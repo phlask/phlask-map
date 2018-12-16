@@ -1,1 +1,232 @@
+ /* map specific */
+ #map {
+    height: 650px;
+}
+/* sidebar */
+.sidebar {
+height: 650px;
+float: left;
+width: 20%;
+min-width: 225px;
+display: none;
+border-right: #00ADEE solid 3px;
+padding-left: 15px;
+padding-top: 15px;
+  overflow: auto;
+}
+.sidebar strong {
+color: #00ADEE;
+}
+.field-desccription {
+margin-top: 0px;
+font-size: 10px;
+max-width: 175px;
+}
+.field-with-text {
+padding-top: 15px;
+}
+.location-description {
+max-height: 200px;
+min-height: 50px;
+max-width: 200px;
+min-width: 200px;
+width: 200px;
+font-size: 10px;
+}
+.phlask-logo {
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 20px;
+}
+.sidebar-button {
+display: block;
+margin-right: 10px;
+margin-bottom: 25px;
+margin-left: 100px;
+background-color: #00ADEE;
+border: none;
+color: white;
+padding: 5px;
+text-align: center;
+text-decoration: none;
+font-size: 16px;
+float: right;
+}
+.directions-button {
+margin: auto;
+display: block;
+margin-bottom: 25px;
+background-color: #00ADEE;
+border: none;
+color: white;
+padding: 5px;
+text-align: center;
+text-decoration: none;
+font-size: 16px;
+width: 50%
+}
+.edit-button {
+display: block;
+margin-right: 10px;
+margin-bottom: 25px;
+margin-left: 100px;
+padding-bottom: 25px;
+background-color: #00ADEE;
+border: none;
+color: white;
+padding: 5px;
+text-align: center;
+text-decoration: none;
+font-size: 16px;
+}
+/* edit form */
+#editForm {
+all: unset;
+display: none;
+overflow: visible;
+width: 35em;
+margin:0 auto;
+}
 
+/* intake form */
+#form {
+all: unset;
+display: none;
+overflow: visible;
+width: 35em;
+margin:0 auto;
+}
+td {
+padding-bottom: 5px;
+padding-right: 10px;
+}
+input[type="text"], input[type="search"], input[type="email"], input[type="tel"] {
+margin-bottom: 0px;
+}
+.section-break {
+padding-top: 25px;
+}
+button, input, select, textarea {
+font-family: 50px;
+width: 75px;
+}
+#new-tap-submit {
+display: none;
+text-align: center;
+}
+#edit-tap-submit {
+display: none;
+text-align: center;
+}
+.phlask-code-input {
+width: 150px;
+text-align: center;
+color: #00ADEE;
+}
+/* success message */
+#message {
+display: none;
+text-align: center;
+}
+/* legend */
+#legend {
+font-family: Arial, sans-serif;
+background: #fff;
+padding: 10px;
+margin: 10px;
+margin-bottom: 0px;
+border: 1px solid #000;
+display: none;
+transform: scale(.9, .9);
+}
+#legend img {
+vertical-align: middle;
+padding-bottom: 10px;
+padding-top: 5px;
+}
+#legend h3 {
+margin-bottom: 0;
+font-size: 20px;
+text-align: center;
+}
+#filter {
+display: none;
+font-family: Arial, sans-serif;
+background: #fff;
+padding: 10px;
+margin: 10px;
+margin-bottom: 0px;
+border: 1px solid #000;
+display: none;
+transform: scale(.9, .9);
+}
+.filter-label {
+margin: 0px;
+padding: 0px;
+}
+.filter-input {
+margin: 0px;
+padding: 0px;
+}
+/* Image Gallery */
+.image-gallery {
+/* overflow-x: scroll; */
+/* overflow-y: hidden; */
+height: 300px;
+width: 90%;
+white-space: nowrap;
+margin: 0 auto;
+margin-bottom: 20px;
+}
+.scroll-buttons {
+width: 90%;
+margin: 0 auto;
+}
+.image-btn {
+width: 25px;
+}
+#geo-locate {
+margin-right: 5px;
+background: white;
+display: none;
+}
+#latlon-div {
+margin-left: 10px;
+display: none;
+}
+#latlon-input {
+
+}
+#latlon-button {
+border: 2px solid #00ADEE;
+}
+.phlask-code-input {
+display: none;
+}
+/* Mobile Specific Sytle Rules */
+@media only screen and (max-device-width: 480px) {
+#form {
+width: 90%;
+order: 3;
+}
+#form input {
+width: 90%;
+}
+#main {
+display:flex;
+flex-direction:column;
+}
+.sidebar {
+order: 2;
+clear: both;
+}
+#map {
+order: 1;
+}
+.sidebar {
+overflow: scroll;
+width: 100%;
+height: 210px; }
+}
+}
