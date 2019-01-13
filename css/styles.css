@@ -11,7 +11,11 @@
 header {
   background: white;
   margin: 20px 15px;
-  display: inline-block;
+  display: flex;
+}
+#header-links{
+  float: right;
+  
 }
 header img {
   height: 40px;
@@ -27,7 +31,7 @@ display: none;
 border-right: #00ADEE solid 3px;
 padding-left: 15px;
 padding-top: 15px;
-  overflow: auto;
+overflow: auto;
 }
 .sidebar strong {
 color: #00ADEE;
