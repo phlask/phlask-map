@@ -1,0 +1,22 @@
+{
+    "name": "phlask-map",
+    "version": "1.0.0",
+    "description": "phlask map",
+    "main": "app.js",
+    "scripts": {
+        "sass": "node-sass -w scss/ -o public/css/ --recursive"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/phlask/phlask-map.git"
+    },
+    "author": "Khalil M Saboor <khalilsaboor1@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/phlask/phlask-map/issues"
+    },
+    "homepage": "https://github.com/phlask/phlask-map#readme",
+    "dependencies": {
+        "node-sass": "^4.11.0"
+    }
+}
