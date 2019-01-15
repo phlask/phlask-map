@@ -214,14 +214,15 @@ function initMap() {
     //latLonDiv.style.display = 'none';
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
-      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
-      legend.style.display = "block";
-      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(filter);
-      //filter.style.display = "block";
-      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geoLocate);
-      //geoLocate.style.display = 'block';
       map.controls[google.maps.ControlPosition.LEFT_TOP].push(latLonDiv);
       latLonDiv.style.display = 'block';
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+      legend.style.display = "block";
+      map.controls[google.maps.ControlPosition.LEFT_TOP].push(filter);
+      filter.style.display = "block";
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geoLocate);
+      //geoLocate.style.display = 'block';
+      
     });
 }
 
@@ -715,6 +716,15 @@ function initMap() {
 
  let filtered = false;
  function accessFilter(type) {
+  if (filtered) {
+    for (let i = 0; i < allTaps.length; i++) {
+      allTaps[i].setMap(map);
+    }
+    filtered = false;
+  }
+
+  else {
+   filtered = true;
    for (let i = 0; i < allTaps.length; i++) {
      allTaps[i].setMap(map);
    }
@@ -742,6 +752,7 @@ function initMap() {
    //   }
    }
    accessFilterType = type;
+  }
  }
 
 
