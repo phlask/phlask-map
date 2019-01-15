@@ -17,7 +17,7 @@ body {
 /* header */
 
 header {
-    background: white;
+    background: $secondary-color;
     margin: 20px 15px;
     display: inline-block;
 }
@@ -36,14 +36,14 @@ header img {
     width: 20%;
     min-width: 225px;
     display: none;
-    border-right: #00ADEE solid 3px;
+    border-right: $primary-color solid 3px;
     padding-left: 15px;
     padding-top: 15px;
     overflow: auto;
 }
 
 .sidebar strong {
-    color: #00ADEE;
+    color: $primary-color;
 }
 
 .field-desccription {
@@ -77,9 +77,9 @@ header img {
     margin-right: 10px;
     margin-bottom: 25px;
     margin-left: 100px;
-    background-color: #00ADEE;
+    background-color: $primary-color;
     border: none;
-    color: white;
+    color: $secondary-color;
     padding: 5px;
     text-align: center;
     text-decoration: none;
