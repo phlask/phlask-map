@@ -23,24 +23,31 @@
     <div id='latlon-div'>
       <input class='latlon-search' type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'>
       <button class="icon latlon-search" id="latlon-button"><i class="glyphicon glyphicon-search"></i></button>
-      <!-- <button></button>
-      <div id="filter"><h3>Filter Taps</h3>
-        <label class="filter-label">
-          All Taps
-          <input class="filter-input" type="radio" name="filterToggle" value="All Taps" checked>
-        </label>
-        <label class="filter-label">
-          Public Taps
-          <input class="filter-input" type="radio" name="filterToggle" value="Public Taps">
-        </label>
-        <label class="filter-label">
-          Private Taps
-        <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
-        </label>
-      </div> -->
     </div>
+
+    # Allow for filtering by access and by filtration, handicap, service, tap type, and vessel
     <div id='filter-div'>
         <button class="icon" id="filter-toggle"><i class="glyphicon glyphicon-filter"></i></button>
+        <div id="filter"><h3>Filter Taps</h3>
+          <div id='access-filter' class='filter-type'>
+            <label class="filter-label">
+              All Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="All Taps" checked>
+            </label>
+            <label class="filter-label">
+              Public Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="Public Taps">
+            </label>
+            <label class="filter-label">
+              Private Taps
+            <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
+            </label>
+            <label class="filter-label">
+                Private Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
+              </label>
+          </div>
+        </div>
     </div>
 
     <!-- new tap form -->
