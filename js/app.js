@@ -211,10 +211,13 @@ function initMap() {
     }
 
     latLonDiv = document.getElementById('latlon-div');
+    filterDiv = document.getElementById('filter-div');
     //latLonDiv.style.display = 'none';
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
       map.controls[google.maps.ControlPosition.LEFT_TOP].push(latLonDiv);
+      latLonDiv.style.display = 'block';
+      map.controls[google.maps.ControlPosition.LEFT_TOP].push(filterDiv);
       latLonDiv.style.display = 'block';
       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
       legend.style.display = "block";

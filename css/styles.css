@@ -211,15 +211,25 @@ margin-right: 5px;
 background: white;
 display: none;
 }
+.latlon-search {
+  height: 25px;
+  display: inline-block;
+}
 #latlon-div {
-margin-left: 10px;
-display: none;
+  margin-left: 10px;
+  display: flex !important;
 }
 #latlon-input {
-  width: 100%;
+  width: 175px;
 }
 #latlon-button {
-border: 2px solid #00ADEE;
+  border: 2px solid #00ADEE;
+  width: 75px;
+}
+#filter-div {
+  margin-left: 10px;
+  margin-top: 15px;
+  display: flex !important;
 }
 .phlask-code-input {
 display: none;

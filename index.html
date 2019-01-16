@@ -2,6 +2,7 @@
 <head>
     <title>Phlask Map</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -20,7 +21,8 @@
     <div id="legend"><h3>Legend</h3></div>
     <img id="geo-locate" src='https://i.imgur.com/wWc1rmZ.png'></img>
     <div id='latlon-div'>
-      <input type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'><button id="latlon-button" >Go there!</button>
+      <input class='latlon-search' type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'>
+      <button class="icon latlon-search" id="latlon-button"><i class="glyphicon glyphicon-search"></i></button>
       <!-- <button></button>
       <div id="filter"><h3>Filter Taps</h3>
         <label class="filter-label">
@@ -36,6 +38,9 @@
         <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
         </label>
       </div> -->
+    </div>
+    <div id='filter-div'>
+        <button class="icon" id="filter-toggle"><i class="glyphicon glyphicon-filter"></i></button>
     </div>
 
     <!-- new tap form -->
