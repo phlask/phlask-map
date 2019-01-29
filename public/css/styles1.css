@@ -219,7 +219,7 @@ display: none;
   background: #fff;
   padding: 8px;
   border: 1px solid #000;
-  display: flex;
+  display: none !important;
   margin-left: 10px;
 }
 #filter h3 {
