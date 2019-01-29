@@ -11,7 +11,11 @@
 header {
   background: white;
   margin: 20px 15px;
-  display: inline-block;
+  display: flex;
+}
+#header-links{
+  float: right;
+  
 }
 header img {
   height: 40px;
@@ -27,7 +31,7 @@ display: none;
 border-right: #00ADEE solid 3px;
 padding-left: 15px;
 padding-top: 15px;
-  overflow: auto;
+overflow: auto;
 }
 .sidebar strong {
 color: #00ADEE;
@@ -161,28 +165,10 @@ padding-bottom: 10px;
 padding-top: 5px;
 }
 #legend h3 {
-margin-bottom: 0;
+margin: 0;
+margin-bottom: 5px;
 font-size: 20px;
 text-align: center;
-}
-#filter {
-display: none;
-font-family: Arial, sans-serif;
-background: #fff;
-padding: 10px;
-margin: 10px;
-margin-bottom: 0px;
-border: 1px solid #000;
-display: none;
-transform: scale(.9, .9);
-}
-.filter-label {
-margin: 0px;
-padding: 0px;
-}
-.filter-input {
-margin: 0px;
-padding: 0px;
 }
 /* Image Gallery */
 .image-gallery {
@@ -206,15 +192,42 @@ margin-right: 5px;
 background: white;
 display: none;
 }
+.latlon-search {
+  height: 25px;
+  display: inline-block;
+}
 #latlon-div {
-margin-left: 10px;
-display: none;
+  margin-left: 10px;
+  display: flex !important;
 }
 #latlon-input {
-  width: 100%;
+  width: 175px;
 }
 #latlon-button {
-border: 2px solid #00ADEE;
+  border: 2px solid #00ADEE;
+  width: 75px;
+}
+#filter-div {
+  margin-left: 10px;
+  margin-top: 15px;
+  display: flex !important;
+}
+#filter-toggle {
+  height: 25px;
+}
+#filter {
+  background: #fff;
+  padding: 8px;
+  border: 1px solid #000;
+  display: flex;
+  margin-left: 10px;
+}
+#filter h3 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+.filter-type {
+  float: left;
 }
 .phlask-code-input {
 display: none;

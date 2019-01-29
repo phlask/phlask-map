@@ -17,7 +17,7 @@ let accessFilterType = '';
 let otherFilterType = '';
 
 
- const greyStyleRules = [ { "elementType": "geometry", "stylers": [ { "color": "#f5f5f5" } ] }, { "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f5f5" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#bdbdbd" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#ffffff" } ] }, { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#dadada" } ] }, { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "water", "elementType": "geometry", "stylers": [ { "color": "#c9c9c9" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] } ]
+const greyStyleRules = [ { "elementType": "geometry", "stylers": [ { "color": "#f5f5f5" } ] }, { "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f5f5" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#bdbdbd" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#ffffff" } ] }, { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#dadada" } ] }, { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "water", "elementType": "geometry", "stylers": [ { "color": "#c9c9c9" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] } ]
 
 // map icons for tap types
 // public
@@ -51,6 +51,9 @@ if (window.innerWidth <= 480) {
   smallScreen = true;
   document.getElementById("map").style.height = "600px";
 }
+
+// Enable tooltips throughout the document via JQuery UI
+$(document).tooltip();
 
 function goToLocation() {
   let latLon = document.getElementById('latlon-input').value;
@@ -155,29 +158,71 @@ function initMap() {
     const legend = document.getElementById('legend');
     const filter = document.getElementById('filter');
 
-    var selected_div = document.createElement('div');
-    selected_div.innerHTML = '<img src="' + greyTap + '"> ' + "Selected Tap";
-    //legend.appendChild(selected_div);
+    var tapTypes = {
+      public: {
+        name: "Public Tap",
+        image: blueTap,
+        description: "Taps maintained by municipal agencies for the public benefit.",
+        filterKey: "Public"
+      },
+      privateShared: {
+        name: "Private-Shared Tap",
+        image: greenTap,
+        description: "Taps maintained by private enterprises, generously made available for public access.",
+        filterKey: "Private-Shared"
+      },
+      private: {
+        name: "Private Tap",
+        image: yellowTap,
+        description: "Taps located in private enterprises. PHLasking for permission to access may be required.",
+        filterKey: "Private"
+      },
+      restricted: {
+        name: "Restricted Tap",
+        image: redTap,
+        description: "Taps located in facilities where public access is restricted.",
+        filterKey: "Restricted"
+      }
+    }
 
-    var public_div = document.createElement('div');
-    public_div.innerHTML = '<img src="' + blueTap + '"> ' + "Public Tap";
-    public_div.addEventListener('click', function() {accessFilter('Public')});
-    legend.appendChild(public_div);
+    var legendElementMap = phlaskUtils.generateLegend(map, tapTypes);
 
-    var semi_div = document.createElement('div');
-    semi_div.innerHTML = '<img src="' + greenTap + '"> ' + "Private-Shared Tap";
-    semi_div.addEventListener('click', function() {accessFilter('Private-Shared')});
-    legend.appendChild(semi_div);
+    for (legendElement in legendElementMap) {
+      var element = legendElementMap[legendElement];
+      legend.appendChild(element);
+    }
 
-    var private_div = document.createElement('div');
-    private_div.innerHTML = '<img src="' + yellowTap + '"> ' + "Private Tap";
-    private_div.addEventListener('click', function() {accessFilter('Private')});
-    legend.appendChild(private_div);
+    // var selected_div = document.createElement('div');
+    // selected_div.innerHTML = '<img src="' + greyTap + '"> ' + "Selected Tap";
+    // // legend.appendChild(selected_div);
 
-    var restricted_div = document.createElement('div');
-    restricted_div.innerHTML = '<img src="' + redTap + '"> ' + "Restricted Tap";
-    restricted_div.addEventListener('click', function() {accessFilter('Restricted')});
-    legend.appendChild(restricted_div);
+    // var public_div = document.createElement('div');
+    // var public_div_img = document.createElement('img');
+    // public_div_img.setAttribute('src', blueTap)
+    // public_div.appendChild(public_div_img);
+    
+    // var public_div_tooltip = document.createElement('span');
+    // public_div_tooltip.innerText = "Public Tap";
+    // public_div_tooltip.setAttribute('title', "Taps maintained by municipal agencies for the public benefit");
+    
+    // public_div.appendChild(public_div_tooltip);
+    // public_div.addEventListener('click', function() {accessFilter('Public')});
+    // legend.appendChild(public_div);
+
+    // var semi_div = document.createElement('div');
+    // semi_div.innerHTML = '<img src="' + greenTap + '"> ' + "Private-Shared Tap";
+    // semi_div.addEventListener('click', function() {accessFilter('Private-Shared')});
+    // legend.appendChild(semi_div);
+
+    // var private_div = document.createElement('div');
+    // private_div.innerHTML = '<img src="' + yellowTap + '"> ' + "Private Tap";
+    // private_div.addEventListener('click', function() {accessFilter('Private')});
+    // legend.appendChild(private_div);
+
+    // var restricted_div = document.createElement('div');
+    // restricted_div.innerHTML = '<img src="' + redTap + '"> ' + "Restricted Tap";
+    // restricted_div.addEventListener('click', function() {accessFilter('Restricted')});
+    // legend.appendChild(restricted_div);
 
     // var unconfirmed_div = document.createElement('div');
     // unconfirmed_div.innerHTML = '<img src="' + greyTap + '"> ' + "Un-verified Tap";
@@ -211,17 +256,21 @@ function initMap() {
     }
 
     latLonDiv = document.getElementById('latlon-div');
+    filterDiv = document.getElementById('filter-div');
     //latLonDiv.style.display = 'none';
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
-      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
-      legend.style.display = "block";
-      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(filter);
-      //filter.style.display = "block";
-      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geoLocate);
-      //geoLocate.style.display = 'block';
       map.controls[google.maps.ControlPosition.LEFT_TOP].push(latLonDiv);
       latLonDiv.style.display = 'block';
+      map.controls[google.maps.ControlPosition.LEFT_TOP].push(filterDiv);
+      latLonDiv.style.display = 'block';
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+      legend.style.display = "block";
+      map.controls[google.maps.ControlPosition.LEFT_TOP].push(filter);
+      filter.style.display = "block";
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geoLocate);
+      //geoLocate.style.display = 'block';
+      
     });
 }
 
@@ -713,36 +762,46 @@ function initMap() {
  //document.querySelector('#latlon-button').style.display = 'none';
 
 
- let filtered = false;
- function accessFilter(type) {
-   for (let i = 0; i < allTaps.length; i++) {
-     allTaps[i].setMap(map);
-   }
+//  let filtered = false;
+//  function accessFilter(type) {
+//   if (filtered) {
+//     for (let i = 0; i < allTaps.length; i++) {
+//       allTaps[i].setMap(map);
+//     }
+//     filtered = false;
+//   }
 
-   for (let i = 0; i < initialTaps.length; i++) {
-     if (initialTaps[i].access != type) {
-       allTaps[i].setMap(null);
-     }
+//   else {
+//    filtered = true;
+//    for (let i = 0; i < allTaps.length; i++) {
+//      allTaps[i].setMap(map);
+//    }
 
-   // if (accessFilterType == type) {
-   //   for (let i = 0; i < allTaps.length; i++) {
-   //     allTaps[i].setMap(map);
-   //   }
-   // }
-   //
-   // else {
-   //   for (let i = 0; i < allTaps.length; i++) {
-   //     allTaps[i].setMap(map);
-   //   }
-   //
-   //   for (let i = 0; i < initialTaps.length; i++) {
-   //     if (initialTaps[i].access != type) {
-   //       allTaps[i].setMap(null);
-   //     }
-   //   }
-   }
-   accessFilterType = type;
- }
+//    for (let i = 0; i < initialTaps.length; i++) {
+//      if (initialTaps[i].access != type) {
+//        allTaps[i].setMap(null);
+//      }
+
+//    // if (accessFilterType == type) {
+//    //   for (let i = 0; i < allTaps.length; i++) {
+//    //     allTaps[i].setMap(map);
+//    //   }
+//    // }
+//    //
+//    // else {
+//    //   for (let i = 0; i < allTaps.length; i++) {
+//    //     allTaps[i].setMap(map);
+//    //   }
+//    //
+//    //   for (let i = 0; i < initialTaps.length; i++) {
+//    //     if (initialTaps[i].access != type) {
+//    //       allTaps[i].setMap(null);
+//    //     }
+//    //   }
+//    }
+//    accessFilterType = type;
+//   }
+//  }
 
 
 
