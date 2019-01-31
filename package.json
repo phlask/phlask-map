@@ -4,6 +4,7 @@
     "description": "phlask map",
     "main": "app.js",
     "scripts": {
+        "start": "node app.js",
         "sass": "node-sass -w scss/ -o public/css/ --recursive"
     },
     "repository": {
@@ -17,7 +18,9 @@
     },
     "homepage": "https://github.com/phlask/phlask-map#readme",
     "dependencies": {
-        "node-sass": "^4.11.0"
+        "node-sass": "^4.11.0",
+        "serve-static": "^1.13.2",
+        "finalhandler": "^1.1.1"
     },
     "devDependencies": {
         "nodemon": "^1.18.9"
