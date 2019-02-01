@@ -4,8 +4,8 @@
     "description": "phlask map",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js",
-        "sass": "node-sass -w scss/ -o public/css/ --recursive"
+        "prestart": "node_modules/.bin/node-sass --output-style compressed -o public/css/ scss/",
+        "start": "node app.js"
     },
     "repository": {
         "type": "git",
