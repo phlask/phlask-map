@@ -192,42 +192,6 @@ function initMap() {
       legend.appendChild(element);
     }
 
-    // var selected_div = document.createElement('div');
-    // selected_div.innerHTML = '<img src="' + greyTap + '"> ' + "Selected Tap";
-    // // legend.appendChild(selected_div);
-
-    // var public_div = document.createElement('div');
-    // var public_div_img = document.createElement('img');
-    // public_div_img.setAttribute('src', blueTap)
-    // public_div.appendChild(public_div_img);
-    
-    // var public_div_tooltip = document.createElement('span');
-    // public_div_tooltip.innerText = "Public Tap";
-    // public_div_tooltip.setAttribute('title', "Taps maintained by municipal agencies for the public benefit");
-    
-    // public_div.appendChild(public_div_tooltip);
-    // public_div.addEventListener('click', function() {accessFilter('Public')});
-    // legend.appendChild(public_div);
-
-    // var semi_div = document.createElement('div');
-    // semi_div.innerHTML = '<img src="' + greenTap + '"> ' + "Private-Shared Tap";
-    // semi_div.addEventListener('click', function() {accessFilter('Private-Shared')});
-    // legend.appendChild(semi_div);
-
-    // var private_div = document.createElement('div');
-    // private_div.innerHTML = '<img src="' + yellowTap + '"> ' + "Private Tap";
-    // private_div.addEventListener('click', function() {accessFilter('Private')});
-    // legend.appendChild(private_div);
-
-    // var restricted_div = document.createElement('div');
-    // restricted_div.innerHTML = '<img src="' + redTap + '"> ' + "Restricted Tap";
-    // restricted_div.addEventListener('click', function() {accessFilter('Restricted')});
-    // legend.appendChild(restricted_div);
-
-    // var unconfirmed_div = document.createElement('div');
-    // unconfirmed_div.innerHTML = '<img src="' + greyTap + '"> ' + "Un-verified Tap";
-    // legend.appendChild(unconfirmed_div);
-
     var geoLocate = document.querySelector('#geo-locate');
     //geoLocate.style.display = 'none';
     //geoLocate.addListener('click', locateMe());
@@ -551,6 +515,9 @@ function initMap() {
           firebase.database().ref('/').once('value').then(function(snapshot) {
                   //console.log(snapshot.val())
                   for (item in snapshot.val()) {
+                          if (snapshot.val()[item].access == "WM") {
+                            continue;
+                          }
                           var lat = snapshot.val()[item].lat;
                           var lon = snapshot.val()[item].lon;
 
