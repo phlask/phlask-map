@@ -1,16 +1,20 @@
 <html>
 
 <head>
-    <title>Phlask Map!!!</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <title>Phlask Map</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/styles1.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/phlaskUtils.js"></script>
 </head>
 
 <body>
     <!-- HTML strucutre -->
     <header>
-        <img src="https://i2.wp.com/phlask.me/wp-content/uploads/2017/05/cropped-phlask-text-icon-logo.png?zoom=1.25&fit=283%2C55" />
-        <div id='header-links'>
-            <a href="http://phlask.me/">Home</a>
+        <img class="header-item" src="https://i2.wp.com/phlask.me/wp-content/uploads/2017/05/cropped-phlask-text-icon-logo.png?zoom=1.25&fit=283%2C55" />
+        <div class="header-item" id='header-links'>
+            <a id='home-nav' href="http://phlask.me/">Home</a>
         </div>
     </header>
     <!-- Sidebar -->
@@ -21,23 +25,37 @@
     <div id="legend">
         <h3>Legend</h3>
     </div>
-    <div id="filter">
-        <h3>Filter Taps</h3>
-        <label class="filter-label">
-        All Taps
-        <input class="filter-input" type="radio" name="filterToggle" value="All Taps" checked>
-      </label>
-        <label class="filter-label">
-        Public Taps
-        <input class="filter-input" type="radio" name="filterToggle" value="Public Taps">
-      </label>
-        <label class="filter-label">
-        Private Taps
-      <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
-      </label>
-    </div>
     <img id="geo-locate" src='https://i.imgur.com/wWc1rmZ.png'></img>
-    <div id='latlon-div'><input type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'><button id="latlon-button">Go there!</button></div>
+    <div id='latlon-div'>
+        <input class='latlon-search' type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'>
+        <button class="icon latlon-search" id="latlon-button"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+
+    # Allow for filtering by access and by filtration, handicap, service, tap type, and vessel
+    <div id='filter-div'>
+        <button class="icon" id="filter-toggle"><i class="glyphicon glyphicon-filter"></i></button>
+        <div id="filter">
+            <h3>Filter Taps</h3>
+            <div id='access-filter' class='filter-type'>
+                <label class="filter-label">
+              All Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="All Taps" checked>
+            </label>
+                <label class="filter-label">
+              Public Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="Public Taps">
+            </label>
+                <label class="filter-label">
+              Private Taps
+            <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
+            </label>
+                <label class="filter-label">
+                Private Taps
+              <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
+              </label>
+            </div>
+        </div>
+    </div>
 
     <!-- new tap form -->
     <div id="form" class="form">
@@ -295,6 +313,7 @@
     <!-- firebase API -->
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 
 

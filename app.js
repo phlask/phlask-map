@@ -1,17 +1,16 @@
+const finalhandler = require('finalhandler');
 const http = require('http');
-const fs = require('fs');
+const serveStatic = require('serve-static');
 
-const hostname = '127.0.0.1';
+const hostname = "localhost";
 const port = 3000;
 
+var serve = serveStatic('public')
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-type', 'text/html');
-    fs.readFile('./public/index.html', (err, fileContent) => {
-        res.end(fileContent);
-    })
+var server = http.createServer(function onRequest(req, res) {
+    serve(req, res, finalhandler(req, res))
 });
-server.listen(port, hostname, () => {
+
+server.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
