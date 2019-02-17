@@ -13,7 +13,6 @@ let addressMarkers = [];
 let allTaps = [];
 let initialTaps = [];
 
-let accessFilterType = '';
 let otherFilterType = '';
 
 

@@ -1,12 +1,15 @@
 let filtered = false;
+let activeFilterType = "";
 var accessFilter = function(event) {
     type = event.target.getAttribute('data-filter');
-    if (filtered) {
+    // If the map is filtered and you try to filter for the same filter type that is active...
+    if (filtered && type == activeFilterType) {
+        // ...clear the filter.
         for (let i = 0; i < allTaps.length; i++) {
             allTaps[i].setMap(map);
         }
         filtered = false;
-    } else {
+    } else { // Otherwise, filter taps to the newly requested type
         filtered = true;
         for (let i = 0; i < allTaps.length; i++) {
             if (allTaps[i].data.access == type) {
@@ -16,7 +19,7 @@ var accessFilter = function(event) {
             }
         }
     }
-    accessFilterType = type;
+    activeFilterType = type;
 }
 
 var phlaskUtils = {
