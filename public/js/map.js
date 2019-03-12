@@ -5,17 +5,12 @@ google.maps.event.addDomListener(window, 'load', initMap);
 var map;
 var marker;
 var tapwindow;
+
+// file-local variables
 let nextTapNumber = 0;
-let tapMarkers = [];
 let addressMarkers = [];
-
-
 let allTaps = [];
 let initialTaps = [];
-
-let accessFilterType = '';
-let otherFilterType = '';
-
 
 const greyStyleRules = [ { "elementType": "geometry", "stylers": [ { "color": "#f5f5f5" } ] }, { "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f5f5" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#bdbdbd" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#ffffff" } ] }, { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#dadada" } ] }, { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "water", "elementType": "geometry", "stylers": [ { "color": "#c9c9c9" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] } ]
 
@@ -158,34 +153,9 @@ function initMap() {
     const legend = document.getElementById('legend');
     const filter = document.getElementById('filter');
 
-    var tapTypes = {
-      public: {
-        name: "Public Tap",
-        image: blueTap,
-        description: "Taps maintained by municipal agencies for the public benefit.",
-        filterKey: "Public"
-      },
-      privateShared: {
-        name: "Private-Shared Tap",
-        image: greenTap,
-        description: "Taps maintained by private enterprises, generously made available for public access.",
-        filterKey: "Private-Shared"
-      },
-      private: {
-        name: "Private Tap",
-        image: yellowTap,
-        description: "Taps located in private enterprises. PHLasking for permission to access may be required.",
-        filterKey: "Private"
-      },
-      restricted: {
-        name: "Restricted Tap",
-        image: redTap,
-        description: "Taps located in facilities where public access is restricted.",
-        filterKey: "Restricted"
-      }
-    }
+    
 
-    var legendElementMap = phlaskUtils.generateLegend(map, tapTypes);
+    var legendElementMap = phlaskUtils.generateLegend(map, phlaskData.tapTypes);
 
     for (legendElement in legendElementMap) {
       var element = legendElementMap[legendElement];
@@ -314,13 +284,14 @@ function placeMarker(position, map, marker) {
   });
 }
 
+
 // function used to place and symbolize verified taps
 function placeTap(position, map, data, isNew=false) {
   if (isNew) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: greyTap,
+      icon: phlaskData.tapTypes.unverified.image,
       data: data,
       temporary: true
     });
@@ -329,22 +300,22 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: blueTap,
+      icon: phlaskData.tapTypes.public.image,
       data: data
     });
   }
   else if (data.access == 'Semi-public') {
     var tap = new google.maps.Marker({
-            position: position,
-            map: map,
-            icon: greenTap,
-            data: data
+      position: position,
+      map: map,
+      icon: phlaskData.tapTypes.semiPublic.image,
+      data: data
     });
   }
   else if (data.access == 'Private') {
     var tap = new google.maps.Marker({
       position: position,
-      map: map,
+      map: phlaskData.tapTypes.private.image,
       icon: yellowTap,
       data: data
     });
@@ -353,7 +324,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: greyTap,
+      icon: phlaskData.tapTypes.unverified.image,
       data: data
     });
   }
@@ -361,7 +332,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: redTap,
+      icon: phlaskData.tapTypes.restricted.image,
       data: data
     });
   }
@@ -369,7 +340,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: greenTap,
+      icon: phlaskData.tapTypes.privateShared.image,
       data: data
     });
   }
@@ -404,7 +375,6 @@ function placeTap(position, map, data, isNew=false) {
       "<p>" + "<strong>Longitude: </strong>" + data.lon + "</p>"
   });
 
-  // console.log(tap)
   tap.addListener('click', function() {
     console.log(this.data);
     slideIndex = 1

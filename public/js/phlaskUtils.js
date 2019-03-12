@@ -1,24 +1,3 @@
-let filtered = false;
-var accessFilter = function(event) {
-    type = event.target.getAttribute('data-filter');
-    if (filtered) {
-        for (let i = 0; i < allTaps.length; i++) {
-            allTaps[i].setMap(map);
-        }
-        filtered = false;
-    } else {
-        filtered = true;
-        for (let i = 0; i < allTaps.length; i++) {
-            if (allTaps[i].data.access == type) {
-                allTaps[i].setMap(map);
-            } else {
-                allTaps[i].setMap(null);
-            }
-        }
-    }
-    accessFilterType = type;
-}
-
 var phlaskUtils = {
     generateLegend: function(map, tapTypeMapping) {
         legendElements = {};
