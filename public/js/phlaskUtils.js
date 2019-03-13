@@ -2,6 +2,9 @@ var phlaskUtils = {
     generateLegend: function(map, tapTypeMapping) {
         legendElements = {};
         for (tapType in tapTypeMapping) {
+            if(!tapTypeMapping[tapType].activeOnFilter) {
+                continue
+            }
             var legend_div = document.createElement('div');
             legend_div.setAttribute('data-filter', tapTypeMapping[tapType].filterKey)
 
