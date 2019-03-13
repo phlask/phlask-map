@@ -291,7 +291,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.unverified.image,
+      icon: phlaskData.tapTypes["Unverified"].image,
       data: data,
       temporary: true
     });
@@ -300,7 +300,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.public.image,
+      icon: phlaskData.tapTypes["Public"].image,
       data: data
     });
   }
@@ -308,14 +308,14 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.semiPublic.image,
+      icon: phlaskData.tapTypes["Semi-Public"].image,
       data: data
     });
   }
   else if (data.access == 'Private') {
     var tap = new google.maps.Marker({
       position: position,
-      map: phlaskData.tapTypes.private.image,
+      map: phlaskData.tapTypes["Private"].image,
       icon: yellowTap,
       data: data
     });
@@ -324,7 +324,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.unverified.image,
+      icon: phlaskData.tapTypes["Unverified"].image,
       data: data
     });
   }
@@ -332,7 +332,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.restricted.image,
+      icon: phlaskData.tapTypes["Restricted"].image,
       data: data
     });
   }
@@ -340,7 +340,7 @@ function placeTap(position, map, data, isNew=false) {
     var tap = new google.maps.Marker({
       position: position,
       map: map,
-      icon: phlaskData.tapTypes.privateShared.image,
+      icon: phlaskData.tapTypes["Private-Shared"].image,
       data: data
     });
   }
