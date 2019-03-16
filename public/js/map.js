@@ -12,23 +12,6 @@ let addressMarkers = [];
 let allTaps = [];
 let initialTaps = [];
 
-const greyStyleRules = [ { "elementType": "geometry", "stylers": [ { "color": "#f5f5f5" } ] }, { "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f5f5" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#bdbdbd" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#ffffff" } ] }, { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [ { "color": "#757575" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#dadada" } ] }, { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "color": "#616161" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#e5e5e5" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#eeeeee" } ] }, { "featureType": "water", "elementType": "geometry", "stylers": [ { "color": "#c9c9c9" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#9e9e9e" } ] } ]
-
-// map icons for tap types
-// public
-const blueTap = "https://i.imgur.com/M12e1HV.png"
-// semi-public
-const greenTap = "https://i.imgur.com/DXMMxXR.png"
-// selected
-const yellowTap = "https://i.imgur.com/kt825XO.png"
-// private
-const redTap = "https://i.imgur.com/5NOdOyY.png"
-// unverified
-const greyTap = "https://i.imgur.com/kKXG3TO.png"
-
-const HOSR_tap = "https://i.imgur.com/cZ3GxdF.png"
-const HOSR_grey_tap = 'https://i.imgur.com/bnw3Erx.png'
-
 const userLocation = "https://i.imgur.com/ofjiRtT.png"
 const locateMeIcon = "https://i.imgur.com/wWc1rmZ.png"
 
@@ -110,8 +93,6 @@ function initMap() {
         zoom: 12,
         disableDoubleClickZoom: true,
         gestureHandling: 'greedy',
-        //styles: greyStyleRules,
-
     });
 
     messagewindow = new google.maps.InfoWindow({
@@ -208,54 +189,41 @@ function initMap() {
     });
 }
 
- // firebase configuration for verified taps database
- var config = {
-     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-     authDomain: "phlask-web-map.firebaseapp.com",
-     databaseURL: "https://phlask-web-map.firebaseio.com",
-     projectId: "phlask-web-map",
-     storageBucket: "phlask-web-map.appspot.com",
-     messagingSenderId: "428394983826"
-   };
- firebase.initializeApp(config);
+// firebase configuration for verified taps database
+var config = {
+    apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
+    authDomain: "phlask-web-map.firebaseapp.com",
+    databaseURL: "https://phlask-web-map.firebaseio.com",
+    projectId: "phlask-web-map",
+    storageBucket: "phlask-web-map.appspot.com",
+    messagingSenderId: "428394983826"
+};
 
- var database = firebase.database();
+firebase.initializeApp(config);
 
- // firebase configuration for new taps database
- var config_new = {
-     apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
-     authDomain: "phlask-web-map-new-taps.firebaseapp.com",
-     databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
-     projectId: "phlask-web-map-new-taps",
-     storageBucket: "phlask-web-map-new-taps.appspot.com",
-     messagingSenderId: "673087230724"
- };
+var database = firebase.database();
 
- // Initialize another app with a different config
- var secondary = firebase.initializeApp(config_new, "new");
+// firebase configuration for new taps database
+var config_new = {
+    apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
+    authDomain: "phlask-web-map-new-taps.firebaseapp.com",
+    databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
+    projectId: "phlask-web-map-new-taps",
+    storageBucket: "phlask-web-map-new-taps.appspot.com",
+    messagingSenderId: "673087230724"
+};
 
- // Retrieve the database.
- var newDatabase = secondary.database();
+// Initialize another app with a different config
+var secondary = firebase.initializeApp(config_new, "new");
+
+// Retrieve the database.
+var newDatabase = secondary.database();
 
 // function used to place new tap marker
 function placeMarker(position, map, marker) {
   marker.setPosition(position);
 
   google.maps.event.addListener(marker, 'click', function() {
-    try {
-      // document.getElementById('new-tap-submit').style.display = 'none';
-      // document.getElementById('edit-tap-submit').style.display = 'none';
-      
-      // var form = document.getElementById("form");
-      //                 form.style.display = "block"
-      
-      // document.getElementById("editForm").style.display = 'none';
-      
-      // form.scrollIntoView();
-      // window.scrollBy(0, -65);
-    }
-    catch(err) {}
-    //infowindow.open(map, this);
     side_close();
     const submitMessage = document.getElementById('new-tap-submit');
     submitMessage.style.display = 'none';
@@ -296,62 +264,15 @@ function placeTap(position, map, data, isNew=false) {
       temporary: true
     });
   }
-  else if (data.access == 'Public') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: phlaskData.tapTypes["Public"].image,
-      data: data
-    });
-  }
-  else if (data.access == 'Semi-public') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: phlaskData.tapTypes["Semi-Public"].image,
-      data: data
-    });
-  }
-  else if (data.access == 'Private') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: phlaskData.tapTypes["Private"].image,
-      icon: yellowTap,
-      data: data
-    });
-  }
-  else if (data.access == 'Unverified') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: phlaskData.tapTypes["Unverified"].image,
-      data: data
-    });
-  }
-  else if (data.access == 'Restricted') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: phlaskData.tapTypes["Restricted"].image,
-      data: data
-    });
-  }
-  else if (data.access == 'Private-Shared') {
-    var tap = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: phlaskData.tapTypes["Private-Shared"].image,
-      data: data
-    });
-  }
-
-  else if (data.access == 'WM') {
-    var tap = new google.maps.Marker({
-      position: position,
-      // map: map,
-      icon: HOSR_tap,
-      data: data
-    });
+  else {
+    if(phlaskData.tapTypes[data.access].activeOnFilter) {
+      var tap = new google.maps.Marker({
+        position: position,
+        map: map,
+        icon: phlaskData.tapTypes[data.access].image,
+        data: data
+     });
+    }
   }
 
   tapwindow = new google.maps.InfoWindow({
@@ -381,8 +302,12 @@ function placeTap(position, map, data, isNew=false) {
 
     change_icon_back();
 
-    if (tap.data.access == "WM") tap.setIcon(HOSR_grey_tap);
-    else tap.setIcon(greyTap);
+    if (tap.data.access == "WM") {
+      tap.setIcon(phlaskData.tapTypes["WM"].image);
+    }
+    else{
+      tap.setIcon(phlaskData.tapTypes["Unverified"].image);
+    }
 
     selected_taps.push(tap);
 
@@ -574,27 +499,7 @@ function saveData() {
 function change_icon_back() {
   if (selected_taps.length > 0) {
     var change_icon = selected_taps.pop();
-    if (change_icon.data.access == 'Public') {
-      change_icon.setIcon(blueTap)
-    }
-    else if (change_icon.data.access == 'Private') {
-      change_icon.setIcon(yellowTap)
-    }
-    else if (change_icon.data.access == 'Semi-public') {
-      change_icon.setIcon(greenTap)
-    }
-    else if (change_icon.data.access == 'Unverified') {
-      change_icon.setIcon(greyTap)
-    }
-    else if (change_icon.data.access == 'Restricted') {
-      change_icon.setIcon(redTap)
-    }
-    else if (change_icon.data.access == 'Private-Shared') {
-      change_icon.setIcon(greenTap)
-    }
-    else if (change_icon.data.access == 'WM') {
-      change_icon.setIcon(HOSR_tap)
-    }
+    change_icon.setIcon(phlaskData.tapTypes[change_icon.data.access].image)
   }
 }
 
@@ -621,7 +526,6 @@ function plusDivs(n) {
 }
 
 function editData(tap) {
-  //console.log(tap);
   const form = document.getElementById("form");
   form.style.display = "none";
 
@@ -634,8 +538,6 @@ function editData(tap) {
 
   editForm.scrollIntoView();
   window.scrollBy(0, -65);
-
-  // console.log(tap);
 
   document.getElementById('edit-access').value = tap.data.access;
   document.getElementById('edit-service').value = tap.data.service;
