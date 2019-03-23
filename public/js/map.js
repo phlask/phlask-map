@@ -136,7 +136,7 @@ function initMap() {
 
     
 
-    var legendElementMap = phlaskUtils.generateLegend(map, phlaskData.tapTypes);
+    var legendElementMap = phlaskUtils.generateLegend(phlaskData.tapTypes);
 
     for (legendElement in legendElementMap) {
       var element = legendElementMap[legendElement];
@@ -409,24 +409,24 @@ function placeTap(position, map, data, isNew=false) {
 function getTaps(increment) {
   //allTaps = []
   firebase.database().ref('/').once('value').then(function(snapshot) {
-          //console.log(snapshot.val())
-          for (item in snapshot.val()) {
-                  if (snapshot.val()[item].access == "WM") {
-                    continue;
-                  }
-                  var lat = snapshot.val()[item].lat;
-                  var lon = snapshot.val()[item].lon;
+    //console.log(snapshot.val())
+    for (item in snapshot.val()) {
+      if (snapshot.val()[item].access == "WM") {
+        continue;
+      }
+      var lat = snapshot.val()[item].lat;
+      var lon = snapshot.val()[item].lon;
 
-                  var latlng = {lat: lat, lng: lon};
+      var latlng = {lat: lat, lng: lon};
 
-                  placeTap(latlng, map, snapshot.val()[item]);
+      placeTap(latlng, map, snapshot.val()[item]);
 
-  initialTaps.push(snapshot.val()[item])
+      initialTaps.push(snapshot.val()[item])
 
-  if (increment) {
-    nextTapNumber += 1;
-  }
-          }
+      if (increment) {
+        nextTapNumber += 1;
+      }
+    }
   });
   //console.log(allTaps);
 }
@@ -448,7 +448,9 @@ function saveData() {
   try {
     document.getElementById("message").style.display = "block"
   }
-  catch(err) {}
+  catch(err) {
+    console.log("An error ocurred loading the message!")
+  }
 
   var access = document.getElementById('access').value;
   var service = document.getElementById('service').value;

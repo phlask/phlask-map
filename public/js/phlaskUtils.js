@@ -1,5 +1,5 @@
 var phlaskUtils = {
-    generateLegend: function(map, tapTypeMapping) {
+    generateLegend: function(tapTypeMapping) {
         legendElements = {};
         for (tapType in tapTypeMapping) {
             if(!tapTypeMapping[tapType].activeOnFilter) {
