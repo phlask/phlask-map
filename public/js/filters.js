@@ -33,13 +33,16 @@ var accessFilter = function(event) {
     }
 
     // Then make sure the filter icons are colored if active and grey if not.
-    typeList = ["Public", "Private-Shared", "Private", "Restricted"]
-    typeList.forEach(currentType => {
-        if(activeFilterStatus[currentType]){
-            $("img[data-filter='" + currentType + "']").attr("src", phlaskData.tapTypes[currentType].image)
+    for(tapType in phlaskData.tapTypes) {
+        //...if the filter type is active...
+        if(activeFilterStatus[tapType]){
+            //...ensure the legend icon is colored.
+            $("img[data-filter='" + tapType + "']").attr("src", phlaskData.tapTypes[tapType].image)
         }
+        // Otherwise...
         else {
-            $("img[data-filter='" + currentType + "']").attr("src", phlaskData.tapTypes['Unverified'].image)
+            //...set the legend icon to grey.
+            $("img[data-filter='" + tapType + "']").attr("src", phlaskData.tapTypes['Unverified'].image)
         }
-    });
+    }
 }

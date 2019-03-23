@@ -4,7 +4,6 @@
     "description": "phlask map",
     "main": "app.js",
     "scripts": {
-        "prestart": "node_modules/.bin/node-sass --output-style compressed -o public/css/ scss/",
         "start": "node app.js"
     },
     "repository": {
