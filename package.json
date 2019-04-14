@@ -1,27 +1,28 @@
 {
-    "name": "phlask-map",
-    "version": "1.0.0",
-    "description": "phlask map",
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/phlask/phlask-map.git"
-    },
-    "author": "Khalil M Saboor <khalilsaboor1@gmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/phlask/phlask-map/issues"
-    },
-    "homepage": "https://github.com/phlask/phlask-map#readme",
-    "dependencies": {
-        "node-sass": "^4.11.0",
-        "serve-static": "^1.13.2",
-        "finalhandler": "^1.1.1"
-    },
-    "devDependencies": {
-        "nodemon": "^1.18.9"
-    }
+  "name": "phlask-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "ts-pnp": "^1.0.1"
+  },
+  "devDependencies": {
+    "react-scripts": "2.1.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
