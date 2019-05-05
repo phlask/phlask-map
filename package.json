@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "react": "^16.8.6",
+    "react-burger-menu": "^2.6.9",
     "react-dom": "^16.8.6",
+    "react-google-maps": "^9.4.5",
+    "recompose": "^0.30.0",
     "ts-pnp": "^1.0.1"
   },
   "devDependencies": {
