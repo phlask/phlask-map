@@ -1,5 +1,5 @@
 # phlask-map
-Code behind the Phlask Web Map. In order to run the app locally 
+Code behind the [Phlask Web Map](https://phlask.me/find-water/). In order to run the app locally 
 
 * You will need to have Docker installed: https://www.docker.com
 
