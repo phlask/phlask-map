@@ -1,9 +1,22 @@
 # phlask-map
-Code behind the Phlask Web Map
+Code behind the Phlask Web Map. In order to run the app locally 
 
-In order to run the app locally:
 * You will need to have Docker installed: https://www.docker.com
 
-* Once Docker is installed, run `docker-compose build` and then `docker-compose up` from the root of this repository.
+* Once Docker is installed, run the following commands from the root of this repository.
+```shell
+# Build the phlask image
+docker-compose build
 
-* Navigate to localhost:3000 on your browser.
+# Run the application
+docker-compose up
+docker-compose up -d #The app will run in the backgroud
+
+# Stop the application
+# Ctrl+C or ⌘+C
+docker-compose stop #When running in the backgroud
+
+# Rebuild the image
+docker-compose up -d --build
+```
+* Navigate to http://localhost:3000 on your browser to view the application
