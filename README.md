@@ -10,11 +10,11 @@ docker-compose build
 
 # Run the application
 docker-compose up
-docker-compose up -d #The app will run in the backgroud
+docker-compose up -d # Run in the background
 
 # Stop the application
 # Ctrl+C or ⌘+C
-docker-compose stop #When running in the backgroud
+docker-compose stop # When running in the background
 
 # Rebuild the image
 docker-compose up -d --build
