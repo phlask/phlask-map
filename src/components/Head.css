@@ -1,0 +1,33 @@
+.headColumns{
+    display: flex;
+    justify-content: space-between;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #0e1015;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    max-width: 100%;
+    white-space: normal;
+    padding-right: 100px;
+    padding-left: 10%
+}
+
+.logoImage{
+    padding-right: 200pt;
+    max-height: 60%;
+    vertical-align: middle;
+    padding-left: 10%;
+    opacity: 100%;
+}
+
+.Logo {
+    height: 100;
+    width: 100;
+    background-image: "src/components/cropped-phlask-text-icon-logo.png";
+}
