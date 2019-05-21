@@ -1,328 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-<head>
-    <title>Phlask Map</title>
-    <!-- <link rel="stylesheet" type="text/css" href="css/styles1.css"> -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script type="text/javascript" src="js/phlaskData.js"></script>
-    <script type="text/javascript" src="js/phlaskUtils.js"></script>
-    <script type="text/javascript" src="js/filters.js"></script>
-</head>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Phlask</title>
 
-<body>
-    <!-- HTML strucutre -->
-    <header>
-        <img class="header-item" src="https://i2.wp.com/phlask.me/wp-content/uploads/2017/05/cropped-phlask-text-icon-logo.png?zoom=1.25&fit=283%2C55" />
-        <div class="header-item" id='header-links'>
-            <a id='home-nav' href="http://phlask.me/">Home</a>
-        </div>
-    </header>
-    <!-- Sidebar -->
-    <div class="sidebar" id="mySidebar"></div>
-    <!-- map -->
-    <div id="map"></div>
-    <!-- legend -->
-    <div id="legend">
-        <h3>Legend</h3>
-    </div>
-    <img id="geo-locate" src='https://i.imgur.com/wWc1rmZ.png'></img>
-    <div id='latlon-div'>
-        <input class='latlon-search' type="text" name="latlon" value="" placeholder="Enter an address" id='latlon-input'>
-        <button class="icon latlon-search" id="latlon-button"><i class="glyphicon glyphicon-search"></i></button>
-    </div>
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 
-    <!-- Allow for filtering by access and by filtration, handicap, service, tap type, and vessel -->
-    <div id='filter-div'>
-        <button class="icon" id="filter-toggle"><i class="glyphicon glyphicon-filter"></i></button>
-        <div id="filter">
-            <h3>Filter Taps</h3>
-            <div id='access-filter' class='filter-type'>
-                <label class="filter-label">
-              All Taps
-              <input class="filter-input" type="radio" name="filterToggle" value="All Taps" checked>
-            </label>
-                <label class="filter-label">
-              Public Taps
-              <input class="filter-input" type="radio" name="filterToggle" value="Public Taps">
-            </label>
-                <label class="filter-label">
-              Private Taps
-            <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
-            </label>
-                <label class="filter-label">
-                Private Taps
-              <input class="filter-input" type="radio" name="filterToggle" value="Private Taps">
-              </label>
-            </div>
-        </div>
-    </div>
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <!-- new tap form -->
-    <div id="form" class="form">
-        <table>
-            <tr>
-                <td class="field-with-text"><strong>Enterprise / Facility: </strong>
-                    <p class="field-desccription">Name of enterprise (business or organization) or facility (train station, park, etc.) where the tap is located.</p>
-                </td>
-                <td><input type='text' id='org' /></td>
-            </tr>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-            <tr>
-                <td><strong>Address:</strong></td>
-                <td><input type='text' id='address' /> </td>
-            </tr>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-            <tr>
-                <td><strong>City:</strong></td>
-                <td><input type='text' id='city' value='Philadelphia' /> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Zip Code:</strong></td>
-                <td><input type='text' id='zipcode' /> </td>
-            </tr>
-
-            <tr>
-                <td class="field-with-text"><strong>Handicap Accessible:</strong>
-                    <p class="field-desccription">Is the tap accessible according to ADA standards?</p>
-                </td>
-                <td><select id='handicap'> +
-                 <option value='' style="display:none">
-                 <option value='Yes'>Yes</option>
-                 <option value='No'>No</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select></td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Access:</strong></td>
-                <td><select id='access'> +
-                 <option value='' style="display:none">
-                 <option value='Public'>Public</option>
-                 <option value='Semi-public'>Semi-public</option>
-                 <option value='Private'>Private</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Description of on-site<br>tap location:</strong></td>
-                <td>
-                    <textarea class='location-description' id='description'></textarea></td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Type:</strong></td>
-                <td><select id='tap-type'> +
-                 <option value='' style="display:none">
-                 <option value='Drinking fountain' >Drinking Fountain</option>
-                 <option value='Bottle filler and fountain' >Bottle Filler & Fountain</option>
-                 <option value='Sink'>Sink</option>
-                 <option value='Soda fountain'>Soda Fountain</option>
-                 <option value='Dedicated water dispenser'>Dedicated Water Dispenser</option>
-                 <option value='Water cooler'>Water Cooler</option>
-                 <option value='Other'>Other</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Service:</strong></td>
-                <td><select id='service'> +
-                 <option value='' style="display:none">
-                 <option value='Self-serve' >Self-Serve</option>
-                 <option value='Ask proprietor'>Ask Proprietor</option>
-                 </select></td>
-            </tr>
-
-
-            <tr>
-                <td><strong>Filtration:</strong></td>
-                <td><select id='filtration'> +
-                 <option value='' style="display:none">
-                 <option value='Yes' >Yes, Filtered</option>
-                 <option value='No'>No, Unfiltered</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Water Vessel:</strong></td>
-                <td><select id='vessel'> +
-                 <option value='' style="display:none">
-                 <option value='Yes'>Yes, cups or vessel available on-site</option>
-                 <option value='No'>No, BYO Phlask</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>PHLASK Statement:</strong>
-                    <p class="field-desccription">Please use this section to make any statement about your organization or enterprise!</p>
-                </td>
-                <td>
-                    <textarea class='location-description' id='statement'></textarea></td>
-            </tr>
-
-            <tr>
-                <td><strong>PHLASKing norms and rules</strong>
-                    <p class="field-desccription">PHLASKing is intended to be an unobtrusive part of doing business. If there are special norms associated with accessing water, please use this space to describe them.</p>
-                </td>
-                <td>
-                    <textarea class='location-description' id='norms-rules'></textarea></td>
-            </tr>
-
-            <!-- <tr><td><strong>Add Images</strong></td><td><input type='file' id='image-upload' name='Image Upload' accept="image/*" multiple/></td></tr> -->
-            <tr id='last-form-row'>
-                <td></td>
-                <td><input type='button' value='Save' onclick='saveData()' class="save-button" /></td>
-            </tr>
-        </table>
-        <h2 id='new-tap-submit'>Tap Submitted!</h2>
-    </div>
-
-
-    <div id="editForm" class="form">
-        <table>
-            <tr>
-                <td class="field-with-text"><strong>Enterprise / Facility: </strong>
-                    <p class="field-desccription">Name of enterprise (business or organization) or facility (train station, park, etc.) where the tap is located.</p>
-                </td>
-                <td><input type='text' id='edit-org' /></td>
-            </tr>
-
-            <tr>
-                <td><strong>Address:</strong></td>
-                <td><input type='text' id='edit-address' /> </td>
-            </tr>
-
-            <tr>
-                <td><strong>City:</strong></td>
-                <td><input type='text' id='edit-city' value='Philadelphia' /> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Zip Code:</strong></td>
-                <td><input type='text' id='edit-zipcode' /> </td>
-            </tr>
-
-            <tr>
-                <td class="field-with-text"><strong>Handicap Accessible:</strong>
-                    <p class="field-desccription">Is the tap accessible according to ADA standards?</p>
-                </td>
-                <td><select id='edit-handicap'> +
-                 <option value='' style="display:none">
-                 <option value='Yes'>Yes</option>
-                 <option value='No'>No</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select></td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Access:</strong></td>
-                <td><select id='edit-access'> +
-                 <option value='' style="display:none">
-                 <option value='Public'>Public</option>
-                 <option value='Semi-public'>Semi-public</option>
-                 <option value='Private'>Private</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Description of on-site<br>tap location:</strong></td>
-                <td>
-                    <textarea class='location-description' id='edit-description'></textarea></td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Type:</strong></td>
-                <td><select id='edit-tap-type'> +
-                 <option value='' style="display:none">
-                 <option value='Drinking fountain' >Drinking Fountain</option>
-                 <option value='Bottle filler and fountain' >Bottle Filler & Fountain</option>
-                 <option value='Sink'>Sink</option>
-                 <option value='Soda fountain'>Soda Fountain</option>
-                 <option value='Dedicated water dispenser'>Dedicated Water Dispenser</option>
-                 <option value='Water cooler'>Water Cooler</option>
-                 <option value='Other'>Other</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Tap Service:</strong></td>
-                <td><select id='edit-service'> +
-                 <option value='' style="display:none">
-                 <option value='Self-serve' >Self-Serve</option>
-                 <option value='Ask proprietor'>Ask Proprietor</option>
-                 </select></td>
-            </tr>
-
-
-            <tr>
-                <td><strong>Filtration:</strong></td>
-                <td><select id='edit-filtration'> +
-                 <option value='' style="display:none">
-                 <option value='Yes' >Yes, Filtered</option>
-                 <option value='No'>No, Unfiltered</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>Water Vessel:</strong></td>
-                <td><select id='edit-vessel'> +
-                 <option value='' style="display:none">
-                 <option value='Yes'>Yes, cups or vessel available on-site</option>
-                 <option value='No'>No, BYO Phlask</option>
-                 <option value='Unsure'>Unsure</option>
-                 </select> </td>
-            </tr>
-
-            <tr>
-                <td><strong>PHLASK Statement:</strong>
-                    <p class="field-desccription">Please use this section to make any statement about your organization or enterprise!</p>
-                </td>
-                <td>
-                    <textarea class='location-description' id='edit-statement'></textarea></td>
-            </tr>
-
-            <tr>
-                <td><strong>PHLASKing norms and rules</strong>
-                    <p class="field-desccription">PHLASKing is intended to be an unobtrusive part of doing business. If there are special norms associated with accessing water, please use this space to describe them.</p>
-                </td>
-                <td>
-                    <textarea class='location-description' id='edit-norms-rules'></textarea></td>
-            </tr>
-
-            <!-- <tr><td><strong>Add Images</strong></td><td><input type='file' id='image-upload' name='Image Upload' accept="image/*" multiple/></td></tr> -->
-            <tr>
-                <td></td>
-                <td class="phlask-code-input-td"><input placeholder="Enter Phlask Edit Code" class="phlask-code-input"></td>
-            </tr>
-            <tr id='last-form-row'>
-                <td></td>
-                <td><input type='button' value='Save Edit' class="save-button edit-submit" /></td>
-            </tr>
-        </table>
-        <h2 id='edit-tap-submit'>Tap Submitted!</h2>
-    </div>
-
-    <!-- new tap submit success message -->
-    <div id="message">Tap Location Submitted<br>and Awaiting Verification!</div>
-
-    <!-- google maps API -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDxIuJdCSTm7yDQaShtWq7-sI3KOsrn30w"></script>
-    <!-- firebase API -->
-    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-
-
-    <script src="js/map.js"></script>
-    </div>
-    <!-- #primary -->
-    </div>
-</body>
-
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>
