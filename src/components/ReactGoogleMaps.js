@@ -1,34 +1,58 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { compose, withProps } from "recompose";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} from "react-google-maps";
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import React, { Component } from 'react'
+ 
+const LoadingContainer = (props) => (
+  <div>Looking for water!</div>
+)
 
-const MyMapComponent = compose(
-  withProps({
-    /**
-     * Note: create and replace your own key in the Google console.
-     * https://console.developers.google.com/apis/dashboard
-     * The key "AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q" can be ONLY used in this sandbox (no forked).
-     */
-    googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props => (
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: 39.9526, lng: -75.1652 }}>
-    {props.isMarkerShown && (
-      <Marker position={{ lat: 39.9526, lng: -75.1652 }} />
-    )}
-  </GoogleMap>
-));
+const style = {
+  width: '100%',
+  height: '90%',
+  position: 'relative'
+}
 
-ReactDOM.render(<MyMapComponent isMarkerShown />, document.getElementById("root"));
+export class ReactGoogleMaps extends Component {
+
+  state = {
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {},
+  };
+
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+    onMapClicked = (props) => {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        })
+      }
+    };
+
+  render() {
+    return (
+
+      <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
+            lat: 39.9526,
+            lng: -75.1652
+          }}>
+
+        <Marker
+            name={'Current Pos'}
+            position={{lat: 39.9526, lng: -75.1652}}/>
+      </Map>
+    );
+  }
+}
+
+ 
+export default GoogleApiWrapper({
+  apiKey: ("AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I"),
+  LoadingContainer: LoadingContainer
+})(ReactGoogleMaps)
