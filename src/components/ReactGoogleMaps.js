@@ -1,6 +1,8 @@
 import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react'
 
+var mylat;
+var mylon
 
 if ("geolocation" in navigator) {
   console.log("here");
@@ -8,6 +10,8 @@ if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition(
    function success(position) {
      // for when getting location is a success
+     mylat = position.coords.latitude;
+     mylon = position.coords.longitude;
      console.log('latitude', position.coords.latitude, 
                  'longitude', position.coords.longitude);
    },
@@ -66,7 +70,7 @@ export class ReactGoogleMaps extends Component {
 
         <Marker
             name={'Current Pos'}
-            position={{lat: 39.9526, lng: -75.1652}}/>
+            position={{lat: mylat, lng: mylon}}/>
       </Map>
     );
   }
