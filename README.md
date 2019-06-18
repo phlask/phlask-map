@@ -8,11 +8,11 @@ In order to run the app locally:
 
 * Navigate to localhost:3000 on your browser.
 
-Master (ole code before react)\
+**Master (ole code before react)**\
   ^\
   |\
   |\
-develop (new code moving forward with React goes here)\
+**develop (new code moving forward with React goes here)**\
   |\
   |\
-  ALL OTHER BRANCHES\
+  **ALL OTHER BRANCHES**
