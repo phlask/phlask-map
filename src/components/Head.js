@@ -16,8 +16,8 @@ export class Head extends Component {
             <h3>Data</h3>
             <a href= "https://phlask.me/contact/"><h3>Contact</h3></a>
             <div className="search">
-									<i class="fa fa-search"></i>
-									<span class="title">Site Search</span>
+									<i className="fa fa-search"></i>
+									<span className="title">Site Search</span>
 								</div> 
           </div>
         </header>
