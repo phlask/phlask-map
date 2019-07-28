@@ -4,10 +4,15 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^6.2.0",
+    "geolocation": "^0.2.0",
+    "google-maps-react": "^2.0.2",
     "react": "^16.8.6",
     "react-burger-menu": "^2.6.9",
     "react-dom": "^16.8.6",
+    "react-github-fork-ribbon": "^0.6.0",
     "react-google-maps": "^9.4.5",
+    "react-location": "^2.0.0",
     "recompose": "^0.30.0",
     "ts-pnp": "^1.0.1"
   },
