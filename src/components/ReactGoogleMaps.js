@@ -14,23 +14,19 @@ var config = {
 
 firebase.initializeApp(config);
 
-//returns the location of all the taps in the database
 function getTaps() {
-  var allTaps = [];
-  var item;
-  firebase.database().ref('/').once('value').then(function(snapshot) {
-    //console.log(snapshot.val())
+  return firebase.database().ref('/').once('value').then(function(snapshot) {
+    var allTaps = [];
+    var item;
     for (item in snapshot.val()) {
       if (snapshot.val()[item].access === "WM") {
         continue;
       }
       allTaps.push(snapshot.val()[item]);
-
     }
+    return allTaps;
   });
-  //console.log(allTaps);
-  return(allTaps);
-}
+};
 
 
 //gets the users latitude
@@ -101,8 +97,18 @@ export class ReactGoogleMaps extends Component {
     selectedPlace: {},
     currlat: getLat(),
     currlon: getLon(),
-    taps: getTaps()
+    taps: [],
+    tapsLoaded: false
   };
+
+  componentDidMount() {
+    getTaps()
+      .then(taps => {
+        this.setState(oldState => {
+          return {...oldState, taps: taps}
+        });
+      });
+  }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -111,28 +117,59 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: true,
     });
 
-    onMapClicked = (props) => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        })
-      }
-    };
+  onMapClicked = (props) => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
+  };
+
+  getIcon(access) {
+    switch(access) {
+      case "Public":
+          return "https://i.imgur.com/M12e1HV.png";
+      case "Private-Shared":
+          return "https://i.imgur.com/DXMMxXR.png";
+      case "Private":
+          return "https://i.imgur.com/kt825XO.png";
+      case "Restricted":
+          return "https://i.imgur.com/5NOdOyY.png";
+      case "Semi-public":
+          return "https://i.imgur.com/DXMMxXR.png";
+      default:
+        break;
+    }
+  }
 
   render() {
-    console.log(this.state.taps)
-    return (
-      <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
-            lat: 39.9526,
-            lng: -75.1652
-          }}>
+    if(this.state.taps.length) {
+      return (
+        <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
+              lat: 39.9526,
+              lng: -75.1652
+            }}>
 
-        <Marker
-            name={'Current Pos'}
-            position={{lat: this.state.currlat, lng: this.state.currlon}}/>
-      </Map>
-    );
+          <Marker
+              key='current_pos'
+              name={'Current Pos'}
+              position={{lat: this.state.currlat, lng: this.state.currlon}}/>
+          
+          {
+            this.state.taps.map((tap, index) => 
+              <Marker key={index} name={tap.tapnum} 
+                position={{lat: tap.lat, lng: tap.lon}}
+                icon={{
+                  url: this.getIcon(tap.access)
+                }}/>
+            )
+          }
+        </Map>
+      );
+    } else {
+      return <div>Loading taps...</div>
+    }
   }
 }
 
