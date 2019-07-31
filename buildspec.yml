@@ -11,4 +11,4 @@ phases:
       - docker-compose run prod_build
       - echo Build completed on `date`
       - echo Pushing the webapp to S3...
-      - aws s3 sync /docker/build s3://phlask-beta-gcardona --acl public-read --delete
+      - aws s3 sync docker/build s3://phlask-beta-gcardona --acl public-read --delete
