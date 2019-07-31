@@ -4,3 +4,8 @@ services:
     build: .
     ports:
     - "3000:3000"
+  prod_build:
+    build: .
+    entrypoint: npm run build
+    volumes:
+    - "./docker/build:/usr/src/app/build"
