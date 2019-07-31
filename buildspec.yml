@@ -9,8 +9,6 @@ phases:
       - echo Build started on `date`
       - echo Building the webapp...
       - docker-compose run prod_build
-  post_build:
-    commands:
       - echo Build completed on `date`
       - echo Pushing the webapp to S3...
       - aws s3 sync /docker/build s3://phlask-beta-gcardona --acl public-read --delete
