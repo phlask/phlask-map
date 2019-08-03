@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <Head />
-        <br></br>
+        <br/>
         <ReactGoogleMaps />
         <Foot />
       </div>
