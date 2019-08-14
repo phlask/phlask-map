@@ -14,6 +14,23 @@ var config = {
 
 firebase.initializeApp(config);
 
+// Actual Magic: https://stackoverflow.com/a/41337005
+// Distance calculates the distance between two lat/lon pairs
+function distance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295
+    var a = 0.5 - Math.cos((lat2-lat1)*p)/2 + Math.cos(lat1*p)*Math.cos(lat2*p) * (1-Math.cos((lon2-lon1)*p)) / 2
+    return 12742 * Math.asin(Math.sqrt(a))
+}
+
+// Takes an array of objects with lat and lon properties as well as a single object with lat and lon
+// properties and finds the closest point (by shortest distance).
+// TODO: Update this logic to return a reference to the closest point's ID in the dataset.
+function closest(data, v) {
+    console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
+    console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
+    return Math.min(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
+}
+
 function getTaps() {
   return firebase.database().ref('/').once('value').then(function(snapshot) {
     var allTaps = [];
@@ -28,6 +45,11 @@ function getTaps() {
   });
 };
 
+function getCoordinates() {
+  return new Promise(function(resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
 
 //gets the users latitude
 function getLat(){
@@ -108,6 +130,12 @@ export class ReactGoogleMaps extends Component {
           return {...oldState, taps: taps}
         });
       });
+    getCoordinates()
+      .then(position => {
+        this.setState({currlat: position.coords.latitude})
+        this.setState({currlon: position.coords.longitude})
+      }
+      )
   }
 
   onMarkerClick = (props, marker, e) =>
@@ -145,6 +173,8 @@ export class ReactGoogleMaps extends Component {
 
   render() {
     if(this.state.taps.length) {
+      console.log({lat: this.state.currlat, lon: this.state.currlon})
+      console.log(closest(this.state.taps, {lat: this.state.currlat, lon: this.state.currlon}))
       return (
         <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
               lat: 39.9526,
