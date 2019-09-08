@@ -1,6 +1,7 @@
 import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react'
 import * as firebase from "firebase";
+import ClosestTap from './ClosestTap';
 
 
 var config = {
@@ -24,11 +25,34 @@ function distance(lat1, lon1, lat2, lon2) {
 
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
-// TODO: Update this logic to return a reference to the closest point's ID in the dataset.
 function closest(data, v) {
-    console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-    console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
-    return Math.min(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
+    // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
+    // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
+    var distances = data.map(function(p) {
+      return {
+        lat: p['lat'],
+        lon: p['lon'],
+        organization: p['organization'],
+        distance: distance(v['lat'],v['lon'],p['lat'],p['lon'])
+      }
+    })
+    var minDistance = Math.min(...distances.map(d => d.distance))
+
+    var closestTap = {
+      organization: "",
+      lat: "",
+      lon: ""
+    }
+
+    for(var i=0; i<distances.length; i++) {
+      if(distances[i].distance === minDistance) {
+        closestTap.lat = distances[i].lat
+        closestTap.lon = distances[i].lon
+        closestTap.organization = distances[i].organization
+      }
+    }
+
+    return closestTap
 }
 
 function getTaps() {
@@ -173,29 +197,31 @@ export class ReactGoogleMaps extends Component {
 
   render() {
     if(this.state.taps.length) {
-      console.log({lat: this.state.currlat, lon: this.state.currlon})
-      console.log(closest(this.state.taps, {lat: this.state.currlat, lon: this.state.currlon}))
+      var closestTap = closest(this.state.taps, {lat: this.state.currlat, lon: this.state.currlon})
       return (
-        <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
-              lat: 39.9526,
-              lng: -75.1652
-            }}>
+        <div>
+          <ClosestTap lat={closestTap.lat} lon={closestTap.lon} org={closestTap.organization} />
+          <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
+                lat: 39.9526,
+                lng: -75.1652
+              }}>
 
-          <Marker
-              key='current_pos'
-              name={'Current Pos'}
-              position={{lat: this.state.currlat, lng: this.state.currlon}}/>
-          
-          {
-            this.state.taps.map((tap, index) => 
-              <Marker key={index} name={tap.tapnum} 
-                position={{lat: tap.lat, lng: tap.lon}}
-                icon={{
-                  url: this.getIcon(tap.access)
-                }}/>
-            )
-          }
-        </Map>
+            <Marker
+                key='current_pos'
+                name={'Current Pos'}
+                position={{lat: this.state.currlat, lng: this.state.currlon}}/>
+            
+            {
+              this.state.taps.map((tap, index) => 
+                <Marker key={index} name={tap.tapnum} 
+                  position={{lat: tap.lat, lng: tap.lon}}
+                  icon={{
+                    url: this.getIcon(tap.access)
+                  }}/>
+              )
+            }
+          </Map>
+        </div>
       );
     } else {
       return <div>Loading taps...</div>
