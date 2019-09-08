@@ -15,4 +15,4 @@ In order to run the app locally:
 **develop (new code moving forward with React goes here - MAKE PR HERE)**\
   |\
   |\
-  **ALL OTHER BRANCHES**
+  **ALL OTHER BRANCHES** .
