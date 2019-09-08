@@ -13,8 +13,16 @@ export class ClosestTap extends Component {
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  The closest tap is: {this.props.org} <br />
-                  Located at: {this.props.lat}, {this.props.lon}
+                {this.props.lat === "" || this.props.lon === "" ? (
+                  <p>The closest tap feature is unavailable. We require permission to access your location to provide it.</p>
+                ) : (
+                  <p>The closest tap is: {this.props.org} <br />
+                  Located at: 
+                  <a href={"https://www.google.com/maps/search/?api=1&query="+this.props.lat+", "+this.props.lon}>
+                    {this.props.lat}, {this.props.lon}
+                  </a>
+                  </p>
+                )}
                 </Card.Body>
                 </Accordion.Collapse>
             </Card>
