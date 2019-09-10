@@ -213,27 +213,10 @@ export class ReactGoogleMaps extends Component {
         lon: this.state.currlon
       });
       return (
-        <div>
-          <ClosestTap
-            lat={closestTap.lat}
-            lon={closestTap.lon}
-            org={closestTap.organization}
-          />
-          <Map
-            google={this.props.google}
-            className={"map"}
-            style={style}
-            zoom={12}
-            initialCenter={{
-              lat: 39.9526,
-              lng: -75.1652
-            }}
-          >
-            <Marker
-              key="current_pos"
-              name={"Current Pos"}
-              position={{ lat: this.state.currlat, lng: this.state.currlon }}
-            />
+        <Map google={this.props.google} className = {'map'} style={style} zoom={16} initialCenter={{
+              lat: this.state.currlat,
+              lng: this.state.currlon
+            }}>
 
             {this.state.taps.map((tap, index) => (
               <Marker
