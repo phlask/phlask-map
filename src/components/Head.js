@@ -17,7 +17,7 @@ import {
 export class Head extends Component {
   render() {
     return (
-      <div>
+      <div className = 'menu'>
         <header>
                     <Navbar bg="light" expand="lg" className = "headColumns">
               <Navbar.Brand href="https://phlask.me/"><img src={logo} alt="Logo" className = "logoImage"/></Navbar.Brand>
@@ -45,9 +45,12 @@ export class Head extends Component {
             </Navbar>
       
           <Navbar bg="light" expand="lg" className="headColumns">
-            <Navbar.Brand href="https://phlask.me/">
-              <img src={logo} alt="Logo" className="logoImage" />
-            </Navbar.Brand>
+            <div className = 'logo'>
+              <Navbar.Brand href="https://phlask.me/">
+                <img src={logo} alt="Logo" className="logoImage" />
+              </Navbar.Brand>
+            </div>
+            
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
@@ -74,14 +77,17 @@ export class Head extends Component {
                 </NavDropdown>
                 <Nav.Link href="#link">Contact</Nav.Link>
               </Nav>
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
+              <div id = 'searchBar'>
+                <Form inline>
+                  <FormControl
+                    type="text"
+                    placeholder="Search"
+                    className="mr-sm-2"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+              </div>
+              
             </Navbar.Collapse>
           </Navbar>
         </header>
