@@ -1,27 +1,34 @@
-.headColumns {
-  display: flex;
-  justify-content: space-between;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #0e1015;
-  opacity: 0.5;
-  transition: all 0.3s ease;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  max-width: 100%;
-  white-space: normal;
+.headColumns{
+    display: flex;
+    justify-content: space-between;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #0e1015;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    max-width: 100%;
+    white-space: normal;
+    z-index: 20;
 }
 
-.menu {
-  float: right;
+.mr-auto{
+    float: right;
 }
 
-.logoImage {
-  padding-right: 45%;
-  max-height: 10%;
-  vertical-align: middle;
-  opacity: 100%;
+.data{
+    opacity: 1;
+    font-size: 10px;
+}
+
+.logoImage{
+
+
+    max-height: 10%;
+    vertical-align: middle;
+    opacity: 100%;
 }
