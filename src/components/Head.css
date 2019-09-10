@@ -15,13 +15,20 @@
   white-space: normal;
 }
 
-.menu {
-  float: right;
+.logo{
+  max-width: 50%;
 }
 
-.logoImage {
-  padding-right: 45%;
-  max-height: 10%;
-  vertical-align: middle;
-  opacity: 100%;
+.menu {
+  z-index: 100;
+}
+
+.searchBar {
+  height: 10%
+}
+
+.dropdown-item{
+  font-size: 10px;
+  background-color: white;
+  z-index: 1000000;
 }

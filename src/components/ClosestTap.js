@@ -4,7 +4,8 @@ import { Accordion, Card, Button } from "react-bootstrap";
 export class ClosestTap extends Component {
   render() {
     return (
-      <Accordion>
+      <div className = "closestTap">
+      <Accordion >
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -38,6 +39,7 @@ export class ClosestTap extends Component {
           </Accordion.Collapse>
         </Card>
       </Accordion>
+      </div>
     );
   }
 }
