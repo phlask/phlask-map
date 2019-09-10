@@ -4,6 +4,8 @@ services:
     build: .
     ports:
     - "3000:3000"
+    volumes:
+    - ".:/usr/src/app"
   prod_build:
     build: .
     entrypoint: npm run build
