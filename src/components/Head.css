@@ -16,13 +16,22 @@
     z-index: 20;
 }
 
-.mr-auto{
-    float: right;
+.logo{
+  max-width: 50%;
 }
 
-.data{
-    opacity: 1;
-    font-size: 10px;
+.menu {
+  z-index: 100;
+}
+
+.searchBar {
+  height: 10%
+}
+
+.dropdown-item{
+  font-size: 10px;
+  background-color: white;
+  z-index: 1000000;
 }
 
 .logoImage{
