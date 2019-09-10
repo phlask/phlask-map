@@ -20,13 +20,22 @@
     "ts-pnp": "^1.0.1"
   },
   "devDependencies": {
-    "react-scripts": "2.1.8"
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2",
+    "react-scripts": "3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint \"**/*.{js,jsx}\" --quiet",
+    "format": "prettier \"src/**/*.{js,css,html}\" --write"
   },
   "eslintConfig": {
     "extends": "react-app"
