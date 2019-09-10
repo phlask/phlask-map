@@ -176,9 +176,9 @@ export class ReactGoogleMaps extends Component {
       console.log({lat: this.state.currlat, lon: this.state.currlon})
       console.log(closest(this.state.taps, {lat: this.state.currlat, lon: this.state.currlon}))
       return (
-        <Map google={this.props.google} className = {'map'} style={style} zoom={12} initialCenter={{
-              lat: 39.9526,
-              lng: -75.1652
+        <Map google={this.props.google} className = {'map'} style={style} zoom={16} initialCenter={{
+              lat: this.state.currlat,
+              lng: this.state.currlon
             }}>
 
           <Marker
