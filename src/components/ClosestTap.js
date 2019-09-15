@@ -22,7 +22,7 @@ export class ClosestTap extends Component {
               ) : (
                 <p>
                   The closest tap is: {this.props.org} <br />
-                  Located at:
+                  Located at:   &nbsp;
                   <a
                     href={
                       "https://www.google.com/maps/search/?api=1&query=" +
@@ -31,7 +31,7 @@ export class ClosestTap extends Component {
                       this.props.lon
                     }
                   >
-                    {this.props.lat}, {this.props.lon}
+                    {this.props.address}
                   </a>
                 </p>
               )}
