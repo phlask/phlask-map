@@ -1,6 +1,7 @@
 import {
   Map,
-  /*InfoWindow,*/ Marker,
+  InfoWindow, 
+  Marker,
   GoogleApiWrapper
 } from "google-maps-react";
 import React, { Component } from "react";
@@ -42,6 +43,7 @@ function closest(data, v) {
       lat: p["lat"],
       lon: p["lon"],
       organization: p["organization"],
+      address: p["address"],
       distance: distance(v["lat"], v["lon"], p["lat"], p["lon"])
     };
   });
@@ -49,6 +51,7 @@ function closest(data, v) {
 
   var closestTap = {
     organization: "",
+    address:'',
     lat: "",
     lon: ""
   };
@@ -58,6 +61,7 @@ function closest(data, v) {
       closestTap.lat = distances[i].lat;
       closestTap.lon = distances[i].lon;
       closestTap.organization = distances[i].organization;
+      closestTap.address = distances[i].address;
     }
   }
 
@@ -158,7 +162,7 @@ export class ReactGoogleMaps extends Component {
     currlat: getLat(),
     currlon: getLon(),
     taps: [],
-    tapsLoaded: false
+    tapsLoaded: false,
   };
 
   componentDidMount() {
@@ -180,6 +184,15 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: true
     });
 
+    onClose = props => {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
+    };
+
   onMapClicked = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -188,6 +201,8 @@ export class ReactGoogleMaps extends Component {
       });
     }
   };
+
+ 
 
   getIcon(access) {
     switch (access) {
@@ -213,21 +228,67 @@ export class ReactGoogleMaps extends Component {
         lon: this.state.currlon
       });
       return (
+
+        <div>
+          <ClosestTap
+            lat={closestTap.lat}
+            lon={closestTap.lon}
+            org={closestTap.organization}
+            address={closestTap.address}
+          />
+            
+
         <Map google={this.props.google} className = {'map'} style={style} zoom={16} initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
             }}>
 
+        
+        <Marker
+              key="current_pos"
+              name={"Current Pos"}
+              position={{ lat: this.state.currlat, lng: this.state.currlon }}
+              onClick={this.onMarkerClick}
+            />
+
             {this.state.taps.map((tap, index) => (
               <Marker
                 key={index}
                 name={tap.tapnum}
+                organization={tap.organization}
+                address = {tap.address}
+                description={tap.description}
+                filtration={tap.filtration}
+                handicap={tap.handicap}
+                service={tap.service}
+                tap_type={tap.tap_type}
+                norms_rules={tap.norms_rules}
+                vessel={tap.vessel}
+                img = {tap.images}
+                onClick={this.onMarkerClick}
                 position={{ lat: tap.lat, lng: tap.lon }}
                 icon={{
                   url: this.getIcon(tap.access)
                 }}
               />
+              
             ))}
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+              onClose={this.onClose}
+              >
+              <div>
+                <h4>{this.state.selectedPlace.organization}</h4>
+                <h5>{this.state.selectedPlace.address}</h5>
+
+              </div>
+              </InfoWindow>
+            
+            
+
+            
+              
           </Map>
         </div>
       );
