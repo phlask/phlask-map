@@ -1,6 +1,7 @@
 import {
   Map,
-  /*InfoWindow,*/ Marker,
+  InfoWindow, 
+  Marker,
   GoogleApiWrapper
 } from "google-maps-react";
 import React, { Component } from "react";
@@ -158,7 +159,7 @@ export class ReactGoogleMaps extends Component {
     currlat: getLat(),
     currlon: getLon(),
     taps: [],
-    tapsLoaded: false
+    tapsLoaded: false,
   };
 
   componentDidMount() {
@@ -180,6 +181,15 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: true
     });
 
+    onClose = props => {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
+    };
+
   onMapClicked = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -188,6 +198,8 @@ export class ReactGoogleMaps extends Component {
       });
     }
   };
+
+ 
 
   getIcon(access) {
     switch (access) {
@@ -233,18 +245,47 @@ export class ReactGoogleMaps extends Component {
               key="current_pos"
               name={"Current Pos"}
               position={{ lat: this.state.currlat, lng: this.state.currlon }}
+              onClick={this.onMarkerClick}
             />
 
             {this.state.taps.map((tap, index) => (
               <Marker
                 key={index}
                 name={tap.tapnum}
+                organization={tap.organization}
+                address = {tap.address}
+                description={tap.description}
+                filtration={tap.filtration}
+                handicap={tap.handicap}
+                service={tap.service}
+                tap_type={tap.tap_type}
+                norms_rules={tap.norms_rules}
+                vessel={tap.vessel}
+                img = {tap.images}
+                onClick={this.onMarkerClick}
                 position={{ lat: tap.lat, lng: tap.lon }}
                 icon={{
                   url: this.getIcon(tap.access)
                 }}
               />
+              
             ))}
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+              onClose={this.onClose}
+              >
+              <div>
+                <h4>{this.state.selectedPlace.organization}</h4>
+                <h5>{this.state.selectedPlace.address}</h5>
+
+              </div>
+              </InfoWindow>
+            
+            
+
+            
+              
           </Map>
         </div>
       );
