@@ -19,7 +19,7 @@ export class Head extends Component {
     return (
       <div className = 'menu'>
         <header>
-                    <Navbar bg="light" expand="lg" className = "headColumns">
+            <Navbar bg="light" expand="lg" className = "headColumns">
               <Navbar.Brand href="https://phlask.me/"><img src={logo} alt="Logo" className = "logoImage"/></Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className= "menu">
