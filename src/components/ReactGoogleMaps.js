@@ -7,6 +7,7 @@ import {
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
+import "./ReactGoogleMaps.css"
 
 const config = {
   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -281,8 +282,8 @@ export class ReactGoogleMaps extends Component {
               visible={this.state.showingInfoWindow}
               onClose={this.onClose}
               >
-              <div>
-                <h4>{this.state.selectedPlace.organization}</h4>
+              <div >
+                <h4 className = 'infoWindow'>{this.state.selectedPlace.organization}</h4>
                 <h5>{this.state.selectedPlace.address}</h5>
 
               </div>
