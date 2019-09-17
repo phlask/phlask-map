@@ -80,6 +80,9 @@ function getTaps() {
         if (snapshot.val()[item].access === "WM") {
           continue;
         }
+        if (snapshot.val()[item].active === "N") {
+          continue;
+        }
         allTaps.push(snapshot.val()[item]);
       }
       return allTaps;
