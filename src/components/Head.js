@@ -30,8 +30,8 @@ export class Head extends Component {
                   <Nav.Link href="#blog">Blog</Nav.Link>
                   <NavDropdown title="Data" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#about" className="data">About The Project</NavDropdown.Item >
-                    <NavDropdown.Item href="#Business" className="data">Business Benifits</NavDropdown.Item>
-                    <NavDropdown.Item href="#Finance" className="data">Finantial Data</NavDropdown.Item>
+                    <NavDropdown.Item href="#Business" className="data">Business Benefits</NavDropdown.Item>
+                    <NavDropdown.Item href="#Finance" className="data">Financial Data</NavDropdown.Item>
                     <NavDropdown.Item href="#Citation" className="data">Citations and Acknowledgements</NavDropdown.Item>
                     <NavDropdown.Item href="#Bottle" className="data">Phlask Bottle</NavDropdown.Item>
                   </NavDropdown>
