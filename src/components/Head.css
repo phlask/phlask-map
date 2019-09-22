@@ -27,8 +27,12 @@
 }
 
 .logoImage{
-    width: 75%;
-    height: auto;
-    vertical-align: middle;
-    opacity: 100%;
+  width: 75%;
+  height: auto;
+  vertical-align: middle;
+  opacity: 100%;
+}
+
+.navbar-toggler{
+  display: contents
 }
