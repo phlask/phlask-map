@@ -1,17 +1,19 @@
 # phlask-map
 Code behind the Phlask Web Map
 
-In order to run the app locally:
-* You will need to have Docker installed: https://www.docker.com
+## Running Locally
+### NPM
+1. Ensure you have npm installed on your machine
+1. Run `npm install`
+1. Run `npm run build`
+### Docker (Recommended path for consistency)
+1. You will need to have Docker installed: https://www.docker.com
+1. Once Docker is installed, run `docker-compose build app` and then `docker-compose up app` from the root of this repository.
+1. Navigate to localhost:3000 on your browser.
 
-* Once Docker is installed, run `docker-compose build app` and then `docker-compose up app` from the root of this repository.
+## Want to add something new or develop/report a fix for a bug you found?
+See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!
 
-* Navigate to localhost:3000 on your browser.
-
-**Master (ole code before react DO NOT MERGE OR CREATE A PR)**\ 
-  ^\
-  |\
-  |\
 **develop (new code moving forward with React goes here - MAKE PR HERE)**\
   |\
   |\
