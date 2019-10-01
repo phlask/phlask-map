@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Deploy the Map
+      run: |
+         echo Build started on `date`
+         echo Building the webapp...
+         docker-compose run prod_build
+         echo Build completed on `date`
+         echo Pushing the webapp to S3...
+         echo Soon
