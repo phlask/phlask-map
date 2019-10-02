@@ -17,4 +17,4 @@ jobs:
          docker-compose run prod_build
          echo Build completed on `date`
          echo Pushing the webapp to S3...
-         ls /docker/build
+         ls ./docker/build
