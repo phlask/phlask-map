@@ -25,4 +25,4 @@ jobs:
          sudo apt-get install python3-setuptools
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
-         aws s3 ls s3://beta.phlask.me
+         aws s3 sync docker/build s3://beta.phlask.me --acl public-read --delete
