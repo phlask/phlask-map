@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./Head.css";
+import FilterCard from "./FilterCard.js"
 import logo from "./cropped-phlask-text-icon-logo.png";
-//import $ from 'jquery';
-//import Popper from 'popper.js';
+import icon from "./icons8-filter.png"
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -15,12 +15,33 @@ import {
 } from "react-bootstrap";
 
 export class Head extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      displayFilter: false,
+      activeFilter: {}
+    };
+
+    this.display = this.display.bind(this);
+  }
+
+  display(){
+      this.setState({
+        displayFilter: true,
+      })
+
+      console.log(this.state.displayFilter);
+  }
+
   render() {
     return (
+      <>
       <div className = 'menu'>
         <header>
             <Navbar bg="light" expand="lg" className = "headColumns">
               <Navbar.Brand href="https://phlask.me/"><img src={logo} alt="Logo" className = "logoImage"/></Navbar.Brand>
+              <img src = {icon} alt="filterImg" onClick={this.display}/>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className= "menu">
                 <Nav className="mr-auto">
@@ -45,6 +66,10 @@ export class Head extends Component {
             </Navbar>
         </header>
       </div>
+      <div>
+        <FilterCard display = {this.state.displayFilter}/>
+      </div>
+      </>
     );
   }
 }
