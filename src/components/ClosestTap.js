@@ -7,7 +7,7 @@ export class ClosestTap extends Component {
     super(props);
 
     this.state = {
-        text : "Click me!"
+        text : "Click for nearest tap!"
     };
 
     this.change = this.change.bind(this);
