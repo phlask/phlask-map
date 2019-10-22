@@ -1,13 +1,8 @@
-import {
-  Map,
-  InfoWindow, 
-  Marker,
-  GoogleApiWrapper
-} from "google-maps-react";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
-import "./ReactGoogleMaps.css"
+import "./ReactGoogleMaps.css";
 
 const config = {
   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -52,7 +47,7 @@ function closest(data, v) {
 
   var closestTap = {
     organization: "",
-    address:'',
+    address: "",
     lat: "",
     lon: ""
   };
@@ -166,7 +161,7 @@ export class ReactGoogleMaps extends Component {
     currlat: getLat(),
     currlon: getLon(),
     taps: [],
-    tapsLoaded: false,
+    tapsLoaded: false
   };
 
   componentDidMount() {
@@ -188,14 +183,14 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: true
     });
 
-    onClose = props => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        });
-      }
-    };
+  onClose = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
 
   onMapClicked = props => {
     if (this.state.showingInfoWindow) {
@@ -205,8 +200,6 @@ export class ReactGoogleMaps extends Component {
       });
     }
   };
-
- 
 
   getIcon(access) {
     switch (access) {
@@ -220,6 +213,8 @@ export class ReactGoogleMaps extends Component {
         return "https://i.imgur.com/5NOdOyY.png";
       case "Semi-public":
         return "https://i.imgur.com/DXMMxXR.png";
+      case "TrashAcademy":
+        return "https://i.imgur.com/fXTeEKL.png";
       default:
         break;
     }
@@ -232,7 +227,6 @@ export class ReactGoogleMaps extends Component {
         lon: this.state.currlon
       });
       return (
-
         <div>
           <ClosestTap
             lat={closestTap.lat}
@@ -240,15 +234,18 @@ export class ReactGoogleMaps extends Component {
             org={closestTap.organization}
             address={closestTap.address}
           />
-            
 
-        <Map google={this.props.google} className = {'map'} style={style} zoom={16} initialCenter={{
+          <Map
+            google={this.props.google}
+            className={"map"}
+            style={style}
+            zoom={16}
+            initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
-            }}>
-
-        
-        <Marker
+            }}
+          >
+            <Marker
               key="current_pos"
               name={"Current Pos"}
               position={{ lat: this.state.currlat, lng: this.state.currlon }}
@@ -260,7 +257,7 @@ export class ReactGoogleMaps extends Component {
                 key={index}
                 name={tap.tapnum}
                 organization={tap.organization}
-                address = {tap.address}
+                address={tap.address}
                 description={tap.description}
                 filtration={tap.filtration}
                 handicap={tap.handicap}
@@ -268,31 +265,26 @@ export class ReactGoogleMaps extends Component {
                 tap_type={tap.tap_type}
                 norms_rules={tap.norms_rules}
                 vessel={tap.vessel}
-                img = {tap.images}
+                img={tap.images}
                 onClick={this.onMarkerClick}
                 position={{ lat: tap.lat, lng: tap.lon }}
                 icon={{
                   url: this.getIcon(tap.access)
                 }}
               />
-              
             ))}
             <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               onClose={this.onClose}
-              >
-              <div >
-                <h4 className = 'infoWindow'>{this.state.selectedPlace.organization}</h4>
+            >
+              <div>
+                <h4 className="infoWindow">
+                  {this.state.selectedPlace.organization}
+                </h4>
                 <h5>{this.state.selectedPlace.address}</h5>
-
               </div>
-              </InfoWindow>
-            
-            
-
-            
-              
+            </InfoWindow>
           </Map>
         </div>
       );
