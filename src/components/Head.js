@@ -27,7 +27,7 @@ export class Head extends Component {
   }
 
   display(){
-    if(this.state.displayFilter == false){
+    if(this.state.displayFilter === false){
       this.setState({
         displayFilter: true,
       });
@@ -42,7 +42,7 @@ export class Head extends Component {
   
 
   render() {
-    if(this.state.displayFilter == false){
+    if(this.state.displayFilter === false){
       return (
         <div className = 'menu'>
           <header>
