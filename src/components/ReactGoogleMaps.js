@@ -91,60 +91,6 @@ function getCoordinates() {
   });
 }
 
-//gets the users latitude
-function getLat() {
-  if ("geolocation" in navigator) {
-    console.log("here");
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylat = position.coords.latitude;
-        console.log("latitude", position.coords.latitude);
-        return mylat;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          "An error has occured while retrieving location",
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log("geolocation is not enabled on this browser");
-  }
-}
-
-//gets the users longitutude
-function getLon() {
-  if ("geolocation" in navigator) {
-    console.log("here");
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylon = position.coords.longitude;
-        console.log("longitude", position.coords.longitude);
-        return mylon;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          "An error has occured while retrieving location",
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log("geolocation is not enabled on this browser");
-  }
-}
-
 const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
@@ -158,8 +104,8 @@ export class ReactGoogleMaps extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    currlat: getLat(),
-    currlon: getLon(),
+    currlat: parseFloat('39.952744'),
+    currlon: parseFloat('-75.163500'),
     taps: [],
     tapsLoaded: false
   };
@@ -171,8 +117,14 @@ export class ReactGoogleMaps extends Component {
       });
     });
     getCoordinates().then(position => {
-      this.setState({ currlat: position.coords.latitude });
-      this.setState({ currlon: position.coords.longitude });
+      if(isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
+        this.setState({currlat: parseFloat('39.952744')})
+        this.setState({currlon: parseFloat('-75.163500')})
+      }
+      else {
+        this.setState({ currlat: position.coords.latitude });
+        this.setState({ currlon: position.coords.longitude });
+      }
     });
   }
 
