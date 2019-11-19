@@ -1,19 +1,22 @@
 import React, { Component } from "react";
-import "./App.css";
-import Foot from "./components/Foot";
-import Head from "./components/Head";
-import ReactGoogleMaps from "./components/ReactGoogleMaps";
 
-class App extends Component {
-  render() {
+import {Route, Switch } from "react-router";
+import "./App.css";
+
+import MapPage from './pages/MapPage/MapPage';
+
+
+function App(){
     return (
-      <div className="App">
-        <Head />
-        <ReactGoogleMaps />
-        <Foot />
-      </div>
+        <Switch>
+          <Route path='/MapPage'>
+            <MapPage />
+          </Route>
+          <Route path='/'>
+            <MapPage />
+          </Route>
+        </Switch>
     );
-  }
 }
 
 export default App;
