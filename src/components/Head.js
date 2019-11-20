@@ -20,7 +20,6 @@ export class Head extends Component {
 
     this.state = {
       displayFilter: false,
-      activeFilter: {}
     };
 
     this.display = this.display.bind(this);
@@ -42,6 +41,7 @@ export class Head extends Component {
   
 
   render() {
+    console.log(this.props);
     if(this.state.displayFilter === false){
       return (
         <div className = 'menu'>
@@ -106,7 +106,7 @@ export class Head extends Component {
                   </Form>
                 </Navbar.Collapse>
               </Navbar>
-              <FilterCard display = {this.state.displayFilter}/>
+              <FilterCard display = {this.state.displayFilter} legendButton = {this.props.legendButton}/>
           </header>
         </div>
       );
