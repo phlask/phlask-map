@@ -12,7 +12,6 @@ export class FilterCard extends Component {
     }
 
     render(){
-        console.log(this.props);
         if(this.state.display === false){
             return(
                 <></>
@@ -27,25 +26,25 @@ export class FilterCard extends Component {
                                 <Card.Title className = "title">Legend</Card.Title>
                                 <Row>
                                 <div>
-                                    <img src = "https://i.imgur.com/M12e1HV.png" alt = "blue" onClick={() => this.props.legendButton("blue")}></img>
+                                    <img src = "https://i.imgur.com/M12e1HV.png" alt = "blue" onClick={() => this.props.legendButton("Public")}></img>
                                 </div>
                                     <p className = "tapName">Public Tap</p>
                                 </Row>
                                 <Row>
                                 <div>
-                                    <img src = "https://i.imgur.com/DXMMxXR.png" alt = "green" onClick={() => this.props.legendButton("green")}></img>
+                                    <img src = "https://i.imgur.com/DXMMxXR.png" alt = "green" onClick={() => this.props.legendButton("Private-Shared")}></img>
                                 </div>
                                     <p className = "tapName">Private-Shared Tap</p>
                                 </Row>
                                 <Row>
                                 <div>
-                                    <img src = "https://i.imgur.com/kt825XO.png" alt = "yellow" onClick={() => this.props.legendButton("yellow")}></img>
+                                    <img src = "https://i.imgur.com/kt825XO.png" alt = "yellow" onClick={() => this.props.legendButton("Private")}></img>
                                 </div>
                                     <p className = "tapName">Private Tap</p>
                                 </Row>
                                 <Row>
                                 <div>
-                                    <img src = "https://i.imgur.com/5NOdOyY.png" alt = "red" onClick={() => this.props.legendButton("red")}></img>
+                                    <img src = "https://i.imgur.com/5NOdOyY.png" alt = "red" onClick={() => this.props.legendButton("Restricted")}></img>
                                 </div>
                                     <p className = "tapName">Restricted Tap</p>
                                 </Row>

@@ -10,7 +10,7 @@ export class MapPage extends Component {
     this.state = {
       ada: false,
       filter: false,
-      tapsDisplayed: ["blue", "green", "red", "yellow"],
+      tapsDisplayed: ["Public", "Private-Shared", "Private", "Restricted"],
     };
 
     this.legendButton = this.legendButton.bind(this);
