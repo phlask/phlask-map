@@ -35,8 +35,6 @@ export class Head extends Component {
         displayFilter: false,
       });
     }
-      
-      console.log(this.state.displayFilter);
   }
   
 

@@ -84,6 +84,9 @@ function getTaps() {
         if (snapshot.val()[item].active === "N") {
           continue;
         }
+        if (snapshot.val()[item].access === "TrashAcademy") {
+          continue;
+        }
         allTaps.push(snapshot.val()[item]);
       }
       return allTaps;
@@ -159,7 +162,10 @@ const style = {
 };
 
 export class ReactGoogleMaps extends Component {
-  state = {
+  constructor(props) {
+    super(props);
+
+    this.state = {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
@@ -167,12 +173,14 @@ export class ReactGoogleMaps extends Component {
     currlon: getLon(),
     taps: [],
     tapsLoaded: false,
+    unfilteredTaps: this.props.tapsDisplayed,
+    }
   };
 
   componentDidMount() {
     getTaps().then(taps => {
       this.setState(oldState => {
-        return { ...oldState, taps: taps };
+        return { ...oldState, taps: taps};
       });
     });
     getCoordinates().then(position => {
@@ -209,20 +217,26 @@ export class ReactGoogleMaps extends Component {
  
 
   getIcon(access) {
-    switch (access) {
-      case "Public":
-        return "https://i.imgur.com/M12e1HV.png";
-      case "Private-Shared":
-        return "https://i.imgur.com/DXMMxXR.png";
-      case "Private":
-        return "https://i.imgur.com/kt825XO.png";
-      case "Restricted":
-        return "https://i.imgur.com/5NOdOyY.png";
-      case "Semi-public":
-        return "https://i.imgur.com/DXMMxXR.png";
-      default:
-        break;
+    if(this.state.unfilteredTaps.includes(access) == true){
+      switch (access) {
+        case "Public":
+          return "https://i.imgur.com/M12e1HV.png";
+        case "Private-Shared":
+          return "https://i.imgur.com/DXMMxXR.png";
+        case "Private":
+          return "https://i.imgur.com/kt825XO.png";
+        case "Restricted":
+          return "https://i.imgur.com/5NOdOyY.png";
+        case "Semi-public":
+          return "https://i.imgur.com/DXMMxXR.png";
+        default:
+          break;
+      }
     }
+      else{
+        return "https://i.imgur.com/kKXG3TO.png";
+      }
+    
   }
 
   render() {
