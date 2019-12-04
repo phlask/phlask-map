@@ -157,7 +157,7 @@ const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: "100%",
-  height: "90%",
+  height: "81%",
   position: "relative"
 };
 
@@ -217,7 +217,7 @@ export class ReactGoogleMaps extends Component {
  
 
   getIcon(access) {
-    if(this.state.unfilteredTaps.includes(access) == true){
+    if(this.state.unfilteredTaps.includes(access) === true){
       switch (access) {
         case "Public":
           return "https://i.imgur.com/M12e1HV.png";
@@ -302,11 +302,7 @@ export class ReactGoogleMaps extends Component {
 
               </div>
               </InfoWindow>
-            
-            
-
-            
-              
+          
           </Map>
         </div>
       );
