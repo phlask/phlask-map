@@ -14,7 +14,7 @@ Code behind the Phlask Web Map
 ## Want to add something new or develop/report a fix for a bug you found?
 See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!
 
-**develop (new code moving forward with React goes here - MAKE PR HERE)**\
-  |\
-  |\
-  **ALL OTHER BRANCHES** .
+
+## Github Branching strategy 
+![png](phlaskgitPipelines.png)
+
