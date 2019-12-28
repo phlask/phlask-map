@@ -15,7 +15,7 @@ Code behind the Phlask Web Map
 See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!
 
 ## Branching Strategy
-**develop (new code moving forward with React goes here - MAKE PR HERE)**\
+**develop (new code moving forward with React goes here - This should be the target for your Pull Requests)**\
   |\
   |\
   **ALL OTHER BRANCHES** .
