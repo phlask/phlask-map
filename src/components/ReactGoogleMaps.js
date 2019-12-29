@@ -104,8 +104,8 @@ export class ReactGoogleMaps extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    currlat: parseFloat('39.952744'),
-    currlon: parseFloat('-75.163500'),
+    currlat: parseFloat("39.952744"),
+    currlon: parseFloat("-75.163500"),
     taps: [],
     tapsLoaded: false
   };
@@ -117,11 +117,10 @@ export class ReactGoogleMaps extends Component {
       });
     });
     getCoordinates().then(position => {
-      if(isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
-        this.setState({currlat: parseFloat('39.952744')})
-        this.setState({currlon: parseFloat('-75.163500')})
-      }
-      else {
+      if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
+        this.setState({ currlat: parseFloat("39.952744") });
+        this.setState({ currlon: parseFloat("-75.163500") });
+      } else {
         this.setState({ currlat: position.coords.latitude });
         this.setState({ currlon: position.coords.longitude });
       }
