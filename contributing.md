@@ -15,13 +15,14 @@ Unsure where to begin contributing to Phlask? It always best to attend to for Ph
 3. If you like the change and think the project could use it, open a Pull Request: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork
 
 # How to report a bug
-
 If you find a security vulnerability, do NOT open an issue. Message Billy, Taylor, Khalil, Gabriel on the Code For Philly Slack #phlask Channel (or directly) instead.
 
+For non-security bug reports, [open a GitHub issue](https://github.com/phlask/phlask-map/issues) and choose the Bug Report template. Follow the template, where possible, to provide the necessary information to address the bug.
+
 # How to suggest a feature or enhancement
+Have an idea for a new feature or an enhancement to existing functionality? [Open a GitHub issue](https://github.com/phlask/phlask-map/issues) and select the Feature Request template. We use GH issues to plan for things to work on as well as track ongoing work on our [project board](https://github.com/phlask/phlask-map/projects/1).
 
 # Code review process 
-
 The core team look at Pull Requests every HackNight for major changes and features.
 For smaller changes they will be reviewed ASAP.
 
