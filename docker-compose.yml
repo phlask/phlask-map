@@ -4,10 +4,11 @@ services:
     build: .
     ports:
     - "3000:3000"
+    entrypoint: bash -c "yarn install && yarn start"
     volumes:
     - ".:/usr/src/app"
   prod_build:
     build: .
-    entrypoint: npm run build
+    entrypoint: yarn build
     volumes:
     - "./docker/build:/usr/src/app/build"
