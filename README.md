@@ -2,10 +2,10 @@
 Code behind the Phlask Web Map
 
 ## Running Locally
-### NPM
-1. Ensure you have npm installed on your machine
-1. Run `npm install`
-1. Run `npm run build`
+### Yarn
+1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
+1. Run `yarn install`
+1. Run `yarn start`
 ### Docker (Recommended path for consistency across computers)
 1. You will need to have Docker installed: https://www.docker.com
 1. Once Docker is installed, run `docker-compose build app` and then `docker-compose up app` from the root of this repository.
