@@ -1,9 +1,6 @@
-name: Build Beta Site
+name: Test Site on S3
 
-on:
-  push:
-    branches:
-      - develop
+on: [push, pull_request]
 
 jobs:
   build:
@@ -25,4 +22,5 @@ jobs:
          sudo apt-get install python3-setuptools
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
-         aws s3 sync docker/build s3://beta.phlask.me --acl public-read --delete
+         aws s3 sync docker/build s3://test.phlask.me/$GITHUB_REF --acl public-read --delete
+         echo "Test site for this run can be accessed at: http://test.phlask.me.s3-website.us-east-2.amazonaws.com/$GITHUB_REF"
