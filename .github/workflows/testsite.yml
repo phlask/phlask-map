@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    # Ref for branch name splitting: https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
     - name: Build and Deploy the Map
       env:
         AWS_DEFAULT_REGION: us-east-2
@@ -22,5 +27,5 @@ jobs:
          sudo apt-get install python3-setuptools
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
-         aws s3 sync docker/build s3://test.phlask.me/$GITHUB_REF --acl public-read --delete
-         echo "Test site for this run can be accessed at: http://test.phlask.me.s3-website.us-east-2.amazonaws.com/$GITHUB_REF"
+         aws s3 sync docker/build s3://test.phlask.me/${{ steps.extract_branch.outputs.branch }} --acl public-read --delete
+         echo "Test site for this run can be accessed at: http://test.phlask.me.s3-website.us-east-2.amazonaws.com/${{ steps.extract_branch.outputs.branch }}"
