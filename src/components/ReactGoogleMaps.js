@@ -79,6 +79,9 @@ function getTaps() {
         if (snapshot.val()[item].active === "N") {
           continue;
         }
+        if (snapshot.val()[item].access === "TrashAcademy") {
+          continue;
+        }
         allTaps.push(snapshot.val()[item]);
       }
       return allTaps;
