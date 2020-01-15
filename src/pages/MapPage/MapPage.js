@@ -10,7 +10,7 @@ export class MapPage extends Component {
     this.state = {
       ada: false,
       filter: false,
-      tapsDisplayed: ["Public", "Private-Shared", "Private", "Restricted"],
+      tapsDisplayed: ["Public", "Private", "Private-Shared", "Restricted"],
     };
 
     this.legendButton = this.legendButton.bind(this);
@@ -21,12 +21,16 @@ export class MapPage extends Component {
     if(this.state.tapsDisplayed.includes(color)){
         //removes color form tapsDisplayed array
         this.state.tapsDisplayed = this.state.tapsDisplayed.filter(item => item !== color);
+        this.setState({});
     }
+
     else{
         //adds color to tapsDisplayed array
         this.state.tapsDisplayed.push(color);
+        this.setState({})
     }
     console.log(this.state.tapsDisplayed);
+  
   }
 
   render() {
