@@ -176,6 +176,9 @@ export class ReactGoogleMaps extends Component {
     unfilteredTaps: this.props.tapsDisplayed,
     }
   };
+  componentWillReceiveProps(nextProps) {
+    this.setState({unfilteredTaps: nextProps.tapsDisplayed})
+  };
 
   componentDidMount() {
     getTaps().then(taps => {
@@ -214,8 +217,6 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
- 
-
   getIcon(access) {
     if(this.state.unfilteredTaps.includes(access) === true){
       switch (access) {
@@ -240,6 +241,7 @@ export class ReactGoogleMaps extends Component {
   }
 
   render() {
+    console.log(this.state.unfilteredTaps);
     if (this.state.taps.length) {
       var closestTap = closest(this.state.taps, {
         lat: this.state.currlat,
