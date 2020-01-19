@@ -29,7 +29,7 @@ jobs:
          sudo pip3 install awscli --upgrade --user
          aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
          echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
-    - name:
+    - name: Record the test build
       env:
         AWS_DEFAULT_REGION: us-east-1
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -50,7 +50,10 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       # https://github.com/GoogleChrome/lighthouse/blob/master/docs/headless-chrome.md
       run: |
-        sudo apt-get install -y nodejs npm chromium jq
+        sudo apt -f install
+        sudo apt-get install -y curl
+        curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+        sudo apt-get install -y nodejs npm chromium-browser jq
         sudo npm install -g lighthouse
         
         lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
