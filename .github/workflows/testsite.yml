@@ -40,5 +40,6 @@ jobs:
           "gitHash": {"S": "'${GITHUB_SHA}'"},
           "creator": {"S": "'${GITHUB_ACTOR}'"},
           "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
-          "timeCreated": {"S": "'$(date +%s)'"}
+          "timeCreated": {"S": "'$(date +%s)'"},
+          "expirationTime": {"S": "'$(date +%s -d "+1 day")'"}
         }'
