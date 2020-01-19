@@ -10,7 +10,7 @@ jobs:
     # Ref for branch name splitting: https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=commithash;]$(echo ${GITHUB_SHA:0:6})"
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: Build and Deploy the Map
       env:
@@ -27,5 +27,18 @@ jobs:
          sudo apt-get install python3-setuptools
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
-         aws s3 sync docker/build s3://test.phlask.me/${{ steps.extract_branch.outputs.commithash }} --acl public-read --delete
-         echo "Test site for this run can be accessed at: https://test.phlask.me/${{ steps.extract_branch.outputs.commithash }}"
+         aws s3 sync docker/build s3://test.phlask.me/${{ GITHUB_SHA }} --acl public-read --delete
+         echo "Test site for this run can be accessed at: https://test.phlask.me/${{ GITHUB_SHA }}"
+    - name:
+      env:
+        AWS_DEFAULT_REGION: us-east-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        echo Recording the test build...
+        aws dynamodb put-item --table-name test-page-list --item '{
+          "gitHash": {"S": "${{ GITHUB_SHA }}"},
+          "creator": {"S": "${{ GITHUB_ACTOR }}"},
+          "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
+          "timeCreated": {"S": "$(date +%s)"}
+        }'
