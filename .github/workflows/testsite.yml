@@ -27,8 +27,8 @@ jobs:
          sudo apt-get install python3-setuptools
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
-         aws s3 sync docker/build s3://test.phlask.me/${ GITHUB_SHA } --acl public-read --delete
-         echo "Test site for this run can be accessed at: https://test.phlask.me/${ GITHUB_SHA }"
+         aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
+         echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
     - name:
       env:
         AWS_DEFAULT_REGION: us-east-1
@@ -37,8 +37,8 @@ jobs:
       run: |
         echo Recording the test build...
         aws dynamodb put-item --table-name test-page-list --item '{
-          "gitHash": {"S": "${ GITHUB_SHA }"},
-          "creator": {"S": "${ GITHUB_ACTOR }"},
+          "gitHash": {"S": "${GITHUB_SHA}"},
+          "creator": {"S": "${GITHUB_ACTOR}"},
           "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
           "timeCreated": {"S": "$(date +%s)"}
         }'
