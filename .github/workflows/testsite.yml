@@ -43,3 +43,33 @@ jobs:
           "timeCreated": {"S": "'$(date +%s)'"},
           "expirationTime": {"N": "'$(date +%s -d "+1 day")'"}
         }'
+    - name: Google Lighthouse Test
+      env:
+        AWS_DEFAULT_REGION: us-east-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # https://github.com/GoogleChrome/lighthouse/blob/master/docs/headless-chrome.md
+      run: |
+      apt-get install -y nodejs npm chromium jq
+      npm install -g lighthouse
+      
+      lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
+        --output json \
+      | jq -r "{ description: \"Phlask Test Results - ${GITHUB_SHA}\", public: \"true\", files: {\"$(date "+%Y%m%d").lighthouse.report.json\": {content: (. | tostring) }}}" \
+      | curl -sS -X POST -H 'Content-Type: application/json' \
+          -u ${GITHUB_OWNER}:${GITHUB_TOKEN} \
+          -d @- https://api.github.com/gists > results.gist
+      
+      # Let's be nice and add the Lighthouse Viewer link in the Gist description.
+      GID=$(cat results.gist | jq -r '.id') && \
+      curl -sS -X POST -H 'Content-Type: application/json' \
+        -u ${GITHUB_OWNER}:${GITHUB_TOKEN} \
+        -d "{ \"description\": \"Phlask Test Results - ${GITHUB_SHA} - Lighthouse: https://googlechrome.github.io/lighthouse/viewer/?gist=${GID}\" }" "https://api.github.com/gists/${GID}" > updated.gist
+
+      aws dynamodb update-item --table-name test-page-list --key '{
+        "gitHash": {"S": "'${GITHUB_SHA}'"}
+      }' --update-expression "SET #G = :g" --expression-attribute-names '{
+        "#G": "gistID"
+      }'--expression-attribute-values '{
+        ":g":{"S": "'${GID}'"}
+      }'
