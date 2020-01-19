@@ -56,7 +56,7 @@ jobs:
         sudo apt-get install -y nodejs chromium-browser jq
         sudo npm install -g lighthouse
         
-        lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
+        sudo lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
           --output json \
         | jq -r "{ description: \"Phlask Test Results - ${GITHUB_SHA}\", public: \"true\", files: {\"$(date "+%Y%m%d").lighthouse.report.json\": {content: (. | tostring) }}}" \
         | curl -sS -X POST -H 'Content-Type: application/json' \
@@ -73,6 +73,6 @@ jobs:
           "gitHash": {"S": "'${GITHUB_SHA}'"}
         }' --update-expression "SET #G = :g" --expression-attribute-names '{
           "#G": "gistID"
-        }'--expression-attribute-values '{
+        }' --expression-attribute-values '{
           ":g":{"S": "'${GID}'"}
         }'
