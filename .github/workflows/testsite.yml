@@ -50,8 +50,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       # https://github.com/GoogleChrome/lighthouse/blob/master/docs/headless-chrome.md
       run: |
-        apt-get install -y nodejs npm chromium jq
-        npm install -g lighthouse
+        sudo apt-get install -y nodejs npm chromium jq
+        sudo npm install -g lighthouse
         
         lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
           --output json \
