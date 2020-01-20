@@ -64,10 +64,12 @@ jobs:
             -d @- https://api.github.com/gists > results.gist
         
         # Let's be nice and add the Lighthouse Viewer link in the Gist description.
-        GID=$(cat results.gist | jq -r '.id') && \
+        export GID=$(cat results.gist | jq -r '.id') && \
         curl -sS -X POST -H 'Content-Type: application/json' \
           -u ${GITHUB_OWNER}:${GITHUB_TOKEN} \
           -d "{ \"description\": \"Phlask Test Results - ${GITHUB_SHA} - Lighthouse: https://googlechrome.github.io/lighthouse/viewer/?gist=${GID}\" }" "https://api.github.com/gists/${GID}" > updated.gist
+          
+        echo Updating the test build record...
 
         aws dynamodb update-item --table-name test-page-list --key '{
           "gitHash": {"S": "'${GITHUB_SHA}'"}
