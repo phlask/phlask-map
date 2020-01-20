@@ -60,13 +60,13 @@ jobs:
           --output json \
         | jq -r "{ description: \"Phlask Test Results - ${GITHUB_SHA}\", public: \"false\", files: {\"$(date "+%Y%m%d").lighthouse.report.json\": {content: (. | tostring) }}}" \
         | curl -sS -X POST -H 'Content-Type: application/json' \
-            -u ${GITHUB_PHLASK_USER}:${GITHUB_PHLASK_TOKEN} \
+            -u ${{ secrets.GITHUB_PHLASK_USER }}:${{ secrets.GITHUB_PHLASK_TOKEN }} \
             -d @- https://api.github.com/gists > results.gist
         
         # Let's be nice and add the Lighthouse Viewer link in the Gist description.
         export GID=$(cat results.gist | jq -r '.id') && \
         curl -sS -X POST -H 'Content-Type: application/json' \
-          -u ${GITHUB_PHLASK_USER}:${GITHUB_PHLASK_TOKEN} \
+          -u ${{ secrets.GITHUB_PHLASK_USER }}:${{ secrets.GITHUB_PHLASK_TOKEN }} \
           -d "{ \"description\": \"Phlask Test Results - ${GITHUB_SHA} - Lighthouse: https://googlechrome.github.io/lighthouse/viewer/?gist=${GID}\" }" "https://api.github.com/gists/${GID}" > updated.gist
           
         echo Updating the test build record...
