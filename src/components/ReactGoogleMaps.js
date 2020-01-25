@@ -103,15 +103,19 @@ const style = {
 };
 
 export class ReactGoogleMaps extends Component {
-  state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
-    currlat: parseFloat("39.952744"),
-    currlon: parseFloat("-75.163500"),
-    taps: [],
-    tapsLoaded: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      currlat: parseFloat("39.952744"),
+      currlon: parseFloat("-75.163500"),
+      taps: [],
+      tapsLoaded: false
+    };
+  }
 
   componentDidMount() {
     getTaps().then(taps => {
