@@ -11,7 +11,7 @@ export class ClosestTap extends Component {
     };
 
     this.change = this.change.bind(this);
-    }
+  }
 
   change(){
     if(this.props.lat === "" || this.props.lon === ""){
