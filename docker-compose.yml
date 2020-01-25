@@ -7,6 +7,13 @@ services:
     entrypoint: bash -c "yarn install && yarn start"
     volumes:
     - ".:/usr/src/app"
+  bash:
+    build: .
+    ports:
+    - "3000:3000"
+    entrypoint: /bin/bash
+    volumes:
+    - ".:/usr/src/app"
   prod_build:
     build: .
     entrypoint: yarn build
