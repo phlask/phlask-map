@@ -28,6 +28,7 @@ jobs:
          sudo apt-get install -y python3-pip
          sudo pip3 install awscli --upgrade --user
          aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
+         aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read --delete
          echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
     - name: Record the test build
       env:
