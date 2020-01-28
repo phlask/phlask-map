@@ -1,3 +1,9 @@
 .infoWindow {
-    font-family: 'Exo 2', sans-serif;
-  }
+  font-family: "Exo 2", sans-serif;
+}
+
+.searchBarContainer {
+  position: relative;
+  top: 60px;
+  left: 10px;
+}
