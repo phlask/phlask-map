@@ -4,6 +4,6 @@ import { SearchBar } from "./SearchBar";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
-  ReactDOM.render(<ReactGoogleMaps />, div);
+  ReactDOM.render(<SearchBar />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
