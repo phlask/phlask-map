@@ -5,16 +5,6 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import "./SearchBar.css";
 
-const google = window.google;
-
-// search only within ~25 miles of Philly
-const searchOptions = {
-  location: new google.maps.LatLng(39.952744, -75.1635),
-  radius: 42000
-  // , optional parameter to filter for "establishments" or "addresses"
-  // types: [""]
-};
-
 export default class SearchBar extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +30,6 @@ export default class SearchBar extends React.Component {
           value={this.state.address}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
-          searchOptions={searchOptions}
         >
           {({
             getInputProps,
