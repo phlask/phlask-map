@@ -1,13 +1,8 @@
-import {
-  Map,
-  InfoWindow, 
-  Marker,
-  GoogleApiWrapper
-} from "google-maps-react";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
-import "./ReactGoogleMaps.css"
+import "./ReactGoogleMaps.css";
 
 const config = {
   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -52,7 +47,7 @@ function closest(data, v) {
 
   var closestTap = {
     organization: "",
-    address:'',
+    address: "",
     lat: "",
     lon: ""
   };
@@ -166,25 +161,32 @@ export class ReactGoogleMaps extends Component {
     super(props);
 
     this.state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
-    currlat: getLat(),
-    currlon: getLon(),
-    taps: [],
-    tapsLoaded: false,
-    unfilteredTaps: this.props.tapsDisplayed,
-    }
-  };
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      currlat: getLat(),
+      currlon: getLon(),
+      taps: [],
+      tapsLoaded: false,
+      unfilteredTaps: this.props.tapsDisplayed,
+      ada: this.props.ada,
+      filtered: this.props.filtered
+    };
+  }
   componentWillReceiveProps(nextProps) {
-    this.setState({unfilteredTaps: nextProps.tapsDisplayed})
-  };
+    this.setState({
+      unfilteredTaps: nextProps.tapsDisplayed,
+      ada: this.props.ada,
+      filtered: this.props.filtered
+    });
+  }
 
   componentDidMount() {
     getTaps().then(taps => {
-      this.setState(oldState => {
-        return { ...oldState, taps: taps};
-      });
+      this.setState({ taps });
+      //   oldState => {
+      //   return { ...oldState, taps: taps};
+      // });
     });
     getCoordinates().then(position => {
       this.setState({ currlat: position.coords.latitude });
@@ -199,14 +201,14 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: true
     });
 
-    onClose = props => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        });
-      }
-    };
+  onClose = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
 
   onMapClicked = props => {
     if (this.state.showingInfoWindow) {
@@ -218,7 +220,7 @@ export class ReactGoogleMaps extends Component {
   };
 
   getIcon(access) {
-    if(this.state.unfilteredTaps.includes(access) === true){
+    if (this.state.unfilteredTaps.includes(access) === true) {
       switch (access) {
         case "Public":
           return "https://i.imgur.com/M12e1HV.png";
@@ -233,22 +235,59 @@ export class ReactGoogleMaps extends Component {
         default:
           break;
       }
+    } else {
+      return "https://i.imgur.com/kKXG3TO.png";
     }
-      else{
-        return "https://i.imgur.com/kKXG3TO.png";
-      }
-    
   }
 
+  placeMarker(tap, index) {
+    return (
+      <Marker
+        key={index}
+        name={tap.tapnum}
+        organization={tap.organization}
+        address={tap.address}
+        description={tap.description}
+        filtration={tap.filtration}
+        handicap={tap.handicap}
+        service={tap.service}
+        tap_type={tap.tap_type}
+        norms_rules={tap.norms_rules}
+        vessel={tap.vessel}
+        img={tap.images}
+        onClick={this.onMarkerClick}
+        position={{ lat: tap.lat, lng: tap.lon }}
+        icon={{
+          url: this.getIcon(tap.access)
+        }}
+      />
+    );
+  }
+
+  tapsToggleState = () => {
+    const taps = [...this.state.taps];
+    if (this.state.filtered && this.state.ada) {
+      const filteredtaps = taps.filter(tap => tap.filtration === "yes");
+      const adataps = filteredtaps.filter(tap => tap.handicap === "yes");
+      return adataps;
+    } else if (this.state.filtered) {
+      const filteredtaps = taps.filter(tap => tap.filtration === "yes");
+      return filteredtaps;
+    } else if (this.state.ada) {
+      const adataps = taps.filter(tap => tap.handicap === "yes");
+      return adataps;
+    } else return taps;
+  };
+
   render() {
-    console.log(this.state.unfilteredTaps);
     if (this.state.taps.length) {
       var closestTap = closest(this.state.taps, {
         lat: this.state.currlat,
         lon: this.state.currlon
       });
+      // const taps = this.tapsToggleState();
+      console.log(this.state.filtered, this.state.ada)
       return (
-
         <div>
           <ClosestTap
             lat={closestTap.lat}
@@ -256,55 +295,40 @@ export class ReactGoogleMaps extends Component {
             org={closestTap.organization}
             address={closestTap.address}
           />
-            
 
-        <Map google={this.props.google} className = {'map'} style={style} zoom={16} initialCenter={{
+          <Map
+            google={this.props.google}
+            className={"map"}
+            style={style}
+            zoom={16}
+            initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
-            }}>
-
-        
-        <Marker
+            }}
+          >
+            <Marker
               key="current_pos"
               name={"Current Pos"}
               position={{ lat: this.state.currlat, lng: this.state.currlon }}
               onClick={this.onMarkerClick}
             />
 
-            {this.state.taps.map((tap, index) => (
-              <Marker
-                key={index}
-                name={tap.tapnum}
-                organization={tap.organization}
-                address = {tap.address}
-                description={tap.description}
-                filtration={tap.filtration}
-                handicap={tap.handicap}
-                service={tap.service}
-                tap_type={tap.tap_type}
-                norms_rules={tap.norms_rules}
-                vessel={tap.vessel}
-                img = {tap.images}
-                onClick={this.onMarkerClick}
-                position={{ lat: tap.lat, lng: tap.lon }}
-                icon={{
-                  url: this.getIcon(tap.access)
-                }}
-              />
-              
-            ))}
+            {/* {taps.map((tap, index) => {
+              this.placeMarker(tap, index);
+            })} */}
+
             <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               onClose={this.onClose}
-              >
-              <div >
-                <h4 className = 'infoWindow'>{this.state.selectedPlace.organization}</h4>
+            >
+              <div>
+                <h4 className="infoWindow">
+                  {this.state.selectedPlace.organization}
+                </h4>
                 <h5>{this.state.selectedPlace.address}</h5>
-
               </div>
-              </InfoWindow>
-          
+            </InfoWindow>
           </Map>
         </div>
       );

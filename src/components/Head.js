@@ -104,7 +104,7 @@ export class Head extends Component {
                   </Form>
                 </Navbar.Collapse>
               </Navbar>
-              <FilterCard display = {this.state.displayFilter} legendButton = {this.props.legendButton}/>
+              <FilterCard display = {this.state.displayFilter} legendButton = {this.props.legendButton} toggleSwitch = {this.props.toggleSwitch} />
           </header>
         </div>
       );
