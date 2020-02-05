@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Head from "../../components/Head";
-import ReactGoogleMaps from "./components/ReactGoogleMaps";
+import Head from "./Head";
+import ReactGoogleMaps from "./ReactGoogleMaps";
 
 export class MapPage extends Component {
   constructor(props) {
