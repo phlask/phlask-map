@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 
-import {Route, Switch } from "react-router";
+import { Route, Switch } from "react-router";
 import "./App.css";
 
-import MapPage from './pages/MapPage/MapPage';
+import MapPage from "./components/MapPage";
 
-
-function App(){
-    return (
-        <Switch>
-          <Route path='/MapPage'>
-            <MapPage />
-          </Route>
-          <Route path='/'>
-            <MapPage />
-          </Route>
-        </Switch>
-    );
+function App() {
+  return (
+    <Switch>
+      <Route path="/MapPage">
+        <MapPage />
+      </Route>
+      <Route path="/">
+        <MapPage />
+      </Route>
+    </Switch>
+  );
 }
 
 export default App;
