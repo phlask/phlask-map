@@ -286,7 +286,6 @@ export class ReactGoogleMaps extends Component {
         lon: this.state.currlon
       });
       // const taps = this.tapsToggleState();
-      console.log(this.state.filtered, this.state.ada)
       return (
         <div>
           <ClosestTap
