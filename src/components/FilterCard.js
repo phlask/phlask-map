@@ -1,31 +1,29 @@
 import React, { Component } from "react";
 import { Card, Col, Row, Form } from "react-bootstrap";
 import "./FilterCard.css";
+import { connect } from "react-redux";
+import { setToggleState } from "../actions";
 
 export class FilterCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      display: this.props.display,
-      filteredchecked: false,
-      adachecked: false
+      display: this.props.display
     };
   }
 
   handleChange(event) {
     if (event.target.id === "filtered") {
-      this.setState(
-        { filteredchecked: !this.state.filteredchecked },
-        // callback parameter for setState to fire when setState is complete
-        // {this.props.toggleSwitch("filtered", this.state.filteredchecked);
-        console.log("filter card says filtered", this.state.filteredchecked)
-      );
+      // callback parameter for setState to fire when setState is complete
+      // {this.props.toggleSwitch("filtered", this.state.filteredchecked);
+      // console.log("filter card says filtered", this.state.filteredchecked)
+      this.props.dispatch(setToggleState("filtered", !this.props.filtered));
     } else if (event.target.id === "ada") {
-      this.setState(
-        { adaChecked: !this.state.adachecked },
-        this.props.toggleSwitch("ada", this.state.adachecked)
-      );
+      //   this.setState(
+      //     { adaChecked: !this.state.adachecked },
+      //     this.props.toggleSwitch("ada", this.state.adachecked)
+      //   );
     } else console.log("error with toggle");
   }
 
@@ -106,4 +104,11 @@ export class FilterCard extends Component {
   }
 }
 
-export default FilterCard;
+const mapStateToProps = state => ({
+  filtered: state.filtered,
+  handicap: state.handicap
+});
+
+export default connect(mapStateToProps)(FilterCard);
+
+// export default FilterCard;
