@@ -3,17 +3,19 @@ import React, { Component } from "react";
 import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
 import "./ReactGoogleMaps.css";
+import { connect } from "react-redux";
+import { getTaps } from "../actions";
 
-const config = {
-  apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-  authDomain: "phlask-web-map.firebaseapp.com",
-  databaseURL: "https://phlask-web-map.firebaseio.com",
-  projectId: "phlask-web-map",
-  storageBucket: "phlask-web-map.appspot.com",
-  messagingSenderId: "428394983826"
-};
+// const config = {
+//   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
+//   authDomain: "phlask-web-map.firebaseapp.com",
+//   databaseURL: "https://phlask-web-map.firebaseio.com",
+//   projectId: "phlask-web-map",
+//   storageBucket: "phlask-web-map.appspot.com",
+//   messagingSenderId: "428394983826"
+// };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -64,29 +66,29 @@ function closest(data, v) {
   return closestTap;
 }
 
-function getTaps() {
-  return firebase
-    .database()
-    .ref("/")
-    .once("value")
-    .then(function(snapshot) {
-      var allTaps = [];
-      var item;
-      for (item in snapshot.val()) {
-        if (snapshot.val()[item].access === "WM") {
-          continue;
-        }
-        if (snapshot.val()[item].active === "N") {
-          continue;
-        }
-        if (snapshot.val()[item].access === "TrashAcademy") {
-          continue;
-        }
-        allTaps.push(snapshot.val()[item]);
-      }
-      return allTaps;
-    });
-}
+// function getTaps() {
+//   return firebase
+//     .database()
+//     .ref("/")
+//     .once("value")
+//     .then(function(snapshot) {
+//       var allTaps = [];
+//       var item;
+//       for (item in snapshot.val()) {
+//         if (snapshot.val()[item].access === "WM") {
+//           continue;
+//         }
+//         if (snapshot.val()[item].active === "N") {
+//           continue;
+//         }
+//         if (snapshot.val()[item].access === "TrashAcademy") {
+//           continue;
+//         }
+//         allTaps.push(snapshot.val()[item]);
+//       }
+//       return allTaps;
+//     });
+// }
 
 function getCoordinates() {
   return new Promise(function(resolve, reject) {
@@ -97,13 +99,11 @@ function getCoordinates() {
 //gets the users latitude
 function getLat() {
   if ("geolocation" in navigator) {
-    console.log("here");
     // check if geolocation is supported/enabled on current browser
     navigator.geolocation.getCurrentPosition(
       function success(position) {
         // for when getting location is a success
-        var mylat = position.coords.latitude;
-        console.log("latitude", position.coords.latitude);
+        var mylat = parseFloat(position.coords.latitude.toFixed(5));
         return mylat;
       },
       function error(error_message) {
@@ -124,13 +124,11 @@ function getLat() {
 //gets the users longitutude
 function getLon() {
   if ("geolocation" in navigator) {
-    console.log("here");
     // check if geolocation is supported/enabled on current browser
     navigator.geolocation.getCurrentPosition(
       function success(position) {
         // for when getting location is a success
-        var mylon = position.coords.longitude;
-        console.log("longitude", position.coords.longitude);
+        var mylon = parseFloat(position.coords.longitude.toFixed(5));
         return mylon;
       },
       function error(error_message) {
@@ -164,35 +162,36 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      currlat: getLat(),
-      currlon: getLon(),
+      currlat: getLat(), // 39.9528,
+      currlon: getLon(), //-75.1635,
       taps: [],
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
-      ada: this.props.ada,
-      filtered: this.props.filtered
+      filteredTaps: []
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      unfilteredTaps: nextProps.tapsDisplayed,
-      ada: this.props.ada,
-      filtered: this.props.filtered
+      unfilteredTaps: nextProps.tapsDisplayed
     });
   }
 
   componentDidMount() {
-    getTaps().then(taps => {
-      this.setState({ taps });
-      //   oldState => {
-      //   return { ...oldState, taps: taps};
-      // });
-    });
+    // getTaps().then(taps => {
+    //   this.setState(oldState => {
+    //     return { ...oldState, taps: taps };
+    //   });
+    // });
+
+    this.props.getTaps();
+
     getCoordinates().then(position => {
       this.setState({ currlat: position.coords.latitude });
       this.setState({ currlon: position.coords.longitude });
     });
   }
+
+  // componentDidUpdate() {  }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -240,52 +239,19 @@ export class ReactGoogleMaps extends Component {
     }
   }
 
-  placeMarker(tap, index) {
-    return (
-      <Marker
-        key={index}
-        name={tap.tapnum}
-        organization={tap.organization}
-        address={tap.address}
-        description={tap.description}
-        filtration={tap.filtration}
-        handicap={tap.handicap}
-        service={tap.service}
-        tap_type={tap.tap_type}
-        norms_rules={tap.norms_rules}
-        vessel={tap.vessel}
-        img={tap.images}
-        onClick={this.onMarkerClick}
-        position={{ lat: tap.lat, lng: tap.lon }}
-        icon={{
-          url: this.getIcon(tap.access)
-        }}
-      />
-    );
-  }
-
-  tapsToggleState = () => {
-    const taps = [...this.state.taps];
-    if (this.state.filtered && this.state.ada) {
-      const filteredtaps = taps.filter(tap => tap.filtration === "yes");
-      const adataps = filteredtaps.filter(tap => tap.handicap === "yes");
-      return adataps;
-    } else if (this.state.filtered) {
-      const filteredtaps = taps.filter(tap => tap.filtration === "yes");
-      return filteredtaps;
-    } else if (this.state.ada) {
-      const adataps = taps.filter(tap => tap.handicap === "yes");
-      return adataps;
-    } else return taps;
-  };
-
   render() {
-    if (this.state.taps.length) {
-      var closestTap = closest(this.state.taps, {
+    if (this.props.allTaps.length) {
+      var closestTap = closest(this.props.allTaps, {
         lat: this.state.currlat,
         lon: this.state.currlon
       });
-      // const taps = this.tapsToggleState();
+      console.log(this.props.filteredTaps);
+      console.log(
+        "filtered",
+        this.props.filtered,
+        "handicap",
+        this.props.handicap
+      );
       return (
         <div>
           <ClosestTap
@@ -312,9 +278,29 @@ export class ReactGoogleMaps extends Component {
               onClick={this.onMarkerClick}
             />
 
-            {/* {taps.map((tap, index) => {
-              this.placeMarker(tap, index);
-            })} */}
+            {this.props.filteredTaps
+              /* {toggledTaps */
+              .map((tap, index) => (
+                <Marker
+                  key={index}
+                  name={tap.tapnum}
+                  organization={tap.organization}
+                  address={tap.address}
+                  description={tap.description}
+                  filtration={tap.filtration}
+                  handicap={tap.handicap}
+                  service={tap.service}
+                  tap_type={tap.tap_type}
+                  norms_rules={tap.norms_rules}
+                  vessel={tap.vessel}
+                  img={tap.images}
+                  onClick={this.onMarkerClick}
+                  position={{ lat: tap.lat, lng: tap.lon }}
+                  icon={{
+                    url: this.getIcon(tap.access)
+                  }}
+                />
+              ))}
 
             <InfoWindow
               marker={this.state.activeMarker}
@@ -337,7 +323,21 @@ export class ReactGoogleMaps extends Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-  LoadingContainer: LoadingContainer
-})(ReactGoogleMaps);
+const mapStateToProps = state => ({
+  filtered: state.filtered,
+  handicap: state.handicap,
+  allTaps: state.allTaps,
+  filteredTaps: state.filteredTaps
+});
+
+const mapDispatchToProps = { getTaps };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  GoogleApiWrapper({
+    apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
+    LoadingContainer: LoadingContainer
+  })(ReactGoogleMaps)
+);

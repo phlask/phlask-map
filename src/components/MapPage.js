@@ -46,7 +46,6 @@ export class MapPage extends Component {
       <div className="MapPage">
         <Head
           legendButton={this.legendButton}
-          toggleSwitch={this.toggleSwitch}
         />
         <ReactGoogleMaps
           tapsDisplayed={this.state.tapsDisplayed}
