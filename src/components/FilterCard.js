@@ -24,11 +24,11 @@ export class FilterCard extends Component {
       //     { adaChecked: !this.state.adachecked },
       //     this.props.toggleSwitch("ada", this.state.adachecked)
       //   );
+      this.props.dispatch(setToggleState("handicap", !this.props.handicap));
     } else console.log("error with toggle");
   }
 
   render() {
-    console.log("init filter state", this.state.filteredchecked);
     if (this.state.display === false) {
       return <></>;
     } else {
