@@ -12,5 +12,5 @@ COPY . .
 
 EXPOSE 8080
 
-ENTRYPOINT npm start
+ENTRYPOINT yarn start
 

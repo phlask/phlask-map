@@ -19,6 +19,7 @@
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
+    "react-places-autocomplete": "^7.2.1",
     "recompose": "^0.30.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
@@ -50,5 +51,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "."
 }

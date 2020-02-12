@@ -7,8 +7,18 @@ services:
     entrypoint: bash -c "yarn install && yarn start"
     volumes:
     - ".:/usr/src/app"
+  bash:
+    build: .
+    ports:
+    - "3000:3000"
+    entrypoint: /bin/bash
+    volumes:
+    - ".:/usr/src/app"
   prod_build:
     build: .
-    entrypoint: yarn build
+    entrypoint: bash -c "mkdir -p testResults && yarn test --json --outputFile=testResults/jestResults.json && yarn build"
+    environment: 
+      CI: "true"
     volumes:
     - "./docker/build:/usr/src/app/build"
+    - "./docker/testResults:/usr/src/app/testResults"

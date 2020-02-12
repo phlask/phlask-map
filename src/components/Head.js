@@ -8,10 +8,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Navbar,
   Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button
+  NavDropdown
+  // ,
+  // Form,
+  // FormControl,
+  // Button
 } from "react-bootstrap";
 
 export class Head extends Component {

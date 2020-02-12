@@ -6,11 +6,8 @@ on:
       - develop
 
 jobs:
-
   build:
- 
     runs-on: ubuntu-latest
- 
     steps:
     - uses: actions/checkout@v1
     - name: Build and Deploy the Map
