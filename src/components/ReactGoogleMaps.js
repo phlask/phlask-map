@@ -2,6 +2,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
+import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import { getTaps } from "../actions";
@@ -244,6 +245,10 @@ export class ReactGoogleMaps extends Component {
     }
   }
 
+  searchForLocation = location => {
+    this.setState({ currlat: location.lat, currlon: location.lng });
+  };
+
   render() {
     if (this.props.allTaps.length) {
       var closestTap = closest(this.props.allTaps, {
@@ -275,6 +280,7 @@ export class ReactGoogleMaps extends Component {
               lat: this.state.currlat,
               lng: this.state.currlon
             }}
+            center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
             <Marker
               key="current_pos"
@@ -320,6 +326,12 @@ export class ReactGoogleMaps extends Component {
               </div>
             </InfoWindow>
           </Map>
+          <div className="searchBarContainer">
+            <SearchBar
+              className="searchBar"
+              search={location => this.searchForLocation(location)}
+            />
+          </div>
         </div>
       );
     } else {

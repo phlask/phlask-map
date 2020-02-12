@@ -1,0 +1,15 @@
+.clearInput {
+  display: inline;
+  font-size: 1.5em;
+  font-weight: bold;
+  height: 30px;
+}
+
+.clearInput:hover {
+  cursor: pointer;
+}
+
+button {
+  padding-bottom: 40px;
+  height: 30px;
+}
