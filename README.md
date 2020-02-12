@@ -35,7 +35,7 @@ The Phlask Map runs on a static page built with:
 
 The site runs on:
 - AWS S3 (https://aws.amazon.com/s3/)
-  - Stores the static files generated from the ReactJS build which present the map page
+  - Stores the static files generated from the ReactJS build which present the map page 
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
