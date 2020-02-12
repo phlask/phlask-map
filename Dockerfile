@@ -6,7 +6,7 @@ COPY package*.json ./
 
 # RUN useradd app
 
-RUN npm install
+RUN yarn install
 
 COPY . .
 

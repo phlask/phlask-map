@@ -186,8 +186,13 @@ export class ReactGoogleMaps extends Component {
     this.props.getTaps();
 
     getCoordinates().then(position => {
-      this.setState({ currlat: position.coords.latitude });
-      this.setState({ currlon: position.coords.longitude });
+      if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
+        this.setState({ currlat: parseFloat("39.952744") });
+        this.setState({ currlon: parseFloat("-75.163500") });
+      } else {
+        this.setState({ currlat: position.coords.latitude });
+        this.setState({ currlon: position.coords.longitude });
+      }
     });
   }
 
