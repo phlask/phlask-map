@@ -1,15 +1,16 @@
 {
-  "short_name": "React App",
+  "short_name": "Phlask App",
   "name": "Phlask Map",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "800x808"
+
     }
   ],
-  "start_url": ".",
+  "start_url": "/beta.phlask.me/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#26A9E0",
   "background_color": "#000000"
 }
