@@ -5,14 +5,7 @@ import logo from "./cropped-phlask-text-icon-logo.png";
 import icon from "./icons8-filter.png";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button
-} from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 export class Head extends Component {
   constructor(props) {
@@ -38,7 +31,6 @@ export class Head extends Component {
   }
 
   render() {
-    console.log(this.props);
     if (this.state.displayFilter === false) {
       return (
         <div className="menu">
@@ -74,14 +66,6 @@ export class Head extends Component {
                   </NavDropdown>
                   <Nav.Link href="#link">Contact</Nav.Link>
                 </Nav>
-                <Form inline>
-                  <FormControl
-                    type="text"
-                    placeholder="Search"
-                    className="mr-sm-2"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form>
               </Navbar.Collapse>
             </Navbar>
           </header>
@@ -122,14 +106,6 @@ export class Head extends Component {
                   </NavDropdown>
                   <Nav.Link href="#link">Contact</Nav.Link>
                 </Nav>
-                <Form inline>
-                  <FormControl
-                    type="text"
-                    placeholder="Search"
-                    className="mr-sm-2"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form>
               </Navbar.Collapse>
             </Navbar>
             <FilterCard

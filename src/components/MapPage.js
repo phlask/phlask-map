@@ -41,12 +41,9 @@ export class MapPage extends Component {
   }
 
   render() {
-    console.log("map page says filtered", this.state.filtered);
     return (
       <div className="MapPage">
-        <Head
-          legendButton={this.legendButton}
-        />
+        <Head legendButton={this.legendButton} />
         <ReactGoogleMaps
           tapsDisplayed={this.state.tapsDisplayed}
           ada={this.state.ada}
