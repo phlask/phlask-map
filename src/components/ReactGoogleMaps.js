@@ -255,13 +255,6 @@ export class ReactGoogleMaps extends Component {
         lat: this.state.currlat,
         lon: this.state.currlon
       });
-      console.log(this.props.filteredTaps);
-      console.log(
-        "filtered",
-        this.props.filtered,
-        "handicap",
-        this.props.handicap
-      );
       return (
         <div>
           <ClosestTap
