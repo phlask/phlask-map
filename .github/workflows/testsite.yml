@@ -18,18 +18,18 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-         echo Build started on `date`
-         echo Building the webapp...
-         docker-compose run prod_build
-         echo Build completed on `date`
-         echo Pushing the webapp to S3...
-         sudo apt-get update -y
-         sudo apt-get install python3-setuptools
-         sudo apt-get install -y python3-pip
-         sudo pip3 install awscli --upgrade --user
-         aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
-         aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read --delete
-         echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
+        echo Build started on `date`
+        echo Building the webapp...
+        docker-compose run prod_build
+        echo Build completed on `date`
+        echo Pushing the webapp to S3...
+        sudo apt-get update -y
+        sudo apt-get install python3-setuptools
+        sudo apt-get install -y python3-pip
+        sudo pip3 install awscli --upgrade --user
+        aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
+        aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read --delete
+        echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
     - name: Record the test build
       env:
         AWS_DEFAULT_REGION: us-east-1
