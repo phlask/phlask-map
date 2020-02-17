@@ -38,7 +38,7 @@ export default class SearchBar extends React.Component {
             loading
           }) => (
             <div>
-              {/* type="serach" is only HTML5 compliant */}
+              {/* type="search" is only HTML5 compliant */}
               <input
                 {...getInputProps({
                   placeholder: "Search For Taps Near...",
