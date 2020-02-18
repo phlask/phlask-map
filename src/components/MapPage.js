@@ -37,6 +37,8 @@ export class MapPage extends Component {
         return this.setState({ ada: position });
       case "filtered":
         return this.setState({ filtered: position });
+      default:
+        return this.state
     }
   }
 

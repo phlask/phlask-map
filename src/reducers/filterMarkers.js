@@ -93,8 +93,10 @@ export default (state = initialState, act) => {
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
+    
+    default:
+      return state
   }
-  return state;
 };
 
 // tapsToggleState = () => {
