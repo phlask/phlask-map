@@ -7,14 +7,15 @@ import MapPage from "./components/MapPage";
 
 function App() {
   return (
-    <Switch>
-      <Route path="/MapPage">
-        <MapPage />
-      </Route>
-      <Route path="/">
-        <MapPage />
-      </Route>
-    </Switch>
+    // <Switch>
+    //   <Route path="/MapPage">
+    //     <MapPage />
+    //   </Route>
+    //   <Route path="/">
+    //     <MapPage />
+    //   </Route>
+    // </Switch>
+    <MapPage />
   );
 }
 
