@@ -163,15 +163,15 @@ export class ReactGoogleMaps extends Component {
   getIcon(access) {
     switch (access) {
       case "Public":
-        return "https://i.imgur.com/M12e1HV.png";
+        return "https://i.imgur.com/fsofse7.png";
       case "Private-Shared":
-        return "https://i.imgur.com/DXMMxXR.png";
+        return "https://i.imgur.com/MMsmsHG.png";
       case "Private":
-        return "https://i.imgur.com/kt825XO.png";
+        return "https://i.imgur.com/oLPMQtg.png";
       case "Restricted":
-        return "https://i.imgur.com/5NOdOyY.png";
+        return "https://i.imgur.com/T93TDTO.png";
       case "Semi-public":
-        return "https://i.imgur.com/DXMMxXR.png";
+        return "https://i.imgur.com/MMsmsHG.png";
       case "TrashAcademy":
         return "https://i.imgur.com/fXTeEKL.png";
       default:
