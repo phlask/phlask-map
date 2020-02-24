@@ -6,6 +6,9 @@ import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import { getTaps } from "../actions";
+import Legend from "./Legend";
+import Filter from "./Filter";
+import { Spinner } from "react-bootstrap";
 
 // const config = {
 //   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -168,7 +171,8 @@ export class ReactGoogleMaps extends Component {
       taps: [],
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
-      filteredTaps: []
+      filteredTaps: [],
+      zoom: 16
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -199,12 +203,15 @@ export class ReactGoogleMaps extends Component {
 
   // componentDidUpdate() {  }
 
-  onMarkerClick = (props, marker, e) =>
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
+      currlat: props.position.lat,
+      currlon: props.position.lng
     });
+  };
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -248,10 +255,11 @@ export class ReactGoogleMaps extends Component {
   }
 
   searchForLocation = location => {
-    this.setState({ currlat: location.lat, currlon: location.lng });
+    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
   };
 
   render() {
+    console.log(this.state.zoom);
     if (this.props.allTaps.length) {
       var closestTap = closest(this.props.allTaps, {
         lat: this.state.currlat,
@@ -270,7 +278,7 @@ export class ReactGoogleMaps extends Component {
             google={this.props.google}
             className={"map"}
             style={style}
-            zoom={16}
+            zoom={this.state.zoom}
             initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
@@ -327,10 +335,21 @@ export class ReactGoogleMaps extends Component {
               search={location => this.searchForLocation(location)}
             />
           </div>
+          <div className="legend">
+            <Legend />
+          </div>
+          <div className="filter">
+            <Filter />
+          </div>
         </div>
       );
     } else {
-      return <div>Loading taps...</div>;
+      return (
+        <div className="loading">
+          <Spinner animation="border" variant="info" className="spinner" />
+          Loading taps...
+        </div>
+      );
     }
   }
 }
