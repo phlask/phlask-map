@@ -1,0 +1,18 @@
+.filterCard{
+    font-family: 'Exo 2', sans-serif;
+    font-size: 75%;
+}
+
+.legend{
+    outline-style: solid;
+    outline-width: thin;
+}
+
+.filter{
+    outline-style: solid;
+    outline-width: thin;
+}
+
+.title{
+    text-align: center;
+}
