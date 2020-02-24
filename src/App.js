@@ -1,19 +1,21 @@
-import React, { Component } from "react";
-import "./App.css";
-import Foot from "./components/Foot";
-import Head from "./components/Head";
-import ReactGoogleMaps from "./components/ReactGoogleMaps";
+import React from "react";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Head />
-        <ReactGoogleMaps />
-        <Foot />
-      </div>
-    );
-  }
+import "./App.css";
+
+import MapPage from "./components/MapPage";
+
+function App() {
+  return (
+    // <Switch>
+    //   <Route path="/MapPage">
+    //     <MapPage />
+    //   </Route>
+    //   <Route path="/">
+    //     <MapPage />
+    //   </Route>
+    // </Switch>
+    <MapPage />
+  );
 }
 
 export default App;
