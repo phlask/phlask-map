@@ -8,10 +8,9 @@ const initialState = {
 };
 
 export default (state = initialState, act) => {
+  let updatedTaps = [...state.allTaps];
   switch (act.type) {
     case actions.SET_TOGGLE_STATE:
-      let updatedTaps = [...state.allTaps];
-
       if (act.toggle === "filtered") {
         if (act.toggleState === true) {
           const filteredTaps = Object.keys(updatedTaps)
