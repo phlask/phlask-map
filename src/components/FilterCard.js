@@ -25,7 +25,9 @@ export class FilterCard extends Component {
       //     this.props.toggleSwitch("ada", this.state.adachecked)
       //   );
       this.props.dispatch(setToggleState("handicap", !this.props.handicap));
-    } else console.log("error with toggle");
+    } else {
+      console.log("error with toggle");
+    }
   }
 
   render() {
