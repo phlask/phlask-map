@@ -1,0 +1,12 @@
+.filterIcon {
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+div {
+  border: none;
+  outline-style: none;
+}
