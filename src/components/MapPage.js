@@ -16,10 +16,9 @@ export class MapPage extends Component {
     this.toggleSwitch = this.toggleSwitch.bind(this);
   }
 
-  //Toggles wether color is in the tapsDisplayed array or not
+  //Toggles whether color is in the tapsDisplayed array or not
   legendButton(color) {
     const taps = [...this.state.tapsDisplayed];
-    console.log(color, taps);
 
     if (taps.includes(color)) {
       //removes color form tapsDisplayed array
