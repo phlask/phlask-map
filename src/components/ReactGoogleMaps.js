@@ -5,7 +5,7 @@ import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
-import { getTaps } from "../actions";
+import { getTaps, setFilterFunction } from "../actions";
 import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
@@ -69,30 +69,6 @@ function closest(data, v) {
 
   return closestTap;
 }
-
-// function getTaps() {
-//   return firebase
-//     .database()
-//     .ref("/")
-//     .once("value")
-//     .then(function(snapshot) {
-//       var allTaps = [];
-//       var item;
-//       for (item in snapshot.val()) {
-//         if (snapshot.val()[item].access === "WM") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].active === "N") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].access === "TrashAcademy") {
-//           continue;
-//         }
-//         allTaps.push(snapshot.val()[item]);
-//       }
-//       return allTaps;
-//     });
-// }
 
 function getCoordinates() {
   return new Promise(function(resolve, reject) {
@@ -338,7 +314,10 @@ export class ReactGoogleMaps extends Component {
           <div className="legend">
             <Legend />
           </div>
-          <div className="filter">
+          <div
+            className="filter"
+            onClick={() => this.props.setFilterFunction()}
+          >
             <Filter />
           </div>
         </div>
@@ -361,7 +340,7 @@ const mapStateToProps = state => ({
   filteredTaps: state.filteredTaps
 });
 
-const mapDispatchToProps = { getTaps };
+const mapDispatchToProps = { getTaps, setFilterFunction };
 
 export default connect(
   mapStateToProps,

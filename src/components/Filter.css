@@ -10,3 +10,7 @@ div {
   border: none;
   outline-style: none;
 }
+
+.filterIcon:hover {
+  cursor: pointer;
+}
