@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import { getTaps } from "../actions";
+import SelectedTap from './SelectedTap'
 
 // const config = {
 //   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -313,12 +314,17 @@ export class ReactGoogleMaps extends Component {
               visible={this.state.showingInfoWindow}
               onClose={this.onClose}
             >
-              <div>
+              <SelectedTap
+                organization = {this.state.selectedPlace.organization}
+                address = {this.state.selectedPlace.address}
+              >
+              </SelectedTap>
+              {/* <div>
                 <h4 className="infoWindow">
                   {this.state.selectedPlace.organization}
                 </h4>
                 <h5>{this.state.selectedPlace.address}</h5>
-              </div>
+              </div> */}
             </InfoWindow>
           </Map>
           <div className="searchBarContainer">
