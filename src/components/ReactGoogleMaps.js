@@ -317,6 +317,10 @@ export class ReactGoogleMaps extends Component {
               <SelectedTap
                 organization = {this.state.selectedPlace.organization}
                 address = {this.state.selectedPlace.address}
+                // users = {this.state.selectedPlace.users}
+                // availability = {this.state.selectedPlace.availability}
+                // accessiblility = {this.state.selectedPlace.accessiblility}
+                // filtered = {this.state.selectedPlace.filtered}
               >
               </SelectedTap>
               {/* <div>
