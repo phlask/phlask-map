@@ -1,0 +1,160 @@
+:root{
+    --info-main-image-height-min: 50px;
+    --info-main-image-height-max: 200px;
+    --info-icons-size-min: 20px;
+    --info-icons-size-max: 50px;
+    --info-user-images: 25px;
+    --info-user-images-spacing: 10px;
+}
+
+#tap-info-container{
+    top: 100%;
+    width: 100%;
+    height: fit-content;
+    /* background-color: seashell; */
+    
+}
+#tap-content{
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    height: fit-content;
+    justify-content: center;
+}
+#tap-organization-name{
+    text-align: center;
+    /* background-color: salmon; */
+}
+#tap-info-img-box{
+    position: relative;
+    /* min-width: var(--info-main-image-height-min);
+    max-width: var(--info-main-image-height-max); */
+    width: 100%;
+    height: 25vw;
+    max-width: 100%;
+    max-height: var(--info-main-image-height-max);
+    min-width: 100%;
+    min-height: var(--info-main-image-height-min);
+}
+#tap-info-img{
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+#tap-info-address-box{
+    
+}
+#tap-info-address{
+    text-align: center;
+}
+#tap-info-icons-and-users{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    /* background-color: aliceblue; */
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+#tap-info-icons-box{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    /* flex: 3; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* margin: 10px; */
+    /* justify-content: space-around; */
+    /* background-color: yellowgreen; */
+}
+.tap-info-icon{
+    position: relative;
+    /* height: fit-content;
+    width: fit-content; */
+    /* flex-shrink: 2; */
+    margin: 2px;
+    min-width: var(--info-icons-size-min);
+    max-width: var(--info-icons-size-max);
+    min-height: var(--info-icons-size-min);
+    max-height: var(--info-icons-size-max);
+    height: 5vw;
+    width: 5vw;
+    /* background-color: yellowgreen; */
+}
+.tap-info-icon-img{
+    position: relative;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    /* background-color: sandybrown; */
+}
+#tap-info-users-box{
+    /* display: flex;
+    flex-direction: row;
+    height: var(--info-user-images); */
+    /* flex: 1; */
+    width: calc( var(--info-user-images) * 2);
+    /* background-color: tomato; */
+}
+#tap-info-users{
+    height: var(--info-user-images);
+    display: flex;
+    flex-direction: row;
+}
+.tap-info-users-icon{
+    position: relative;
+    width: 10px;
+   /* flex: 1; */
+   /* display: inline-block; */
+   /* width: fit-content; */
+   /* height: 50px; */
+   /* background-color: lightblue; */
+
+}
+#tap-info-other-users{
+    font-size: 12px;
+    width: 100%; 
+}
+/* Description */
+.tap-info-users-img{
+    position: absolute;
+    width: var(--info-user-images);
+    height: var(--info-user-images);
+    object-fit: cover;
+    border-radius: 50%;
+    /* background-color: rgb(137, 154, 160); */
+
+}
+#tap-info-description-box{
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,.2);
+    text-align: center;
+    width: 100%;
+    height: fit-content;
+    /* background-color: violet; */
+}
+#tap-info-description{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
+#tap-info-arrow-box{
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    /* opacity: .4;
+    background-color: royalblue; */
+}
+#tap-info-arrow{
+
+}
