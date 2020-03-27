@@ -15,7 +15,7 @@ import profileImg3 from './images/profileImg3.jpg'
 const tempImages = {
     tapImg: sampleImg,
     infoImages: [
-        privateTap,
+        // privateTap,
         privateRestricted,
         privateTap,
         privateRestricted,
@@ -56,7 +56,7 @@ export class SelectedTap extends React.Component{
                             as well as the first [4] profile images [shrunken] of users 
                             who've contributed to this tap
                         */}
-                        <div id='tap-info-icons-and-users'>
+                        <div id='tap-info-quick-info'>
                             <div id='tap-info-icons-box'>
                                 {tempImages.infoImages.map((icon,index) => (
                                     <div className='tap-info-icon' key={index}>
@@ -80,6 +80,11 @@ export class SelectedTap extends React.Component{
                                 ))}
                                 </div>
                                 <div id='tap-info-other-users'>...12 others</div>
+                            </div>
+                            <div id='tap-info-hours-container'>
+                                <div id='tap-info-org-status'>
+                                    Open
+                                </div>
                             </div>
                         </div>
                         

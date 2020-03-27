@@ -3,16 +3,17 @@
     --info-main-image-height-max: 200px;
     --info-icons-size-min: 20px;
     --info-icons-size-max: 50px;
-    --info-user-images: 25px;
+    --info-user-images: 3vw;
+    --info-user-images-min: 20px;
+    --info-user-images-max: 50px;
     --info-user-images-spacing: 10px;
 }
 
 #tap-info-container{
     top: 100%;
-    width: 100%;
+    width: fit-content;
     height: fit-content;
     /* background-color: seashell; */
-    
 }
 #tap-content{
     position: relative;
@@ -51,21 +52,23 @@
 #tap-info-address{
     text-align: center;
 }
-#tap-info-icons-and-users{
+#tap-info-quick-info{
     position: relative;
     width: 100%;
     height: fit-content;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     /* background-color: aliceblue; */
-    justify-content: space-around;
+    justify-content: center;
     margin-bottom: 10px;
 }
 #tap-info-icons-box{
     position: relative;
     height: fit-content;
     width: fit-content;
-    /* flex: 3; */
+    max-width: 70%;
+    flex: 5;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -79,7 +82,7 @@
     /* height: fit-content;
     width: fit-content; */
     /* flex-shrink: 2; */
-    margin: 2px;
+    margin: 0 2px 0 2px;
     min-width: var(--info-icons-size-min);
     max-width: var(--info-icons-size-max);
     min-height: var(--info-icons-size-min);
@@ -98,41 +101,68 @@
 }
 #tap-info-users-box{
     /* display: flex;
-    flex-direction: row;
-    height: var(--info-user-images); */
-    /* flex: 1; */
+    flex-direction: row; */
+    /* height: var(--info-user-images); */
+    flex: 2;
     width: calc( var(--info-user-images) * 2);
     /* background-color: tomato; */
 }
 #tap-info-users{
     height: var(--info-user-images);
+    min-height: var(--info-user-images-min);
+    max-height: var(--info-user-images-max);
     display: flex;
     flex-direction: row;
+    /* background-color: pink; */
 }
 .tap-info-users-icon{
     position: relative;
-    width: 10px;
+    width: calc(var(--info-user-images) / 3);
+    height: var(--info-user-images);
+    min-height: var(--info-user-images-min);
+    max-height: var(--info-user-images-max);
    /* flex: 1; */
    /* display: inline-block; */
    /* width: fit-content; */
    /* height: 50px; */
    /* background-color: lightblue; */
-
+   /* border: brown solid 1px; */
 }
-#tap-info-other-users{
-    font-size: 12px;
-    width: 100%; 
-}
-/* Description */
 .tap-info-users-img{
-    position: absolute;
+    position: relative;
     width: var(--info-user-images);
     height: var(--info-user-images);
+    min-width: var(--info-user-images-min);
+    min-height: var(--info-user-images-min);
+    max-width: var(--info-user-images-max);
+    max-height: var(--info-user-images-max);
     object-fit: cover;
     border-radius: 50%;
     /* background-color: rgb(137, 154, 160); */
 
 }
+#tap-info-other-users{
+    font-size: .9em;
+    width: fit-content; 
+    /* background-color: chartreuse; */
+}
+/* Hours */
+#tap-info-hours-container{
+    flex: 1;
+    width: 100%;
+    flex-basis: 100%;
+    height: fit-content;
+
+}
+#tap-info-org-status{
+    margin-top: 1%;
+    width: 100%;
+    color: green;
+    font-weight: 500;
+    text-align: center;
+}
+/* Description */
+
 #tap-info-description-box{
     padding-top: 10px;
     border-top: 1px solid rgba(0,0,0,.2);
