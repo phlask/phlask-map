@@ -7,3 +7,30 @@
   top: 60px;
   left: 10px;
 }
+.legend {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  margin-bottom: 20px;
+}
+
+.filter {
+  position: absolute;
+  z-index: 1000;
+  bottom: 230px;
+  left: 150px;
+  border: none;
+  outline-style: none;
+}

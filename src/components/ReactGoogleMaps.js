@@ -5,8 +5,11 @@ import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
-import { getTaps } from "../actions";
 import SelectedTap from './SelectedTap'
+import { getTaps, setFilterFunction } from "../actions";
+import Legend from "./Legend";
+import Filter from "./Filter";
+import { Spinner } from "react-bootstrap";
 
 // const config = {
 //   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
@@ -67,30 +70,6 @@ function closest(data, v) {
 
   return closestTap;
 }
-
-// function getTaps() {
-//   return firebase
-//     .database()
-//     .ref("/")
-//     .once("value")
-//     .then(function(snapshot) {
-//       var allTaps = [];
-//       var item;
-//       for (item in snapshot.val()) {
-//         if (snapshot.val()[item].access === "WM") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].active === "N") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].access === "TrashAcademy") {
-//           continue;
-//         }
-//         allTaps.push(snapshot.val()[item]);
-//       }
-//       return allTaps;
-//     });
-// }
 
 function getCoordinates() {
   return new Promise(function(resolve, reject) {
@@ -169,7 +148,8 @@ export class ReactGoogleMaps extends Component {
       taps: [],
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
-      filteredTaps: []
+      filteredTaps: [],
+      zoom: 16
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -200,12 +180,15 @@ export class ReactGoogleMaps extends Component {
 
   // componentDidUpdate() {  }
 
-  onMarkerClick = (props, marker, e) =>
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
+      currlat: props.position.lat,
+      currlon: props.position.lng
     });
+  };
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -249,10 +232,11 @@ export class ReactGoogleMaps extends Component {
   }
 
   searchForLocation = location => {
-    this.setState({ currlat: location.lat, currlon: location.lng });
+    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
   };
 
   render() {
+    console.log(this.state.zoom);
     if (this.props.allTaps.length) {
       var closestTap = closest(this.props.allTaps, {
         lat: this.state.currlat,
@@ -271,7 +255,7 @@ export class ReactGoogleMaps extends Component {
             google={this.props.google}
             className={"map"}
             style={style}
-            zoom={16}
+            zoom={this.state.zoom}
             initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
@@ -337,10 +321,24 @@ export class ReactGoogleMaps extends Component {
               search={location => this.searchForLocation(location)}
             />
           </div>
+          <div className="legend">
+            <Legend />
+          </div>
+          <div
+            className="filter"
+            onClick={() => this.props.setFilterFunction()}
+          >
+            <Filter />
+          </div>
         </div>
       );
     } else {
-      return <div>Loading taps...</div>;
+      return (
+        <div className="loading">
+          <Spinner animation="border" variant="info" className="spinner" />
+          Loading taps...
+        </div>
+      );
     }
   }
 }
@@ -352,7 +350,7 @@ const mapStateToProps = state => ({
   filteredTaps: state.filteredTaps
 });
 
-const mapDispatchToProps = { getTaps };
+const mapDispatchToProps = { getTaps, setFilterFunction };
 
 export default connect(
   mapStateToProps,
