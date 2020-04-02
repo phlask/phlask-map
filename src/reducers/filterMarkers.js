@@ -1,6 +1,7 @@
 import * as actions from "../actions";
 
 const initialState = {
+  filterFunction: false,
   filtered: false,
   handicap: false,
   allTaps: [],
@@ -92,9 +93,13 @@ export default (state = initialState, act) => {
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
-    
+
+    case actions.SET_FILTER_FUNCTION:
+      console.log("set filter func");
+      return { filterFunction: !state.filterFunction, ...state };
+
     default:
-      return state
+      return state;
   }
 };
 

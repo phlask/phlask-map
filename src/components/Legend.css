@@ -1,0 +1,14 @@
+.filterCard {
+  width: 170px;
+}
+
+.tapIcon {
+  position: relative;
+  top: -10px;
+  margin: 5px;
+}
+
+.tapName{
+  font-size: 12px;
+
+}

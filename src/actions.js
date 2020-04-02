@@ -18,6 +18,11 @@ export const setToggleState = (toggle, toggleState) => ({
   toggleState
 });
 
+export const SET_FILTER_FUNCTION = "SET_FILTER_FUNCTION";
+export const setFilterFunction = () => ({
+  type: SET_FILTER_FUNCTION
+});
+
 export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
 export const getTapsSuccess = allTaps => ({
   type: GET_TAPS_SUCCESS,
@@ -46,5 +51,4 @@ export const getTaps = () => dispatch => {
       }
       dispatch(getTapsSuccess(allTaps));
     });
-  // .then(allTaps => dispatch(getTapsSuccess(allTaps)));
 };
