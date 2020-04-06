@@ -32,6 +32,14 @@
     justify-content: center;
     background-color: white;
 }
+#tap-content-expanded{
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    height: fit-content;
+    justify-content: center;
+    background-color: white;
+}
 #selected-tap-head{
     display: flex;
     flex-direction: row;
@@ -195,10 +203,14 @@
     /* background-color: violet; */
 }
 #tap-info-description{
+    height: 50px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;  
+}
+#tap-info-description-expanded{
+    height: fit-content;
 }
 #tap-info-arrow-box{
     position: absolute;
