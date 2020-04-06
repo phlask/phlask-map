@@ -10,7 +10,8 @@
 }
 
 #tap-info-container{
-    top: 100%;
+    bottom: 0;
+    position: absolute;
     width: fit-content;
     height: fit-content;
     /* background-color: seashell; */
@@ -21,6 +22,7 @@
     max-width: 100%;
     height: fit-content;
     justify-content: center;
+    background-color: khaki;
 }
 #tap-organization-name{
     text-align: center;

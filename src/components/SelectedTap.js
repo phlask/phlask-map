@@ -30,7 +30,8 @@ export class SelectedTap extends React.Component{
         return(
             <div>
 
-                <div id='tap-info-container'>
+                {this.props.visible
+                ?<div id='tap-info-container'>
                     <div id='tap-content'>
                         {/* Location Name */}
                         <h4 id='tap-organization-name'>
@@ -38,11 +39,12 @@ export class SelectedTap extends React.Component{
                         </h4>
                         {/* Main Image */}
                         <div id='tap-info-img-box'>
-                            <image id ='tap-info-img'
+                            <img id ='tap-info-img'
                                 // src={this.props.displayImg}
                                 src={tempImages.tapImg}
+                                alt=''
                             > 
-                            </image>
+                            </img>
                         </div>
                         {/* Address */}
                         <div id='tap-info-address-box'>
@@ -60,22 +62,23 @@ export class SelectedTap extends React.Component{
                             <div id='tap-info-icons-box'>
                                 {tempImages.infoImages.map((icon,index) => (
                                     <div className='tap-info-icon' key={index}>
-                                        <image className='tap-info-icon-img' src={icon}></image>
+                                        <img className='tap-info-icon-img' src={icon} alt=''></img>
                                     </div>
                                 ))}
                             </div>
                             <div id='tap-info-users-box'>
                                 <div id='tap-info-users'>
                                 {tempImages.profile.map((images, index) => (
-                                   <div 
+                                <div 
                                     className='tap-info-users-icon' 
                                     key={index}
                                     // style={{left: `${index * 20}px`}}
                                     >
-                                        <image 
+                                        <img 
                                             className='tap-info-users-img' 
                                             src={images} 
-                                        ></image>
+                                            alt=''
+                                        ></img>
                                     </div>
                                 ))}
                                 </div>
@@ -105,11 +108,10 @@ export class SelectedTap extends React.Component{
 
                     </div>
                 </div>
+                :<div></div>
+                }
 
-                {/* <h4 className="infoWindow">
-                {this.props.organization}
-                </h4>
-                <h5>{this.props.address}</h5> */}
+                
             </div>
         )
     }
