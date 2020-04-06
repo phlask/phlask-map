@@ -43,8 +43,8 @@ export class MapPage extends Component {
 
   render() {
     return (
-      <div>
-        {/* <Head legendButton={this.legendButton} /> */}
+      <div className="MapPage">
+        <Head legendButton={this.legendButton} />
         <ReactGoogleMaps
           tapsDisplayed={this.state.tapsDisplayed}
           ada={this.state.ada}

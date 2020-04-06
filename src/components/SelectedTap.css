@@ -7,10 +7,18 @@
     --info-user-images-min: 20px;
     --info-user-images-max: 50px;
     --info-user-images-spacing: 10px;
+    --tap-menu-margin: 5%;
 }
 
 #tap-info-container{
-    bottom: 0;
+    top: 0;
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    /* background-color: seashell; */
+}
+#tap-info-container-mobile{
+    top: 0;
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -22,11 +30,24 @@
     max-width: 100%;
     height: fit-content;
     justify-content: center;
-    background-color: khaki;
+    background-color: white;
+}
+#selected-tap-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 #tap-organization-name{
     text-align: center;
-    /* background-color: salmon; */
+    flex: 3;
+    margin: 0 var(--tap-menu-margin) 0 var(--tap-menu-margin);
+}
+#tap-menu{
+    position: absolute;
+    right: var(--tap-menu-margin);
+}
+#tap-menu-icon{
+
 }
 #tap-info-img-box{
     position: relative;
