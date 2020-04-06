@@ -131,7 +131,7 @@ const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: "100%",
-  height: "81%",
+  height: "100%",
   position: "relative"
 };
 
@@ -244,12 +244,12 @@ export class ReactGoogleMaps extends Component {
       });
       return (
         <div>
-          <ClosestTap
+          {/* <ClosestTap
             lat={closestTap.lat}
             lon={closestTap.lon}
             org={closestTap.organization}
             address={closestTap.address}
-          />
+          /> */}
 
           <Map
             google={this.props.google}
@@ -293,12 +293,12 @@ export class ReactGoogleMaps extends Component {
                 />
               ))}
 
-            <InfoWindow
+            {/* <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               onClose={this.onClose}
-            >
-              <SelectedTap
+            > */}
+              {/* <SelectedTap
                 organization = {this.state.selectedPlace.organization}
                 address = {this.state.selectedPlace.address}
                 // users = {this.state.selectedPlace.users}
@@ -306,14 +306,24 @@ export class ReactGoogleMaps extends Component {
                 // accessiblility = {this.state.selectedPlace.accessiblility}
                 // filtered = {this.state.selectedPlace.filtered}
               >
-              </SelectedTap>
+              </SelectedTap> */}
               {/* <div>
                 <h4 className="infoWindow">
                   {this.state.selectedPlace.organization}
                 </h4>
                 <h5>{this.state.selectedPlace.address}</h5>
               </div> */}
-            </InfoWindow>
+            {/* </InfoWindow> */}
+            <SelectedTap
+                organization = {this.state.selectedPlace.organization}
+                address = {this.state.selectedPlace.address}
+                visible = {this.state.showingInfoWindow}
+                // users = {this.state.selectedPlace.users}
+                // availability = {this.state.selectedPlace.availability}
+                // accessiblility = {this.state.selectedPlace.accessiblility}
+                // filtered = {this.state.selectedPlace.filtered}
+              >
+              </SelectedTap>
           </Map>
           <div className="searchBarContainer">
             <SearchBar
