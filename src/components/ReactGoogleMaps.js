@@ -131,7 +131,7 @@ const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: "100%",
-  height: "100%",
+  height: "81%",
   position: "relative"
 };
 
@@ -244,12 +244,12 @@ export class ReactGoogleMaps extends Component {
       });
       return (
         <div>
-          {/* <ClosestTap
+          <ClosestTap
             lat={closestTap.lat}
             lon={closestTap.lon}
             org={closestTap.organization}
             address={closestTap.address}
-          /> */}
+          />
 
           <Map
             google={this.props.google}

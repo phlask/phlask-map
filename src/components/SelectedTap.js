@@ -8,9 +8,10 @@ import filteredBlue from './images/filteredBlue.png'
 import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
-import profileImg1 from './images/profileImg1.jpg'
-import profileImg2 from './images/profileImg2.png'
-import profileImg3 from './images/profileImg3.jpg'
+// import profileImg1 from './images/profileImg1.jpg'
+// import profileImg2 from './images/profileImg2.png'
+// import profileImg3 from './images/profileImg3.jpg'
+import tapMenu from './images/tapMenu.png'
 
 const tempImages = {
     tapImg: sampleImg,
@@ -22,7 +23,7 @@ const tempImages = {
         accessible,
         filteredBlue,
         privateShared],
-    profile: [profileImg1,profileImg2,profileImg3]
+    // profile: [profileImg1,profileImg2,profileImg3]
 }
 export class SelectedTap extends React.Component{
 
@@ -34,8 +35,13 @@ export class SelectedTap extends React.Component{
                 ?<div id='tap-info-container'>
                     <div id='tap-content'>
                         {/* Location Name */}
-                        <h4 id='tap-organization-name'>
-                            {this.props.organization}
+                        <h4 id='selected-tap-head'>
+                            <div id='tap-organization-name'>
+                                {this.props.organization}
+                            </div>
+                            <div id='tap-menu'>
+                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                            </div>
                         </h4>
                         {/* Main Image */}
                         <div id='tap-info-img-box'>
@@ -66,7 +72,7 @@ export class SelectedTap extends React.Component{
                                     </div>
                                 ))}
                             </div>
-                            <div id='tap-info-users-box'>
+                            {/* <div id='tap-info-users-box'>
                                 <div id='tap-info-users'>
                                 {tempImages.profile.map((images, index) => (
                                 <div 
@@ -83,7 +89,7 @@ export class SelectedTap extends React.Component{
                                 ))}
                                 </div>
                                 <div id='tap-info-other-users'>...12 others</div>
-                            </div>
+                            </div> */}
                             <div id='tap-info-hours-container'>
                                 <div id='tap-info-org-status'>
                                     Open
