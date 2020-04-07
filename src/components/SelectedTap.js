@@ -2,6 +2,7 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 // import { connect } from 'react-redux'
 import './SelectedTap.css'
+import arrow from './images/arrow.png'
 import sampleImg from './fountain.png'
 import accessible from './images/accessible.png'
 import filteredBlue from './images/filteredBlue.png'
@@ -56,6 +57,10 @@ export class SelectedTap extends React.Component{
                     {this.state.isExpanded
                     ?<div id='tap-content-expanded'>
                         {/* Location Name */}
+                        <div id='tap-info-drag-area' onClick={this.collapseTap.bind(this)}>
+                            <div id='tap-info-drag-bar'></div>
+                            <img class='tap-info-arrow' src={arrow} alt=''></img>
+                        </div>
                         <h4 id='selected-tap-head'>
                             <div id='tap-organization-name'>
                                 {this.props.organization}
@@ -122,17 +127,23 @@ export class SelectedTap extends React.Component{
                         <div id='tap-info-description-box'>
                             <div id='tap-info-description-expanded'>
                                 {/* {this.props.description} */}
-                                This place is located downtown, near Wawa at the corner of Broad and Chestnut.
-                                There is a gate next to the build ding, the fountain is on the left side of the gate.
+                                Lorem ipsum dolor sit amet, vix ex modus philosophia. At mei idque noluisse suavitate. Probo reprimique delicatissimi nec ut, diam mandamus te cum. Ad mea bonorum voluptua, ex quo melius fabellas efficiendi. Alii vituperatoribus vix te, per inani disputationi eu, omnium assueverit an has.
+
+No vim verear contentiones, sed et sale nihil dictas. Ad tamquam ornatus explicari est, sea laudem volutpat maiestatis ad. Dicit paulo an eam, id wisi copiosae dissentiunt cum, has malis indoctum eu. Eam et fuisset invenire, in erant nullam liberavisse ius, ut est affert ceteros. Cotidieque neglegentur usu ex, cu nam delectus definitiones, qui eu justo dicit iriure. Qui nibh scripta ne.
+
+Scribentur deterruisset nec ea, meis possit diceret has ut. Inermis legendos sea te. Vis in quando mollis. Ne dolore alterum vim.
+
+Eos tollit adipisci ne, ea euismod oporteat suscipiantur eos. Cu dicant nemore aperiri pro, ex pri ubique verear platonem. Ius ut albucius probatus intellegam, id recteque adipiscing per. Ex augue commune suavitate vis. Pri in pertinax intellegebat.
+
+Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapientem, definitiones signiferumque id est, modo essent honestatis ei pro. Senserit urbanitas comprehensam ne est. Vel docendi similique ex, reque mundi percipitur vix no. Vel bonorum delenit admodum te, eos cibo oratio melius et.
                             </div>
                         </div>
-                        {/* "More" arrow */}
                     </div>
                     
                     /** Preview **/
 
                     :<div id='tap-content'>
-                        {/* Location Name */}
+                        {/* Head */}
                         <h4 id='selected-tap-head'>
                             <div id='tap-organization-name'>
                                 {this.props.organization}
@@ -197,8 +208,9 @@ export class SelectedTap extends React.Component{
                         
                         {/* Description */}
                         <div id='tap-info-description-box'>
-                            <div id='tap-info-arrow-box'>
-                                <div id='tap-info-arrow'></div>
+                                {/* "More" arrow */}
+                            <div id='tap-info-arrow-box' onClick={this.expandTap.bind(this)}>
+                                <img class='tap-info-arrow' src={arrow} alt=''></img>
                             </div>
                             <div id='tap-info-description'>
                                 {/* {this.props.description} */}
@@ -207,7 +219,6 @@ export class SelectedTap extends React.Component{
                             </div>
                             
                         </div>
-                        {/* "More" arrow */}
                         
 
                     </div>
