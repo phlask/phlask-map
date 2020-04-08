@@ -59,7 +59,7 @@ export class SelectedTap extends React.Component{
                         {/* Location Name */}
                         <div id='tap-info-drag-area' onClick={this.collapseTap.bind(this)}>
                             <div id='tap-info-drag-bar'></div>
-                            <img class='tap-info-arrow' src={arrow} alt=''></img>
+                            <img className='tap-info-arrow' src={arrow} alt=''></img>
                         </div>
                         <h4 id='selected-tap-head'>
                             <div id='tap-organization-name'>
@@ -210,7 +210,7 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
                         <div id='tap-info-description-box'>
                                 {/* "More" arrow */}
                             <div id='tap-info-arrow-box' onClick={this.expandTap.bind(this)}>
-                                <img class='tap-info-arrow' src={arrow} alt=''></img>
+                                <img className='tap-info-arrow' src={arrow} alt=''></img>
                             </div>
                             <div id='tap-info-description'>
                                 {/* {this.props.description} */}
