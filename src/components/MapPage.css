@@ -1,0 +1,4 @@
+.MapPage{
+    display: flex;
+    flex-direction: column;
+}

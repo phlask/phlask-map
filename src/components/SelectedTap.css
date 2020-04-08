@@ -18,7 +18,7 @@
     /* background-color: seashell; */
 }
 #tap-info-container-mobile{
-    bottom: 20%;
+    bottom: 0;
     position: absolute;
     width: 90%;
     height: fit-content;

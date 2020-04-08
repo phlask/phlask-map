@@ -131,7 +131,7 @@ const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: "100%",
-  height: "81%",
+  height: "100%",
   position: "relative"
 };
 
