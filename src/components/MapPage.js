@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import './MapPage.css'
 import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
 

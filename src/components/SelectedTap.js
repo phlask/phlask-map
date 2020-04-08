@@ -50,7 +50,20 @@ export class SelectedTap extends React.Component{
 
                 {this.props.visible
                 // Preview
-                ?<div id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}>
+                ?<div 
+                    id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
+                    style={this.state.isExpanded ? {
+                            position: 'relative',
+                            height: '100vh',
+                            overflow: 'scroll',
+                            top: '10px'
+                        } 
+                        : {
+                            height:'fit-content',
+                            bottom: '0'   
+                        }
+                    }
+                    >
 
                     {/* Expanded View */}
 
@@ -61,67 +74,53 @@ export class SelectedTap extends React.Component{
                             <div id='tap-info-drag-bar'></div>
                             <img className='tap-info-arrow' src={arrow} alt=''></img>
                         </div>
-                        <h4 id='selected-tap-head'>
-                            <div id='tap-organization-name'>
-                                {this.props.organization}
+                        
+                        <div id='tap-info'>
+                            <h4 id='selected-tap-head'>
+                                <div id='tap-organization-name'>
+                                    {this.props.organization}
+                                </div>
+                                <div id='tap-menu'>
+                                    <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                                </div>
+                            </h4>
+                            {/* Main Image */}
+                            <div id='tap-info-img-box'>
+                                <img id ='tap-info-img'
+                                    // src={this.props.displayImg}
+                                    src={tempImages.tapImg}
+                                    alt=''
+                                > 
+                                </img>
                             </div>
-                            <div id='tap-menu'>
-                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                            {/* Address */}
+                            <div id='tap-info-address-box'>
+                                <h5 id='tap-info-address'>
+                                    {this.props.address}
+                                </h5>
                             </div>
-                        </h4>
-                        {/* Main Image */}
-                        <div id='tap-info-img-box'>
-                            <img id ='tap-info-img'
-                                // src={this.props.displayImg}
-                                src={tempImages.tapImg}
-                                alt=''
-                            > 
-                            </img>
-                        </div>
-                        {/* Address */}
-                        <div id='tap-info-address-box'>
-                            <h5 id='tap-info-address'>
-                                {this.props.address}
-                            </h5>
+                            
+                            {/* Icons & Users*/}
+                            {/* Receive a list of icons corresponding to the selected tap,
+                                as well as the first [4] profile images [shrunken] of users 
+                                who've contributed to this tap
+                            */}
+                            <div id='tap-info-quick-info'>
+                                <div id='tap-info-icons-box'>
+                                    {tempImages.infoImages.map((icon,index) => (
+                                        <div className='tap-info-icon' key={index}>
+                                            <img className='tap-info-icon-img' src={icon} alt=''></img>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div id='tap-info-hours-container'>
+                                    <div id='tap-info-org-status'>
+                                        Open
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        {/* Icons & Users*/}
-                        {/* Receive a list of icons corresponding to the selected tap,
-                            as well as the first [4] profile images [shrunken] of users 
-                            who've contributed to this tap
-                        */}
-                        <div id='tap-info-quick-info'>
-                            <div id='tap-info-icons-box'>
-                                {tempImages.infoImages.map((icon,index) => (
-                                    <div className='tap-info-icon' key={index}>
-                                        <img className='tap-info-icon-img' src={icon} alt=''></img>
-                                    </div>
-                                ))}
-                            </div>
-                            {/* <div id='tap-info-users-box'>
-                                <div id='tap-info-users'>
-                                {tempImages.profile.map((images, index) => (
-                                <div 
-                                    className='tap-info-users-icon' 
-                                    key={index}
-                                    // style={{left: `${index * 20}px`}}
-                                    >
-                                        <img 
-                                            className='tap-info-users-img' 
-                                            src={images} 
-                                            alt=''
-                                        ></img>
-                                    </div>
-                                ))}
-                                </div>
-                                <div id='tap-info-other-users'>...12 others</div>
-                            </div> */}
-                            <div id='tap-info-hours-container'>
-                                <div id='tap-info-org-status'>
-                                    Open
-                                </div>
-                            </div>
-                        </div>
                         
                         {/* Description */}
                         <div id='tap-info-description-box'>
@@ -138,6 +137,8 @@ Eos tollit adipisci ne, ea euismod oporteat suscipiantur eos. Cu dicant nemore a
 Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapientem, definitiones signiferumque id est, modo essent honestatis ei pro. Senserit urbanitas comprehensam ne est. Vel docendi similique ex, reque mundi percipitur vix no. Vel bonorum delenit admodum te, eos cibo oratio melius et.
                             </div>
                         </div>
+                        
+                        
                     </div>
                     
                     /** Preview **/
