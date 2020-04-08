@@ -314,6 +314,7 @@ export class ReactGoogleMaps extends Component {
                 <h5>{this.state.selectedPlace.address}</h5>
               </div> */}
             {/* </InfoWindow> */}
+            </Map>
             <SelectedTap
                 organization = {this.state.selectedPlace.organization}
                 address = {this.state.selectedPlace.address}
@@ -324,12 +325,12 @@ export class ReactGoogleMaps extends Component {
                 // filtered = {this.state.selectedPlace.filtered}
               >
               </SelectedTap>
-          </Map>
+          
           <div className="searchBarContainer">
-            <SearchBar
+            {/* <SearchBar
               className="searchBar"
               search={location => this.searchForLocation(location)}
-            />
+            /> */}
           </div>
           <div className="legend">
             <Legend />
