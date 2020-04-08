@@ -9,7 +9,8 @@
   ],
   "rules": {
     "react/prop-types": 0,
-    "no-console": 1
+    "no-console": 1,
+    "no-unused-vars": 0
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {
