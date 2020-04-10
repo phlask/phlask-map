@@ -3,9 +3,11 @@ import { isMobile } from 'react-device-detect'
 // import { connect } from 'react-redux'
 import './SelectedTap.css'
 import arrow from './images/arrow.png'
+import hoursArrow from './images/hoursArrow.png'
 import sampleImg from './fountain.png'
 import accessible from './images/accessible.png'
 import filteredBlue from './images/filteredBlue.png'
+import phlaskGreen from './images/phlaskGreen.png'
 import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
@@ -18,12 +20,14 @@ const tempImages = {
     tapImg: sampleImg,
     infoImages: [
         // privateTap,
-        privateRestricted,
-        privateTap,
-        privateRestricted,
+        phlaskGreen,
+        // privateRestricted,
+        // privateTap,
+        // privateRestricted,
         accessible,
         filteredBlue,
-        privateShared],
+        // privateShared
+    ],
     // profile: [profileImg1,profileImg2,profileImg3]
 }
 export class SelectedTap extends React.Component{
@@ -55,12 +59,11 @@ export class SelectedTap extends React.Component{
                     style={this.state.isExpanded ? {
                             position: 'relative',
                             height: '100vh',
-                            overflow: 'scroll',
                             top: '10px'
                         } 
                         : {
                             height:'fit-content',
-                            bottom: '0'   
+                            bottom: '5px'   
                         }
                     }
                     >
@@ -69,14 +72,20 @@ export class SelectedTap extends React.Component{
 
                     {this.state.isExpanded
                     ?<div id='tap-content-expanded'>
-                        {/* Location Name */}
-                        <div id='tap-info-drag-area' onClick={this.collapseTap.bind(this)}>
+                        {/* Drag & Close Area */}
+                        <div id='tap-info-drag-area-close' onClick={this.collapseTap.bind(this)}>
+                            <div id='tap-info-drag-bar'></div>
+                            <img className='tap-info-arrow' src={arrow} alt=''></img>
+                        </div>
+                        {/* Placeholder for Fixed Close Area */}
+                        <div id='tap-info-drag-area-placeholder'>
                             <div id='tap-info-drag-bar'></div>
                             <img className='tap-info-arrow' src={arrow} alt=''></img>
                         </div>
                         
                         <div id='tap-info'>
                             <h4 id='selected-tap-head'>
+                                {/* Location Name */}
                                 <div id='tap-organization-name'>
                                     {this.props.organization}
                                 </div>
@@ -100,11 +109,7 @@ export class SelectedTap extends React.Component{
                                 </h5>
                             </div>
                             
-                            {/* Icons & Users*/}
-                            {/* Receive a list of icons corresponding to the selected tap,
-                                as well as the first [4] profile images [shrunken] of users 
-                                who've contributed to this tap
-                            */}
+                            {/* Tap Info Icons & Hours */}
                             <div id='tap-info-quick-info'>
                                 <div id='tap-info-icons-box'>
                                     {tempImages.infoImages.map((icon,index) => (
@@ -113,12 +118,21 @@ export class SelectedTap extends React.Component{
                                         </div>
                                     ))}
                                 </div>
-                                <div id='tap-info-hours-container'>
-                                    <div id='tap-info-org-status'>
-                                        Open
+                                
+                            </div>
+                            <div id='tap-info-status-container'>
+                                <div id='tap-info-org-status'>Open</div>
+                                <div id='tap-info-walking-time'>12 mins</div>
+                            </div>
+                            <div id='tap-info-hours-container'>
+                                <div id='tap-info-hours'>
+                                    <span>8am</span>-<span>10pm</span>
+                                    <div id='hours-dropdown-arrow-container'>
+                                        <img id='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                         
                         
@@ -182,29 +196,18 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
                                     </div>
                                 ))}
                             </div>
-                            {/* <div id='tap-info-users-box'>
-                                <div id='tap-info-users'>
-                                {tempImages.profile.map((images, index) => (
-                                <div 
-                                    className='tap-info-users-icon' 
-                                    key={index}
-                                    // style={{left: `${index * 20}px`}}
-                                    >
-                                        <img 
-                                            className='tap-info-users-img' 
-                                            src={images} 
-                                            alt=''
-                                        ></img>
-                                    </div>
-                                ))}
-                                </div>
-                                <div id='tap-info-other-users'>...12 others</div>
-                            </div> */}
-                            <div id='tap-info-hours-container'>
-                                <div id='tap-info-org-status'>
-                                    Open
-                                </div>
+                            <div id='tap-info-org-status'>
+                                Open
                             </div>
+                        </div>
+                        <div id='tap-info-walking-time'
+                            style={
+                                {
+                                    marginBottom: '10px'
+                                }
+                            }
+                        >
+                            12 mins
                         </div>
                         
                         {/* Description */}
