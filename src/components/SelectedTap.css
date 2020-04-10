@@ -182,6 +182,8 @@
     -o-transform: translateX(-50%);
 }
 #tap-info-hours{
+    display: flex;
+    flex-direction: row;
     width: fit-content;
     box-sizing: border-box;
     text-align: center;
@@ -196,12 +198,12 @@
     -o-border-radius: 5px;
 }
 #hours-dropdown-arrow-container{
-    height: 100%;
-    background-color: seagreen;
+    width: 20px;
+    /* background-color: seagreen; */
 }
 #hours-dropdown-arrow{
-    height: 40%;
-    object-fit: contain;
+    width: 100%;
+    /* background-color: palegoldenrod; */
 }
 /* Description */
 
