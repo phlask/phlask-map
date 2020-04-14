@@ -36,8 +36,8 @@
   visibility: hidden;
   position: absolute;
   z-index: 1000;
-  bottom: 230px;
-  left: 150px;
+  bottom: 30px;
+  left: 30px;
   border: none;
   outline-style: none;
 }

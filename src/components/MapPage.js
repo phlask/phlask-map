@@ -37,7 +37,7 @@ export class MapPage extends Component {
       case "filtered":
         return this.setState({ filtered: position });
       default:
-        return this.state
+        return this.state;
     }
   }
 

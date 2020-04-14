@@ -211,20 +211,24 @@ export class ReactGoogleMaps extends Component {
   getIcon(access) {
     if (this.state.unfilteredTaps.includes(access) === true) {
       switch (access) {
+        // blue with blue outline
         case "Public":
-          return "https://i.imgur.com/fsofse7.png";
+          return "https://imgur.com/czMZ0SC.png";
+        // green with green outline
         case "Private-Shared":
-          return "https://i.imgur.com/MMsmsHG.png";
+          return "https://imgur.com/ZslHzRe.png";
+        // yellow with yellow outline
         case "Private":
-          return "https://i.imgur.com/oLPMQtg.png";
+          return "https://imgur.com/2SItPIV.png";
+        // red with red outline
         case "Restricted":
-          return "https://i.imgur.com/T93TDTO.png";
+          return "https://imgur.com/waTJBzj.png";
+        // yellow with yellow outline
         case "Semi-public":
-          return "https://i.imgur.com/MMsmsHG.png";
-        case "TrashAcademy":
-          return "https://i.imgur.com/fXTeEKL.png";
+          return "https://imgur.com/ZslHzRe.png";
+        // blue with gray outline
         default:
-          return "https://i.imgur.com/kKXG3TO.png";
+          return "https://imgur.com/iCyD4Nt.png";
       }
     } else {
       return "https://i.imgur.com/kKXG3TO.png";
@@ -236,7 +240,7 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.state.zoom);
+    console.log(this.props.filterFunction);
     if (this.props.allTaps.length) {
       var closestTap = closest(this.props.allTaps, {
         lat: this.state.currlat,
@@ -288,7 +292,10 @@ export class ReactGoogleMaps extends Component {
                   onClick={this.onMarkerClick}
                   position={{ lat: tap.lat, lng: tap.lon }}
                   icon={{
-                    url: this.getIcon(tap.access)
+                    url: this.getIcon(tap.access),
+                    // icon images as of April 2020 are 300x397 px
+                    // so scale images ~3:4 ratio
+                    scaledSize: { width: 37, height: 50 }
                   }}
                 />
               ))}
@@ -332,9 +339,9 @@ export class ReactGoogleMaps extends Component {
               search={location => this.searchForLocation(location)}
             /> */}
           </div>
-          <div className="legend">
+          {/* <div className="legend">
             <Legend />
-          </div>
+          </div> */}
           <div
             className="filter"
             onClick={() => this.props.setFilterFunction()}
@@ -358,7 +365,8 @@ const mapStateToProps = state => ({
   filtered: state.filtered,
   handicap: state.handicap,
   allTaps: state.allTaps,
-  filteredTaps: state.filteredTaps
+  filteredTaps: state.filteredTaps,
+  filterFunction: state.filterFunction
 });
 
 const mapDispatchToProps = { getTaps, setFilterFunction };
