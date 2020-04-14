@@ -4,6 +4,10 @@ import "./FilterCard.css";
 import { connect } from "react-redux";
 import { setToggleState } from "../actions";
 
+// ============================================== //
+// THIS IS THE OLD FILTER
+// ============================================== //
+
 export class FilterCard extends Component {
   constructor(props) {
     super(props);
