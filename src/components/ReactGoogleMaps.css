@@ -1,11 +1,7 @@
-/* .infoWindow {
-  font-family: "Exo 2", sans-serif;
+.map-interface{
+  display: flex;
+  flex-direction: column;
 }
-.infoBox{
-  width: 400px;
-  height: 400px;
-  background-color: khaki;
-} */
 
 .searchBarContainer {
   position: relative;
@@ -33,10 +29,17 @@
 }
 
 .filter {
-  visibility: hidden;
   position: absolute;
   z-index: 1000;
   bottom: 30px;
+  left: 30px;
+  border: none;
+  outline-style: none;
+}
+.filter-grouped{
+  position: relative;
+  z-index: 1000;
+  bottom: 15px;
   left: 30px;
   border: none;
   outline-style: none;

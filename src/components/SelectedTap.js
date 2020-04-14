@@ -37,15 +37,17 @@ export class SelectedTap extends React.Component{
     }
 
     expandTap(){
-        this.setState({
-            isExpanded: true
-        })
+        // this.setState({
+        //     isExpanded: true
+        // })
+        this.props.toggleTapInfo(true)
     }
     
     collapseTap(){
-        this.setState({
-            isExpanded: false
-        })
+        // this.setState({
+        //     isExpanded: false
+        // })
+        this.props.toggleTapInfo(false)
     }
 
     render(){
@@ -56,7 +58,7 @@ export class SelectedTap extends React.Component{
                 // Preview
                 ?<div 
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
-                    style={this.state.isExpanded ? {
+                    style={this.props.isExpanded ? {
                             position: 'relative',
                             height: '100vh',
                             top: '10px'
@@ -70,7 +72,7 @@ export class SelectedTap extends React.Component{
 
                     {/* Expanded View */}
 
-                    {this.state.isExpanded
+                    {this.props.isExpanded
                     ?<div id='tap-content-expanded'>
                         {/* Drag & Close Area */}
                         <div id='tap-info-drag-area-close' onClick={this.collapseTap.bind(this)}>

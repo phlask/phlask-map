@@ -140,6 +140,7 @@ export class ReactGoogleMaps extends Component {
     super(props);
 
     this.state = {
+      isExpanded: false,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -207,6 +208,12 @@ export class ReactGoogleMaps extends Component {
       });
     }
   };
+
+  toggleTapInfo = isExpanded => {
+    this.setState({
+      isExpanded: isExpanded
+    })
+  }
 
   getIcon(access) {
     if (this.state.unfilteredTaps.includes(access) === true) {
@@ -299,39 +306,43 @@ export class ReactGoogleMaps extends Component {
                   }}
                 />
               ))}
-
-            {/* <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-              onClose={this.onClose}
-            > */}
-              {/* <SelectedTap
-                organization = {this.state.selectedPlace.organization}
-                address = {this.state.selectedPlace.address}
-                // users = {this.state.selectedPlace.users}
-                // availability = {this.state.selectedPlace.availability}
-                // accessiblility = {this.state.selectedPlace.accessiblility}
-                // filtered = {this.state.selectedPlace.filtered}
-              >
-              </SelectedTap> */}
-              {/* <div>
-                <h4 className="infoWindow">
-                  {this.state.selectedPlace.organization}
-                </h4>
-                <h5>{this.state.selectedPlace.address}</h5>
-              </div> */}
-            {/* </InfoWindow> */}
             </Map>
-            <SelectedTap
-                organization = {this.state.selectedPlace.organization}
-                address = {this.state.selectedPlace.address}
-                visible = {this.state.showingInfoWindow}
-                // users = {this.state.selectedPlace.users}
-                // availability = {this.state.selectedPlace.availability}
-                // accessiblility = {this.state.selectedPlace.accessiblility}
-                // filtered = {this.state.selectedPlace.filtered}
-              >
-              </SelectedTap>
+            {
+              this.state.showingInfoWindow
+                ?<div className="map-interface-container"
+                    style = {
+                      this.state.isExpanded 
+                      ? {}
+                      :{ position: 'absolute', bottom: 0 }
+                    }>
+                  <div
+                    className="filter-grouped"
+                    onClick={() => this.props.setFilterFunction()}
+                  >
+                    {this.state.isExpanded 
+                      ? <div></div>
+                      :<Filter />
+                    }
+                  </div>
+                  <SelectedTap
+                      toggleTapInfo = {this.toggleTapInfo}
+                      isExpanded = {this.state.isExpanded}
+                      organization = {this.state.selectedPlace.organization}
+                      address = {this.state.selectedPlace.address}
+                      visible = {this.state.showingInfoWindow}
+                    >
+                    </SelectedTap>
+                </div>
+                :<div
+                    className="filter"
+                    onClick={() => this.props.setFilterFunction()}
+                  >
+                    {this.state.isExpanded 
+                      ? <div></div>
+                      :<Filter />
+                    }
+                  </div>
+            }
           
           <div className="searchBarContainer">
             {/* <SearchBar
@@ -342,12 +353,6 @@ export class ReactGoogleMaps extends Component {
           {/* <div className="legend">
             <Legend />
           </div> */}
-          <div
-            className="filter"
-            onClick={() => this.props.setFilterFunction()}
-          >
-            <Filter />
-          </div>
         </div>
       );
     } else {
