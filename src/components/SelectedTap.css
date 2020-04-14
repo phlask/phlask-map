@@ -23,7 +23,7 @@
     -o-transform: translateX(-50%);
 }
 #tap-info-container-mobile{
-    position: absolute;
+    position: relative;
     width: 90%;
     height: 100vh;
     left: 50%;
