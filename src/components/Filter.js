@@ -5,7 +5,7 @@ import {
   OverlayTrigger,
   Popover,
   Form,
-  Container,
+  Button,
   Row,
   Col
 } from "react-bootstrap";
@@ -36,7 +36,7 @@ export class Filter extends React.Component {
             <Popover id="popover-basic">
               <Popover.Content>
                 {/* // Legend button filters for tap type */}
-                <Row>
+                <Row className="buttonRow">
                   <Col>
                     <Row className="legendRow">
                       <p className="tapName">PUBLIC</p>
@@ -83,6 +83,10 @@ export class Filter extends React.Component {
                       </div>
                     </Row>
                   </Col>
+                  <Col xs={1}>
+                    <div className="filterDivider"></div>
+                  </Col>
+
                   {/* Toggle Switches */}
                   <Col>
                     <Row className="legendRow filterRow">
@@ -125,6 +129,10 @@ export class Filter extends React.Component {
                       />
                     </Row>
                   </Col>
+                </Row>
+
+                <Row className="resetButtonRow">
+                  <div className="resetButton">RESET</div>
                 </Row>
               </Popover.Content>
             </Popover>
