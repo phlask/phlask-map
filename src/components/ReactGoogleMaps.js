@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import SelectedTap from './SelectedTap'
-import { getTaps, setFilterFunction } from "../actions";
+import { getTaps, setFilterFunction, toggleInfoWindow, infoIsExpanded } from "../actions";
 import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
@@ -182,6 +182,7 @@ export class ReactGoogleMaps extends Component {
   // componentDidUpdate() {  }
 
   onMarkerClick = (props, marker, e) => {
+    this.props.toggleInfoWindow(true)
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -307,31 +308,35 @@ export class ReactGoogleMaps extends Component {
                 />
               ))}
             </Map>
+
+            {/* Reposition Filter when Tap Info is displayed */}
+            
             {
               this.state.showingInfoWindow
                 ?<div className="map-interface-container"
                     style = {
-                      this.state.isExpanded 
+                      this.props.infoIsExpanded 
                       ? {}
                       :{ position: 'absolute', bottom: 0 }
-                    }>
+                    }
+                  >
                   <div
                     className="filter-grouped"
                     onClick={() => this.props.setFilterFunction()}
                   >
-                    {this.state.isExpanded 
+                    {this.props.infoIsExpanded 
                       ? <div></div>
                       :<Filter />
                     }
                   </div>
                   <SelectedTap
-                      toggleTapInfo = {this.toggleTapInfo}
-                      isExpanded = {this.state.isExpanded}
-                      organization = {this.state.selectedPlace.organization}
-                      address = {this.state.selectedPlace.address}
-                      visible = {this.state.showingInfoWindow}
-                    >
-                    </SelectedTap>
+                    toggleTapInfo = {this.toggleTapInfo}
+                    organization = {this.state.selectedPlace.organization}
+                    address = {this.state.selectedPlace.address}
+                    visible = {this.props.showingInfoWindow}
+                  >
+                  </SelectedTap>
+                  {/* <div className='test-div'></div> */}
                 </div>
                 :<div
                     className="filter"
@@ -371,10 +376,12 @@ const mapStateToProps = state => ({
   handicap: state.handicap,
   allTaps: state.allTaps,
   filteredTaps: state.filteredTaps,
-  filterFunction: state.filterFunction
+  filterFunction: state.filterFunction,
+  showingInfoWindow: state.showingInfoWindow,
+  infoIsExpanded: state.infoIsExpanded
 });
 
-const mapDispatchToProps = { getTaps, setFilterFunction };
+const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow };
 
 export default connect(
   mapStateToProps,

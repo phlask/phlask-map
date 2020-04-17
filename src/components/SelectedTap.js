@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { toggleInfoExpanded, toggleInfoWindow } from '../actions'
 import { isMobile } from 'react-device-detect'
 // import { connect } from 'react-redux'
 import './SelectedTap.css'
@@ -32,33 +34,29 @@ const tempImages = {
 }
 export class SelectedTap extends React.Component{
 
-    state = {
-        isExpanded: false
-    }
-
     expandTap(){
         // this.setState({
-        //     isExpanded: true
+        //     infoIsExpanded: true
         // })
-        this.props.toggleTapInfo(true)
+        this.props.toggleInfoExpanded(true)
     }
     
     collapseTap(){
         // this.setState({
-        //     isExpanded: false
+        //     infoIsExpanded: false
         // })
-        this.props.toggleTapInfo(false)
+        this.props.toggleInfoExpanded(false)
     }
 
     render(){
         return(
             <div>
 
-                {this.props.visible
+                {this.props.showingInfoWindow
                 // Preview
                 ?<div 
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
-                    style={this.props.isExpanded ? {
+                    style={this.props.infoIsExpanded ? {
                             position: 'relative',
                             height: '100vh',
                             top: '10px'
@@ -72,7 +70,7 @@ export class SelectedTap extends React.Component{
 
                     {/* Expanded View */}
 
-                    {this.props.isExpanded
+                    {this.props.infoIsExpanded
                     ?<div id='tap-content-expanded'>
                         {/* Drag & Close Area */}
                         <div id='tap-info-drag-area-close' onClick={this.collapseTap.bind(this)}>
@@ -165,7 +163,7 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
                             <div id='tap-organization-name'>
                                 {this.props.organization}
                             </div>
-                            <div id='tap-menu'>
+                            <div id='tap-menu' onClick={()=>{this.props.toggleInfoWindow(false)}}>
                                 <img id='tap-menu-icon' src={tapMenu} alt=''/>
                             </div>
                         </h4>
@@ -239,4 +237,11 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
     }
 }
 
-export default SelectedTap
+const mapStateToProps = state => ({
+    showingInfoWindow: state.showingInfoWindow,
+    infoIsExpanded: state.infoIsExpanded
+});
+const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow };
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(SelectedTap);

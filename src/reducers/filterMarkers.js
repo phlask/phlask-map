@@ -5,7 +5,9 @@ const initialState = {
   filtered: false,
   handicap: false,
   allTaps: [],
-  filteredTaps: []
+  filteredTaps: [],
+  showingInfoWindow: false ,
+  infoIsExpanded: false
 };
 
 export default (state = initialState, act) => {
@@ -97,6 +99,12 @@ export default (state = initialState, act) => {
     case actions.SET_FILTER_FUNCTION:
       console.log("set filter func");
       return { filterFunction: !state.filterFunction, ...state };
+
+    case actions.TOGGLE_INFO_WINDOW:
+      return {...state, showingInfoWindow: act.isShown};
+
+    case actions.TOGGLE_INFO_EXPANDED:
+      return {...state, infoIsExpanded: act.isExpanded}
 
     default:
       return state;
