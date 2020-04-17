@@ -52,3 +52,15 @@ export const getTaps = () => dispatch => {
       dispatch(getTapsSuccess(allTaps));
     });
 };
+
+export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
+export const toggleInfoWindow = (isShown) => ({
+    type: TOGGLE_INFO_WINDOW,
+    isShown
+})
+
+export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED'
+export const toggleInfoExpanded = (isExpanded) => ({
+  type: TOGGLE_INFO_EXPANDED,
+  isExpanded
+})

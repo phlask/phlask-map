@@ -1,4 +1,5 @@
-.map-interface{
+.map-interface-container{
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -30,6 +31,7 @@
 
 .filter {
   position: absolute;
+  width: fit-content;
   z-index: 1000;
   bottom: 30px;
   left: 30px;
@@ -38,6 +40,7 @@
 }
 .filter-grouped{
   position: relative;
+  width: fit-content;
   z-index: 1000;
   bottom: 15px;
   left: 30px;
