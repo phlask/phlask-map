@@ -1,20 +1,26 @@
 .map-interface-container{
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
 }
 
 .searchBarContainer {
   position: relative;
-  top: 60px;
   left: 10px;
 }
-.legend {
+/* .legend {
   visibility: hidden;
   position: absolute;
   bottom: 30px;
   left: 10px;
-}
+} */
 
 .loading {
   display: flex;
@@ -42,13 +48,13 @@
   position: relative;
   width: fit-content;
   z-index: 1000;
-  bottom: 15px;
+  margin-bottom: 15px;
   left: 30px;
   border: none;
   outline-style: none;
 }
 
-/* Style the map/satellite buttons */
+/* Hide unneeded default controls */
 /* buttons container */
 .gmnoprint{
   visibility: hidden;
@@ -62,3 +68,12 @@
   -ms-border-radius: 50px !important;
   -o-border-radius: 50px !important;
 }
+.gm-fullscreen-control{
+  visibility: hidden;
+}
+/* .gm-control-active{
+  visibility: hidden;
+  position: absolute !important;
+  height: 0 !important;
+  width: 0 !important;
+} */

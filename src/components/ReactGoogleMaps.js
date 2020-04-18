@@ -7,7 +7,7 @@ import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import SelectedTap from './SelectedTap'
 import { getTaps, setFilterFunction, toggleInfoWindow, infoIsExpanded } from "../actions";
-import Legend from "./Legend";
+// import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
 
@@ -308,6 +308,12 @@ export class ReactGoogleMaps extends Component {
                 />
               ))}
             </Map>
+            <div className="searchBarContainer">
+              <SearchBar
+                className="searchBar"
+                search={location => this.searchForLocation(location)}
+              />
+            </div>
 
             {/* Reposition Filter when Tap Info is displayed */}
             
@@ -348,16 +354,6 @@ export class ReactGoogleMaps extends Component {
                     }
                   </div>
             }
-          
-          <div className="searchBarContainer">
-            {/* <SearchBar
-              className="searchBar"
-              search={location => this.searchForLocation(location)}
-            /> */}
-          </div>
-          {/* <div className="legend">
-            <Legend />
-          </div> */}
         </div>
       );
     } else {

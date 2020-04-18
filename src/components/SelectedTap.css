@@ -11,10 +11,10 @@
 }
 
 #tap-info-container{
-    position: absolute;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     background-color: white;
     -webkit-transform: translateX(-50%);
@@ -24,7 +24,7 @@
 }
 #tap-info-container-mobile{
     position: relative;
-    width: 90%;
+    width: 100%;
     height: 100vh;
     left: 50%;
     transform: translateX(-50);
@@ -71,7 +71,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* background-color: seagreen; */
 }
 
 #tap-organization-name{
@@ -89,8 +88,6 @@
 }
 #tap-info-img-box{
     position: relative;
-    /* min-width: var(--info-main-image-height-min);
-    max-width: var(--info-main-image-height-max); */
     width: 100%;
     height: 25vw;
     max-width: 100%;
@@ -132,7 +129,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    /* background-color: yellowgreen; */
 }
 .tap-info-icon{
     position: relative;
@@ -143,7 +139,6 @@
     max-height: var(--info-icons-size-max);
     height: 10vw;
     width: 10vw;
-    /* background-color: yellowgreen; */
 }
 .tap-info-icon-img{
     position: relative;
@@ -151,7 +146,6 @@
     max-width: 100%;
     height: 100%;
     width: 100%;
-    /* background-color: sandybrown; */
 }
 /* Hours */
 #tap-info-status-container{
@@ -199,11 +193,9 @@
 }
 #hours-dropdown-arrow-container{
     width: 20px;
-    /* background-color: seagreen; */
 }
 #hours-dropdown-arrow{
     width: 100%;
-    /* background-color: palegoldenrod; */
 }
 /* Description */
 
@@ -214,7 +206,6 @@
     text-align: center;
     width: 100%;
     height: fit-content;
-    /* background-color: violet; */
 }
 #tap-info-description{
     height: 50px;
