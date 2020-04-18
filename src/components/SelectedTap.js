@@ -58,7 +58,7 @@ export class SelectedTap extends React.Component{
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     style={this.props.infoIsExpanded ? {
                             position: 'relative',
-                            height: '100vh',
+                            // height: '100vh',
                             top: '10px'
                         } 
                         : {
