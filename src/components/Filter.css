@@ -20,8 +20,47 @@ div {
   margin-left: -8px;
 }
 
+.popover {
+  max-width: 97vw;
+}
+
+#popover-basic {
+  width: 97vw;
+}
+
+.popover-body {
+  width: 97vw;
+  padding: 10px;
+}
+
 .legendRow {
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
+}
+
+.filterRow {
+  height: 45px;
+}
+
+.filterDivider {
+  width: 5px;
+  height: 90%;
+  border-left: 2px solid #dddddd;
+}
+
+.buttonRow {
+  padding: 10px;
+}
+
+.resetButtonRow {
+  justify-content: flex-end;
+  margin-right: 5%;
+}
+
+.resetButton {
+  font-size: 0.85rem;
+  background-color: #dddddd;
+  padding: 3px 20px;
+  border-radius: 15px;
 }
