@@ -3,10 +3,6 @@
     --info-main-image-height-max: 200px;
     --info-icons-size-min: 20px;
     --info-icons-size-max: 50px;
-    --info-user-images: 3vw;
-    --info-user-images-min: 20px;
-    --info-user-images-max: 50px;
-    --info-user-images-spacing: 10px;
     --tap-menu-margin: 5%;
 }
 
@@ -40,52 +36,49 @@
     -o-border-radius: 6px;
     background-color: white;
 }
-
-#tap-content{
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    height: fit-content;
-    justify-content: center;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-}
-#tap-content-expanded{
-    position: relative;
-    width: fit-content;
-    max-width: 100%;
-    height: 100%;
-    justify-content: center;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    overflow: scroll;
-}
-#selected-tap-head{
-    width: 100%;
+#tap-info-top{
+    position: absolute;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
+    width: 100%;
 }
-
-#tap-organization-name{
-    font-size: .9em;
-    text-align: center;
-    flex: 3;
-    margin: 0 var(--tap-menu-margin) 0 var(--tap-menu-margin);
+#tap-info-drag-area{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 2px;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+.drag-bar-dash{
+    height: 2.5px;
+    width: 20px;
+    margin: 1px 0 1px 0;
+    background-color: gray;
 }
 #tap-menu{
-    position: absolute;
-    right: var(--tap-menu-margin);
+    height: fit-content;
+    margin-right: var(--tap-menu-margin);
+    margin-top: 5px;
 }
 #tap-menu-icon{
-
+    height: 30px;
 }
+#tap-info-drag-area-placeholder{
+    visibility: hidden;
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/* Tap Image */
 #tap-info-img-box{
     position: relative;
     width: 100%;
@@ -104,41 +97,106 @@
     min-height: 100%;
     object-fit: cover;
 }
-#tap-info-address-box{
-    
-}
-#tap-info-address{
-    text-align: center;
-}
-#tap-info-quick-info{
+
+/* Content Area */
+#tap-content{
     position: relative;
     width: 100%;
-    height: fit-content;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-#tap-info-icons-box{
-    position: relative;
+    flex-direction: column;
+    max-width: 100%;
     height: fit-content;
-    width: fit-content;
-    max-width: 70%;
-    /* flex: 5; */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    padding: 5px;
+    /* background-color: khaki; */
 }
-.tap-info-icon{
+#tap-content-expanded{
     position: relative;
-    margin: 0 2px 0 2px;
+    width: fit-content;
+    max-width: 100%;
+    height: 100%;
+    justify-content: center;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    overflow: scroll;
+}
+#tap-head-info{
+    display: flex;
+    flex-direction: row;
+}
+#tap-type-icon-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 2;
+    margin: 10px 5px 0 5px;
+    max-width: 15%;
+}
+#tap-type-icon{
+    width: 100vw;
+    height: min-content;
     min-width: var(--info-icons-size-min);
     max-width: var(--info-icons-size-max);
     min-height: var(--info-icons-size-min);
     max-height: var(--info-icons-size-max);
-    height: 10vw;
-    width: 10vw;
+}
+#org-name-and-address{
+    align-self: center;
+    flex: 3;
+    /* margin-right: 5px; */
+}
+#tap-organization-name{
+    font-size: 1.2em;
+    font-weight: 700;
+    text-align: start;
+    line-height: 100%;
+    /* margin: 5px 0 5px 0; */
+    
+}
+#tap-info-address{
+    text-align: start;
+    font-size: 15px;
+    font-weight: 400;
+    
+}
+#walk-time-and-icons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 5px 5px 5px;
+}
+#tap-info-walk-time{
+    width: fit-content;
+    font-size: 12px;
+    font-weight: 400;
+}
+#tap-info-icons-box{
+    position: relative;
+    /* height: fit-content; */
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+.tap-info-icon{
+    position: relative;
+    width: 10px;
+    /* margin: 0 2px 0 2px; */
+    min-width: var(--info-icons-size-min);
+    max-width: var(--info-icons-size-max);
+    min-height: var(--info-icons-size-min);
+    max-height: var(--info-icons-size-max);
+    /* flex: 1; */
 }
 .tap-info-icon-img{
     position: relative;
@@ -148,43 +206,29 @@
     width: 100%;
 }
 /* Hours */
-#tap-info-status-container{
+#org-hours{
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
-    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    flex: 1;
 }
 #tap-info-org-status{
-    color: green;
-    font-weight: 500;
-}
-#tap-info-walking-time{
     text-align: center;
-    font-weight: 500;
-}
-#tap-info-hours-container{
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 35px;
-    width: fit-content;
-    display: flex;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
+    color: green;
+    font-weight: 700;
 }
 #tap-info-hours{
     display: flex;
     flex-direction: row;
     width: fit-content;
     box-sizing: border-box;
-    text-align: center;
+    align-self: center;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 5px;
     padding: 0 3px 0 3px;
-    border: .5px solid #c4c4c4;
+    border: 1px solid #c4c4c4;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -217,33 +261,6 @@
 #tap-info-description-expanded{
     height: fit-content;
     overflow: hidden;
-}
-#tap-info-drag-area{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-#tap-info-drag-area-close{
-    position: fixed;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-}
-#tap-info-drag-area-placeholder{
-    visibility: hidden;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-#tap-info-drag-bar{
-    height: 5px;
-    margin-bottom: 2px;
-    width: 100%;
-    background-color: #c4c4c4;
-    opacity: .3;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
 }
 #tap-info-arrow-box{
     position: absolute;
