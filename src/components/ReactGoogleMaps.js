@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import SelectedTap from './SelectedTap'
-import { getTaps, setFilterFunction, toggleInfoWindow, infoIsExpanded } from "../actions";
+import { getTaps, setFilterFunction, toggleInfoWindow } from "../actions";
 // import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";

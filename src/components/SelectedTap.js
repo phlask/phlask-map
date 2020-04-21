@@ -24,8 +24,8 @@ const tempImages = {
         // privateTap,
         phlaskGreen,
         // privateRestricted,
-        // privateTap,
-        // privateRestricted,
+        privateTap,
+        privateRestricted,
         accessible,
         filteredBlue,
         // privateShared
@@ -67,33 +67,34 @@ export class SelectedTap extends React.Component{
                         }
                     }
                     >
-
-                    {/* Expanded View */}
-
-                    {this.props.infoIsExpanded
-                    ?<div id='tap-content-expanded'>
-                        {/* Drag & Close Area */}
-                        <div id='tap-info-drag-area-close' onClick={this.collapseTap.bind(this)}>
-                            <div id='tap-info-drag-bar'></div>
-                            <img className='tap-info-arrow' src={arrow} alt=''></img>
+                    {/* Drag & Close Area */}
+                    <div id='tap-info-top'>
+                        <div id='tap-info-drag-area'>
+                            <div className='drag-bar-dash'></div>
+                            <div className='drag-bar-dash'></div>
                         </div>
-                        {/* Placeholder for Fixed Close Area */}
-                        <div id='tap-info-drag-area-placeholder'>
-                            <div id='tap-info-drag-bar'></div>
-                            <img className='tap-info-arrow' src={arrow} alt=''></img>
+                        <div id='tap-menu'>
+                            <img id='tap-menu-icon' src={tapMenu} alt=''/>
                         </div>
-                        
-                        <div id='tap-info'>
-                            <h4 id='selected-tap-head'>
-                                {/* Location Name */}
-                                <div id='tap-organization-name'>
-                                    {this.props.organization}
-                                </div>
-                                <div id='tap-menu'>
-                                    <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                                </div>
-                            </h4>
+                    </div>
+                    
+
+                    {/* Placeholder for Fixed Close Area */}
+                    <div id='tap-info-drag-area-placeholder'>
+                        <div id='tap-menu'>
+                            <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                        </div>
+                    </div>
+
+                    {/* Tap Info */}
+
+                    <div id='tap-info'>
+
+                        {/* Location Name */}
+                        <div id='tap-content'>
+
                             {/* Main Image */}
+
                             <div id='tap-info-img-box'>
                                 <img id ='tap-info-img'
                                     // src={this.props.displayImg}
@@ -102,15 +103,39 @@ export class SelectedTap extends React.Component{
                                 > 
                                 </img>
                             </div>
-                            {/* Address */}
-                            <div id='tap-info-address-box'>
-                                <h5 id='tap-info-address'>
-                                    {this.props.address}
-                                </h5>
+
+                            <div id='tap-head-info'>
+                                {/* Tap Type Icon */}
+                                <div id='tap-type-icon-container'>
+                                    <div id='tap-type-icon'>
+                                        <img className='tap-info-icon-img' src={phlaskGreen} alt=''></img>
+                                    </div>
+                                </div>
+
+                                {/* Name & Address */}
+                                <div id='org-name-and-address'>
+                                    <div id='tap-organization-name'>
+                                        {this.props.organization}
+                                    </div>
+                                    <h5 id='tap-info-address'>
+                                        {this.props.address}
+                                    </h5>
+                                </div>
+
+                                {/* Hours */}
+                                <div id='org-hours'>
+                                    <div id='tap-info-org-status'>Open</div>
+                                    <div id='tap-info-hours'>
+                                        <span>8am</span>-<span>10pm</span>
+                                        <div id='hours-dropdown-arrow-container'>
+                                            <img id='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            {/* Tap Info Icons & Hours */}
-                            <div id='tap-info-quick-info'>
+                            {/* Walk Time & Info Icons */}
+                            <div id='walk-time-and-icons'>
+                                <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
                                 <div id='tap-info-icons-box'>
                                     {tempImages.infoImages.map((icon,index) => (
                                         <div className='tap-info-icon' key={index}>
@@ -118,23 +143,15 @@ export class SelectedTap extends React.Component{
                                         </div>
                                     ))}
                                 </div>
-                                
                             </div>
-                            <div id='tap-info-status-container'>
-                                <div id='tap-info-org-status'>Open</div>
-                                <div id='tap-info-walking-time'>12 mins</div>
-                            </div>
-                            <div id='tap-info-hours-container'>
-                                <div id='tap-info-hours'>
-                                    <span>8am</span>-<span>10pm</span>
-                                    <div id='hours-dropdown-arrow-container'>
-                                        <img id='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
-                                    </div>
-                                </div>
-                            </div>
-                            
                         </div>
                         
+                                                    
+                    </div>
+                    {/* Expanded View */}
+
+                    {this.props.infoIsExpanded
+                    ?<div id='tap-content-expanded'>
                         
                         {/* Description */}
                         <div id='tap-info-description-box'>
@@ -151,87 +168,17 @@ Eos tollit adipisci ne, ea euismod oporteat suscipiantur eos. Cu dicant nemore a
 Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapientem, definitiones signiferumque id est, modo essent honestatis ei pro. Senserit urbanitas comprehensam ne est. Vel docendi similique ex, reque mundi percipitur vix no. Vel bonorum delenit admodum te, eos cibo oratio melius et.
                             </div>
                         </div>
-                        
-                        
                     </div>
                     
                     /** Preview **/
 
-                    :<div id='tap-content'>
-                        {/* Head */}
-                        <h4 id='selected-tap-head'>
-                            <div id='tap-organization-name'>
-                                {this.props.organization}
-                            </div>
-                            <div id='tap-menu' onClick={()=>{this.props.toggleInfoWindow(false)}}>
-                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                            </div>
-                        </h4>
-                        {/* Main Image */}
-                        <div id='tap-info-img-box'>
-                            <img id ='tap-info-img'
-                                // src={this.props.displayImg}
-                                src={tempImages.tapImg}
-                                alt=''
-                            > 
-                            </img>
-                        </div>
-                        {/* Address */}
-                        <div id='tap-info-address-box'>
-                            <h5 id='tap-info-address'>
-                                {this.props.address}
-                            </h5>
-                        </div>
-                        
-                        {/* Icons & Users*/}
-                        {/* Receive a list of icons corresponding to the selected tap,
-                            as well as the first [4] profile images [shrunken] of users 
-                            who've contributed to this tap
-                        */}
-                        <div id='tap-info-quick-info'>
-                            <div id='tap-info-icons-box'>
-                                {tempImages.infoImages.map((icon,index) => (
-                                    <div className='tap-info-icon' key={index}>
-                                        <img className='tap-info-icon-img' src={icon} alt=''></img>
-                                    </div>
-                                ))}
-                            </div>
-                            <div id='tap-info-org-status'>
-                                Open
-                            </div>
-                        </div>
-                        <div id='tap-info-walking-time'
-                            style={
-                                {
-                                    marginBottom: '10px'
-                                }
-                            }
-                        >
-                            12 mins
-                        </div>
-                        
-                        {/* Description */}
-                        <div id='tap-info-description-box'>
-                                {/* "More" arrow */}
-                            <div id='tap-info-arrow-box' onClick={this.expandTap.bind(this)}>
-                                <img className='tap-info-arrow' src={arrow} alt=''></img>
-                            </div>
-                            <div id='tap-info-description'>
-                                {/* {this.props.description} */}
-                                This place is located downtown, near Wawa at the corner of Broad and Chestnut.
-                                There is a gate next to the build ding, the fountain is on the left side of the gate.
-                            </div>
-                            
-                        </div>
-                        
-
+                    :<div id='tap-info-arrow-box' onClick={this.expandTap.bind(this)}>
+                        <img className='tap-info-arrow' src={arrow} alt=''></img>
                     </div>
                     }
                 </div>
                 :<div></div>
                 }
-
-                
             </div>
         )
     }
