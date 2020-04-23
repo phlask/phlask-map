@@ -1,5 +1,19 @@
 .map-interface-container{
   position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
+.map-interface-container-expanded{
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   width: 90%;

@@ -11,17 +11,6 @@ import { getTaps, setFilterFunction, toggleInfoWindow } from "../actions";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
 
-// const config = {
-//   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-//   authDomain: "phlask-web-map.firebaseapp.com",
-//   databaseURL: "https://phlask-web-map.firebaseio.com",
-//   projectId: "phlask-web-map",
-//   storageBucket: "phlask-web-map.appspot.com",
-//   messagingSenderId: "428394983826"
-// };
-
-// firebase.initializeApp(config);
-
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
 function distance(lat1, lon1, lat2, lon2) {
@@ -326,13 +315,14 @@ export class ReactGoogleMaps extends Component {
             
             {
               this.state.showingInfoWindow
-                ?<div className="map-interface-container"
-                    style = {
-                      this.props.infoIsExpanded 
-                      ? {}
-                      :{ position: 'absolute', bottom: 0 }
-                    }
-                  >
+                // ?<div className="map-interface-container"
+                //     style = {
+                //       this.props.infoIsExpanded 
+                //       ? {}
+                //       :{ position: 'absolute', bottom: 0 }
+                //     }
+                //   >
+                ?<div className="map-interface-container">
                   <div
                     className="filter-grouped"
                     onClick={() => this.props.setFilterFunction()}

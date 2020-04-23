@@ -22,34 +22,46 @@ const tempImages = {
         // privateTap,
         phlaskGreen,
         // privateRestricted,
-        privateTap,
-        privateRestricted,
+        // privateTap,
+        // privateRestricted,
         accessible,
         filteredBlue,
         // privateShared
-    ],
-    // profile: [profileImg1,profileImg2,profileImg3]
+    ]
 }
 
 class SelectedTap extends React.Component{
-
-    constructor(props){
-        super(props)
-        const testRef = React.createRef()
-        this.state = {
-            testRef: testRef
-        }
-    }
+    
+    state = {
+                testRef: React.createRef(),
+                previewHeight: 0,
+                infoExpansionStyle: {},
+                isDescriptionShown: false
+            }
 
     toggleInfoExpanded(shouldExpand){
-        // Close if in preview mode
+        
         if(!shouldExpand){
+            // Start animation before unmounting description
+            setTimeout(() => {
+                this.setState({
+                    isDescriptionShown: shouldExpand
+                })
+            }, 1000);
+            // Close if in preview mode
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
             }
+        }else{
+            // Unmount the arrow before animation
+            this.setState({
+                isDescriptionShown: shouldExpand
+            })
         }
         // Expand or Collapse
-            this.props.toggleInfoExpanded(shouldExpand)
+        this.animateInfoExpansion(shouldExpand)
+        this.props.toggleInfoExpanded(shouldExpand)
+        
     }
 
     toggleInfoWindow(shouldShow){
@@ -62,9 +74,25 @@ class SelectedTap extends React.Component{
         else{
             setTimeout(() => {
                 this.props.toggleInfoWindow(false)
-            }, 300);
+            }, 1000);
         }
     } 
+
+    animateInfoExpansion(isExpanded){
+        this.setState({
+            infoExpansionStyle: {
+                height: isExpanded
+                    ? '80vh'
+                    : this.state.previewHeight
+            }
+        })
+    }
+      
+    componentDidMount(){
+        this.setState({
+            previewHeight: this.state.testRef.current.clientHeight
+        })
+    }
 
     render(){
         return(
@@ -76,16 +104,8 @@ class SelectedTap extends React.Component{
                     ref={this.state.testRef}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     className={this.props.infoWindowIn}
-                    style={this.props.infoIsExpanded ? {
-                            position: 'relative',
-                            top: '10px'
-                        } 
-                        : {
-                            height:'fit-content',
-                            bottom: '5px'   
-                        }
-                    }
-                    >
+                    style={this.state.infoExpansionStyle}
+                >
                     {/* Drag & Close Area */}
                     <div id='tap-info-top'>
                         <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
@@ -108,10 +128,7 @@ class SelectedTap extends React.Component{
                     {/* Tap Info */}
 
                     {/* Location Name */}
-                    <div id={this.props.infoIsExpanded
-                        ? 'tap-content-expanded'
-                        : 'tap-content'
-                        }>
+                    <div id='tap-content'>
 
                         {/* Main Image */}
 
@@ -183,8 +200,9 @@ class SelectedTap extends React.Component{
 
                         {/* Description */}
 
-                        {this.props.infoIsExpanded
-                        ?<div id='tap-info-description'>
+                        {this.state.isDescriptionShown
+                        ?<div id='tap-info-description-container'>
+                            <div id='tap-info-description'>
                             {/* {this.props.description} */}
                             Lorem ipsum dolor sit amet, vix ex modus philosophia. At mei idque noluisse suavitate. Probo reprimique delicatissimi nec ut, diam mandamus te cum. Ad mea bonorum voluptua, ex quo melius fabellas efficiendi. Alii vituperatoribus vix te, per inani disputationi eu, omnium assueverit an has.
 
@@ -195,7 +213,9 @@ Scribentur deterruisset nec ea, meis possit diceret has ut. Inermis legendos sea
 Eos tollit adipisci ne, ea euismod oporteat suscipiantur eos. Cu dicant nemore aperiri pro, ex pri ubique verear platonem. Ius ut albucius probatus intellegam, id recteque adipiscing per. Ex augue commune suavitate vis. Pri in pertinax intellegebat.
 
 Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapientem, definitiones signiferumque id est, modo essent honestatis ei pro. Senserit urbanitas comprehensam ne est. Vel docendi similique ex, reque mundi percipitur vix no. Vel bonorum delenit admodum te, eos cibo oratio melius et.
+                            </div>
                         </div>
+                        
                         
                         /** Preview **/
 

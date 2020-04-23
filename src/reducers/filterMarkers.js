@@ -103,14 +103,14 @@ export default (state = initialState, act) => {
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.TOGGLE_INFO_WINDOW:
-      console.log('Info Window Class: ' + state.infoWindowIn);
+      // console.log('Info Window Class: ' + state.infoWindowIn);
       
       return act.isShown 
         ? {...state, showingInfoWindow: act.isShown, infoWindowIn: 'info-window-in'}
         :{...state, showingInfoWindow: act.isShown}
 
     case actions.TOGGLE_INFO_WINDOW_IN:
-      console.log('Info Window Class: ' + state.infoWindowIn);
+      // console.log('Info Window Class: ' + state.infoWindowIn);
       return {...state, 
         infoWindowIn: act.isShown
           ? 'info-window-in'
