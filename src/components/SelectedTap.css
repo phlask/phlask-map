@@ -21,9 +21,7 @@
 #tap-info-container-mobile{
     position: relative;
     width: 100%;
-    height: 80vh;
-    /*transform: translate(-50%,100%);
-    */display: flex;
+    display: flex;
     flex-direction: column;
     border-radius: 6px;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -33,9 +31,14 @@
     -o-border-radius: 6px;
     background-color: white;
     animation-name: info-modal-in;
-    animation-duration: .3s;
+    animation-duration: 1s;
     animation-fill-mode: forward;
     animation-timing-function: ease-in-out;
+    transition: 1s all ease-in-out;
+    -webkit-transition: 1s all ease-in-out;
+    -moz-transition: 1s all ease-in-out;
+    -ms-transition: 1s all ease-in-out;
+    -o-transition: 1s all ease-in-out;
 }
 .info-window-out{
     left: 50%;
@@ -44,12 +47,13 @@
     -moz-transform: translate(-50%,100%);
     -ms-transform: translate(-50%,100%);
     -o-transform: translate(-50%,100%);
-    transition: .3s all ease-in-out;
-    -webkit-transition: .3s all ease-in-out;
-    -moz-transition: .3s all ease-in-out;
-    -ms-transition: .3s all ease-in-out;
-    -o-transition: .3s all ease-in-out;
-    /*background-color: blueviolet;*/
+    transition: 1s all ease-in-out;
+    -webkit-transition: 1s all ease-in-out;
+    -moz-transition: 1s all ease-in-out;
+    -ms-transition: 1s all ease-in-out;
+    -o-transition: 1s all ease-in-out;
+    /* background-color: blueviolet; */
+    opacity: 0;
 }
 .info-window-in{
     left: 50%;
@@ -68,13 +72,15 @@
         -moz-transform: translate(-50%,100%);
         -ms-transform: translate(-50%,100%);
         -o-transform: translate(-50%,100%);
-    }100%{
+        opacity: 0;
+}100%{
         left: 50%;
         transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
         -moz-transform: translateX(-50%);
         -ms-transform: translateX(-50%);
         -o-transform: translateX(-50%);
+        opacity: 1;
     }
 }
 #tap-info-top{
@@ -252,7 +258,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 5px 5px 5px;
+    margin: 0 0 5px 5px;
 }
 #tap-info-walk-time{
     width: fit-content;
@@ -262,9 +268,11 @@
 #tap-info-icons-box{
     position: relative;
     display: flex;
+    flex: 1;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    margin: 0 5px 0 5px;
 }
 .tap-info-icon{
     position: relative;
@@ -313,10 +321,14 @@
 }
 
 /* Description */
-
 #tap-info-description{
-    height: fit-content;
+    flex: 1;
     margin-bottom: 10px;
     padding-top: 10px;
     border-top: 1px solid rgba(0,0,0,.2);
+    transition: 1s all ease-in-out;
+    -webkit-transition: 1s all ease-in-out;
+    -moz-transition: 1s all ease-in-out;
+    -ms-transition: 1s all ease-in-out;
+    -o-transition: 1s all ease-in-out;
 }
