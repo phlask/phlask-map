@@ -22,4 +22,4 @@ build/
 docker/
 
 # Firebase
-/src/firebase
+# /src/firebase
