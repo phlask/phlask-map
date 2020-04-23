@@ -179,10 +179,12 @@ export class ReactGoogleMaps extends Component {
     });
   }
 
-  // componentDidUpdate() {  }
+  showInfoWindow(){
+    this.props.toggleInfoWindow(true)
+  }
 
   onMarkerClick = (props, marker, e) => {
-    this.props.toggleInfoWindow(true)
+    this.showInfoWindow()
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -256,12 +258,6 @@ export class ReactGoogleMaps extends Component {
       });
       return (
         <div>
-          <ClosestTap
-            lat={closestTap.lat}
-            lon={closestTap.lon}
-            org={closestTap.organization}
-            address={closestTap.address}
-          />
 
           <Map
             google={this.props.google}
@@ -308,12 +304,23 @@ export class ReactGoogleMaps extends Component {
                 />
               ))}
             </Map>
-            <div className="searchBarContainer">
-              <SearchBar
-                className="searchBar"
-                search={location => this.searchForLocation(location)}
-              />
-            </div>
+            {this.props.infoIsExpanded
+              ?<div></div>
+              :<div>
+                <ClosestTap
+                  lat={closestTap.lat}
+                  lon={closestTap.lon}
+                  org={closestTap.organization}
+                  address={closestTap.address}
+                />
+                <div className="searchBarContainer">
+                  <SearchBar
+                    className="searchBar"
+                    search={location => this.searchForLocation(location)}
+                  />
+                </div>
+              </div>
+              }
 
             {/* Reposition Filter when Tap Info is displayed */}
             

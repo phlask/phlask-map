@@ -1,16 +1,5 @@
 import * as firebase from "firebase";
 
-const config = {
-  apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-  authDomain: "phlask-web-map.firebaseapp.com",
-  databaseURL: "https://phlask-web-map.firebaseio.com",
-  projectId: "phlask-web-map",
-  storageBucket: "phlask-web-map.appspot.com",
-  messagingSenderId: "428394983826"
-};
-
-firebase.initializeApp(config);
-
 export const SET_TOGGLE_STATE = "SET_TOGGLE_STATE";
 export const setToggleState = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE,
@@ -56,6 +45,12 @@ export const getTaps = () => dispatch => {
 export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
 export const toggleInfoWindow = (isShown) => ({
     type: TOGGLE_INFO_WINDOW,
+    isShown
+})
+
+export const TOGGLE_INFO_WINDOW_IN = 'TOGGLE_INFO_WINDOW_IN'
+export const toggleInfoWindowIn = (isShown) => ({
+    type: TOGGLE_INFO_WINDOW_IN,
     isShown
 })
 

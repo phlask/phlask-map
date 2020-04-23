@@ -6,8 +6,10 @@ const initialState = {
   handicap: false,
   allTaps: [],
   filteredTaps: [],
-  showingInfoWindow: false ,
-  infoIsExpanded: false
+  showingInfoWindow: true ,
+  infoIsExpanded: false,
+  infoWindowIn: 'info-window-out',
+  // infoWindoExpandedClass: ''
 };
 
 export default (state = initialState, act) => {
@@ -101,7 +103,19 @@ export default (state = initialState, act) => {
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.TOGGLE_INFO_WINDOW:
-      return {...state, showingInfoWindow: act.isShown};
+      console.log('Info Window Class: ' + state.infoWindowIn);
+      
+      return act.isShown 
+        ? {...state, showingInfoWindow: act.isShown, infoWindowIn: 'info-window-in'}
+        :{...state, showingInfoWindow: act.isShown}
+
+    case actions.TOGGLE_INFO_WINDOW_IN:
+      console.log('Info Window Class: ' + state.infoWindowIn);
+      return {...state, 
+        infoWindowIn: act.isShown
+          ? 'info-window-in'
+          : 'info-window-out'
+      }
 
     case actions.TOGGLE_INFO_EXPANDED:
       return {...state, infoIsExpanded: act.isExpanded}

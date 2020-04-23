@@ -20,3 +20,6 @@ build/
 
 # Local target for files built on docker
 docker/
+
+# Firebase
+/src/firebase

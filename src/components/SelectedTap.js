@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { connect } from 'react-redux'
-import { toggleInfoExpanded, toggleInfoWindow } from '../actions'
+import { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowIn } from '../actions'
 import { isMobile } from 'react-device-detect'
 // import { connect } from 'react-redux'
 import './SelectedTap.css'
@@ -29,16 +30,50 @@ const tempImages = {
     ],
     // profile: [profileImg1,profileImg2,profileImg3]
 }
-export class SelectedTap extends React.Component{
+
+class SelectedTap extends React.Component{
+
+    constructor(props){
+        super(props)
+        const testRef = React.createRef()
+        this.state = {
+            testRef: testRef
+        }
+    }
 
     toggleInfoExpanded(shouldExpand){
+        // Close if in preview mode
         if(!shouldExpand){
             if(!this.props.infoIsExpanded){
-                this.props.toggleInfoWindow(false)
+                this.toggleInfoWindow(false)
             }
         }
-        this.props.toggleInfoExpanded(shouldExpand)
+        // Expand or Collapse
+            this.props.toggleInfoExpanded(shouldExpand)
     }
+
+    toggleInfoWindow(shouldShow){
+        this.props.toggleInfoWindowIn(shouldShow)
+        // Animate in
+        if(shouldShow){
+            this.props.toggleInfoWindow(shouldShow)
+        }
+        // Animate Out
+        else{
+            setTimeout(() => {
+                this.props.toggleInfoWindow(false)
+            }, 300);
+        }
+    }
+
+    componentDidMount(){
+        console.log('Mount: ' + this.props.infoWindowClass);
+    }
+    componentDidUpdate(){
+        console.log('Update: ' + this.props.infoWindowClass);
+    }
+
+    
 
     render(){
         return(
@@ -47,10 +82,11 @@ export class SelectedTap extends React.Component{
                 {this.props.showingInfoWindow
                 // Preview
                 ?<div 
+                    ref={this.state.testRef}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
+                    className={this.props.infoWindowIn}
                     style={this.props.infoIsExpanded ? {
                             position: 'relative',
-                            // height: '100vh',
                             top: '10px'
                         } 
                         : {
@@ -187,9 +223,10 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
 
 const mapStateToProps = state => ({
     showingInfoWindow: state.showingInfoWindow,
-    infoIsExpanded: state.infoIsExpanded
+    infoIsExpanded: state.infoIsExpanded,
+    infoWindowIn: state.infoWindowIn,
 });
-const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow };
+const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowIn };
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(SelectedTap);
