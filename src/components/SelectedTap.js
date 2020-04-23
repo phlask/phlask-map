@@ -64,16 +64,7 @@ class SelectedTap extends React.Component{
                 this.props.toggleInfoWindow(false)
             }, 300);
         }
-    }
-
-    componentDidMount(){
-        console.log('Mount: ' + this.props.infoWindowClass);
-    }
-    componentDidUpdate(){
-        console.log('Update: ' + this.props.infoWindowClass);
-    }
-
-    
+    } 
 
     render(){
         return(
