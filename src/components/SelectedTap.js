@@ -59,9 +59,7 @@ class SelectedTap extends React.Component{
             })
         }
         // Expand or Collapse
-        this.animateInfoExpansion(shouldExpand)
-        this.props.toggleInfoExpanded(shouldExpand)
-        
+        this.animateInfoExpansion(shouldExpand)        
     }
 
     toggleInfoWindow(shouldShow){
@@ -78,19 +76,24 @@ class SelectedTap extends React.Component{
         }
     } 
 
-    animateInfoExpansion(isExpanded){
+    animateInfoExpansion(shouldExpand){
         this.setState({
             infoExpansionStyle: {
-                height: isExpanded
+                height: shouldExpand
                     ? '80vh'
                     : this.state.previewHeight
             }
+        }, ()=>{
+            this.props.toggleInfoExpanded(shouldExpand)
         })
     }
       
     componentDidMount(){
         this.setState({
-            previewHeight: this.state.testRef.current.clientHeight
+            previewHeight: this.state.testRef.current.clientHeight,
+            infoExpansionStyle: {
+                height: this.state.testRef.current.clientHeight
+            }
         })
     }
 
