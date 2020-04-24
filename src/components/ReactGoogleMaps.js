@@ -141,13 +141,48 @@ export class ReactGoogleMaps extends Component {
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
       filteredTaps: [],
-      zoom: 16
+      zoom: 16,
+      // Temporary fix to Marker rendering
+      tempMarkers: []
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
+
+    // Check if filter has changed before rerendering Markers
+    if(nextProps.filteredTaps !== this.props.filteredTaps){
+      this.setState({
+        tempMarkers: 
+          nextProps.filteredTaps
+          /* {toggledTaps */
+          .map((tap, index) => (
+              <Marker
+              key={index}
+              name={tap.tapnum}
+              organization={tap.organization}
+              address={tap.address}
+              description={tap.description}
+              filtration={tap.filtration}
+              handicap={tap.handicap}
+              service={tap.service}
+              tap_type={tap.tap_type}
+              norms_rules={tap.norms_rules}
+              vessel={tap.vessel}
+              img={tap.images}
+              onClick={this.onMarkerClick}
+              position={{ lat: tap.lat, lng: tap.lon }}
+              icon={{
+                  url: this.getIcon(tap.access),
+                  // icon images as of April 2020 are 300x397 px
+                  // so scale images ~3:4 ratio
+                  scaledSize: { width: 37, height: 50 }
+              }}
+              />
+          ))
+      })
+    }
   }
 
   componentDidMount() {
@@ -168,6 +203,37 @@ export class ReactGoogleMaps extends Component {
         this.setState({ currlon: position.coords.longitude });
       }
     });
+
+    setTimeout(() => {
+      this.setState({
+        tempMarkers: this.props.filteredTaps
+          /* {toggledTaps */
+          .map((tap, index) => (
+              <Marker
+              key={index}
+              name={tap.tapnum}
+              organization={tap.organization}
+              address={tap.address}
+              description={tap.description}
+              filtration={tap.filtration}
+              handicap={tap.handicap}
+              service={tap.service}
+              tap_type={tap.tap_type}
+              norms_rules={tap.norms_rules}
+              vessel={tap.vessel}
+              img={tap.images}
+              onClick={this.onMarkerClick}
+              position={{ lat: tap.lat, lng: tap.lon }}
+              icon={{
+                  url: this.getIcon(tap.access),
+                  // icon images as of April 2020 are 300x397 px
+                  // so scale images ~3:4 ratio
+                  scaledSize: { width: 37, height: 50 }
+              }}
+              />
+          ))
+      })
+    }, 5000);
   }
 
   showInfoWindow(){
@@ -273,10 +339,9 @@ export class ReactGoogleMaps extends Component {
             />
 
             {/* FilteredTaps */}
-            {/* ***** Taps not rendering. Data loaded and everything, but rendering to DOM ***** */}
-            <FilteredTaps
-              tapsDisplayed = {this.props.tapsDisplayed}
-            />
+            {/* The Array of Marker Componenents is held in local state, 
+            and rerenders only when the list of filtered markers changes */}
+            {this.state.tempMarkers}
 
             </Map>
             {this.props.infoIsExpanded
