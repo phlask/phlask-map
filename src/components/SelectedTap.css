@@ -39,6 +39,7 @@
     -moz-transition: 1s all ease-in-out;
     -ms-transition: 1s all ease-in-out;
     -o-transition: 1s all ease-in-out;
+    /* overflow: scroll; */
 }
 .info-window-out{
     left: 50%;
@@ -129,6 +130,7 @@
 #tap-content{
     position: relative;
     width: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     max-width: 100%;
@@ -205,8 +207,11 @@
     font-weight: 700;
     text-align: start;
     line-height: 100%;
-    /* margin: 5px 0 5px 0; */
-    
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    text-overflow: ellipsis;    
 }
 #tap-info-address{
     text-align: start;

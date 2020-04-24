@@ -131,7 +131,11 @@ class SelectedTap extends React.Component{
                     {/* Tap Info */}
 
                     {/* Location Name */}
-                    <div id='tap-content'>
+                    <div id={this.props.infoIsExpanded
+                            ? 'tap-content-expanded'
+                            : 'tap-content'
+                        }
+                        >
 
                         {/* Main Image */}
 
