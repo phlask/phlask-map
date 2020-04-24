@@ -17,6 +17,7 @@
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
+    pointer-events: visibleStroke;
 }
 #tap-info-container-mobile{
     position: relative;
@@ -39,7 +40,7 @@
     -moz-transition: 1s all ease-in-out;
     -ms-transition: 1s all ease-in-out;
     -o-transition: 1s all ease-in-out;
-    /* overflow: scroll; */
+    pointer-events: visibleStroke;
 }
 .info-window-out{
     left: 50%;
