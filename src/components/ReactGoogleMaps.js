@@ -1,6 +1,7 @@
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
 // import * as firebase from "firebase";
+import FilteredTaps from './FilteredTaps.js'
 import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
@@ -135,6 +136,7 @@ export class ReactGoogleMaps extends Component {
       selectedPlace: {},
       currlat: getLat(), // 39.9528,
       currlon: getLon(), //-75.1635,
+      closestTap: {},
       taps: [],
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
@@ -241,10 +243,14 @@ export class ReactGoogleMaps extends Component {
   render() {
     console.log(this.props.filterFunction);
     if (this.props.allTaps.length) {
-      var closestTap = closest(this.props.allTaps, {
-        lat: this.state.currlat,
-        lon: this.state.currlon
-      });
+      if((Object.keys(this.state.closestTap).length) === 0){
+        this.setState({
+          closestTap: closest(this.props.allTaps, {
+            lat: this.state.currlat,
+            lon: this.state.currlon
+          })
+        })
+      }
       return (
         <div>
 
@@ -266,41 +272,21 @@ export class ReactGoogleMaps extends Component {
               onClick={this.onMarkerClick}
             />
 
-            {this.props.filteredTaps
-              /* {toggledTaps */
-              .map((tap, index) => (
-                <Marker
-                  key={index}
-                  name={tap.tapnum}
-                  organization={tap.organization}
-                  address={tap.address}
-                  description={tap.description}
-                  filtration={tap.filtration}
-                  handicap={tap.handicap}
-                  service={tap.service}
-                  tap_type={tap.tap_type}
-                  norms_rules={tap.norms_rules}
-                  vessel={tap.vessel}
-                  img={tap.images}
-                  onClick={this.onMarkerClick}
-                  position={{ lat: tap.lat, lng: tap.lon }}
-                  icon={{
-                    url: this.getIcon(tap.access),
-                    // icon images as of April 2020 are 300x397 px
-                    // so scale images ~3:4 ratio
-                    scaledSize: { width: 37, height: 50 }
-                  }}
-                />
-              ))}
+            {/* FilteredTaps */}
+            {/* ***** Taps not rendering. Data loaded and everything, but rendering to DOM ***** */}
+            <FilteredTaps
+              tapsDisplayed = {this.props.tapsDisplayed}
+            />
+
             </Map>
             {this.props.infoIsExpanded
               ?<div></div>
               :<div>
                 <ClosestTap
-                  lat={closestTap.lat}
-                  lon={closestTap.lon}
-                  org={closestTap.organization}
-                  address={closestTap.address}
+                  lat={this.state.closestTap.lat}
+                  lon={this.state.closestTap.lon}
+                  org={this.state.closestTap.organization}
+                  address={this.state.closestTap.address}
                 />
                 <div className="searchBarContainer">
                   <SearchBar
