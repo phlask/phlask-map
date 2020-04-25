@@ -317,7 +317,7 @@ export class ReactGoogleMaps extends Component {
         })
       }
       return (
-        <div>
+        <div id='react-google-map'>
 
           <Map
             google={this.props.google}

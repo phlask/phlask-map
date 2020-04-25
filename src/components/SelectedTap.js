@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
+import ReactTouchEvents from 'react-touch-events'
 import { connect } from 'react-redux'
 import { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowIn } from '../actions'
 import { isMobile } from 'react-device-detect'
@@ -98,6 +99,21 @@ class SelectedTap extends React.Component{
             this.props.toggleInfoExpanded(shouldExpand)
         })
     }
+    
+    handleSwipe(direction){
+        if(direction === 'top'){
+            console.log('Top')
+            this.toggleInfoExpanded(true)
+        }else if(direction === 'bottom'){
+            console.log('Bottom');
+            this.toggleInfoExpanded(false)
+        }else if(direction === 'left'){
+            console.log('Left');
+        }else if(direction === 'right'){
+            console.log('Right');
+        }
+        
+    }
       
     componentDidMount(){
         this.setState({
@@ -121,15 +137,17 @@ class SelectedTap extends React.Component{
                     style={this.state.infoExpansionStyle}
                 >
                     {/* Drag & Close Area */}
-                    <div id='tap-info-top'>
-                        <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
-                            <div className='drag-bar-dash'></div>
-                            <div className='drag-bar-dash'></div>
+                    <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
+                        <div id='tap-info-top'>
+                            <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
+                                <div className='drag-bar-dash'></div>
+                                <div className='drag-bar-dash'></div>
+                            </div>
+                            <div id='tap-menu'>
+                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                            </div>
                         </div>
-                        <div id='tap-menu'>
-                            <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                        </div>
-                    </div>
+                    </ReactTouchEvents>
                     
 
                     {/* Placeholder for Fixed Close Area */}
