@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
+import './MapPage.css'
 
 export class MapPage extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ export class MapPage extends Component {
 
   render() {
     return (
-      <div className="MapPage">
+      <div className="map-page">
         <Head legendButton={this.legendButton} />
         <ReactGoogleMaps
           tapsDisplayed={this.state.tapsDisplayed}
