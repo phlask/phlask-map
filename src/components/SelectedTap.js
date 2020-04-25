@@ -16,6 +16,16 @@ import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
 import tapMenu from './images/tapMenu.png'
 
+const hoursList = [
+        '8am-9pm',
+        '8am-9pm',
+        '8am-9pm',
+        '8am-9pm',
+        '8am-9pm',
+        '8am-9pm',
+        '8am-9pm'
+]
+
 const tempImages = {
     tapImg: sampleImg,
     infoImages: [
@@ -36,7 +46,8 @@ class SelectedTap extends React.Component{
                 testRef: React.createRef(),
                 previewHeight: 0,
                 infoExpansionStyle: {},
-                isDescriptionShown: false
+                isDescriptionShown: false,
+                isHoursExpanded: false
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -47,7 +58,7 @@ class SelectedTap extends React.Component{
                 this.setState({
                     isDescriptionShown: shouldExpand
                 })
-            }, 1000);
+            }, 600);
             // Close if in preview mode
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
@@ -72,7 +83,7 @@ class SelectedTap extends React.Component{
         else{
             setTimeout(() => {
                 this.props.toggleInfoWindow(false)
-            }, 1000);
+            }, 600);
         }
     } 
 
@@ -169,12 +180,57 @@ class SelectedTap extends React.Component{
                             {/* Hours */}
                             <div id='org-hours'>
                                 <div id='tap-info-org-status'>Open</div>
-                                <div id='tap-info-hours'>
-                                    <span>8am</span>-<span>10pm</span>
-                                    <div id='hours-dropdown-arrow-container'>
-                                        <img id='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                <div id='hours-area'>
+
+                                    {/* Placeholder for Dropdown */}
+                                    
+                                    <div id='tap-info-hours-container-placeholder'>
+                                        <div className='tap-hours-list-item'>Placeholder</div>
+                                        {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
+                                            <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                        </div> */}
+                                    </div>
+
+                                    {/* Container of all visible hours elements */}
+                                    <div id='tap-info-hours-container'>
+                                        {/* Placeholder for Dropdown */}
+                                        <div id='current-hours-placeholder'>
+                                            <div className='tap-hours-list-item'>Placeholder</div>
+                                            {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
+                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                            </div> */}
+                                        </div>
+
+                                        {/* Current Day */}
+                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
+                                            <div className='tap-hours-list-item'>
+                                                {hoursList[0]}
+                                            </div>
+                                            <div 
+                                                className='hours-dropdown-arrow-container'
+                                                style={{width: this.props.infoIsExpanded
+                                                    ? '20px'
+                                                    : '0'
+                                                }}
+                                            >
+                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                            </div>
+                                        </div>
+                                        {/* Other Days */}
+                                        {this.state.isHoursExpanded && this.props.infoIsExpanded
+                                            ? <div id='other-hours-container'>
+                                                {hoursList.map((hours,index) => {
+                                                    if(index !== 0){
+                                                        return <div className='tap-hours-list-item' key={index}>{hours}</div>
+                                                    }
+                                                })}
+                                            </div>
+                                            :<div></div>
+                                        }
+
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                         {/* Walk Time & Info Icons */}
