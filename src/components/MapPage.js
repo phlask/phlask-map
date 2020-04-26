@@ -51,6 +51,7 @@ export class MapPage extends Component {
           ada={this.state.ada}
           filtered={this.state.filtered}
         />
+        <Toolbar />
       </div>
     );
   }
