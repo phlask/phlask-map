@@ -306,7 +306,6 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.props.filterFunction);
     if (this.props.allTaps.length) {
       if((Object.keys(this.state.closestTap).length) === 0){
         this.setState({
