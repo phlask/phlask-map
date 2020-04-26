@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
+import Toolbar from "./Toolbar";
+import "./MapPage.css";
 
 export class MapPage extends Component {
   constructor(props) {
@@ -51,6 +53,7 @@ export class MapPage extends Component {
           ada={this.state.ada}
           filtered={this.state.filtered}
         />
+        <Toolbar />
       </div>
     );
   }

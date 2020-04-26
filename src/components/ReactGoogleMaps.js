@@ -239,14 +239,13 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.props.filterFunction);
     if (this.props.allTaps.length) {
       var closestTap = closest(this.props.allTaps, {
         lat: this.state.currlat,
         lon: this.state.currlon
       });
       return (
-        <div>
+        <div className="mapContainer">
           <ClosestTap
             lat={closestTap.lat}
             lon={closestTap.lon}
@@ -318,14 +317,12 @@ export class ReactGoogleMaps extends Component {
               search={location => this.searchForLocation(location)}
             />
           </div>
-          {/* <div className="legend">
-            <Legend />
-          </div> */}
+
           <div
             className="filter"
             onClick={() => this.props.setFilterFunction()}
           >
-            <Filter />
+            {/* <Filter /> */}
           </div>
         </div>
       );
