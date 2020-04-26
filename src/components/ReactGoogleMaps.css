@@ -59,6 +59,7 @@
   border: none;
   outline-style: none;
 }
+
 .filter-grouped{
   position: relative;
   width: fit-content;
@@ -91,4 +92,8 @@
   position: absolute !important;
   height: 0 !important;
   width: 0 !important;
+} */
+
+/* .mapContainer {
+  height: 80vh;
 } */
