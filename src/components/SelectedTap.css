@@ -89,6 +89,7 @@
 #tap-info-top{
     position: absolute;
     display: flex;
+    height: fit-content;
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
@@ -228,7 +229,7 @@
     font-size: 1.2em;
     font-weight: 700;
     text-align: start;
-    line-height: 100%;
+    line-height: normal;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -398,12 +399,9 @@
     position: relative;
     width: 3vh;
     height: 3vh;
-    /* margin: 0 2px 0 2px; */
-    /* min-width: var(--info-icons-size-min);
-    max-width: var(--info-icons-size-max);
-    min-height: var(--info-icons-size-min);
-    max-height: var(--info-icons-size-max); */
-    /* flex: 1; */
+    display: flex;
+    min-width: 20px;
+    min-height: 20px;
 }
 .tap-info-icon-img{
     position: relative;
