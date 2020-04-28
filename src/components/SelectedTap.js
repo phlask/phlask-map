@@ -42,13 +42,15 @@ const tempImages = {
 }
 
 class SelectedTap extends React.Component{
-    
+    refSelectedTap =  React.createRef()
+    refContentArea =  React.createRef()
+
     state = {
-                testRef: React.createRef(),
                 previewHeight: 0,
                 infoExpansionStyle: {},
                 isDescriptionShown: false,
-                isHoursExpanded: false
+                isHoursExpanded: false,
+                animationSpeed: 600
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -59,7 +61,7 @@ class SelectedTap extends React.Component{
                 this.setState({
                     isDescriptionShown: shouldExpand
                 })
-            }, 600);
+            }, this.state.animationSpeed);
             // Close if in preview mode
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
@@ -84,16 +86,19 @@ class SelectedTap extends React.Component{
         else{
             setTimeout(() => {
                 this.props.toggleInfoWindow(false)
-            }, 600);
+            }, this.state.animationSpeed);
         }
     } 
 
     animateInfoExpansion(shouldExpand){
+        if(shouldExpand){
+            this.refContentArea.current.scrollTop = 0
+        }
         this.setState({
             infoExpansionStyle: {
                 height: shouldExpand
                     ? '80vh'
-                    : this.state.previewHeight
+                    : '40vh'
             }
         }, ()=>{
             this.props.toggleInfoExpanded(shouldExpand)
@@ -117,9 +122,9 @@ class SelectedTap extends React.Component{
       
     componentDidMount(){
         this.setState({
-            previewHeight: this.state.testRef.current.clientHeight,
+            previewHeight: this.refSelectedTap.current.clientHeight,
             infoExpansionStyle: {
-                height: this.state.testRef.current.clientHeight
+                height: this.refSelectedTap.current.clientHeight
             }
         })
     }
@@ -131,7 +136,7 @@ class SelectedTap extends React.Component{
                 {this.props.showingInfoWindow
                 // Preview
                 ?<div 
-                    ref={this.state.testRef}
+                    ref={this.refSelectedTap}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     className={this.props.infoWindowIn}
                     style={this.state.infoExpansionStyle}
@@ -160,7 +165,9 @@ class SelectedTap extends React.Component{
                     {/* Tap Info */}
 
                     {/* Location Name */}
-                    <div id={this.props.infoIsExpanded
+                    <div 
+                        ref= {this.refContentArea}
+                        id={this.props.infoIsExpanded
                             ? 'tap-content-expanded'
                             : 'tap-content'
                         }

@@ -345,12 +345,12 @@ export class ReactGoogleMaps extends Component {
             {this.props.infoIsExpanded
               ?<div></div>
               :<div>
-                <ClosestTap
+                {/* <ClosestTap
                   lat={this.state.closestTap.lat}
                   lon={this.state.closestTap.lon}
                   org={this.state.closestTap.organization}
                   address={this.state.closestTap.address}
-                />
+                /> */}
                 <div className="searchBarContainer">
                   <SearchBar
                     className="searchBar"
