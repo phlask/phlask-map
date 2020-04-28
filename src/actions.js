@@ -42,6 +42,12 @@ export const getTaps = () => dispatch => {
     });
 };
 
+export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR'
+export const toggleSearchBar = (isShown) => ({
+    type: TOGGLE_SEARCH_BAR,
+    isShown
+})
+
 export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
 export const toggleInfoWindow = (isShown) => ({
     type: TOGGLE_INFO_WINDOW,

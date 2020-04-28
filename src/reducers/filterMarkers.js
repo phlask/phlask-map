@@ -9,7 +9,7 @@ const initialState = {
   showingInfoWindow: true ,
   infoIsExpanded: false,
   infoWindowIn: 'info-window-out',
-  // infoWindoExpandedClass: ''
+  isSearchShown: false
 };
 
 export default (state = initialState, act) => {
@@ -101,6 +101,10 @@ export default (state = initialState, act) => {
     case actions.SET_FILTER_FUNCTION:
       console.log("set filter func");
       return { filterFunction: !state.filterFunction, ...state };
+
+    case actions.TOGGLE_SEARCH_BAR:
+      console.log('Seach Bar Shown: ' + act.isShown);
+      return { ...state, isSearchShown: act.isShown }
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowIn);

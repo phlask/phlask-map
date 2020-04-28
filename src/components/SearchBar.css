@@ -1,3 +1,8 @@
+#searchContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 .clearInput {
   display: inline;
   font-size: 1.5em;
@@ -12,4 +17,22 @@
 button {
   padding-bottom: 40px;
   height: 30px;
+}
+
+#close-button{
+  height: 30px;
+  width: 30px;
+}
+#close-icon{
+  height: 100%;
+  width: 100%;
+}
+
+#search-icon{
+  height: 40px;
+  width: 40px;
+}
+#search-img{
+  height: 100%;
+  width: 100%;
 }

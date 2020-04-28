@@ -91,9 +91,9 @@ class SelectedTap extends React.Component{
     } 
 
     animateInfoExpansion(shouldExpand){
-        if(shouldExpand){
-            this.refContentArea.current.scrollTop = 0
-        }
+        // if(shouldExpand){
+        //     this.refContentArea.current.scrollTop = 0
+        // }
         this.setState({
             infoExpansionStyle: {
                 height: shouldExpand
