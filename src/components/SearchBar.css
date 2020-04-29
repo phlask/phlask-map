@@ -1,16 +1,18 @@
-#searchContainer{
+#search-container{
   display: flex;
   flex-direction: row;
-  background-color: khaki;
+  width: 100%;
+  padding: 8px 0 0 8px;
+  justify-content: start;
 }
 #search-input{
-  
+  /* width: 90%; */
+  flex: 1;
 }
 .clearInput {
   display: inline;
   font-size: 1.5em;
   font-weight: bold;
-  height: 30px;
 }
 
 .clearInput:hover {
@@ -23,8 +25,10 @@ button {
 }
 
 #close-button{
+  position: relative;
   height: 30px;
   width: 30px;
+  /* background-color: lightcyan; */
 }
 #close-icon{
   height: 100%;
@@ -32,6 +36,7 @@ button {
 }
 
 #search-icon{
+  padding: 8px 0 0 8px;
   height: 40px;
   width: 40px;
 }

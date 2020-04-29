@@ -29,9 +29,9 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div style={{width: '100%'}}>
+      <div>
         {this.props.isSearchShown
-          ? <div id="searchContainer">
+          ? <div id='search-container'>
               <PlacesAutocomplete
                 value={this.state.address}
                 onChange={this.handleChange}
@@ -43,14 +43,14 @@ class SearchBar extends React.Component {
                   getSuggestionItemProps,
                   loading
                 }) => (
-                  <div>
+                  <div style={{width: 'fit-content'}}>
                     {/* type="search" is only HTML5 compliant */}
                     <input
                       {...getInputProps({
                         placeholder: "Search For Taps Near...",
                         className: "location-search-input"
                       })}
-                      id= 'search-input'
+                      id= "search-input"
                       type="search"
                     />
                     {/* <div className="clearInput">
