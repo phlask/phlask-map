@@ -29,7 +29,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {this.props.isSearchShown
           ? <div id="searchContainer">
               <PlacesAutocomplete
@@ -50,7 +50,7 @@ class SearchBar extends React.Component {
                         placeholder: "Search For Taps Near...",
                         className: "location-search-input"
                       })}
-                      style={{ width: "300px" }}
+                      id= 'search-input'
                       type="search"
                     />
                     {/* <div className="clearInput">
