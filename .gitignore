@@ -20,3 +20,5 @@ build/
 
 # Local target for files built on docker
 docker/
+
+.env
