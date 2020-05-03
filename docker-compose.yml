@@ -18,7 +18,7 @@ services:
     build: .
     entrypoint: bash -c "mkdir -p testResults && yarn test --json --outputFile=testResults/jestResults.json && yarn build"
     environment: 
-      CI: "true"
+      CI: "false"
     volumes:
     - "./docker/build:/usr/src/app/build"
     - "./docker/testResults:/usr/src/app/testResults"
