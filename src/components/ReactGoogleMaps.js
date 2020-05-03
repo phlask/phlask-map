@@ -135,7 +135,8 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: []
     };
   }
-  componentWillReceiveProps(nextProps) {
+  
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
@@ -145,11 +146,15 @@ export class ReactGoogleMaps extends Component {
 
     getCoordinates().then(position => {
       if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
-        this.setState({ currlat: parseFloat("39.952744") });
-        this.setState({ currlon: parseFloat("-75.163500") });
+        this.setState({ 
+          currlat: parseFloat("39.952744"),
+          currlon: parseFloat("-75.163500")
+        });
       } else {
-        this.setState({ currlat: position.coords.latitude });
-        this.setState({ currlon: position.coords.longitude });
+        this.setState({ 
+          currlat: position.coords.latitude,
+          currlon: position.coords.longitude
+         });
       }
     });
   }
@@ -189,6 +194,8 @@ export class ReactGoogleMaps extends Component {
       //   lat: this.state.currlat,
       //   lon: this.state.currlon
       // });
+      console.log(this.state.currlon)
+      console.log(this.state.currlon)
       return (
         <div>
           {/* <ClosestTap
@@ -212,7 +219,7 @@ export class ReactGoogleMaps extends Component {
           <MapMarkers 
             map={this.props.map}
             google={this.props.google}
-            mapCenter={this.props.mapCenter}
+            mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
           />
 
             <InfoWindow

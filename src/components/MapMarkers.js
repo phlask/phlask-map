@@ -2,48 +2,51 @@ import React, { Component } from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import { getTaps } from "../actions";
-import PropTypes from "prop-types"
+import makeGetVisibleTaps from '../selectors/tapSelectors';
 
 export class MapMarkers extends Component {
-  constructor(props) {
-    super(props);
-  }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getTaps()
   }
 
   getIcon(access) {
-    // if (this.props.unfilteredTaps.includes(access) === true) {
-    //   switch (access) {
-    //     case "Public":
-    //       return "https://i.imgur.com/fsofse7.png";
-    //     case "Private-Shared":
-    //       return "https://i.imgur.com/MMsmsHG.png";
-    //     case "Private":
-    //       return "https://i.imgur.com/oLPMQtg.png";
-    //     case "Restricted":
-    //       return "https://i.imgur.com/T93TDTO.png";
-    //     case "Semi-public":
-    //       return "https://i.imgur.com/MMsmsHG.png";
-    //     case "TrashAcademy":
-    //       return "https://i.imgur.com/fXTeEKL.png";
-    //     default:
-    //       return "https://i.imgur.com/kKXG3TO.png";
-    //   }
-    // } else {
-    //   return "https://i.imgur.com/kKXG3TO.png";
-    // }
-    return "https://i.imgur.com/kKXG3TO.png";
+    if (!this.props.accessTypesHidden.includes(access)) {
+      switch (access) {
+        case "Public":
+          return "https://i.imgur.com/fsofse7.png";
+        case "Private-Shared":
+          return "https://i.imgur.com/MMsmsHG.png";
+        case "Private":
+          return "https://i.imgur.com/oLPMQtg.png";
+        case "Restricted":
+          return "https://i.imgur.com/T93TDTO.png";
+        case "Semi-public":
+          return "https://i.imgur.com/MMsmsHG.png";
+        case "TrashAcademy":
+          return "https://i.imgur.com/fXTeEKL.png";
+        default:
+          return "https://i.imgur.com/kKXG3TO.png";
+      }
+    } else {
+      return "https://i.imgur.com/kKXG3TO.png";
+    }
   }
 
   render() {
     console.log(this.props)
-    if(this.props.filteredTaps) {
+    if(this.props.visibleTaps) {
       return (
         <React.Fragment>
-          {this.props.filteredTaps
-            /* {toggledTaps */
+          <Marker
+            map={this.props.map}
+            google={this.props.google}
+            key="current_pos"
+            name={"Current Pos"}
+            position={this.props.mapCenter}
+            onClick={this.onMarkerClick}
+          />
+          {this.props.visibleTaps
             .map((tap, index) => (
               <Marker
                 map={this.props.map}
@@ -67,7 +70,7 @@ export class MapMarkers extends Component {
                   url: this.getIcon(tap.access)
                 }}
               />
-          ))};
+          ))}
         </React.Fragment>
       );
     }
@@ -75,21 +78,19 @@ export class MapMarkers extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    filtered: state.filtered,
-    handicap: state.handicap,
-    allTaps: state.allTaps,
-    filteredTaps: state.filteredTaps
+const makeMapStateToProps = () => {
+  const getVisibleTaps = makeGetVisibleTaps()
+  const mapStateToProps = (state, props) => {
+    return {
+      visibleTaps: getVisibleTaps(state, props),
+      filtered: state.tapFilters.filtered,
+      handicap: state.tapFilters.handicap,
+      accessTypesHidden: state.tapFilters.accessTypesHidden
+    }
   }
-};
+  return mapStateToProps
+}
 
 const mapDispatchToProps = { getTaps };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return{
-//     getTaps: () => dispatch(getTaps())
-//   }
-// }
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapMarkers);
+export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);
