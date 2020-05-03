@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 import "./SearchBar.css";
-import searchIcon from './images/searchIcon.png'
+import searchIcon from './images/searchIconBlack.png'
 import closeIcon from './images/closeIcon.png'
 
 class SearchBar extends React.Component {

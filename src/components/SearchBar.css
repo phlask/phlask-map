@@ -6,8 +6,23 @@
   justify-content: start;
 }
 #search-input{
-  /* width: 90%; */
+  border-radius: 5px;
   flex: 1;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  animation-name: search-input-animation;
+  animation-duration: .4s;
+  animation-fill-mode: forward;
+  animation-timing-function: ease-in-out;
+}
+@keyframes search-input-animation{
+  0%{
+    width: 0;
+  }100%{
+    width: 100%;
+  }
 }
 .clearInput {
   display: inline;
@@ -26,9 +41,23 @@ button {
 
 #close-button{
   position: relative;
-  height: 30px;
-  width: 30px;
-  /* background-color: lightcyan; */
+  margin-left: 5px;
+  height: 15px;
+  width: 15px;
+  /* opacity: .7; */
+  /* animation-name: close-button-animation; */
+  animation-duration: .6s;
+  animation-fill-mode: forward;
+  animation-timing-function: ease-in-out;
+}
+@keyframes close-button-animation{
+  0%{
+    opacity: 0;
+  }50%{
+    opacity: 0;
+  }100%{
+    opacity: .7;
+  }
 }
 #close-icon{
   height: 100%;
@@ -39,6 +68,7 @@ button {
   padding: 8px 0 0 8px;
   height: 40px;
   width: 40px;
+  opacity: .5;
 }
 #search-img{
   height: 100%;
