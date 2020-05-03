@@ -16,6 +16,7 @@ import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
 import tapMenu from './images/tapMenu.png'
+import { getHours, getDays } from './hours.js'
 
 const hoursList = [
         '8am-9pm',
