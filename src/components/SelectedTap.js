@@ -18,15 +18,15 @@ import privateTap from './images/privateTap.png'
 import tapMenu from './images/tapMenu.png'
 import { hours } from './hours.js'
 
-const hoursList = [
-        '8am-9pm',
-        '8am-9pm',
-        '8am-9pm',
-        '8am-9pm',
-        '8am-9pm',
-        '8am-9pm',
-        '8am-9pm'
-]
+// const hoursList = [
+//         '8am-9pm',
+//         '8am-9pm',
+//         '8am-9pm',
+//         '8am-9pm',
+//         '8am-9pm',
+//         '8am-9pm',
+//         '8am-9pm'
+// ]
 
 const tempImages = {
     tapImg: sampleImg,
@@ -52,9 +52,16 @@ class SelectedTap extends React.Component{
                 isDescriptionShown: false,
                 isHoursExpanded: false,
                 animationSpeed: 600,
-                currentDay: '',
+                currentDay: null,
+                orgHours: {
+                    hours: {
+                        open: {time: null},
+                        close: {time: null}
+                    }
+                },
                 currentHour: '',
-                currentMinute: ''
+                currentMinute: '',
+                hoursList: null
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -127,31 +134,71 @@ class SelectedTap extends React.Component{
     // Handle Times
     
     setCurrentDate(){
+        if( (this.props.hours === undefined) ){
+            return
+        }
         const today = new Date() 
+        const currentDay = today.getDay()
+        
         this.setState({
-            currentDay: today.getDay(),
+            currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
-            currentMinute: today.getMinutes()
-        },
-         console.log(`Hour: ${this.state.currentHour} Minute: ${this.state.currentMinute}`)
+            currentMinute: today.getMinutes(),
+            orgHours: {
+                        hours: {
+                            open: {time: hours.getSimpleHours(this.props.hours[currentDay].open.time)},
+                            close: {time: hours.getSimpleHours(this.props.hours[currentDay].close.time)}
+                        }
+                    },
+            hoursList: this.getAllHours() 
+
+        },()=>{
+            // console.log('Set Current Date: ' + this.props.hours[this.state.currentDay].open.time)
+        }
+        
         )
     }
     
-
-    // ******* Issue here 
-    
     getHoursFromDay(){
-        const test = this.state.currentDay
         return {
-            open: this.props.hours[this.state.currentDay].open.time,
-            close: this.props.hours[this.state.currentDay].close.time
+            open: this.props.hours[this.state.orgHours].open.time,
+            close: this.props.hours[this.state.orgHours].close.time
         }
     }
 
-    componentDidUpdate(){
-        // console.log(this.getHoursFromDay());
+    /* Return an array of objects containing Day of the week, open time, 
+        and closing time, starting with the current day
+     */
+    getAllHours(){
         
-        // console.log(`Hour: ${this.state.hour} Minute: ${this.state.currentMinute}`)
+        const hoursList = []
+
+        this.props.hours.map((orgHours,index)=>{
+            const formattedHours = {
+                day:  hours.getDays(index),
+                open: hours.getSimpleHours(orgHours.open.time),
+                close: hours.getSimpleHours(orgHours.close.time)
+            }
+            hoursList.push(formattedHours)
+        })
+
+        // Shift array so current day is first
+        const date = new Date()
+        const day = date.getDay()
+        for(let x = 0; x < day; x++){
+            hoursList.push(hoursList.shift())
+        }
+
+        return hoursList
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props !== prevProps){
+            if(this.props.hours !== undefined){
+                console.log(`${hours.getDays(this.props.hours[1].open.day)}: ${this.props.hours[1].open.time}`);      
+            }
+            this.setCurrentDate()
+        }
     }
       
     componentDidMount(){
@@ -265,7 +312,10 @@ class SelectedTap extends React.Component{
                                         {/* Current Day */}
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
-                                                {hoursList[0]}
+                                                {this.state.hoursList !== null
+                                                    ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
+                                                    :'n/a'
+                                                } 
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
@@ -280,11 +330,19 @@ class SelectedTap extends React.Component{
                                         {/* Other Days */}
                                         {this.state.isHoursExpanded && this.props.infoIsExpanded
                                             ? <div id='other-hours-container'>
-                                                {hoursList.map((hours,index) => {
-                                                    if(index !== 0){
-                                                        return <div className='tap-hours-list-item' key={index}>{hours}</div>
-                                                    }
-                                                })}
+                                                {(this.state.hoursList !== null)
+                                                    ?this.state.hoursList.map((hours,index) => {
+                                                        if(index !== 0){
+                                                            return <div 
+                                                                        className='tap-hours-list-item' 
+                                                                        key={index}
+                                                                    >
+                                                                        {`${hours.open} - ${hours.close}`}
+                                                                    </div>
+                                                        }
+                                                    })
+                                                    :<div className='tap-hours-list-item'>n/a</div>
+                                            }
                                             </div>
                                             :<div></div>
                                         }

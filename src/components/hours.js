@@ -29,6 +29,9 @@ export const hours = {
     
         return `${newHour}:${minute}${mer}`    
     },
+    /* Returns a user readable time, truncating the :00 if there are no partial hours
+        eg: "6pm" or "3:30pm"
+    */
     getSimpleHours : function getSimpleHours(hours){
     
         // Check for 12:00am or hours exceeding 2400
@@ -57,9 +60,9 @@ export const hours = {
     
         const mer = hour >= 12 ? 'pm' : 'am'
     
-        console.log(parseInt(minute) === 0 
-            ? `${newHour}${mer}`
-            : `${newHour}:${minute}${mer}` );
+        // console.log(parseInt(minute) === 0 
+        //     ? `${newHour}${mer}`
+        //     : `${newHour}:${minute}${mer}` );
         
     
         return parseInt(minute) === 0
@@ -68,6 +71,9 @@ export const hours = {
     },
     
     getHourFromMilitary: function getHourFromMilitary(hour){
+        if(hour === 12){
+            return hour
+        }
         return (hour - 12).toString()
     },
     
@@ -78,7 +84,7 @@ export const hours = {
         }
     
         const intDays = [0,1,2,3,4,5,6,]
-        const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
     
         return days[intDays.indexOf(integerDay)]
     },

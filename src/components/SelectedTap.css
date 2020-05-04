@@ -356,6 +356,7 @@
     /* position: absolute; */
 }
 .tap-hours-list-item{
+    text-align: center;
     white-space: nowrap;
 }
 #tap-hours-placeholder{
