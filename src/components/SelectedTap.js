@@ -265,8 +265,7 @@ class SelectedTap extends React.Component{
                                         {/* Current Day */}
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
-                                                {/* {hours.getSimpleHours(this.getHoursFromDay())} */}
-                                                8am
+                                                {hoursList[0]}
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
