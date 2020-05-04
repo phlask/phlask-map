@@ -16,7 +16,7 @@ import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
 import tapMenu from './images/tapMenu.png'
-import { getHours, getDays } from './hours.js'
+import { hours } from './hours.js'
 
 const hoursList = [
         '8am-9pm',
@@ -51,7 +51,10 @@ class SelectedTap extends React.Component{
                 infoExpansionStyle: {},
                 isDescriptionShown: false,
                 isHoursExpanded: false,
-                animationSpeed: 600
+                animationSpeed: 600,
+                currentDay: '',
+                currentHour: '',
+                currentMinute: ''
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -120,8 +123,40 @@ class SelectedTap extends React.Component{
         }
         
     }
+
+    // Handle Times
+    
+    setCurrentDate(){
+        const today = new Date() 
+        this.setState({
+            currentDay: today.getDay(),
+            currentHour: hours.getHourFromMilitary(today.getHours()),
+            currentMinute: today.getMinutes()
+        },
+         console.log(`Hour: ${this.state.currentHour} Minute: ${this.state.currentMinute}`)
+        )
+    }
+    
+
+    // ******* Issue here 
+    
+    getHoursFromDay(){
+        const test = this.state.currentDay
+        return {
+            open: this.props.hours[this.state.currentDay].open.time,
+            close: this.props.hours[this.state.currentDay].close.time
+        }
+    }
+
+    componentDidUpdate(){
+        // console.log(this.getHoursFromDay());
+        
+        // console.log(`Hour: ${this.state.hour} Minute: ${this.state.currentMinute}`)
+    }
       
     componentDidMount(){
+        this.setCurrentDate()
+        
         this.setState({
             previewHeight: this.refSelectedTap.current.clientHeight,
             infoExpansionStyle: {
@@ -230,7 +265,8 @@ class SelectedTap extends React.Component{
                                         {/* Current Day */}
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
-                                                {hoursList[0]}
+                                                {/* {hours.getSimpleHours(this.getHoursFromDay())} */}
+                                                8am
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'

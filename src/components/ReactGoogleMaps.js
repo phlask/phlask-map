@@ -161,6 +161,7 @@ export class ReactGoogleMaps extends Component {
               key={index}
               name={tap.tapnum}
               organization={tap.organization}
+              hours={tap.hours}
               address={tap.address}
               description={tap.description}
               filtration={tap.filtration}
@@ -212,6 +213,7 @@ export class ReactGoogleMaps extends Component {
               key={index}
               name={tap.tapnum}
               organization={tap.organization}
+              hours={tap.hours}
               address={tap.address}
               description={tap.description}
               filtration={tap.filtration}
@@ -384,6 +386,7 @@ export class ReactGoogleMaps extends Component {
                   <SelectedTap
                     toggleTapInfo = {this.toggleTapInfo}
                     organization = {this.state.selectedPlace.organization}
+                    hours = {this.state.selectedPlace.hours}
                     address = {this.state.selectedPlace.address}
                     visible = {this.props.showingInfoWindow}
                   >
