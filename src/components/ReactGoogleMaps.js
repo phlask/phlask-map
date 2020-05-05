@@ -353,7 +353,7 @@ export class ReactGoogleMaps extends Component {
                   org={this.state.closestTap.organization}
                   address={this.state.closestTap.address}
                 /> */}
-                <div className="searchBarContainer">
+                <div className="search-bar-container">
                   <SearchBar
                     className="searchBar"
                     search={location => this.searchForLocation(location)}

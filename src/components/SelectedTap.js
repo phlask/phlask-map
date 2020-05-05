@@ -53,12 +53,6 @@ class SelectedTap extends React.Component{
                 isHoursExpanded: false,
                 animationSpeed: 600,
                 currentDay: null,
-                orgHours: {
-                    hours: {
-                        open: {time: null},
-                        close: {time: null}
-                    }
-                },
                 currentHour: '',
                 currentMinute: '',
                 hoursList: null
@@ -134,36 +128,32 @@ class SelectedTap extends React.Component{
     // Handle Times
     
     setCurrentDate(){
-        if( (this.props.hours === undefined) ){
-            return
-        }
         const today = new Date() 
         const currentDay = today.getDay()
+        if( (this.props.hours === undefined) ){
+            this.setState({
+            currentDay: currentDay,
+            currentHour: hours.getHourFromMilitary(today.getHours()),
+            currentMinute: today.getMinutes(),
+            hoursList: null 
+
+        })
+        
+        return
+        }
+        
         
         this.setState({
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
-            orgHours: {
-                        hours: {
-                            open: {time: hours.getSimpleHours(this.props.hours[currentDay].open.time)},
-                            close: {time: hours.getSimpleHours(this.props.hours[currentDay].close.time)}
-                        }
-                    },
             hoursList: this.getAllHours() 
 
-        },()=>{
-            // console.log('Set Current Date: ' + this.props.hours[this.state.currentDay].open.time)
-        }
+        },  ()=>{
+                // console.log('Set Current Date: ' + this.props.hours[this.state.currentDay].open.time)
+            }
         
         )
-    }
-    
-    getHoursFromDay(){
-        return {
-            open: this.props.hours[this.state.orgHours].open.time,
-            close: this.props.hours[this.state.orgHours].close.time
-        }
     }
 
     /* Return an array of objects containing Day of the week, open time, 
@@ -303,10 +293,11 @@ class SelectedTap extends React.Component{
                                     <div id='tap-info-hours-container'>
                                         {/* Placeholder for Dropdown */}
                                         <div id='current-hours-placeholder'>
-                                            <div className='tap-hours-list-item'>Placeholder</div>
-                                            {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
-                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
-                                            </div> */}
+                                            <div className='tap-hours-list-item'></div>
+                                                {this.state.hoursList !== null
+                                                    ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
+                                                    :'n/a'
+                                                } 
                                         </div>
 
                                         {/* Current Day */}

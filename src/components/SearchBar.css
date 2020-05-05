@@ -4,6 +4,7 @@
   width: 100%;
   padding: 8px 0 0 8px;
   justify-content: start;
+  pointer-events: visibleStroke;
 }
 #search-input{
   border-radius: 5px;
@@ -69,6 +70,7 @@ button {
   height: 40px;
   width: 40px;
   opacity: .5;
+  pointer-events: visibleStroke;
 }
 #search-img{
   height: 100%;

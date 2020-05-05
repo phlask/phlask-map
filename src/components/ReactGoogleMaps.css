@@ -26,8 +26,9 @@
   -o-transform: translateX(-50%);
 }
 
-.searchBarContainer {
+.search-bar-container {
   position: relative;
+  pointer-events: none;
 }
 /* .legend {
   visibility: hidden;

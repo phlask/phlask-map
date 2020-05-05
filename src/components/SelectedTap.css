@@ -250,7 +250,7 @@
     flex-direction: column;
     align-items: center;
     align-self: center;
-    flex: 1;
+    flex: 3;
     /* background-color: darkcyan; */
 }
 #tap-info-org-status{
@@ -258,23 +258,7 @@
     color: green;
     font-weight: 700;
 }
-/* #tap-info-hours{
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    box-sizing: border-box;
-    align-self: center;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    padding: 0 3px 0 3px;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-} */
+
 /* expanded */
 #tap-info-hours-container{
     position: absolute;
@@ -328,7 +312,7 @@
     font-size: 13px;
     font-weight: 500;
     margin-bottom: 5px;
-    padding: 0 3px 0 3px;
+    /* padding: 0 3px 0 3px; */
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -344,13 +328,14 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
+    width: fit-content;
     /* background-color: cadetblue; */
 }
 #current-hours-placeholder{
     visibility: hidden;
     display: flex;
     flex-direction: row;
+    width: fit-content;
 }
 #other-hours-container{
     /* position: absolute; */
@@ -358,6 +343,8 @@
 .tap-hours-list-item{
     text-align: center;
     white-space: nowrap;
+    width: fit-content;
+    /* background-color: lightgreen; */
 }
 #tap-hours-placeholder{
     visibility: hidden;
