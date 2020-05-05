@@ -23,3 +23,6 @@ docker/
 
 # Firebase
 # /src/firebase
+
+# dev files
+resources/

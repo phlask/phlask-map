@@ -7,7 +7,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import "./SearchBar.css";
 import searchIcon from './images/searchIconBlack.png'
-import closeIcon from './images/closeIcon.png'
+import closeIcon from './images/fatArrow.png'
 
 class SearchBar extends React.Component {
   constructor(props) {

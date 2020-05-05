@@ -1,10 +1,10 @@
 #search-container{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  /* width: 100%; */
   padding: 8px 0 0 8px;
   justify-content: start;
-  pointer-events: visibleStroke;
+  pointer-events: none;
 }
 #search-input{
   border-radius: 5px;
@@ -17,6 +17,7 @@
   animation-duration: .4s;
   animation-fill-mode: forward;
   animation-timing-function: ease-in-out;
+  pointer-events: visibleStroke;
 }
 @keyframes search-input-animation{
   0%{
@@ -24,6 +25,9 @@
   }100%{
     width: 100%;
   }
+}
+.autocomplete-dropdown-container{
+  position: absolute;
 }
 .clearInput {
   display: inline;
@@ -43,13 +47,14 @@ button {
 #close-button{
   position: relative;
   margin-left: 5px;
-  height: 15px;
+  height: 10px;
   width: 15px;
-  /* opacity: .7; */
+  opacity: .5;
   /* animation-name: close-button-animation; */
   animation-duration: .6s;
   animation-fill-mode: forward;
   animation-timing-function: ease-in-out;
+  pointer-events: visibleStroke;
 }
 @keyframes close-button-animation{
   0%{
@@ -63,6 +68,11 @@ button {
 #close-icon{
   height: 100%;
   width: 100%;
+  transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+  -moz-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  -o-transform: rotateZ(90deg);
 }
 
 #search-icon{
