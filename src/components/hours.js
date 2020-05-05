@@ -84,7 +84,7 @@ export const hours = {
         }
     
         const intDays = [0,1,2,3,4,5,6,]
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
     
         return days[intDays.indexOf(integerDay)]
     },

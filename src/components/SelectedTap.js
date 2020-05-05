@@ -328,7 +328,7 @@ class SelectedTap extends React.Component{
                                                                         className='tap-hours-list-item' 
                                                                         key={index}
                                                                     >
-                                                                        {`${hours.open} - ${hours.close}`}
+                                                                        {`${hours.day} ${hours.open} - ${hours.close}`}
                                                                     </div>
                                                         }
                                                     })
