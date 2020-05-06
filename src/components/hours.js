@@ -89,6 +89,16 @@ export const hours = {
         return days[intDays.indexOf(integerDay)]
     },
     
+    checkOpen: function checkOpen(open, close){
+        const today = new Date()
+        const currentTime = parseInt(today.getHours().toString() + today.getMinutes().toString())
+        
+        return currentTime > open && currentTime < close
+            ? true
+            :false
+        
+    }
+    
     // Get current time & day
     
     // const today = new Date() 
@@ -110,6 +120,4 @@ export const hours = {
 
 
 
-// console.log(hours.getCurrentDay());
-
-// getSimpleHours('2300')
+// hours.checkOpen(1200,1900)

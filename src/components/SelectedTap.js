@@ -12,6 +12,9 @@ import sampleImg from './fountain.png'
 import accessible from './images/accessible.png'
 import filteredBlue from './images/filteredBlue.png'
 import phlaskGreen from './images/phlaskGreen.png'
+import phlaskBlue from './images/phlaskBlue.png'
+import phlaskYellow from './images/phlaskYellow.png'
+import phlaskRed from './images/phlaskRed.png'
 import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
@@ -55,7 +58,8 @@ class SelectedTap extends React.Component{
                 currentDay: null,
                 currentHour: '',
                 currentMinute: '',
-                hoursList: null
+                hoursList: null,
+                isOpen: null
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -135,7 +139,8 @@ class SelectedTap extends React.Component{
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
-            hoursList: null 
+            hoursList: null,
+            isOpen: null
 
         })
         
@@ -147,7 +152,8 @@ class SelectedTap extends React.Component{
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
-            hoursList: this.getAllHours() 
+            hoursList: this.getAllHours(),
+            isOpen: hours.checkOpen(this.props.hours[currentDay].open.time, this.props.hours[currentDay].close.time)
 
         },  ()=>{
                 // console.log('Set Current Date: ' + this.props.hours[this.state.currentDay].open.time)
@@ -182,6 +188,13 @@ class SelectedTap extends React.Component{
         return hoursList
     }
 
+    // Handle Icons
+    getIcon(property){
+
+        return
+    }
+    
+
     componentDidUpdate(prevProps){
         if(this.props !== prevProps){
             if(this.props.hours !== undefined){
@@ -200,6 +213,7 @@ class SelectedTap extends React.Component{
                 height: this.refSelectedTap.current.clientHeight
             }
         })
+        
     }
 
     render(){
@@ -277,7 +291,15 @@ class SelectedTap extends React.Component{
 
                             {/* Hours */}
                             <div id='org-hours'>
-                                <div id='tap-info-org-status'>Open</div>
+                                <div id='tap-info-org-status'>
+                                {/* Continue Here */}
+                                    {this.state.isOpen
+                                        ? 'Open'
+                                        : this.state.isOpen !== null
+                                            ? 'Closed'
+                                            : 'unavailable'
+                                    }
+                                </div>
                                 <div id='hours-area'>
 
                                     {/* Placeholder for Dropdown */}
@@ -296,16 +318,16 @@ class SelectedTap extends React.Component{
                                             <div className='tap-hours-list-item'></div>
                                                 {this.state.hoursList !== null
                                                     ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
-                                                    :'n/a'
+                                                    :''
                                                 } 
                                         </div>
 
-                                        {/* Current Day */}
+                                        {/* Current Day Hours */}
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.hoursList !== null
                                                     ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
-                                                    :'n/a'
+                                                    :''
                                                 } 
                                             </div>
                                             <div 
