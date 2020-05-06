@@ -1,22 +1,10 @@
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
-// import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
-import { getTaps } from "../actions";
-
-// const config = {
-//   apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-//   authDomain: "phlask-web-map.firebaseapp.com",
-//   databaseURL: "https://phlask-web-map.firebaseio.com",
-//   projectId: "phlask-web-map",
-//   storageBucket: "phlask-web-map.appspot.com",
-//   messagingSenderId: "428394983826"
-// };
-
-// firebase.initializeApp(config);
+import MapMarkers from "./MapMarkers"
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -66,30 +54,6 @@ function closest(data, v) {
 
   return closestTap;
 }
-
-// function getTaps() {
-//   return firebase
-//     .database()
-//     .ref("/")
-//     .once("value")
-//     .then(function(snapshot) {
-//       var allTaps = [];
-//       var item;
-//       for (item in snapshot.val()) {
-//         if (snapshot.val()[item].access === "WM") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].active === "N") {
-//           continue;
-//         }
-//         if (snapshot.val()[item].access === "TrashAcademy") {
-//           continue;
-//         }
-//         allTaps.push(snapshot.val()[item]);
-//       }
-//       return allTaps;
-//     });
-// }
 
 function getCoordinates() {
   return new Promise(function(resolve, reject) {
@@ -171,33 +135,29 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: []
     };
   }
-  componentWillReceiveProps(nextProps) {
+  
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
   }
 
   componentDidMount() {
-    // getTaps().then(taps => {
-    //   this.setState(oldState => {
-    //     return { ...oldState, taps: taps };
-    //   });
-    // });
-
-    this.props.getTaps();
 
     getCoordinates().then(position => {
       if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
-        this.setState({ currlat: parseFloat("39.952744") });
-        this.setState({ currlon: parseFloat("-75.163500") });
+        this.setState({ 
+          currlat: parseFloat("39.952744"),
+          currlon: parseFloat("-75.163500")
+        });
       } else {
-        this.setState({ currlat: position.coords.latitude });
-        this.setState({ currlon: position.coords.longitude });
+        this.setState({ 
+          currlat: position.coords.latitude,
+          currlon: position.coords.longitude
+         });
       }
     });
   }
-
-  // componentDidUpdate() {  }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -224,47 +184,26 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
-  getIcon(access) {
-    if (this.state.unfilteredTaps.includes(access) === true) {
-      switch (access) {
-        case "Public":
-          return "https://i.imgur.com/fsofse7.png";
-        case "Private-Shared":
-          return "https://i.imgur.com/MMsmsHG.png";
-        case "Private":
-          return "https://i.imgur.com/oLPMQtg.png";
-        case "Restricted":
-          return "https://i.imgur.com/T93TDTO.png";
-        case "Semi-public":
-          return "https://i.imgur.com/MMsmsHG.png";
-        case "TrashAcademy":
-          return "https://i.imgur.com/fXTeEKL.png";
-        default:
-          return "https://i.imgur.com/kKXG3TO.png";
-      }
-    } else {
-      return "https://i.imgur.com/kKXG3TO.png";
-    }
-  }
-
   searchForLocation = location => {
     this.setState({ currlat: location.lat, currlon: location.lng });
   };
 
   render() {
-    if (this.props.allTaps.length) {
-      var closestTap = closest(this.props.allTaps, {
-        lat: this.state.currlat,
-        lon: this.state.currlon
-      });
+    // if (this.props.allTaps.length) {
+      // var closestTap = closest(this.props.allTaps, {
+      //   lat: this.state.currlat,
+      //   lon: this.state.currlon
+      // });
+      console.log(this.state.currlon)
+      console.log(this.state.currlon)
       return (
         <div>
-          <ClosestTap
+          {/* <ClosestTap
             lat={closestTap.lat}
             lon={closestTap.lon}
             org={closestTap.organization}
             address={closestTap.address}
-          />
+          /> */}
 
           <Map
             google={this.props.google}
@@ -277,36 +216,11 @@ export class ReactGoogleMaps extends Component {
             }}
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
-            <Marker
-              key="current_pos"
-              name={"Current Pos"}
-              position={{ lat: this.state.currlat, lng: this.state.currlon }}
-              onClick={this.onMarkerClick}
-            />
-
-            {this.props.filteredTaps
-              /* {toggledTaps */
-              .map((tap, index) => (
-                <Marker
-                  key={index}
-                  name={tap.tapnum}
-                  organization={tap.organization}
-                  address={tap.address}
-                  description={tap.description}
-                  filtration={tap.filtration}
-                  handicap={tap.handicap}
-                  service={tap.service}
-                  tap_type={tap.tap_type}
-                  norms_rules={tap.norms_rules}
-                  vessel={tap.vessel}
-                  img={tap.images}
-                  onClick={this.onMarkerClick}
-                  position={{ lat: tap.lat, lng: tap.lon }}
-                  icon={{
-                    url: this.getIcon(tap.access)
-                  }}
-                />
-              ))}
+          <MapMarkers 
+            map={this.props.map}
+            google={this.props.google}
+            mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+          />
 
             <InfoWindow
               marker={this.state.activeMarker}
@@ -329,25 +243,15 @@ export class ReactGoogleMaps extends Component {
           </div>
         </div>
       );
-    } else {
-      return <div>Loading taps...</div>;
-    }
-  }
+    } //else {
+    //   return <div>Loading taps...</div>;
+    // }
+  // }
 }
 
-const mapStateToProps = state => ({
-  filtered: state.filtered,
-  handicap: state.handicap,
-  allTaps: state.allTaps,
-  filteredTaps: state.filteredTaps
-});
+// const mapDispatchToProps = { getTaps };
 
-const mapDispatchToProps = { getTaps };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
+export default connect()(
   GoogleApiWrapper({
     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
     LoadingContainer: LoadingContainer

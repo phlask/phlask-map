@@ -46,5 +46,10 @@ export const getTaps = () => dispatch => {
       }
       dispatch(getTapsSuccess(allTaps));
     });
-  // .then(allTaps => dispatch(getTapsSuccess(allTaps)));
 };
+
+export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
+  export const setFilteredTapTypes = tapType => ({
+    type: SET_FILTERED_TAP_TYPES,
+    tapType
+  }); 
