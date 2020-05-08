@@ -222,11 +222,11 @@
 
 #org-name-and-address{
     align-self: center;
-    flex: 3;
+    flex: 2;
     margin-top: 5px;
 }
 #tap-organization-name{
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 700;
     text-align: start;
     line-height: normal;
@@ -238,8 +238,8 @@
 }
 #tap-info-address{
     text-align: start;
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: 500;
     
 }
 
@@ -256,6 +256,7 @@
 #tap-info-org-status{
     text-align: center;
     color: green;
+    font-size: 1em;
     font-weight: 700;
 }
 
@@ -268,7 +269,7 @@
     box-sizing: border-box;
     align-self: center;
     align-items: center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     margin-bottom: 5px;
     padding: 0 3px 0 3px;
@@ -354,13 +355,12 @@
     visibility: hidden;
 }
 .hours-dropdown-arrow-container{
-    width: 20px;
     transition: .6s width ease-in-out;
     -webkit-transition: .6s width ease-in-out;
     -moz-transition: .6s width ease-in-out;
     -ms-transition: .6s width ease-in-out;
     -o-transition: .6s width ease-in-out;
-    margin-right: 3px;
+    /* margin-right: 3px; */
 }
 .hours-dropdown-arrow{
     width: 100%;
@@ -376,7 +376,7 @@
 #tap-info-walk-time{
     width: fit-content;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 500;
 }
 #tap-info-icons-box{
     position: relative;

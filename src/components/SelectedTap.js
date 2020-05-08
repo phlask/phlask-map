@@ -315,11 +315,22 @@ class SelectedTap extends React.Component{
                                     <div id='tap-info-hours-container'>
                                         {/* Placeholder for Dropdown */}
                                         <div id='current-hours-placeholder'>
-                                            <div className='tap-hours-list-item'></div>
+                                            <div className='tap-hours-list-item'>
                                                 {this.state.hoursList !== null
                                                     ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
                                                     :''
                                                 } 
+                                            </div>
+                                            <div 
+                                                className='hours-dropdown-arrow-container'
+                                                style={this.props.infoIsExpanded
+                                                        ? {width: '10px',marginLeft: '3px'}
+                                                        : {width: '0'}
+                                                    }                                       
+                                                >
+                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                            </div>
+                                                
                                         </div>
 
                                         {/* Current Day Hours */}
@@ -332,10 +343,10 @@ class SelectedTap extends React.Component{
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
-                                                style={{width: this.props.infoIsExpanded
-                                                    ? '20px'
-                                                    : '0'
-                                                }}
+                                                style={this.props.infoIsExpanded
+                                                    ? {width: '10px',marginLeft: '3px'}
+                                                    : {width: '0'}
+                                                }   
                                             >
                                                 <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
                                             </div>
