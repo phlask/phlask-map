@@ -49,7 +49,7 @@ export class MapMarkers extends Component {
             key="current_pos"
             name={"Current Pos"}
             position={this.props.mapCenter}
-            onClick={this.onMarkerClick}
+            // onClick={this.onMarkerClick}
           />
           {this.props.visibleTaps
             .map((tap, index) => (
@@ -61,6 +61,7 @@ export class MapMarkers extends Component {
                 name={tap.tapnum}
                 organization={tap.organization}
                 address={tap.address}
+                hours={tap.hours}
                 description={tap.description}
                 filtration={tap.filtration}
                 handicap={tap.handicap}

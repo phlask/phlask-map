@@ -257,7 +257,7 @@ export class ReactGoogleMaps extends Component {
             {/* Reposition Filter when Tap Info is displayed */}
             
             {
-              this.state.showingInfoWindow
+              this.props.showingInfoWindow
                 // ?<div className="map-interface-container"
                 //     style = {
                 //       this.props.infoIsExpanded 

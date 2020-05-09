@@ -52,7 +52,8 @@ class SelectedTap extends React.Component{
                 isOpen: null,
                 organization: this.props.selectedPlace.organization,
                 hours: this.props.selectedPlace.hours,
-                address: this.props.selectedPlace.address
+                address: this.props.selectedPlace.address,
+                accessible: this.props.selectedPlace.accessible
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -127,15 +128,15 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
-        if( (this.state.hours === undefined) ){
+        if( (this.props.selectedPlace.hours === undefined) ){
             this.setState({
-            currentDay: currentDay,
-            currentHour: hours.getHourFromMilitary(today.getHours()),
-            currentMinute: today.getMinutes(),
-            hoursList: null,
-            isOpen: null
+                currentDay: currentDay,
+                currentHour: hours.getHourFromMilitary(today.getHours()),
+                currentMinute: today.getMinutes(),
+                hoursList: null,
+                isOpen: null
 
-        })
+            })
         
         return
         }
@@ -146,7 +147,13 @@ class SelectedTap extends React.Component{
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
             hoursList: this.getAllHours(),
-            isOpen: hours.checkOpen(this.state.hours[currentDay].open.time, this.state.hours[currentDay].close.time)
+            organization: this.props.selectedPlace.organization,
+            address: this.props.selectedPlace.address,
+            accessible: this.props.selectedPlace.accessible,
+            isOpen: hours.checkOpen(
+                        this.props.selectedPlace.hours[currentDay].open.time, 
+                        this.props.selectedPlace.hours[currentDay].close.time
+                    )
 
         },  ()=>{
                 // console.log('Set Current Date: ' + this.state.hours[this.state.currentDay].open.time)
@@ -162,7 +169,7 @@ class SelectedTap extends React.Component{
         
         const hoursList = []
 
-        this.state.hours.map((orgHours,index)=>{
+        this.props.selectedPlace.hours.map((orgHours,index)=>{
             const formattedHours = {
                 day:  hours.getDays(index),
                 open: hours.getSimpleHours(orgHours.open.time),
@@ -189,9 +196,11 @@ class SelectedTap extends React.Component{
     
 
     componentDidUpdate(prevProps){
-        if(this.props !== prevProps){
-            if(this.state.hours !== undefined){
-                console.log(`${hours.getDays(this.state.hours[1].open.day)}: ${this.state.hours[1].open.time}`);      
+        console.log("Showing Info Window: " + this.props.showingInfoWindow);
+        
+        if(this.props.selectedPlace !== prevProps.selectedPlace){
+            if(this.props.selectedPlace.hours !== undefined){
+                console.log(`${hours.getDays(this.props.selectedPlace.hours[1].open.day)}: ${this.props.selectedPlace.hours[1].open.time}`);      
             }
             this.setCurrentDate()
         }
@@ -213,9 +222,10 @@ class SelectedTap extends React.Component{
         return(
             <div>
 
-                {this.props.showingInfoWindow
-                // Preview
-                ?<div 
+                {/* {this.props.showingInfoWindow */}
+                {/* Preview */}
+                {/* ? */}
+                <div 
                     ref={this.refSelectedTap}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     className={this.props.infoWindowIn}
@@ -424,8 +434,8 @@ Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapien
                         }
                     </div>
                 </div>
-                :<div></div>
-                }
+                 {/* :<div></div>
+                 } */}
             </div>
         )
     }

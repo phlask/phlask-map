@@ -1,7 +1,7 @@
 import * as actions from "../actions";
 
 const initialState = {
-  showingInfoWindow: true ,
+  showingInfoWindow: false ,
   infoIsExpanded: false,
   infoWindowIn: 'info-window-out',
   isSearchShown: false,
