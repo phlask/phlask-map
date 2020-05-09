@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Col, Row, Form } from "react-bootstrap";
 import "./FilterCard.css";
 import { connect } from "react-redux";
-import { setToggleState } from "../actions";
+import { setToggleState, setFilteredTapTypes } from "../actions";
 
 // ============================================== //
 // THIS IS THE OLD FILTER
@@ -19,16 +19,9 @@ export class FilterCard extends Component {
 
   handleChange(event) {
     if (event.target.id === "filtered") {
-      // callback parameter for setState to fire when setState is complete
-      // {this.props.toggleSwitch("filtered", this.state.filteredchecked);
-      // console.log("filter card says filtered", this.state.filteredchecked)
-      this.props.dispatch(setToggleState("filtered", !this.props.filtered));
+      this.props.setToggleState("filtered", !this.props.filtered);
     } else if (event.target.id === "ada") {
-      //   this.setState(
-      //     { adaChecked: !this.state.adachecked },
-      //     this.props.toggleSwitch("ada", this.state.adachecked)
-      //   );
-      this.props.dispatch(setToggleState("handicap", !this.props.handicap));
+      this.props.setToggleState("handicap", !this.props.handicap);
     } else {
       console.log("error with toggle");
     }
@@ -47,9 +40,9 @@ export class FilterCard extends Component {
                 <Row>
                   <div>
                     <img
-                      src="https://i.imgur.com/M12e1HV.png"
+                      src={this.props.accessTypesHidden.includes("Public") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/M12e1HV.png"}
                       alt="blue"
-                      onClick={() => this.props.legendButton("Public")}
+                      onClick={() => this.props.setFilteredTapTypes("Public")}
                     ></img>
                   </div>
                   <p className="tapName">Public Tap</p>
@@ -57,9 +50,9 @@ export class FilterCard extends Component {
                 <Row>
                   <div>
                     <img
-                      src="https://i.imgur.com/DXMMxXR.png"
+                      src={this.props.accessTypesHidden.includes("Private-Shared") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/DXMMxXR.png"}
                       alt="green"
-                      onClick={() => this.props.legendButton("Private-Shared")}
+                      onClick={() => this.props.setFilteredTapTypes("Private-Shared")}
                     ></img>
                   </div>
                   <p className="tapName">Private-Shared Tap</p>
@@ -67,9 +60,9 @@ export class FilterCard extends Component {
                 <Row>
                   <div>
                     <img
-                      src="https://i.imgur.com/kt825XO.png"
+                      src={this.props.accessTypesHidden.includes("Private") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/kt825XO.png"}
                       alt="yellow"
-                      onClick={() => this.props.legendButton("Private")}
+                      onClick={() => this.props.setFilteredTapTypes("Private")}
                     ></img>
                   </div>
                   <p className="tapName">Private Tap</p>
@@ -77,9 +70,9 @@ export class FilterCard extends Component {
                 <Row>
                   <div>
                     <img
-                      src="https://i.imgur.com/5NOdOyY.png"
+                      src={this.props.accessTypesHidden.includes("Restricted") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/5NOdOyY.png"}
                       alt="red"
-                      onClick={() => this.props.legendButton("Restricted")}
+                      onClick={() => this.props.setFilteredTapTypes("Restricted")}
                     ></img>
                   </div>
                   <p className="tapName">Restricted Tap</p>
@@ -111,10 +104,14 @@ export class FilterCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.filtered,
-  handicap: state.handicap
+  filtered: state.tapFilters.filtered,
+  handicap: state.tapFilters.handicap,
+  accessTypesHidden: state.tapFilters.accessTypesHidden
 });
 
-export default connect(mapStateToProps)(FilterCard);
+const mapDispatchToProps = {
+  setFilteredTapTypes,
+  setToggleState
+}
 
-// export default FilterCard;
+export default connect(mapStateToProps, mapDispatchToProps)(FilterCard);

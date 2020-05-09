@@ -65,3 +65,8 @@ export const toggleInfoExpanded = (isExpanded) => ({
   type: TOGGLE_INFO_EXPANDED,
   isExpanded
 })
+export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
+  export const setFilteredTapTypes = tapType => ({
+    type: SET_FILTERED_TAP_TYPES,
+    tapType
+  }); 

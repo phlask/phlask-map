@@ -1,6 +1,5 @@
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 import React, { Component } from "react";
-// import * as firebase from "firebase";
 import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
@@ -10,6 +9,7 @@ import { getTaps, setFilterFunction, toggleInfoWindow } from "../actions";
 // import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
+import MapMarkers from "./MapMarkers"
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -145,104 +145,101 @@ export class ReactGoogleMaps extends Component {
       tempMarkers: []
     };
   }
-  componentWillReceiveProps(nextProps) {
+  
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
 
     // Check if filter has changed before rerendering Markers
-    if(nextProps.filteredTaps !== this.props.filteredTaps){
-      this.setState({
-        tempMarkers: 
-          nextProps.filteredTaps
-          /* {toggledTaps */
-          .map((tap, index) => (
-              <Marker
-              key={index}
-              name={tap.tapnum}
-              organization={tap.organization}
-              hours={tap.hours}
-              address={tap.address}
-              description={tap.description}
-              filtration={tap.filtration}
-              handicap={tap.handicap}
-              service={tap.service}
-              tap_type={tap.tap_type}
-              norms_rules={tap.norms_rules}
-              vessel={tap.vessel}
-              img={tap.images}
-              onClick={this.onMarkerClick}
-              position={{ lat: tap.lat, lng: tap.lon }}
-              icon={{
-                  url: this.getIcon(tap.access),
-                  // icon images as of April 2020 are 300x397 px
-                  // so scale images ~3:4 ratio
-                  scaledSize: { width: 37, height: 50 }
-              }}
-              />
-          ))
-      })
-    }
+    // if(nextProps.filteredTaps !== this.props.filteredTaps){
+    //   this.setState({
+    //     tempMarkers: 
+    //       nextProps.filteredTaps
+    //       /* {toggledTaps */
+    //       .map((tap, index) => (
+    //           <Marker
+    //           key={index}
+    //           name={tap.tapnum}
+    //           organization={tap.organization}
+    //           hours={tap.hours}
+    //           address={tap.address}
+    //           description={tap.description}
+    //           filtration={tap.filtration}
+    //           handicap={tap.handicap}
+    //           service={tap.service}
+    //           tap_type={tap.tap_type}
+    //           norms_rules={tap.norms_rules}
+    //           vessel={tap.vessel}
+    //           img={tap.images}
+    //           onClick={this.onMarkerClick}
+    //           position={{ lat: tap.lat, lng: tap.lon }}
+    //           icon={{
+    //               url: this.getIcon(tap.access),
+    //               // icon images as of April 2020 are 300x397 px
+    //               // so scale images ~3:4 ratio
+    //               scaledSize: { width: 37, height: 50 }
+    //           }}
+    //           />
+    //       ))
+    //   })
+    // }
   }
 
   componentDidMount() {
-    // getTaps().then(taps => {
-    //   this.setState(oldState => {
-    //     return { ...oldState, taps: taps };
-    //   });
-    // });
-
-    this.props.getTaps();
 
     getCoordinates().then(position => {
       if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
-        this.setState({ currlat: parseFloat("39.952744") });
-        this.setState({ currlon: parseFloat("-75.163500") });
+        this.setState({ 
+          currlat: parseFloat("39.952744"),
+          currlon: parseFloat("-75.163500")
+        });
       } else {
-        this.setState({ currlat: position.coords.latitude });
-        this.setState({ currlon: position.coords.longitude });
+        this.setState({ 
+          currlat: position.coords.latitude,
+          currlon: position.coords.longitude
+         });
       }
     });
 
-    setTimeout(() => {
-      this.setState({
-        tempMarkers: this.props.filteredTaps
-          /* {toggledTaps */
-          .map((tap, index) => (
-              <Marker
-              key={index}
-              name={tap.tapnum}
-              organization={tap.organization}
-              hours={tap.hours}
-              address={tap.address}
-              description={tap.description}
-              filtration={tap.filtration}
-              handicap={tap.handicap}
-              service={tap.service}
-              tap_type={tap.tap_type}
-              norms_rules={tap.norms_rules}
-              vessel={tap.vessel}
-              img={tap.images}
-              onClick={this.onMarkerClick}
-              position={{ lat: tap.lat, lng: tap.lon }}
-              icon={{
-                  url: this.getIcon(tap.access),
-                  // icon images as of April 2020 are 300x397 px
-                  // so scale images ~3:4 ratio
-                  scaledSize: { width: 37, height: 50 }
-              }}
-              />
-          ))
-      })
-    }, 5000);
+    // setTimeout(() => {
+    //   this.setState({
+    //     tempMarkers: this.props.filteredTaps
+    //       /* {toggledTaps */
+    //       .map((tap, index) => (
+    //           <Marker
+    //           key={index}
+    //           name={tap.tapnum}
+    //           organization={tap.organization}
+    //           hours={tap.hours}
+    //           address={tap.address}
+    //           description={tap.description}
+    //           filtration={tap.filtration}
+    //           handicap={tap.handicap}
+    //           service={tap.service}
+    //           tap_type={tap.tap_type}
+    //           norms_rules={tap.norms_rules}
+    //           vessel={tap.vessel}
+    //           img={tap.images}
+    //           onClick={this.onMarkerClick}
+    //           position={{ lat: tap.lat, lng: tap.lon }}
+    //           icon={{
+    //               url: this.getIcon(tap.access),
+    //               // icon images as of April 2020 are 300x397 px
+    //               // so scale images ~3:4 ratio
+    //               scaledSize: { width: 37, height: 50 }
+    //           }}
+    //           />
+    //       ))
+    //   })
+    // }, 5000);
   }
 
   showInfoWindow(){
     this.props.toggleInfoWindow(true)
   }
 
-  onMarkerClick = (props, marker, e) => {
-    this.showInfoWindow()
+  onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -250,7 +247,7 @@ export class ReactGoogleMaps extends Component {
       currlat: props.position.lat,
       currlon: props.position.lng
     });
-  };
+  
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -276,47 +273,48 @@ export class ReactGoogleMaps extends Component {
     })
   }
 
-  getIcon(access) {
-    if (this.state.unfilteredTaps.includes(access) === true) {
-      switch (access) {
-        // blue with blue outline
-        case "Public":
-          return "https://imgur.com/czMZ0SC.png";
-        // green with green outline
-        case "Private-Shared":
-          return "https://imgur.com/ZslHzRe.png";
-        // yellow with yellow outline
-        case "Private":
-          return "https://imgur.com/2SItPIV.png";
-        // red with red outline
-        case "Restricted":
-          return "https://imgur.com/waTJBzj.png";
-        // yellow with yellow outline
-        case "Semi-public":
-          return "https://imgur.com/ZslHzRe.png";
-        // blue with gray outline
-        default:
-          return "https://imgur.com/iCyD4Nt.png";
-      }
-    } else {
-      return "https://i.imgur.com/kKXG3TO.png";
-    }
-  }
+  // Keep ?
+  // getIcon(access) {
+  //   if (this.state.unfilteredTaps.includes(access) === true) {
+  //     switch (access) {
+  //       // blue with blue outline
+  //       case "Public":
+  //         return "https://imgur.com/czMZ0SC.png";
+  //       // green with green outline
+  //       case "Private-Shared":
+  //         return "https://imgur.com/ZslHzRe.png";
+  //       // yellow with yellow outline
+  //       case "Private":
+  //         return "https://imgur.com/2SItPIV.png";
+  //       // red with red outline
+  //       case "Restricted":
+  //         return "https://imgur.com/waTJBzj.png";
+  //       // yellow with yellow outline
+  //       case "Semi-public":
+  //         return "https://imgur.com/ZslHzRe.png";
+  //       // blue with gray outline
+  //       default:
+  //         return "https://imgur.com/iCyD4Nt.png";
+  //     }
+  //   } else {
+  //     return "https://i.imgur.com/kKXG3TO.png";
+  //   }
+  // }
 
   searchForLocation = location => {
     this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
   };
 
   render() {
-    if (this.props.allTaps.length) {
-      if((Object.keys(this.state.closestTap).length) === 0){
-        this.setState({
-          closestTap: closest(this.props.allTaps, {
-            lat: this.state.currlat,
-            lon: this.state.currlon
-          })
-        })
-      }
+    // if (this.props.allTaps.length) {
+      // if((Object.keys(this.state.closestTap).length) === 0){
+      //   this.setState({
+      //     closestTap: closest(this.props.allTaps, {
+      //       lat: this.state.currlat,
+      //       lon: this.state.currlon
+      //     })
+      //   })
+      // }
       return (
         <div id='react-google-map'>
 
@@ -331,36 +329,23 @@ export class ReactGoogleMaps extends Component {
             }}
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
-            <Marker
-              key="current_pos"
-              name={"Current Pos"}
-              position={{ lat: this.state.currlat, lng: this.state.currlon }}
-              onClick={this.onMarkerClick}
-            />
 
             {/* FilteredTaps */}
             {/* The Array of Marker Componenents is held in local state, 
             and rerenders only when the list of filtered markers changes */}
-            {this.state.tempMarkers}
 
-            </Map>
-            {this.props.infoIsExpanded
-              ?<div></div>
-              :<div>
-                {/* <ClosestTap
-                  lat={this.state.closestTap.lat}
-                  lon={this.state.closestTap.lon}
-                  org={this.state.closestTap.organization}
-                  address={this.state.closestTap.address}
-                /> */}
-                <div className="search-bar-container">
-                  <SearchBar
-                    className="searchBar"
-                    search={location => this.searchForLocation(location)}
-                  />
-                </div>
-              </div>
-              }
+          </Map>
+            <div className="search-bar-container">
+              <SearchBar
+                className="searchBar"
+                search={location => this.searchForLocation(location)}
+              />
+            </div>
+          <MapMarkers 
+            map={this.props.map}
+            google={this.props.google}
+            mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+          />
 
             {/* Reposition Filter when Tap Info is displayed */}
             
@@ -405,15 +390,16 @@ export class ReactGoogleMaps extends Component {
             }
         </div>
       );
-    } else {
-      return (
-        <div className="loading">
-          <Spinner animation="border" variant="info" className="spinner" />
-          Loading taps...
-        </div>
-      );
-    }
-  }
+    } 
+  //   else {
+  //     return (
+  //       <div className="loading">
+  //         <Spinner animation="border" variant="info" className="spinner" />
+  //         Loading taps...
+  //       </div>
+  //     );
+  //   }
+  // }
 }
 
 const mapStateToProps = state => ({
@@ -428,10 +414,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
+// const mapDispatchToProps = { getTaps };
+
+export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({
     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
     LoadingContainer: LoadingContainer
