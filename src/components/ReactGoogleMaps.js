@@ -265,35 +265,16 @@ export class ReactGoogleMaps extends Component {
                 //       :{ position: 'absolute', bottom: 0 }
                 //     }
                 //   >
-                ?<div className="map-interface-container">
-                  <div
-                    className="filter-grouped"
-                    onClick={() => this.props.setFilterFunction()}
-                  >
-                    {this.props.infoIsExpanded 
-                      ? <div></div>
-                      :<Filter />
-                    }
-                  </div>
+                ?
                   <SelectedTap
-                    toggleTapInfo = {this.toggleTapInfo}
-                    organization = {this.state.selectedPlace.organization}
-                    hours = {this.state.selectedPlace.hours}
-                    address = {this.state.selectedPlace.address}
-                    visible = {this.props.showingInfoWindow}
+                    // toggleTapInfo = {this.toggleTapInfo}
+                    // organization = {this.state.selectedPlace.organization}
+                    // hours = {this.state.selectedPlace.hours}
+                    // address = {this.state.selectedPlace.address}
+                    // visible = {this.props.showingInfoWindow}
                   >
                   </SelectedTap>
-                  {/* <div className='test-div'></div> */}
-                </div>
-                :<div
-                    className="filter"
-                    onClick={() => this.props.setFilterFunction()}
-                  >
-                    {this.state.isExpanded 
-                      ? <div></div>
-                      :<Filter />
-                    }
-                  </div>
+                :<div></div>  
             }
         </div>
       );

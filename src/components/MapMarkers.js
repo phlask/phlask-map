@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
-import { getTaps } from "../actions";
+import { getTaps, toggleInfoWindow, setSelectedPlace } from "../actions";
 import makeGetVisibleTaps from '../selectors/tapSelectors';
 
 export class MapMarkers extends Component {
@@ -32,9 +32,14 @@ export class MapMarkers extends Component {
       return "https://i.imgur.com/kKXG3TO.png";
     }
   }
+  
+  onMarkerClick(tap){
+    this.props.toggleInfoWindow(true);
+    this.props.setSelectedPlace(tap)
+  }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     if(this.props.visibleTaps) {
       return (
         <React.Fragment>
@@ -64,7 +69,7 @@ export class MapMarkers extends Component {
                 norms_rules={tap.norms_rules}
                 vessel={tap.vessel}
                 img={tap.images}
-                onClick={this.onMarkerClick}
+                onClick={this.onMarkerClick.bind(this)}
                 position={{ lat: tap.lat, lng: tap.lon }}
                 icon={{
                   url: this.getIcon(tap.access)
@@ -91,6 +96,6 @@ const makeMapStateToProps = () => {
   return mapStateToProps
 }
 
-const mapDispatchToProps = { getTaps };
+const mapDispatchToProps = { getTaps, toggleInfoWindow, setSelectedPlace };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);

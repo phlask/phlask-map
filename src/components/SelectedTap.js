@@ -21,16 +21,6 @@ import privateTap from './images/privateTap.png'
 import tapMenu from './images/tapMenu.png'
 import { hours } from './hours.js'
 
-// const hoursList = [
-//         '8am-9pm',
-//         '8am-9pm',
-//         '8am-9pm',
-//         '8am-9pm',
-//         '8am-9pm',
-//         '8am-9pm',
-//         '8am-9pm'
-// ]
-
 const tempImages = {
     tapImg: sampleImg,
     infoImages: [
@@ -59,7 +49,10 @@ class SelectedTap extends React.Component{
                 currentHour: '',
                 currentMinute: '',
                 hoursList: null,
-                isOpen: null
+                isOpen: null,
+                organization: this.props.selectedPlace.organization,
+                hours: this.props.selectedPlace.hours,
+                address: this.props.selectedPlace.address
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -134,7 +127,7 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
-        if( (this.props.hours === undefined) ){
+        if( (this.state.hours === undefined) ){
             this.setState({
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
@@ -153,10 +146,10 @@ class SelectedTap extends React.Component{
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
             hoursList: this.getAllHours(),
-            isOpen: hours.checkOpen(this.props.hours[currentDay].open.time, this.props.hours[currentDay].close.time)
+            isOpen: hours.checkOpen(this.state.hours[currentDay].open.time, this.state.hours[currentDay].close.time)
 
         },  ()=>{
-                // console.log('Set Current Date: ' + this.props.hours[this.state.currentDay].open.time)
+                // console.log('Set Current Date: ' + this.state.hours[this.state.currentDay].open.time)
             }
         
         )
@@ -169,7 +162,7 @@ class SelectedTap extends React.Component{
         
         const hoursList = []
 
-        this.props.hours.map((orgHours,index)=>{
+        this.state.hours.map((orgHours,index)=>{
             const formattedHours = {
                 day:  hours.getDays(index),
                 open: hours.getSimpleHours(orgHours.open.time),
@@ -197,8 +190,8 @@ class SelectedTap extends React.Component{
 
     componentDidUpdate(prevProps){
         if(this.props !== prevProps){
-            if(this.props.hours !== undefined){
-                console.log(`${hours.getDays(this.props.hours[1].open.day)}: ${this.props.hours[1].open.time}`);      
+            if(this.state.hours !== undefined){
+                console.log(`${hours.getDays(this.state.hours[1].open.day)}: ${this.state.hours[1].open.time}`);      
             }
             this.setCurrentDate()
         }
@@ -282,10 +275,10 @@ class SelectedTap extends React.Component{
                             {/* Name & Address */}
                             <div id='org-name-and-address'>
                                 <div id='tap-organization-name'>
-                                    {this.props.organization}
+                                    {this.state.organization}
                                 </div>
                                 <h5 id='tap-info-address'>
-                                    {this.props.address}
+                                    {this.state.address}
                                 </h5>
                             </div>
 
@@ -442,6 +435,7 @@ const mapStateToProps = state => ({
     showingInfoWindow: state.showingInfoWindow,
     infoIsExpanded: state.infoIsExpanded,
     infoWindowIn: state.infoWindowIn,
+    selectedPlace: state.selectedPlace
 });
 const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowIn };
 

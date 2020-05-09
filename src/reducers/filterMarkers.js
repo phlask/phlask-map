@@ -10,7 +10,8 @@ const initialState = {
     handicap: false,
     accessTypesHidden: []
   },
-  allTaps: []
+  allTaps: [],
+  selectedPlace: {}
 };
 
 export default (state = initialState, act) => {
@@ -48,6 +49,11 @@ export default (state = initialState, act) => {
     case actions.TOGGLE_SEARCH_BAR:
       console.log('Seach Bar Shown: ' + act.isShown);
       return { ...state, isSearchShown: act.isShown }
+
+    case actions.SET_SELECTED_PLACE:
+      console.log('Selected Place: ' + act.selectedPlace.organization);
+      return { ...state, selectedPlace: act.selectedPlace}
+      
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowIn);

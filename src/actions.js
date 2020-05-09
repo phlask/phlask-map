@@ -70,3 +70,9 @@ export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
     type: SET_FILTERED_TAP_TYPES,
     tapType
   }); 
+
+export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"
+export const setSelectedPlace = selectedPlace => ({
+  type: SET_SELECTED_PLACE,
+  selectedPlace
+})
