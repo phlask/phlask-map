@@ -49,6 +49,7 @@ class SelectedTap extends React.Component{
                 currentHour: '',
                 currentMinute: '',
                 hoursList: null,
+                currentOrgHours: null,
                 isOpen: null,
                 organization: this.props.selectedPlace.organization,
                 hours: this.props.selectedPlace.hours,
@@ -134,6 +135,7 @@ class SelectedTap extends React.Component{
                 currentHour: hours.getHourFromMilitary(today.getHours()),
                 currentMinute: today.getMinutes(),
                 hoursList: null,
+                currentOrgHours: null,
                 isOpen: null
 
             })
@@ -141,19 +143,29 @@ class SelectedTap extends React.Component{
         return
         }
         
+        const selectedPlace = this.props.selectedPlace
+        // console.log("Hours Length:" + selectedPlace.hours.length);
         
         this.setState({
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
             hoursList: this.getAllHours(),
-            organization: this.props.selectedPlace.organization,
-            address: this.props.selectedPlace.address,
-            accessible: this.props.selectedPlace.accessible,
-            isOpen: hours.checkOpen(
-                        this.props.selectedPlace.hours[currentDay].open.time, 
-                        this.props.selectedPlace.hours[currentDay].close.time
-                    )
+            currentOrgHours: selectedPlace.hours[currentDay] !== undefined
+                                ? {
+                                    open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
+                                    close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
+                                }
+                                : null,
+            organization: selectedPlace.organization,
+            address: selectedPlace.address,
+            accessible: selectedPlace.accessible,
+            isOpen: selectedPlace.hours.length >= currentDay + 1
+                ? hours.checkOpen(
+                    selectedPlace.hours[currentDay].open.time, 
+                    selectedPlace.hours[currentDay].close.time
+                )
+                : false
 
         },  ()=>{
                 // console.log('Set Current Date: ' + this.state.hours[this.state.currentDay].open.time)
@@ -200,9 +212,9 @@ class SelectedTap extends React.Component{
         
         if(this.props.selectedPlace !== prevProps.selectedPlace){
             if(this.props.selectedPlace.hours !== undefined){
-                console.log(`${hours.getDays(this.props.selectedPlace.hours[1].open.day)}: ${this.props.selectedPlace.hours[1].open.time}`);      
+                console.log('Did Update. Props: ' + this.props.selectedPlace);
+                this.setCurrentDate()
             }
-            this.setCurrentDate()
         }
     }
       
@@ -319,8 +331,8 @@ class SelectedTap extends React.Component{
                                         {/* Placeholder for Dropdown */}
                                         <div id='current-hours-placeholder'>
                                             <div className='tap-hours-list-item'>
-                                                {this.state.hoursList !== null
-                                                    ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
+                                                {this.state.currentOrgHours !== null
+                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
                                                     :''
                                                 } 
                                             </div>
@@ -339,8 +351,8 @@ class SelectedTap extends React.Component{
                                         {/* Current Day Hours */}
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
-                                                {this.state.hoursList !== null
-                                                    ?`${this.state.hoursList[0].open} - ${this.state.hoursList[0].close}`
+                                                {this.state.currentOrgHours !== null
+                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
                                                     :''
                                                 } 
                                             </div>
