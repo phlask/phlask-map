@@ -150,40 +150,6 @@ export class ReactGoogleMaps extends Component {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
-
-    // Check if filter has changed before rerendering Markers
-    // if(nextProps.filteredTaps !== this.props.filteredTaps){
-    //   this.setState({
-    //     tempMarkers: 
-    //       nextProps.filteredTaps
-    //       /* {toggledTaps */
-    //       .map((tap, index) => (
-    //           <Marker
-    //           key={index}
-    //           name={tap.tapnum}
-    //           organization={tap.organization}
-    //           hours={tap.hours}
-    //           address={tap.address}
-    //           description={tap.description}
-    //           filtration={tap.filtration}
-    //           handicap={tap.handicap}
-    //           service={tap.service}
-    //           tap_type={tap.tap_type}
-    //           norms_rules={tap.norms_rules}
-    //           vessel={tap.vessel}
-    //           img={tap.images}
-    //           onClick={this.onMarkerClick}
-    //           position={{ lat: tap.lat, lng: tap.lon }}
-    //           icon={{
-    //               url: this.getIcon(tap.access),
-    //               // icon images as of April 2020 are 300x397 px
-    //               // so scale images ~3:4 ratio
-    //               scaledSize: { width: 37, height: 50 }
-    //           }}
-    //           />
-    //       ))
-    //   })
-    // }
   }
 
   componentDidMount() {
@@ -201,38 +167,6 @@ export class ReactGoogleMaps extends Component {
          });
       }
     });
-
-    // setTimeout(() => {
-    //   this.setState({
-    //     tempMarkers: this.props.filteredTaps
-    //       /* {toggledTaps */
-    //       .map((tap, index) => (
-    //           <Marker
-    //           key={index}
-    //           name={tap.tapnum}
-    //           organization={tap.organization}
-    //           hours={tap.hours}
-    //           address={tap.address}
-    //           description={tap.description}
-    //           filtration={tap.filtration}
-    //           handicap={tap.handicap}
-    //           service={tap.service}
-    //           tap_type={tap.tap_type}
-    //           norms_rules={tap.norms_rules}
-    //           vessel={tap.vessel}
-    //           img={tap.images}
-    //           onClick={this.onMarkerClick}
-    //           position={{ lat: tap.lat, lng: tap.lon }}
-    //           icon={{
-    //               url: this.getIcon(tap.access),
-    //               // icon images as of April 2020 are 300x397 px
-    //               // so scale images ~3:4 ratio
-    //               scaledSize: { width: 37, height: 50 }
-    //           }}
-    //           />
-    //       ))
-    //   })
-    // }, 5000);
   }
 
   showInfoWindow(){
@@ -273,34 +207,6 @@ export class ReactGoogleMaps extends Component {
     })
   }
 
-  // Keep ?
-  // getIcon(access) {
-  //   if (this.state.unfilteredTaps.includes(access) === true) {
-  //     switch (access) {
-  //       // blue with blue outline
-  //       case "Public":
-  //         return "https://imgur.com/czMZ0SC.png";
-  //       // green with green outline
-  //       case "Private-Shared":
-  //         return "https://imgur.com/ZslHzRe.png";
-  //       // yellow with yellow outline
-  //       case "Private":
-  //         return "https://imgur.com/2SItPIV.png";
-  //       // red with red outline
-  //       case "Restricted":
-  //         return "https://imgur.com/waTJBzj.png";
-  //       // yellow with yellow outline
-  //       case "Semi-public":
-  //         return "https://imgur.com/ZslHzRe.png";
-  //       // blue with gray outline
-  //       default:
-  //         return "https://imgur.com/iCyD4Nt.png";
-  //     }
-  //   } else {
-  //     return "https://i.imgur.com/kKXG3TO.png";
-  //   }
-  // }
-
   searchForLocation = location => {
     this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
   };
@@ -334,6 +240,11 @@ export class ReactGoogleMaps extends Component {
             {/* The Array of Marker Componenents is held in local state, 
             and rerenders only when the list of filtered markers changes */}
 
+            <MapMarkers 
+              map={this.props.map}
+              google={this.props.google}
+              mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+            />
           </Map>
             <div className="search-bar-container">
               <SearchBar
@@ -341,11 +252,7 @@ export class ReactGoogleMaps extends Component {
                 search={location => this.searchForLocation(location)}
               />
             </div>
-          <MapMarkers 
-            map={this.props.map}
-            google={this.props.google}
-            mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-          />
+          
 
             {/* Reposition Filter when Tap Info is displayed */}
             
