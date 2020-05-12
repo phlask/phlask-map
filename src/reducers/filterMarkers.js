@@ -47,11 +47,11 @@ export default (state = initialState, act) => {
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.TOGGLE_SEARCH_BAR:
-      console.log('Seach Bar Shown: ' + act.isShown);
+      // console.log('Seach Bar Shown: ' + act.isShown);
       return { ...state, isSearchShown: act.isShown }
 
     case actions.SET_SELECTED_PLACE:
-      console.log('Selected Place: ' + act.selectedPlace.organization);
+      // console.log('Selected Place: ' + act.selectedPlace.organization);
       return { ...state, selectedPlace: act.selectedPlace}
       
 

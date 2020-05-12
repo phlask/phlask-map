@@ -60,6 +60,7 @@ export class MapMarkers extends Component {
           {this.props.visibleTaps
             .map((tap, index) => (
               <Marker
+                access={tap.access}
                 map={this.props.map}
                 google={this.props.google}
                 mapCenter={this.props.mapCenter}

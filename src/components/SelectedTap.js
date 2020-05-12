@@ -9,7 +9,7 @@ import './SelectedTap.css'
 import arrow from './images/arrow.png'
 import hoursArrow from './images/hoursArrow.png'
 import sampleImg from './fountain.png'
-import accessible from './images/accessible.png'
+import accessibilityIcon from './images/accessible.png'
 import filteredBlue from './images/filteredBlue.png'
 import phlaskGreen from './images/phlaskGreen.png'
 import phlaskBlue from './images/phlaskBlue.png'
@@ -18,6 +18,7 @@ import phlaskRed from './images/phlaskRed.png'
 import privateRestricted from './images/privateRestrictedTap.png'
 import privateShared from './images/privateSharedTap.png'
 import privateTap from './images/privateTap.png'
+import tempUnverified from './images/tempUnverified.png'
 import tapMenu from './images/tapMenu.png'
 import { hours } from './hours.js'
 
@@ -29,7 +30,7 @@ const tempImages = {
         // privateRestricted,
         // privateTap,
         // privateRestricted,
-        accessible,
+        accessibilityIcon,
         filteredBlue,
         // privateShared
     ]
@@ -54,7 +55,8 @@ class SelectedTap extends React.Component{
                 organization: this.props.selectedPlace.organization,
                 hours: this.props.selectedPlace.hours,
                 address: this.props.selectedPlace.address,
-                accessible: this.props.selectedPlace.accessible
+                accessible: this.props.selectedPlace.accessible,
+                tapIcons: null
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -140,7 +142,7 @@ class SelectedTap extends React.Component{
 
             })
         
-        return
+            return
         }
         
         const selectedPlace = this.props.selectedPlace
@@ -165,7 +167,8 @@ class SelectedTap extends React.Component{
                     selectedPlace.hours[currentDay].open.time, 
                     selectedPlace.hours[currentDay].close.time
                 )
-                : false
+                : false,
+            tapIcons: this.setTapIcons()
 
         },  ()=>{
                 // console.log('Set Current Date: ' + this.state.hours[this.state.currentDay].open.time)
@@ -200,21 +203,78 @@ class SelectedTap extends React.Component{
         return hoursList
     }
 
+    getAccess(){
+        if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
+            console.log('Access is not defined for this entry');
+            return null
+        }
+        else {
+            let access = tempUnverified
+            switch(this.props.selectedPlace.access){
+                case 'Public': access = phlaskBlue
+                    break
+                case 'Semi-public': access = phlaskGreen
+                    break
+                case 'Private-Shared': access = phlaskGreen
+                    break
+                case 'Private': access = phlaskYellow
+                    break
+                case 'Restricted': access = phlaskRed
+                    break
+                case 'Unverified': access = tempUnverified
+                    break    
+                // case 'TrashAcademy': access = trashAcademyIcon
+                //     break 
+                // case 'Water Monsters': access = waterMonstersIcon
+                //     break                       
+            }
+            return access
+        }
+    }
+
+    getAccessibility(){
+        if(this.props.selectedPlace.handicap === undefined || this.props.selectedPlace.handicap.length === 0){
+            console.log('Handicap access is not defined for this entry');
+            return null
+        } 
+        else {
+            let accessibility = 'unsure'
+            switch(this.props.selectedPlace.handicap){
+                case 'Yes': accessibility = accessibilityIcon
+                    break
+                case 'No': 
+                    break
+                // case 'Unsure': accessibility = accessibilityUnsureIcon
+                default: return accessibility
+            }
+            return accessibility
+        }
+    }
+
     // Handle Icons
-    setIcons(){
-        const iconList = []
-        this.props
+    setTapIcons(){
+        const iconList = {
+            access: this.getAccess(),
+            accessibility: this.getAccessibility()
+        }
+        
+        if(iconList.access !== null){
+            console.log(`Access: ${ typeof (iconList.access)} -- ${this.props.selectedPlace.access}`)
+        }
+        if(iconList.accessibility !== null){
+            console.log(`Accessible: ${ typeof (iconList.accessibility)} -- ${this.props.selectedPlace.accessibility}`);
+        }
+        
+        
+        
+        return iconList
     }
     
 
-    componentDidUpdate(prevProps){
-        console.log('Selected Tap Updated');
-        
-        console.log("Showing Info Window: " + this.props.showingInfoWindow);
-        
+    componentDidUpdate(prevProps){                
         if(this.props.selectedPlace !== prevProps.selectedPlace){
             if(this.props.selectedPlace.hours !== undefined){
-                console.log('Did Update. Props: ' + this.props.selectedPlace);
+                // console.log('Did Update. Props: ' + this.props.selectedPlace);
                 this.setCurrentDate()
             }
         }

@@ -140,9 +140,7 @@ export class ReactGoogleMaps extends Component {
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
       filteredTaps: [],
-      zoom: 16,
-      // Temporary fix to Marker rendering
-      tempMarkers: []
+      zoom: 16
     };
   }
 
