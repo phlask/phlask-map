@@ -144,10 +144,18 @@ export class ReactGoogleMaps extends Component {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({
-      unfilteredTaps: nextProps.tapsDisplayed
-    });
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //     this.setState({
+  //       unfilteredTaps: nextProps.tapsDisplayed
+  //     });
+  // }
+  
+  componentDidUpdate(prevProps){
+    if(prevProps !== this.props){
+      this.setState({
+        unfilteredTaps: prevProps.tapsDisplayed
+      });
+    }
   }
   
   componentDidMount() {
@@ -259,9 +267,7 @@ const mapStateToProps = state => ({
   handicap: state.handicap,
   allTaps: state.allTaps,
   filteredTaps: state.filteredTaps,
-  filterFunction: state.filterFunction,
-  showingInfoWindow: state.showingInfoWindow,
-  infoIsExpanded: state.infoIsExpanded
+  filterFunction: state.filterFunction
 });
 
 const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow };

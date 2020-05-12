@@ -24,16 +24,6 @@ import { hours } from './hours.js'
 
 const tempImages = {
     tapImg: sampleImg,
-    infoImages: [
-        // privateTap,
-        phlaskGreen,
-        // privateRestricted,
-        // privateTap,
-        // privateRestricted,
-        accessibilityIcon,
-        filteredBlue,
-        // privateShared
-    ]
 }
 
 class SelectedTap extends React.Component{
@@ -44,6 +34,7 @@ class SelectedTap extends React.Component{
                 previewHeight: 0,
                 infoExpansionStyle: {},
                 isDescriptionShown: false,
+                tapDescription: null,
                 isHoursExpanded: false,
                 animationSpeed: 600,
                 currentDay: null,
@@ -56,7 +47,15 @@ class SelectedTap extends React.Component{
                 hours: this.props.selectedPlace.hours,
                 address: this.props.selectedPlace.address,
                 accessible: this.props.selectedPlace.accessible,
-                tapIcons: null
+                tapIcons: {
+                    access: null,
+                    accessibility: null,
+                    filtered: null
+                },
+                testIcons: {
+                    access: phlaskBlue,
+                    accessibility: phlaskGreen
+                }
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -113,15 +112,15 @@ class SelectedTap extends React.Component{
     
     handleSwipe(direction){
         if(direction === 'top'){
-            console.log('Top')
+            // console.log('Top')
             this.toggleInfoExpanded(true)
         }else if(direction === 'bottom'){
-            console.log('Bottom');
+            // console.log('Bottom');
             this.toggleInfoExpanded(false)
         }else if(direction === 'left'){
-            console.log('Left');
+            // console.log('Left');
         }else if(direction === 'right'){
-            console.log('Right');
+            // console.log('Right');
         }
         
     }
@@ -131,19 +130,19 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
-        if( (this.props.selectedPlace.hours === undefined) ){
-            this.setState({
-                currentDay: currentDay,
-                currentHour: hours.getHourFromMilitary(today.getHours()),
-                currentMinute: today.getMinutes(),
-                hoursList: null,
-                currentOrgHours: null,
-                isOpen: null
+        // if( (this.props.selectedPlace.hours === undefined) ){
+        //     this.setState({
+        //         currentDay: currentDay,
+        //         currentHour: hours.getHourFromMilitary(today.getHours()),
+        //         currentMinute: today.getMinutes(),
+        //         hoursList: null,
+        //         currentOrgHours: null,
+        //         isOpen: null
 
-            })
+        //     })
         
-            return
-        }
+        //     return
+        // }
         
         const selectedPlace = this.props.selectedPlace
         // console.log("Hours Length:" + selectedPlace.hours.length);
@@ -152,55 +151,66 @@ class SelectedTap extends React.Component{
             currentDay: currentDay,
             currentHour: hours.getHourFromMilitary(today.getHours()),
             currentMinute: today.getMinutes(),
-            hoursList: this.getAllHours(),
-            currentOrgHours: selectedPlace.hours[currentDay] !== undefined
-                                ? {
-                                    open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
-                                    close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
-                                }
-                                : null,
+            hoursList: selectedPlace.hours !== undefined
+                ? this.getAllHours()
+                : null,
+            currentOrgHours: selectedPlace.hours !== undefined
+                ? selectedPlace.hours[currentDay] !== undefined
+                    ? {
+                        open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
+                        close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
+                    }
+                    : null
+                : null,
             organization: selectedPlace.organization,
             address: selectedPlace.address,
-            accessible: selectedPlace.accessible,
-            isOpen: selectedPlace.hours.length >= currentDay + 1
-                ? hours.checkOpen(
-                    selectedPlace.hours[currentDay].open.time, 
-                    selectedPlace.hours[currentDay].close.time
-                )
-                : false,
-            tapIcons: this.setTapIcons()
+            isOpen: selectedPlace.hours !== undefined
+                ?selectedPlace.hours.length >= currentDay + 1
+                    ? hours.checkOpen(
+                        selectedPlace.hours[currentDay].open.time, 
+                        selectedPlace.hours[currentDay].close.time
+                    )
+                    : false
+                : null,
+            tapIcons: this.setTapIcons(),
+            tapDescription: selectedPlace.description !== undefined
+                        ? selectedPlace.description
+                        : null
 
-        },  ()=>{
-                // console.log('Set Current Date: ' + this.state.hours[this.state.currentDay].open.time)
-            }
-        
-        )
+        }, ()=>{console.log('Hours List: ' + this.state.hoursList);
+        })
     }
 
     /* Return an array of objects containing Day of the week, open time, 
         and closing time, starting with the current day
      */
     getAllHours(){
-        
-        const hoursList = []
 
-        this.props.selectedPlace.hours.map((orgHours,index)=>{
-            const formattedHours = {
-                day:  hours.getDays(index),
-                open: hours.getSimpleHours(orgHours.open.time),
-                close: hours.getSimpleHours(orgHours.close.time)
-            }
-            hoursList.push(formattedHours)
-        })
-
-        // Shift array so current day is first
-        const date = new Date()
-        const day = date.getDay()
-        for(let x = 0; x < day; x++){
-            hoursList.push(hoursList.shift())
+        if(this.props.hours === undefined){
+            return null
         }
+        else{
+            const hoursList = []
 
-        return hoursList
+            this.props.selectedPlace.hours.map((orgHours,index)=>{
+                const formattedHours = {
+                    day:  hours.getDays(index),
+                    open: hours.getSimpleHours(orgHours.open.time),
+                    close: hours.getSimpleHours(orgHours.close.time)
+                }
+                hoursList.push(formattedHours)
+            })
+
+            // Shift array so current day is first
+            const date = new Date()
+            const day = date.getDay()
+            for(let x = 0; x < day; x++){
+                hoursList.push(hoursList.shift())
+            }
+
+            return hoursList
+        }
+        
     }
 
     getAccess(){
@@ -234,11 +244,11 @@ class SelectedTap extends React.Component{
 
     getAccessibility(){
         if(this.props.selectedPlace.handicap === undefined || this.props.selectedPlace.handicap.length === 0){
-            console.log('Handicap access is not defined for this entry');
+            // console.log('Handicap access is not defined for this entry');
             return null
         } 
         else {
-            let accessibility = 'unsure'
+            let accessibility = null
             switch(this.props.selectedPlace.handicap){
                 case 'Yes': accessibility = accessibilityIcon
                     break
@@ -250,19 +260,39 @@ class SelectedTap extends React.Component{
             return accessibility
         }
     }
+    
+    getFiltration(){
+        if(this.props.selectedPlace.filtration === undefined || this.props.selectedPlace.filtration.length === 0){
+            // console.log('Filtration is not defined for this entry');
+            return null
+        } 
+        else {
+            let filtered = null
+            switch(this.props.selectedPlace.filtration){
+                case 'Yes': filtered = filteredBlue
+                    break
+                case 'No': 
+                    break
+                // case 'Unsure': accessibility = accessibilityUnsureIcon
+                default: return filtered
+            }
+            return filtered
+        }
+    }
 
     // Handle Icons
     setTapIcons(){
         const iconList = {
             access: this.getAccess(),
-            accessibility: this.getAccessibility()
+            accessibility: this.getAccessibility(),
+            filtered: this.getFiltration()
         }
         
         if(iconList.access !== null){
-            console.log(`Access: ${ typeof (iconList.access)} -- ${this.props.selectedPlace.access}`)
+            // console.log(`Access: ${ typeof (iconList.access)} -- ${this.props.selectedPlace.access}`)
         }
         if(iconList.accessibility !== null){
-            console.log(`Accessible: ${ typeof (iconList.accessibility)} -- ${this.props.selectedPlace.accessibility}`);
+            // console.log(`Accessible: ${ typeof (iconList.accessibility)} -- ${this.props.selectedPlace.handicap}`);
         }
         
         
@@ -275,8 +305,8 @@ class SelectedTap extends React.Component{
         if(this.props.selectedPlace !== prevProps.selectedPlace){
             if(this.props.selectedPlace.hours !== undefined){
                 // console.log('Did Update. Props: ' + this.props.selectedPlace);
-                this.setCurrentDate()
             }
+            this.setCurrentDate()
         }
     }
       
@@ -348,7 +378,7 @@ class SelectedTap extends React.Component{
                         {/* Tap Type Icon */}
                         <div id='tap-type-icon-container'>
                             <div id='tap-type-icon'>
-                                <img className='tap-info-icon-img' src={phlaskGreen} alt=''></img>
+                                <img className='tap-info-icon-img' src={this.state.tapIcons.access} alt=''></img>
                             </div>
                         </div>
 
@@ -396,7 +426,7 @@ class SelectedTap extends React.Component{
                                         </div>
                                         <div 
                                             className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded
+                                            style={this.props.infoIsExpanded && this.props.hoursList !== null
                                                     ? {width: '10px',marginLeft: '3px'}
                                                     : {width: '0'}
                                                 }                                       
@@ -416,7 +446,7 @@ class SelectedTap extends React.Component{
                                         </div>
                                         <div 
                                             className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded
+                                            style={this.props.infoIsExpanded && this.props.hoursList !== null
                                                 ? {width: '10px',marginLeft: '3px'}
                                                 : {width: '0'}
                                             }   
@@ -463,16 +493,22 @@ class SelectedTap extends React.Component{
                                 : {}
                             }
                         >
-                            {tempImages.infoImages.map((icon,index) => (
-                                <div className='tap-info-icon' key={index}
-                                    style={this.props.infoIsExpanded
-                                        ?   {width: '4vh',
-                                            height: '4vh',
-                                            marginTop: '5px'}
-                                        : {}
-                                    }>
-                                    <img className='tap-info-icon-img' src={icon} alt=''></img>
-                                </div>
+                            {Object.keys(this.state.tapIcons).map((icon,index) => (
+                                this.state.tapIcons[icon] !== null
+                                    ? <div className='tap-info-icon' key={index}
+                                        style={this.props.infoIsExpanded
+                                            ?   {width: '4vh',
+                                                height: '4vh',
+                                                marginTop: '5px'}
+                                            : {}
+                                        }>
+                                        <img 
+                                            className='tap-info-icon-img' 
+                                            alt=''
+                                            src={this.state.tapIcons[icon]} 
+                                        ></img>
+                                    </div>
+                                    :[]
                             ))}
                         </div>
                     </div>
@@ -482,16 +518,15 @@ class SelectedTap extends React.Component{
                     {this.state.isDescriptionShown
                     ?<div id='tap-info-description-container'>
                         <div id='tap-info-description'>
-                        {/* {this.props.description} */}
-                        Lorem ipsum dolor sit amet, vix ex modus philosophia. At mei idque noluisse suavitate. Probo reprimique delicatissimi nec ut, diam mandamus te cum. Ad mea bonorum voluptua, ex quo melius fabellas efficiendi. Alii vituperatoribus vix te, per inani disputationi eu, omnium assueverit an has.
-
-No vim verear contentiones, sed et sale nihil dictas. Ad tamquam ornatus explicari est, sea laudem volutpat maiestatis ad. Dicit paulo an eam, id wisi copiosae dissentiunt cum, has malis indoctum eu. Eam et fuisset invenire, in erant nullam liberavisse ius, ut est affert ceteros. Cotidieque neglegentur usu ex, cu nam delectus definitiones, qui eu justo dicit iriure. Qui nibh scripta ne.
-
-Scribentur deterruisset nec ea, meis possit diceret has ut. Inermis legendos sea te. Vis in quando mollis. Ne dolore alterum vim.
-
-Eos tollit adipisci ne, ea euismod oporteat suscipiantur eos. Cu dicant nemore aperiri pro, ex pri ubique verear platonem. Ius ut albucius probatus intellegam, id recteque adipiscing per. Ex augue commune suavitate vis. Pri in pertinax intellegebat.
-
-Vis ei diam ridens saperet, ius ei vitae regione cotidieque. Eam ut liber sapientem, definitiones signiferumque id est, modo essent honestatis ei pro. Senserit urbanitas comprehensam ne est. Vel docendi similique ex, reque mundi percipitur vix no. Vel bonorum delenit admodum te, eos cibo oratio melius et.
+                        {this.state.tapDescription !== null || this.state.tapDescription !== undefined
+                            ? this.state.tapDescription.length > 0
+                                ? this.state.tapDescription
+                                : 'Happy Phlasking'
+                            : this.state.organization !== null || this.state.organization !== undefined
+                                ? this.state.organization
+                                : 'Happy Phlasking'
+                        }
+                        
                         </div>
                     </div>
                     

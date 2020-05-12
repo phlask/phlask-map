@@ -151,8 +151,8 @@ export class Filter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.filtered,
-  handicap: state.handicap
+  filtered: state.tapFilters.filtered,
+  handicap: state.tapFilters.handicap
 });
 
 export default connect(mapStateToProps)(Filter);
