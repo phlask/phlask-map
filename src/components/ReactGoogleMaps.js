@@ -145,13 +145,13 @@ export class ReactGoogleMaps extends Component {
       tempMarkers: []
     };
   }
-  
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       unfilteredTaps: nextProps.tapsDisplayed
     });
   }
-
+  
   componentDidMount() {
 
     getCoordinates().then(position => {
@@ -212,15 +212,6 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    // if (this.props.allTaps.length) {
-      // if((Object.keys(this.state.closestTap).length) === 0){
-      //   this.setState({
-      //     closestTap: closest(this.props.allTaps, {
-      //       lat: this.state.currlat,
-      //       lon: this.state.currlon
-      //     })
-      //   })
-      // }
       return (
         <div id='react-google-map'>
 
@@ -237,8 +228,6 @@ export class ReactGoogleMaps extends Component {
           >
 
             {/* FilteredTaps */}
-            {/* The Array of Marker Componenents is held in local state, 
-            and rerenders only when the list of filtered markers changes */}
 
             <MapMarkers 
               map={this.props.map}
@@ -252,30 +241,7 @@ export class ReactGoogleMaps extends Component {
                 search={location => this.searchForLocation(location)}
               />
             </div>
-          
-
-            {/* Reposition Filter when Tap Info is displayed */}
-            
-            {
-              this.props.showingInfoWindow
-                // ?<div className="map-interface-container"
-                //     style = {
-                //       this.props.infoIsExpanded 
-                //       ? {}
-                //       :{ position: 'absolute', bottom: 0 }
-                //     }
-                //   >
-                ?
-                  <SelectedTap
-                    // toggleTapInfo = {this.toggleTapInfo}
-                    // organization = {this.state.selectedPlace.organization}
-                    // hours = {this.state.selectedPlace.hours}
-                    // address = {this.state.selectedPlace.address}
-                    // visible = {this.props.showingInfoWindow}
-                  >
-                  </SelectedTap>
-                :<div></div>  
-            }
+            <SelectedTap></SelectedTap>
         </div>
       );
     } 
@@ -301,8 +267,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow };
-
-// const mapDispatchToProps = { getTaps };
 
 export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({

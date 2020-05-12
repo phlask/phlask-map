@@ -72,7 +72,7 @@ export default (state = initialState, act) => {
 
     case actions.TOGGLE_INFO_EXPANDED:
 
-      return { ...state, allTaps: act.allTaps, infoIsExpanded: act.isExpanded };
+      return { ...state, infoIsExpanded: act.isExpanded };
     
     case actions.SET_FILTERED_TAP_TYPES:
       var currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];

@@ -9,6 +9,12 @@ export class MapMarkers extends Component {
   UNSAFE_componentWillMount() {
     this.props.getTaps()
   }
+  
+  shouldComponentUpdate(nextProps){
+    return nextProps.visibleTaps === this.props.visibleTaps
+      ? false
+      : true
+  }
 
   getIcon(access) {
     if (!this.props.accessTypesHidden.includes(access)) {
