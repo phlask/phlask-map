@@ -1,6 +1,10 @@
 import * as actions from "../actions";
 
 const initialState = {
+  mapCenter: {
+    lat: parseFloat("39.952744"),
+    lng: parseFloat("-75.163500")
+  },
   showingInfoWindow: false ,
   infoIsExpanded: false,
   infoWindowIn: 'info-window-out',
@@ -38,6 +42,11 @@ export default (state = initialState, act) => {
         return newState;
       }
       return state; // If an unknown toggle-type is used, don't change the state.
+
+    case actions.SET_MAP_CENTER:
+      console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
+      
+      return { ...state, mapCenter: act.coords}
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };

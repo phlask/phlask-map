@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
 import SelectedTap from './SelectedTap'
-import { getTaps, setFilterFunction, toggleInfoWindow } from "../actions";
+import { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter } from "../actions";
 // import Legend from "./Legend";
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
@@ -133,8 +133,8 @@ export class ReactGoogleMaps extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      currlat: getLat(), // 39.9528,
-      currlon: getLon(), //-75.1635,
+      currlat: this.props.mapCenter.lat, // 39.9528,
+      currlon: this.props.mapCenter.lng, //-75.1635,
       closestTap: {},
       taps: [],
       tapsLoaded: false,
@@ -155,6 +155,12 @@ export class ReactGoogleMaps extends Component {
       this.setState({
         unfilteredTaps: prevProps.tapsDisplayed
       });
+      if (this.state.currlat !== this.props.mapCenter.lat || this.state.currlon !== this.props.mapCenter.lng){
+        this.setState({
+          currlat: this.props.mapCenter.lat,
+          currlon: this.props.mapCenter.lng
+        })
+      }
     }
   }
   
@@ -172,6 +178,11 @@ export class ReactGoogleMaps extends Component {
           currlon: position.coords.longitude
          });
       }
+    }, ()=>{
+      this.props.setMapCenter({
+        lat: getLat(),
+        lon: getLon()
+      })
     });
   }
 
@@ -267,10 +278,13 @@ const mapStateToProps = state => ({
   handicap: state.handicap,
   allTaps: state.allTaps,
   filteredTaps: state.filteredTaps,
-  filterFunction: state.filterFunction
+  filterFunction: state.filterFunction,
+  mapCenter: state.mapCenter
+  // showingInfoWindow: state.showingInfoWindow,
+  // infoIsExpanded: state.infoIsExpanded
 });
 
-const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow };
+const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter };
 
 export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({

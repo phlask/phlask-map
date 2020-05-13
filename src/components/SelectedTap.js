@@ -71,6 +71,9 @@ class SelectedTap extends React.Component{
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
             }
+            this.setState({
+                isHoursExpanded: false
+            })
         }else{
             // Unmount the arrow before animation
             this.setState({
@@ -177,7 +180,6 @@ class SelectedTap extends React.Component{
                         ? selectedPlace.description
                         : null
 
-        }, ()=>{console.log('Hours List: ' + this.state.hoursList);
         })
     }
 
@@ -186,7 +188,7 @@ class SelectedTap extends React.Component{
      */
     getAllHours(){
 
-        if(this.props.hours === undefined){
+        if(this.props.selectedPlace.hours === undefined){
             return null
         }
         else{

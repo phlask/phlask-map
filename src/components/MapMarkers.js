@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
-import { getTaps, toggleInfoWindow, setSelectedPlace } from "../actions";
+import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/tapSelectors';
 
 export class MapMarkers extends Component {
@@ -41,7 +41,8 @@ export class MapMarkers extends Component {
   
   onMarkerClick(tap){
     this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(tap)
+    this.props.setSelectedPlace(tap);
+    this.props.setMapCenter(tap.position);
   }
 
   render() {
@@ -98,12 +99,13 @@ const makeMapStateToProps = () => {
       visibleTaps: getVisibleTaps(state, props),
       filtered: state.tapFilters.filtered,
       handicap: state.tapFilters.handicap,
-      accessTypesHidden: state.tapFilters.accessTypesHidden
+      accessTypesHidden: state.tapFilters.accessTypesHidden,
+      mapCenter: state.mapCenter
     }
   }
   return mapStateToProps
 }
 
-const mapDispatchToProps = { getTaps, toggleInfoWindow, setSelectedPlace };
+const mapDispatchToProps = { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);

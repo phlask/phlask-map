@@ -42,6 +42,12 @@ export const getTaps = () => dispatch => {
     });
 };
 
+export const SET_MAP_CENTER = 'SET_MAP_CENTER'
+export const setMapCenter = (coords) => ({
+    type: SET_MAP_CENTER,
+    coords
+})
+
 export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR'
 export const toggleSearchBar = (isShown) => ({
     type: TOGGLE_SEARCH_BAR,
