@@ -106,7 +106,8 @@ class SelectedTap extends React.Component{
             infoExpansionStyle: {
                 height: shouldExpand
                     ? '80vh'
-                    : '40vh'
+                    : this.state.previewHeight
+                    // : '40vh'
             }
         }, ()=>{
             this.props.toggleInfoExpanded(shouldExpand)
@@ -198,10 +199,10 @@ class SelectedTap extends React.Component{
             selectedPlace.hours.map((orgHours,index)=>{
                 const formattedHours = {
                     day:  hours.getDays(index),
-                    open: selectedPlace.hours.open !== undefined
+                    open: orgHours.open !== undefined
                         ? hours.getSimpleHours(orgHours.open.time)
                         : null,
-                    close: selectedPlace.hours.close !== undefined 
+                    close: orgHours.close !== undefined 
                         ? hours.getSimpleHours(orgHours.close.time)
                         : null
                 }
@@ -309,24 +310,31 @@ class SelectedTap extends React.Component{
     
 
     componentDidUpdate(prevProps){                
-        if(this.props.selectedPlace !== prevProps.selectedPlace){
+        if ( this.props.selectedPlace !== prevProps.selectedPlace ){
             if(this.props.selectedPlace.hours !== undefined){
                 // console.log('Did Update. Props: ' + this.props.selectedPlace);
             }
             this.setCurrentDate()
+        }
+        if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
+            && !this.state.isDescriptionShown ){
+            this.setState({
+                previewHeight: this.refSelectedTap.current.clientHeight
+            })
         }
     }
       
     componentDidMount(){
 
         this.setCurrentDate()
+        console.log('Height: ' + this.refSelectedTap.current.clientHeight);
         
-        this.setState({
-            previewHeight: this.refSelectedTap.current.clientHeight,
-            infoExpansionStyle: {
-                height: this.refSelectedTap.current.clientHeight
-            }
-        })
+        // this.setState({
+        //     previewHeight: this.refSelectedTap.current.clientHeight,
+        //     infoExpansionStyle: {
+        //         height: this.refSelectedTap.current.clientHeight
+        //     }
+        // })
         
     }
 
@@ -433,7 +441,7 @@ class SelectedTap extends React.Component{
                                         </div>
                                         <div 
                                             className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded && this.props.hoursList !== null
+                                            style={this.props.infoIsExpanded && this.state.hoursList !== null
                                                     ? {width: '10px',marginLeft: '3px'}
                                                     : {width: '0'}
                                                 }                                       
@@ -453,7 +461,7 @@ class SelectedTap extends React.Component{
                                         </div>
                                         <div 
                                             className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded && this.props.hoursList !== null
+                                            style={this.props.infoIsExpanded && this.state.hoursList !== null
                                                 ? {width: '10px',marginLeft: '3px'}
                                                 : {width: '0'}
                                             }   

@@ -21,7 +21,7 @@
 }
 #tap-info-container-mobile{
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     width: 95%;
     display: flex;
     flex-direction: column;
