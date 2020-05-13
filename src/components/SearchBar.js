@@ -12,7 +12,10 @@ import closeIcon from './images/fatArrow.png'
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "" };
+    this.state = { 
+      address: "",
+      refSearchBar: React.createRef()
+    };
   }
 
   handleChange = address => {
@@ -26,6 +29,16 @@ class SearchBar extends React.Component {
       .then(latLng => this.props.search(latLng))
       .catch(error => console.error("Error", error));
   };
+
+  openSearch(){
+    this.props.toggleSearchBar(true);
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.isSearchShown && !prevProps.isSearchShown){
+      this.state.refSearchBar.current.focus()
+    }
+  }
 
   render() {
     return (
@@ -52,6 +65,7 @@ class SearchBar extends React.Component {
                       })}
                       id= "search-input"
                       type="search"
+                      ref={this.state.refSearchBar}
                     />
                     {/* <div className="clearInput">
                       <button>&times;</button>
@@ -88,7 +102,7 @@ class SearchBar extends React.Component {
               </div>
             </div>
             :<div id='search-icon'
-                  onClick={()=>{this.props.toggleSearchBar(true)}}
+                  onClick={this.openSearch.bind(this)}
               >
               <img id='search-img' src={searchIcon} alt=''/>
             </div>

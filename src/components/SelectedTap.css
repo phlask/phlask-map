@@ -33,10 +33,10 @@
     -o-border-radius: 6px;
     padding: 0 2px 0 2px;
     background-color: white;
-    animation-name: info-modal-in;
+    /* animation-name: info-modal-in;
     animation-duration: .6s;
     animation-fill-mode: forward;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out; */
     transition: .6s all ease-in-out;
     -webkit-transition: .6s all ease-in-out;
     -moz-transition: .6s all ease-in-out;

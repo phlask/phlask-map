@@ -187,18 +187,23 @@ class SelectedTap extends React.Component{
         and closing time, starting with the current day
      */
     getAllHours(){
+        const selectedPlace = this.props.selectedPlace
 
-        if(this.props.selectedPlace.hours === undefined){
+        if(selectedPlace.hours === undefined){
             return null
         }
         else{
             const hoursList = []
 
-            this.props.selectedPlace.hours.map((orgHours,index)=>{
+            selectedPlace.hours.map((orgHours,index)=>{
                 const formattedHours = {
                     day:  hours.getDays(index),
-                    open: hours.getSimpleHours(orgHours.open.time),
-                    close: hours.getSimpleHours(orgHours.close.time)
+                    open: selectedPlace.hours.open !== undefined
+                        ? hours.getSimpleHours(orgHours.open.time)
+                        : null,
+                    close: selectedPlace.hours.close !== undefined 
+                        ? hours.getSimpleHours(orgHours.close.time)
+                        : null
                 }
                 hoursList.push(formattedHours)
             })
