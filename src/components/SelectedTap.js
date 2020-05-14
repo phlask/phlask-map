@@ -65,7 +65,9 @@ class SelectedTap extends React.Component{
             setTimeout(() => {
                 this.setState({
                     isDescriptionShown: shouldExpand
-                })
+                }, ()=>{
+                    // Expand or Collapse
+                    this.animateInfoExpansion(shouldExpand)  })
             }, this.state.animationSpeed);
             // Close if in preview mode
             if(!this.props.infoIsExpanded){
@@ -75,13 +77,29 @@ class SelectedTap extends React.Component{
                 isHoursExpanded: false
             })
         }else{
-            // Unmount the arrow before animation
-            this.setState({
-                isDescriptionShown: shouldExpand
-            })
+                // Set height on first render to animate expansion
+            if(Object.keys(this.state.infoExpansionStyle).length < 1){
+                this.setState({
+                    infoExpansionStyle: {
+                        height: this.state.previewHeight
+                    }
+                }, ()=>{
+                    this.setState({
+                        isDescriptionShown: shouldExpand
+                    }, ()=>{
+                        // Collapse
+                        this.animateInfoExpansion(shouldExpand)  
+                    })
+                })
+            }else{
+                this.setState({
+                    isDescriptionShown: shouldExpand
+                }, ()=>{
+                    // Expand
+                    this.animateInfoExpansion(shouldExpand)  
+                })
+            }
         }
-        // Expand or Collapse
-        this.animateInfoExpansion(shouldExpand)        
     }
 
     toggleInfoWindow(shouldShow){
