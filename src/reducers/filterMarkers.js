@@ -1,4 +1,5 @@
 import * as actions from "../actions";
+import { isMobile } from 'react-device-detect'
 
 const initialState = {
   mapCenter: {
@@ -7,7 +8,9 @@ const initialState = {
   },
   showingInfoWindow: false ,
   infoIsExpanded: false,
-  infoWindowIn: 'info-window-out',
+  infoWindowClass: isMobile
+    ? 'info-window-out'
+    : 'info-window-out-desktop',
   isSearchShown: false,
   tapFilters: {
     filtered: false,
@@ -65,18 +68,29 @@ export default (state = initialState, act) => {
       
 
     case actions.TOGGLE_INFO_WINDOW:
-      // console.log('Info Window Class: ' + state.infoWindowIn);
+      // console.log('Info Window Class: ' + state.infoWindowClass);
       
       return act.isShown 
-        ? {...state, showingInfoWindow: act.isShown, infoWindowIn: 'info-window-in'}
+        ? {...state, 
+            showingInfoWindow: act.isShown, 
+            infoWindowClass: isMobile
+              ? 'info-window-in'
+              : 'info-window-in-desktop'
+          }
         :{...state, showingInfoWindow: act.isShown}
 
-    case actions.TOGGLE_INFO_WINDOW_IN:
-      // console.log('Info Window Class: ' + state.infoWindowIn);
+    case actions.TOGGLE_INFO_WINDOW_CLASS:
+      console.log('Info Window Class: ' + state.infoWindowClass);
+      console.log('Is Mobile: ' + isMobile);
+      
       return {...state, 
-        infoWindowIn: act.isShown
-          ? 'info-window-in'
-          : 'info-window-out'
+        infoWindowClass: isMobile
+          ? act.isShown
+            ? 'info-window-in'
+            : 'info-window-out'
+          : act.isShown
+            ? 'info-window-in-desktop'
+            : 'info-window-out-desktop'
       }
 
     case actions.TOGGLE_INFO_EXPANDED:

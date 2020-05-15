@@ -93,7 +93,7 @@ export const hours = {
         const today = new Date()
         const currentTime = parseInt(today.getHours().toString() + today.getMinutes().toString())
         
-        return currentTime > open && currentTime < close
+        return currentTime > parseInt(open) && currentTime < parseInt(close)
             ? true
             :false
         

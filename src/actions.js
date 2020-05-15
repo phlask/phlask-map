@@ -60,9 +60,9 @@ export const toggleInfoWindow = (isShown) => ({
     isShown
 })
 
-export const TOGGLE_INFO_WINDOW_IN = 'TOGGLE_INFO_WINDOW_IN'
-export const toggleInfoWindowIn = (isShown) => ({
-    type: TOGGLE_INFO_WINDOW_IN,
+export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS'
+export const toggleInfoWindowClass = (isShown) => ({
+    type: TOGGLE_INFO_WINDOW_CLASS,
     isShown
 })
 
