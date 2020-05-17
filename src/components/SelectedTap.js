@@ -327,10 +327,19 @@ class SelectedTap extends React.Component{
     }
     
 
-    componentDidUpdate(prevProps){                
-        if ( this.props.selectedPlace !== prevProps.selectedPlace ){
-            if(this.props.selectedPlace.hours !== undefined){
-                // console.log('Did Update. Props: ' + this.props.selectedPlace);
+    componentDidUpdate(prevProps){              
+        if ( this.props.showingInfoWindow) {
+            if ( this.props.selectedPlace !== prevProps.selectedPlace ){
+                if(this.props.selectedPlace.hours !== undefined){
+                    // console.log('Did Update. Props: ' + this.props.selectedPlace);
+                }
+                this.setCurrentDate()
+            }
+            if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
+                && !this.state.isDescriptionShown ){
+                this.setState({
+                    previewHeight: this.refSelectedTap.current.clientHeight
+                })
             }
             this.setCurrentDate()
         }
@@ -591,6 +600,7 @@ class SelectedTap extends React.Component{
                                     
                                     </div>
                                 </div>
+                                
                             </div>
                             }
                         </div>

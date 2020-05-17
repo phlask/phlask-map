@@ -289,6 +289,7 @@ const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setMa
 export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({
     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-    LoadingContainer: LoadingContainer
+    LoadingContainer: LoadingContainer,
+    version: "quarterly"
   })(ReactGoogleMaps)
 );
