@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
-import { getTaps } from "../actions";
+import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/tapSelectors';
 
 export class MapMarkers extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.getTaps()
+  }
+  
+  shouldComponentUpdate(nextProps){
+    return nextProps.visibleTaps === this.props.visibleTaps
+      ? false
+      : true
   }
 
   getIcon(access) {
@@ -32,9 +38,15 @@ export class MapMarkers extends Component {
       return "https://i.imgur.com/kKXG3TO.png";
     }
   }
+  
+  onMarkerClick(tap){
+    this.props.toggleInfoWindow(true);
+    this.props.setSelectedPlace(tap);
+    this.props.setMapCenter(tap.position);
+  }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     if(this.props.visibleTaps) {
       return (
         <React.Fragment>
@@ -44,11 +56,12 @@ export class MapMarkers extends Component {
             key="current_pos"
             name={"Current Pos"}
             position={this.props.mapCenter}
-            onClick={this.onMarkerClick}
+            // onClick={this.onMarkerClick}
           />
           {this.props.visibleTaps
             .map((tap, index) => (
               <Marker
+                access={tap.access}
                 map={this.props.map}
                 google={this.props.google}
                 mapCenter={this.props.mapCenter}
@@ -56,6 +69,7 @@ export class MapMarkers extends Component {
                 name={tap.tapnum}
                 organization={tap.organization}
                 address={tap.address}
+                hours={tap.hours}
                 description={tap.description}
                 filtration={tap.filtration}
                 handicap={tap.handicap}
@@ -64,7 +78,7 @@ export class MapMarkers extends Component {
                 norms_rules={tap.norms_rules}
                 vessel={tap.vessel}
                 img={tap.images}
-                onClick={this.onMarkerClick}
+                onClick={this.onMarkerClick.bind(this)}
                 position={{ lat: tap.lat, lng: tap.lon }}
                 icon={{
                   url: this.getIcon(tap.access)
@@ -85,12 +99,13 @@ const makeMapStateToProps = () => {
       visibleTaps: getVisibleTaps(state, props),
       filtered: state.tapFilters.filtered,
       handicap: state.tapFilters.handicap,
-      accessTypesHidden: state.tapFilters.accessTypesHidden
+      accessTypesHidden: state.tapFilters.accessTypesHidden,
+      mapCenter: state.mapCenter
     }
   }
   return mapStateToProps
 }
 
-const mapDispatchToProps = { getTaps };
+const mapDispatchToProps = { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);

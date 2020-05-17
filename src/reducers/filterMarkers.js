@@ -1,12 +1,24 @@
 import * as actions from "../actions";
+import { isMobile } from 'react-device-detect'
 
 const initialState = {
+  mapCenter: {
+    lat: parseFloat("39.952744"),
+    lng: parseFloat("-75.163500")
+  },
+  showingInfoWindow: false ,
+  infoIsExpanded: false,
+  infoWindowClass: isMobile
+    ? 'info-window-out'
+    : 'info-window-out-desktop',
+  isSearchShown: false,
   tapFilters: {
     filtered: false,
     handicap: false,
     accessTypesHidden: []
   },
-  allTaps: []
+  allTaps: [],
+  selectedPlace: {}
 };
 
 export default (state = initialState, act) => {
@@ -34,8 +46,56 @@ export default (state = initialState, act) => {
       }
       return state; // If an unknown toggle-type is used, don't change the state.
 
+    case actions.SET_MAP_CENTER:
+      console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
+      
+      return { ...state, mapCenter: act.coords}
+
     case actions.GET_TAPS_SUCCESS:
-      return { ...state, allTaps: act.allTaps };
+      return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
+
+    case actions.SET_FILTER_FUNCTION:
+      console.log("set filter func");
+      return { filterFunction: !state.filterFunction, ...state };
+
+    case actions.TOGGLE_SEARCH_BAR:
+      // console.log('Seach Bar Shown: ' + act.isShown);
+      return { ...state, isSearchShown: act.isShown }
+
+    case actions.SET_SELECTED_PLACE:
+      // console.log('Selected Place: ' + act.selectedPlace.organization);
+      return { ...state, selectedPlace: act.selectedPlace}
+      
+
+    case actions.TOGGLE_INFO_WINDOW:
+      // console.log('Info Window Class: ' + state.infoWindowClass);
+      
+      return act.isShown 
+        ? {...state, 
+            showingInfoWindow: act.isShown, 
+            infoWindowClass: isMobile
+              ? 'info-window-in'
+              : 'info-window-in-desktop'
+          }
+        :{...state, showingInfoWindow: act.isShown}
+
+    case actions.TOGGLE_INFO_WINDOW_CLASS:
+      console.log('Info Window Class: ' + state.infoWindowClass);
+      console.log('Is Mobile: ' + isMobile);
+      
+      return {...state, 
+        infoWindowClass: isMobile
+          ? act.isShown
+            ? 'info-window-in'
+            : 'info-window-out'
+          : act.isShown
+            ? 'info-window-in-desktop'
+            : 'info-window-out-desktop'
+      }
+
+    case actions.TOGGLE_INFO_EXPANDED:
+
+      return { ...state, infoIsExpanded: act.isExpanded };
     
     case actions.SET_FILTERED_TAP_TYPES:
       var currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
@@ -54,6 +114,6 @@ export default (state = initialState, act) => {
       }
     
     default:
-      return state
+      return state;
   }
 };

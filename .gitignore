@@ -21,4 +21,9 @@ build/
 # Local target for files built on docker
 docker/
 
+# Firebase
+# /src/firebase
+
+# dev files
+resources/
 .env

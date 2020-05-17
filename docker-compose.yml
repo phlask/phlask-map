@@ -2,6 +2,7 @@ version: '3'
 services:
   app:
     build: .
+    stdin_open: true
     ports:
     - "3000:3000"
     entrypoint: bash -c "yarn install && yarn start"
@@ -11,6 +12,7 @@ services:
     build: .
     ports:
     - "3000:3000"
+    stdin_open: true
     entrypoint: /bin/bash
     volumes:
     - ".:/usr/src/app"

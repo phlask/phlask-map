@@ -4,6 +4,11 @@ import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
+import SelectedTap from './SelectedTap'
+import { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter } from "../actions";
+// import Legend from "./Legend";
+import Filter from "./Filter";
+import { Spinner } from "react-bootstrap";
 import MapMarkers from "./MapMarkers"
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -115,7 +120,7 @@ const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: "100%",
-  height: "81%",
+  height: "100%",
   position: "relative"
 };
 
@@ -124,24 +129,41 @@ export class ReactGoogleMaps extends Component {
     super(props);
 
     this.state = {
+      isExpanded: false,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      currlat: getLat(), // 39.9528,
-      currlon: getLon(), //-75.1635,
+      currlat: this.props.mapCenter.lat, // 39.9528,
+      currlon: this.props.mapCenter.lng, //-75.1635,
+      closestTap: {},
       taps: [],
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
-      filteredTaps: []
+      filteredTaps: [],
+      zoom: 16
     };
   }
-  
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({
-      unfilteredTaps: nextProps.tapsDisplayed
-    });
-  }
 
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //     this.setState({
+  //       unfilteredTaps: nextProps.tapsDisplayed
+  //     });
+  // }
+  
+  componentDidUpdate(prevProps){
+    if(prevProps !== this.props){
+      this.setState({
+        unfilteredTaps: prevProps.tapsDisplayed
+      });
+      if (this.state.currlat !== this.props.mapCenter.lat || this.state.currlon !== this.props.mapCenter.lng){
+        this.setState({
+          currlat: this.props.mapCenter.lat,
+          currlon: this.props.mapCenter.lng
+        })
+      }
+    }
+  }
+  
   componentDidMount() {
 
     getCoordinates().then(position => {
@@ -156,15 +178,27 @@ export class ReactGoogleMaps extends Component {
           currlon: position.coords.longitude
          });
       }
+    }, ()=>{
+      this.props.setMapCenter({
+        lat: getLat(),
+        lon: getLon()
+      })
     });
+  }
+
+  showInfoWindow(){
+    this.props.toggleInfoWindow(true)
   }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
+      currlat: props.position.lat,
+      currlon: props.position.lng
     });
+  
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -184,76 +218,80 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
+  toggleTapInfo = isExpanded => {
+    this.setState({
+      isExpanded: isExpanded
+    })
+  }
+
   searchForLocation = location => {
-    this.setState({ currlat: location.lat, currlon: location.lng });
+    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
   };
 
   render() {
-    // if (this.props.allTaps.length) {
-      // var closestTap = closest(this.props.allTaps, {
-      //   lat: this.state.currlat,
-      //   lon: this.state.currlon
-      // });
-      console.log(this.state.currlon)
-      console.log(this.state.currlon)
       return (
-        <div>
-          {/* <ClosestTap
-            lat={closestTap.lat}
-            lon={closestTap.lon}
-            org={closestTap.organization}
-            address={closestTap.address}
-          /> */}
+        <div id='react-google-map'>
 
           <Map
             google={this.props.google}
             className={"map"}
             style={style}
-            zoom={16}
+            zoom={this.state.zoom}
             initialCenter={{
               lat: this.state.currlat,
               lng: this.state.currlon
             }}
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
-          <MapMarkers 
-            map={this.props.map}
-            google={this.props.google}
-            mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-          />
 
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-              onClose={this.onClose}
-            >
-              <div>
-                <h4 className="infoWindow">
-                  {this.state.selectedPlace.organization}
-                </h4>
-                <h5>{this.state.selectedPlace.address}</h5>
-              </div>
-            </InfoWindow>
-          </Map>
-          <div className="searchBarContainer">
-            <SearchBar
-              className="searchBar"
-              search={location => this.searchForLocation(location)}
+            <Filter/>
+
+            {/* FilteredTaps */}
+
+            <MapMarkers 
+              map={this.props.map}
+              google={this.props.google}
+              mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
             />
-          </div>
+          </Map>
+            <div className="search-bar-container">
+              <SearchBar
+                className="searchBar"
+                search={location => this.searchForLocation(location)}
+              />
+            </div>
+            <SelectedTap></SelectedTap>
         </div>
       );
-    } //else {
-    //   return <div>Loading taps...</div>;
-    // }
+    } 
+  //   else {
+  //     return (
+  //       <div className="loading">
+  //         <Spinner animation="border" variant="info" className="spinner" />
+  //         Loading taps...
+  //       </div>
+  //     );
+  //   }
   // }
 }
 
-// const mapDispatchToProps = { getTaps };
+const mapStateToProps = state => ({
+  filtered: state.filtered,
+  handicap: state.handicap,
+  allTaps: state.allTaps,
+  filteredTaps: state.filteredTaps,
+  filterFunction: state.filterFunction,
+  mapCenter: state.mapCenter
+  // showingInfoWindow: state.showingInfoWindow,
+  // infoIsExpanded: state.infoIsExpanded
+});
 
-export default connect()(
+const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter };
+
+export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({
     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-    LoadingContainer: LoadingContainer
+    LoadingContainer: LoadingContainer,
+    version: "quarterly"
   })(ReactGoogleMaps)
 );

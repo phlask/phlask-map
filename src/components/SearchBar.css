@@ -1,8 +1,38 @@
+#search-container{
+  display: flex;
+  flex-direction: row;
+  /* width: 100%; */
+  padding: 8px 0 0 8px;
+  justify-content: start;
+  pointer-events: none;
+}
+#search-input{
+  border-radius: 5px;
+  flex: 1;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  animation-name: search-input-animation;
+  animation-duration: .4s;
+  animation-fill-mode: forward;
+  animation-timing-function: ease-in-out;
+  pointer-events: visibleStroke;
+}
+@keyframes search-input-animation{
+  0%{
+    width: 0;
+  }100%{
+    width: 100%;
+  }
+}
+.autocomplete-dropdown-container{
+  position: absolute;
+}
 .clearInput {
   display: inline;
   font-size: 1.5em;
   font-weight: bold;
-  height: 30px;
 }
 
 .clearInput:hover {
@@ -12,4 +42,50 @@
 button {
   padding-bottom: 40px;
   height: 30px;
+}
+
+#close-button{
+  position: relative;
+  margin-left: 5px;
+  height: 10px;
+  width: 15px;
+  animation-name: close-button-animation;
+  animation-duration: .6s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  pointer-events: visibleStroke;
+}
+@keyframes close-button-animation{
+  0%{
+    opacity: 0;
+  }50%{
+    opacity: 0;
+  }100%{
+    opacity: .5;
+  }
+}
+#close-icon{
+  height: 100%;
+  width: 100%;
+  transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+  -moz-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  -o-transform: rotateZ(90deg);
+}
+
+#search-icon{
+  padding: 8px 0 0 8px;
+  height: 40px;
+  width: 40px;
+  opacity: .5;
+  pointer-events: visibleStroke;
+}
+#search-img{
+  height: 100%;
+  width: 100%;
+}
+
+.suggestion-item{
+  
 }

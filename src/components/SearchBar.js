@@ -1,14 +1,21 @@
 import React from "react";
+import { connect }from 'react-redux'
+import { toggleSearchBar } from '../actions'
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
 import "./SearchBar.css";
+import searchIcon from './images/searchIconBlack.png'
+import closeIcon from './images/fatArrow.png'
 
-export default class SearchBar extends React.Component {
+class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "" };
+    this.state = { 
+      address: "",
+      refSearchBar: React.createRef()
+    };
   }
 
   handleChange = address => {
@@ -23,59 +30,92 @@ export default class SearchBar extends React.Component {
       .catch(error => console.error("Error", error));
   };
 
+  openSearch(){
+    this.props.toggleSearchBar(true);
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.isSearchShown && !prevProps.isSearchShown){
+      this.state.refSearchBar.current.focus()
+    }
+  }
+
   render() {
     return (
-      <div id="searchContainer">
-        <PlacesAutocomplete
-          value={this.state.address}
-          onChange={this.handleChange}
-          onSelect={this.handleSelect}
-        >
-          {({
-            getInputProps,
-            suggestions,
-            getSuggestionItemProps,
-            loading
-          }) => (
-            <div>
-              {/* type="search" is only HTML5 compliant */}
-              <input
-                {...getInputProps({
-                  placeholder: "Search For Taps Near...",
-                  className: "location-search-input"
-                })}
-                style={{ width: "300px" }}
-                type="search"
-              />
-              {/* <div className="clearInput">
-                <button>&times;</button>
-              </div> */}
-              <div className="autocomplete-dropdown-container">
-                {loading && <div>Loading...</div>}
-                {suggestions.map(suggestion => {
-                  const className = suggestion.active
-                    ? "suggestion-item--active"
-                    : "suggestion-item";
-                  // inline style for demonstration purpose
-                  const style = suggestion.active
-                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                    : { backgroundColor: "#ffffff", cursor: "pointer" };
-                  return (
-                    <div
-                      {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style
+      <div>
+        {this.props.isSearchShown
+          ? <div id='search-container'>
+              <PlacesAutocomplete
+                value={this.state.address}
+                onChange={this.handleChange}
+                onSelect={this.handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading
+                }) => (
+                  <div style={{width: 'fit-content'}}>
+                    {/* type="search" is only HTML5 compliant */}
+                    <input
+                      {...getInputProps({
+                        placeholder: "Search For Taps Near...",
+                        className: "location-search-input"
                       })}
-                    >
-                      <span>{suggestion.description}</span>
+                      id= "search-input"
+                      type="search"
+                      ref={this.state.refSearchBar}
+                    />
+                    {/* <div className="clearInput">
+                      <button>&times;</button>
+                    </div> */}
+                    <div className="autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        // inline style for demonstration purpose
+                        const style = suggestion.active
+                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              style
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  </div>
+                )}
+              </PlacesAutocomplete>
+              <div id='close-button'
+                  onClick={()=>{this.props.toggleSearchBar(false)}}
+              >
+                <img id='close-icon' src={closeIcon} alt=''/>
               </div>
             </div>
-          )}
-        </PlacesAutocomplete>
+            :<div id='search-icon'
+                  onClick={this.openSearch.bind(this)}
+              >
+              <img id='search-img' src={searchIcon} alt=''/>
+            </div>
+        }
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isSearchShown: state.isSearchShown
+})
+
+const mapDispatchToProps = { toggleSearchBar }
+
+export default connect(mapStateToProps,mapDispatchToProps)(SearchBar)

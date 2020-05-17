@@ -1,21 +1,15 @@
 import * as firebase from "firebase";
 
-const config = {
-  apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-  authDomain: "phlask-web-map.firebaseapp.com",
-  databaseURL: "https://phlask-web-map.firebaseio.com",
-  projectId: "phlask-web-map",
-  storageBucket: "phlask-web-map.appspot.com",
-  messagingSenderId: "428394983826"
-};
-
-firebase.initializeApp(config);
-
 export const SET_TOGGLE_STATE = "SET_TOGGLE_STATE";
 export const setToggleState = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE,
   toggle,
   toggleState
+});
+
+export const SET_FILTER_FUNCTION = "SET_FILTER_FUNCTION";
+export const setFilterFunction = () => ({
+  type: SET_FILTER_FUNCTION
 });
 
 export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
@@ -48,8 +42,43 @@ export const getTaps = () => dispatch => {
     });
 };
 
+export const SET_MAP_CENTER = 'SET_MAP_CENTER'
+export const setMapCenter = (coords) => ({
+    type: SET_MAP_CENTER,
+    coords
+})
+
+export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR'
+export const toggleSearchBar = (isShown) => ({
+    type: TOGGLE_SEARCH_BAR,
+    isShown
+})
+
+export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
+export const toggleInfoWindow = (isShown) => ({
+    type: TOGGLE_INFO_WINDOW,
+    isShown
+})
+
+export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS'
+export const toggleInfoWindowClass = (isShown) => ({
+    type: TOGGLE_INFO_WINDOW_CLASS,
+    isShown
+})
+
+export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED'
+export const toggleInfoExpanded = (isExpanded) => ({
+  type: TOGGLE_INFO_EXPANDED,
+  isExpanded
+})
 export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
   export const setFilteredTapTypes = tapType => ({
     type: SET_FILTERED_TAP_TYPES,
     tapType
   }); 
+
+export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"
+export const setSelectedPlace = selectedPlace => ({
+  type: SET_SELECTED_PLACE,
+  selectedPlace
+})
