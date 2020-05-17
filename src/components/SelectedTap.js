@@ -341,15 +341,6 @@ class SelectedTap extends React.Component{
                     previewHeight: this.refSelectedTap.current.clientHeight
                 })
             }
-            this.setCurrentDate()
-        }
-        if(this.props.showingInfoWindow){
-            if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
-                && !this.state.isDescriptionShown ){
-                this.setState({
-                    previewHeight: this.refSelectedTap.current.clientHeight
-                })
-            }
         }
     }
       
