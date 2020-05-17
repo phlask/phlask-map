@@ -309,25 +309,27 @@ class SelectedTap extends React.Component{
     }
     
 
-    componentDidUpdate(prevProps){                
-        if ( this.props.selectedPlace !== prevProps.selectedPlace ){
-            if(this.props.selectedPlace.hours !== undefined){
-                // console.log('Did Update. Props: ' + this.props.selectedPlace);
+    componentDidUpdate(prevProps){              
+        if ( this.props.showingInfoWindow) {
+            if ( this.props.selectedPlace !== prevProps.selectedPlace ){
+                if(this.props.selectedPlace.hours !== undefined){
+                    // console.log('Did Update. Props: ' + this.props.selectedPlace);
+                }
+                this.setCurrentDate()
             }
-            this.setCurrentDate()
-        }
-        if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
-            && !this.state.isDescriptionShown ){
-            this.setState({
-                previewHeight: this.refSelectedTap.current.clientHeight
-            })
+            if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
+                && !this.state.isDescriptionShown ){
+                this.setState({
+                    previewHeight: this.refSelectedTap.current.clientHeight
+                })
+            }
         }
     }
       
     componentDidMount(){
 
         this.setCurrentDate()
-        console.log('Height: ' + this.refSelectedTap.current.clientHeight);
+        // console.log('Height: ' + this.refSelectedTap.current.clientHeight);
         
         // this.setState({
         //     previewHeight: this.refSelectedTap.current.clientHeight,
@@ -339,222 +341,225 @@ class SelectedTap extends React.Component{
     }
 
     render(){
-        return(
-            <div 
-                ref={this.refSelectedTap}
-                id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
-                className={this.props.infoWindowIn}
-                style={this.state.infoExpansionStyle}
-            >
-                {/* Drag & Close Area */}
-                <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
-                    <div id='tap-info-top'>
-                        <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
-                            <div className='drag-bar-dash'></div>
-                            <div className='drag-bar-dash'></div>
+        if(this.props.showingInfoWindow){
+            return(
+                <div 
+                    ref={this.refSelectedTap}
+                    id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
+                    className={this.props.infoWindowIn}
+                    style={this.state.infoExpansionStyle}
+                >
+                    {/* Drag & Close Area */}
+                    <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
+                        <div id='tap-info-top'>
+                            <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
+                                <div className='drag-bar-dash'></div>
+                                <div className='drag-bar-dash'></div>
+                            </div>
+                            <div id='tap-menu'>
+                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                            </div>
                         </div>
+                    </ReactTouchEvents>
+                    
+
+                    {/* Placeholder for Fixed Close Area */}
+                    <div id='tap-info-drag-area-placeholder'>
                         <div id='tap-menu'>
                             <img id='tap-menu-icon' src={tapMenu} alt=''/>
                         </div>
                     </div>
-                </ReactTouchEvents>
-                
 
-                {/* Placeholder for Fixed Close Area */}
-                <div id='tap-info-drag-area-placeholder'>
-                    <div id='tap-menu'>
-                        <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                    </div>
-                </div>
+                    {/* Tap Info */}
 
-                {/* Tap Info */}
+                    {/* Location Name */}
+                    <div 
+                        ref= {this.refContentArea}
+                        id={this.props.infoIsExpanded
+                            ? 'tap-content-expanded'
+                            : 'tap-content'
+                        }
+                        >
 
-                {/* Location Name */}
-                <div 
-                    ref= {this.refContentArea}
-                    id={this.props.infoIsExpanded
-                        ? 'tap-content-expanded'
-                        : 'tap-content'
-                    }
-                    >
+                        {/* Main Image */}
 
-                    {/* Main Image */}
-
-                    <div id='tap-info-img-box'>
-                        <img id ='tap-info-img'
-                            // src={this.props.displayImg}
-                            src={tempImages.tapImg}
-                            alt=''
-                        > 
-                        </img>
-                    </div>
-
-                    <div id='tap-head-info'>
-                        {/* Tap Type Icon */}
-                        <div id='tap-type-icon-container'>
-                            <div id='tap-type-icon'>
-                                <img className='tap-info-icon-img' src={this.state.tapIcons.access} alt=''></img>
-                            </div>
+                        <div id='tap-info-img-box'>
+                            <img id ='tap-info-img'
+                                // src={this.props.displayImg}
+                                src={tempImages.tapImg}
+                                alt=''
+                            > 
+                            </img>
                         </div>
 
-                        {/* Name & Address */}
-                        <div id='org-name-and-address'>
-                            <div id='tap-organization-name'>
-                                {this.state.organization}
-                            </div>
-                            <h5 id='tap-info-address'>
-                                {this.state.address}
-                            </h5>
-                        </div>
-
-                        {/* Hours */}
-                        <div id='org-hours'>
-                            <div id='tap-info-org-status'>
-                            {/* Continue Here */}
-                                {this.state.isOpen
-                                    ? 'Open'
-                                    : this.state.isOpen !== null
-                                        ? 'Closed'
-                                        : 'unavailable'
-                                }
-                            </div>
-                            <div id='hours-area'>
-
-                                {/* Placeholder for Dropdown */}
-                                
-                                <div id='tap-info-hours-container-placeholder'>
-                                    <div className='tap-hours-list-item'>Placeholder</div>
-                                    {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
-                                        <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
-                                    </div> */}
+                        <div id='tap-head-info'>
+                            {/* Tap Type Icon */}
+                            <div id='tap-type-icon-container'>
+                                <div id='tap-type-icon'>
+                                    <img className='tap-info-icon-img' src={this.state.tapIcons.access} alt=''></img>
                                 </div>
+                            </div>
 
-                                {/* Container of all visible hours elements */}
-                                <div id='tap-info-hours-container'>
+                            {/* Name & Address */}
+                            <div id='org-name-and-address'>
+                                <div id='tap-organization-name'>
+                                    {this.state.organization}
+                                </div>
+                                <h5 id='tap-info-address'>
+                                    {this.state.address}
+                                </h5>
+                            </div>
+
+                            {/* Hours */}
+                            <div id='org-hours'>
+                                <div id='tap-info-org-status'>
+                                {/* Continue Here */}
+                                    {this.state.isOpen
+                                        ? 'Open'
+                                        : this.state.isOpen !== null
+                                            ? 'Closed'
+                                            : 'unavailable'
+                                    }
+                                </div>
+                                <div id='hours-area'>
+
                                     {/* Placeholder for Dropdown */}
-                                    <div id='current-hours-placeholder'>
-                                        <div className='tap-hours-list-item'>
-                                            {this.state.currentOrgHours !== null
-                                                ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
-                                                :''
-                                            } 
+                                    
+                                    <div id='tap-info-hours-container-placeholder'>
+                                        <div className='tap-hours-list-item'>Placeholder</div>
+                                        {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
+                                            <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                        </div> */}
+                                    </div>
+
+                                    {/* Container of all visible hours elements */}
+                                    <div id='tap-info-hours-container'>
+                                        {/* Placeholder for Dropdown */}
+                                        <div id='current-hours-placeholder'>
+                                            <div className='tap-hours-list-item'>
+                                                {this.state.currentOrgHours !== null
+                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    :''
+                                                } 
+                                            </div>
+                                            <div 
+                                                className='hours-dropdown-arrow-container'
+                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
+                                                        ? {width: '10px',marginLeft: '3px'}
+                                                        : {width: '0'}
+                                                    }                                       
+                                                >
+                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                            </div>
+                                                
                                         </div>
-                                        <div 
-                                            className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded && this.state.hoursList !== null
+
+                                        {/* Current Day Hours */}
+                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
+                                            <div className='tap-hours-list-item'>
+                                                {this.state.currentOrgHours !== null
+                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    :''
+                                                } 
+                                            </div>
+                                            <div 
+                                                className='hours-dropdown-arrow-container'
+                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
                                                     ? {width: '10px',marginLeft: '3px'}
                                                     : {width: '0'}
-                                                }                                       
+                                                }   
                                             >
-                                            <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                                <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
+                                            </div>
                                         </div>
-                                            
-                                    </div>
-
-                                    {/* Current Day Hours */}
-                                    <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
-                                        <div className='tap-hours-list-item'>
-                                            {this.state.currentOrgHours !== null
-                                                ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
-                                                :''
-                                            } 
-                                        </div>
-                                        <div 
-                                            className='hours-dropdown-arrow-container'
-                                            style={this.props.infoIsExpanded && this.state.hoursList !== null
-                                                ? {width: '10px',marginLeft: '3px'}
-                                                : {width: '0'}
-                                            }   
-                                        >
-                                            <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
-                                        </div>
-                                    </div>
-                                    {/* Other Days */}
-                                    {this.state.isHoursExpanded && this.props.infoIsExpanded
-                                        ? <div id='other-hours-container'>
-                                            {(this.state.hoursList !== null)
-                                                ?this.state.hoursList.map((hours,index) => {
-                                                    if(index !== 0){
-                                                        return <div 
-                                                                    className='tap-hours-list-item' 
-                                                                    key={index}
-                                                                >
-                                                                    {`${hours.day} ${hours.open} - ${hours.close}`}
-                                                                </div>
-                                                    }
-                                                })
-                                                :<div className='tap-hours-list-item'>n/a</div>
+                                        {/* Other Days */}
+                                        {this.state.isHoursExpanded && this.props.infoIsExpanded
+                                            ? <div id='other-hours-container'>
+                                                {(this.state.hoursList !== null)
+                                                    ?this.state.hoursList.map((hours,index) => {
+                                                        if(index !== 0){
+                                                            return <div 
+                                                                        className='tap-hours-list-item' 
+                                                                        key={index}
+                                                                    >
+                                                                        {`${hours.day} ${hours.open} - ${hours.close}`}
+                                                                    </div>
+                                                        }
+                                                    })
+                                                    :<div className='tap-hours-list-item'>n/a</div>
+                                            }
+                                            </div>
+                                            :<div></div>
                                         }
-                                        </div>
-                                        :<div></div>
-                                    }
 
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    {/* Walk Time & Info Icons */}
-                    <div id='walk-time-and-icons'
-                        style={{flexDirection: this.props.infoIsExpanded
-                            ? 'column'
-                            : 'row'
-                        }}
-                    >
-                        <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
-                        <div id='tap-info-icons-box'
-                            style={this.props.infoIsExpanded
-                                ? {width: '100%'}
-                                : {}
-                            }
-                        >
-                            {Object.keys(this.state.tapIcons).map((icon,index) => (
-                                this.state.tapIcons[icon] !== null
-                                    ? <div className='tap-info-icon' key={index}
-                                        style={this.props.infoIsExpanded
-                                            ?   {width: '4vh',
-                                                height: '4vh',
-                                                marginTop: '5px'}
-                                            : {}
-                                        }>
-                                        <img 
-                                            className='tap-info-icon-img' 
-                                            alt=''
-                                            src={this.state.tapIcons[icon]} 
-                                        ></img>
                                     </div>
-                                    :[]
-                            ))}
+                                </div>
+                                
+                            </div>
                         </div>
-                    </div>
+                        {/* Walk Time & Info Icons */}
+                        <div id='walk-time-and-icons'
+                            style={{flexDirection: this.props.infoIsExpanded
+                                ? 'column'
+                                : 'row'
+                            }}
+                        >
+                            <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
+                            <div id='tap-info-icons-box'
+                                style={this.props.infoIsExpanded
+                                    ? {width: '100%'}
+                                    : {}
+                                }
+                            >
+                                {Object.keys(this.state.tapIcons).map((icon,index) => (
+                                    this.state.tapIcons[icon] !== null
+                                        ? <div className='tap-info-icon' key={index}
+                                            style={this.props.infoIsExpanded
+                                                ?   {width: '4vh',
+                                                    height: '4vh',
+                                                    marginTop: '5px'}
+                                                : {}
+                                            }>
+                                            <img 
+                                                className='tap-info-icon-img' 
+                                                alt=''
+                                                src={this.state.tapIcons[icon]} 
+                                            ></img>
+                                        </div>
+                                        :[]
+                                ))}
+                            </div>
+                        </div>
 
-                    {/* Description */}
+                        {/* Description */}
 
-                    {this.state.isDescriptionShown
-                    ?<div id='tap-info-description-container'>
-                        <div id='tap-info-description'>
-                        {this.state.tapDescription !== null || this.state.tapDescription !== undefined
-                            ? this.state.tapDescription.length > 0
-                                ? this.state.tapDescription
-                                : 'Happy Phlasking'
-                            : this.state.organization !== null || this.state.organization !== undefined
-                                ? this.state.organization
-                                : 'Happy Phlasking'
-                        }
+                        {this.state.isDescriptionShown
+                        ?<div id='tap-info-description-container'>
+                            <div id='tap-info-description'>
+                            {this.state.tapDescription !== null || this.state.tapDescription !== undefined
+                                ? this.state.tapDescription.length > 0
+                                    ? this.state.tapDescription
+                                    : 'Happy Phlasking'
+                                : this.state.organization !== null || this.state.organization !== undefined
+                                    ? this.state.organization
+                                    : 'Happy Phlasking'
+                            }
+                            
+                            </div>
+                        </div>
                         
-                        </div>
-                    </div>
-                    
-                    
-                    /** Preview **/
+                        
+                        /** Preview **/
 
-                    :<div id='tap-info-arrow-box' onClick={()=>{this.toggleInfoExpanded(true)}}>
-                        <img className='tap-info-arrow' src={arrow} alt=''></img>
+                        :<div id='tap-info-arrow-box' onClick={()=>{this.toggleInfoExpanded(true)}}>
+                            <img className='tap-info-arrow' src={arrow} alt=''></img>
+                        </div>
+                        }
                     </div>
-                    }
                 </div>
-            </div>
-        )
+            )
+        }
+        else return null
     }
 }
 
