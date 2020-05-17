@@ -178,6 +178,8 @@ class SelectedTap extends React.Component{
                 : null,
             currentOrgHours: selectedPlace.hours !== undefined
                 ? selectedPlace.hours[currentDay] !== undefined
+                 && selectedPlace.hours[currentDay].open !== undefined
+                 && selectedPlace.hours[currentDay].close !== undefined
                     ? {
                         open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
                         close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
@@ -187,18 +189,26 @@ class SelectedTap extends React.Component{
             organization: selectedPlace.organization,
             address: selectedPlace.address,
             isOpen: selectedPlace.hours !== undefined
-                ?selectedPlace.hours.length >= currentDay + 1
-                    ? hours.checkOpen(
-                        selectedPlace.hours[currentDay].open.time, 
-                        selectedPlace.hours[currentDay].close.time
-                    )
-                    : false
+                ?selectedPlace.hours.length >= currentDay + 1 
+                    ? selectedPlace.hours[currentDay].close !== undefined
+                      && selectedPlace.hours[currentDay].open !== undefined
+                        ? hours.checkOpen(
+                            selectedPlace.hours[currentDay].open.time, 
+                            selectedPlace.hours[currentDay].close.time
+                         )
+                        : null
+                    : null
                 : null,
             tapIcons: this.setTapIcons(),
             tapDescription: selectedPlace.description !== undefined
                         ? selectedPlace.description
                         : null
 
+        },
+        ()=>{
+            const test = this.state.isOpen
+            console.log('open?' + test);
+            
         })
     }
 

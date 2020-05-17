@@ -244,6 +244,8 @@ export class ReactGoogleMaps extends Component {
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
 
+            <Filter/>
+
             {/* FilteredTaps */}
 
             <MapMarkers 

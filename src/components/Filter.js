@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from 'react-device-detect'
 import icon from "./icons8-filter-mod.png";
 import "./Filter.css";
 import {
@@ -143,6 +144,12 @@ export class Filter extends React.Component {
             alt="filterImg"
             className="filterIcon"
             //   onClick={this.display}
+            style={isMobile
+              ? {top: '35%'}
+              : this.props.showingInfoWindow
+                ?{top: '75%', left: '30%'}
+                :{top: '75%'}
+            }
           />
         </OverlayTrigger>
       </div>
@@ -152,7 +159,8 @@ export class Filter extends React.Component {
 
 const mapStateToProps = state => ({
   filtered: state.tapFilters.filtered,
-  handicap: state.tapFilters.handicap
+  handicap: state.tapFilters.handicap,
+  showingInfoWindow: state.showingInfoWindow
 });
 
 export default connect(mapStateToProps)(Filter);
