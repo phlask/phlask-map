@@ -11,19 +11,19 @@ import {
   Col
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setToggleState } from "../actions";
+import { setToggleState, setFilteredTapTypes } from "../actions";
 
 export class Filter extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleChange(event) {
     if (event.target.id === "filtered") {
-      this.props.dispatch(setToggleState("filtered", !this.props.filtered));
+      this.props.setToggleState("filtered", !this.props.filtered);
     } else if (event.target.id === "ada") {
-      this.props.dispatch(setToggleState("handicap", !this.props.handicap));
-    } else console.log("error with toggle");
+      this.props.setToggleState("handicap", !this.props.handicap);
+    } else if (event.target.id === "sparkling") {
+      this.props.setToggleState("sparkling", !this.props.sparkling)
+    }
+    else console.log("error with toggle");
   }
 
   render() {
@@ -44,9 +44,9 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src="https://i.imgur.com/M12e1HV.png"
+                          src={this.props.accessTypesHidden.includes("Public") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/M12e1HV.png"}
                           alt="blue"
-                          // onClick={() => this.props.legendButton("Public")}
+                          onClick={() => this.props.setFilteredTapTypes("Public")}
                         ></img>
                       </div>
                     </Row>
@@ -55,9 +55,9 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src="https://i.imgur.com/DXMMxXR.png"
+                          src={this.props.accessTypesHidden.includes("Private-Shared") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/DXMMxXR.png"}
                           alt="green"
-                          // onClick={() => this.props.legendButton("Private-Shared")}
+                          onClick={() => this.props.setFilteredTapTypes("Private-Shared")}
                         ></img>
                       </div>
                     </Row>
@@ -66,9 +66,9 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src="https://i.imgur.com/kt825XO.png"
+                          src={this.props.accessTypesHidden.includes("Private") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/kt825XO.png"}
                           alt="yellow"
-                          // onClick={() => this.props.legendButton("Private")}
+                          onClick={() => this.props.setFilteredTapTypes("Private")}
                         ></img>
                       </div>
                     </Row>
@@ -77,9 +77,9 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src="https://i.imgur.com/5NOdOyY.png"
+                          src={this.props.accessTypesHidden.includes("Restricted") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/5NOdOyY.png"}
                           alt="red"
-                          // onClick={() => this.props.legendButton("Restricted")}
+                          onClick={() => this.props.setFilteredTapTypes("Restricted")}
                         ></img>
                       </div>
                     </Row>
@@ -106,6 +106,7 @@ export class Filter extends React.Component {
                         type="switch"
                         id="ada"
                         label=""
+                        checked={this.props.handicap}
                         onClick={e => this.handleChange(e)}
                       />
                     </Row>
@@ -116,6 +117,7 @@ export class Filter extends React.Component {
                         type="switch"
                         id="filtered"
                         label=""
+                        checked={this.props.filtered}
                         onClick={e => this.handleChange(e)}
                       />
                     </Row>
@@ -126,6 +128,7 @@ export class Filter extends React.Component {
                         type="switch"
                         id="sparkling"
                         label=""
+                        checked={this.props.sparkling}
                         onClick={e => this.handleChange(e)}
                       />
                     </Row>
@@ -160,7 +163,13 @@ export class Filter extends React.Component {
 const mapStateToProps = state => ({
   filtered: state.tapFilters.filtered,
   handicap: state.tapFilters.handicap,
+  accessTypesHidden: state.tapFilters.accessTypesHidden,
   showingInfoWindow: state.showingInfoWindow
 });
 
-export default connect(mapStateToProps)(Filter);
+const mapDispatchToProps = {
+  setFilteredTapTypes,
+  setToggleState
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

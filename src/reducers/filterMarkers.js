@@ -15,6 +15,7 @@ const initialState = {
   tapFilters: {
     filtered: false,
     handicap: false,
+    sparkling: false,
     accessTypesHidden: []
   },
   allTaps: [],
@@ -22,29 +23,17 @@ const initialState = {
 };
 
 export default (state = initialState, act) => {
-  let updatedTaps = [...state.allTaps];
   switch (act.type) {
     case actions.SET_TOGGLE_STATE:
-      if (act.toggle === "filtered") {
-        const newState = {
-          ...state,
-          tapFilters: {
-            ...state.tapFilters,
-            filtered: act.toggleState
-          }
-        };
-        return newState;
-      } else if (act.toggle === "handicap"){
-        const newState = {
-          ...state,
-          tapFilters: {
-            ...state.tapFilters,
-            handicap: act.toggleState
-          }
-        };
-        return newState;
+      return {
+        ...state,
+        tapFilters: {
+          ...state.tapFilters,
+          filtered: act.toggle === "filtered" ? act.toggleState : state.tapFilters.filtered,
+          handicap: act.toggle === "handicap" ? act.toggleState : state.tapFilters.handicap,
+          sparkling: act.toggle === "sparkling" ? act.toggleState : state.tapFilters.sparkling
+        }
       }
-      return state; // If an unknown toggle-type is used, don't change the state.
 
     case actions.SET_MAP_CENTER:
       console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);

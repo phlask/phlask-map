@@ -27,6 +27,17 @@ const makeGetVisibleTaps = () => {
                 return obj;
               }, []);
         }
+        
+        // If we want to filter for taps that offer sparkling water
+        if (tapFilters.sparkling) {
+          filteredTaps = Object.keys(filteredTaps)
+            .filter(key => filteredTaps[key].sparkling === "yes")
+            .reduce((obj, key) => {
+              obj[key] = filteredTaps[key];
+              return obj;
+            }, []);
+      }
+
         filteredTaps = Object.keys(filteredTaps)
           .filter(key => !tapFilters.accessTypesHidden.includes(filteredTaps[key].access))
           .reduce((obj, key) => {
