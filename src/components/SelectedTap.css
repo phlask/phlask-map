@@ -9,9 +9,11 @@
 #tap-info-container{
     position: absolute;
     width: 30%;
+    min-width: 400px;
     height: 80%;
     border-radius: 5px;
     background-color: rgba(255,255,255,.9);
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     pointer-events: visibleStroke;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -22,6 +24,7 @@
     -moz-transition: .6s all ease-in-out;
     -ms-transition: .6s all ease-in-out;
     -o-transition: .6s all ease-in-out;
+    overflow: scroll;
 }
 #tap-info-container-mobile{
     position: absolute;
@@ -232,6 +235,11 @@
 #org-name-and-address{
     align-self: center;
     flex: 2;
+    margin-top: 5px;
+}
+#org-name-and-address-desktop{
+    align-self: center;
+    flex: 3;
     margin-top: 5px;
 }
 #tap-organization-name{

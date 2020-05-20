@@ -411,7 +411,11 @@ class SelectedTap extends React.Component{
     
                         {/* Main Image */}
     
-                        <div id='tap-info-img-box'>
+                        <div 
+                            id={isMobile
+                                ?'tap-info-img-box'
+                                : 'tap-info-img-box-desktop'
+                            }>
                             <img id ='tap-info-img'
                                 // src={this.props.displayImg}
                                 src={tempImages.tapImg}
@@ -429,7 +433,11 @@ class SelectedTap extends React.Component{
                             </div>
     
                             {/* Name & Address */}
-                            <div id='org-name-and-address'>
+                            <div 
+                                id={isMobile
+                                    ? 'org-name-and-address'
+                                    : 'org-name-and-address-desktop'
+                                }>
                                 <div id='tap-organization-name'>
                                     {this.state.organization}
                                 </div>
@@ -440,7 +448,13 @@ class SelectedTap extends React.Component{
     
                             {/* Hours */}
                             <div id='org-hours'>
-                                <div id='tap-info-org-status'>
+                                <div id='tap-info-org-status'
+                                    style={this.state.isOpen
+                                        ? { color: 'green' }
+                                        : this.state.isOpen !== null
+                                            ?{ color: 'red' }
+                                            :{ color: 'yellow'}
+                                    }>
                                 {/* Continue Here */}
                                     {this.state.isOpen
                                         ? 'Open'
