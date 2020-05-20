@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from 'react-device-detect'
 import { connect }from 'react-redux'
 import { toggleSearchBar } from '../actions'
 import PlacesAutocomplete, {
@@ -14,7 +15,8 @@ class SearchBar extends React.Component {
     super(props);
     this.state = { 
       address: "",
-      refSearchBar: React.createRef()
+      refSearchBar: React.createRef(),
+      isSearchBarShown: false
     };
   }
 
@@ -31,7 +33,19 @@ class SearchBar extends React.Component {
   };
 
   openSearch(){
-    this.props.toggleSearchBar(true);
+    this.setSearchDisplayType(true);
+  }
+  
+  setSearchDisplayType(shouldToggle = false){
+    if(isMobile){
+        this.setState({
+          isSearchBarShown: shouldToggle
+        })
+    }else{
+      this.setState({
+        isSearchBarShown: true
+      })
+    }
   }
 
   componentDidUpdate(prevProps){
@@ -40,11 +54,20 @@ class SearchBar extends React.Component {
     }
   }
 
+  componentDidMount(){
+    this.setSearchDisplayType()
+  }
+
   render() {
     return (
       <div>
-        {this.props.isSearchShown
-          ? <div id='search-container'>
+        {this.state.isSearchBarShown
+          ? <div id='search-container'
+              style={ isMobile 
+                ? {padding: "8px 0 0 8px"}
+                : {}
+              }
+            >
               <PlacesAutocomplete
                 value={this.state.address}
                 onChange={this.handleChange}
@@ -66,6 +89,11 @@ class SearchBar extends React.Component {
                       id= "search-input"
                       type="search"
                       ref={this.state.refSearchBar}
+                      style={
+                        !isMobile
+                          ? {width: '30vw', minWidth: "400px" }
+                          : {}
+                        }
                     />
                     {/* <div className="clearInput">
                       <button>&times;</button>
@@ -95,11 +123,15 @@ class SearchBar extends React.Component {
                   </div>
                 )}
               </PlacesAutocomplete>
-              <div id='close-button'
-                  onClick={()=>{this.props.toggleSearchBar(false)}}
-              >
-                <img id='close-icon' src={closeIcon} alt=''/>
-              </div>
+              {isMobile
+                ? <div 
+                    id='close-button'
+                    onClick={()=>{this.setSearchDisplayType(false)}}
+                  >
+                    <img id='close-icon' src={closeIcon} alt=''/>
+                  </div>
+                  :[]
+                }
             </div>
             :<div id='search-icon'
                   onClick={this.openSearch.bind(this)}

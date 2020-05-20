@@ -1,8 +1,8 @@
 #search-container{
+  padding-top: 3px;
   display: flex;
   flex-direction: row;
-  /* width: 100%; */
-  padding: 8px 0 0 8px;
+  width: 100%;
   justify-content: start;
   pointer-events: none;
 }

@@ -15,6 +15,10 @@
     background-color: rgba(255,255,255,.9);
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     pointer-events: visibleStroke;
+    animation-name: info-modal-in-desktop;
+    animation-duration: .6s;
+    animation-fill-mode: forward;
+    animation-timing-function: ease-in-out;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
@@ -73,7 +77,6 @@
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
-    /* background-color: burlywood; */
 }
 .info-window-out-desktop{
     left: -50%;
@@ -90,6 +93,15 @@
         opacity: 0;
 }100%{
         bottom: 0;
+        opacity: 1;
+    }
+}
+@keyframes info-modal-in-desktop{
+    0%{
+        left: -50%;
+        opacity: 0;
+}100%{
+        left: 0;
         opacity: 1;
     }
 }
@@ -187,6 +199,15 @@
 
 /* Tap Image */
 #tap-info-img-box{
+    position: relative;
+    width: 100%;
+    height: 25vw;
+    max-width: 100%;
+    max-height: var(--info-main-image-height-max);
+    min-width: 100%;
+    min-height: var(--info-main-image-height-min);
+}
+#tap-info-img-box-desktop{
     position: relative;
     width: 100%;
     height: 25vw;

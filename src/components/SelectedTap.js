@@ -375,7 +375,10 @@ class SelectedTap extends React.Component{
                     ref={this.refSelectedTap}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     className={this.props.infoWindowClass}
-                    style={this.state.infoExpansionStyle}
+                    style={isMobile
+                            ? this.state.infoExpansionStyle
+                            : {}
+                        }
                 >
                     {/* Drag & Close Area */}
                     <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
@@ -453,7 +456,7 @@ class SelectedTap extends React.Component{
                                         ? { color: 'green' }
                                         : this.state.isOpen !== null
                                             ?{ color: 'red' }
-                                            :{ color: 'yellow'}
+                                            :{ color: 'orange'}
                                     }>
                                 {/* Continue Here */}
                                     {this.state.isOpen
