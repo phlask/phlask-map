@@ -65,10 +65,10 @@ class SelectedTap extends React.Component{
             setTimeout(() => {
                 this.setState({
                     isDescriptionShown: shouldExpand
-                }, ()=>{
-                    // Expand or Collapse
-                    this.animateInfoExpansion(shouldExpand)  })
+                })
             }, this.state.animationSpeed);
+            // Expand or Collapse
+            this.animateInfoExpansion(shouldExpand) 
             // Close if in preview mode
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
@@ -470,7 +470,13 @@ class SelectedTap extends React.Component{
     
                                     {/* Placeholder for Dropdown */}
                                     
-                                    <div id='tap-info-hours-container-placeholder'>
+                                    <div 
+                                        id='tap-info-hours-container-placeholder'
+                                        style={this.state.currentOrgHours !== null
+                                            ? {border: '1px solid #c4c4c4'}    
+                                            : {}
+                                        }    
+                                    >
                                         <div className='tap-hours-list-item'>Placeholder</div>
                                         {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
                                             <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
@@ -478,7 +484,13 @@ class SelectedTap extends React.Component{
                                     </div>
     
                                     {/* Container of all visible hours elements */}
-                                    <div id='tap-info-hours-container'>
+                                    <div 
+                                        id='tap-info-hours-container'
+                                        style={this.state.currentOrgHours !== null
+                                            ? {border: '1px solid #c4c4c4'}    
+                                            : {}
+                                        }
+                                    >
                                         {/* Placeholder for Dropdown */}
                                         <div id='current-hours-placeholder'>
                                             <div className='tap-hours-list-item'>
