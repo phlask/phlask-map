@@ -16,6 +16,7 @@ const initialState = {
     filtered: false,
     handicap: false,
     sparkling: false,
+    openNow: false,
     accessTypesHidden: []
   },
   allTaps: [],
@@ -31,7 +32,8 @@ export default (state = initialState, act) => {
           ...state.tapFilters,
           filtered: act.toggle === "filtered" ? act.toggleState : state.tapFilters.filtered,
           handicap: act.toggle === "handicap" ? act.toggleState : state.tapFilters.handicap,
-          sparkling: act.toggle === "sparkling" ? act.toggleState : state.tapFilters.sparkling
+          sparkling: act.toggle === "sparkling" ? act.toggleState : state.tapFilters.sparkling,
+          openNow: act.toggle === "openNow" ? act.toggleState : state.tapFilters.openNow
         }
       }
 
@@ -83,8 +85,19 @@ export default (state = initialState, act) => {
       }
 
     case actions.TOGGLE_INFO_EXPANDED:
-
       return { ...state, infoIsExpanded: act.isExpanded };
+    
+    case actions.RESET_FILTER_FUNCTION:
+      return {
+        ...state,
+        tapFilters: {
+          accessTypesHidden: [],
+          filtered: false,
+          handicap: false,
+          sparkling: false,
+          openNow: false
+        }
+      }
     
     case actions.SET_FILTERED_TAP_TYPES:
       var currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];

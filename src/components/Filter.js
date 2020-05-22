@@ -11,7 +11,7 @@ import {
   Col
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setToggleState, setFilteredTapTypes } from "../actions";
+import { setToggleState, setFilteredTapTypes, resetFilterFunction } from "../actions";
 
 export class Filter extends React.Component {
 
@@ -22,6 +22,8 @@ export class Filter extends React.Component {
       this.props.setToggleState("handicap", !this.props.handicap);
     } else if (event.target.id === "sparkling") {
       this.props.setToggleState("sparkling", !this.props.sparkling)
+    } else if (event.target.id === "openNow") {
+      this.props.setToggleState("openNow", !this.props.openNow)
     }
     else console.log("error with toggle");
   }
@@ -96,7 +98,9 @@ export class Filter extends React.Component {
                         type="switch"
                         id="openNow"
                         label=""
+                        checked={this.props.openNow}
                         onClick={e => this.handleChange(e)}
+                        readOnly
                       />
                     </Row>
 
@@ -108,6 +112,7 @@ export class Filter extends React.Component {
                         label=""
                         checked={this.props.handicap}
                         onClick={e => this.handleChange(e)}
+                        readOnly
                       />
                     </Row>
 
@@ -119,6 +124,7 @@ export class Filter extends React.Component {
                         label=""
                         checked={this.props.filtered}
                         onClick={e => this.handleChange(e)}
+                        readOnly
                       />
                     </Row>
 
@@ -130,30 +136,32 @@ export class Filter extends React.Component {
                         label=""
                         checked={this.props.sparkling}
                         onClick={e => this.handleChange(e)}
+                        readOnly
                       />
                     </Row>
                   </Col>
                 </Row>
 
                 <Row className="resetButtonRow">
-                  <div className="resetButton">RESET</div>
+                  <div className="resetButton" onClick={() => this.props.resetFilterFunction()}>RESET</div>
                 </Row>
               </Popover.Content>
             </Popover>
           }
         >
-          <img
-            src={icon}
-            alt="filterImg"
-            className="filterIcon"
-            //   onClick={this.display}
-            style={isMobile
-              ? {top: '35%'}
-              : this.props.showingInfoWindow
-                ?{top: '75%', left: '30%'}
-                :{top: '75%'}
-            }
-          />
+
+        <img
+          src={icon}
+          alt="filterImg"
+          className="filterIcon"
+          //   onClick={this.display}
+          style={isMobile
+            ? {top: '35%'}
+            : this.props.showingInfoWindow
+              ?{top: '75%', left: '30%'}
+              :{top: '75%'}
+          }
+        />
         </OverlayTrigger>
       </div>
     );
@@ -163,13 +171,16 @@ export class Filter extends React.Component {
 const mapStateToProps = state => ({
   filtered: state.tapFilters.filtered,
   handicap: state.tapFilters.handicap,
+  sparkling: state.tapFilters.sparkling,
+  openNow: state.tapFilters.openNow,
   accessTypesHidden: state.tapFilters.accessTypesHidden,
   showingInfoWindow: state.showingInfoWindow
 });
 
 const mapDispatchToProps = {
   setFilteredTapTypes,
-  setToggleState
+  setToggleState,
+  resetFilterFunction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
