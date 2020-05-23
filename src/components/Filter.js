@@ -13,6 +13,12 @@ import {
 import { connect } from "react-redux";
 import { setToggleState, setFilteredTapTypes, resetFilterFunction } from "../actions";
 
+let icon_publicFilter = require('./images/tap-filter-icons/public.png')
+let icon_sharedFilter = require('./images/tap-filter-icons/shared.png')
+let icon_privateFilter = require('./images/tap-filter-icons/private.png')
+let icon_restrictedFilter = require('./images/tap-filter-icons/restricted.png')
+let icon_disabledFilter = require('./images/tap-filter-icons/disabled.png')
+
 export class Filter extends React.Component {
 
   handleChange(event) {
@@ -46,7 +52,7 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Public") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/M12e1HV.png"}
+                          src={this.props.accessTypesHidden.includes("Public") ? icon_disabledFilter : icon_publicFilter}
                           alt="blue"
                           onClick={() => this.props.setFilteredTapTypes("Public")}
                         ></img>
@@ -57,7 +63,7 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Private-Shared") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/DXMMxXR.png"}
+                          src={this.props.accessTypesHidden.includes("Private-Shared") ? icon_disabledFilter : icon_sharedFilter}
                           alt="green"
                           onClick={() => this.props.setFilteredTapTypes("Private-Shared")}
                         ></img>
@@ -68,7 +74,7 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Private") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/kt825XO.png"}
+                          src={this.props.accessTypesHidden.includes("Private") ? icon_disabledFilter : icon_privateFilter}
                           alt="yellow"
                           onClick={() => this.props.setFilteredTapTypes("Private")}
                         ></img>
@@ -79,7 +85,7 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Restricted") ? "https://i.imgur.com/kKXG3TO.png" : "https://i.imgur.com/5NOdOyY.png"}
+                          src={this.props.accessTypesHidden.includes("Restricted") ? icon_disabledFilter : icon_restrictedFilter}
                           alt="red"
                           onClick={() => this.props.setFilteredTapTypes("Restricted")}
                         ></img>
