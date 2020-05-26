@@ -1,4 +1,4 @@
-import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
+import { Map, InfoWindow, GoogleApiWrapper, Marker } from "google-maps-react";
 import React, { Component } from "react";
 import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
@@ -140,7 +140,8 @@ export class ReactGoogleMaps extends Component {
       tapsLoaded: false,
       unfilteredTaps: this.props.tapsDisplayed,
       filteredTaps: [],
-      zoom: 16
+      zoom: 16,
+      searchedTap: null
     };
   }
 
@@ -225,7 +226,7 @@ export class ReactGoogleMaps extends Component {
   }
 
   searchForLocation = location => {
-    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16 });
+    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16, searchedTap: {lat: location.lat, lng: location.lng} });
   };
 
   render() {
@@ -253,6 +254,12 @@ export class ReactGoogleMaps extends Component {
               google={this.props.google}
               mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
             />
+            {this.state.searchedTap != null && 
+              <Marker
+                name={"Your Search Result"}
+                position={this.state.searchedTap}
+              />
+            }
           </Map>
             <div className="search-bar-container">
               <SearchBar
