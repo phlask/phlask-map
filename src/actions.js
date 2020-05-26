@@ -12,6 +12,11 @@ export const setFilterFunction = () => ({
   type: SET_FILTER_FUNCTION
 });
 
+export const RESET_FILTER_FUNCTION = "RESET_FILTER_FUNCTION";
+export const resetFilterFunction = () => ({
+  type: RESET_FILTER_FUNCTION
+});
+
 export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
 export const getTapsSuccess = allTaps => ({
   type: GET_TAPS_SUCCESS,

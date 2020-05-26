@@ -20,15 +20,15 @@ export class MapMarkers extends Component {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
         case "Public":
-          return "https://i.imgur.com/fsofse7.png";
+          return require('./images/tap-marker-icons/Public.png')
         case "Private-Shared":
-          return "https://i.imgur.com/MMsmsHG.png";
+          return require('./images/tap-marker-icons/Shared.png')
         case "Private":
-          return "https://i.imgur.com/oLPMQtg.png";
+          return require('./images/tap-marker-icons/Private.png')
         case "Restricted":
-          return "https://i.imgur.com/T93TDTO.png";
+          return require('./images/tap-marker-icons/Restricted.png')
         case "Semi-public":
-          return "https://i.imgur.com/MMsmsHG.png";
+          return require('./images/tap-marker-icons/Shared.png')
         case "TrashAcademy":
           return "https://i.imgur.com/fXTeEKL.png";
         default:
@@ -74,6 +74,7 @@ export class MapMarkers extends Component {
                 filtration={tap.filtration}
                 handicap={tap.handicap}
                 service={tap.service}
+                sparkling={"sparkling" in tap ? tap.sparkling : "no"}
                 tap_type={tap.tap_type}
                 norms_rules={tap.norms_rules}
                 vessel={tap.vessel}
