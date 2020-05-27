@@ -57,7 +57,7 @@ jobs:
         sudo apt-get install -y nodejs chromium-browser jq
         sudo npm install -g lighthouse
         
-        sudo lighthouse "https://test.phlask.me/${GITHUB_SHA}" --chrome-flags="--no-sandbox --headless" \
+        sudo lighthouse "https://test.phlask.me/${GITHUB_SHA}/" --chrome-flags="--no-sandbox --headless" \
           --output json \
         | jq -r "{ description: \"Phlask Test Results - ${GITHUB_SHA}\", public: \"false\", files: {\"$(date "+%Y%m%d").lighthouse.report.json\": {content: (. | tostring) }}}" \
         | curl -sS -X POST -H 'Content-Type: application/json' \
