@@ -152,6 +152,10 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
+        const hour = today.getHours()
+        const getMinute = today.getMinutes()
+        console.log('Time: ' + today.getHours().toString() + today.getMinutes().toString());
+        
         // if( (this.props.selectedPlace.hours === undefined) ){
         //     this.setState({
         //         currentDay: currentDay,
@@ -381,17 +385,27 @@ class SelectedTap extends React.Component{
                         }
                 >
                     {/* Drag & Close Area */}
-                    <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
-                        <div id='tap-info-top'>
-                            <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
-                                <div className='drag-bar-dash'></div>
-                                <div className='drag-bar-dash'></div>
+                    {isMobile
+                        ? <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
+                            <div id='tap-info-top'>
+                                <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
+                                    <div className='drag-bar-dash'></div>
+                                    <div className='drag-bar-dash'></div>
+                                </div>
+                                <div id='tap-menu'>
+                                    <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                                </div>
                             </div>
-                            <div id='tap-menu'>
-                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                            </div>
-                        </div>
-                    </ReactTouchEvents>
+                        </ReactTouchEvents>
+                        :<div 
+                            id='close-arrow-desktop-container'
+                            onClick={()=>{this.toggleInfoWindow(false)}}
+                            >
+                                <div id='close-arrow-desktop'>
+                                    <img id='close-arrow-desktop-img' src={arrow} alt=''/>
+                                </div>
+                            </div>                        
+                    }
                     
     
                     {/* Placeholder for Fixed Close Area */}
@@ -635,6 +649,7 @@ class SelectedTap extends React.Component{
                             }
                         </div>
                     </div>
+                    
                 </div>
             )
         }else{

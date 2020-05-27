@@ -91,12 +91,17 @@ export const hours = {
     
     checkOpen: function checkOpen(open, close){
         const today = new Date()
-        const currentTime = parseInt(today.getHours().toString() + today.getMinutes().toString())
+
+        // If minutes is single digit, add "0" as first digit
+        let minutes = today.getMinutes().toString()
+        if (minutes.length < 2){
+            minutes = "0" + minutes
+        }
+        const currentTime = parseInt(today.getHours().toString() + minutes)
         
         return currentTime > parseInt(open) && currentTime < parseInt(close)
             ? true
-            :false
-        
+            : false
     }
     
     // Get current time & day
