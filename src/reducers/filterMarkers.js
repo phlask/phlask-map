@@ -20,6 +20,7 @@ const initialState = {
     accessTypesHidden: []
   },
   allTaps: [],
+  allFoodOrgs: [],
   selectedPlace: {}
 };
 
@@ -44,6 +45,11 @@ export default (state = initialState, act) => {
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
+
+    case actions.GET_FOOD_SUCCESS:
+      return { ...state, allFoodOrgs: act.allFoodOrgs, 
+        // filteredTaps: act.allTaps 
+      };
 
     case actions.SET_FILTER_FUNCTION:
       console.log("set filter func");

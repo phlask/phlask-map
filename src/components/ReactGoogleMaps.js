@@ -10,6 +10,8 @@ import { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter } from "../a
 import Filter from "./Filter";
 import { Spinner } from "react-bootstrap";
 import MapMarkers from "./MapMarkers"
+import MapMarkersFood from "./MapMarkersFood"
+
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -249,11 +251,17 @@ export class ReactGoogleMaps extends Component {
 
             {/* FilteredTaps */}
 
-            <MapMarkers 
+            {/* <MapMarkers 
+              map={this.props.map}
+              google={this.props.google}
+              mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+            /> */}
+            <MapMarkersFood 
               map={this.props.map}
               google={this.props.google}
               mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
             />
+
             {this.state.searchedTap != null && 
               <Marker
                 name={"Your Search Result"}

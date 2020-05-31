@@ -17,6 +17,10 @@ export const resetFilterFunction = () => ({
   type: RESET_FILTER_FUNCTION
 });
 
+/* User should select which type ( food or water) to display before retrieving data.
+  First choice would be set as default
+*/
+
 export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
 export const getTapsSuccess = allTaps => ({
   type: GET_TAPS_SUCCESS,
@@ -44,6 +48,27 @@ export const getTaps = () => dispatch => {
         allTaps.push(snapshot.val()[item]);
       }
       dispatch(getTapsSuccess(allTaps));
+    });
+};
+
+export const GET_FOOD_SUCCESS = "GET_FOOD_SUCCESS";
+export const getFoodSuccess = allFoodOrgs => ({
+  type: GET_FOOD_SUCCESS,
+  allFoodOrgs
+});
+
+export const getFoodOrgs = () => dispatch => {
+  return firebase.app('food')
+    .database()
+    .ref("/")
+    .once("value")
+    .then(snapshot => {
+      var allFoodOrgs = [];
+      var item;
+      for (item in snapshot.val()) {
+        allFoodOrgs.push(snapshot.val()[item]);
+      }
+      dispatch(getFoodSuccess(allFoodOrgs));
     });
 };
 
