@@ -152,26 +152,11 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
-        const hour = today.getHours()
-        const getMinute = today.getMinutes()
-        console.log('Time: ' + today.getHours().toString() + today.getMinutes().toString());
-        
-        // if( (this.props.selectedPlace.hours === undefined) ){
-        //     this.setState({
-        //         currentDay: currentDay,
-        //         currentHour: hours.getHourFromMilitary(today.getHours()),
-        //         currentMinute: today.getMinutes(),
-        //         hoursList: null,
-        //         currentOrgHours: null,
-        //         isOpen: null
-
-        //     })
-        
-        //     return
-        // }
+        // const hour = today.getHours()
+        // const getMinute = today.getMinutes()
+        // console.log('Time: ' + today.getHours().toString() + today.getMinutes().toString());
         
         const selectedPlace = this.props.selectedPlace
-        // console.log("Hours Length:" + selectedPlace.hours.length);
         
         this.setState({
             currentDay: currentDay,
@@ -182,26 +167,27 @@ class SelectedTap extends React.Component{
                 : null,
             currentOrgHours: selectedPlace.hours !== undefined
                 ? selectedPlace.hours[currentDay] !== undefined
-                 && selectedPlace.hours[currentDay].open !== undefined
-                 && selectedPlace.hours[currentDay].close !== undefined
-                    ? {
-                        open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
-                        close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
-                    }
-                    : null
+                    ? selectedPlace.hours[currentDay].open !== undefined
+                    && selectedPlace.hours[currentDay].close !== undefined
+                        ? {
+                            open: hours. getSimpleHours(selectedPlace.hours[currentDay].open.time),
+                            close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
+                        }
+                        : false
+                    : false
                 : null,
             organization: selectedPlace.organization,
             address: selectedPlace.address,
             isOpen: selectedPlace.hours !== undefined
-                ?selectedPlace.hours.length >= currentDay + 1 
+                ?selectedPlace.hours[currentDay]
                     ? selectedPlace.hours[currentDay].close !== undefined
                       && selectedPlace.hours[currentDay].open !== undefined
                         ? hours.checkOpen(
                             selectedPlace.hours[currentDay].open.time, 
                             selectedPlace.hours[currentDay].close.time
                          )
-                        : null
-                    : null
+                        : false
+                    : false
                 : null,
             tapIcons: this.setTapIcons(),
             tapDescription: selectedPlace.description !== undefined
@@ -253,34 +239,35 @@ class SelectedTap extends React.Component{
         
     }
 
-    getAccess(){
-        if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
-            console.log('Access is not defined for this entry');
-            return null
-        }
-        else {
-            let access = tempUnverified
-            switch(this.props.selectedPlace.access){
-                case 'Public': access = phlaskBlue
-                    break
-                case 'Semi-public': access = phlaskGreen
-                    break
-                case 'Private-Shared': access = phlaskGreen
-                    break
-                case 'Private': access = phlaskYellow
-                    break
-                case 'Restricted': access = phlaskRed
-                    break
-                case 'Unverified': access = tempUnverified
-                    break    
-                // case 'TrashAcademy': access = trashAcademyIcon
-                //     break 
-                // case 'Water Monsters': access = waterMonstersIcon
-                //     break                       
-            }
-            return access
-        }
-    }
+
+    // getAccess(){
+    //     if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
+    //         console.log('Access is not defined for this entry');
+    //         return null
+    //     }
+    //     else {
+    //         let access = tempUnverified
+    //         switch(this.props.selectedPlace.access){
+    //             case 'Public': access = phlaskBlue
+    //                 break
+    //             case 'Semi-public': access = phlaskGreen
+    //                 break
+    //             case 'Private-Shared': access = phlaskGreen
+    //                 break
+    //             case 'Private': access = phlaskYellow
+    //                 break
+    //             case 'Restricted': access = phlaskRed
+    //                 break
+    //             case 'Unverified': access = tempUnverified
+    //                 break    
+    //             // case 'TrashAcademy': access = trashAcademyIcon
+    //             //     break 
+    //             // case 'Water Monsters': access = waterMonstersIcon
+    //             //     break                       
+    //         }
+    //         return this.props.selectedPlace.icon
+    //     }
+    // }
 
     getAccessibility(){
         if(this.props.selectedPlace.handicap === undefined || this.props.selectedPlace.handicap.length === 0){
@@ -323,7 +310,7 @@ class SelectedTap extends React.Component{
     // Handle Icons
     setTapIcons(){
         const iconList = {
-            access: this.getAccess(),
+            access: this.props.icon,
             accessibility: this.getAccessibility(),
             filtered: this.getFiltration()
         }
@@ -445,7 +432,7 @@ class SelectedTap extends React.Component{
                             {/* Tap Type Icon */}
                             <div id='tap-type-icon-container'>
                                 <div id='tap-type-icon'>
-                                    <img className='tap-info-icon-img' src={this.state.tapIcons.access} alt=''></img>
+                                    <img className='tap-info-icon-img' src={this.props.selectedPlace.icon} alt=''></img>
                                 </div>
                             </div>
     
@@ -472,7 +459,7 @@ class SelectedTap extends React.Component{
                                             ?{ color: 'red' }
                                             :{ color: 'orange'}
                                     }>
-                                {/* Continue Here */}
+                                
                                     {this.state.isOpen
                                         ? 'Open'
                                         : this.state.isOpen !== null
@@ -509,7 +496,9 @@ class SelectedTap extends React.Component{
                                         <div id='current-hours-placeholder'>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.currentOrgHours !== null
-                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    ? this.state.currentOrgHours !== false
+                                                        ? `${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                        : ''
                                                     :''
                                                 } 
                                             </div>
@@ -529,7 +518,9 @@ class SelectedTap extends React.Component{
                                         <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.currentOrgHours !== null
-                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    ? this.state.currentOrgHours !== false
+                                                        ? `${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                        : ''
                                                     :''
                                                 } 
                                             </div>

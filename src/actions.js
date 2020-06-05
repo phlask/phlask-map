@@ -7,6 +7,13 @@ export const setToggleState = (toggle, toggleState) => ({
   toggleState
 });
 
+export const SET_TOGGLE_STATE_FOOD = "SET_TOGGLE_STATE_FOOD";
+export const setToggleStateFood = (toggle, toggleState) => ({
+  type: SET_TOGGLE_STATE_FOOD,
+  toggle,
+  toggleState
+});
+
 export const SET_FILTER_FUNCTION = "SET_FILTER_FUNCTION";
 export const setFilterFunction = () => ({
   type: SET_FILTER_FUNCTION
@@ -105,6 +112,11 @@ export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
   export const setFilteredTapTypes = tapType => ({
     type: SET_FILTERED_TAP_TYPES,
     tapType
+  }); 
+  export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
+  export const setFilteredFoodTypes = foodType => ({
+    type: SET_FILTERED_FOOD_TYPES,
+    foodType
   }); 
 
 export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"

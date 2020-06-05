@@ -8,6 +8,7 @@ import SelectedTap from './SelectedTap'
 import { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter } from "../actions";
 // import Legend from "./Legend";
 import Filter from "./Filter";
+import FoodFilter from "./FoodFilter";
 import { Spinner } from "react-bootstrap";
 import MapMarkers from "./MapMarkers"
 import MapMarkersFood from "./MapMarkersFood"
@@ -247,7 +248,8 @@ export class ReactGoogleMaps extends Component {
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
 
-            <Filter/>
+            <FoodFilter/>
+            {/* <Filter/> */}
 
             {/* FilteredTaps */}
 

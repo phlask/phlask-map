@@ -3,7 +3,7 @@ import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import { getFoodOrgs, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/foodOrgSelectors';
-import foodIcon from './foodIcon.png'
+import foodIcon from './images/food-marker-icons/food-site.png'
 
 export class MapMarkersFood extends Component {
 
@@ -12,7 +12,7 @@ export class MapMarkersFood extends Component {
   }
   
   shouldComponentUpdate(nextProps){
-    return nextProps.allFoodOrgs === this.props.allFoodOrgs
+    return nextProps.visibleTaps === this.props.visibleTaps
       ? false
       : true
   }
@@ -20,23 +20,20 @@ export class MapMarkersFood extends Component {
   getIcon(access) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
-        case "Public":
-          return require('./images/tap-marker-icons/Public.png')
-        case "Private-Shared":
-          return require('./images/tap-marker-icons/Shared.png')
-        case "Private":
-          return require('./images/tap-marker-icons/Private.png')
-        case "Restricted":
-          return require('./images/tap-marker-icons/Restricted.png')
-        case "Semi-public":
-          return require('./images/tap-marker-icons/Shared.png')
-        case "TrashAcademy":
-          return "https://i.imgur.com/fXTeEKL.png";
+        case "Food Site":
+          return require('./images/food-marker-icons/food-site.png')
+        case "School":
+          return require('./images/food-marker-icons/school.png')
+        case "Charter School":
+          return require('./images/food-marker-icons/charter-school.png')
+        case "PHA Community Center":
+          return require('./images/food-marker-icons/pha.png')
         default:
-          return "https://i.imgur.com/kKXG3TO.png";
+          return "./images/foodIcon.png";
       }
-    } else {
-      return "https://i.imgur.com/kKXG3TO.png";
+    } 
+    else {
+      return {foodIcon};
     }
   }
   
@@ -48,40 +45,41 @@ export class MapMarkersFood extends Component {
 
   render() {
     // console.log(this.props)
-    // if(this.props.visibleTaps) {
-        if( this.props ){
-      return (
-        <React.Fragment>
-          <Marker
-            map={this.props.map}
-            google={this.props.google}
-            key="current_pos"
-            name={"Current Pos"}
-            position={this.props.mapCenter}
-            // onClick={this.onMarkerClick}
-          />
-          {this.props.allFoodOrgs
-            .map((org, index) => (
-              <Marker
-                access={org.access}
-                map={this.props.map}
-                google={this.props.google}
-                mapCenter={this.props.mapCenter}
-                key={index}
-                organization={org.organization}
-                address={org.address}
-                hours={org.hours}
-                description={org.description}
-                img={org.images}
-                onClick={this.onMarkerClick.bind(this)}
-                position={{ lat: org.lat, lng: org.lon }}
-                icon={{
-                    url: 'https://i.imgur.com/kKXG3TO.png'
-                }}
-              />
-          ))}
-        </React.Fragment>
-      );
+    if(this.props.visibleTaps) {
+      if( this.props ){
+        return (
+          <React.Fragment>
+            <Marker
+              map={this.props.map}
+              google={this.props.google}
+              key="current_pos"
+              name={"Current Pos"}
+              position={this.props.mapCenter}
+              // onClick={this.onMarkerClick}
+            />
+            {this.props.visibleTaps
+              .map((org, index) => (
+                <Marker
+                  access={org.access}
+                  map={this.props.map}
+                  google={this.props.google}
+                  mapCenter={this.props.mapCenter}
+                  key={index}
+                  organization={org.organization}
+                  address={org.address}
+                  hours={org.hours}
+                  idRequired={org.id_required === 'yes' ? true : false}
+                  kidOnly={org.kid_only === 'yes' ? true : false}
+                  description={org.description}
+                  img={org.images}
+                  onClick={this.onMarkerClick.bind(this)}
+                  position={{ lat: org.lat, lng: org.lon }}
+                  icon={this.getIcon(org.access)}
+                />
+            ))}
+          </React.Fragment>
+        );
+      }
     }
     else return null;
   }
@@ -91,11 +89,10 @@ const makeMapStateToProps = () => {
   const getVisibleTaps = makeGetVisibleTaps()
   const mapStateToProps = (state, props) => {
     return {
-        allFoodOrgs: state.allFoodOrgs,
-    //   visibleTaps: getVisibleTaps(state, props),
+      visibleTaps: getVisibleTaps(state, props),
     //   filtered: state.tapFilters.filtered,
     //   handicap: state.tapFilters.handicap,
-    //   accessTypesHidden: state.tapFilters.accessTypesHidden,
+      accessTypesHidden: state.foodFilters.accessTypesHidden,
       mapCenter: state.mapCenter
     }
   }

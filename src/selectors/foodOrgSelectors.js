@@ -2,9 +2,9 @@ import { createSelector } from "reselect"
 
 import { hours } from '../components/hours.js'
 
-const getTapFilters = (state) => state.tapFilters
+const getTapFilters = (state) => state.foodFilters
 
-const getTaps = (state) => state.allTaps
+const getTaps = (state) => state.allFoodOrgs
 
 const makeGetVisibleTaps = () => {
   return createSelector(
@@ -12,35 +12,44 @@ const makeGetVisibleTaps = () => {
     (tapFilters, allTaps) => {
       
       let filteredTaps = allTaps
-      // If we want to filter for filtered taps (water filter)
-      if (tapFilters.filtered) {
-          filteredTaps = Object.keys(filteredTaps)
-              .filter(key => allTaps[key].filtration === "Yes")
-              .reduce((obj, key) => {
-              obj[key] = allTaps[key];
-              return obj;
-              }, []);
-      }
+      // If we want to filter for Food Sites
+      // if (tapFilters.accessTypesHidden) {
+      //     filteredTaps = Object.keys(filteredTaps)
+      //         .filter(key => allTaps[key].access === "Food Site")
+      //         .reduce((obj, key) => {
+      //         obj[key] = allTaps[key];
+      //         return obj;
+      //         }, []);
+      // }
 
-      // If we want to filter for handicap-accessible taps
-      if (tapFilters.handicap) {
-          filteredTaps = Object.keys(filteredTaps)
-            .filter(key => filteredTaps[key].handicap === "Yes")
-            .reduce((obj, key) => {
-              obj[key] = filteredTaps[key];
-              return obj;
-            }, []);
-      }
+      // // If we want to filter for Schools
+      // if (tapFilters.accessTypesHidden) {
+      //     filteredTaps = Object.keys(filteredTaps)
+      //       .filter(key => filteredTaps[key].access === "School")
+      //       .reduce((obj, key) => {
+      //         obj[key] = filteredTaps[key];
+      //         return obj;
+      //       }, []);
+      // }
       
-      // If we want to filter for taps that offer sparkling water
-      if (tapFilters.sparkling) {
-        filteredTaps = Object.keys(filteredTaps)
-          .filter(key => filteredTaps[key].sparkling === "yes")
-          .reduce((obj, key) => {
-            obj[key] = filteredTaps[key];
-            return obj;
-          }, []);
-      }
+      // // If we want to filter for Charter Schools
+      // if (tapFilters.accessTypesHidden) {
+      //   filteredTaps = Object.keys(filteredTaps)
+      //     .filter(key => filteredTaps[key].access === "Charter School")
+      //     .reduce((obj, key) => {
+      //       obj[key] = filteredTaps[key];
+      //       return obj;
+      //     }, []);
+      // }
+      // // If we want to filter for PHA Community Centers
+      // if (tapFilters.accessTypesHidden) {
+      //   filteredTaps = Object.keys(filteredTaps)
+      //     .filter(key => filteredTaps[key].access === "PHA Community Center")
+      //     .reduce((obj, key) => {
+      //       obj[key] = filteredTaps[key];
+      //       return obj;
+      //     }, []);
+      // }
 
       if (tapFilters.openNow) {
         filteredTaps = Object.keys(filteredTaps)
