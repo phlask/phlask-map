@@ -17,8 +17,10 @@ let icon_food_site = require('./images/food-marker-icons/food-site.png')
 let icon_school = require('./images/food-marker-icons/school.png')
 let icon_charter_school = require('./images/food-marker-icons/charter-school.png')
 let icon_pha = require('./images/food-marker-icons/pha.png')
-let icon_disabledFilter = require('./images/tap-filter-icons/disabled.png')
-
+let icon_food_site_disabled = require ('./images/food-marker-icons/food-site-disabled.png')
+let icon_school_disabled = require ('./images/food-marker-icons/school-disabled.png')
+let icon_charter_school_disabled = require ('./images/food-marker-icons/charter-school-disabled.png')
+let icon_pha_disabled = require ('./images/food-marker-icons/pha-disabled.png')
 export class FoodFilter extends React.Component {
 
   handleChange(event) {
@@ -50,7 +52,7 @@ export class FoodFilter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Food Site") ? icon_disabledFilter : icon_food_site}
+                          src={this.props.accessTypesHidden.includes("Food Site") ? icon_food_site_disabled : icon_food_site}
                           alt="blue"
                           onClick={() => this.props.setFilteredFoodTypes("Food Site")}
                         ></img>
@@ -61,7 +63,7 @@ export class FoodFilter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("School") ? icon_disabledFilter : icon_school}
+                          src={this.props.accessTypesHidden.includes("School") ? icon_school_disabled : icon_school}
                           alt="green"
                           onClick={() => this.props.setFilteredFoodTypes("School")}
                         ></img>
@@ -72,7 +74,7 @@ export class FoodFilter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Charter School") ? icon_disabledFilter : icon_charter_school}
+                          src={this.props.accessTypesHidden.includes("Charter School") ? icon_charter_school_disabled : icon_charter_school}
                           alt="yellow"
                           onClick={() => this.props.setFilteredFoodTypes("Charter School")}
                         ></img>
@@ -83,7 +85,7 @@ export class FoodFilter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("PHA Community Center") ? icon_disabledFilter : icon_pha}
+                          src={this.props.accessTypesHidden.includes("PHA Community Center") ? icon_pha_disabled : icon_pha}
                           alt="red"
                           onClick={() => this.props.setFilteredFoodTypes("PHA Community Center")}
                         ></img>

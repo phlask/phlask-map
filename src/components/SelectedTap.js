@@ -411,7 +411,7 @@ class SelectedTap extends React.Component{
                             ? 'tap-content-expanded'
                             : 'tap-content'
                         }
-                        >
+                    >
     
                         {/* Main Image */}
     
@@ -504,8 +504,8 @@ class SelectedTap extends React.Component{
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
-                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
-                                                        ? {width: '10px',marginLeft: '3px'}
+                                                style={( this.props.infoIsExpanded || !isMobile ) && this.state.hoursList !== null && this.state.currentOrgHours !== false
+                                                    ? {width: '10px',marginLeft: '3px'}
                                                         : {width: '0'}
                                                     }                                       
                                                 >
@@ -515,7 +515,7 @@ class SelectedTap extends React.Component{
                                         </div>
     
                                         {/* Current Day Hours */}
-                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
+                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded || !isMobile){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.currentOrgHours !== null
                                                     ? this.state.currentOrgHours !== false
@@ -526,7 +526,7 @@ class SelectedTap extends React.Component{
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
-                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
+                                                style={( this.props.infoIsExpanded || !isMobile ) && this.state.hoursList !== null && this.state.currentOrgHours !== false
                                                     ? {width: '10px',marginLeft: '3px'}
                                                     : {width: '0'}
                                                 }   
@@ -535,7 +535,7 @@ class SelectedTap extends React.Component{
                                             </div>
                                         </div>
                                         {/* Other Days */}
-                                        {this.state.isHoursExpanded && this.props.infoIsExpanded
+                                        {this.state.isHoursExpanded && ( this.props.infoIsExpanded || !isMobile )
                                             ? <div id='other-hours-container'>
                                                 {(this.state.hoursList !== null)
                                                     ?this.state.hoursList.map((hours,index) => {

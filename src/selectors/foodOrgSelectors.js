@@ -12,44 +12,26 @@ const makeGetVisibleTaps = () => {
     (tapFilters, allTaps) => {
       
       let filteredTaps = allTaps
-      // If we want to filter for Food Sites
-      // if (tapFilters.accessTypesHidden) {
-      //     filteredTaps = Object.keys(filteredTaps)
-      //         .filter(key => allTaps[key].access === "Food Site")
-      //         .reduce((obj, key) => {
-      //         obj[key] = allTaps[key];
-      //         return obj;
-      //         }, []);
-      // }
 
-      // // If we want to filter for Schools
-      // if (tapFilters.accessTypesHidden) {
-      //     filteredTaps = Object.keys(filteredTaps)
-      //       .filter(key => filteredTaps[key].access === "School")
-      //       .reduce((obj, key) => {
-      //         obj[key] = filteredTaps[key];
-      //         return obj;
-      //       }, []);
-      // }
-      
-      // // If we want to filter for Charter Schools
-      // if (tapFilters.accessTypesHidden) {
-      //   filteredTaps = Object.keys(filteredTaps)
-      //     .filter(key => filteredTaps[key].access === "Charter School")
-      //     .reduce((obj, key) => {
-      //       obj[key] = filteredTaps[key];
-      //       return obj;
-      //     }, []);
-      // }
-      // // If we want to filter for PHA Community Centers
-      // if (tapFilters.accessTypesHidden) {
-      //   filteredTaps = Object.keys(filteredTaps)
-      //     .filter(key => filteredTaps[key].access === "PHA Community Center")
-      //     .reduce((obj, key) => {
-      //       obj[key] = filteredTaps[key];
-      //       return obj;
-      //     }, []);
-      // }
+      // If we want to filter for Orgs that are Kids Only
+      if (tapFilters.kidOnly) {
+        filteredTaps = Object.keys(filteredTaps)
+          .filter(key => filteredTaps[key].kid_only === "yes")
+          .reduce((obj, key) => {
+            obj[key] = filteredTaps[key];
+            return obj;
+          }, []);
+      }
+
+      // If we want to filter for Orgs that require ID
+      if (tapFilters.idRequired) {
+        filteredTaps = Object.keys(filteredTaps)
+          .filter(key => filteredTaps[key].id_required === "yes")
+          .reduce((obj, key) => {
+            obj[key] = filteredTaps[key];
+            return obj;
+          }, []);
+      }
 
       if (tapFilters.openNow) {
         filteredTaps = Object.keys(filteredTaps)
