@@ -133,18 +133,6 @@ export class FoodFilter extends React.Component {
                         readOnly
                       />
                     </Row>
-
-                    {/* <Row className="legendRow filterRow">
-                      <Form.Check.Label>Sparkling Water</Form.Check.Label>
-                      <Form.Check
-                        type="switch"
-                        id="sparkling"
-                        label=""
-                        checked={this.props.sparkling}
-                        onClick={e => this.handleChange(e)}
-                        readOnly
-                      />
-                    </Row> */}
                   </Col>
                 </Row>
 
@@ -175,10 +163,6 @@ export class FoodFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  // foodSite: state.foodFilters.foodSite,
-  // pha: state.foodFilters.pha,
-  // school: state.foodFilters.school,
-  // charter: state.foodFilters.charter,
   idRequired: state.foodFilters.idRequired,
   kidOnly: state.foodFilters.kidOnly,
   openNow: state.foodFilters.openNow,

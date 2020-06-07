@@ -20,10 +20,6 @@ const initialState = {
     accessTypesHidden: []
   },
   foodFilters: {
-    foodSite: false,
-    pha: false,
-    school: false,
-    charter: false,
     idRequired: false,
     kidOnly: false,
     openNow: false,
@@ -31,7 +27,8 @@ const initialState = {
   },
   allTaps: [],
   allFoodOrgs: [],
-  selectedPlace: {}
+  selectedPlace: {},
+  phlaskType: actions.PHLASK_TYPE_WATER
 };
 
 export default (state = initialState, act) => {
@@ -52,7 +49,7 @@ export default (state = initialState, act) => {
         return {
           ...state,
           foodFilters: {
-            ...state.tapFilters,
+            ...state.foodFilters,
             idRequired: act.toggle === "idRequired" ? act.toggleState : state.foodFilters.idRequired,
             kidOnly: act.toggle === "kidOnly" ? act.toggleState : state.foodFilters.kidOnly,
             openNow: act.toggle === "openNow" ? act.toggleState : state.foodFilters.openNow            
@@ -68,9 +65,7 @@ export default (state = initialState, act) => {
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
 
     case actions.GET_FOOD_SUCCESS:
-      return { ...state, allFoodOrgs: act.allFoodOrgs, 
-        // filteredTaps: act.allTaps 
-      };
+      return { ...state, allFoodOrgs: act.allFoodOrgs, filteredOrgs: act.allFoodOrgs };
 
     case actions.SET_FILTER_FUNCTION:
       console.log("set filter func");
@@ -170,6 +165,11 @@ export default (state = initialState, act) => {
           }
         }
     }
+
+    case actions.TOGGLE_PHLASK_TYPE:
+      console.log(act.mode);
+      
+      return {...state, phlaskType: act.mode}
     
     default:
       return state;

@@ -1,0 +1,16 @@
+#phlask-toggle-container{
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    z-index: 100;
+    top: 50%;
+    right: 0;
+}
+#phlask-btn{
+    height: auto;
+    width: 40px;
+}
+#phlask-icon{
+    height: 100%;
+    width: 100%;
+}

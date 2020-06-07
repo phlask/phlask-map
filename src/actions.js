@@ -113,14 +113,23 @@ export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
     type: SET_FILTERED_TAP_TYPES,
     tapType
   }); 
-  export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
-  export const setFilteredFoodTypes = foodType => ({
-    type: SET_FILTERED_FOOD_TYPES,
-    foodType
-  }); 
+export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
+export const setFilteredFoodTypes = foodType => ({
+  type: SET_FILTERED_FOOD_TYPES,
+  foodType
+}); 
 
 export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"
 export const setSelectedPlace = selectedPlace => ({
   type: SET_SELECTED_PLACE,
   selectedPlace
 })
+
+export const TOGGLE_PHLASK_TYPE = "TOGGLE_PHLASK_TYPE"
+export const togglePhlaskType = phlaskType => ({
+  type: TOGGLE_PHLASK_TYPE,
+  mode: phlaskType
+})
+
+export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER"
+export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD"
