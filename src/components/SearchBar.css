@@ -1,14 +1,15 @@
 #search-container{
+  padding-top: 3px;
   display: flex;
   flex-direction: row;
-  /* width: 100%; */
-  padding: 8px 0 0 8px;
+  width: 100%;
   justify-content: start;
   pointer-events: none;
 }
 #search-input{
   border-radius: 5px;
   flex: 1;
+  border-width: 1px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -28,6 +29,9 @@
 }
 .autocomplete-dropdown-container{
   position: absolute;
+  z-index: 100;
+  cursor: pointer;
+  pointer-events: painted;
 }
 .clearInput {
   display: inline;

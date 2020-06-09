@@ -65,10 +65,10 @@ class SelectedTap extends React.Component{
             setTimeout(() => {
                 this.setState({
                     isDescriptionShown: shouldExpand
-                }, ()=>{
-                    // Expand or Collapse
-                    this.animateInfoExpansion(shouldExpand)  })
+                })
             }, this.state.animationSpeed);
+            // Expand or Collapse
+            this.animateInfoExpansion(shouldExpand) 
             // Close if in preview mode
             if(!this.props.infoIsExpanded){
                 this.toggleInfoWindow(false)
@@ -152,22 +152,11 @@ class SelectedTap extends React.Component{
     setCurrentDate(){
         const today = new Date() 
         const currentDay = today.getDay()
-        // if( (this.props.selectedPlace.hours === undefined) ){
-        //     this.setState({
-        //         currentDay: currentDay,
-        //         currentHour: hours.getHourFromMilitary(today.getHours()),
-        //         currentMinute: today.getMinutes(),
-        //         hoursList: null,
-        //         currentOrgHours: null,
-        //         isOpen: null
-
-        //     })
-        
-        //     return
-        // }
+        // const hour = today.getHours()
+        // const getMinute = today.getMinutes()
+        // console.log('Time: ' + today.getHours().toString() + today.getMinutes().toString());
         
         const selectedPlace = this.props.selectedPlace
-        // console.log("Hours Length:" + selectedPlace.hours.length);
         
         this.setState({
             currentDay: currentDay,
@@ -178,26 +167,27 @@ class SelectedTap extends React.Component{
                 : null,
             currentOrgHours: selectedPlace.hours !== undefined
                 ? selectedPlace.hours[currentDay] !== undefined
-                 && selectedPlace.hours[currentDay].open !== undefined
-                 && selectedPlace.hours[currentDay].close !== undefined
-                    ? {
-                        open: hours.getSimpleHours(selectedPlace.hours[currentDay].open.time),
-                        close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
-                    }
-                    : null
+                    ? selectedPlace.hours[currentDay].open !== undefined
+                    && selectedPlace.hours[currentDay].close !== undefined
+                        ? {
+                            open: hours. getSimpleHours(selectedPlace.hours[currentDay].open.time),
+                            close: hours.getSimpleHours(selectedPlace.hours[currentDay].close.time)
+                        }
+                        : false
+                    : false
                 : null,
             organization: selectedPlace.organization,
             address: selectedPlace.address,
             isOpen: selectedPlace.hours !== undefined
-                ?selectedPlace.hours.length >= currentDay + 1 
+                ?selectedPlace.hours[currentDay]
                     ? selectedPlace.hours[currentDay].close !== undefined
                       && selectedPlace.hours[currentDay].open !== undefined
                         ? hours.checkOpen(
                             selectedPlace.hours[currentDay].open.time, 
                             selectedPlace.hours[currentDay].close.time
                          )
-                        : null
-                    : null
+                        : false
+                    : false
                 : null,
             tapIcons: this.setTapIcons(),
             tapDescription: selectedPlace.description !== undefined
@@ -249,34 +239,35 @@ class SelectedTap extends React.Component{
         
     }
 
-    getAccess(){
-        if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
-            console.log('Access is not defined for this entry');
-            return null
-        }
-        else {
-            let access = tempUnverified
-            switch(this.props.selectedPlace.access){
-                case 'Public': access = phlaskBlue
-                    break
-                case 'Semi-public': access = phlaskGreen
-                    break
-                case 'Private-Shared': access = phlaskGreen
-                    break
-                case 'Private': access = phlaskYellow
-                    break
-                case 'Restricted': access = phlaskRed
-                    break
-                case 'Unverified': access = tempUnverified
-                    break    
-                // case 'TrashAcademy': access = trashAcademyIcon
-                //     break 
-                // case 'Water Monsters': access = waterMonstersIcon
-                //     break                       
-            }
-            return access
-        }
-    }
+
+    // getAccess(){
+    //     if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
+    //         console.log('Access is not defined for this entry');
+    //         return null
+    //     }
+    //     else {
+    //         let access = tempUnverified
+    //         switch(this.props.selectedPlace.access){
+    //             case 'Public': access = phlaskBlue
+    //                 break
+    //             case 'Semi-public': access = phlaskGreen
+    //                 break
+    //             case 'Private-Shared': access = phlaskGreen
+    //                 break
+    //             case 'Private': access = phlaskYellow
+    //                 break
+    //             case 'Restricted': access = phlaskRed
+    //                 break
+    //             case 'Unverified': access = tempUnverified
+    //                 break    
+    //             // case 'TrashAcademy': access = trashAcademyIcon
+    //             //     break 
+    //             // case 'Water Monsters': access = waterMonstersIcon
+    //             //     break                       
+    //         }
+    //         return this.props.selectedPlace.icon
+    //     }
+    // }
 
     getAccessibility(){
         if(this.props.selectedPlace.handicap === undefined || this.props.selectedPlace.handicap.length === 0){
@@ -319,7 +310,7 @@ class SelectedTap extends React.Component{
     // Handle Icons
     setTapIcons(){
         const iconList = {
-            access: this.getAccess(),
+            access: this.props.icon,
             accessibility: this.getAccessibility(),
             filtered: this.getFiltration()
         }
@@ -375,20 +366,33 @@ class SelectedTap extends React.Component{
                     ref={this.refSelectedTap}
                     id={isMobile ? 'tap-info-container-mobile' :'tap-info-container'}
                     className={this.props.infoWindowClass}
-                    style={this.state.infoExpansionStyle}
+                    style={isMobile
+                            ? this.state.infoExpansionStyle
+                            : {}
+                        }
                 >
                     {/* Drag & Close Area */}
-                    <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
-                        <div id='tap-info-top'>
-                            <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
-                                <div className='drag-bar-dash'></div>
-                                <div className='drag-bar-dash'></div>
+                    {isMobile
+                        ? <ReactTouchEvents onSwipe={this.handleSwipe.bind(this)}>
+                            <div id='tap-info-top'>
+                                <div id='tap-info-drag-area' onClick={()=>{this.toggleInfoExpanded(false)}}>
+                                    <div className='drag-bar-dash'></div>
+                                    <div className='drag-bar-dash'></div>
+                                </div>
+                                <div id='tap-menu'>
+                                    <img id='tap-menu-icon' src={tapMenu} alt=''/>
+                                </div>
                             </div>
-                            <div id='tap-menu'>
-                                <img id='tap-menu-icon' src={tapMenu} alt=''/>
-                            </div>
-                        </div>
-                    </ReactTouchEvents>
+                        </ReactTouchEvents>
+                        :<div 
+                            id='close-arrow-desktop-container'
+                            onClick={()=>{this.toggleInfoWindow(false)}}
+                            >
+                                <div id='close-arrow-desktop'>
+                                    <img id='close-arrow-desktop-img' src={arrow} alt=''/>
+                                </div>
+                            </div>                        
+                    }
                     
     
                     {/* Placeholder for Fixed Close Area */}
@@ -407,11 +411,15 @@ class SelectedTap extends React.Component{
                             ? 'tap-content-expanded'
                             : 'tap-content'
                         }
-                        >
+                    >
     
                         {/* Main Image */}
     
-                        <div id='tap-info-img-box'>
+                        <div 
+                            id={isMobile
+                                ?'tap-info-img-box'
+                                : 'tap-info-img-box-desktop'
+                            }>
                             <img id ='tap-info-img'
                                 // src={this.props.displayImg}
                                 src={tempImages.tapImg}
@@ -424,12 +432,16 @@ class SelectedTap extends React.Component{
                             {/* Tap Type Icon */}
                             <div id='tap-type-icon-container'>
                                 <div id='tap-type-icon'>
-                                    <img className='tap-info-icon-img' src={this.state.tapIcons.access} alt=''></img>
+                                    <img className='tap-info-icon-img' src={this.props.selectedPlace.icon} alt=''></img>
                                 </div>
                             </div>
     
                             {/* Name & Address */}
-                            <div id='org-name-and-address'>
+                            <div 
+                                id={isMobile
+                                    ? 'org-name-and-address'
+                                    : 'org-name-and-address-desktop'
+                                }>
                                 <div id='tap-organization-name'>
                                     {this.state.organization}
                                 </div>
@@ -440,8 +452,14 @@ class SelectedTap extends React.Component{
     
                             {/* Hours */}
                             <div id='org-hours'>
-                                <div id='tap-info-org-status'>
-                                {/* Continue Here */}
+                                <div id='tap-info-org-status'
+                                    style={this.state.isOpen
+                                        ? { color: 'green' }
+                                        : this.state.isOpen !== null
+                                            ?{ color: 'red' }
+                                            :{ color: 'orange'}
+                                    }>
+                                
                                     {this.state.isOpen
                                         ? 'Open'
                                         : this.state.isOpen !== null
@@ -453,7 +471,13 @@ class SelectedTap extends React.Component{
     
                                     {/* Placeholder for Dropdown */}
                                     
-                                    <div id='tap-info-hours-container-placeholder'>
+                                    <div 
+                                        id='tap-info-hours-container-placeholder'
+                                        style={this.state.currentOrgHours !== null
+                                            ? {border: '1px solid #c4c4c4'}    
+                                            : {}
+                                        }    
+                                    >
                                         <div className='tap-hours-list-item'>Placeholder</div>
                                         {/* <div className='hours-dropdown-arrow-container' style={{width: this.props.infoIsExpanded ? '20px' : '0' }}>
                                             <img className='hours-dropdown-arrow' src={hoursArrow} alt=''></img>
@@ -461,19 +485,27 @@ class SelectedTap extends React.Component{
                                     </div>
     
                                     {/* Container of all visible hours elements */}
-                                    <div id='tap-info-hours-container'>
+                                    <div 
+                                        id='tap-info-hours-container'
+                                        style={this.state.currentOrgHours !== null
+                                            ? {border: '1px solid #c4c4c4'}    
+                                            : {}
+                                        }
+                                    >
                                         {/* Placeholder for Dropdown */}
                                         <div id='current-hours-placeholder'>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.currentOrgHours !== null
-                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    ? this.state.currentOrgHours !== false
+                                                        ? `${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                        : ''
                                                     :''
                                                 } 
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
-                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
-                                                        ? {width: '10px',marginLeft: '3px'}
+                                                style={( this.props.infoIsExpanded || !isMobile ) && this.state.hoursList !== null && this.state.currentOrgHours !== false
+                                                    ? {width: '10px',marginLeft: '3px'}
                                                         : {width: '0'}
                                                     }                                       
                                                 >
@@ -483,16 +515,18 @@ class SelectedTap extends React.Component{
                                         </div>
     
                                         {/* Current Day Hours */}
-                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
+                                        <div id='current-hours' onClick={()=>{if(this.props.infoIsExpanded || !isMobile){this.setState({isHoursExpanded: !this.state.isHoursExpanded})}}}>
                                             <div className='tap-hours-list-item'>
                                                 {this.state.currentOrgHours !== null
-                                                    ?`${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                    ? this.state.currentOrgHours !== false
+                                                        ? `${this.state.currentOrgHours.open} - ${this.state.currentOrgHours.close}`
+                                                        : ''
                                                     :''
                                                 } 
                                             </div>
                                             <div 
                                                 className='hours-dropdown-arrow-container'
-                                                style={this.props.infoIsExpanded && this.state.hoursList !== null
+                                                style={( this.props.infoIsExpanded || !isMobile ) && this.state.hoursList !== null && this.state.currentOrgHours !== false
                                                     ? {width: '10px',marginLeft: '3px'}
                                                     : {width: '0'}
                                                 }   
@@ -501,7 +535,7 @@ class SelectedTap extends React.Component{
                                             </div>
                                         </div>
                                         {/* Other Days */}
-                                        {this.state.isHoursExpanded && this.props.infoIsExpanded
+                                        {this.state.isHoursExpanded && ( this.props.infoIsExpanded || !isMobile )
                                             ? <div id='other-hours-container'>
                                                 {(this.state.hoursList !== null)
                                                     ?this.state.hoursList.map((hours,index) => {
@@ -606,6 +640,7 @@ class SelectedTap extends React.Component{
                             }
                         </div>
                     </div>
+                    
                 </div>
             )
         }else{

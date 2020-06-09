@@ -7,6 +7,13 @@ export const setToggleState = (toggle, toggleState) => ({
   toggleState
 });
 
+export const SET_TOGGLE_STATE_FOOD = "SET_TOGGLE_STATE_FOOD";
+export const setToggleStateFood = (toggle, toggleState) => ({
+  type: SET_TOGGLE_STATE_FOOD,
+  toggle,
+  toggleState
+});
+
 export const SET_FILTER_FUNCTION = "SET_FILTER_FUNCTION";
 export const setFilterFunction = () => ({
   type: SET_FILTER_FUNCTION
@@ -16,6 +23,10 @@ export const RESET_FILTER_FUNCTION = "RESET_FILTER_FUNCTION";
 export const resetFilterFunction = () => ({
   type: RESET_FILTER_FUNCTION
 });
+
+/* User should select which type ( food or water) to display before retrieving data.
+  First choice would be set as default
+*/
 
 export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
 export const getTapsSuccess = allTaps => ({
@@ -44,6 +55,27 @@ export const getTaps = () => dispatch => {
         allTaps.push(snapshot.val()[item]);
       }
       dispatch(getTapsSuccess(allTaps));
+    });
+};
+
+export const GET_FOOD_SUCCESS = "GET_FOOD_SUCCESS";
+export const getFoodSuccess = allFoodOrgs => ({
+  type: GET_FOOD_SUCCESS,
+  allFoodOrgs
+});
+
+export const getFoodOrgs = () => dispatch => {
+  return firebase.app('food')
+    .database()
+    .ref("/")
+    .once("value")
+    .then(snapshot => {
+      var allFoodOrgs = [];
+      var item;
+      for (item in snapshot.val()) {
+        allFoodOrgs.push(snapshot.val()[item]);
+      }
+      dispatch(getFoodSuccess(allFoodOrgs));
     });
 };
 
@@ -81,9 +113,23 @@ export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
     type: SET_FILTERED_TAP_TYPES,
     tapType
   }); 
+export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
+export const setFilteredFoodTypes = foodType => ({
+  type: SET_FILTERED_FOOD_TYPES,
+  foodType
+}); 
 
 export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"
 export const setSelectedPlace = selectedPlace => ({
   type: SET_SELECTED_PLACE,
   selectedPlace
 })
+
+export const TOGGLE_PHLASK_TYPE = "TOGGLE_PHLASK_TYPE"
+export const togglePhlaskType = phlaskType => ({
+  type: TOGGLE_PHLASK_TYPE,
+  mode: phlaskType
+})
+
+export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER"
+export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD"

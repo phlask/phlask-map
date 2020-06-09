@@ -91,33 +91,74 @@ export const hours = {
     
     checkOpen: function checkOpen(open, close){
         const today = new Date()
-        const currentTime = parseInt(today.getHours().toString() + today.getMinutes().toString())
+
+        // If minutes is single digit, add "0" as first digit
+        let minutes = today.getMinutes().toString()
+        if (minutes.length < 2){
+            minutes = "0" + minutes
+        }
+        const currentTime = parseInt(today.getHours().toString() + minutes)
         
         return currentTime > parseInt(open) && currentTime < parseInt(close)
             ? true
-            :false
-        
+            : false
+    },
+
+    getOrgTimes: ( times ) => {
+        const timeSplit = times.split('-')
+        const open = getTime(timeSplit[0])
+        const close = getTime(timeSplit[1])
+    
+        console.log('Open: ' + convertToMilitary(open));
+        console.log('Close: ' + convertToMilitary(close));
     }
-    
-    // Get current time & day
-    
-    // const today = new Date() 
-    
-    // getCurrentDay: function getCurrentDay(){  
-    //     return today.getDay()
-    // },
-    
-    // getCurrentTime: function getCurrentTime(){
-    //     const time = {
-    //         hour : getHourFromMilitary(today.getHours()),
-    //         minute : today.getMinutes().toString
-    //     }
-    //     console.log(time);
-        
-    //     return time    
-    // }
  }
 
 
+/*** Food Org Hours ***/
+
+            
+function convertToMilitary(time){
+    if (time.mer === 'am'){
+        const test = time.hour + time.minute 
+
+        if ( time.hour === '12' ){
+            return '00' + time.minute 
+        }else{
+            return time.hour + time.minute 
+        }
+        
+    }else if ( time.mer === 'pm' ){
+        const test = (parseInt(time.hour) + 12).toString() + time.minute 
+        
+        if(time.hour !== '12'){
+            return (parseInt(time.hour) + 12).toString() + time.minute 
+        }else{
+            return (parseInt(time.hour)).toString() + time.minute 
+        }
+    }
+}
+function getTime(time){
+    const timeSplit = time.split(':')
+    const hour = timeSplit[0]
+
+    const minuteSplit = timeSplit[1].split('')
+    const minute = minuteSplit[0] + minuteSplit[1]
+    const mer = minuteSplit[2] + minuteSplit[3]
+
+    return {
+        hour: hour,
+        minute: minute,
+       
+        mer: mer
+    }
+}
+
+function getDays(days){
+    const week = ['S','M','T','W','Th','F','Sat']
+    const daysSplit = days.split(" ")
+
+
+}
 
 // hours.checkOpen(1200,1900)

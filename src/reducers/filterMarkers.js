@@ -19,8 +19,16 @@ const initialState = {
     openNow: false,
     accessTypesHidden: []
   },
+  foodFilters: {
+    idRequired: false,
+    kidOnly: false,
+    openNow: false,
+    accessTypesHidden: []
+  },
   allTaps: [],
-  selectedPlace: {}
+  allFoodOrgs: [],
+  selectedPlace: {},
+  phlaskType: actions.PHLASK_TYPE_WATER
 };
 
 export default (state = initialState, act) => {
@@ -36,6 +44,17 @@ export default (state = initialState, act) => {
           openNow: act.toggle === "openNow" ? act.toggleState : state.tapFilters.openNow
         }
       }
+      
+      case actions.SET_TOGGLE_STATE_FOOD:
+        return {
+          ...state,
+          foodFilters: {
+            ...state.foodFilters,
+            idRequired: act.toggle === "idRequired" ? act.toggleState : state.foodFilters.idRequired,
+            kidOnly: act.toggle === "kidOnly" ? act.toggleState : state.foodFilters.kidOnly,
+            openNow: act.toggle === "openNow" ? act.toggleState : state.foodFilters.openNow            
+          }
+        }
 
     case actions.SET_MAP_CENTER:
       console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
@@ -44,6 +63,9 @@ export default (state = initialState, act) => {
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
+
+    case actions.GET_FOOD_SUCCESS:
+      return { ...state, allFoodOrgs: act.allFoodOrgs, filteredOrgs: act.allFoodOrgs };
 
     case actions.SET_FILTER_FUNCTION:
       console.log("set filter func");
@@ -96,24 +118,58 @@ export default (state = initialState, act) => {
           handicap: false,
           sparkling: false,
           openNow: false
+        },
+        foodFilters: {
+          foodSite: false,
+          school: false,
+          charter: false,
+          pha: false,
+          idRequired: false,
+          kidOnly: false,
+          openNow: false,
+          accessTypesHidden: []
         }
       }
     
     case actions.SET_FILTERED_TAP_TYPES:
-      var currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
-      if (currentAccessTypesHidden.includes(act.tapType)) {
-        currentAccessTypesHidden = currentAccessTypesHidden.filter(tapType => tapType !== act.tapType)
-      }
-      else {
-        currentAccessTypesHidden.push(act.tapType)
-      }
-      return {
-        ...state,
-        tapFilters: {
-          ...state.tapFilters,
-          accessTypesHidden: currentAccessTypesHidden
+      {
+        let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
+        if (currentAccessTypesHidden.includes(act.tapType)) {
+          currentAccessTypesHidden = currentAccessTypesHidden.filter(tapType => tapType !== act.tapType)
+        }
+        else {
+          currentAccessTypesHidden.push(act.tapType)
+        }
+        return {
+          ...state,
+          tapFilters: {
+            ...state.tapFilters,
+            accessTypesHidden: currentAccessTypesHidden
+          }
         }
       }
+    case actions.SET_FILTERED_FOOD_TYPES:
+      {
+        let currentAccessTypesHidden = [...state.foodFilters.accessTypesHidden];
+        if (currentAccessTypesHidden.includes(act.foodType)) {
+          currentAccessTypesHidden = currentAccessTypesHidden.filter(foodType => foodType !== act.foodType)
+        }
+        else {
+          currentAccessTypesHidden.push(act.foodType)
+        }
+        return {
+          ...state,
+          foodFilters: {
+            ...state.foodFilters,
+            accessTypesHidden: currentAccessTypesHidden
+          }
+        }
+    }
+
+    case actions.TOGGLE_PHLASK_TYPE:
+      console.log(act.mode);
+      
+      return {...state, phlaskType: act.mode}
     
     default:
       return state;
