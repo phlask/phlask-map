@@ -8,7 +8,9 @@ import foodIcon from './images/food-marker-icons/food-site.png'
 export class MapMarkersFood extends Component {
 
   UNSAFE_componentWillMount() {
-    this.props.getFoodOrgs()
+    if(!this.props.allFoodOrgs.length){
+      this.props.getFoodOrgs()
+    }
   }
   
   shouldComponentUpdate(nextProps){
@@ -93,6 +95,7 @@ const makeMapStateToProps = () => {
     //   filtered: state.tapFilters.filtered,
     //   handicap: state.tapFilters.handicap,
       accessTypesHidden: state.foodFilters.accessTypesHidden,
+      allFoodOrgs: state.allFoodOrgs,
       mapCenter: state.mapCenter
     }
   }

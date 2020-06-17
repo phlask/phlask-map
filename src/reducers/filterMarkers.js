@@ -57,7 +57,7 @@ export default (state = initialState, act) => {
         }
 
     case actions.SET_MAP_CENTER:
-      console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
+      // console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
       
       return { ...state, mapCenter: act.coords}
 
