@@ -20,6 +20,7 @@ import MapMarkersFood from "./MapMarkersFood"
 // Temporary Food/Water Toggle
 import TypeToggle from './TypeToggle.js'
 import { isMobile } from "react-device-detect";
+import Toolbar from './Toolbar'
 
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -242,9 +243,11 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
+    // console.log("Rendered ReactGoogleMaps");
+    
       return (
         <div id='react-google-map'>
-
+          <ClosestTap/>
           <Map
             google={this.props.google}
             className={"map"}
@@ -256,14 +259,14 @@ export class ReactGoogleMaps extends Component {
             }}
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
-            <TypeToggle/>
+            {/* <TypeToggle/> */}
 
           {/* FilteredTaps */}
 
-          {this.props.phlaskType === PHLASK_TYPE_WATER
+          {/* {this.props.phlaskType === PHLASK_TYPE_WATER
             ? <WaterFilter/>
             : <FoodFilter/>
-          }
+          } */}
 
           {/* Issue: MapMarkers won't render when placed inside container? */}
           {this.props.phlaskType === PHLASK_TYPE_WATER
@@ -302,6 +305,7 @@ export class ReactGoogleMaps extends Component {
                 search={location => this.searchForLocation(location)}
               />
             </div>
+            <Toolbar/>
             <SelectedTap></SelectedTap>
         </div>
       );

@@ -2,6 +2,7 @@ import * as actions from "../actions";
 import { isMobile } from 'react-device-detect'
 
 const initialState = {
+  screenSize: "",
   mapCenter: {
     lat: parseFloat("39.952744"),
     lng: parseFloat("-75.163500")
@@ -33,6 +34,13 @@ const initialState = {
 
 export default (state = initialState, act) => {
   switch (act.type) {
+
+    case actions.RESIZE_WINDOW:
+      return ()=>{
+        // console.log("Resize: " + act.size);
+        
+      }
+
     case actions.SET_TOGGLE_STATE:
       return {
         ...state,

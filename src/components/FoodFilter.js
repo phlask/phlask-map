@@ -1,6 +1,7 @@
 import React from "react";
 import { isMobile } from 'react-device-detect'
-import icon from "./icons8-filter-mod.png";
+// import icon from "./icons8-filter-mod.png";
+import icon from "./images/slider.png";
 import "./Filter.css";
 import {
   OverlayTrigger,

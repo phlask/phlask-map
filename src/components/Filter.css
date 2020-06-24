@@ -1,9 +1,9 @@
 .filterIcon {
-  position: absolute;
+  /* position: absolute; */
   /* top: 35%; */
-  width: 50px;
-  height: 50px;
-  background-color: black;
+  width: 100%;
+  height: 100%;
+  /* background-color: black; */
   padding: 2px;
   border-radius: 25px;
   pointer-events: visibleStroke;

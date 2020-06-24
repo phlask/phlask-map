@@ -3,11 +3,13 @@ import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/tapSelectors';
-
+import './IndieMarker.css'
 
 class IndieMarker extends React.Component{
 
     state = {
+        icon: '',
+        shouldUpdate: true,
         markerVisibility: {
             visibility: this.props.visibleTaps.includes(this.props.tap)
                 ? 'visible'
@@ -15,24 +17,41 @@ class IndieMarker extends React.Component{
         }
     }
 
-    shouldComponentUpdate(nextProps){
-        
-        // console.log('Tap in visible list: ' + this.props.visibleTaps.includes(this.props.tap));
-        
-        return this.props.visibleTaps.includes(this.props.tap)
-            ? false
-            : true
-    }
-
-    componentDidUpdate(){
-        console.log('Indie Update');
-    }
-
     componentWillUnmount(){
         console.log('unmount');
     }
+    
+    shouldComponentUpdate(nextProps){
+      // return this.props.accessTypesHidden.includes(this.props.tap.access) === nextProps.accessTypesHidden.includes(this.props.tap.access) 
+      // return nextProps.visibleTaps.includes(this.props.tap) === this.props.visibleTaps.includes(this.props.tap)
+      // After initial icon is set, shouldUpdate is false.
+      // Checks to see if this tap was updated in props
+      return !this.state.shouldUpdate
+        ? nextProps.visibleTaps.includes(this.props.tap) === this.props.visibleTaps.includes(this.props.tap)
+          ? false
+          :true
+        : true
+    }
+
+    componentDidUpdate(prevProps){
+      console.log(('Did Update'));
+      
+      // if(this.props.visibleTaps === prevProps.visibleTaps){
+      //   this.setState(this.getIcon(this.props.tap.access))
+      // }
+    }
   
-    getIcon(access) {
+    componentDidMount(){
+      this.setState({
+        icon: this.getIcon(this.props.tap.access),
+      }, ()=>{
+        this.setState({
+          shouldUpdate: false
+        })
+      })
+    }
+
+    getIcon(access) {  
       if (!this.props.accessTypesHidden.includes(access)) {
         switch (access) {
           case "Public":
@@ -60,12 +79,17 @@ class IndieMarker extends React.Component{
         this.props.setSelectedPlace(tap);
         this.props.setMapCenter(tap.position);
       }
+
+
   
     render(){
         console.log('rendered marker');
         
       return(
+        // Doesn't Render Marker as child of div, 
+        // so can't use this method to style individual Markers 
         <div 
+          // className="testMarker"
             // style={this.state.markerVisibility}
         >
             <Marker
@@ -90,7 +114,7 @@ class IndieMarker extends React.Component{
                   onClick={this.onMarkerClick.bind(this)}
                   position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
                   icon={{
-                    url: this.getIcon(this.props.tap.access)
+                    url: this.state.icon
                   }}
                 />
         </div>

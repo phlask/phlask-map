@@ -46,7 +46,7 @@ export class MapMarkersFood extends Component {
   }
 
   render() {
-    // console.log(this.props)
+    // console.log("rendered MapMarkers")
     if(this.props.visibleTaps) {
       if( this.props ){
         return (

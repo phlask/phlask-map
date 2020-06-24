@@ -1,5 +1,30 @@
 import * as firebase from "firebase";
 
+export const RESIZE_WINDOW = "RESIZE_WINDOW"
+export const resizeWindow = (size) => ({
+  type: RESIZE_WINDOW,
+  size
+})
+
+// let mediaList = [
+//   ['mobile','(max-width: 500px)'],
+//   ['tablet','(max-width: 800px)'],
+//   ['computer','(max-width: 1400px)'],
+//   ['xl', '(min-width: 1400px)']
+// ]
+
+// let size = ''
+// for (let x  = 0; x < mediaList.length; x++){
+//   if(window.matchMedia(mediaList[x][1]).matches){
+//       if (state.screenSize !== mediaList[x][0]){
+//           size = mediaList[x][0]
+//           console.log('Screensize: ' + size)
+//       }
+      
+//       // return
+//   }
+// }
+
 export const SET_TOGGLE_STATE = "SET_TOGGLE_STATE";
 export const setToggleState = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE,
