@@ -7,6 +7,11 @@ const initialState = {
     lat: parseFloat("39.952744"),
     lng: parseFloat("-75.163500")
   },
+  // Change to reflect user's current location
+  userLocation: {
+    lat: parseFloat("39.952744"),
+    lng: parseFloat("-75.163500")
+  },
   showingInfoWindow: false ,
   infoIsExpanded: false,
   infoWindowClass: isMobile
@@ -85,7 +90,11 @@ export default (state = initialState, act) => {
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);
-      return { ...state, selectedPlace: act.selectedPlace}
+      // console.log(state.alltaps[act.id]);
+      
+      return typeof act.selectedPlace === 'object'
+        ?  { ...state, selectedPlace: act.selectedPlace}
+        :  { ...state, selectedPlace: state.allTaps[act.selectedPlace], showingInfoWindow: true}
       
 
     case actions.TOGGLE_INFO_WINDOW:

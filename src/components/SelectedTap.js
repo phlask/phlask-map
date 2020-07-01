@@ -58,6 +58,11 @@ class SelectedTap extends React.Component{
                 }
             }
 
+            componentWillUnmount(){
+                console.log('unmounting');
+                
+            }
+
     toggleInfoExpanded(shouldExpand){
         
         if(!shouldExpand){
@@ -194,11 +199,6 @@ class SelectedTap extends React.Component{
                         ? selectedPlace.description
                         : null
 
-        },
-        ()=>{
-            const test = this.state.isOpen
-            console.log('open?' + test);
-            
         })
     }
 
@@ -343,6 +343,8 @@ class SelectedTap extends React.Component{
                 })
             }
         }
+        console.log("Showing Info Window: " + this.props.showingInfoWindow);
+        
     }
       
     componentDidMount(){
