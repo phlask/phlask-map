@@ -103,6 +103,11 @@ export const getFoodOrgs = () => dispatch => {
       dispatch(getFoodSuccess(allFoodOrgs));
     });
 };
+export const SET_USER_LOCATION = 'SET_USER_LOCATION'
+export const setUserLocation = (coords) => ({
+    type: SET_USER_LOCATION,
+    coords
+})
 
 export const SET_MAP_CENTER = 'SET_MAP_CENTER'
 export const setMapCenter = (coords) => ({

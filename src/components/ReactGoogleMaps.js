@@ -9,6 +9,7 @@ import { getTaps,
   setFilterFunction,
   toggleInfoWindow,
   setMapCenter,
+  setUserLocation,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD } from "../actions";
 // import Legend from "./Legend";
@@ -88,6 +89,8 @@ function getLat() {
       function success(position) {
         // for when getting location is a success
         var mylat = parseFloat(position.coords.latitude.toFixed(5));
+        console.log('lat ' + mylat);
+        
         return mylat;
       },
       function error(error_message) {
@@ -181,6 +184,9 @@ export class ReactGoogleMaps extends Component {
   
   componentDidMount() {
 
+    // console.log('Lat: ' + getLat());
+    // console.log('Lon: ' + getLon()); 
+
     getCoordinates().then(position => {
       if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
         this.setState({ 
@@ -188,16 +194,21 @@ export class ReactGoogleMaps extends Component {
           currlon: parseFloat("-75.163500")
         });
       } else {
+        this.props.setMapCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
+        this.props.setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
         this.setState({ 
           currlat: position.coords.latitude,
           currlon: position.coords.longitude
          });
       }
     }, ()=>{
-      this.props.setMapCenter({
-        lat: getLat(),
-        lon: getLon()
-      })
+      
     });
   }
 
@@ -334,7 +345,7 @@ const mapStateToProps = state => ({
   // infoIsExpanded: state.infoIsExpanded
 });
 
-const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter };
+const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setUserLocation, setMapCenter };
 
 export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({

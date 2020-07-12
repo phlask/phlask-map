@@ -434,7 +434,7 @@ class SelectedTap extends React.Component{
                             {/* Tap Type Icon */}
                             <div id='tap-type-icon-container'>
                                 <div id='tap-type-icon'>
-                                    <img className='tap-info-icon-img' src={this.props.selectedPlace.icon} alt=''></img>
+                                    <img className='tap-info-icon-img' src={this.props.selectedPlace.infoIcon} alt=''></img>
                                 </div>
                             </div>
     

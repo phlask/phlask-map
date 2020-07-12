@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getFoodOrgs, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/foodOrgSelectors';
 import foodIcon from './images/food-marker-icons/food-site.png'
+import IndieFoodMarker from './IndieFoodMarker.js'
 
 export class MapMarkersFood extends Component {
 
@@ -61,22 +62,11 @@ export class MapMarkersFood extends Component {
             />
             {this.props.visibleTaps
               .map((org, index) => (
-                <Marker
-                  access={org.access}
-                  map={this.props.map}
-                  google={this.props.google}
-                  mapCenter={this.props.mapCenter}
+                <IndieFoodMarker
                   key={index}
-                  organization={org.organization}
-                  address={org.address}
-                  hours={org.hours}
-                  idRequired={org.id_required === 'yes' ? true : false}
-                  kidOnly={org.kid_only === 'yes' ? true : false}
-                  description={org.description}
-                  img={org.images}
-                  onClick={this.onMarkerClick.bind(this)}
-                  position={{ lat: org.lat, lng: org.lon }}
-                  icon={this.getIcon(org.access)}
+                  org={org}
+                  google={this.props.google}
+                  map={this.props.map}
                 />
             ))}
           </React.Fragment>

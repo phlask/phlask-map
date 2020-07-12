@@ -51,19 +51,29 @@ class IndieMarker extends React.Component{
       })
     }
 
-    getIcon(access) {  
+    getIcon(access,isForSelection = false) {  
       if (!this.props.accessTypesHidden.includes(access)) {
         switch (access) {
           case "Public":
-            return require('./images/tap-marker-icons/Public.png')
+            return !isForSelection
+              ? require('./images/tap-marker-icons/Public.png')
+              : require('./images/tap-filter-icons/public.png')
           case "Private-Shared":
-            return require('./images/tap-marker-icons/Shared.png')
+            return !isForSelection
+              ? require('./images/tap-marker-icons/Shared.png')
+              : require('./images/tap-filter-icons/shared.png')
           case "Private":
-            return require('./images/tap-marker-icons/Private.png')
+            return !isForSelection
+              ? require('./images/tap-marker-icons/Private.png')
+              : require('./images/tap-filter-icons/private.png')
           case "Restricted":
-            return require('./images/tap-marker-icons/Restricted.png')
+            return !isForSelection
+              ? require('./images/tap-marker-icons/Restricted.png')
+              : require('./images/tap-filter-icons/restricted.png')
           case "Semi-public":
-            return require('./images/tap-marker-icons/Shared.png')
+            return !isForSelection
+              ? require('./images/tap-marker-icons/Shared.png')
+              : require('./images/tap-filter-icons/shared.png')
           case "TrashAcademy":
             return "https://i.imgur.com/fXTeEKL.png";
           default:
@@ -115,9 +125,8 @@ class IndieMarker extends React.Component{
                   img={this.props.tap.images}
                   onClick={this.onMarkerClick.bind(this)}
                   position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
-                  icon={{
-                    url: this.state.icon
-                  }}
+                  icon={this.getIcon(this.props.tap.access)}
+                  infoIcon={this.getIcon(this.props.tap.access,true)}
                 />
         </div>
       )
