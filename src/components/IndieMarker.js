@@ -88,7 +88,9 @@ class IndieMarker extends React.Component{
       return(
         // Doesn't Render Marker as child of div, 
         // so can't use this method to style individual Markers 
-        <div 
+        !this.props.visibleTaps.includes(this.props.tap)
+          ? []
+          : <div 
           // className="testMarker"
             // style={this.state.markerVisibility}
         >
@@ -127,8 +129,8 @@ const makeMapStateToProps = () => {
     const mapStateToProps = (state, props) => {
       return {
         visibleTaps: getVisibleTaps(state, props),
-        filtered: state.tapFilters.filtered,
-        handicap: state.tapFilters.handicap,
+        // filtered: state.tapFilters.filtered,
+        // handicap: state.tapFilters.handicap,
         accessTypesHidden: state.tapFilters.accessTypesHidden,
         allTaps: state.allTaps,
         mapCenter: state.mapCenter

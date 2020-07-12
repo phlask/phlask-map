@@ -159,8 +159,8 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, props) => {
     return {
       visibleTaps: getVisibleTaps(state, props),
-      filtered: state.tapFilters.filtered,
-      handicap: state.tapFilters.handicap,
+      // filtered: state.tapFilters.filtered,
+      // handicap: state.tapFilters.handicap,
       accessTypesHidden: state.tapFilters.accessTypesHidden,
       allTaps: state.allTaps,
       mapCenter: state.mapCenter
