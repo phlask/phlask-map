@@ -93,9 +93,16 @@ export default (state = initialState, act) => {
       // console.log('Selected Place: ' + act.selectedPlace.organization);
       // console.log(state.alltaps[act.id]);
       
+      // if passed Selected Place as an object, set selected place as the object
+      // if passed an ID, locate the item using ID, then set selected place  
       return typeof act.selectedPlace === 'object'
         ?  { ...state, selectedPlace: act.selectedPlace}
-        :  { ...state, selectedPlace: state.allTaps[act.selectedPlace], showingInfoWindow: true}
+        :  { ...state, 
+            selectedPlace: state.phlaskType === actions.PHLASK_TYPE_WATER
+              ? state.allTaps[act.selectedPlace]
+              : state.allFoodOrgs[act.selectedPlace], 
+            showingInfoWindow: true
+           }
       
 
     case actions.TOGGLE_INFO_WINDOW:
@@ -184,10 +191,17 @@ export default (state = initialState, act) => {
         }
     }
 
+    // Toggle Phlask type & close the info window
     case actions.TOGGLE_PHLASK_TYPE:
-      console.log(act.mode);
-      
-      return {...state, phlaskType: act.mode}
+      return {
+        ...state, 
+        phlaskType: act.mode,
+        infoWindowClass: act.mode !== state.showingInfoWindow 
+          ? isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+          : state.infoWindowClass
+      }
     
     default:
       return state;

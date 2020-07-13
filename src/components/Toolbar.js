@@ -7,7 +7,8 @@ import {
   PHLASK_TYPE_WATER, 
   PHLASK_TYPE_FOOD,
   setSelectedPlace,
-  toggleInfoWindow } from '../actions'
+  toggleInfoWindow,
+  setMapCenter } from '../actions'
 import { connect } from 'react-redux'
 import Filter from "./Filter";
 import FoodFilter from "./FoodFilter";
@@ -77,56 +78,6 @@ function getCoordinates() {
  });
 }
 
-//gets the users latitude
-function getLat() {
- if ("geolocation" in navigator) {
-   // check if geolocation is supported/enabled on current browser
-   navigator.geolocation.getCurrentPosition(
-     function success(position) {
-       // for when getting location is a success
-       var mylat = parseFloat(position.coords.latitude.toFixed(5));
-       return mylat;
-     },
-     function error(error_message) {
-       // for when getting location results in an error
-       console.error(
-         "An error has occured while retrieving location",
-         error_message
-       );
-     }
-   );
- } else {
-   // geolocation is not supported
-   // get your location some other way
-   console.log("geolocation is not enabled on this browser");
- }
-}
-
-//gets the users longitutude
-function getLon() {
- if ("geolocation" in navigator) {
-   // check if geolocation is supported/enabled on current browser
-   navigator.geolocation.getCurrentPosition(
-     function success(position) {
-       // for when getting location is a success
-       var mylon = parseFloat(position.coords.longitude.toFixed(5));
-       return mylon;
-     },
-     function error(error_message) {
-       // for when getting location results in an error
-       console.error(
-         "An error has occured while retrieving location",
-         error_message
-       );
-     }
-   );
- } else {
-   // geolocation is not supported
-   // get your location some other way
-   console.log("geolocation is not enabled on this browser");
- }
-}
-
 function Toolbar(props) {
 
   function switchType(type){
@@ -136,14 +87,25 @@ function Toolbar(props) {
   }
 
   function setClosest(){
-    const closest = getClosest(props.allTaps, {
+    
+    const data = props.phlaskType === PHLASK_TYPE_WATER
+      ? props.allTaps
+      : props.allFoodOrgs
+    const closest = getClosest(data, {
       lat: props.userLocation.lat,
       lon: props.userLocation.lng
     });
     const place = new Promise(() =>{
       props.setSelectedPlace(closest.id)
     })
-    place.then(props.toggleInfoWindow(true))
+    place.then(
+      props.setMapCenter({
+        lat: closest.lat,
+        lng: closest.lon
+      })
+    ).then(
+      props.toggleInfoWindow(true)
+    )
   }
   
   return (
@@ -183,9 +145,10 @@ function Toolbar(props) {
 const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
+  allFoodOrgs: state.allFoodOrgs,
   userLocation: state.userLocation
 })
 
-const mapDispatchToProps = { togglePhlaskType, PHLASK_TYPE_FOOD, PHLASK_TYPE_WATER, setSelectedPlace, toggleInfoWindow}
+const mapDispatchToProps = { togglePhlaskType, PHLASK_TYPE_FOOD, PHLASK_TYPE_WATER, setSelectedPlace, toggleInfoWindow, setMapCenter}
 
 export default connect(mapStateToProps,mapDispatchToProps)(Toolbar)
