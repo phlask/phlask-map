@@ -1,0 +1,36 @@
+#toolbar-container{
+    position: absolute;
+    height: 5%;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+#phlask-btn{
+    height: 9vh;
+    width: 9vh;
+    max-width: 45px;
+    max-height: 45px;
+    margin: 0 4px 10px 4px;
+}
+.toolbar-item{
+    height: 8vh;
+    width: 8vh;
+    max-height: 35px;
+    max-width: 35px;
+}
+#slider-btn{
+    position: absolute;
+    left: 2%;
+    height: 7vh;
+    width: 7vh;
+    max-height: 40px;
+    max-width: 40px;
+}
+.img{
+    height: 100%;
+    width: 100%;
+}

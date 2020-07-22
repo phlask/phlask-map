@@ -2,7 +2,13 @@ import * as actions from "../actions";
 import { isMobile } from 'react-device-detect'
 
 const initialState = {
+  screenSize: "",
   mapCenter: {
+    lat: parseFloat("39.952744"),
+    lng: parseFloat("-75.163500")
+  },
+  // Change to reflect user's current location
+  userLocation: {
     lat: parseFloat("39.952744"),
     lng: parseFloat("-75.163500")
   },
@@ -33,6 +39,13 @@ const initialState = {
 
 export default (state = initialState, act) => {
   switch (act.type) {
+
+    case actions.RESIZE_WINDOW:
+      return ()=>{
+        // console.log("Resize: " + act.size);
+        
+      }
+
     case actions.SET_TOGGLE_STATE:
       return {
         ...state,
@@ -56,9 +69,10 @@ export default (state = initialState, act) => {
           }
         }
 
-    case actions.SET_MAP_CENTER:
-      console.log(`Lat: ${act.coords.lat} -- Lon: ${act.coords.lng}`);
-      
+    case actions.SET_USER_LOCATION:
+        return {...state, userLocation: act.coords}
+
+    case actions.SET_MAP_CENTER:      
       return { ...state, mapCenter: act.coords}
 
     case actions.GET_TAPS_SUCCESS:
@@ -77,7 +91,18 @@ export default (state = initialState, act) => {
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);
-      return { ...state, selectedPlace: act.selectedPlace}
+      // console.log(state.alltaps[act.id]);
+      
+      // if passed Selected Place as an object, set selected place as the object
+      // if passed an ID, locate the item using ID, then set selected place  
+      return typeof act.selectedPlace === 'object'
+        ?  { ...state, selectedPlace: act.selectedPlace}
+        :  { ...state, 
+            selectedPlace: state.phlaskType === actions.PHLASK_TYPE_WATER
+              ? state.allTaps[act.selectedPlace]
+              : state.allFoodOrgs[act.selectedPlace], 
+            showingInfoWindow: true
+           }
       
 
     case actions.TOGGLE_INFO_WINDOW:
@@ -166,10 +191,17 @@ export default (state = initialState, act) => {
         }
     }
 
+    // Toggle Phlask type & close the info window
     case actions.TOGGLE_PHLASK_TYPE:
-      console.log(act.mode);
-      
-      return {...state, phlaskType: act.mode}
+      return {
+        ...state, 
+        phlaskType: act.mode,
+        infoWindowClass: act.mode !== state.showingInfoWindow 
+          ? isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+          : state.infoWindowClass
+      }
     
     default:
       return state;

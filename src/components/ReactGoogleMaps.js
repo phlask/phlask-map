@@ -9,6 +9,7 @@ import { getTaps,
   setFilterFunction,
   toggleInfoWindow,
   setMapCenter,
+  setUserLocation,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD } from "../actions";
 // import Legend from "./Legend";
@@ -20,57 +21,59 @@ import MapMarkersFood from "./MapMarkersFood"
 // Temporary Food/Water Toggle
 import TypeToggle from './TypeToggle.js'
 import { isMobile } from "react-device-detect";
+import Toolbar from './Toolbar'
 
 
-// Actual Magic: https://stackoverflow.com/a/41337005
-// Distance calculates the distance between two lat/lon pairs
-function distance(lat1,
-   lon1, lat2, lon2) {
-  var p = 0.017453292519943295;
-  var a =
-    0.5 -
-    Math.cos((lat2 - lat1) * p) / 2 +
-    (Math.cos(lat1 * p) *
-      Math.cos(lat2 * p) *
-      (1 - Math.cos((lon2 - lon1) * p))) /
-      2;
-  return 12742 * Math.asin(Math.sqrt(a));
-}
+// // Actual Magic: https://stackoverflow.com/a/41337005
+// // Distance calculates the distance between two lat/lon pairs
+// function distance(lat1,
+//    lon1, lat2, lon2) {
+//   var p = 0.017453292519943295;
+//   var a =
+//     0.5 -
+//     Math.cos((lat2 - lat1) * p) / 2 +
+//     (Math.cos(lat1 * p) *
+//       Math.cos(lat2 * p) *
+//       (1 - Math.cos((lon2 - lon1) * p))) /
+//       2;
+//   return 12742 * Math.asin(Math.sqrt(a));
+// }
 
-// Takes an array of objects with lat and lon properties as well as a single object with lat and lon
-// properties and finds the closest point (by shortest distance).
-function closest(data, v) {
-  // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-  // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
-  var distances = data.map(function(p) {
-    return {
-      lat: p["lat"],
-      lon: p["lon"],
-      organization: p["organization"],
-      address: p["address"],
-      distance: distance(v["lat"], v["lon"], p["lat"], p["lon"])
-    };
-  });
-  var minDistance = Math.min(...distances.map(d => d.distance));
+// // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
+// // properties and finds the closest point (by shortest distance).
+// function closest(data, v) {
+//   // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
+//   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
+//   var distances = data.map(function(p) {
+//     return {
+//       lat: p["lat"],
+//       lon: p["lon"],
+//       // organization: p["organization"],
+//       // address: p["address"],
+//       distance: distance(v["lat"], v["lon"], p["lat"], p["lon"])
+//     };
+//   });
+//   var minDistance = Math.min(...distances.map(d => d.distance));
 
-  var closestTap = {
-    organization: "",
-    address: "",
-    lat: "",
-    lon: ""
-  };
+//   var closestTap = {
+//     // organization: "",
+//     // address: "",
+//     lat: "",
+//     lon: ""
+//   };
 
-  for (var i = 0; i < distances.length; i++) {
-    if (distances[i].distance === minDistance) {
-      closestTap.lat = distances[i].lat;
-      closestTap.lon = distances[i].lon;
-      closestTap.organization = distances[i].organization;
-      closestTap.address = distances[i].address;
-    }
-  }
+//   for (var i = 0; i < distances.length; i++) {
+//     if (distances[i].distance === minDistance) {
+//       closestTap.lat = distances[i].lat;
+//       closestTap.lon = distances[i].lon;
+//       // closestTap.organization = distances[i].organization;
+//       // closestTap.address = distances[i].address;
+      
+//     }
+//   }
 
-  return closestTap;
-}
+//   return closestTap;
+// }
 
 function getCoordinates() {
   return new Promise(function(resolve, reject) {
@@ -86,6 +89,8 @@ function getLat() {
       function success(position) {
         // for when getting location is a success
         var mylat = parseFloat(position.coords.latitude.toFixed(5));
+        console.log('lat ' + mylat);
+        
         return mylat;
       },
       function error(error_message) {
@@ -179,6 +184,9 @@ export class ReactGoogleMaps extends Component {
   
   componentDidMount() {
 
+    // console.log('Lat: ' + getLat());
+    // console.log('Lon: ' + getLon()); 
+
     getCoordinates().then(position => {
       if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
         this.setState({ 
@@ -186,16 +194,21 @@ export class ReactGoogleMaps extends Component {
           currlon: parseFloat("-75.163500")
         });
       } else {
+        this.props.setMapCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
+        this.props.setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
         this.setState({ 
           currlat: position.coords.latitude,
           currlon: position.coords.longitude
          });
       }
     }, ()=>{
-      this.props.setMapCenter({
-        lat: getLat(),
-        lon: getLon()
-      })
+      
     });
   }
 
@@ -242,9 +255,11 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
+    // console.log("Rendered ReactGoogleMaps");
+    
       return (
         <div id='react-google-map'>
-
+          {/* <ClosestTap/> */}
           <Map
             google={this.props.google}
             className={"map"}
@@ -256,14 +271,14 @@ export class ReactGoogleMaps extends Component {
             }}
             center={{ lat: this.state.currlat, lng: this.state.currlon }}
           >
-            <TypeToggle/>
+            {/* <TypeToggle/> */}
 
           {/* FilteredTaps */}
 
-          {this.props.phlaskType === PHLASK_TYPE_WATER
+          {/* {this.props.phlaskType === PHLASK_TYPE_WATER
             ? <WaterFilter/>
             : <FoodFilter/>
-          }
+          } */}
 
           {/* Issue: MapMarkers won't render when placed inside container? */}
           {this.props.phlaskType === PHLASK_TYPE_WATER
@@ -302,6 +317,7 @@ export class ReactGoogleMaps extends Component {
                 search={location => this.searchForLocation(location)}
               />
             </div>
+            <Toolbar/>
             <SelectedTap></SelectedTap>
         </div>
       );
@@ -329,7 +345,7 @@ const mapStateToProps = state => ({
   // infoIsExpanded: state.infoIsExpanded
 });
 
-const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setMapCenter };
+const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setUserLocation, setMapCenter };
 
 export default connect(mapStateToProps,mapDispatchToProps)(
   GoogleApiWrapper({

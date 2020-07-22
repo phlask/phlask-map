@@ -4,11 +4,14 @@ import { connect } from "react-redux";
 import { getFoodOrgs, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/foodOrgSelectors';
 import foodIcon from './images/food-marker-icons/food-site.png'
+import IndieFoodMarker from './IndieFoodMarker.js'
 
 export class MapMarkersFood extends Component {
 
   UNSAFE_componentWillMount() {
-    this.props.getFoodOrgs()
+    if(!this.props.allFoodOrgs.length){
+      this.props.getFoodOrgs()
+    }
   }
   
   shouldComponentUpdate(nextProps){
@@ -44,7 +47,7 @@ export class MapMarkersFood extends Component {
   }
 
   render() {
-    // console.log(this.props)
+    // console.log("rendered MapMarkers")
     if(this.props.visibleTaps) {
       if( this.props ){
         return (
@@ -59,22 +62,11 @@ export class MapMarkersFood extends Component {
             />
             {this.props.visibleTaps
               .map((org, index) => (
-                <Marker
-                  access={org.access}
-                  map={this.props.map}
-                  google={this.props.google}
-                  mapCenter={this.props.mapCenter}
+                <IndieFoodMarker
                   key={index}
-                  organization={org.organization}
-                  address={org.address}
-                  hours={org.hours}
-                  idRequired={org.id_required === 'yes' ? true : false}
-                  kidOnly={org.kid_only === 'yes' ? true : false}
-                  description={org.description}
-                  img={org.images}
-                  onClick={this.onMarkerClick.bind(this)}
-                  position={{ lat: org.lat, lng: org.lon }}
-                  icon={this.getIcon(org.access)}
+                  org={org}
+                  google={this.props.google}
+                  map={this.props.map}
                 />
             ))}
           </React.Fragment>
@@ -93,6 +85,7 @@ const makeMapStateToProps = () => {
     //   filtered: state.tapFilters.filtered,
     //   handicap: state.tapFilters.handicap,
       accessTypesHidden: state.foodFilters.accessTypesHidden,
+      allFoodOrgs: state.allFoodOrgs,
       mapCenter: state.mapCenter
     }
   }

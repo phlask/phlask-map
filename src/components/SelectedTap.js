@@ -2,7 +2,12 @@
 import React from 'react'
 import ReactTouchEvents from 'react-touch-events'
 import { connect } from 'react-redux'
-import { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowClass } from '../actions'
+import { 
+    toggleInfoExpanded, 
+    toggleInfoWindow, 
+    toggleInfoWindowClass,
+    PHLASK_TYPE_WATER,
+    PHLASK_TYPE_FOOD } from '../actions'
 import { isMobile } from 'react-device-detect'
 // import { connect } from 'react-redux'
 import './SelectedTap.css'
@@ -56,6 +61,11 @@ class SelectedTap extends React.Component{
                     access: phlaskBlue,
                     accessibility: phlaskGreen
                 }
+            }
+
+            componentWillUnmount(){
+                console.log('unmounting');
+                
             }
 
     toggleInfoExpanded(shouldExpand){
@@ -194,11 +204,6 @@ class SelectedTap extends React.Component{
                         ? selectedPlace.description
                         : null
 
-        },
-        ()=>{
-            const test = this.state.isOpen
-            console.log('open?' + test);
-            
         })
     }
 
@@ -343,6 +348,8 @@ class SelectedTap extends React.Component{
                 })
             }
         }
+        console.log("Showing Info Window: " + this.props.showingInfoWindow);
+        
     }
       
     componentDidMount(){
@@ -432,7 +439,13 @@ class SelectedTap extends React.Component{
                             {/* Tap Type Icon */}
                             <div id='tap-type-icon-container'>
                                 <div id='tap-type-icon'>
-                                    <img className='tap-info-icon-img' src={this.props.selectedPlace.icon} alt=''></img>
+                                    <img 
+                                        className='tap-info-icon-img' 
+                                        src={this.props.phlaskType === PHLASK_TYPE_WATER
+                                                ? this.props.selectedPlace.infoIcon
+                                                : this.props.selectedPlace.icon
+                                        } 
+                                        alt=''></img>
                                 </div>
                             </div>
     
@@ -654,7 +667,8 @@ const mapStateToProps = state => ({
     showingInfoWindow: state.showingInfoWindow,
     infoIsExpanded: state.infoIsExpanded,
     infoWindowClass: state.infoWindowClass,
-    selectedPlace: state.selectedPlace
+    selectedPlace: state.selectedPlace,
+    phlaskType: state.phlaskType
 });
 const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowClass };
 
