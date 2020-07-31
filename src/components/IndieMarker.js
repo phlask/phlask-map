@@ -63,7 +63,7 @@ class IndieMarker extends React.Component{
           case "Semi-public":
             return !isForSelection
               ? { url: phlaskMarkerIcon(access, 48, 48) }
-              : { url: phlaskFilterIcon(access) }
+              : phlaskFilterIcon(access, 35, 35)
           case "TrashAcademy":
             return "https://i.imgur.com/fXTeEKL.png";
           default:
