@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/tapSelectors';
 import './IndieMarker.css'
+import phlaskMarkerIcon from './icons/PhlaskMarkerIcon'
+import phlaskFilterIcon from './icons/PhlaskFilterIcon'
 
 class IndieMarker extends React.Component{
 
@@ -55,25 +57,13 @@ class IndieMarker extends React.Component{
       if (!this.props.accessTypesHidden.includes(access)) {
         switch (access) {
           case "Public":
-            return !isForSelection
-              ? require('./images/tap-marker-icons/Public.png')
-              : require('./images/tap-filter-icons/public.png')
           case "Private-Shared":
-            return !isForSelection
-              ? require('./images/tap-marker-icons/Shared.png')
-              : require('./images/tap-filter-icons/shared.png')
           case "Private":
-            return !isForSelection
-              ? require('./images/tap-marker-icons/Private.png')
-              : require('./images/tap-filter-icons/private.png')
           case "Restricted":
-            return !isForSelection
-              ? require('./images/tap-marker-icons/Restricted.png')
-              : require('./images/tap-filter-icons/restricted.png')
           case "Semi-public":
             return !isForSelection
-              ? require('./images/tap-marker-icons/Shared.png')
-              : require('./images/tap-filter-icons/shared.png')
+              ? { url: phlaskMarkerIcon(access, 48, 48) }
+              : { url: phlaskFilterIcon(access) }
           case "TrashAcademy":
             return "https://i.imgur.com/fXTeEKL.png";
           default:

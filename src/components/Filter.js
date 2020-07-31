@@ -13,12 +13,7 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setToggleState, setFilteredTapTypes, resetFilterFunction } from "../actions";
-
-let icon_publicFilter = require('./images/tap-filter-icons/public.png')
-let icon_sharedFilter = require('./images/tap-filter-icons/shared.png')
-let icon_privateFilter = require('./images/tap-filter-icons/private.png')
-let icon_restrictedFilter = require('./images/tap-filter-icons/restricted.png')
-let icon_disabledFilter = require('./images/tap-filter-icons/disabled.png')
+import phlaskFilterIcon from './icons/PhlaskFilterIcon'
 
 export class Filter extends React.Component {
 
@@ -52,9 +47,9 @@ export class Filter extends React.Component {
                       <p className="tapName">PUBLIC</p>
                       <div>
                         <img
-                          className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Public") ? icon_disabledFilter : icon_publicFilter}
-                          alt="blue"
+													className="tapIcon"
+													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Public") ? "disabled" : "Public"), 35, 35)}
+                          alt="Public"
                           onClick={() => this.props.setFilteredTapTypes("Public")}
                         ></img>
                       </div>
@@ -64,8 +59,8 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Private-Shared") ? icon_disabledFilter : icon_sharedFilter}
-                          alt="green"
+													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Private-Shared") ? "disabled" : "Private-Shared"), 35, 35)}
+                          alt="Private-Shared"
                           onClick={() => this.props.setFilteredTapTypes("Private-Shared")}
                         ></img>
                       </div>
@@ -75,8 +70,8 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Private") ? icon_disabledFilter : icon_privateFilter}
-                          alt="yellow"
+													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Private") ? "disabled" : "Private"), 35, 35)}
+                          alt="Private"
                           onClick={() => this.props.setFilteredTapTypes("Private")}
                         ></img>
                       </div>
@@ -86,8 +81,8 @@ export class Filter extends React.Component {
                       <div>
                         <img
                           className="tapIcon"
-                          src={this.props.accessTypesHidden.includes("Restricted") ? icon_disabledFilter : icon_restrictedFilter}
-                          alt="red"
+													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Restricted") ? "disabled" : "Restricted"), 35, 35)}
+                          alt="Restricted"
                           onClick={() => this.props.setFilteredTapTypes("Restricted")}
                         ></img>
                       </div>
