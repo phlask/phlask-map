@@ -25,7 +25,7 @@ function TypeToggle(props){
 
     return(
         <div id='phlask-toggle-container'>
-            <div id='phlask-btn'>
+            <div id='phlask-toggle-btn'>
                 <img 
                     id='phlask-icon' 
                     alt=''
