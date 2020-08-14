@@ -23,7 +23,7 @@ export class Head extends Component {
           <Navbar bg="light" expand="lg" className="headColumns">
             <Navbar.Brand href="https://phlask.me/">
               <img src={logo} alt="Phlask" className="logoImage"
-                srcset={logo + ", " + logo2x + " 2x"} />
+                srcSet={logo + ", " + logo2x + " 2x"} />
             </Navbar.Brand>
             {/* <img src={icon} alt="filterImg" onClick={this.display} /> */}
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
