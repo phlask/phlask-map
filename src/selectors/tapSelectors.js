@@ -12,6 +12,17 @@ const makeGetVisibleTaps = () => {
     (tapFilters, allTaps) => {
       
       let filteredTaps = allTaps
+
+      // Default filters
+      filteredTaps = Object.keys(filteredTaps)
+        .filter(key => {
+          return (allTaps[key].permanently_closed !== undefined && allTaps[key].permanently_closed !== true)
+        })
+        .reduce((obj, key) => {
+        obj[key] = allTaps[key];
+        return obj;
+        }, []);
+
       // If we want to filter for filtered taps (water filter)
       if (tapFilters.filtered) {
           filteredTaps = Object.keys(filteredTaps)
