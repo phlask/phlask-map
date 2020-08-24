@@ -1,0 +1,124 @@
+$waterColor: #27aae1;
+$foodColor: #8dc63f;
+
+.toolbar {
+  position: absolute;
+  display: flex;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.title {
+  // title is desktop only
+  flex: 1 0 auto;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 1;
+  font-size: 1.25rem;
+}
+
+.waterTitle {
+  color: $waterColor;
+}
+
+.foodTitle {
+  color: $foodColor;
+}
+
+.closestTapButton {
+  // closest tap is mobile only
+  width: 50px;
+  height: 50px;
+  margin: -18px 10px 0 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+  }
+}
+
+.toolbarButton {
+  // water and food buttons
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  border-radius: 50%;
+  transition: box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.waterButton:focus {
+  box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
+}
+
+.foodButton:focus {
+  box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+}
+
+.filterButton {
+  position: absolute;
+  max-height: 40px;
+  max-width: 40px;
+  height: 40px;
+  width: 40px;
+}
+
+.mobileToolbar {
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+  align-items: flex-start;
+
+  .toolbarButton {
+    // water and food buttons
+    margin-top: -8px;
+  }
+
+  .filterButton {
+    left: 2%;
+  }
+}
+
+.desktopToolbar {
+  height: 50px;
+  width: 30vw;
+  min-width: 400px;
+  padding: 0 5.65rem 0 1rem;
+  border-radius: 5px;
+  bottom: 1rem;
+  left: 1rem;
+  align-items: center;
+
+  .waterButton:hover {
+    box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
+  }
+
+  .foodButton {
+    margin-left: 0.5rem;
+
+    &:hover {
+      box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+    }
+  }
+
+  .filterButton {
+    box-sizing: content-box;
+    right: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid #ccc;
+  }
+}
