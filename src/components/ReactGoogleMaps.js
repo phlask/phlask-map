@@ -300,9 +300,6 @@ export class ReactGoogleMaps extends Component {
                 mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
               />
           }
-          
-
-            
 
             {this.state.searchedTap != null && 
               <Marker
@@ -311,6 +308,7 @@ export class ReactGoogleMaps extends Component {
               />
             }
           </Map>
+
             <div className="search-bar-container">
               <SearchBar
                 className="searchBar"

@@ -349,7 +349,9 @@ class SelectedTap extends React.Component{
             }
         }
         console.log("Showing Info Window: " + this.props.showingInfoWindow);
-        
+        console.log('user location:')
+        console.log(this.props.userLocation);
+       
     }
       
     componentDidMount(){
@@ -580,6 +582,9 @@ class SelectedTap extends React.Component{
                             }}
                         >
                             <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
+                            {/* <div id='tap-info-walk-time'>Estimated Walk Time: {tapWalkTime.getTapWalkTime(
+                                this.props.selectedPlace.address, this.props.userLocation)}</div> */}
+
                             <div id='tap-info-icons-box'
                                 style={this.props.infoIsExpanded
                                     ? {width: '100%'}
@@ -668,7 +673,8 @@ const mapStateToProps = state => ({
     infoIsExpanded: state.infoIsExpanded,
     infoWindowClass: state.infoWindowClass,
     selectedPlace: state.selectedPlace,
-    phlaskType: state.phlaskType
+    phlaskType: state.phlaskType,
+    userLocation: state.userLocation
 });
 const mapDispatchToProps = { toggleInfoExpanded, toggleInfoWindow, toggleInfoWindowClass };
 
