@@ -1,5 +1,6 @@
 import { Map, InfoWindow, GoogleApiWrapper, Marker } from "google-maps-react";
 import React, { Component } from "react";
+import ReactTouchEvents from 'react-touch-events';
 import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
@@ -253,6 +254,12 @@ export class ReactGoogleMaps extends Component {
   searchForLocation = location => {
     this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16, searchedTap: {lat: location.lat, lng: location.lng} });
   };
+  
+  handleTap = (e) => {
+    if (e.target instanceof HTMLDivElement && this.props.showingInfoWindow) {
+      this.props.toggleInfoWindow(false);
+    }
+  }
 
   render() {
     // console.log("Rendered ReactGoogleMaps");
@@ -260,57 +267,61 @@ export class ReactGoogleMaps extends Component {
       return (
         <div id='react-google-map'>
           {/* <ClosestTap/> */}
-          <Map
-            google={this.props.google}
-            className={"map"}
-            style={style}
-            zoom={this.state.zoom}
-            initialCenter={{
-              lat: this.state.currlat,
-              lng: this.state.currlon
-            }}
-            center={{ lat: this.state.currlat, lng: this.state.currlon }}
-          >
-            {/* <TypeToggle/> */}
-
-          {/* FilteredTaps */}
-
-          {/* {this.props.phlaskType === PHLASK_TYPE_WATER
-            ? <WaterFilter/>
-            : <FoodFilter/>
-          } */}
-
-          {/* Issue: MapMarkers won't render when placed inside container? */}
-          {this.props.phlaskType === PHLASK_TYPE_WATER
-            // Water
-            ? 
-              <MapMarkers 
-                map={this.props.map}
+          <ReactTouchEvents onTap={this.handleTap.bind(this)}>
+            <div>
+              <Map
                 google={this.props.google}
-                mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-              />
-            
+                className={"map"}
+                style={style}
+                zoom={this.state.zoom}
+                initialCenter={{
+                  lat: this.state.currlat,
+                  lng: this.state.currlon
+                }}
+                center={{ lat: this.state.currlat, lng: this.state.currlon }}
+              >
+                {/* <TypeToggle/> */}
 
-            // Food
+              {/* FilteredTaps */}
+
+              {/* {this.props.phlaskType === PHLASK_TYPE_WATER
+                ? <WaterFilter/>
+                : <FoodFilter/>
+              } */}
+
+              {/* Issue: MapMarkers won't render when placed inside container? */}
+              {this.props.phlaskType === PHLASK_TYPE_WATER
+                // Water
+                ? 
+                  <MapMarkers 
+                    map={this.props.map}
+                    google={this.props.google}
+                    mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+                  />
                 
-            :   
-              <MapMarkersFood 
-                map={this.props.map}
-                google={this.props.google}
-                mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-              />
-          }
-          
 
-            
+                // Food
+                    
+                :   
+                  <MapMarkersFood 
+                    map={this.props.map}
+                    google={this.props.google}
+                    mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
+                  />
+              }
+              
 
-            {this.state.searchedTap != null && 
-              <Marker
-                name={"Your Search Result"}
-                position={this.state.searchedTap}
-              />
-            }
-          </Map>
+                
+
+                {this.state.searchedTap != null && 
+                  <Marker
+                    name={"Your Search Result"}
+                    position={this.state.searchedTap}
+                  />
+                }
+              </Map>
+            </div>
+          </ReactTouchEvents>
             <div className="search-bar-container">
               <SearchBar
                 className="searchBar"
@@ -340,8 +351,8 @@ const mapStateToProps = state => ({
   filteredTaps: state.filteredTaps,
   filterFunction: state.filterFunction,
   mapCenter: state.mapCenter,
-  phlaskType: state.phlaskType
-  // showingInfoWindow: state.showingInfoWindow,
+  phlaskType: state.phlaskType,
+  showingInfoWindow: state.showingInfoWindow
   // infoIsExpanded: state.infoIsExpanded
 });
 
