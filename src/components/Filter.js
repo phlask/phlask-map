@@ -1,7 +1,5 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
-// import icon from "./icons8-filter-mod.png";
-import icon from "./images/slider.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Filter.module.scss";
@@ -39,7 +37,7 @@ export class Filter extends React.Component {
       <OverlayTrigger
         trigger="click"
         key="top"
-        placement="top"
+        placement={isMobile ? "top" : "top-end"}
         overlay={
           <Popover
             className={`${styles.filterPopover} ${
@@ -217,8 +215,6 @@ export class Filter extends React.Component {
       >
         <FontAwesomeIcon
           icon={faSlidersH}
-          aria-label="show filters"
-          aria-hidden="false"
           className={styles.filterIcon}
           size="3x"
           color="#999"

@@ -132,7 +132,7 @@ function Toolbar(props) {
         </h3>
       )}
       <div className={styles.filterButton}>
-        <button>
+        <button aria-label="show filters">
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
       </div>

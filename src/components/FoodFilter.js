@@ -43,7 +43,7 @@ export class FoodFilter extends React.Component {
         <OverlayTrigger
           trigger="click"
           key="top"
-          placement="top"
+          placement={isMobile ? "top" : "top-end"}
           overlay={
             <Popover
               className={`${styles.filterPopover} ${
@@ -213,8 +213,6 @@ export class FoodFilter extends React.Component {
         >
           <FontAwesomeIcon
             icon={faSlidersH}
-            aria-label="show filters"
-            aria-hidden="false"
             className={styles.filterIcon}
             size="3x"
             color="#999"
