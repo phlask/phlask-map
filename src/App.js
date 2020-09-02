@@ -17,7 +17,7 @@ function App(props) {
   ReactGA.pageview(window.location.pathname + window.location.search);
   return (
     <>
-      {/* <Head /> */}
+      <Head />
       <Switch>
         <Route exact path="/">
           <MapPage />

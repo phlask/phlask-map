@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import "./Head.css";
 import logo from "./images/phlask-logo/phlask-logo.png";
 import logo2x from "./images/phlask-logo/phlask-logo@2x.png";
@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export class Head extends Component {
+export class Head extends PureComponent {
   constructor(props) {
     super(props);
 

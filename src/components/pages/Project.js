@@ -5,7 +5,7 @@ import styles from "./Pages.module.scss";
 const Project = () => {
   return (
     <>
-      <Head />
+      {/* <Head /> */}
       <div className={styles.pageText}>
         <h2>Project</h2>
         <p>
