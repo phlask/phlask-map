@@ -12,7 +12,7 @@
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
-    max-width: 100%;
+    width: 100%;
     white-space: nowrap;
     z-index: 20;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
