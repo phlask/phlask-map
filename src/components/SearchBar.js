@@ -1,19 +1,22 @@
 import React from "react";
-import { isMobile } from 'react-device-detect'
-import { connect }from 'react-redux'
-import { toggleSearchBar } from '../actions'
+import { isMobile } from "react-device-detect";
+import { connect } from "react-redux";
+import { toggleSearchBar } from "../actions";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import "./SearchBar.css";
-import searchIcon from './images/searchIconBlack.png'
-import closeIcon from './images/fatArrow.png'
+import styles from "./SearchBar.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearchLocation,
+  faChevronLeft
+} from "@fortawesome/free-solid-svg-icons";
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       address: "",
       refSearchBar: React.createRef(),
       isSearchBarShown: false
@@ -32,87 +35,80 @@ class SearchBar extends React.Component {
       .catch(error => console.error("Error", error));
   };
 
-  openSearch(){
+  openSearch() {
     this.setSearchDisplayType(true);
   }
-  
-  setSearchDisplayType(shouldToggle = false){
-    if(isMobile){
-        this.setState({
-          isSearchBarShown: shouldToggle
-        })
-    }else{
+
+  setSearchDisplayType(shouldToggle = false) {
+    if (isMobile) {
+      this.setState({
+        isSearchBarShown: shouldToggle
+      });
+    } else {
       this.setState({
         isSearchBarShown: true
-      })
+      });
     }
   }
 
-  componentDidUpdate(prevProps){
-    if(this.props.isSearchShown && !prevProps.isSearchShown){
-      this.state.refSearchBar.current.focus()
+  componentDidUpdate(prevProps) {
+    if (this.props.isSearchShown && !prevProps.isSearchShown) {
+      this.state.refSearchBar.current.focus();
     }
   }
 
-  componentDidMount(){
-    this.setSearchDisplayType()
+  componentDidMount() {
+    this.setSearchDisplayType();
   }
 
   render() {
     return (
-      <div>
-        {this.state.isSearchBarShown
-          ? <div id='search-container'
-              style={ isMobile 
-                ? {padding: "8px 0 0 8px"}
-                : {}
-              }
+      <>
+        {this.state.isSearchBarShown ? (
+          <div
+            className={isMobile ? styles.mobileSearch : styles.desktopSearch}
+          >
+            <PlacesAutocomplete
+              value={this.state.address}
+              onChange={this.handleChange}
+              onSelect={this.handleSelect}
             >
-              <PlacesAutocomplete
-                value={this.state.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading
-                }) => (
-                  <div style={{width: 'fit-content'}}>
-                    {/* type="search" is only HTML5 compliant */}
-                    <input
-                      {...getInputProps({
-                        placeholder: "Search For Taps Near...",
-                        className: "location-search-input"
-                      })}
-                      id= "search-input"
-                      type="search"
-                      ref={this.state.refSearchBar}
-                      style={
-                        !isMobile
-                          ? {width: '30vw', minWidth: "400px" }
-                          : {}
-                        }
-                    />
-                    {/* <div className="clearInput">
-                      <button>&times;</button>
-                    </div> */}
-                    <div className="autocomplete-dropdown-container">
-                      {loading && <div>Loading...</div>}
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading
+              }) => (
+                <div
+                  className={`${styles.searchBarContainer} ${
+                    loading || suggestions.length > 0 ? styles.hasDropdown : ""
+                  }`}
+                >
+                  {/* type="search" is only HTML5 compliant */}
+                  <input
+                    {...getInputProps({
+                      placeholder: "Search For Taps Near..."
+                    })}
+                    className={`${styles.searchInput} form-control`}
+                    type="search"
+                    ref={this.state.refSearchBar}
+                  />
+                  {loading && (
+                    <div className={styles.autocompleteDropdown}>
+                      Loading...
+                    </div>
+                  )}
+                  {suggestions.length > 0 && (
+                    <div className={styles.autocompleteDropdown}>
                       {suggestions.map(suggestion => {
                         const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        // inline style for demonstration purpose
-                        const style = suggestion.active
-                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                          ? styles.suggestionItemActive
+                          : styles.suggestionItem;
                         return (
                           <div
+                            key={suggestion.id}
                             {...getSuggestionItemProps(suggestion, {
-                              className,
-                              style
+                              className
                             })}
                           >
                             <span>{suggestion.description}</span>
@@ -120,34 +116,48 @@ class SearchBar extends React.Component {
                         );
                       })}
                     </div>
-                  </div>
-                )}
-              </PlacesAutocomplete>
-              {isMobile
-                ? <div 
-                    id='close-button'
-                    onClick={()=>{this.setSearchDisplayType(false)}}
-                  >
-                    <img id='close-icon' src={closeIcon} alt=''/>
-                  </div>
-                  :[]
-                }
-            </div>
-            :<div id='search-icon'
-                  onClick={this.openSearch.bind(this)}
+                  )}
+                </div>
+              )}
+            </PlacesAutocomplete>
+            {isMobile ? (
+              <button
+                className={styles.mobileCloseButton}
+                onClick={() => {
+                  this.setSearchDisplayType(false);
+                }}
+                aria-label="Close the search bar"
               >
-              <img id='search-img' src={searchIcon} alt=''/>
-            </div>
-        }
-      </div>
+                <FontAwesomeIcon
+                  className={styles.mobileIcon}
+                  icon={faChevronLeft}
+                />
+              </button>
+            ) : (
+              []
+            )}
+          </div>
+        ) : (
+          <button
+            className={styles.mobileSearchButton}
+            onClick={this.openSearch.bind(this)}
+            aria-label="Search for a location"
+          >
+            <FontAwesomeIcon
+              className={styles.mobileIcon}
+              icon={faSearchLocation}
+            />
+          </button>
+        )}
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
   isSearchShown: state.isSearchShown
-})
+});
 
-const mapDispatchToProps = { toggleSearchBar }
+const mapDispatchToProps = { toggleSearchBar };
 
-export default connect(mapStateToProps,mapDispatchToProps)(SearchBar)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

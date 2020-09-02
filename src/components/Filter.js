@@ -1,8 +1,8 @@
 import React from "react";
-import { isMobile } from 'react-device-detect'
-// import icon from "./icons8-filter-mod.png";
-import icon from "./images/slider.png";
-import "./Filter.css";
+import { isMobile } from "react-device-detect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
+import styles from "./Filter.module.scss";
 import {
   OverlayTrigger,
   Popover,
@@ -12,160 +12,214 @@ import {
   Col
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setToggleState, setFilteredTapTypes, resetFilterFunction } from "../actions";
-import phlaskFilterIcon from './icons/PhlaskFilterIcon'
+import {
+  setToggleState,
+  setFilteredTapTypes,
+  resetFilterFunction
+} from "../actions";
+import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
 
 export class Filter extends React.Component {
-
   handleChange(event) {
     if (event.target.id === "filtered") {
       this.props.setToggleState("filtered", !this.props.filtered);
     } else if (event.target.id === "ada") {
       this.props.setToggleState("handicap", !this.props.handicap);
     } else if (event.target.id === "sparkling") {
-      this.props.setToggleState("sparkling", !this.props.sparkling)
+      this.props.setToggleState("sparkling", !this.props.sparkling);
     } else if (event.target.id === "openNow") {
-      this.props.setToggleState("openNow", !this.props.openNow)
-    }
-    else console.log("error with toggle");
+      this.props.setToggleState("openNow", !this.props.openNow);
+    } else console.log("error with toggle");
   }
 
   render() {
     return (
-      <div>
-        <OverlayTrigger
-          trigger="click"
-          key="top"
-          placement="top"
-          overlay={
-            <Popover id="popover-basic">
-              <Popover.Content>
-                {/* // Legend button filters for tap type */}
-                <Row className="buttonRow">
-                  <Col>
-                    <Row className="legendRow">
-                      <p className="tapName">PUBLIC</p>
-                      <div>
-                        <img
-													className="tapIcon"
-													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Public") ? "disabled" : "Public"), 35, 35)}
-                          alt="Public"
-                          onClick={() => this.props.setFilteredTapTypes("Public")}
-                        ></img>
-                      </div>
-                    </Row>
-                    <Row className="legendRow">
-                      <p className="tapName">SHARED</p>
-                      <div>
-                        <img
-                          className="tapIcon"
-													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Private-Shared") ? "disabled" : "Private-Shared"), 35, 35)}
-                          alt="Private-Shared"
-                          onClick={() => this.props.setFilteredTapTypes("Private-Shared")}
-                        ></img>
-                      </div>
-                    </Row>
-                    <Row className="legendRow">
-                      <p className="tapName">PRIVATE</p>
-                      <div>
-                        <img
-                          className="tapIcon"
-													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Private") ? "disabled" : "Private"), 35, 35)}
-                          alt="Private"
-                          onClick={() => this.props.setFilteredTapTypes("Private")}
-                        ></img>
-                      </div>
-                    </Row>
-                    <Row className="legendRow">
-                      <p className="tapName">RESTRICTED</p>
-                      <div>
-                        <img
-                          className="tapIcon"
-													src={phlaskFilterIcon((this.props.accessTypesHidden.includes("Restricted") ? "disabled" : "Restricted"), 35, 35)}
-                          alt="Restricted"
-                          onClick={() => this.props.setFilteredTapTypes("Restricted")}
-                        ></img>
-                      </div>
-                    </Row>
-                  </Col>
-                  <Col xs={1}>
-                    <div className="filterDivider"></div>
-                  </Col>
+      <OverlayTrigger
+        trigger="click"
+        key="top"
+        placement={isMobile ? "top" : "top-end"}
+        overlay={
+          <Popover
+            className={`${styles.filterPopover} ${
+              isMobile ? styles.mobilePopover : styles.desktopPopover
+            }`}
+          >
+            <Popover.Content>
+              {/* // Legend button filters for tap type */}
+              <Row className={styles.buttonRow}>
+                <Col>
+                  <Row className={styles.legendRow}>
+                    <button
+                      className={
+                        this.props.accessTypesHidden.includes("Public")
+                          ? styles.disabledTapButton
+                          : styles.tapButton
+                      }
+                      onClick={() => this.props.setFilteredTapTypes("Public")}
+                    >
+                      PUBLIC
+                      <img
+                        className={styles.tapIcon}
+                        src={phlaskFilterIcon(
+                          this.props.accessTypesHidden.includes("Public")
+                            ? "disabled"
+                            : "Public",
+                          35,
+                          35
+                        )}
+                        alt="Public"
+                      ></img>
+                    </button>
+                  </Row>
+                  <Row className={styles.legendRow}>
+                    <button
+                      className={
+                        this.props.accessTypesHidden.includes("Private-Shared")
+                          ? styles.disabledTapButton
+                          : styles.tapButton
+                      }
+                      onClick={() =>
+                        this.props.setFilteredTapTypes("Private-Shared")
+                      }
+                    >
+                      SHARED
+                      <img
+                        className={styles.tapIcon}
+                        src={phlaskFilterIcon(
+                          this.props.accessTypesHidden.includes(
+                            "Private-Shared"
+                          )
+                            ? "disabled"
+                            : "Private-Shared",
+                          35,
+                          35
+                        )}
+                        alt="Private-Shared"
+                      ></img>
+                    </button>
+                  </Row>
+                  <Row className={styles.legendRow}>
+                    <button
+                      className={
+                        this.props.accessTypesHidden.includes("Private")
+                          ? styles.disabledTapButton
+                          : styles.tapButton
+                      }
+                      onClick={() => this.props.setFilteredTapTypes("Private")}
+                    >
+                      PRIVATE
+                      <img
+                        className={styles.tapIcon}
+                        src={phlaskFilterIcon(
+                          this.props.accessTypesHidden.includes("Private")
+                            ? "disabled"
+                            : "Private",
+                          35,
+                          35
+                        )}
+                        alt="Private"
+                      ></img>
+                    </button>
+                  </Row>
+                  <Row className={styles.legendRow}>
+                    <button
+                      className={
+                        this.props.accessTypesHidden.includes("Restricted")
+                          ? styles.disabledTapButton
+                          : styles.tapButton
+                      }
+                      onClick={() =>
+                        this.props.setFilteredTapTypes("Restricted")
+                      }
+                    >
+                      RESTRICTED
+                      <img
+                        className={styles.tapIcon}
+                        src={phlaskFilterIcon(
+                          this.props.accessTypesHidden.includes("Restricted")
+                            ? "disabled"
+                            : "Restricted",
+                          35,
+                          35
+                        )}
+                        alt="Restricted"
+                      ></img>
+                    </button>
+                  </Row>
+                </Col>
 
-                  {/* Toggle Switches */}
-                  <Col>
-                    <Row className="legendRow filterRow">
-                      <Form.Check.Label>Open Now</Form.Check.Label>
-                      <Form.Check
-                        type="switch"
-                        id="openNow"
-                        label=""
-                        checked={this.props.openNow}
-                        onClick={e => this.handleChange(e)}
-                        readOnly
-                      />
-                    </Row>
+                {/* Toggle Switches */}
+                <Col>
+                  <Row className={`${styles.legendRow} ${styles.filterRow}`}>
+                    <Form.Check.Label>Open Now</Form.Check.Label>
+                    <Form.Check
+                      type="switch"
+                      id="openNow"
+                      label=""
+                      checked={this.props.openNow}
+                      onClick={e => this.handleChange(e)}
+                      readOnly
+                    />
+                  </Row>
 
-                    <Row className="legendRow filterRow">
-                      <Form.Check.Label>ADA Accessible</Form.Check.Label>
-                      <Form.Check
-                        type="switch"
-                        id="ada"
-                        label=""
-                        checked={this.props.handicap}
-                        onClick={e => this.handleChange(e)}
-                        readOnly
-                      />
-                    </Row>
+                  <Row className={`${styles.legendRow} ${styles.filterRow}`}>
+                    <Form.Check.Label>ADA Accessible</Form.Check.Label>
+                    <Form.Check
+                      type="switch"
+                      id="ada"
+                      label=""
+                      checked={this.props.handicap}
+                      onClick={e => this.handleChange(e)}
+                      readOnly
+                    />
+                  </Row>
 
-                    <Row className="legendRow filterRow">
-                      <Form.Check.Label>Filtered Water</Form.Check.Label>
-                      <Form.Check
-                        type="switch"
-                        id="filtered"
-                        label=""
-                        checked={this.props.filtered}
-                        onClick={e => this.handleChange(e)}
-                        readOnly
-                      />
-                    </Row>
+                  <Row className={`${styles.legendRow} ${styles.filterRow}`}>
+                    <Form.Check.Label>Filtered Water</Form.Check.Label>
+                    <Form.Check
+                      type="switch"
+                      id="filtered"
+                      label=""
+                      checked={this.props.filtered}
+                      onClick={e => this.handleChange(e)}
+                      readOnly
+                    />
+                  </Row>
 
-                    <Row className="legendRow filterRow">
-                      <Form.Check.Label>Sparkling Water</Form.Check.Label>
-                      <Form.Check
-                        type="switch"
-                        id="sparkling"
-                        label=""
-                        checked={this.props.sparkling}
-                        onClick={e => this.handleChange(e)}
-                        readOnly
-                      />
-                    </Row>
-                  </Col>
-                </Row>
+                  <Row className={`${styles.legendRow} ${styles.filterRow}`}>
+                    <Form.Check.Label>Sparkling Water</Form.Check.Label>
+                    <Form.Check
+                      type="switch"
+                      id="sparkling"
+                      label=""
+                      checked={this.props.sparkling}
+                      onClick={e => this.handleChange(e)}
+                      readOnly
+                    />
+                  </Row>
+                </Col>
+              </Row>
 
-                <Row className="resetButtonRow">
-                  <div className="resetButton" onClick={() => this.props.resetFilterFunction()}>RESET</div>
-                </Row>
-              </Popover.Content>
-            </Popover>
-          }
-        >
-
-        <img
-          src={icon}
-          alt="filterImg"
-          className="filterIcon"
-          //   onClick={this.display}
-          style={isMobile
-            ? {top: '35%'}
-            : this.props.showingInfoWindow
-              ?{top: '75%', left: '30%'}
-              :{top: '75%'}
-          }
+              <Row className={styles.resetButtonRow}>
+                <Button
+                  variant="secondary"
+                  className={styles.resetButton}
+                  onClick={() => this.props.resetFilterFunction()}
+                >
+                  Reset
+                </Button>
+              </Row>
+            </Popover.Content>
+          </Popover>
+        }
+      >
+        <FontAwesomeIcon
+          icon={faSlidersH}
+          className={styles.filterIcon}
+          size="3x"
+          color="#999"
         />
-        </OverlayTrigger>
-      </div>
+      </OverlayTrigger>
     );
   }
 }
@@ -183,6 +237,6 @@ const mapDispatchToProps = {
   setFilteredTapTypes,
   setToggleState,
   resetFilterFunction
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
