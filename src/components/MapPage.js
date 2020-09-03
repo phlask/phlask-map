@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
+import Div100vh from "react-div-100vh";
 import './MapPage.css'
 
 export class MapPage extends Component {
@@ -44,6 +45,7 @@ export class MapPage extends Component {
 
   render() {
     return (
+      <Div100vh>
       <div className="map-page">
         <Head legendButton={this.legendButton} />
         <ReactGoogleMaps
@@ -52,6 +54,7 @@ export class MapPage extends Component {
           filtered={this.state.filtered}
         />
       </div>
+      </Div100vh>
     );
   }
 }
