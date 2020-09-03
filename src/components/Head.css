@@ -11,7 +11,7 @@
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
-    max-width: 100%;
+    width: 100%;
     white-space: nowrap;
     z-index: 20;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -19,6 +19,17 @@
 
 .menu {
   z-index: 100;
+}
+
+.mobile-menu {
+  position: fixed;
+  width: 100%;
+  height: 66px;
+}
+
+/* style the wrapper div around the map that we don't seem to be able to assign a class name to  */
+.mobile-menu + div {
+  height: 100%;
 }
 
 .dropdown-item{
