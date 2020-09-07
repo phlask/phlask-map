@@ -52,19 +52,40 @@ $foodColor: #8dc63f;
   width: 40px;
   background-color: white;
   border-radius: 50%;
-  transition: box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &.disabled {
+    color: #ccc;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
+    }
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
 
   &:focus {
     outline: none;
   }
 }
 
-.waterButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
+.waterButton {
+  color: $waterColor;
+
+  :focus {
+    box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
+  }
 }
 
-.foodButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+.foodButton {
+  color: $foodColor;
+
+  :focus {
+    box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+  }
 }
 
 .filterButton {
@@ -115,6 +136,10 @@ $foodColor: #8dc63f;
     &:hover {
       box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
     }
+  }
+
+  .toolbarButton.disabled:hover {
+    box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
   }
 
   .filterButton {
