@@ -17,6 +17,8 @@ import styles from "./Toolbar.module.scss";
 import phlaskImg from "./images/PHLASK Button.png";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
+import WaterIcon from "./icons/WaterIcon";
+import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -138,12 +140,14 @@ function Toolbar(props) {
       </div>
 
       <button
-        className={`${styles.toolbarButton} ${styles.waterButton}`}
+        className={`${styles.toolbarButton} ${
+          styles.waterButton
+        } ${props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled}`}
         onClick={() => {
           switchType(PHLASK_TYPE_WATER);
         }}
       >
-        <img className="img" src={waterImg} alt=""></img>
+        <WaterIcon />
       </button>
 
       {isMobile && (
@@ -158,12 +162,14 @@ function Toolbar(props) {
       )}
 
       <button
-        className={`${styles.toolbarButton} ${styles.foodButton}`}
+        className={`${styles.toolbarButton} ${
+          styles.foodButton
+        } ${props.phlaskType === PHLASK_TYPE_WATER && styles.disabled}`}
         onClick={() => {
           switchType(PHLASK_TYPE_FOOD);
         }}
       >
-        <img className="img" src={foodImg} alt=""></img>
+        <FoodIcon />
       </button>
     </div>
   );
