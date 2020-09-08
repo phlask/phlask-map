@@ -5,7 +5,7 @@ import logo2x from "./images/phlask-logo/phlask-logo@2x.png";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 
 export class Head extends PureComponent {
   constructor(props) {
@@ -18,7 +18,7 @@ export class Head extends PureComponent {
 
   render() {
     return (
-      <div className="menu">
+      <div className={isMobile ? "menu mobile-menu" : "menu"}>
         <header>
           <Navbar bg="light" expand="lg" className="headColumns">
             <Navbar.Brand href="https://phlask.me/">

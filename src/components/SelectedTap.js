@@ -133,7 +133,7 @@ class SelectedTap extends React.Component {
     this.setState(
       {
         infoExpansionStyle: {
-          height: shouldExpand ? "80vh" : this.state.previewHeight
+          height: shouldExpand ? "80%" : this.state.previewHeight
           // : '40vh'
         }
       },
