@@ -14,11 +14,13 @@ export class Head extends Component {
 
     this.state = {
       displayFilter: false,
-      showModal: false
+      showModal: false,
+      step: 1
     };
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
 
   handleShow() {
@@ -29,7 +31,14 @@ export class Head extends Component {
 
   handleClose() {
     this.setState({
-      showModal: false
+      showModal: false,
+      step: 1
+    });
+  }
+
+  handleNext() {
+    this.setState({
+      step: this.state.step + 1
     });
   }
 
@@ -81,6 +90,8 @@ export class Head extends Component {
           <TutorialModal
             show={this.state.showModal}
             handleClose={this.handleClose}
+            handleNext={this.handleNext}
+            step={this.state.step}
           />
         </header>
       </div>
