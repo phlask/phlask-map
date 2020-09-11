@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const TutorialModal = ({ handleClose, show, handleNext, step }) => {
+const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   const modalContent = {
     1: { title: "case1", body: "case 1" },
     2: { title: "case2", body: "case 2" },
@@ -15,12 +15,16 @@ const TutorialModal = ({ handleClose, show, handleNext, step }) => {
       <Modal.Header closeButton>{modalContent[step].title}</Modal.Header>
       <Modal.Body>{modalContent[step].body}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={{ handleNext }}>
-          {step == 4 ? "Prev" : "Next"}
-        </Button>
+        {step != 1 && (
+          <Button variant="primary" onClick={handlePrev}>
+            Previous
+          </Button>
+        )}
+        {step != 4 && (
+          <Button variant="primary" onClick={handleNext}>
+            Next
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

@@ -17,6 +17,7 @@ import styles from "./Toolbar.module.scss";
 import phlaskImg from "./images/PHLASK Button.png";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
+import infoIcon from "./images/infoIcon.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
@@ -138,7 +139,6 @@ function Toolbar(props) {
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
       </div>
-
       <button
         className={`${styles.toolbarButton} ${
           styles.waterButton
@@ -149,7 +149,6 @@ function Toolbar(props) {
       >
         <WaterIcon />
       </button>
-
       {isMobile && (
         <button className={styles.closestTapButton}>
           <img
@@ -160,7 +159,6 @@ function Toolbar(props) {
           ></img>
         </button>
       )}
-
       <button
         className={`${styles.toolbarButton} ${
           styles.foodButton
@@ -170,6 +168,20 @@ function Toolbar(props) {
         }}
       >
         <FoodIcon />
+      </button>
+      <button>
+        <img
+          src={infoIcon}
+          alt=""
+          onClick={setClosest}
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "absolute",
+            left: "90%",
+            top: "12%"
+          }}
+        ></img>
       </button>
     </div>
   );

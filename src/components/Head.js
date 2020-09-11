@@ -21,6 +21,7 @@ export class Head extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleNext = this.handleNext.bind(this);
+    this.handlePrev = this.handlePrev.bind(this);
   }
 
   handleShow() {
@@ -33,6 +34,12 @@ export class Head extends Component {
     this.setState({
       showModal: false,
       step: 1
+    });
+  }
+
+  handlePrev() {
+    this.setState({
+      step: this.state.step - 1
     });
   }
 
@@ -91,6 +98,7 @@ export class Head extends Component {
             show={this.state.showModal}
             handleClose={this.handleClose}
             handleNext={this.handleNext}
+            handlePrev={this.handlePrev}
             step={this.state.step}
           />
         </header>
