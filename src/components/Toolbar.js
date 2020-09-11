@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from "react";
+import React, { useState } from "react";
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
@@ -20,6 +20,7 @@ import foodImg from "./images/foodButton.png";
 import infoIcon from "./images/infoIcon.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
+import TutorialModal from "./TutorialModal";
 import { isMobile } from "react-device-detect";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -86,6 +87,26 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalStep, setModalStep] = useState(1);
+
+  function handleShow() {
+    setShowModal(true);
+  }
+
+  function handleClose() {
+    setShowModal(false);
+    setModalStep(1);
+  }
+
+  function handleNext() {
+    setModalStep(modalStep + 1);
+  }
+
+  function handlePrev() {
+    setModalStep(modalStep - 1);
+  }
+
   function switchType(type) {
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
@@ -173,7 +194,7 @@ function Toolbar(props) {
         <img
           src={infoIcon}
           alt=""
-          onClick={setClosest}
+          onClick={handleShow}
           style={{
             width: "30px",
             height: "30px",
@@ -183,6 +204,13 @@ function Toolbar(props) {
           }}
         ></img>
       </button>
+      <TutorialModal
+        show={showModal}
+        handleClose={handleClose}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+        step={modalStep}
+      />
     </div>
   );
 }
