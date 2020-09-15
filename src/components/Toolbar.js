@@ -19,6 +19,8 @@ import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import TutorialModal from "./TutorialModal";
 import { isMobile } from "react-device-detect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -157,12 +159,12 @@ function Toolbar(props) {
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
         <button>
-          <img
-            src={infoIcon}
-            alt=""
-            onClick={handleShow}
+          <FontAwesomeIcon
             className={styles.infoButton}
-          ></img>
+            icon={faInfoCircle}
+            size="2x"
+            color="#999"
+          />
         </button>
       </div>
       <button
