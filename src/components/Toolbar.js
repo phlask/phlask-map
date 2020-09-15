@@ -164,13 +164,7 @@ function Toolbar(props) {
             src={infoIcon}
             alt=""
             onClick={handleShow}
-            style={{
-              width: "30px",
-              height: "30px",
-              position: "absolute",
-              left: "70%",
-              top: "12%"
-            }}
+            className={styles.infoButton}
           ></img>
         </button>
       </div>

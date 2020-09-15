@@ -96,6 +96,13 @@ $foodColor: #8dc63f;
   width: 40px;
 }
 
+.infoButton {
+  max-width: 30px;
+  max-height: 30px;
+  position: absolute;
+  top: 12%;
+}
+
 .mobileToolbar {
   position: fixed;
   width: 100%;
@@ -112,6 +119,10 @@ $foodColor: #8dc63f;
 
   .filterButton {
     left: 2%;
+  }
+
+  .infoButton {
+    left: 900%;
   }
 }
 
@@ -148,5 +159,9 @@ $foodColor: #8dc63f;
     padding-left: 1rem;
     padding-right: 2rem;
     border-left: 1px solid #ccc;
+  }
+
+  .infoButton {
+    left: 70%;
   }
 }
