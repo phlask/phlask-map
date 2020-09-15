@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import phlaskImg from "./images/PHLASK Button.png";
 import styles from "./TutorialModal.module.scss";
-import Filter from "./Filter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 

@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from "react";
 import {
   togglePhlaskType,
@@ -87,7 +84,7 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [modalStep, setModalStep] = useState(1);
 
   function handleShow() {
