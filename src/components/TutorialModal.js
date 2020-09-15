@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
@@ -10,14 +10,18 @@ import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   const modalContent = {
     1: {
-      title: "Welcome to the PHLASK App!",
-      body:
-        "Your tool for finding and sharing free resources in Philadelphia - all you have to do is PHLask!"
+      title: <h3 className={styles.text}>Welcome to the PHLASK App!</h3>,
+      body: (
+        <p className={styles.text}>
+          Your tool for finding and sharing free resources in Philadelphia - all
+          you have to do is PHLask!
+        </p>
+      )
     },
     2: {
-      title: "Finding Water & Food",
+      title: <h3 className={styles.text}>Finding Water & Food</h3>,
       body: (
-        <p>
+        <p className={styles.text}>
           The control panel at the bottom of the screen allows you to toggle
           between WATER{" "}
           <img src={waterImg} alt="" className={styles.modalIcon} /> and FOOD{" "}
@@ -31,9 +35,9 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       )
     },
     3: {
-      title: "Filter",
+      title: <h3 className={styles.text}>Filter</h3>,
       body: (
-        <p>
+        <p className={styles.text}>
           What’s a water app without a filter? Click the{" "}
           <FontAwesomeIcon
             icon={faSlidersH}
@@ -47,9 +51,9 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       )
     },
     4: {
-      title: "Legend",
+      title: <h3 className={styles.text}>Legend</h3>,
       body: (
-        <div>
+        <div className={styles.text}>
           <p>
             Public (Blue) These taps are maintained by the City or
             publicly-funded enterprise
