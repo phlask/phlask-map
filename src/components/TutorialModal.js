@@ -46,7 +46,42 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
         </p>
       )
     },
-    4: { title: "Legend", body: "Legend" }
+    4: {
+      title: "Legend",
+      body: (
+        <div>
+          <p>
+            Public (Blue) These taps are maintained by the City or
+            publicly-funded enterprise
+          </p>
+          <p>
+            Shared (Green) Taps located in private enterprises that have either
+            explicitly granted public access or function as a de-facto public
+            space
+          </p>{" "}
+          <p>
+            Private (Yellow) These taps are located in private businesses;
+            public access is not guaranteed
+          </p>{" "}
+          <p>Restricted (Red) These taps are restricted from public use</p>
+          <p>
+            School Public, private and charter schools that offer free food and
+            meals
+          </p>
+          <p>
+            Recreation Parks and recreation centers that offer free food and
+            meals to the public
+          </p>
+          <p>
+            Congregation Houses of worship and religious congregations that
+            offer free food
+          </p>
+          <p>
+            Other Places offering free food that do not fit the above categories
+          </p>
+        </div>
+      )
+    }
   };
 
   return (
