@@ -5,6 +5,7 @@ import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import phlaskImg from "./images/PHLASK Button.png";
 import styles from "./TutorialModal.module.scss";
+import { isMobile } from "react-device-detect";
 
 const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   const modalContent = {
