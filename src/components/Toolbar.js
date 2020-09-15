@@ -14,7 +14,6 @@ import styles from "./Toolbar.module.scss";
 import phlaskImg from "./images/PHLASK Button.png";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
-import infoIcon from "./images/infoIcon.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import TutorialModal from "./TutorialModal";
@@ -158,7 +157,7 @@ function Toolbar(props) {
         <button aria-label="show filters">
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
-        <button>
+        <button onClick={handleShow}>
           <FontAwesomeIcon
             className={styles.infoButton}
             icon={faInfoCircle}
