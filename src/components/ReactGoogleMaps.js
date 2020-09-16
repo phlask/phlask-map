@@ -1,7 +1,6 @@
-import { Map, InfoWindow, GoogleApiWrapper, Marker } from "google-maps-react";
+import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import React, { Component } from "react";
 import ReactTouchEvents from 'react-touch-events';
-import ClosestTap from "./ClosestTap";
 import SearchBar from "./SearchBar";
 import "./ReactGoogleMaps.css";
 import { connect } from "react-redux";
@@ -11,16 +10,11 @@ import { getTaps,
   toggleInfoWindow,
   setMapCenter,
   setUserLocation,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FOOD } from "../actions";
+  PHLASK_TYPE_WATER } from "../actions";
 // import Legend from "./Legend";
-import WaterFilter from "./Filter";
-import FoodFilter from "./FoodFilter";
-import { Spinner } from "react-bootstrap";
 import MapMarkers from "./MapMarkers"
 import MapMarkersFood from "./MapMarkersFood"
 // Temporary Food/Water Toggle
-import TypeToggle from './TypeToggle.js'
 import { isMobile } from "react-device-detect";
 import Toolbar from './Toolbar'
 

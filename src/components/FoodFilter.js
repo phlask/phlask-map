@@ -22,14 +22,6 @@ import {
   resetFilterFunction
 } from "../actions";
 
-let icon_food_site = require("./images/food-marker-icons/food-site.png");
-let icon_school = require("./images/food-marker-icons/school.png");
-let icon_charter_school = require("./images/food-marker-icons/charter-school.png");
-let icon_pha = require("./images/food-marker-icons/pha.png");
-let icon_food_site_disabled = require("./images/food-marker-icons/food-site-disabled.png");
-let icon_school_disabled = require("./images/food-marker-icons/school-disabled.png");
-let icon_charter_school_disabled = require("./images/food-marker-icons/charter-school-disabled.png");
-let icon_pha_disabled = require("./images/food-marker-icons/pha-disabled.png");
 export class FoodFilter extends React.Component {
   handleChange(event) {
     if (event.target.id === "idRequired") {

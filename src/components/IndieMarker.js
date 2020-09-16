@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";

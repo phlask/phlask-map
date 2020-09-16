@@ -5,8 +5,7 @@ import {
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FOOD
+  PHLASK_TYPE_WATER
 } from "../actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
