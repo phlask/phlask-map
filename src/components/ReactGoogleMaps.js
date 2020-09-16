@@ -265,7 +265,7 @@ export class ReactGoogleMaps extends Component {
     // console.log("Rendered ReactGoogleMaps");
     
       return (
-        <div id="react-google-map" className={isMobile && "mobile-map-container"}>
+        <div id="react-google-map" className={isMobile ? "mobile-map-container" : undefined}>
           {/* <ClosestTap/> */}
           <ReactTouchEvents onTap={this.handleTap.bind(this)}>
             <div>
