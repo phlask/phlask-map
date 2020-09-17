@@ -157,14 +157,6 @@ function Toolbar(props) {
         <button aria-label="show filters">
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
-        <button onClick={handleShow}>
-          <FontAwesomeIcon
-            className={styles.infoButton}
-            icon={faInfoCircle}
-            size="2x"
-            color="#999"
-          />
-        </button>
       </div>
       <button
         className={`${styles.toolbarButton} ${
@@ -195,6 +187,9 @@ function Toolbar(props) {
         }}
       >
         <FoodIcon />
+      </button>
+      <button onClick={handleShow} className={styles.infoButton}>
+        <FontAwesomeIcon icon={faInfoCircle} size="2x" color="#999" />
       </button>
       <TutorialModal
         show={showModal}
