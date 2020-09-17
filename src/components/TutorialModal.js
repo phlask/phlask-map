@@ -3,7 +3,8 @@ import { Modal, Button } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import phlaskImg from "./images/PHLASK Button.png";
-import styles from "./TutorialModal.module.scss";
+// import styles from "./TutorialModal.module.scss";
+import "./TutorialModal.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
@@ -13,38 +14,37 @@ import charterSchoolIcon from "./images/food-marker-icons/charter-school.png";
 const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   const modalContent = {
     1: {
-      title: <h3 className={styles.text}>Welcome to the PHLASK App!</h3>,
+      title: <h3 className="text">Welcome to the PHLASK App!</h3>,
       body: (
-        <p className={styles.text}>
+        <p className="text">
           Your tool for finding and sharing free resources in Philadelphia - all
           you have to do is PHLask!
         </p>
       )
     },
     2: {
-      title: <h3 className={styles.text}>Finding Water & Food</h3>,
+      title: <h3 className="text">Finding Water & Food</h3>,
       body: (
-        <p className={styles.text}>
+        <p className="text">
           The control panel at the bottom of the screen allows you to toggle
-          between WATER{" "}
-          <img src={waterImg} alt="" className={styles.modalIcon} /> and FOOD{" "}
-          <img className={styles.modalIcon} src={foodImg} alt="" /> interfaces.
+          between WATER <img src={waterImg} alt="" className="modalIcon" /> and
+          FOOD <img className="modalIcon" src={foodImg} alt="" /> interfaces.
           Select the desired interface to search the city for free water and
           food locations. Use the center PHLASK button{" "}
-          <img src={phlaskImg} alt="" className={styles.modalIcon} /> to find
-          the nearest source of water or food, depending on which interface is
+          <img src={phlaskImg} alt="" className="modalIcon" /> to find the
+          nearest source of water or food, depending on which interface is
           toggled.
         </p>
       )
     },
     3: {
-      title: <h3 className={styles.text}>Filter</h3>,
+      title: <h3 className="text">Filter</h3>,
       body: (
-        <p className={styles.text}>
+        <p className="text">
           What’s a water app without a filter? Click the{" "}
           <FontAwesomeIcon
             icon={faSlidersH}
-            className={styles.filterIcon}
+            className="filterIcon"
             color="#999"
           />{" "}
           icon to filter the taps on the WATER and FOOD interfaces with more
@@ -53,16 +53,12 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       )
     },
     4: {
-      title: <h3 className={styles.text}>Legend</h3>,
+      title: <h3 className="test">Legend</h3>,
       body: (
-        <div className={styles.text}>
+        <div className="test">
           <p>
             Public{" "}
-            <img
-              className={styles.tapIcon}
-              src={phlaskFilterIcon("Public", 25, 25)}
-              alt="Public"
-            ></img>{" "}
+            <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
             <p>
               These taps are maintained by the City or publicly-funded
               enterprise
@@ -70,11 +66,7 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
           </p>
           <p>
             Shared{" "}
-            <img
-              className={styles.tapIcon}
-              src={phlaskFilterIcon("Shared", 25, 25)}
-              alt="Public"
-            ></img>{" "}
+            <img src={phlaskFilterIcon("Shared", 25, 25)} alt="Public"></img>{" "}
             <p>
               Taps located in private enterprises that have either explicitly
               granted public access or function as a de-facto public space
@@ -82,11 +74,7 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
           </p>{" "}
           <p>
             Private{" "}
-            <img
-              className={styles.tapIcon}
-              src={phlaskFilterIcon("Private", 25, 25)}
-              alt="Public"
-            ></img>{" "}
+            <img src={phlaskFilterIcon("Private", 25, 25)} alt="Public"></img>{" "}
             <p>
               These taps are located in private businesses; public access is not
               guaranteed
@@ -95,7 +83,6 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
           <p>
             Restricted{" "}
             <img
-              className={styles.tapIcon}
               src={phlaskFilterIcon("Restricted", 25, 25)}
               alt="Public"
             ></img>{" "}
@@ -103,13 +90,9 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
           </p>
           <p>
             School{" "}
+            <img className="modalIcon" src={schoolIcon} alt="School"></img>{" "}
             <img
-              className={styles.modalIcon}
-              src={schoolIcon}
-              alt="School"
-            ></img>{" "}
-            <img
-              className={styles.modalIcon}
+              className="modalIcon"
               src={charterSchoolIcon}
               alt="Charter School"
             ></img>
@@ -137,18 +120,20 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>{modalContent[step].title}</Modal.Header>
-      <Modal.Body className={styles.modalBody}>
-        {modalContent[step].body}
-      </Modal.Body>
+      <Modal.Body className="modalBody">{modalContent[step].body}</Modal.Body>
       <Modal.Footer>
         {step != 1 && (
-          <Button variant="primary" onClick={handlePrev}>
+          <Button variant="blue" onClick={handlePrev}>
             Previous
           </Button>
         )}
-        {step != 4 && (
-          <Button variant="primary" onClick={handleNext}>
+        {step != 4 ? (
+          <Button variant="blue" onClick={handleNext}>
             Next
+          </Button>
+        ) : (
+          <Button variant="red" onClick={handleClose}>
+            Close
           </Button>
         )}
       </Modal.Footer>
