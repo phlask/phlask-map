@@ -6,6 +6,9 @@ import phlaskImg from "./images/PHLASK Button.png";
 import styles from "./TutorialModal.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
+import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
+import schoolIcon from "./images/food-marker-icons/school.png";
+import charterSchoolIcon from "./images/food-marker-icons/charter-school.png";
 
 const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
   const modalContent = {
@@ -42,7 +45,6 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
           <FontAwesomeIcon
             icon={faSlidersH}
             className={styles.filterIcon}
-            size="1.5x"
             color="#999"
           />{" "}
           icon to filter the taps on the WATER and FOOD interfaces with more
@@ -55,22 +57,66 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       body: (
         <div className={styles.text}>
           <p>
-            Public (Blue) These taps are maintained by the City or
-            publicly-funded enterprise
+            Public{" "}
+            <img
+              className={styles.tapIcon}
+              src={phlaskFilterIcon("Public", 25, 25)}
+              alt="Public"
+            ></img>{" "}
+            <p>
+              These taps are maintained by the City or publicly-funded
+              enterprise
+            </p>
           </p>
           <p>
-            Shared (Green) Taps located in private enterprises that have either
-            explicitly granted public access or function as a de-facto public
-            space
+            Shared{" "}
+            <img
+              className={styles.tapIcon}
+              src={phlaskFilterIcon("Shared", 25, 25)}
+              alt="Public"
+            ></img>{" "}
+            <p>
+              Taps located in private enterprises that have either explicitly
+              granted public access or function as a de-facto public space
+            </p>
           </p>{" "}
           <p>
-            Private (Yellow) These taps are located in private businesses;
-            public access is not guaranteed
+            Private{" "}
+            <img
+              className={styles.tapIcon}
+              src={phlaskFilterIcon("Private", 25, 25)}
+              alt="Public"
+            ></img>{" "}
+            <p>
+              These taps are located in private businesses; public access is not
+              guaranteed
+            </p>
           </p>{" "}
-          <p>Restricted (Red) These taps are restricted from public use</p>
           <p>
-            School Public, private and charter schools that offer free food and
-            meals
+            Restricted{" "}
+            <img
+              className={styles.tapIcon}
+              src={phlaskFilterIcon("Restricted", 25, 25)}
+              alt="Public"
+            ></img>{" "}
+            <p>These taps are restricted from public use</p>
+          </p>
+          <p>
+            School{" "}
+            <img
+              className={styles.modalIcon}
+              src={schoolIcon}
+              alt="School"
+            ></img>{" "}
+            <img
+              className={styles.modalIcon}
+              src={charterSchoolIcon}
+              alt="Charter School"
+            ></img>
+            <p>
+              Public, private and charter schools that offer free food and
+              meals.
+            </p>
           </p>
           <p>
             Recreation Parks and recreation centers that offer free food and

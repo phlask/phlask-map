@@ -189,7 +189,12 @@ function Toolbar(props) {
         <FoodIcon />
       </button>
       <button onClick={handleShow} className={styles.infoButton}>
-        <FontAwesomeIcon icon={faInfoCircle} size="2x" color="#999" />
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          size="2x"
+          color="#999"
+          className={styles.infoIcon}
+        />
       </button>
       <TutorialModal
         show={showModal}
