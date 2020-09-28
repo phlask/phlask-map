@@ -1,7 +1,4 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from "react";
+import React, { useState } from "react";
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
@@ -19,7 +16,10 @@ import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
+import TutorialModal from "./TutorialModal";
 import { isMobile } from "react-device-detect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -85,6 +85,26 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
+  const [showModal, setShowModal] = useState(true);
+  const [modalStep, setModalStep] = useState(1);
+
+  function handleShow() {
+    setShowModal(true);
+  }
+
+  function handleClose() {
+    setShowModal(false);
+    setModalStep(1);
+  }
+
+  function handleNext() {
+    setModalStep(modalStep + 1);
+  }
+
+  function handlePrev() {
+    setModalStep(modalStep - 1);
+  }
+
   function switchType(type) {
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
@@ -138,7 +158,6 @@ function Toolbar(props) {
           {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
         </button>
       </div>
-
       <button
         className={`${styles.toolbarButton} ${
           styles.waterButton
@@ -149,7 +168,6 @@ function Toolbar(props) {
       >
         <WaterIcon />
       </button>
-
       {isMobile && (
         <button className={styles.closestTapButton}>
           <img
@@ -160,7 +178,6 @@ function Toolbar(props) {
           ></img>
         </button>
       )}
-
       <button
         className={`${styles.toolbarButton} ${
           styles.foodButton
@@ -171,6 +188,21 @@ function Toolbar(props) {
       >
         <FoodIcon />
       </button>
+      <button onClick={handleShow} className={styles.infoButton}>
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          size="2x"
+          color="#999"
+          className={styles.infoIcon}
+        />
+      </button>
+      <TutorialModal
+        show={showModal}
+        handleClose={handleClose}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+        step={modalStep}
+      />
     </div>
   );
 }

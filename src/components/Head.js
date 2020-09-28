@@ -4,8 +4,8 @@ import logo from "./images/phlask-logo/phlask-logo.png";
 import logo2x from "./images/phlask-logo/phlask-logo@2x.png";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Navbar, Nav, NavDropdown} from "react-bootstrap";
-import {isMobile} from "react-device-detect";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { isMobile } from "react-device-detect";
 
 export class Head extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ export class Head extends Component {
     this.state = {
       displayFilter: false
     };
-
   }
 
   render() {
@@ -23,8 +22,12 @@ export class Head extends Component {
         <header>
           <Navbar bg="light" expand="lg" className="headColumns">
             <Navbar.Brand href="https://phlask.me/">
-              <img src={logo} alt="Phlask" className="logoImage"
-                srcSet={logo + ", " + logo2x + " 2x"} />
+              <img
+                src={logo}
+                alt="Phlask"
+                className="logoImage"
+                srcSet={logo + ", " + logo2x + " 2x"}
+              />
             </Navbar.Brand>
             {/* <img src={icon} alt="filterImg" onClick={this.display} /> */}
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
