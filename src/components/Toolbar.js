@@ -12,8 +12,6 @@ import Filter from "./Filter";
 import FoodFilter from "./FoodFilter";
 import styles from "./Toolbar.module.scss";
 import phlaskImg from "./images/PHLASK Button.png";
-import waterImg from "./images/waterButton.png";
-import foodImg from "./images/foodButton.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import TutorialModal from "./TutorialModal";
