@@ -2,7 +2,7 @@ import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import React, { Component } from "react";
 import ReactTouchEvents from 'react-touch-events';
 import SearchBar from "./SearchBar";
-import "./ReactGoogleMaps.css";
+import styles from "./ReactGoogleMaps.module.scss";
 import { connect } from "react-redux";
 import SelectedTap from './SelectedTap'
 import { getTaps,
@@ -259,7 +259,7 @@ export class ReactGoogleMaps extends Component {
     // console.log("Rendered ReactGoogleMaps");
     
       return (
-        <div id="react-google-map" className={isMobile ? "mobile-map-container" : undefined}>
+        <div id="react-google-map" className={styles.mapContainer}>
           {/* <ClosestTap/> */}
           <ReactTouchEvents onTap={this.handleTap.bind(this)}>
             <div>
@@ -268,6 +268,11 @@ export class ReactGoogleMaps extends Component {
                 className={"map"}
                 style={style}
                 zoom={this.state.zoom}
+                zoomControl={!isMobile}
+                streetViewControl={false}
+                mapTypeControl={false}
+                rotateControl={false}
+                fullscreenControl={false}
                 initialCenter={{
                   lat: this.state.currlat,
                   lng: this.state.currlon
@@ -316,7 +321,7 @@ export class ReactGoogleMaps extends Component {
               </Map>
             </div>
           </ReactTouchEvents>
-            <div className="search-bar-container">
+            <div className={styles.searchBarContainer}>
               <SearchBar
                 className="searchBar"
                 search={location => this.searchForLocation(location)}
@@ -326,16 +331,7 @@ export class ReactGoogleMaps extends Component {
             <SelectedTap></SelectedTap>
         </div>
       );
-    } 
-  //   else {
-  //     return (
-  //       <div className="loading">
-  //         <Spinner animation="border" variant="info" className="spinner" />
-  //         Loading taps...
-  //       </div>
-  //     );
-  //   }
-  // }
+    }
 }
 
 const mapStateToProps = state => ({
