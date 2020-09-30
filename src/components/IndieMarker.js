@@ -6,6 +6,7 @@ import makeGetVisibleTaps from '../selectors/tapSelectors';
 import './IndieMarker.css'
 import phlaskMarkerIcon from './icons/PhlaskMarkerIcon'
 import phlaskFilterIcon from './icons/PhlaskFilterIcon'
+import { isMobile } from "react-device-detect";
 
 class IndieMarker extends React.Component{
 
@@ -77,7 +78,27 @@ class IndieMarker extends React.Component{
     onMarkerClick(tap){
         this.props.toggleInfoWindow(true);
         this.props.setSelectedPlace(tap);
-        this.props.setMapCenter(tap.position);
+        //this.props.setMapCenter(tap.position);
+        if (isMobile) {
+          // https://stackoverflow.com/questions/10656743/how-to-offset-the-center-point-in-google-maps-api-v3
+          const latlng = new this.props.google.maps.LatLng(tap.position.lat, tap.position.lng);
+          const offsetx = 0;
+          // offset by half the height of modal minus height of the marker icon
+          const modalHeight = document.getElementById("tap-info-container-mobile").offsetHeight;
+          const offsety = Math.floor(modalHeight / 2 - 20);
+          var scale = Math.pow(2, this.props.map.getZoom());
+          var worldCoordinateCenter = this.props.map.getProjection().fromLatLngToPoint(latlng);
+          var pixelOffset = new this.props.google.maps.Point((offsetx/scale) || 0,(offsety/scale) || 0);
+          var worldCoordinateNewCenter = new this.props.google.maps.Point(
+            worldCoordinateCenter.x - pixelOffset.x,
+            worldCoordinateCenter.y + pixelOffset.y
+          );
+          var newCenter = this.props.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+          const newLatlng = {lat: newCenter.lat(), lng: newCenter.lng()};
+          this.props.setMapCenter(newLatlng);
+        } else {
+          this.props.setMapCenter(tap.position);
+        }
       }
 
 
