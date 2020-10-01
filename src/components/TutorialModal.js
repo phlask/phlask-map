@@ -149,12 +149,12 @@ const TutorialModal = ({ showButton }) => {
           {modalContent[modalStep].body}
         </Modal.Body>
         <Modal.Footer>
-          {modalStep != 1 && (
+          {modalStep !== 1 && (
             <Button variant="blue" onClick={handlePrev}>
               Previous
             </Button>
           )}
-          {modalStep != 4 ? (
+          {modalStep !== 4 ? (
             <Button variant="blue" onClick={handleNext}>
               Next
             </Button>
