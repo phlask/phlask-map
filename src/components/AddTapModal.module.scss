@@ -1,0 +1,19 @@
+.addButton {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0.35rem;
+  color: #999;
+
+  &:hover {
+    color: #666;
+  }
+
+  svg {
+    padding: 0.15rem;
+  }
+}
+
+.mobileAddButton {
+  right: 2%;
+}

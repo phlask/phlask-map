@@ -15,6 +15,7 @@ import phlaskImg from "./images/PHLASK Button.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
+import AddTapModal from "./AddTapModal";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -163,6 +164,7 @@ function Toolbar(props) {
       >
         <FoodIcon />
       </button>
+      <AddTapModal />
     </div>
   );
 }
