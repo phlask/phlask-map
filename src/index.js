@@ -17,10 +17,10 @@ if (!firebase.length) {
 // window.addEventListener('resize', resizeWindow())
 
 let host = window.location.split('#')[0];
-let path = location.hash.slice(1);
+let path = window.location.hash.slice(1);
 if (path) {
-  location.hash = '';
-  history.replaceState({}, '', `${host}${path}`);
+  window.location.hash = '';
+  window.history.replaceState({}, '', `${host}${path}`);
 }
 
 ReactDOM.render(
