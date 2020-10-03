@@ -23,9 +23,18 @@ if (path) {
   window.history.replaceState({}, '', `${basepath}${path}`);
 }
 
+let host = window.location.host
+if (host === "test.phlask.me") {
+  basepath = window.location.pathname
+}
+else {
+  basepath = ""
+}
+console.log("Basepath: " + basepath)
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={basepath}>
       <App />
     </BrowserRouter>
   </Provider>,
