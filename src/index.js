@@ -16,21 +16,18 @@ if (!firebase.length) {
 
 // window.addEventListener('resize', resizeWindow())
 
-let basepath = window.location.pathname;
+let basepath = ""
+// Test-specific routing logic
+let host = window.location.host
+if (host === "test.phlask.me") {
+  basepath = window.location.pathname;
+}
+
 let path = window.location.hash.slice(1);
 if (path) {
   window.location.hash = '';
   window.history.replaceState({}, '', `${basepath}${path}`);
 }
-
-let host = window.location.host
-if (host === "test.phlask.me") {
-  basepath = window.location.pathname
-}
-else {
-  basepath = ""
-}
-console.log("Basepath: " + basepath)
 
 ReactDOM.render(
   <Provider store={store}>
