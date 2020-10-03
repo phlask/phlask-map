@@ -5,8 +5,7 @@ import {
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FOOD
+  PHLASK_TYPE_WATER
 } from "../actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
@@ -397,15 +396,15 @@ class SelectedTap extends React.Component {
               {/* Tap Type Icon */}
               <div id="tap-type-icon-container">
                 <div id="tap-type-icon">
-                  <img
-                    className="tap-info-icon-img"
-                    src={
-                      this.props.phlaskType === PHLASK_TYPE_WATER
-                        ? this.props.selectedPlace.infoIcon
-                        : this.props.selectedPlace.icon
-                    }
-                    alt=""
-                  ></img>
+                  {this.props.phlaskType === PHLASK_TYPE_WATER ? (
+                    <img
+                      className="tap-info-icon-img"
+                      src={this.props.selectedPlace.infoIcon}
+                      alt=""
+                    ></img>
+                  ) : (
+                    this.props.selectedPlace.infoIcon
+                  )}
                 </div>
               </div>
 

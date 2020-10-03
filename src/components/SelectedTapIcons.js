@@ -1,4 +1,4 @@
-import React, { setState, useEffect } from "react";
+import React from "react";
 import styles from "./SelectedTapIcons.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAccessibleIcon } from "@fortawesome/free-brands-svg-icons";

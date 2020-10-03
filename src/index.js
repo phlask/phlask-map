@@ -5,13 +5,13 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { waterConfig, foodConfig } from './firebase/firebaseConfig'
-import * as firebase from 'firebase'
+import { waterConfig, foodConfig } from "./firebase/firebaseConfig";
+import * as firebase from "firebase";
 // import { resizeWindow } from './actions'
 
-if (!firebase.length){
-  firebase.initializeApp(waterConfig)
-  firebase.initializeApp(foodConfig, "food")
+if (!firebase.length) {
+  firebase.initializeApp(waterConfig);
+  firebase.initializeApp(foodConfig, "food");
 }
 
 // window.addEventListener('resize', resizeWindow())

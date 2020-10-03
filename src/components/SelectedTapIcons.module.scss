@@ -19,14 +19,14 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
+  width: 30px;
+  height: 30px;
+  min-width: 30x;
+  min-height: 30px;
   margin: 0 auto;
   border-radius: 50%;
-  border: 2px solid #ccc;
-  padding: 4px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 
 .strikethrough {
@@ -40,7 +40,7 @@
     right: 50%;
     margin-right: -1px;
     transform: rotate(45deg);
-    width: 2px;
+    width: 1px;
     height: 100%;
     background-color: #ccc;
   }
