@@ -1,10 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import { Marker } from "google-maps-react";
 import { connect } from "react-redux";
 import { getFoodOrgs, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
 import makeGetVisibleTaps from '../selectors/foodOrgSelectors';
 import foodIcon from './images/food-marker-icons/food-site.png'
+import foodOtherMarkerIcon from './icons/FoodOtherMarkerIcon'
+import foodSchoolMarkerIcon from './icons/FoodSchoolMarkerIcon'
+import foodRecreationMarkerIcon from './icons/FoodRecreationMarkerIcon'
+import foodCongregationMarkerIcon from './icons/FoodCongregationMarkerIcon'
+import FoodOtherFilterIcon from './icons/FoodOtherFilterIcon'
+import FoodSchoolFilterIcon from './icons/FoodSchoolFilterIcon'
+import FoodRecreationFilterIcon from './icons/FoodRecreationFilterIcon'
+import FoodCongregationFilterIcon from './icons/FoodCongregationFilterIcon'
 import './IndieMarker.css'
+import { isMobile } from "react-device-detect";
 
 class IndieMarker extends React.Component{
 
@@ -52,19 +61,27 @@ class IndieMarker extends React.Component{
       })
     }
 
-    getIcon(access) {
+    getIcon(access,isForSelection = false) {
       if (!this.props.accessTypesHidden.includes(access)) {
         switch (access) {
           case "Food Site":
-            return require('./images/food-marker-icons/food-site.png')
+            return !isForSelection
+              ? { url: foodOtherMarkerIcon(48, 48) }
+              : <FoodOtherFilterIcon />
           case "School":
-            return require('./images/food-marker-icons/school.png')
+            return !isForSelection
+              ? { url: foodSchoolMarkerIcon(48, 48) }
+              : <FoodSchoolFilterIcon />
           case "Charter School":
-            return require('./images/food-marker-icons/charter-school.png')
+            return !isForSelection
+            ? { url: foodRecreationMarkerIcon(48, 48) }
+            : <FoodRecreationFilterIcon />
           case "PHA Community Center":
-            return require('./images/food-marker-icons/pha.png')
+            return !isForSelection
+            ? { url: foodCongregationMarkerIcon(48, 48) }
+            : <FoodCongregationFilterIcon />
           default:
-            return "./images/foodIcon.png";
+            return { url: foodOtherMarkerIcon(48, 48) }
         }
       } 
       else {
@@ -75,7 +92,27 @@ class IndieMarker extends React.Component{
     onMarkerClick(org){
         this.props.toggleInfoWindow(true);
         this.props.setSelectedPlace(org);
-        this.props.setMapCenter(org.position);
+        //this.props.setMapCenter(org.position);
+        if (isMobile) {
+          // https://stackoverflow.com/questions/10656743/how-to-offset-the-center-point-in-google-maps-api-v3
+          const latlng = new this.props.google.maps.LatLng(org.position.lat, org.position.lng);
+          const offsetx = 0;
+          // offset by half the height of modal minus height of the marker icon
+          const modalHeight = document.getElementById("tap-info-container-mobile").offsetHeight;
+          const offsety = Math.floor(modalHeight / 2 - 20);
+          var scale = Math.pow(2, this.props.map.getZoom());
+          var worldCoordinateCenter = this.props.map.getProjection().fromLatLngToPoint(latlng);
+          var pixelOffset = new this.props.google.maps.Point((offsetx/scale) || 0,(offsety/scale) || 0);
+          var worldCoordinateNewCenter = new this.props.google.maps.Point(
+            worldCoordinateCenter.x - pixelOffset.x,
+            worldCoordinateCenter.y + pixelOffset.y
+          );
+          var newCenter = this.props.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+          const newLatlng = {lat: newCenter.lat(), lng: newCenter.lng()};
+          this.props.setMapCenter(newLatlng);
+        } else {
+          this.props.setMapCenter(org.position);
+        }
       }
 
 
@@ -108,6 +145,7 @@ class IndieMarker extends React.Component{
                   onClick={this.onMarkerClick.bind(this)}
                   position={{ lat: this.props.org.lat, lng: this.props.org.lon }}
                   icon={this.getIcon(this.props.org.access)}
+                  infoIcon={this.getIcon(this.props.org.access,true)}
                 />
         </div>
       )

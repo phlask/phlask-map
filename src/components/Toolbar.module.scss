@@ -96,6 +96,17 @@ $foodColor: #8dc63f;
   width: 40px;
 }
 
+.infoButton {
+  max-width: 30px;
+  max-height: 30px;
+  position: absolute;
+  right: 3%;
+}
+
+.infoIcon:hover {
+  color: #666;
+}
+
 .mobileToolbar {
   position: fixed;
   width: 100%;
@@ -113,13 +124,17 @@ $foodColor: #8dc63f;
   .filterButton {
     left: 2%;
   }
+
+  .infoButton {
+    top: 11%;
+  }
 }
 
 .desktopToolbar {
   height: 50px;
   width: 30vw;
   min-width: 400px;
-  padding: 0 5.65rem 0 1rem;
+  padding: 0 7.8rem 0 1rem;
   border-radius: 5px;
   bottom: 1rem;
   left: 1rem;
@@ -146,6 +161,11 @@ $foodColor: #8dc63f;
     box-sizing: content-box;
     right: 1rem;
     padding-left: 1rem;
+    padding-right: 2rem;
     border-left: 1px solid #ccc;
+  }
+
+  .infoButton {
+    top: 17%;
   }
 }

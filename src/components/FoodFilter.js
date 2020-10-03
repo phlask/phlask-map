@@ -2,6 +2,10 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
+import FoodOtherFilterIcon from "./icons/FoodOtherFilterIcon";
+import FoodSchoolFilterIcon from "./icons/FoodSchoolFilterIcon";
+import FoodRecreationFilterIcon from "./icons/FoodRecreationFilterIcon";
+import FoodCongregationFilterIcon from "./icons/FoodCongregationFilterIcon";
 import styles from "./Filter.module.scss";
 import {
   OverlayTrigger,
@@ -18,14 +22,6 @@ import {
   resetFilterFunction
 } from "../actions";
 
-let icon_food_site = require("./images/food-marker-icons/food-site.png");
-let icon_school = require("./images/food-marker-icons/school.png");
-let icon_charter_school = require("./images/food-marker-icons/charter-school.png");
-let icon_pha = require("./images/food-marker-icons/pha.png");
-let icon_food_site_disabled = require("./images/food-marker-icons/food-site-disabled.png");
-let icon_school_disabled = require("./images/food-marker-icons/school-disabled.png");
-let icon_charter_school_disabled = require("./images/food-marker-icons/charter-school-disabled.png");
-let icon_pha_disabled = require("./images/food-marker-icons/pha-disabled.png");
 export class FoodFilter extends React.Component {
   handleChange(event) {
     if (event.target.id === "idRequired") {
@@ -65,16 +61,12 @@ export class FoodFilter extends React.Component {
                           this.props.setFilteredFoodTypes("Food Site")
                         }
                       >
-                        FOOD SITE
-                        <img
-                          className={styles.tapIcon}
-                          src={
-                            this.props.accessTypesHidden.includes("Food Site")
-                              ? icon_food_site_disabled
-                              : icon_food_site
-                          }
-                          alt="blue"
-                        ></img>
+                        OTHER
+                        <FoodOtherFilterIcon
+                          disabled={this.props.accessTypesHidden.includes(
+                            "Food Site"
+                          )}
+                        />
                       </button>
                     </Row>
                     <Row className={styles.legendRow}>
@@ -89,15 +81,11 @@ export class FoodFilter extends React.Component {
                         }
                       >
                         SCHOOL
-                        <img
-                          className={styles.tapIcon}
-                          src={
-                            this.props.accessTypesHidden.includes("School")
-                              ? icon_school_disabled
-                              : icon_school
-                          }
-                          alt="green"
-                        ></img>
+                        <FoodSchoolFilterIcon
+                          disabled={this.props.accessTypesHidden.includes(
+                            "School"
+                          )}
+                        ></FoodSchoolFilterIcon>
                       </button>
                     </Row>
                     <Row className={styles.legendRow}>
@@ -113,18 +101,12 @@ export class FoodFilter extends React.Component {
                           this.props.setFilteredFoodTypes("Charter School")
                         }
                       >
-                        CHARTER SCHOOL
-                        <img
-                          className={styles.tapIcon}
-                          src={
-                            this.props.accessTypesHidden.includes(
-                              "Charter School"
-                            )
-                              ? icon_charter_school_disabled
-                              : icon_charter_school
-                          }
-                          alt="yellow"
-                        ></img>
+                        RECREATION
+                        <FoodRecreationFilterIcon
+                          disabled={this.props.accessTypesHidden.includes(
+                            "Charter School"
+                          )}
+                        ></FoodRecreationFilterIcon>
                       </button>
                     </Row>
                     <Row className={styles.legendRow}>
@@ -142,18 +124,12 @@ export class FoodFilter extends React.Component {
                           )
                         }
                       >
-                        PHA
-                        <img
-                          className={styles.tapIcon}
-                          src={
-                            this.props.accessTypesHidden.includes(
-                              "PHA Community Center"
-                            )
-                              ? icon_pha_disabled
-                              : icon_pha
-                          }
-                          alt="red"
-                        ></img>
+                        CONGREGATION
+                        <FoodCongregationFilterIcon
+                          disabled={this.props.accessTypesHidden.includes(
+                            "PHA Community Center"
+                          )}
+                        ></FoodCongregationFilterIcon>
                       </button>
                     </Row>
                   </Col>

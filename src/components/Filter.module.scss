@@ -40,6 +40,11 @@
   padding: 5px;
   text-align: left;
   transition: background-color 0.15s ease-in-out;
+
+  svg {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .tapButton:focus,
@@ -86,7 +91,8 @@
 }
 
 .desktopPopover {
-  min-width: 30vw;
+  width: 30vw;
+  min-width: 400px;
   left: 0.7rem !important;
   margin-bottom: 0.4rem !important;
 
