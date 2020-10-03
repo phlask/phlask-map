@@ -16,6 +16,13 @@ if (!firebase.length) {
 
 // window.addEventListener('resize', resizeWindow())
 
+let host = window.location.split('#')[0];
+let path = location.hash.slice(1);
+if (path) {
+  location.hash = '';
+  history.replaceState({}, '', `${host}${path}`);
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
