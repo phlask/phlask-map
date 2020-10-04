@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
 import Div100vh from "react-div-100vh";
 import styles from "./MapPage.module.scss";
@@ -47,7 +46,6 @@ export class MapPage extends Component {
     return (
       <Div100vh>
         <div className={styles.mapPage}>
-          <Head legendButton={this.legendButton} />
           <div className={styles.mapWrapper}>
             <ReactGoogleMaps
               tapsDisplayed={this.state.tapsDisplayed}
