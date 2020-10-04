@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Head from "./Head";
 import ReactGoogleMaps from "./ReactGoogleMaps";
 import Div100vh from "react-div-100vh";
-import "./MapPage.css";
+import styles from "./MapPage.module.scss";
 
 export class MapPage extends Component {
   constructor(props) {
@@ -46,13 +45,14 @@ export class MapPage extends Component {
   render() {
     return (
       <Div100vh>
-        <div className="map-page">
-          {/* <Head legendButton={this.legendButton} /> */}
-          <ReactGoogleMaps
-            tapsDisplayed={this.state.tapsDisplayed}
-            ada={this.state.ada}
-            filtered={this.state.filtered}
-          />
+        <div className={styles.mapPage}>
+          <div className={styles.mapWrapper}>
+            <ReactGoogleMaps
+              tapsDisplayed={this.state.tapsDisplayed}
+              ada={this.state.ada}
+              filtered={this.state.filtered}
+            />
+          </div>
         </div>
       </Div100vh>
     );
