@@ -81,7 +81,9 @@ class IndieMarker extends React.Component{
             ? { url: foodCongregationMarkerIcon(48, 48) }
             : <FoodCongregationFilterIcon />
           default:
-            return { url: foodOtherMarkerIcon(48, 48) }
+            return !isForSelection
+            ? { url: foodOtherMarkerIcon(48, 48) }
+            : <FoodOtherFilterIcon />
         }
       } 
       else {
