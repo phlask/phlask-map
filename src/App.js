@@ -10,32 +10,36 @@ import Project from "./components/pages/Project";
 import Share from "./components/pages/Share";
 import Contribute from "./components/pages/Contribute";
 import Head from "./components/Head";
+import Div100vh from "react-div-100vh";
 
 function App(props) {
   // window.addEventListener('resize',props.resizeWindow)
   ReactGA.initialize("UA-160741705-1");
   ReactGA.pageview(window.location.pathname + window.location.search);
   return (
-    <>
-      <Head />
-      <Switch>
-        <Route exact path="/">
-          <MapPage />
-        </Route>
-        <Route path="/mission">
-          <Mission />
-        </Route>
-        <Route path="/project">
-          <Project />
-        </Route>
-        <Route path="/share">
-          <Share />
-        </Route>
-        <Route path="/contribute">
-          <Contribute />
-        </Route>
-      </Switch>
-    </>
+
+    <Div100vh>
+      <div className="page-wrapper">
+        <Head />
+        <Switch>
+          <Route exact path="/">
+            <MapPage />
+          </Route>
+          <Route path="/mission">
+            <Mission />
+          </Route>
+          <Route path="/project">
+            <Project />
+          </Route>
+          <Route path="/share">
+            <Share />
+          </Route>
+          <Route path="/contribute">
+            <Contribute />
+          </Route>
+        </Switch>
+      </div>
+    </Div100vh>
   );
 }
 
