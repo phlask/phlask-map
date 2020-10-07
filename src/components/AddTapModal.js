@@ -9,7 +9,7 @@ import {
   Accordion
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
-import { uploadFile } from "react-s3";
+import S3 from "aws-s3";
 import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -75,15 +75,18 @@ export class AddTapModal extends Component {
       secretAccessKey: "cl8S3clhBSPpPfLK0pQ2SIBpWVrToFrANfOIzHoD"
     };
 
-    uploadFile(imageFile, config)
-      .then(data => {
-        console.log(data.location);
-        console.log(this.state.images);
-        this.setState({
-          images: this.state.images.concat(data.location)
-        });
-      })
-      .catch(err => console.error(err));
+    const S3Client = new S3(config);
+
+    S3Client
+        .uploadFile(imageFile)
+        .then(data => {
+          console.log(data.location);
+          console.log(this.state.images);
+          this.setState({
+            images: this.state.images.concat(data.location)
+          });
+        })
+        .catch(err => console.error(err));
   }
 
   onChangeAddress(e) {
