@@ -1,5 +1,5 @@
 # phlask-map
-Code behind the Phlask Web Map
+Code behind the PHLASK Web Map
 
 ## Running Locally
 ### Yarn
@@ -25,7 +25,7 @@ The technical goals for this project are:
   - Implemented via our Nearest Tap Route
 
 ## Architecture
-The Phlask Map runs on a static page built with:
+The PHLASK Map runs on a static page built with:
 - ReactJS (https://reactjs.org)
   - Builds the static content that composes the map page
 - React Bootstrap (https://react-bootstrap.netlify.com)

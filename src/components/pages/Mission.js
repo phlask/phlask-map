@@ -5,7 +5,6 @@ import Head from "../Head";
 const Mission = () => {
   return (
     <>
-      {/* <Head /> */}
       <div className={styles.pageText}>
         <h2>Mission</h2>
         <h4>

@@ -1,12 +1,12 @@
-# Phlask Contributing guidelines
-First off, thank you for considering contributing to Phlask App. It's people like you that make Phlask such a great tool. Following these guidelines helps to communicate that you respect everyones time managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
+# PHLASK Contributing guidelines
+First off, thank you for considering contributing to PHLASK App. It's people like you that make PHLASK such a great tool. Following these guidelines helps to communicate that you respect everyones time managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
 
 # Code of Conduct
 We follow the Code for Philly COC listed [here](https://codeforphilly.org/pages/code_of_conduct/).
 
 # Your First Contribution
 
-Unsure where to begin contributing to Phlask? It always best to attend to for Philly Hack Nights to general understanding of what's needed. Most issues are created and assigned at Hack Nights. If you need more help on how to contribute to open source. You can learn how from this free series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
+Unsure where to begin contributing to PHLASK? It always best to attend to for Philly Hack Nights to general understanding of what's needed. Most issues are created and assigned at Hack Nights. If you need more help on how to contribute to open source. You can learn how from this free series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 
 1. Create your own fork of the code: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 2. Develop your changes in your fork (See the [README](README.md) to view how you can test your changes locally)
