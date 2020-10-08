@@ -1,0 +1,28 @@
+name: Build Beta Site
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Deploy the Map
+      env:
+        AWS_DEFAULT_REGION: us-east-2
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+         echo Build started on `date`
+         echo Building the webapp...
+         docker-compose run prod_build
+         echo Build completed on `date`
+         echo Pushing the webapp to S3...
+         sudo apt-get update -y
+         sudo apt-get install python3-setuptools
+         sudo apt-get install -y python3-pip
+         sudo pip3 install awscli --upgrade --user
+         aws s3 sync docker/build s3://phlask.me --acl public-read --delete
