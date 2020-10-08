@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactGoogleMaps from "./ReactGoogleMaps";
-import Div100vh from "react-div-100vh";
 import styles from "./MapPage.module.scss";
 
 export class MapPage extends Component {
@@ -44,17 +43,13 @@ export class MapPage extends Component {
 
   render() {
     return (
-      <Div100vh>
-        <div className={styles.mapPage}>
-          <div className={styles.mapWrapper}>
-            <ReactGoogleMaps
-              tapsDisplayed={this.state.tapsDisplayed}
-              ada={this.state.ada}
-              filtered={this.state.filtered}
-            />
-          </div>
-        </div>
-      </Div100vh>
+      <div className={styles.mapWrapper}>
+        <ReactGoogleMaps
+          tapsDisplayed={this.state.tapsDisplayed}
+          ada={this.state.ada}
+          filtered={this.state.filtered}
+        />
+      </div>
     );
   }
 }

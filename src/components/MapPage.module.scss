@@ -1,16 +1,7 @@
-.mapPage {
-  position: absolute;
-  height: 100%;
-  width: 100vw;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
 .mapWrapper {
   position: relative;
-  height: 100%;
   width: 100%;
+  flex: 1;
 
   & > div {
     height: 100%;
