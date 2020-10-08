@@ -354,11 +354,11 @@ class SelectedTap extends React.Component {
                         this.state.tapDescription !== undefined
                           ? this.state.tapDescription.length > 0
                             ? this.state.tapDescription
-                            : "Happy Phlasking"
+                            : "Happy PHLasking"
                           : this.state.organization !== null ||
                             this.state.organization !== undefined
                           ? this.state.organization
-                          : "Happy Phlasking"}
+                          : "Happy PHLasking"}
                       </div>
                     </div>
                   )}
@@ -371,11 +371,11 @@ class SelectedTap extends React.Component {
                       this.state.tapDescription !== undefined
                         ? this.state.tapDescription.length > 0
                           ? this.state.tapDescription
-                          : "Happy Phlasking"
+                          : "Happy PHLasking"
                         : this.state.organization !== null &&
                           this.state.organization !== undefined
                         ? this.state.organization
-                        : "Happy Phlasking"}
+                        : "Happy PHLasking"}
                     </div>
                   </div>
                 </div>

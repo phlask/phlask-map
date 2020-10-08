@@ -23,7 +23,7 @@ export class Head extends PureComponent {
             <Navbar.Brand href="https://phlask.me/">
               <img
                 src={logo}
-                alt="Phlask"
+                alt="PHLASK"
                 className="logoImage"
                 srcSet={logo + ", " + logo2x + " 2x"}
               />
