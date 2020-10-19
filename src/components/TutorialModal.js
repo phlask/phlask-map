@@ -1,9 +1,8 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import phlaskImg from "./images/PHLASK Button.png";
-// import styles from "./TutorialModal.module.scss";
 import "./TutorialModal.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
@@ -53,9 +52,9 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       )
     },
     4: {
-      title: <h3 className="test">Legend</h3>,
+      title: <h3 className="text">Legend</h3>,
       body: (
-        <div className="test">
+        <div className="text">
           <p>
             Public{" "}
             <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
@@ -122,6 +121,13 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
       <Modal.Header closeButton>{modalContent[step].title}</Modal.Header>
       <Modal.Body className="modalBody">{modalContent[step].body}</Modal.Body>
       <Modal.Footer>
+        {step === 1 && (
+        <Form> 
+          {/* <Form.Group controlId="formBasicCheckbox"> */}
+            <Form.Check type="checkbox" label="Don't show this again" className='text checkbox'/>
+          {/* </Form.Group> */}
+        </Form>
+        )}
         {step != 1 && (
           <Button variant="blue" onClick={handlePrev}>
             Previous
