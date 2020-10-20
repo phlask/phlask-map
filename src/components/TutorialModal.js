@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
@@ -9,8 +9,9 @@ import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
 import schoolIcon from "./images/food-marker-icons/school.png";
 import charterSchoolIcon from "./images/food-marker-icons/charter-school.png";
+import useLocalStorage from '../hooks/useLocalStorage'
 
-const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
+const TutorialModal = ({ handleClose, show, handleNext, showModalCheckbox, setShowModalPreference, step, handlePrev }) => {
   const modalContent = {
     1: {
       title: <h3 className="text">Welcome to the PHLASK App!</h3>,
@@ -116,18 +117,31 @@ const TutorialModal = ({ handleClose, show, handleNext, step, handlePrev }) => {
     }
   };
 
+
+  const [modalCheckbox, setModalCheckbox] = useState(false)
+
+  const handleCheckboxChange = (event) => {
+    console.log('event.target.checked', event.target.checked)
+    setModalCheckbox(event.target.checked)
+    if(modalCheckbox) {
+      setShowModalPreference(true)
+    } else {
+      setShowModalPreference(false)
+    }
+  }
+
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>{modalContent[step].title}</Modal.Header>
       <Modal.Body className="modalBody">{modalContent[step].body}</Modal.Body>
       <Modal.Footer>
-        {step === 1 && (
+        {step === 1 && showModalCheckbox ? (
         <Form> 
-          {/* <Form.Group controlId="formBasicCheckbox"> */}
-            <Form.Check type="checkbox" label="Don't show this again" className='text checkbox'/>
-          {/* </Form.Group> */}
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check checked={modalCheckbox} onChange={handleCheckboxChange} type="checkbox" label="Don't show this again" className='text checkbox'/>
+          </Form.Group>
         </Form>
-        )}
+        ) : null}
         {step != 1 && (
           <Button variant="blue" onClick={handlePrev}>
             Previous

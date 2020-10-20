@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
@@ -18,6 +18,9 @@ import TutorialModal from "./TutorialModal";
 import { isMobile } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import useLocalStorage from '../hooks/useLocalStorage'
+
+
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -85,9 +88,20 @@ function getCoordinates() {
 function Toolbar(props) {
   const [showModal, setShowModal] = useState(true);
   const [modalStep, setModalStep] = useState(1);
+  const [showModalPreference, setShowModalPreference] = useLocalStorage('showModalAgain', true);
+  const [showModalCheckbox, setShowModalCheckbox] = useState(true)
+
+
+  useEffect(() => {
+    if(!showModalPreference) {
+      setShowModal(false)
+    }
+  }, [showModalPreference])
 
   function handleShow() {
     setShowModal(true);
+    setShowModalCheckbox(false)
+
   }
 
   function handleClose() {
@@ -102,6 +116,15 @@ function Toolbar(props) {
   function handlePrev() {
     setModalStep(modalStep - 1);
   }
+
+  // const handleCheckboxChange = () => {
+  //   setModalCheckbox(!modalCheckbox)
+  //   if(modalCheckbox) {
+  //     setShowModal(true)
+  //   } else {
+  //     setShowModal(false)
+  //   }
+  // }
 
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -194,12 +217,15 @@ function Toolbar(props) {
           className={styles.infoIcon}
         />
       </button>
+      
       <TutorialModal
         show={showModal}
         handleClose={handleClose}
         handleNext={handleNext}
         handlePrev={handlePrev}
         step={modalStep}
+        setShowModalPreference={setShowModalPreference}
+        showModalCheckbox={showModalCheckbox}
       />
     </div>
   );
