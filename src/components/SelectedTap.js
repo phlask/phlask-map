@@ -344,8 +344,9 @@ class SelectedTap extends React.Component {
                 selectedPlace={this.props.selectedPlace}
               />
             </div>
-            {/* Walk Time & Info Icons */}
+            {/* Walk Time & Info Icons 
             <div className={styles.walkTime}>Estimated Walk Time: 12 mins</div>
+            */}
             <SelectedTapIcons place={this.props.selectedPlace} />
 
             {/* Description */}
