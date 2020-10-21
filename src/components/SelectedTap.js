@@ -39,6 +39,8 @@ class SelectedTap extends React.Component {
     infoExpansionStyle: {},
     isDescriptionShown: false,
     tapDescription: null,
+    tapStatement: null,
+    tapNormsAndRules: null,
     animationSpeed: 600,
     organization: this.props.selectedPlace.organization,
     address: this.props.selectedPlace.address,
@@ -155,10 +157,11 @@ class SelectedTap extends React.Component {
     this.setState({
       organization: selectedPlace.organization,
       address: selectedPlace.address,
-      tapDescription:
-        selectedPlace.description !== undefined
-          ? selectedPlace.description
-          : null
+      tapDescription: selectedPlace.description
+        ? selectedPlace.description
+        : "Happy PHLasking",
+      tapStatement: selectedPlace.statement,
+      tapNormsAndRules: selectedPlace.norms_rules
     });
   }
 
@@ -353,15 +356,24 @@ class SelectedTap extends React.Component {
                   {this.state.isDescriptionShown && (
                     <div className={styles.description}>
                       <div id="tap-info-description">
-                        {this.state.tapDescription !== null ||
-                        this.state.tapDescription !== undefined
-                          ? this.state.tapDescription.length > 0
-                            ? this.state.tapDescription
-                            : "Happy PHLasking"
-                          : this.state.organization !== null ||
-                            this.state.organization !== undefined
-                          ? this.state.organization
-                          : "Happy PHLasking"}
+                        {this.state.tapDescription && (
+                          <div className={styles.section}>
+                            <h3>Description</h3>
+                            <div>{this.state.tapDescription}</div>
+                          </div>
+                        )}
+                        {this.state.tapStatement && (
+                          <div className={styles.section}>
+                            <h3>Statement</h3>
+                            <div>{this.state.tapStatement}</div>
+                          </div>
+                        )}
+                        {this.state.tapNormsAndRules && (
+                          <div className={styles.section}>
+                            <h3>Norms &amp; Rules</h3>
+                            <div>{this.state.tapNormsAndRules}</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -370,15 +382,24 @@ class SelectedTap extends React.Component {
                 <div>
                   <div className={styles.description}>
                     <div id="tap-info-description">
-                      {this.state.tapDescription !== null &&
-                      this.state.tapDescription !== undefined
-                        ? this.state.tapDescription.length > 0
-                          ? this.state.tapDescription
-                          : "Happy PHLasking"
-                        : this.state.organization !== null &&
-                          this.state.organization !== undefined
-                        ? this.state.organization
-                        : "Happy PHLasking"}
+                      {this.state.tapDescription && (
+                        <div className={styles.section}>
+                          <h3>Description</h3>
+                          <div>{this.state.tapDescription}</div>
+                        </div>
+                      )}
+                      {this.state.tapStatement && (
+                        <div className={styles.section}>
+                          <h3>Statement</h3>
+                          <div>{this.state.tapStatement}</div>
+                        </div>
+                      )}
+                      {this.state.tapNormsAndRules && (
+                        <div className={styles.section}>
+                          <h3>Norms &amp; Rules</h3>
+                          <div>{this.state.tapNormsAndRules}</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
