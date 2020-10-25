@@ -49,6 +49,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
           selectedPlace.hours[currentDay].close !== undefined
         ) {
           setCurrentOrgHours({
+            day: hours.getDays(currentDay),
             open: hours.getSimpleHours(
               selectedPlace.hours[currentDay].open.time
             ),
@@ -112,7 +113,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               <div className="tap-hours-list-item">
                 {currentOrgHours !== null
                   ? currentOrgHours !== false
-                    ? `${currentOrgHours.open} - ${currentOrgHours.close}`
+                    ? `${currentOrgHours.day} ${currentOrgHours.open} - ${currentOrgHours.close}`
                     : ""
                   : ""}
               </div>
@@ -142,7 +143,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               <div className="tap-hours-list-item">
                 {currentOrgHours !== null
                   ? currentOrgHours !== false
-                    ? `${currentOrgHours.open} - ${currentOrgHours.close}`
+                    ? `${currentOrgHours.day} ${currentOrgHours.open} - ${currentOrgHours.close}`
                     : ""
                   : ""}
               </div>

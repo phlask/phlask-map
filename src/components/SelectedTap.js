@@ -11,7 +11,8 @@ import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
 import "./SelectedTap.css";
 import styles from "./SelectedTap.module.scss";
-import sampleImg from "./fountain.png";
+import sampleImg from "./images/phlask-tessellation.png";
+import sampleImg2x from "./images/phlask-tessellation@2x.png";
 import phlaskGreen from "./images/phlaskGreen.png";
 import phlaskBlue from "./images/phlaskBlue.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +26,8 @@ import SelectedTapIcons from "./SelectedTapIcons";
 import SelectedTapHours from "./SelectedTapHours";
 
 const tempImages = {
-  tapImg: sampleImg
+  tapImg: sampleImg,
+  tapImg2x: sampleImg2x
 };
 
 class SelectedTap extends React.Component {
@@ -37,6 +39,8 @@ class SelectedTap extends React.Component {
     infoExpansionStyle: {},
     isDescriptionShown: false,
     tapDescription: null,
+    tapStatement: null,
+    tapNormsAndRules: null,
     animationSpeed: 600,
     organization: this.props.selectedPlace.organization,
     address: this.props.selectedPlace.address,
@@ -153,10 +157,11 @@ class SelectedTap extends React.Component {
     this.setState({
       organization: selectedPlace.organization,
       address: selectedPlace.address,
-      tapDescription:
-        selectedPlace.description !== undefined
-          ? selectedPlace.description
-          : null
+      tapDescription: selectedPlace.description
+        ? selectedPlace.description
+        : "Happy PHLasking",
+      tapStatement: selectedPlace.statement,
+      tapNormsAndRules: selectedPlace.norms_rules
     });
   }
 
@@ -299,6 +304,7 @@ class SelectedTap extends React.Component {
                 id="tap-info-img"
                 // src={this.props.displayImg}
                 src={tempImages.tapImg}
+                srcSet={tempImages.tapImg + ", " + tempImages.tapImg2x + " 2x"}
                 alt=""
               ></img>
             </div>
@@ -338,8 +344,9 @@ class SelectedTap extends React.Component {
                 selectedPlace={this.props.selectedPlace}
               />
             </div>
-            {/* Walk Time & Info Icons */}
+            {/* Walk Time & Info Icons 
             <div className={styles.walkTime}>Estimated Walk Time: 12 mins</div>
+            */}
             <SelectedTapIcons place={this.props.selectedPlace} />
 
             {/* Description */}
@@ -350,15 +357,24 @@ class SelectedTap extends React.Component {
                   {this.state.isDescriptionShown && (
                     <div className={styles.description}>
                       <div id="tap-info-description">
-                        {this.state.tapDescription !== null ||
-                        this.state.tapDescription !== undefined
-                          ? this.state.tapDescription.length > 0
-                            ? this.state.tapDescription
-                            : "Happy PHLasking"
-                          : this.state.organization !== null ||
-                            this.state.organization !== undefined
-                          ? this.state.organization
-                          : "Happy PHLasking"}
+                        {this.state.tapDescription && (
+                          <div className={styles.section}>
+                            <h3>Description</h3>
+                            <div>{this.state.tapDescription}</div>
+                          </div>
+                        )}
+                        {this.state.tapStatement && (
+                          <div className={styles.section}>
+                            <h3>Statement</h3>
+                            <div>{this.state.tapStatement}</div>
+                          </div>
+                        )}
+                        {this.state.tapNormsAndRules && (
+                          <div className={styles.section}>
+                            <h3>Norms &amp; Rules</h3>
+                            <div>{this.state.tapNormsAndRules}</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -367,15 +383,24 @@ class SelectedTap extends React.Component {
                 <div>
                   <div className={styles.description}>
                     <div id="tap-info-description">
-                      {this.state.tapDescription !== null &&
-                      this.state.tapDescription !== undefined
-                        ? this.state.tapDescription.length > 0
-                          ? this.state.tapDescription
-                          : "Happy PHLasking"
-                        : this.state.organization !== null &&
-                          this.state.organization !== undefined
-                        ? this.state.organization
-                        : "Happy PHLasking"}
+                      {this.state.tapDescription && (
+                        <div className={styles.section}>
+                          <h3>Description</h3>
+                          <div>{this.state.tapDescription}</div>
+                        </div>
+                      )}
+                      {this.state.tapStatement && (
+                        <div className={styles.section}>
+                          <h3>Statement</h3>
+                          <div>{this.state.tapStatement}</div>
+                        </div>
+                      )}
+                      {this.state.tapNormsAndRules && (
+                        <div className={styles.section}>
+                          <h3>Norms &amp; Rules</h3>
+                          <div>{this.state.tapNormsAndRules}</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
