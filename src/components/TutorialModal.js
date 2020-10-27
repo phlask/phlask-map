@@ -121,7 +121,6 @@ const TutorialModal = ({ handleClose, show, handleNext, showModalCheckbox, setSh
   const [modalCheckbox, setModalCheckbox] = useState(false)
 
   const handleCheckboxChange = (event) => {
-    console.log('event.target.checked', event.target.checked)
     setModalCheckbox(event.target.checked)
     if(modalCheckbox) {
       setShowModalPreference(true)

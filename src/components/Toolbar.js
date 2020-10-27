@@ -86,17 +86,15 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
   const [showModalPreference, setShowModalPreference] = useLocalStorage('showModalAgain', true);
   const [showModalCheckbox, setShowModalCheckbox] = useState(true)
 
 
   useEffect(() => {
-    if(!showModalPreference) {
-      setShowModal(false)
-    }
-  }, [showModalPreference])
+    setShowModal(showModalPreference)
+  }, [])
 
   function handleShow() {
     setShowModal(true);
@@ -116,15 +114,6 @@ function Toolbar(props) {
   function handlePrev() {
     setModalStep(modalStep - 1);
   }
-
-  // const handleCheckboxChange = () => {
-  //   setModalCheckbox(!modalCheckbox)
-  //   if(modalCheckbox) {
-  //     setShowModal(true)
-  //   } else {
-  //     setShowModal(false)
-  //   }
-  // }
 
   function switchType(type) {
     if (props.phlaskType !== type) {
