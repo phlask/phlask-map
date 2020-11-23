@@ -1,5 +1,7 @@
 FROM node:lts-slim                                                                                                                           
-  
+
+RUN apt-get update && apt-get install python3
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
