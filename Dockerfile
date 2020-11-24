@@ -1,8 +1,4 @@
-FROM node:lts-slim                                                                                                                           
-
-RUN apt-get update && apt-get install -y python2.7
-
-ENV PYTHON='/usr/bin/python'
+FROM node:12-slim
 
 WORKDIR /usr/src/app
 
