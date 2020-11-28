@@ -1,29 +1,20 @@
 Arguments: 
-  /usr/local/bin/node /opt/yarn-v1.22.4/bin/yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add node-sass
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  C:\Python39\Scripts\;C:\Python39\;C:\Perl64\bin;C:\Users\PArriaza\AppData\Roaming\ActiveState\bin;C:\ProgramData\Oracle\Java\javapath;C:\Oracle\64-bit\product\12.2.0.1\client;C:\Oracle\32-bit\product\12.2.0.1\client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;K:\PROD\SEEDSV3\DLL;K:\PROD\CORE\BIN;C:\Program Files (x86)\Webex\Plugins;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_261\bin;C:\apache-maven-3.6.3\bin;C:\Program Files\ASCI\ActiveBatchV11\;C:\Program Files\dotnet\;C:\Program Files (x86)\Yarn\bin\;C:\Users\PArriaza\AppData\Local\Programs\Python\Python38-32\python.exe;C:\Program Files\Git\cmd\;C:\Program Files\Git\bin\;C:\StrawberryPerl\c\bin;C:\StrawberryPerl\perl\site\bin;C:\StrawberryPerl\perl\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Users\PArriaza\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\PArriaza\AppData\Local\Programs\Python\Python38-32\;C:\Users\PArriaza\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jre1.8.0_131\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2020.1.2\bin;;C:\Users\PArriaza\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\PArriaza\AppData\Local\Yarn\bin;C:\Users\PArriaza\AppData\Local\GitHubDesktop\bin;C:\Users\PArriaza\.dotnet\tools;C:\Users\PArriaza\AppData\Roaming\npm
 
 Yarn version: 
   1.22.4
 
 Node version: 
-  12.18.3
+  10.23.0
 
 Platform: 
-  linux x64
+  win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.5.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (/opt/yarn-v1.22.4/lib/cli.js:141375:19)
-      at Object.onceWrapper (events.js:421:28)
-      at ClientRequest.emit (events.js:315:20)
-      at TLSSocket.emitRequestTimeout (_http_client.js:709:9)
-      at Object.onceWrapper (events.js:421:28)
-      at TLSSocket.emit (events.js:327:22)
-      at TLSSocket.Socket._onTimeout (net.js:482:8)
-      at listOnTimeout (internal/timers.js:549:17)
-      at processTimers (internal/timers.js:492:7)
+  Error: EPERM: operation not permitted, unlink 'C:\phlask-map\node_modules\create-hmac\node_modules\.bin'
 
 npm manifest: 
   {
@@ -46,6 +37,7 @@ npm manifest:
       "react-bootstrap": "^1.0.0-beta.14",
       "react-burger-menu": "^2.6.9",
       "react-device-detect": "^1.11.14",
+      "react-div-100vh": "^0.5.0",
       "react-dom": "^16.8.6",
       "react-ga": "^2.7.0",
       "react-github-fork-ribbon": "^0.6.0",
@@ -3931,7 +3923,7 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
-  debug@^3.0.0, debug@^3.1.1, debug@^3.2.5, debug@^3.2.6:
+  debug@^3.1.1, debug@^3.2.5, debug@^3.2.6:
     version "3.2.6"
     resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
     integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
@@ -4739,9 +4731,9 @@ Lockfile:
     integrity sha1-Z9CAuXJSkdfjieNMJoYN2X8d66o=
   
   eventemitter3@^4.0.0:
-    version "4.0.4"
-    resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
-    integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
+    version "4.0.7"
+    resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+    integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
   
   events@^3.0.0:
     version "3.1.0"
@@ -5138,11 +5130,9 @@ Lockfile:
       readable-stream "^2.3.6"
   
   follow-redirects@^1.0.0:
-    version "1.11.0"
-    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.11.0.tgz#afa14f08ba12a52963140fe43212658897bc0ecb"
-    integrity sha512-KZm0V+ll8PfBrKwMzdo5D13b1bur9Iq9Zd/RMmAoQQcl2PxxFml8cxXPaaPYVbV0RjNjq1CU7zIzAOqtUPudmA==
-    dependencies:
-      debug "^3.0.0"
+    version "1.13.0"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+    integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
   
   for-in@^0.1.3:
     version "0.1.8"
@@ -5804,9 +5794,9 @@ Lockfile:
       micromatch "^3.1.10"
   
   http-proxy@^1.17.0:
-    version "1.18.0"
-    resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.0.tgz#dbe55f63e75a347db7f3d99974f2692a314a6a3a"
-    integrity sha512-84I2iJM/n1d4Hdgc6y2+qY5mDaz2PUVjlg9znE9byl+q0uC3DeByqBGReQu5tpLK0TAqTIXScRUV+dg7+bUPpQ==
+    version "1.18.1"
+    resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
+    integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
     dependencies:
       eventemitter3 "^4.0.0"
       follow-redirects "^1.0.0"
@@ -9705,6 +9695,11 @@ Lockfile:
     integrity sha512-BQ7xIEHx0VqPBGEtEFJRybHnhZ1Qn3BXX8dRR3EKLRfSTKpITUw925VYCGnygZDpmgYSq5NX0IvHGhy0w7Sckg==
     dependencies:
       ua-parser-js "^0.7.21"
+  
+  react-div-100vh@^0.5.0:
+    version "0.5.0"
+    resolved "https://registry.yarnpkg.com/react-div-100vh/-/react-div-100vh-0.5.0.tgz#493c5fc3a5dd49b92232f91464c6e2129246eb2e"
+    integrity sha512-2qEYAS83bfHPmzvucMbtCugSiDou4XG6zZZBkF53o5n3Ce1/Zpn6SJxsmCNq8TSb8yInxqjvIwf/yIsoLypVfA==
   
   react-dom@^16.8.6:
     version "16.13.1"

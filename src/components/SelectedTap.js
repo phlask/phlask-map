@@ -338,7 +338,7 @@ class SelectedTap extends React.Component {
                   <h5 id="tap-info-address">{this.state.address}</h5>
                 )}
               </div>
-
+           
               <SelectedTapHours
                 infoIsExpanded={this.props.infoIsExpanded}
                 selectedPlace={this.props.selectedPlace}
@@ -394,6 +394,16 @@ class SelectedTap extends React.Component {
                           <h3>Statement</h3>
                           <div>{this.state.tapStatement}</div>
                         </div>
+                        // <div id='walk-time-and-icons'
+                        //     style={{flexDirection: this.props.infoIsExpanded
+                        //         ? 'column'
+                        //         : 'row'
+                        //     }}
+                        // >
+                        //     <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
+                        //     {/* <div id='tap-info-walk-time'>Estimated Walk Time: {tapWalkTime.getTapWalkTime(
+                        //         this.props.selectedPlace.address, this.props.userLocation)}</div> */}
+
                       )}
                       {this.state.tapNormsAndRules && (
                         <div className={styles.section}>
@@ -416,11 +426,12 @@ class SelectedTap extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  showingInfoWindow: state.showingInfoWindow,
-  infoIsExpanded: state.infoIsExpanded,
-  infoWindowClass: state.infoWindowClass,
-  selectedPlace: state.selectedPlace,
-  phlaskType: state.phlaskType
+    showingInfoWindow: state.showingInfoWindow,
+    infoIsExpanded: state.infoIsExpanded,
+    infoWindowClass: state.infoWindowClass,
+    selectedPlace: state.selectedPlace,
+    phlaskType: state.phlaskType,
+    userLocation: state.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
