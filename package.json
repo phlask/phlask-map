@@ -3,17 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
+=======
+    "@types/googlemaps": "^3.40.3",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^17.0.0",
+>>>>>>> 4abaa6f... resolved/upgraded dependencdies, added openrouteservice-js
     "bootstrap": "^4.3.1",
     "firebase": "^6.2.0",
     "geolocation": "^0.2.0",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.4.1",
+<<<<<<< HEAD
     "node-sass": "4.9.0",
+=======
+    "openrouteservice-js": "^0.1.10",
+>>>>>>> 4abaa6f... resolved/upgraded dependencdies, added openrouteservice-js
     "popper.js": "^1.15.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-burger-menu": "^2.6.9",
@@ -33,7 +44,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "ts-pnp": "^1.0.1"
+    "ts-pnp": "^1.0.1",
+    "typescript": "^4.1.2"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
