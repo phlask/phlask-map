@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
@@ -13,16 +14,25 @@
     "@types/markerclustererplus": "^2.1.33",
     "@types/react": "^17.0.0",
 >>>>>>> 4abaa6f... resolved/upgraded dependencdies, added openrouteservice-js
+=======
+    "@types/googlemaps": "^3.40.3",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^17.0.0",
+>>>>>>> 4abaa6f8809745b4602e91c1943b0867ec0f2520
     "bootstrap": "^4.3.1",
     "firebase": "^6.2.0",
     "geolocation": "^0.2.0",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.4.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "node-sass": "4.9.0",
 =======
     "openrouteservice-js": "^0.1.10",
 >>>>>>> 4abaa6f... resolved/upgraded dependencdies, added openrouteservice-js
+=======
+    "openrouteservice-js": "^0.1.10",
+>>>>>>> 4abaa6f8809745b4602e91c1943b0867ec0f2520
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",

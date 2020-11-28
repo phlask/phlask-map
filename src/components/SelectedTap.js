@@ -332,6 +332,7 @@ class SelectedTap extends React.Component {
                     ? "org-name-and-address"
                     : "org-name-and-address-desktop"
                 }
+<<<<<<< HEAD
               >
                 <div id="tap-organization-name">{this.state.organization}</div>
                 {this.state.address && (
@@ -348,6 +349,24 @@ class SelectedTap extends React.Component {
             <div className={styles.walkTime}>Estimated Walk Time: 12 mins</div>
             */}
             <SelectedTapIcons place={this.props.selectedPlace} />
+=======
+                this.setCurrentDate()
+            }
+            if ( this.state.previewHeight !== this.refSelectedTap.current.clientHeight
+                && !this.state.isDescriptionShown ){
+                this.setState({
+                    previewHeight: this.refSelectedTap.current.clientHeight
+                })
+            }
+        }
+        console.log("Showing Info Window: " + this.props.showingInfoWindow);
+        console.log('user location:')
+        console.log(this.props.userLocation);
+       
+    }
+      
+    componentDidMount(){
+>>>>>>> 4abaa6f8809745b4602e91c1943b0867ec0f2520
 
             {/* Description */}
 
@@ -388,11 +407,49 @@ class SelectedTap extends React.Component {
                           <h3>Description</h3>
                           <div>{this.state.tapDescription}</div>
                         </div>
+<<<<<<< HEAD
                       )}
                       {this.state.tapStatement && (
                         <div className={styles.section}>
                           <h3>Statement</h3>
                           <div>{this.state.tapStatement}</div>
+=======
+                        {/* Walk Time & Info Icons */}
+                        <div id='walk-time-and-icons'
+                            style={{flexDirection: this.props.infoIsExpanded
+                                ? 'column'
+                                : 'row'
+                            }}
+                        >
+                            <div id='tap-info-walk-time'>Estimated Walk Time: 12 mins</div>
+                            {/* <div id='tap-info-walk-time'>Estimated Walk Time: {tapWalkTime.getTapWalkTime(
+                                this.props.selectedPlace.address, this.props.userLocation)}</div> */}
+
+                            <div id='tap-info-icons-box'
+                                style={this.props.infoIsExpanded
+                                    ? {width: '100%'}
+                                    : {}
+                                }
+                            >
+                                {Object.keys(this.state.tapIcons).map((icon,index) => (
+                                    this.state.tapIcons[icon] !== null
+                                        ? <div className='tap-info-icon' key={index}
+                                            style={this.props.infoIsExpanded
+                                                ?   {width: '4vh',
+                                                    height: '4vh',
+                                                    marginTop: '5px'}
+                                                : {}
+                                            }>
+                                            <img 
+                                                className='tap-info-icon-img' 
+                                                alt=''
+                                                src={this.state.tapIcons[icon]} 
+                                            ></img>
+                                        </div>
+                                        :[]
+                                ))}
+                            </div>
+>>>>>>> 4abaa6f8809745b4602e91c1943b0867ec0f2520
                         </div>
                         // <div id='walk-time-and-icons'
                         //     style={{flexDirection: this.props.infoIsExpanded
