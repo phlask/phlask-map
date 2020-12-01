@@ -298,7 +298,6 @@ export class ReactGoogleMaps extends Component {
                     mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
                   />
                 
-<<<<<<< HEAD
 
                 // Food
                     
@@ -323,25 +322,6 @@ export class ReactGoogleMaps extends Component {
             </div>
           </ReactTouchEvents>
             <div className={styles.searchBarContainer}>
-=======
-            :   
-              <MapMarkersFood 
-                map={this.props.map}
-                google={this.props.google}
-                mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-              />
-          }
-
-            {this.state.searchedTap != null && 
-              <Marker
-                name={"Your Search Result"}
-                position={this.state.searchedTap}
-              />
-            }
-          </Map>
-
-            <div className="search-bar-container">
->>>>>>> 4abaa6f8809745b4602e91c1943b0867ec0f2520
               <SearchBar
                 className="searchBar"
                 search={location => this.searchForLocation(location)}
