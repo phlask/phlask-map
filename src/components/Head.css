@@ -27,11 +27,6 @@
   height: 66px;
 }
 
-/* style the wrapper div around the map that we don't seem to be able to assign a class name to  */
-.mobile-menu + div {
-  height: 100%;
-}
-
 .dropdown-item{
   font-size: 10px;
   background-color: white;

@@ -3,16 +3,19 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
-import ReactGA from 'react-ga'
+import ReactGA from "react-ga";
+import { MemoryRouter } from "react-router-dom";
 
-jest.mock('react-ga')
+jest.mock("react-ga");
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
   ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <MemoryRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </MemoryRouter>,
     div
   );
   ReactDOM.unmountComponentAtNode(div);
