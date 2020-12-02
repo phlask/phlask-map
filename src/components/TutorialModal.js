@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
 import phlaskImg from "./images/PHLASK Button.png";
@@ -9,13 +9,18 @@ import { faSlidersH, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
 import schoolIcon from "./images/food-marker-icons/school.png";
 import charterSchoolIcon from "./images/food-marker-icons/charter-school.png";
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const TutorialModal = ({ showButton }) => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
+  const [showModalPreference, setShowModalPreference] = useLocalStorage('showModalAgain', true);
+  const [showModalCheckbox, setShowModalCheckbox] = useState(true);
+  const [modalCheckbox, setModalCheckbox] = useState(false);
 
   function handleShow() {
     setShowModal(true);
+    setShowModalCheckbox(false);
   }
 
   function handleClose() {
@@ -30,6 +35,19 @@ const TutorialModal = ({ showButton }) => {
   function handlePrev() {
     setModalStep(modalStep - 1);
   }
+  
+  const handleCheckboxChange = (event) => {
+    setModalCheckbox(event.target.checked)
+    if(modalCheckbox) {
+      setShowModalPreference(true)
+    } else {
+      setShowModalPreference(false)
+    }
+  }
+  
+  useEffect(() => {
+    setShowModal(showModalPreference)
+  }, [])
 
   const modalContent = {
     1: {
@@ -73,9 +91,9 @@ const TutorialModal = ({ showButton }) => {
       )
     },
     4: {
-      title: <h3 className="test">Legend</h3>,
+      title: <h3 className="text">Legend</h3>,
       body: (
-        <div className="test">
+        <div className="text">
           <p>
             Public{" "}
             <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
@@ -148,7 +166,14 @@ const TutorialModal = ({ showButton }) => {
         <Modal.Body className={styles.modalBody}>
           {modalContent[modalStep].body}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className={styles.modalFooter}>
+          {modalStep === 1 && showModalCheckbox ? (
+          <Form> 
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check checked={modalCheckbox} onChange={handleCheckboxChange} type="checkbox" label="Don't show this again" className='text checkbox'/>
+            </Form.Group>
+          </Form>
+          ) : null}
           {modalStep !== 1 && (
             <Button variant="blue" onClick={handlePrev}>
               Previous
