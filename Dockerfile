@@ -1,5 +1,5 @@
-FROM node:lts-slim                                                                                                                           
-  
+FROM node:12-slim
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./

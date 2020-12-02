@@ -1,0 +1,57 @@
+:global .btn-blue {
+  background-color: #27aae1;
+  color: #fff;
+  &:hover {
+    color: #666;
+  }
+}
+
+:global .btn-red {
+  background-color: #cd3642;
+  color: #fff;
+  &:hover {
+    color: #666;
+  }
+}
+
+.modalIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.modalBody {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.text {
+  color: #7c7c7d;
+}
+
+.modalFooter {
+  justify-content: space-between;
+}
+
+.infoIcon:hover {
+  color: #666;
+}
+
+.infoButton {
+  max-width: 30px;
+  max-height: 30px;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 50%;
+  background-color: white;
+
+  svg {
+    width: 100% !important;
+    height: 100%;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(#999, 0.3);
+  }
+}

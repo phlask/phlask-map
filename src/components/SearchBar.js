@@ -12,6 +12,7 @@ import {
   faSearchLocation,
   faChevronLeft
 } from "@fortawesome/free-solid-svg-icons";
+import TutorialModal from "./TutorialModal";
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -149,6 +150,10 @@ class SearchBar extends React.Component {
             />
           </button>
         )}
+
+        <TutorialModal
+          showButton={isMobile ? !this.state.isSearchBarShown : true}
+        />
       </>
     );
   }
