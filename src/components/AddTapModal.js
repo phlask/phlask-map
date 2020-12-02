@@ -9,7 +9,6 @@ import {
   Accordion
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
-import S3 from "aws-s3";
 import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -57,36 +56,32 @@ export class AddTapModal extends Component {
   }
 
   onDrop(picture) {
-    this.setState(
-      {
+    this.setState({
         pictures: picture
-      },
-      () => {
-        console.log(this.state.pictures);
-      }
-    );
+    });
   }
 
   submitImage(imageFile) {
-    const config = {
-      bucketName: "phlask-tap-images",
-      region: "us-east-2",
-      accessKeyId: "AKIA2K2LNBLNJVG4FNHA",
-      secretAccessKey: "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"
-    };
-
-    const S3Client = new S3(config);
-
-    S3Client
-        .uploadFile(imageFile)
-        .then(data => {
-          console.log(data.location);
-          console.log(this.state.images);
-          this.setState({
-            images: this.state.images.concat(data.location)
-          });
-        })
-        .catch(err => console.error(err));
+    // Open a request for a new signed URL for S3 upload
+    // Upload the image with a PUT request
+    // Store the image URL in state.images
+    const imageType = imageFile.type
+    const submitUrl = "/submit-image?type=" + imageType
+    
+    return fetch(submitUrl)
+    .then(response => response.json())
+    .then(data => {
+      return fetch(data.putURL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': imageFile.type
+        },
+        body: imageFile
+      }).then(() => {
+        return data.getURL
+      })
+    })
+    .catch(console.error)
   }
 
   onChangeAddress(e) {
@@ -162,7 +157,7 @@ export class AddTapModal extends Component {
   }
 
   connectToFirebase() {
-    const config = {
+    const prod_config = {
       apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
       authDomain: "phlask-web-map-new-taps.firebaseapp.com",
       databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
@@ -172,7 +167,34 @@ export class AddTapModal extends Component {
       appId: "1:673087230724:web:2545788342843cccdcf651"
     };
 
-    return firebase.initializeApp(config, "new");
+    const beta_config = {
+      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
+      authDomain: "phlask-web-map.firebaseapp.com",
+      databaseURL: "https://phlask-web-map-beta-new.firebaseio.com/",
+      projectId: "phlask-web-map",
+      storageBucket: "phlask-web-map.appspot.com",
+      messagingSenderId: "428394983826",
+      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+    };
+    
+    const test_config = {
+      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
+      authDomain: "phlask-web-map.firebaseapp.com",
+      databaseURL: "https://phlask-web-map-test-new.firebaseio.com/",
+      projectId: "phlask-web-map",
+      storageBucket: "phlask-web-map.appspot.com",
+      messagingSenderId: "428394983826",
+      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+    };
+
+    switch(window.location.hostname) {
+      case 'phlask.me':
+        return firebase.initializeApp(prod_config, "new");
+      case 'beta.phlask.me':
+        return firebase.initializeApp(beta_config, "new");
+      default:
+        return firebase.initializeApp(test_config, "new");    
+    }
   }
 
   getCount() {
@@ -191,9 +213,9 @@ export class AddTapModal extends Component {
           if (snapshot.val()[item].access === "TrashAcademy") {
             continue;
           }
-          this.setState({
-            count: (this.state.count += 1)
-          });
+          this.setState((prevState, props) => ({
+            count: (prevState.count + 1)
+          }));
         }
       });
   }
@@ -210,27 +232,39 @@ export class AddTapModal extends Component {
   }
 
   onSubmit(e) {
-    e.preventDefault();
-    const newTapData = {
-      images: this.state.images,
-      address: this.state.address,
-      city: this.state.city,
-      description: this.state.description,
-      access: this.state.accessToTap,
-      organization: this.state.organization,
-      filtration: this.state.filtration,
-      handicap: this.state.handicapAccessable,
-      service: this.state.tapServiceType,
-      tap_type: this.state.tapType,
-      vessel: this.state.waterVessleNeeded,
-      statement: this.state.phlaskStatement,
-      norms_rules: this.state.normsAndRules
-    };
 
-    this.state.dbConnection
-      .database()
-      .ref("/" + (this.state.count + 1).toString())
-      .set(newTapData);
+    e.preventDefault();
+    var upload_promises = []
+    // Upload images
+    this.state.pictures.forEach(picture => 
+      upload_promises.push(
+        this.submitImage(picture)
+      )
+    )
+
+    Promise.all(upload_promises).then((images) => {
+        // All image uploads completed, loading tap record
+        const newTapData = {
+          images: images,
+          address: this.state.address,
+          city: this.state.city,
+          description: this.state.description,
+          access: this.state.accessToTap,
+          organization: this.state.organization,
+          filtration: this.state.filtration,
+          handicap: this.state.handicapAccessable,
+          service: this.state.tapServiceType,
+          tap_type: this.state.tapType,
+          vessel: this.state.waterVessleNeeded,
+          statement: this.state.phlaskStatement,
+          norms_rules: this.state.normsAndRules
+        };
+
+        this.state.dbConnection
+          .database()
+          .ref("/" + (this.state.count + 1).toString())
+          .set(newTapData);
+    })
   }
   
   handleShow() {
@@ -570,7 +604,7 @@ export class AddTapModal extends Component {
                 withIcon={true}
                 buttonText="Choose images"
                 onChange={this.onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                imgExtension={[".jpg", ".png", ".gif"]}
                 maxFileSize={5242880}
                 withPreview={true}
               />
