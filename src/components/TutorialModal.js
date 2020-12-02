@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import waterImg from "./images/waterButton.png";
 import foodImg from "./images/foodButton.png";
@@ -91,9 +91,9 @@ const TutorialModal = ({ showButton }) => {
       )
     },
     4: {
-      title: <h3 className="text">Legend</h3>,
+      title: <h3 className={styles.text}>Legend</h3>,
       body: (
-        <div className="text">
+        <div className={styles.text}>
           <p>
             Public{" "}
             <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
@@ -170,7 +170,7 @@ const TutorialModal = ({ showButton }) => {
           {modalStep === 1 && showModalCheckbox ? (
           <Form> 
             <Form.Group controlId="formBasicCheckbox">
-              <Form.Check checked={modalCheckbox} onChange={handleCheckboxChange} type="checkbox" label="Don't show this again" className='text checkbox'/>
+                <Form.Check checked={modalCheckbox} onChange={handleCheckboxChange} type="checkbox" label="Don't show this again" className={`${styles.text} ${styles.checkbox}`}/>
             </Form.Group>
           </Form>
           ) : null}
