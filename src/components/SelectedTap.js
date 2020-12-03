@@ -59,10 +59,10 @@ class SelectedTap extends React.Component {
 
   getWalkingDurationAndTimes = () => {
     const orsAPIKey = '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
-    let userLocation = (this.props.userLocation == undefined) ? {lat: parseFloat("39.952744"),
-    lng: parseFloat("-75.163500")} : this.props.userLocation;
-    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation.lng},
-    ${userLocation.lat}&end=${this.props.selectedPlace.position.lng},${this.props.selectedPlace.position.lat}`)
+    // let userLocation = (this.props.userLocation == undefined) ? {lat: parseFloat("39.952744"),
+    // lng: parseFloat("-75.163500")} : this.props.userLocation;
+    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
+    ${this.props.userLocation.lat}&end=${this.props.selectedPlace.position.lng},${this.props.selectedPlace.position.lat}`)
         .then(response => response.json())
         .then(data => {
             // duration is returned in seconds
@@ -441,7 +441,8 @@ const mapStateToProps = state => ({
   infoIsExpanded: state.infoIsExpanded,
   infoWindowClass: state.infoWindowClass,
   selectedPlace: state.selectedPlace,
-  phlaskType: state.phlaskType
+  phlaskType: state.phlaskType,
+  userLocation: state.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
