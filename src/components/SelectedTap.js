@@ -48,11 +48,28 @@ class SelectedTap extends React.Component {
     testIcons: {
       access: phlaskBlue,
       accessibility: phlaskGreen
-    }
+    },
+    walkingDuration: 0,
+    walkingDistance: 0
   };
 
   componentWillUnmount() {
     console.log("unmounting");
+  }
+
+  getWalkingDurationAndTimes = () => {
+    const orsAPIKey = '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
+    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
+    ${this.props.userLocation.lat}&end=${this.props.selectedPlace.position.lng},${this.props.selectedPlace.position.lat}`)
+        .then(response => response.json())
+        .then(data => {
+            // duration is returned in seconds
+            let duration = Math.round((data.features[0].properties.summary.duration)/60);
+            // distance is returned in m = 0.00062 mi
+            let distance = ((data.features[0].properties.summary.distance)*0.00062).toFixed(1);
+            this.setState({walkingDuration: duration, 
+                          walkingDistance: distance});
+        });
   }
 
   toggleInfoExpanded(shouldExpand) {
@@ -198,6 +215,7 @@ class SelectedTap extends React.Component {
     if (this.props.showingInfoWindow) {
       if (this.props.selectedPlace !== prevProps.selectedPlace) {
         this.setCurrentDate();
+        this.getWalkingDurationAndTimes();
       }
       if (
         this.state.previewHeight !== this.refSelectedTap.current.clientHeight &&
@@ -344,9 +362,9 @@ class SelectedTap extends React.Component {
                 selectedPlace={this.props.selectedPlace}
               />
             </div>
-            {/* Walk Time & Info Icons 
-            <div className={styles.walkTime}>Estimated Walk Time: 12 mins</div>
-            */}
+            {/* Walk Time & Info Icons  */}
+            <div className={styles.walkTime}>Estimated Walk Time: {this.state.walkingDuration} mins ({this.state.walkingDistance} mi)</div>
+           
             <SelectedTapIcons place={this.props.selectedPlace} />
 
             {/* Description */}
@@ -420,7 +438,8 @@ const mapStateToProps = state => ({
   infoIsExpanded: state.infoIsExpanded,
   infoWindowClass: state.infoWindowClass,
   selectedPlace: state.selectedPlace,
-  phlaskType: state.phlaskType
+  phlaskType: state.phlaskType,
+  userLocation: state.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
