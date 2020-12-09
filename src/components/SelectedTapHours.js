@@ -14,7 +14,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
 
   useEffect(() => {
     // update hoursList, currentOrgHours, and isOpen when selectedPlace changes
-    if (selectedPlace.hours !== undefined) {
+    if (selectedPlace.hours && selectedPlace.hours.length === 7) {
       const hoursList = [];
 
       selectedPlace.hours.map((orgHours, index) => {
@@ -38,7 +38,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       for (let x = 0; x < day; x++) {
         hoursList.push(hoursList.shift());
       }
-
+      
       setHoursList(hoursList);
 
       setCurrentDay(new Date().getDay());
