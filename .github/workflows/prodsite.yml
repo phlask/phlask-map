@@ -3,7 +3,7 @@ name: Build Beta Site
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
