@@ -18,17 +18,19 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       const hoursList = [];
 
       selectedPlace.hours.map((orgHours, index) => {
+        console.log(orgHours.open)
         const formattedHours = {
           day: hours.getDays(index),
           open:
-            orgHours.open !== undefined
-              ? hours.getSimpleHours(orgHours.open.time)
+            orgHours.open !== undefined && orgHours.open !== ""
+              ? hours.getSimpleHours(orgHours.open)
               : null,
           close:
-            orgHours.close !== undefined
-              ? hours.getSimpleHours(orgHours.close.time)
+            orgHours.close !== undefined && orgHours.close !== ""
+              ? hours.getSimpleHours(orgHours.close)
               : null
         };
+        console.log(formattedHours)
         hoursList.push(formattedHours);
       });
 
@@ -45,22 +47,29 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
 
       if (selectedPlace.hours[currentDay] !== undefined) {
         if (
-          selectedPlace.hours[currentDay].open !== undefined &&
-          selectedPlace.hours[currentDay].close !== undefined
+          (
+            selectedPlace.hours[currentDay].open !== undefined ||
+            !selectedPlace.hours[currentDay].open
+          )
+          &&
+          (
+            selectedPlace.hours[currentDay].close !== undefined ||
+            selectedPlace.hours[currentDay].close
+          )
         ) {
           setCurrentOrgHours({
             day: hours.getDays(currentDay),
             open: hours.getSimpleHours(
-              selectedPlace.hours[currentDay].open.time
+              selectedPlace.hours[currentDay].open
             ),
             close: hours.getSimpleHours(
-              selectedPlace.hours[currentDay].close.time
+              selectedPlace.hours[currentDay].close
             )
           });
           setIsOpen(
             hours.checkOpen(
-              selectedPlace.hours[currentDay].open.time,
-              selectedPlace.hours[currentDay].close.time
+              selectedPlace.hours[currentDay].open,
+              selectedPlace.hours[currentDay].close
             )
           );
         } else {
@@ -70,7 +79,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
     } else {
       setHoursList([]);
       setCurrentOrgHours(false);
-      setIsOpen(false);
+      setIsOpen(null);
     }
   }, [selectedPlace]);
 
@@ -143,7 +152,9 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               <div className="tap-hours-list-item">
                 {currentOrgHours !== null
                   ? currentOrgHours !== false
-                    ? `${currentOrgHours.day} ${currentOrgHours.open} - ${currentOrgHours.close}`
+                    ? currentOrgHours.open // TODO: Update this logic so that "705 S. 5th St." shows closed on Tuesdays (or any business shows closed on current_day)
+                      ? `${currentOrgHours.day} ${currentOrgHours.open} - ${currentOrgHours.close}`
+                      : `${currentOrgHours.day} Closed`
                     : ""
                   : ""}
               </div>
@@ -168,7 +179,11 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
                     if (index !== 0) {
                       return (
                         <div className="tap-hours-list-item" key={index}>
-                          {`${hours.day} ${hours.open} - ${hours.close}`}
+                          {
+                            hours.open
+                              ?`${hours.day} ${hours.open} - ${hours.close}`
+                              : `${hours.day} Closed`
+                          }
                         </div>
                       );
                     }
