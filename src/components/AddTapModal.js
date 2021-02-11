@@ -288,6 +288,20 @@ export class AddTapModal extends Component {
         </Popover.Content>
       </Popover>
     );
+    const imageGuidlines = (
+      <Popover id="imageGuidlines">
+        <Popover.Title as="h3">Image Guidlines</Popover.Title>
+        <Popover.Content>
+          <strong>1.</strong> - Try to capture as much information as possible.
+          <br></br>
+          <strong>2.</strong> - Try to include as much light in the image as possible.
+          <br></br>
+          <strong>3.</strong> - Make sure the light source is above and behind you and the object you are photographing.
+          <br></br>
+          <strong>4.</strong> - No selfies pleaase
+        </Popover.Content>
+      </Popover>
+    );
     
     return (
       <>
@@ -297,6 +311,25 @@ export class AddTapModal extends Component {
           </Modal.Header>
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
+              <OverlayTrigger
+                delay={{ show: 500, hide: 400 }}
+                placement="right"
+                overlay={imageGuidlines}
+              >
+                <Form.Group controlId="Images" value={this.state.images} onChange={this.onChangeImages}>
+                  <Form.Label>
+                    <strong>Images</strong>
+                  </Form.Label>
+                  <ImageUploader
+                    withIcon={true}
+                    buttonText="Choose images"
+                    onChange={this.onDrop}
+                    imgExtension={[".jpg", ".png", ".gif"]}
+                    maxFileSize={5242880}
+                    withPreview={true}
+                  />
+                </Form.Group>
+              </OverlayTrigger>
               <Form.Group
                 controlId="Address"
                 id="time"
@@ -318,6 +351,97 @@ export class AddTapModal extends Component {
               >
                 <Form.Label>
                   <strong>City</strong>
+                </Form.Label>
+                <Form.Control plaintext readOnly defaultValue="Philadelphia"/>
+              </Form.Group>
+              <Form.Group
+                controlId="Access Type"
+                value={this.state.accessType}
+                onChange={this.onChangeAccessType}
+              >
+                <Form.Label>
+                  <strong>Access Type</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="AccessType"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Self-Serve">Self-Serve</option>
+                  <option value="Ask Proprietor">Ask Proprietor</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Tap Type"
+                value={this.state.tapType}
+                onChange={this.onChangeTapType}
+              >
+                <Form.Label>
+                  <strong>Tap Type</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="TapType"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Drinking Fountain">Drinking Fountain</option>
+                  <option value="Bottle Filler">Bottle Filler</option>
+                  <option value="Bottle Filler and Fountain ">Bottle Filler & Fountain</option>
+                  <option value="Sink">Sink</option>
+                  <option value="Soda Fountain">Soda Fountain</option>
+                  <option value="Dedicated Water Dispenser">Dedicated Water Dispenser</option>
+                  <option value="Water Cooler">Water Cooler</option>
+                  <option value="Other">Other</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Filtration"
+                value={this.state.Filtration}
+                onChange={this.onChangeFiltration}
+              >
+                <Form.Label>
+                  <strong>Filtration</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Filtration"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Handicap Accessible"
+                value={this.state.handicapAccessible}
+                onChange={this.onChangehandicapAccessible}
+              >
+                <Form.Label>
+                  <strong>Handicap Accessible</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Handicap Accesible"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Website"
+                value={this.state.website}
+                onChange={this.onChangeWebsite}
+              >
+                <Form.Label>
+                  <strong>Website</strong>
                 </Form.Label>
                 <Form.Control />
               </Form.Group>
@@ -600,14 +724,6 @@ export class AddTapModal extends Component {
                 </Accordion.Collapse>
               </Accordion>
 
-              <ImageUploader
-                withIcon={true}
-                buttonText="Choose images"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".png", ".gif"]}
-                maxFileSize={5242880}
-                withPreview={true}
-              />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.handleClose}>
