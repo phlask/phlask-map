@@ -194,11 +194,11 @@ export class AddFoodTapModal extends Component {
     // Modals connect to the database independently.  Need to find a more elegant solution.
     switch(window.location.hostname) {
       case 'phlask.me':
-        return firebase.initializeApp(prod_config, "food");
+        return firebase.initializeApp(prod_config, "food_form");
       case 'beta.phlask.me':
-        return firebase.initializeApp(beta_config, "food");
+        return firebase.initializeApp(beta_config, "food_form");
       default:
-        return firebase.initializeApp(test_config, "food");    
+        return firebase.initializeApp(test_config, "food_form");    
     }
   }
 
