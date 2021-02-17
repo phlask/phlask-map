@@ -195,13 +195,14 @@ export class AddTapModal extends Component {
       appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
     };
 
+    // Modals connect to the database independently.  Need to find a more elegant solution.
     switch(window.location.hostname) {
       case 'phlask.me':
-        return firebase.initializeApp(prod_config, "new");
+        return firebase.initializeApp(prod_config, "water");
       case 'beta.phlask.me':
-        return firebase.initializeApp(beta_config, "new");
+        return firebase.initializeApp(beta_config, "water");
       default:
-        return firebase.initializeApp(test_config, "new");    
+        return firebase.initializeApp(test_config, "water");    
     }
   }
 
