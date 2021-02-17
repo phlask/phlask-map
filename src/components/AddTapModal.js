@@ -28,6 +28,7 @@ export class AddTapModal extends Component {
     this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
     this.onChangeTapType = this.onChangeTapType.bind(this);
     this.onChangeWaterVessleNeeded = this.onChangeWaterVessleNeeded.bind(this);
+    this.onChangeSparkling = this.onChangeSparkling.bind(this);
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -43,10 +44,11 @@ export class AddTapModal extends Component {
       accessToTap: "",
       organization: "",
       filtration: "",
-      handicapAccessable: "",
+      handicapAccess: "",
       tapServiceType: "",
       tapType: "",
       waterVessleNeeded: "",
+      sparkling: "",
       phlaskStatement: "",
       normsAndRules: "",
       dbConnection: "",
@@ -122,7 +124,7 @@ export class AddTapModal extends Component {
 
   onChangeHandicapAccess(e) {
     this.setState({
-      handicapAccessable: e.target.value
+      handicapAccess: e.target.value
     });
   }
 
@@ -141,6 +143,12 @@ export class AddTapModal extends Component {
   onChangeWaterVessleNeeded(e) {
     this.setState({
       waterVessleNeeded: e.target.value
+    });
+  }
+
+  onChangeSparkling(e) {
+    this.setState({
+      sparkling: e.target.value
     });
   }
 
@@ -256,6 +264,7 @@ export class AddTapModal extends Component {
           service: this.state.tapServiceType,
           tap_type: this.state.tapType,
           vessel: this.state.waterVessleNeeded,
+          sparkling: this.state.sparkling,
           statement: this.state.phlaskStatement,
           norms_rules: this.state.normsAndRules
         };
@@ -398,6 +407,44 @@ export class AddTapModal extends Component {
                 </Form.Control>
               </Form.Group>
               <Form.Group
+                controlId="Water Vessel Needed"
+                value={this.state.waterVessleNeeded}
+                onChange={this.onChangeWaterVessleNeeded}
+              >
+                <Form.Label>
+                  <strong>Water Vessel Needed</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="WaterVesselNeeded"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Sparkling"
+                value={this.state.sparkling}
+                onChange={this.onChangeSparkling}
+              >
+                <Form.Label>
+                  <strong>Sparkling</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Sparkling"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
                 controlId="Filtration"
                 value={this.state.Filtration}
                 onChange={this.onChangeFiltration}
@@ -417,16 +464,16 @@ export class AddTapModal extends Component {
                 </Form.Control>
               </Form.Group>
               <Form.Group
-                controlId="Handicap Accessible"
-                value={this.state.handicapAccessible}
-                onChange={this.onChangehandicapAccessible}
+                controlId="Handicap Access"
+                value={this.state.handicapAccess}
+                onChange={this.onChangehandicapAccess}
               >
                 <Form.Label>
                   <strong>Handicap Accessible</strong>
                 </Form.Label>
                 <Form.Control         
                   as="select"
-                  id="Handicap Accesible"
+                  id="Handicap Access"
                   custom
                 >
                   <option value="Unknown">Choose...</option>
