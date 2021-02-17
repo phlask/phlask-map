@@ -13,6 +13,7 @@ import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
+import { prod_config, test_config, beta_config } from "../firebase/firebaseConfig";
 
 export class AddTapModal extends Component {
   constructor(props) {
@@ -165,35 +166,6 @@ export class AddTapModal extends Component {
   }
 
   connectToFirebase() {
-    const prod_config = {
-      apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
-      authDomain: "phlask-web-map-new-taps.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
-      projectId: "phlask-web-map-new-taps",
-      storageBucket: "phlask-web-map-new-taps.appspot.com",
-      messagingSenderId: "673087230724",
-      appId: "1:673087230724:web:2545788342843cccdcf651"
-    };
-
-    const beta_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-beta-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
-    
-    const test_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-test-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
 
     // Modals connect to the database independently.  Need to find a more elegant solution.
     switch(window.location.hostname) {
