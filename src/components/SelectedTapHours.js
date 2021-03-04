@@ -97,7 +97,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       >
         {isOpen ? "Open" : isOpen !== null ? "Closed" : "unavailable"}
       </div>
-      {currentOrgHours && (
+      {currentOrgHours && selectedPlace.status !== "CLOSED_TEMPORARILY" && (
         <div id="hours-area">
           {/* Placeholder for Dropdown */}
 

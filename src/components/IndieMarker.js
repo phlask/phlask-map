@@ -105,6 +105,9 @@ class IndieMarker extends React.Component{
   
     render(){
         console.log('rendered marker');
+        if (this.props.tap.status === "CLOSED_TEMPORARILY") {
+          console.log("this tap is CLOSED_TEMPORARILY", this.props.tap);
+        }
         
       return(
         // Doesn't Render Marker as child of div, 
