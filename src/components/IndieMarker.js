@@ -77,7 +77,7 @@ class IndieMarker extends React.Component{
 
     onMarkerClick(tap){
         this.props.toggleInfoWindow(true);
-        this.props.setSelectedPlace(tap);
+        this.props.setSelectedPlace({...tap, status: this.props.tap.status});
         //this.props.setMapCenter(tap.position);
         if (isMobile) {
           // https://stackoverflow.com/questions/10656743/how-to-offset-the-center-point-in-google-maps-api-v3
