@@ -14,6 +14,7 @@ import FoodRecreationFilterIcon from './icons/FoodRecreationFilterIcon'
 import FoodCongregationFilterIcon from './icons/FoodCongregationFilterIcon'
 import './IndieMarker.css'
 import { isMobile } from "react-device-detect";
+import ReactGA from "react-ga";
 
 class IndieMarker extends React.Component{
 
@@ -92,6 +93,11 @@ class IndieMarker extends React.Component{
     }
 
     onMarkerClick(org){
+        ReactGA.event({
+          category: "Tap",
+          action: "Food",
+          label: org.organization + ", " + org.address,
+        });
         this.props.toggleInfoWindow(true);
         this.props.setSelectedPlace(org);
         //this.props.setMapCenter(org.position);
