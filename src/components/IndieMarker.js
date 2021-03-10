@@ -106,41 +106,48 @@ class IndieMarker extends React.Component{
     render(){
         console.log('rendered marker');
         
-      return(
-        // Doesn't Render Marker as child of div, 
-        // so can't use this method to style individual Markers 
-        !this.props.visibleTaps.includes(this.props.tap)
-          ? []
-          : <div 
+      return (
+        // Doesn't Render Marker as child of div,
+        // so can't use this method to style individual Markers
+        !this.props.visibleTaps.includes(this.props.tap) ? (
+          []
+        ) : (
+          <div
           // className="testMarker"
-            // style={this.state.markerVisibility}
-        >
+          // style={this.state.markerVisibility}
+          >
             <Marker
-                  access={this.props.tap.access}
-                  map={this.props.map}
-                  google={this.props.google}
-                  mapCenter={this.props.mapCenter}
-                  key={this.props.key}
-                  name={this.props.tap.tapnum}
-                  organization={this.props.tap.organization}
-                  address={this.props.tap.address}
-                  hours={this.props.tap.hours}
-                  description={this.props.tap.description}
-                  filtration={this.props.tap.filtration}
-                  handicap={this.props.tap.handicap}
-                  service={this.props.tap.service}
-                  sparkling={"sparkling" in this.props.tap ? this.props.tap.sparkling : "no"}
-                  tap_type={this.props.tap.tap_type}
-                  norms_rules={this.props.tap.norms_rules}
-                  vessel={this.props.tap.vessel}
-                  img={this.props.tap.images}
-                  onClick={this.onMarkerClick.bind(this)}
-                  position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
-                  icon={this.getIcon(this.props.tap.access)}
-                  infoIcon={this.getIcon(this.props.tap.access,true)}
-                />
-        </div>
-      )
+              access={this.props.tap.access}
+              map={this.props.map}
+              google={this.props.google}
+              mapCenter={this.props.mapCenter}
+              key={this.props.key}
+              name={this.props.tap.tapnum}
+              organization={this.props.tap.organization}
+              address={this.props.tap.address}
+              hours={this.props.tap.hours}
+              description={this.props.tap.description}
+              filtration={this.props.tap.filtration}
+              handicap={this.props.tap.handicap}
+              service={this.props.tap.service}
+              sparkling={
+                "sparkling" in this.props.tap ? this.props.tap.sparkling : "no"
+              }
+              tap_type={this.props.tap.tap_type}
+              norms_rules={this.props.tap.norms_rules}
+              vessel={this.props.tap.vessel}
+              img={this.props.tap.images}
+              onClick={this.onMarkerClick.bind(this)}
+              position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
+              icon={this.getIcon(this.props.tap.access)}
+              infoIcon={this.getIcon(this.props.tap.access, true)}
+              title={this.props.tap.address
+                .replaceAll(" ", "")
+                .replaceAll(".", "")}
+            />
+          </div>
+        )
+      );
     }
   }
 
