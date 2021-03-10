@@ -282,7 +282,12 @@ export class AddFoodTapModal extends Component {
     );
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal 
+          show={this.state.show} 
+          onHide={this.handleClose}
+          keyboard={false}
+          centered
+        >
           <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
           </Modal.Header>
@@ -478,6 +483,7 @@ export class AddFoodTapModal extends Component {
 
         <button
           onClick={this.handleShow}
+          type="button"
           className={`${isMobile ? styles.mobileAddButton : ""} ${
             styles.addButton
           }`}

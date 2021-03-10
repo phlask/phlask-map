@@ -15,6 +15,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import { prod_config, test_config, beta_config } from "../firebase/firebaseConfig";
 
+
 export class AddTapModal extends Component {
   constructor(props) {
     super(props);
@@ -287,7 +288,12 @@ export class AddTapModal extends Component {
     
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal 
+          show={this.state.show} 
+          onHide={this.handleClose}
+          keyboard={false}
+          centered
+        >
           <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
           </Modal.Header>
@@ -297,6 +303,7 @@ export class AddTapModal extends Component {
                 delay={{ show: 500, hide: 400 }}
                 placement="right"
                 overlay={imageGuidlines}
+
               >
                 <Form.Group controlId="Images" value={this.state.images} onChange={this.onChangeImages}>
                   <Form.Label>
@@ -537,6 +544,7 @@ export class AddTapModal extends Component {
 
         <button
           onClick={this.handleShow}
+          type="button"
           className={`${isMobile ? styles.mobileAddButton : ""} ${
             styles.addButton
           }`}

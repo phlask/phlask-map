@@ -15,8 +15,8 @@ import phlaskImg from "./images/PHLASK Button.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
-import AddTapModal from "./AddTapModal";
-import AddFoodTapModal from "./AddFoodTapModal";
+import ToggleModal from "./ToggleModal";
+
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -165,11 +165,7 @@ function Toolbar(props) {
       >
         <FoodIcon />
       </button>
-      {props.phlaskType === PHLASK_TYPE_WATER ? (
-        <AddTapModal />
-      ) : (
-        <AddFoodTapModal />
-      )}
+        <ToggleModal />
     </div>
   );
 }
