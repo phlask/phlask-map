@@ -169,14 +169,18 @@ export class AddTapModal extends Component {
   connectToFirebase() {
 
     // Modals connect to the database independently.  Need to find a more elegant solution.
-    switch(window.location.hostname) {
-      case 'phlask.me':
-        return firebase.initializeApp(prod_config, "water_form");
-      case 'beta.phlask.me':
-        return firebase.initializeApp(beta_config, "water_form");
-      default:
-        return firebase.initializeApp(test_config, "water_form");    
-    }
+    if (!firebase.apps.length) {
+      switch(window.location.hostname) {
+        case 'phlask.me':
+          return firebase.initializeApp(prod_config, "water_form");
+        case 'beta.phlask.me':
+          return firebase.initializeApp(beta_config, "water_form");
+        default:
+          return firebase.initializeApp(test_config, "water_form");    
+      }
+    }else {
+      return firebase.app(); // if already initialized, use that one
+   }    
   }
 
   getCount() {
