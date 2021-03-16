@@ -141,9 +141,7 @@ class IndieMarker extends React.Component{
               position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
               icon={this.getIcon(this.props.tap.access)}
               infoIcon={this.getIcon(this.props.tap.access, true)}
-              title={this.props.tap.address
-                .replaceAll(" ", "")
-                .replaceAll(".", "")}
+              title={String(this.props.tap.tapnum)}
             />
           </div>
         )

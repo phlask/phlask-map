@@ -10,10 +10,9 @@ describe("opening screen", () => {
   });
   
   it("should open a modal when tap icon is clicked", () => {
-    cy.reload();
-    cy.xpath(
-      '//*[@id="react-google-map"]/div[1]/div/div[1]/div/div/div[1]/div[3]/div/div[3]/div[18]'
-    ).click();
+    cy.wait(5000);
+    cy.screenshot();
+    cy.get('[title="214"] > img').click();
     //cy.get("#react-google-map").click(370, 130);
   });
 });
