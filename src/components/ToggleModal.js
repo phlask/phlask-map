@@ -45,24 +45,16 @@ export class ToggleModal extends Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Food Tap or Water Tap</Modal.Title>
+            <Modal.Title as="h1">Add A Resource</Modal.Title>
           </Modal.Header>
-          <Form onSubmit={this.onSubmit}>
-            <Modal.Body>
-                <Form.Group controlId="Water Toggle">
-                  <Form.Label>
-                    <strong>Water</strong>
-                  </Form.Label>
-                    <AddTapModal />
-                </Form.Group>
-                <Form.Group controlId="Water Toggle">
-                  <Form.Label>
-                    <strong>Food</strong>
-                  </Form.Label>
-                    <AddFoodTapModal />
-                </Form.Group>
-            </Modal.Body>
-          </Form>
+          <Modal.Body>
+            <div className={styles.spacer}>
+              <AddTapModal />
+            </div>
+            <div className={styles.spacer}>
+              <AddFoodTapModal />
+            </div>
+          </Modal.Body>
         </Modal>
         <button
           onClick={this.handleShow}

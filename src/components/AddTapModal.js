@@ -10,8 +10,6 @@ import {
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 import * as firebase from "firebase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import { prod_config, test_config, beta_config } from "../firebase/firebaseConfig";
 
@@ -546,15 +544,17 @@ export class AddTapModal extends Component {
           </Form>
         </Modal>
 
-        <button
+        <Button
+          variant="outline-primary"
           onClick={this.handleShow}
           type="button"
+          size="lg"
           className={`${isMobile ? styles.mobileAddButton : ""} ${
-            styles.addButton
+            styles.toggleButton
           }`}
         >
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
+          <strong>Water</strong>
+        </Button>
       </>
     );
   }

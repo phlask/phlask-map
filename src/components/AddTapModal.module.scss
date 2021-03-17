@@ -17,3 +17,23 @@
 .mobileAddButton {
   right: 2%;
 }
+
+.toggleButton {
+  width: 400px;
+  height: 150px;
+  // color: rgb(8, 11, 226);
+  vertical-align: middle;
+  margin: 2rem 2rem 2rem;
+
+  // &:hover {
+  //   color: rgb(142, 143, 180);
+  // }
+}
+
+.spacer {
+  padding: 0.50rem;
+}
+
+.center {
+  text-align: center;
+}
