@@ -9,10 +9,10 @@ describe("opening screen", () => {
     cy.get(".btn-red").click();
   });
   
-  it("should open a modal when tap icon is clicked", () => {
-    cy.wait(5000);
-    cy.screenshot();
-    cy.get('[title="214"] > img').click();
+  // it("should open a modal when tap icon is clicked", () => {
+  //   cy.wait(5000);
+  //   cy.screenshot();
+  //   cy.get('[title="214"] > img').click();
     //cy.get("#react-google-map").click(370, 130);
   });
 });
