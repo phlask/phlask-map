@@ -36,6 +36,16 @@ export const beta_config = {
   appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
 };
 
+export const food_beta_config = {
+  apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
+  authDomain: "phlask-web-map.firebaseapp.com",
+  databaseURL: "https://phlask-web-map-food-beta-new.firebaseio.com/",
+  projectId: "phlask-web-map",
+  storageBucket: "phlask-web-map.appspot.com",
+  messagingSenderId: "428394983826",
+  appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+};
+
 export const test_config = {
   apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
   authDomain: "phlask-web-map.firebaseapp.com",

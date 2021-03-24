@@ -10,7 +10,7 @@ import {
 import ImageUploader from "react-images-upload";
 import * as firebase from "firebase";
 import { isMobile } from "react-device-detect";
-import { prod_config, test_config, beta_config } from "../firebase/firebaseConfig";
+import { foodConfig, test_config, food_beta_config } from "../firebase/firebaseConfig";
 
 
 export class AddFoodTapModal extends Component {
@@ -158,17 +158,21 @@ export class AddFoodTapModal extends Component {
   connectToFirebase() {
 
     // Modals connect to the database independently.  Need to find a more elegant solution.
-    if (!firebase.apps.length) {
+    if (!firebase.apps.includes('food_form')) {
       switch(window.location.hostname) {
         case 'phlask.me':
-          return firebase.initializeApp(prod_config, "food_form");
+          return firebase.initializeApp(foodConfig, "food_form");
         case 'beta.phlask.me':
-          return firebase.initializeApp(beta_config, "food_form");
+          return firebase.initializeApp(food_beta_config, "food_form");
         default:
-          return firebase.initializeApp(test_config, "food_form");    
+          if (!firebase.apps.includes("test")) {
+            return firebase.initializeApp(test_config, "test");    
+          } else{
+            return firebase.app("test"); // if already initialized, use that one
+          }
       }
     }else {
-      return firebase.app(); // if already initialized, use that one
+      return firebase.app("food_form"); // if already initialized, use that one
    }    
   }
 
