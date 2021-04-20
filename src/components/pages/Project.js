@@ -12,6 +12,31 @@ const Project = () => {
           technology as an artistic medium to build social cohesion for solving
           collective sustainability issues.
         </p>
+        <p>
+          Recognizing that the public plumbing infrastructure can much more
+          efficiently distribute water than more energy-intensive, wasteful
+          distribution of single-use plastic bottles, we determined that
+          encouraging users to obtain water from the public water system instead
+          of single-use plastic bottles would have net-positive impacts of
+          reducing waste and reducing energy consumption.
+        </p>
+        <p>
+          While the Philadelphia Water Department maintains many public drinking
+          fountains throughout the city, they are scarce when compared to the
+          ubiquity of private taps at restaurants, shops, cafes, businesses and
+          even people's homes. While every citizen already has the right to ask
+          the proprietor to share water from their tap, this isn't a culturally
+          normalized behavior. Unspoken norms of patronage and privacy, coupled
+          with policies like "restroom is for customers only," give the
+          impression that private businesses may not be willing to share water,
+          which would discourage even asking in the first place.
+        </p>
+        <p>
+          We hope that the PHLASK project will help identify businesses that
+          reject such boundaries and would like to normalize water sharing. This
+          project is a conscious effort to create and normalize, what we believe
+          is, a more environmentally sustainable behavior.
+        </p>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ const test = "UA-16993431-2"
 
 // initiatize google analytics
 export const initGA = () => {
-    ReactGA.initialize(test);
+    ReactGA.initialize(trackingIdTest);
     ReactGA.pageview(window.location.pathname + window.location.search);
 }
 

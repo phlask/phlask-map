@@ -14,7 +14,7 @@ import Div100vh from "react-div-100vh";
 
 function App(props) {
   // window.addEventListener('resize',props.resizeWindow)
-  ReactGA.initialize("UA-160741705-1");
+  ReactGA.initialize("UA-180456355-2");
   ReactGA.pageview(window.location.pathname + window.location.search);
   return (
 

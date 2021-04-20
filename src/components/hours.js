@@ -64,10 +64,13 @@ export const hours = {
         //     ? `${newHour}${mer}`
         //     : `${newHour}:${minute}${mer}` );
         
-    
-        return parseInt(minute) === 0
+        if (isNaN(hour) || isNaN(minute) ){
+            return null
+        } else {
+            return parseInt(minute) === 0
             ? `${newHour}${mer}`
             : `${newHour}:${minute}${mer}`    
+        }
     },
     
     getHourFromMilitary: function getHourFromMilitary(hour){
