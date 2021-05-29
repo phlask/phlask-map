@@ -39,3 +39,6 @@ The site runs on:
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
+
+## Testing 
+##### Phlask run

@@ -8,8 +8,11 @@ describe("opening screen", () => {
     cy.get(".TutorialModal_modalFooter__3YVhE > :nth-child(2)").click();
     cy.get(".btn-red").click();
   });
-
-  it("should open a modal when tap icon is clicked", () => {
-    cy.get("#react-google-map").click(370, 130);
+  
+  // it("should open a modal when tap icon is clicked", () => {
+  //   cy.wait(5000);
+  //   cy.screenshot();
+  //   cy.get('[title="214"] > img').click();
+    //cy.get("#react-google-map").click(370, 130);
   });
 });
