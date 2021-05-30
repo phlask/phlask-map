@@ -60,7 +60,7 @@ class SelectedTap extends React.Component {
   getWalkingDurationAndTimes = () => {
     const orsAPIKey = '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
-    ${this.props.userLocation.lat}&end=${this.props.selectedPlace.position.lng},${this.props.selectedPlace.position.lat}`)
+    ${this.props.userLocation.lat}&end=${this.props.selectedPlace.lon},${this.props.selectedPlace.lat}`)
         .then(response => response.json())
         .then(data => {
             // duration is returned in seconds
