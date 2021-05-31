@@ -138,6 +138,11 @@ class IndieMarker extends React.Component{
                   position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
                   icon={this.getIcon(this.props.tap.access)}
                   infoIcon={this.getIcon(this.props.tap.access,true)}
+                  // The lat and lon properties were added to support the object-based
+                  // setting for SET_SELECTED_PLACE redux action. Object structure consistency is needed in order
+                  // for getWalkingDurationAndTimes() in the SelectedTap component to work properly.
+                  lat={this.props.tap.lat}
+                  lon={this.props.tap.lon}
                 />
         </div>
       )
