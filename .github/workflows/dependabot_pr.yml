@@ -1,11 +1,11 @@
-name: Test Site on S3
-
-on: [push, pull_request]
+name: Dependabot Automerge
+on:
+  pull_request_target
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v1
       # Ref for branch name splitting: https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
