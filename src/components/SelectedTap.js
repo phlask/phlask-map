@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React from "react";
+import ReactGA from "react-ga";
 import { connect } from "react-redux";
 import {
   toggleInfoExpanded,
@@ -125,7 +126,7 @@ class SelectedTap extends React.Component {
     this.props.toggleInfoWindowClass(shouldShow);
     // Animate in
     if (shouldShow) {
-      this.props.toggleInfoWindow(shouldShow);
+      this.props.toggleInfoWindow(shouldShow);      
     }
     // Animate Out
     else {
@@ -164,6 +165,15 @@ class SelectedTap extends React.Component {
     } else if (direction === "right") {
       // console.log('Right');
     }
+  }
+
+  handleGA(){
+    console.log(this.props.selectedPlace);
+    ReactGA.event({
+      category: `Tap - ${this.props.phlaskType}`,
+      action: 'InfoShown',
+      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`
+    });
   }
 
   // Handle Times
@@ -216,6 +226,7 @@ class SelectedTap extends React.Component {
       if (this.props.selectedPlace !== prevProps.selectedPlace) {
         this.setCurrentDate();
         this.getWalkingDurationAndTimes();
+        this.handleGA();
       }
       if (
         this.state.previewHeight !== this.refSelectedTap.current.clientHeight &&

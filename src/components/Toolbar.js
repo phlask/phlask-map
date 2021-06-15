@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
@@ -80,11 +81,23 @@ function getCoordinates() {
   });
 }
 
+
+
 function Toolbar(props) {
   function switchType(type) {
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
+      handleGA(type);
     }
+  }
+
+  function handleGA(type){
+    
+    ReactGA.event({
+      category: `Toolbar`,
+      action: 'MapChangedTo',
+      label: `${type}`
+    });
   }
 
   function setClosest() {

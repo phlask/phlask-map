@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import { isMobile } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +31,18 @@ export class Filter extends React.Component {
     } else if (event.target.id === "openNow") {
       this.props.setToggleState("openNow", !this.props.openNow);
     } else console.log("error with toggle");
+    this.handleGA(event.target.id,!this.props[event.target.id]);
   }
+
+  handleGA(id, state){
+    
+    ReactGA.event({
+      category: `Toolbar`,
+      action: 'FilterUpdate',
+      label: `${id} = ${state} `
+    });
+  }
+
 
   render() {
     return (
