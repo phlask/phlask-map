@@ -10,9 +10,9 @@ import {
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 import * as firebase from "firebase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
+import { prod_config, test_config, beta_config } from "../firebase/firebaseConfig";
+
 
 export class AddTapModal extends Component {
   constructor(props) {
@@ -28,6 +28,7 @@ export class AddTapModal extends Component {
     this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
     this.onChangeTapType = this.onChangeTapType.bind(this);
     this.onChangeWaterVessleNeeded = this.onChangeWaterVessleNeeded.bind(this);
+    this.onChangeSparkling = this.onChangeSparkling.bind(this);
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -43,10 +44,11 @@ export class AddTapModal extends Component {
       accessToTap: "",
       organization: "",
       filtration: "",
-      handicapAccessable: "",
+      handicapAccess: "",
       tapServiceType: "",
       tapType: "",
       waterVessleNeeded: "",
+      sparkling: "",
       phlaskStatement: "",
       normsAndRules: "",
       dbConnection: "",
@@ -122,7 +124,7 @@ export class AddTapModal extends Component {
 
   onChangeHandicapAccess(e) {
     this.setState({
-      handicapAccessable: e.target.value
+      handicapAccess: e.target.value
     });
   }
 
@@ -144,6 +146,12 @@ export class AddTapModal extends Component {
     });
   }
 
+  onChangeSparkling(e) {
+    this.setState({
+      sparkling: e.target.value
+    });
+  }
+
   onChangePhlaskStatement(e) {
     this.setState({
       phlaskStatement: e.target.value
@@ -157,44 +165,24 @@ export class AddTapModal extends Component {
   }
 
   connectToFirebase() {
-    const prod_config = {
-      apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
-      authDomain: "phlask-web-map-new-taps.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
-      projectId: "phlask-web-map-new-taps",
-      storageBucket: "phlask-web-map-new-taps.appspot.com",
-      messagingSenderId: "673087230724",
-      appId: "1:673087230724:web:2545788342843cccdcf651"
-    };
 
-    const beta_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-beta-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
-    
-    const test_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-test-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
-
-    switch(window.location.hostname) {
-      case 'phlask.me':
-        return firebase.initializeApp(prod_config, "new");
-      case 'beta.phlask.me':
-        return firebase.initializeApp(beta_config, "new");
-      default:
-        return firebase.initializeApp(test_config, "new");    
-    }
+    // Modals connect to the database independently.  Need to find a more elegant solution.
+    if (!firebase.apps.includes("water_form")) {
+      switch(window.location.hostname) {
+        case 'phlask.me':
+          return firebase.initializeApp(prod_config, "water_form");
+        case 'beta.phlask.me':
+          return firebase.initializeApp(beta_config, "water_form");
+        default:
+          if (!firebase.apps.includes("test")) {
+            return firebase.initializeApp(test_config, "test");    
+          } else{
+            return firebase.app("test"); // if already initialized, use that one
+          }
+      }
+    }else {
+      return firebase.app("water_form"); // if already initialized, use that one
+   }    
   }
 
   getCount() {
@@ -256,6 +244,7 @@ export class AddTapModal extends Component {
           service: this.state.tapServiceType,
           tap_type: this.state.tapType,
           vessel: this.state.waterVessleNeeded,
+          sparkling: this.state.sparkling,
           statement: this.state.phlaskStatement,
           norms_rules: this.state.normsAndRules
         };
@@ -288,21 +277,57 @@ export class AddTapModal extends Component {
         </Popover.Content>
       </Popover>
     );
+    const imageGuidlines = (
+      <Popover id="imageGuidlines">
+        <Popover.Title as="h3">Image Guidlines</Popover.Title>
+        <Popover.Content>
+          <strong>1.</strong> - Try to capture as much information as possible.
+          <br></br>
+          <strong>2.</strong> - Try to include as much light in the image as possible.
+          <br></br>
+          <strong>3.</strong> - Make sure the light source is above and behind you and the object you are photographing.
+          <br></br>
+          <strong>4.</strong> - No selfies pleaase
+        </Popover.Content>
+      </Popover>
+    );
     
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal 
+          show={this.state.show} 
+          onHide={this.handleClose}
+          keyboard={false}
+          centered
+        >
           <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
           </Modal.Header>
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
+              <OverlayTrigger
+                delay={{ show: 500, hide: 400 }}
+                placement="right"
+                overlay={imageGuidlines}
+
+              >
+                <Form.Group controlId="Images" value={this.state.images} onChange={this.onChangeImages}>
+                  <Form.Label>
+                    <strong>Images</strong>
+                  </Form.Label>
+                  <ImageUploader
+                    withIcon={true}
+                    buttonText="Choose images"
+                    onChange={this.onDrop}
+                    imgExtension={[".jpg", ".png", ".gif"]}
+                    maxFileSize={5242880}
+                    withPreview={true}
+                  />
+                </Form.Group>
+              </OverlayTrigger>
               <Form.Group
                 controlId="Address"
-                id="time"
-                label="End Time"
-                type="time"
-                defaultValue="07:30"
+                id="Address"
                 value={this.state.address}
                 onChange={this.onChangeAddress}
               >
@@ -318,6 +343,135 @@ export class AddTapModal extends Component {
               >
                 <Form.Label>
                   <strong>City</strong>
+                </Form.Label>
+                <Form.Control/>
+              </Form.Group>
+              <Form.Group
+                controlId="Access Type"
+                value={this.state.accessType}
+                onChange={this.onChangeAccessType}
+              >
+                <Form.Label>
+                  <strong>Access Type</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="AccessType"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Self-Serve">Self-Serve</option>
+                  <option value="Ask Proprietor">Ask Proprietor</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Tap Type"
+                value={this.state.tapType}
+                onChange={this.onChangeTapType}
+              >
+                <Form.Label>
+                  <strong>Tap Type</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="TapType"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Drinking Fountain">Drinking Fountain</option>
+                  <option value="Bottle Filler">Bottle Filler</option>
+                  <option value="Bottle Filler and Fountain ">Bottle Filler & Fountain</option>
+                  <option value="Sink">Sink</option>
+                  <option value="Soda Fountain">Soda Fountain</option>
+                  <option value="Dedicated Water Dispenser">Dedicated Water Dispenser</option>
+                  <option value="Water Cooler">Water Cooler</option>
+                  <option value="Other">Other</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Water Vessel Needed"
+                value={this.state.waterVessleNeeded}
+                onChange={this.onChangeWaterVessleNeeded}
+              >
+                <Form.Label>
+                  <strong>Water Vessel Needed</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="WaterVesselNeeded"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Sparkling"
+                value={this.state.sparkling}
+                onChange={this.onChangeSparkling}
+              >
+                <Form.Label>
+                  <strong>Sparkling</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Sparkling"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Filtration"
+                value={this.state.Filtration}
+                onChange={this.onChangeFiltration}
+              >
+                <Form.Label>
+                  <strong>Filtration</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Filtration"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Handicap Access"
+                value={this.state.handicapAccess}
+                onChange={this.onChangehandicapAccess}
+              >
+                <Form.Label>
+                  <strong>Handicap Accessible</strong>
+                </Form.Label>
+                <Form.Control         
+                  as="select"
+                  id="Handicap Access"
+                  custom
+                >
+                  <option value="Unknown">Choose...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Unsure">Not Sure</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                controlId="Website"
+                value={this.state.website}
+                onChange={this.onChangeWebsite}
+              >
+                <Form.Label>
+                  <strong>Website</strong>
                 </Form.Label>
                 <Form.Control />
               </Form.Group>
@@ -379,235 +533,6 @@ export class AddTapModal extends Component {
                 <Form.Control placeholder="What organization/company does this tap belong to?" />
               </Form.Group>
 
-              <Accordion>
-                <Accordion.Toggle as={Button} eventKey="0">
-                  <h5 style={{ fontSize: "1rem", marginBottom: "10px" }}>
-                    Additional Information
-                  </h5>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <div className="additional-info">
-                    <Form.Group
-                      value={this.state.filtration}
-                      onChange={this.onChangeFiltration}
-                    >
-                      <Form.Label as="legend">
-                        <strong>Filtration</strong>
-                      </Form.Label>
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Yes"
-                        name="FilterRadios"
-                        id="FilterRadios1"
-                        value="yes"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="No"
-                        name="FilterRadios"
-                        id="FilterRadios2"
-                        value="no"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      value={this.state.handicapAccessable}
-                      onChange={this.onChangeHandicapAccess}
-                    >
-                      <Form.Label as="legend">
-                        <strong>Handicap Accessible</strong>
-                      </Form.Label>
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Yes"
-                        name="HandicapRadios"
-                        id="HandicapRadios1"
-                        value="yes"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="No"
-                        name="HandicapRadios"
-                        id="HandicapRadios2"
-                        value="no"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      value={this.state.tapServiceType}
-                      onChange={this.onChangeTapServiceType}
-                    >
-                      <Form.Label as="legend">
-                        <strong>Tap Service Type</strong>
-                      </Form.Label>
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Self-serve"
-                        name="ServiceRadios"
-                        id="ServiceRadios1"
-                        value="self serve"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Ask proprietor"
-                        name="ServiceRadios"
-                        id="ServiceRadios2"
-                        value="ask proprietor"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      value={this.state.tapType}
-                      onChange={this.onChangeTapType}
-                    >
-                      <Form.Label as="legend">
-                        <strong>Tap Type</strong>
-                      </Form.Label>
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Drinking Foutain"
-                        name="TypeRadios"
-                        id="TypeRadios1"
-                        value="drinking fountain"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Bottle filler and fountain"
-                        name="TypeRadios"
-                        id="TypeRadios2"
-                        value="bottle filter and fountain"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Sink"
-                        name="TypeRadios"
-                        id="TypeRadios3"
-                        value="sink"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Soda fountain"
-                        name="TypeRadios"
-                        id="TypeRadios4"
-                        value="soda fountain"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Dedicated water dispenser"
-                        name="TypeRadios"
-                        id="TypeRadios5"
-                        value="dedicated water dispenser"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Water cooler"
-                        name="TypeRadios"
-                        id="TypeRadios6"
-                        value="water cooler"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Other"
-                        name="TypeRadios"
-                        id="TypeRadios7"
-                        value="other"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      value={this.state.waterVessleNeeded}
-                      onChange={this.onChangeWaterVessleNeeded}
-                    >
-                      <Form.Label as="legend">
-                        <strong>Water Vessel Needed</strong>
-                      </Form.Label>
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="Yes"
-                        name="VesselRadios"
-                        id="VesselRadios1"
-                        value="yes"
-                      />
-
-                      <Form.Check
-                        className="radioText"
-                        type="radio"
-                        label="No"
-                        name="VesselRadios"
-                        id="VesselRadios2"
-                        value="no"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      controlId="Phlask Statement"
-                      value={this.state.phlaskStatement}
-                      onChange={this.onChangePhlaskStatement}
-                    >
-                      <Form.Label>
-                        <strong>PHLASK Statement</strong>
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows="2"
-                        placeholder="Please use this section to make any statement about your organization or enterprise!"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      controlId="Norms and Rules"
-                      value={this.state.normsAndRules}
-                      onChange={this.onChangeNormsAndRules}
-                    >
-                      <Form.Label>
-                        <strong>Norms and Rules</strong>
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows="3"
-                        placeholder="PHLASKing is intended to be an unobtrusive part of doing business. If there are special norms associated with accessing water, please use this space to describe them."
-                      />
-                    </Form.Group>
-                  </div>
-                </Accordion.Collapse>
-              </Accordion>
-
-              <ImageUploader
-                withIcon={true}
-                buttonText="Choose images"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".png", ".gif"]}
-                maxFileSize={5242880}
-                withPreview={true}
-              />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.handleClose}>
@@ -620,14 +545,17 @@ export class AddTapModal extends Component {
           </Form>
         </Modal>
 
-        <button
+        <Button
+          variant="outline-primary"
           onClick={this.handleShow}
+          type="button"
+          size="lg"
           className={`${isMobile ? styles.mobileAddButton : ""} ${
-            styles.addButton
+            styles.toggleButton
           }`}
         >
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
+          <strong>Water</strong>
+        </Button>
       </>
     );
   }
