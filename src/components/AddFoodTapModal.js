@@ -316,10 +316,7 @@ export class AddFoodTapModal extends Component {
                 </OverlayTrigger>
                 <Form.Group
                   controlId="Address"
-                  id="time"
-                  label="End Time"
-                  type="time"
-                  defaultValue="07:30"
+                  id="Address"
                   value={this.state.address}
                   onChange={this.onChangeAddress}
                 >
