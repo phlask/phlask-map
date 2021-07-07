@@ -7,6 +7,7 @@ import './IndieMarker.css'
 import phlaskMarkerIcon from './icons/PhlaskMarkerIcon'
 import phlaskFilterIcon from './icons/PhlaskFilterIcon'
 import { isMobile } from "react-device-detect";
+import ReactGA from "react-ga";
 
 class IndieMarker extends React.Component{
 
@@ -75,7 +76,12 @@ class IndieMarker extends React.Component{
       }
     }
 
-    onMarkerClick(tap){
+    onMarkerClick(tap) {
+        ReactGA.event({
+          category: "Tap",
+          action: "Water",
+          label: tap.organization + ", " + tap.address,
+        });
         this.props.toggleInfoWindow(true);
         this.props.setSelectedPlace(tap);
         //this.props.setMapCenter(tap.position);
