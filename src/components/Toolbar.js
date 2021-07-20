@@ -81,8 +81,6 @@ function getCoordinates() {
   });
 }
 
-
-
 function Toolbar(props) {
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -91,11 +89,10 @@ function Toolbar(props) {
     }
   }
 
-  function handleGA(type){
-    
+  function handleGA(type) {
     ReactGA.event({
       category: `Toolbar`,
-      action: 'MapChangedTo',
+      action: "MapChangedTo",
       label: `${type}`
     });
   }
