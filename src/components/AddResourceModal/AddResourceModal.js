@@ -287,19 +287,6 @@ export class AddResourceModal extends Component {
   }
 
   render() {
-    const popoverAccess = (
-      <Popover id="popover-access">
-        <Popover.Title as="h3">Tap Access Types</Popover.Title>
-        <Popover.Content>
-          <strong>Public</strong> - This tap resides in a public space (e.g. a
-          water fountain in a park)
-          <br></br>
-          <strong>Private</strong> - This tap resides in a private space (e.g.
-          inside a retail store or cafe)
-        </Popover.Content>
-      </Popover>
-    );
-
     return (
       <>
         <Modal
@@ -343,7 +330,7 @@ export class AddResourceModal extends Component {
 
           {/* <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
-          </Modal.Header>
+          </Modal.Header> 
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
               <Form.Group
