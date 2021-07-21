@@ -1,4 +1,4 @@
-import styles from "./AddTapModal.module.scss";
+import styles from "./AddResourceModal.module.scss";
 import React, { Component } from "react";
 import {
   Modal,
@@ -13,10 +13,12 @@ import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
+import ChooseResource from "./ChooseResource";
 
-export class AddTapModal extends Component {
+export class AddResourceModal extends Component {
   constructor(props) {
     super(props);
+    this.onChangeFormStep = this.onChangeFormStep.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
@@ -51,8 +53,15 @@ export class AddTapModal extends Component {
       normsAndRules: "",
       dbConnection: "",
       count: 0,
-      show: false
+      show: false,
+      formStep: "chooseResource"
     };
+  }
+
+  // controls which modal state to show
+  // (e.g. choose resource, add water tap, social links)
+  onChangeFormStep(step) {
+    this.setState({ formStep: step });
   }
 
   onDrop(picture) {
@@ -289,7 +298,10 @@ export class AddTapModal extends Component {
     return (
       <>
         <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
+          {this.state.formStep === "chooseResource" && (
+            <ChooseResource setFormStep={this.onChangeFormStep} />
+          )}
+          {/* <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
           </Modal.Header>
           <Form onSubmit={this.onSubmit}>
@@ -611,7 +623,7 @@ export class AddTapModal extends Component {
                 Submit
               </Button>
             </Modal.Footer>
-          </Form>
+          </Form> */}
         </Modal>
 
         <button
@@ -627,4 +639,4 @@ export class AddTapModal extends Component {
   }
 }
 
-export default AddTapModal;
+export default AddResourceModal;
