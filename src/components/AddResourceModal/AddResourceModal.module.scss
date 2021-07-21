@@ -26,6 +26,25 @@
   min-width: 60%;
 }
 
+.socialShareMessage {
+  color: #626262;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.socialShareIconWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+  padding: 0px 128px;
+}
+
+.socialShareIcon {
+  color: #626262;
+  font-size: 2.25rem;
+  text-align: center;
+}
+
 .addButton {
   width: 40px;
   height: 40px;

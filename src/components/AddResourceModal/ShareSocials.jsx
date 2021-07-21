@@ -1,54 +1,62 @@
 import React from "react";
+import styles from "./AddResourceModal.module.scss";
+import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
   faTwitter,
-  faInstagram
+  faInstagram,
+  faGithub
 } from "@fortawesome/free-brands-svg-icons";
 
-export default function ShareSocial() {
+function ShareSocials() {
   return (
-    <div className="share-social">
-      <div className="share-social-item">
+    <div className={styles.modalContent}>
+      <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
+      <p className={styles.socialShareMessage}>
+        You have successfully submitted a resource.
+      </p>
+      <h1 className={styles.greyHeader}>Thanks for sharing‼</h1>
+      <p className={styles.socialShareMessage} style={{ marginTop: 128 }}>
+        Follow us on social media:
+      </p>
+      <div className={styles.socialShareIconWrapper}>
         <a
-          className="share-social-item-link"
-          href="https://www.facebook.com/sharer/sharer.php?u=http://www.baidu.com"
+          className={styles.socialShareIcon}
+          href="https://www.facebook.com/pg/PHLASKecosystem/community/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+          <FontAwesomeIcon icon={faFacebook} />
         </a>
-      </div>
-      <div className="share-social-item">
         <a
-          className="share-social-item-link"
-          href="https://twitter.com/intent/tweet?url=http://www.baidu.com&text=Hello+Baidu"
+          className={styles.socialShareIcon}
+          href="https://twitter.com/PHLASKecosystem"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+          <FontAwesomeIcon icon={faTwitter} />
         </a>
-      </div>
-      <div className="share-social-item">
         <a
-          className="share-social-item-link"
-          href="https://plus.google.com/share?url=http://www.baidu.com"
+          className={styles.socialShareIcon}
+          href="https://www.instagram.com/phlaskecosystem/?hl=en"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i>
+          <FontAwesomeIcon icon={faInstagram} />
         </a>
-      </div>
-      <div className="share-social-item">
         <a
-          className="share-social-item-link"
-          href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.baidu.com&title=Hello+Baidu"
+          className={styles.socialShareIcon}
+          href="https://github.com/phlask/phlask-map"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
+          <FontAwesomeIcon icon={faGithub} />
         </a>
       </div>
+      <p className={styles.socialShareMessage}>#phlask</p>
     </div>
   );
 }
+
+export default ShareSocials;

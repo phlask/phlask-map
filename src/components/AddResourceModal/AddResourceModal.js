@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import ChooseResource from "./ChooseResource";
+import ShareSocials from "./ShareSocials";
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -305,6 +306,9 @@ export class AddResourceModal extends Component {
           {this.state.formStep === "chooseResource" && (
             <ChooseResource setFormStep={this.onChangeFormStep} />
           )}
+
+          {this.state.formStep === "shareSocials" && <ShareSocials />}
+
           {/* <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
           </Modal.Header>
