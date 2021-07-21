@@ -15,6 +15,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import ChooseResource from "./ChooseResource";
 import ShareSocials from "./ShareSocials";
+import AddFood from "./AddFood";
+import AddBathroom from "./AddBathroom";
+import AddForaging from "./AddForaging";
+import AddWaterTap from "./AddWaterTap";
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -305,6 +309,34 @@ export class AddResourceModal extends Component {
         >
           {this.state.formStep === "chooseResource" && (
             <ChooseResource setFormStep={this.onChangeFormStep} />
+          )}
+
+          {this.state.formStep === "addWaterTap" && (
+            <AddWaterTap
+              prev={() => this.onChangeFormStep("chooseResource")}
+              next={() => this.onChangeFormStep("shareSocials")}
+            />
+          )}
+
+          {this.state.formStep === "addFood" && (
+            <AddFood
+              prev={() => this.onChangeFormStep("chooseResource")}
+              next={() => this.onChangeFormStep("shareSocials")}
+            />
+          )}
+
+          {this.state.formStep === "addBathroom" && (
+            <AddBathroom
+              prev={() => this.onChangeFormStep("chooseResource")}
+              next={() => this.onChangeFormStep("shareSocials")}
+            />
+          )}
+
+          {this.state.formStep === "addForaging" && (
+            <AddForaging
+              prev={() => this.onChangeFormStep("chooseResource")}
+              next={() => this.onChangeFormStep("shareSocials")}
+            />
           )}
 
           {this.state.formStep === "shareSocials" && <ShareSocials />}

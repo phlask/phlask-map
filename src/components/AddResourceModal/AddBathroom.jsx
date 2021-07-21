@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function addWaterTap({ prev, next }) {
+function AddBathroom({ prev, next }) {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Add Water Tap</Modal.Title>
+        <Modal.Title>Add Bathroom</Modal.Title>
       </Modal.Header>
 
       <button onClick={prev}>Previous</button>
@@ -14,4 +14,4 @@ function addWaterTap({ prev, next }) {
   );
 }
 
-export default addWaterTap;
+export default AddBathroom;
