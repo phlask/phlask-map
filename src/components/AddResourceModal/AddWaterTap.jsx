@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
+// eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
 
 function addWaterTap({ prev, next }) {

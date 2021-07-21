@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Form } from "react-bootstrap";
+// eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
 
 function AddForaging({ prev, next }) {

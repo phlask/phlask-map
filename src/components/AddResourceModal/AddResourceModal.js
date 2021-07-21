@@ -13,11 +13,17 @@ import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
+// eslint-disable-next-line import/no-unresolved
 import ChooseResource from "./ChooseResource";
+// eslint-disable-next-line import/no-unresolved
 import ShareSocials from "./ShareSocials";
+// eslint-disable-next-line import/no-unresolved
 import AddFood from "./AddFood";
+// eslint-disable-next-line import/no-unresolved
 import AddBathroom from "./AddBathroom";
+// eslint-disable-next-line import/no-unresolved
 import AddForaging from "./AddForaging";
+// eslint-disable-next-line import/no-unresolved
 import AddWaterTap from "./AddWaterTap";
 
 export class AddResourceModal extends Component {
