@@ -16,7 +16,7 @@ import phlaskImg from "./images/PHLASK Button.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
-import { AddResourceModal, MetaModal } from "./AddResourceModal";
+import { AddResourceModal } from "./AddResourceModal";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
