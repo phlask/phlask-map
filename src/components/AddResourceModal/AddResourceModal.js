@@ -297,7 +297,11 @@ export class AddResourceModal extends Component {
 
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal
+          show={this.state.show}
+          onHide={this.handleClose}
+          className={styles.modal}
+        >
           {this.state.formStep === "chooseResource" && (
             <ChooseResource setFormStep={this.onChangeFormStep} />
           )}

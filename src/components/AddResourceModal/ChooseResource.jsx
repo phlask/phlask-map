@@ -1,28 +1,44 @@
 import React from "react";
+import styles from "./AddResourceModal.module.scss";
 import { Modal, Button } from "react-bootstrap";
 
 function ChooseResource({ setFormStep }) {
   return (
-    <>
-      <Modal.Header closeButton>
-        <Modal.Title>Add a Resource</Modal.Title>
-      </Modal.Header>
-      <Button variant="primary" onClick={() => setFormStep("addWaterTap")}>
+    <div className={styles.modalContent}>
+      <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
+      <h1 className={styles.greyHeader}>Add a Resource</h1>
+      <Button
+        className={styles.modalButton}
+        variant="primary"
+        onClick={() => setFormStep("addWaterTap")}
+      >
         Water Tap
       </Button>
-      <Button variant="primary" onClick={() => setFormStep("addFood")}>
+      <Button
+        className={styles.modalButton}
+        variant="primary"
+        onClick={() => setFormStep("addFood")}
+      >
         Food
       </Button>
-      <Button variant="primary" onClick={() => setFormStep("addBathroom")}>
+      <Button
+        className={styles.modalButton}
+        variant="primary"
+        onClick={() => setFormStep("addBathroom")}
+      >
         Bathroom
       </Button>
       {/* this copy is different than the copy from the figma page,
         this might be a bit more clear? can make a point to ask 
         about this next week */}
-      <Button variant="primary" onClick={() => setFormStep("addForaging")}>
+      <Button
+        className={styles.modalButton}
+        variant="primary"
+        onClick={() => setFormStep("addForaging")}
+      >
         Foraging
       </Button>
-    </>
+    </div>
   );
 }
 

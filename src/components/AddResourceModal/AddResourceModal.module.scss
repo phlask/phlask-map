@@ -1,3 +1,31 @@
+.modal {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.modalHeader {
+  margin-bottom: 32px;
+}
+
+.modalContent {
+  height: 90vh;
+}
+
+.greyHeader {
+  color: #626262;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.modalButton {
+  display: block;
+  margin: 24px auto;
+  padding: 16px 32px;
+  min-width: 60%;
+}
+
 .addButton {
   width: 40px;
   height: 40px;
