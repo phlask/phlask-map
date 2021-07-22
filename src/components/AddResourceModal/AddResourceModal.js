@@ -31,7 +31,9 @@ export class AddResourceModal extends Component {
     super(props);
     this.onChangeFormStep = this.onChangeFormStep.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.onNameChange = this.onChangeName.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAccessToTap = this.onChangeAccessToTap.bind(this);
@@ -50,7 +52,9 @@ export class AddResourceModal extends Component {
     this.state = {
       pictures: [],
       images: [],
+      name: "",
       address: "",
+      website: "",
       city: "",
       description: "",
       accessToTap: "",
@@ -104,9 +108,21 @@ export class AddResourceModal extends Component {
       .catch(console.error);
   }
 
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+
   onChangeAddress(e) {
     this.setState({
       address: e.target.value
+    });
+  }
+
+  onChangeWebsite(e) {
+    this.setState({
+      website: e.target.value
     });
   }
 
@@ -308,6 +324,17 @@ export class AddResourceModal extends Component {
             <AddWaterTap
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onDrop={this.onDrop}
+              name={this.state.name}
+              onNameChange={this.onNameChange}
+              address={this.state.address}
+              onAddressChange={this.onChangeAddress}
+              website={this.state.website}
+              onWebsiteChange={this.onWebsiteChange}
+              description={this.state.description}
+              onDescriptionChange={this.onChangeDescription}
+              organization={this.state.organization}
+              onChangeOrganization={this.onChangeDescription}
             />
           )}
 
@@ -334,9 +361,9 @@ export class AddResourceModal extends Component {
 
           {this.state.formStep === "shareSocials" && <ShareSocials />}
 
-          {/* <Modal.Header closeButton>
+          <Modal.Header closeButton>
             <Modal.Title>Submit a Tap!</Modal.Title>
-          </Modal.Header> 
+          </Modal.Header>
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
               <Form.Group
@@ -652,11 +679,12 @@ export class AddResourceModal extends Component {
                 variant="primary"
                 type="submit"
                 onClick={this.handleClose}
+                // onClick={() => console.log(this.state)} // this is to test if form state is being updated appropriately
               >
                 Submit
               </Button>
             </Modal.Footer>
-          </Form> */}
+          </Form>
         </Modal>
 
         <button

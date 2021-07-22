@@ -2,99 +2,78 @@ import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 
-function SharedFormFields({ props }) {
+function SharedFormFields({
+  onDrop,
+  name,
+  onNameChange,
+  address,
+  onAddressChange,
+  website,
+  onWebsiteChange,
+  description,
+  onDescriptionChange,
+  organization,
+  onChangeOrganization
+}) {
   return (
     <>
       <Modal.Body>
         <ImageUploader
           withIcon={true}
           buttonText="Choose images"
-          onChange={"bloop"}
+          onChange={onDrop}
           imgExtension={[".jpg", ".png", ".gif"]}
           maxFileSize={5242880}
           withPreview={true}
         />
 
-        <Form.Group
-          controlId="Address"
-          id="time"
-          label="End Time"
-          type="time"
-          defaultValue="07:30"
-          value={"value"}
-          onChange={() => console.log("boop")}
-        >
-          <Form.Label>
-            <strong>Address</strong>
-          </Form.Label>
-          <Form.Control />
-        </Form.Group>
-        <Form.Group
-          controlId="City"
-          value={"bloop"}
-          onChange={() => console.log("boop")}
-        >
-          <Form.Label>
-            <strong>City</strong>
-          </Form.Label>
-          <Form.Control />
-        </Form.Group>
-        <Form.Group
-          controlId="Description"
-          value={"bloop"}
-          onChange={() => console.log("boop")}
-        >
-          <Form.Label>
-            <strong>Description</strong>
-          </Form.Label>
+        <Form.Group controlId="name" value={name} onChange={onNameChange}>
+          <Form.Label>Name</Form.Label>
           <Form.Control
-            as="textarea"
-            rows="2"
-            placeholder="A brief description of the tap's location and appearance"
+            text="text"
+            placeholder="Organization, store, facility, etc."
           />
         </Form.Group>
-        <Form.Group value={"bloop"} onChange={() => console.log("boop")}>
-          <Form.Label>
-            <strong>Access to Tap</strong>
-          </Form.Label>
-
-          <Form.Check
-            className="radioText"
-            type="radio"
-            label="Public"
-            name="AccessRadios"
-            id="AccessRadio1"
-            value="public"
+        <Form.Group
+          controlId="address"
+          value={address}
+          onChange={onAddressChange}
+        >
+          <Form.Label>Address</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter the address of this tap"
           />
-
-          <Form.Check
-            className="radioText"
-            type="radio"
-            label="Private"
-            name="AccessRadios"
-            id="AccessRadio2"
-            value="private"
+        </Form.Group>
+        <Form.Group
+          controlId="website"
+          value={website}
+          onChange={onWebsiteChange}
+        >
+          <Form.Label>Website</Form.Label>
+          <Form.Control type="text" placeholder="https://" />
+        </Form.Group>
+        <Form.Group
+          controlId="description"
+          value={description}
+          onChange={onDescriptionChange}
+        >
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            type="textarea"
+            rows="2"
+            placeholder="Please describe the water site location"
           />
         </Form.Group>
         <Form.Group
           controlId="Organization"
-          value={"bloop"}
-          onChange={() => console.log("boop")}
+          value={organization}
+          onChange={onChangeOrganization}
         >
-          <Form.Label>
-            <strong>Organization</strong>
-          </Form.Label>
+          <Form.Label>Organization</Form.Label>
           <Form.Control placeholder="Who does this tap belong to?" />
         </Form.Group>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => console.log("boop")}>
-          Close
-        </Button>
-        <Button variant="primary" type="submit" onClick={() => console.log()}>
-          Submit
-        </Button>
-      </Modal.Footer>
     </>
   );
 }
