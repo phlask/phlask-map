@@ -1,9 +1,23 @@
 import React from "react";
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
 
-function AddForaging({ prev, next }) {
+function AddForaging({
+  prev,
+  next,
+  onDrop,
+  name,
+  onNameChange,
+  address,
+  onAddressChange,
+  website,
+  onWebsiteChange,
+  description,
+  onDescriptionChange,
+  organization,
+  onChangeOrganization
+}) {
   return (
     <>
       <Modal.Header closeButton>
@@ -17,12 +31,36 @@ function AddForaging({ prev, next }) {
             console.log("boop");
           }}
         >
-          <SharedFormFields />
+          <SharedFormFields
+            onDrop={onDrop}
+            name={name}
+            onNameChange={onNameChange}
+            address={address}
+            onAddressChange={onAddressChange}
+            website={website}
+            onWebsiteChange={onWebsiteChange}
+            description={description}
+            onDescriptionChange={onDescriptionChange}
+            organization={organization}
+            onChangeOrganization={onChangeOrganization}
+          />
         </Form>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={prev}>
+            Select Another Resource
+          </Button>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={() => {
+              console.log();
+              next();
+            }}
+          >
+            Submit
+          </Button>
+        </Modal.Footer>
       </Modal.Body>
-
-      <button onClick={prev}>Previous</button>
-      <button onClick={next}>Next</button>
     </>
   );
 }

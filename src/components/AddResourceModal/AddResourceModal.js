@@ -342,6 +342,17 @@ export class AddResourceModal extends Component {
             <AddFood
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onDrop={this.onDrop}
+              name={this.state.name}
+              onNameChange={this.onNameChange}
+              address={this.state.address}
+              onAddressChange={this.onChangeAddress}
+              website={this.state.website}
+              onWebsiteChange={this.onWebsiteChange}
+              description={this.state.description}
+              onDescriptionChange={this.onChangeDescription}
+              organization={this.state.organization}
+              onChangeOrganization={this.onChangeDescription}
             />
           )}
 
@@ -349,6 +360,17 @@ export class AddResourceModal extends Component {
             <AddBathroom
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onDrop={this.onDrop}
+              name={this.state.name}
+              onNameChange={this.onNameChange}
+              address={this.state.address}
+              onAddressChange={this.onChangeAddress}
+              website={this.state.website}
+              onWebsiteChange={this.onWebsiteChange}
+              description={this.state.description}
+              onDescriptionChange={this.onChangeDescription}
+              organization={this.state.organization}
+              onChangeOrganization={this.onChangeDescription}
             />
           )}
 
@@ -356,6 +378,17 @@ export class AddResourceModal extends Component {
             <AddForaging
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onDrop={this.onDrop}
+              name={this.state.name}
+              onNameChange={this.onNameChange}
+              address={this.state.address}
+              onAddressChange={this.onChangeAddress}
+              website={this.state.website}
+              onWebsiteChange={this.onWebsiteChange}
+              description={this.state.description}
+              onDescriptionChange={this.onChangeDescription}
+              organization={this.state.organization}
+              onChangeOrganization={this.onChangeDescription}
             />
           )}
 
