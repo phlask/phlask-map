@@ -401,23 +401,6 @@ export class AddResourceModal extends Component {
           )}
 
           {this.state.formStep === "shareSocials" && <ShareSocials />}
-
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => console.log("form state", this.state)}
-            >
-              Close
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={this.handleClose}
-              // onClick={() => console.log(this.state)} // this is to test if form state is being updated appropriately
-            >
-              Submit
-            </Button>
-          </Modal.Footer>
         </Modal>
 
         <button
