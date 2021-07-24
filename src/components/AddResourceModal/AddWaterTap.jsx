@@ -66,26 +66,31 @@ function addWaterTap({
                   label="Accessible"
                   value="accessible"
                 />
+
                 <Form.Check
                   type="checkbox"
                   label="ID Required"
                   value="idRequired"
                 />
+
                 <Form.Check
                   type="checkbox"
                   label="Children and minors only"
                   value="childrenOnly"
                 />
+
                 <Form.Check
                   type="checkbox"
                   label="Water vessel needed"
                   value="vesselNeeded"
                 />
+
                 <Form.Check
                   type="checkbox"
                   label="Filtrated"
                   value="filtrated"
                 />
+
                 <Form.Group
                   value={tapServiceType}
                   onChange={onTapServiceTypeChange}
@@ -101,6 +106,7 @@ function addWaterTap({
                     <option value="ask proprietor">Ask proprietor</option>
                   </Form.Control>
                 </Form.Group>
+
                 <Form.Group value={tapType} onChange={onTapTypeChange}>
                   <Form.Label>Tap Type</Form.Label>
                   <Form.Control as="select">
