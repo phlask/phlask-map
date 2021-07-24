@@ -330,11 +330,19 @@ export class AddResourceModal extends Component {
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
               website={this.state.website}
-              onWebsiteChange={this.onWebsiteChange}
+              onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
-              onChangeOrganization={this.onChangeDescription}
+              onOrganizationChange={this.onChangeOrganization}
+              tapServiceType={this.state.tapServiceType}
+              onTapServiceTypeChange={this.onChangeTapServiceType}
+              tapType={this.state.tapType}
+              onTapTypeChange={this.onChangeTapType}
+              phlaskStatement={this.state.phlaskStatement}
+              onPhlaskStatementChange={this.onChangePhlaskStatement}
+              normsAndRules={this.state.normsAndRules}
+              onNormsAndRulesChange={this.onChangeNormsAndRules}
             />
           )}
 
@@ -352,7 +360,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
-              onChangeOrganization={this.onChangeDescription}
+              onChangeOrganization={this.onChangeOrganization}
             />
           )}
 
@@ -616,7 +624,10 @@ export class AddResourceModal extends Component {
             </Accordion>
 
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
+              <Button
+                variant="secondary"
+                onClick={() => console.log("form state", this.state)}
+              >
                 Close
               </Button>
               <Button

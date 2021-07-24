@@ -44,22 +44,22 @@ function AddFood({
             onChangeOrganization={onChangeOrganization}
           />
         </Form>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={prev}>
-            Select Another Resource
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={() => {
-              console.log();
-              next();
-            }}
-          >
-            Submit
-          </Button>
-        </Modal.Footer>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={prev}>
+          Select Another Resource
+        </Button>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={() => {
+            console.log();
+            next();
+          }}
+        >
+          Submit
+        </Button>
+      </Modal.Footer>
     </>
   );
 }

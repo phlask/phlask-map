@@ -13,7 +13,7 @@ function SharedFormFields({
   description,
   onDescriptionChange,
   organization,
-  onChangeOrganization
+  onOrganizationChange
 }) {
   return (
     <>
@@ -62,12 +62,12 @@ function SharedFormFields({
         />
       </Form.Group>
       <Form.Group
-        controlId="Organization"
+        controlId="organization"
         value={organization}
-        onChange={onChangeOrganization}
+        onChange={onOrganizationChange}
       >
         <Form.Label>Organization</Form.Label>
-        <Form.Control placeholder="Who does this tap belong to?" />
+        <Form.Control type="text" placeholder="Who does this tap belong to?" />
       </Form.Group>
     </>
   );
