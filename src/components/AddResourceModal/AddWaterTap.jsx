@@ -22,6 +22,10 @@ function addWaterTap({
   onOrganizationChange,
   accessible,
   onAccessibleChange,
+  idRequired,
+  onIdRequiredChange,
+  childrenOnly,
+  onChildrenOnlyChange,
   waterVesselNeeded,
   onWaterVesselNeededChange,
   filtration,
@@ -78,6 +82,8 @@ function addWaterTap({
                 />
 
                 <Form.Check
+                  checked={idRequired}
+                  onChange={onIdRequiredChange}
                   className={styles.modalFormCheck}
                   type="checkbox"
                   label="ID Required"
@@ -85,6 +91,8 @@ function addWaterTap({
                 />
 
                 <Form.Check
+                  checked={childrenOnly}
+                  onChange={onChildrenOnlyChange}
                   className={styles.modalFormCheck}
                   type="checkbox"
                   label="Children and minors only"

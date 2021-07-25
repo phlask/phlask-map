@@ -43,6 +43,8 @@ export class AddResourceModal extends Component {
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
     this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
+    this.onChangeIdRequired = this.onChangeIdRequired.bind(this);
+    this.onChangeChildrenOnly = this.onChangeChildrenOnly.bind(this);
     this.onChangeWaterVesselNeeded = this.onChangeWaterVesselNeeded.bind(this);
     this.onChangeFiltration = this.onChangeFiltration.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -66,6 +68,8 @@ export class AddResourceModal extends Component {
       filtration: false,
       handicapAccessable: false,
       waterVesselNeeded: false,
+      idRequired: false,
+      childrenOnly: false,
       dbConnection: "",
       count: 0,
       show: false,
@@ -177,6 +181,18 @@ export class AddResourceModal extends Component {
   onChangeWaterVesselNeeded(e) {
     this.setState({
       waterVesselNeeded: e.target.checked
+    });
+  }
+
+  onChangeIdRequired(e) {
+    this.setState({
+      idRequired: e.target.checked
+    });
+  }
+
+  onChangeChildrenOnly(e) {
+    this.setState({
+      childrenOnly: e.target.checked
     });
   }
 
@@ -337,6 +353,10 @@ export class AddResourceModal extends Component {
               onOrganizationChange={this.onChangeOrganization}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
+              idRequired={this.state.idRequired}
+              onIdRequiredChange={this.onChangeIdRequired}
+              childrenOnly={this.state.childrenOnly}
+              onChildrenOnlyChange={this.onChangeChildrenOnly}
               waterVesselNeeded={this.state.waterVesselNeeded}
               onWaterVesselNeededChange={this.onChangeWaterVesselNeeded}
               filtration={this.state.filtration}
