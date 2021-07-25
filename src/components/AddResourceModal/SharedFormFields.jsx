@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
+import styles from "./AddResourceModal.module.scss";
 
 function SharedFormFields({
   onDrop,
@@ -27,8 +28,9 @@ function SharedFormFields({
       />
 
       <Form.Group controlId="name" value={name} onChange={onNameChange}>
-        <Form.Label>Name</Form.Label>
+        <Form.Label className={styles.modalFormLabel}>Name</Form.Label>
         <Form.Control
+          className={styles.modalFormTextInput}
           text="text"
           placeholder="Organization, store, facility, etc."
         />
@@ -38,24 +40,33 @@ function SharedFormFields({
         value={address}
         onChange={onAddressChange}
       >
-        <Form.Label>Address</Form.Label>
-        <Form.Control type="text" placeholder="Enter the address of this tap" />
+        <Form.Label className={styles.modalFormLabel}>Address</Form.Label>
+        <Form.Control
+          className={styles.modalFormTextInput}
+          type="text"
+          placeholder="Enter the address of this tap"
+        />
       </Form.Group>
       <Form.Group
         controlId="website"
         value={website}
         onChange={onWebsiteChange}
       >
-        <Form.Label>Website</Form.Label>
-        <Form.Control type="text" placeholder="https://" />
+        <Form.Label className={styles.modalFormLabel}>Website</Form.Label>
+        <Form.Control
+          className={styles.modalFormTextInput}
+          type="text"
+          placeholder="https://"
+        />
       </Form.Group>
       <Form.Group
         controlId="description"
         value={description}
         onChange={onDescriptionChange}
       >
-        <Form.Label>Description</Form.Label>
+        <Form.Label className={styles.modalFormLabel}>Description</Form.Label>
         <Form.Control
+          className={styles.modalFormTextInput}
           type="textarea"
           rows="2"
           placeholder="Please describe the water site location"
@@ -66,8 +77,12 @@ function SharedFormFields({
         value={organization}
         onChange={onOrganizationChange}
       >
-        <Form.Label>Organization</Form.Label>
-        <Form.Control type="text" placeholder="Who does this tap belong to?" />
+        <Form.Label className={styles.modalFormLabel}>Organization</Form.Label>
+        <Form.Control
+          className={styles.modalFormTextInput}
+          type="text"
+          placeholder="Who does this tap belong to?"
+        />
       </Form.Group>
     </>
   );

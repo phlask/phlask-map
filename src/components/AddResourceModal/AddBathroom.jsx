@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./AddResourceModal.module.scss";
 import { Modal, Form, Button } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";

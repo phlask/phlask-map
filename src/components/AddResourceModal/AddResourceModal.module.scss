@@ -8,6 +8,10 @@
   margin-bottom: 32px;
 }
 
+.modalBody {
+  padding: 0px 24px;
+}
+
 .modalContent {
   height: 90vh;
 }
@@ -24,6 +28,20 @@
   margin: 24px auto;
   padding: 16px 32px;
   min-width: 60%;
+}
+
+.modalFormLabel {
+  color: #525f75;
+  font-weight: 500;
+}
+
+.modalFormTextInput {
+  color: #000;
+  background: #eaeef3;
+}
+
+.modalFormCheck {
+  margin: 8px 0px;
 }
 
 .socialShareMessage {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Form, Button, Accordion } from "react-bootstrap";
+import styles from "./AddResourceModal.module.scss";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
@@ -33,7 +34,7 @@ function addWaterTap({
       <Modal.Header closeButton>
         <Modal.Title>Add Water Tap</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className={styles.modalBody}>
         <Form
           onSubmit={e => {
             e.preventDefault();
@@ -54,7 +55,7 @@ function addWaterTap({
           />
 
           <Accordion>
-            <Accordion.Toggle eventKey="0">
+            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
               Additional Information
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
@@ -62,30 +63,35 @@ function addWaterTap({
                 {/* TODO create states and change handlers for
                 checkboxes */}
                 <Form.Check
+                  className={styles.modalFormCheck}
                   type="checkbox"
                   label="Accessible"
                   value="accessible"
                 />
 
                 <Form.Check
+                  className={styles.modalFormCheck}
                   type="checkbox"
                   label="ID Required"
                   value="idRequired"
                 />
 
                 <Form.Check
+                  className={styles.modalFormCheck}
                   type="checkbox"
                   label="Children and minors only"
                   value="childrenOnly"
                 />
 
                 <Form.Check
+                  className={styles.modalFormCheck}
                   type="checkbox"
                   label="Water vessel needed"
                   value="vesselNeeded"
                 />
 
                 <Form.Check
+                  className={styles.modalFormCheck}
                   type="checkbox"
                   label="Filtrated"
                   value="filtrated"
@@ -95,7 +101,9 @@ function addWaterTap({
                   value={tapServiceType}
                   onChange={onTapServiceTypeChange}
                 >
-                  <Form.Label>Service Type</Form.Label>
+                  <Form.Label className={styles.modalFormLabel}>
+                    Service Type
+                  </Form.Label>
                   <Form.Control as="select">
                     {/* TODO: do we want to use whitespace for values? could lead to
                     some odd parsing edge cases -- but if all current data follows
@@ -108,7 +116,9 @@ function addWaterTap({
                 </Form.Group>
 
                 <Form.Group value={tapType} onChange={onTapTypeChange}>
-                  <Form.Label>Tap Type</Form.Label>
+                  <Form.Label className={styles.modalFormLabel}>
+                    Tap Type
+                  </Form.Label>
                   <Form.Control as="select">
                     <option value="">Choose...</option>
                     <option value="drinking fountain">Drinking Fountain</option>

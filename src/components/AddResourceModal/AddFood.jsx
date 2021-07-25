@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./AddResourceModal.module.scss";
 import { Modal, Form, Accordion, Button } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
@@ -51,7 +52,7 @@ function AddFood({
           />
 
           <Accordion>
-            <Accordion.Toggle eventKey="0">
+            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
               Additional Information
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
@@ -60,7 +61,9 @@ function AddFood({
                   value={"stub"}
                   onChange={() => console.log("Add Foraging Stub")}
                 >
-                  <Form.Label>Consumption Type</Form.Label>
+                  <Form.Label className={styles.modalFormLabel}>
+                    Consumption Type
+                  </Form.Label>
                   <Form.Control as="select">
                     {/* TODO: do we want to use whitespace for values? could lead to
                     some odd parsing edge cases -- but if all current data follows
@@ -74,7 +77,9 @@ function AddFood({
                   value={"stub"}
                   onChange={() => console.log("Add Foraging Stub")}
                 >
-                  <Form.Label>Food Type</Form.Label>
+                  <Form.Label className={styles.modalFormLabel}>
+                    Food Type
+                  </Form.Label>
                   <Form.Control as="select">
                     <option value="">Choose...</option>
                   </Form.Control>
@@ -84,7 +89,9 @@ function AddFood({
                   value={"stub"}
                   onChange={() => console.log("Add Foraging Stub")}
                 >
-                  <Form.Label>Specific Foods Available</Form.Label>
+                  <Form.Label className={styles.modalFormLabel}>
+                    Specific Foods Available
+                  </Form.Label>
                   <Form.Control as="select">
                     <option value="">Choose...</option>
                   </Form.Control>
