@@ -20,6 +20,12 @@ function addWaterTap({
   onDescriptionChange,
   organization,
   onOrganizationChange,
+  accessible,
+  onAccessibleChange,
+  waterVesselNeeded,
+  onWaterVesselNeededChange,
+  filtration,
+  onFiltrationChange,
   tapServiceType,
   onTapServiceTypeChange,
   tapType,
@@ -63,6 +69,8 @@ function addWaterTap({
                 {/* TODO create states and change handlers for
                 checkboxes */}
                 <Form.Check
+                  checked={accessible}
+                  onChange={onAccessibleChange}
                   className={styles.modalFormCheck}
                   type="checkbox"
                   label="Accessible"
@@ -84,6 +92,8 @@ function addWaterTap({
                 />
 
                 <Form.Check
+                  checked={waterVesselNeeded}
+                  onChange={onWaterVesselNeededChange}
                   className={styles.modalFormCheck}
                   type="checkbox"
                   label="Water vessel needed"
@@ -91,6 +101,8 @@ function addWaterTap({
                 />
 
                 <Form.Check
+                  checked={filtration}
+                  onChange={onFiltrationChange}
                   className={styles.modalFormCheck}
                   type="checkbox"
                   label="Filtrated"

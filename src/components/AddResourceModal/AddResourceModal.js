@@ -38,13 +38,13 @@ export class AddResourceModal extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAccessToTap = this.onChangeAccessToTap.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
-    this.onChangeFiltration = this.onChangeFiltration.bind(this);
-    this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
     this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
     this.onChangeTapType = this.onChangeTapType.bind(this);
-    this.onChangeWaterVessleNeeded = this.onChangeWaterVessleNeeded.bind(this);
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
+    this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
+    this.onChangeWaterVesselNeeded = this.onChangeWaterVesselNeeded.bind(this);
+    this.onChangeFiltration = this.onChangeFiltration.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -59,13 +59,13 @@ export class AddResourceModal extends Component {
       description: "",
       accessToTap: "",
       organization: "",
-      filtration: "",
-      handicapAccessable: "",
       tapServiceType: "",
       tapType: "",
-      waterVessleNeeded: "",
       phlaskStatement: "",
       normsAndRules: "",
+      filtration: false,
+      handicapAccessable: false,
+      waterVesselNeeded: false,
       dbConnection: "",
       count: 0,
       show: false,
@@ -150,18 +150,6 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeFiltration(e) {
-    this.setState({
-      filtration: e.target.value
-    });
-  }
-
-  onChangeHandicapAccess(e) {
-    this.setState({
-      handicapAccessable: e.target.value
-    });
-  }
-
   onChangeTapServiceType(e) {
     this.setState({
       tapServiceType: e.target.value
@@ -174,9 +162,21 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeWaterVessleNeeded(e) {
+  onChangeFiltration(e) {
     this.setState({
-      waterVessleNeeded: e.target.value
+      filtration: e.target.checked
+    });
+  }
+
+  onChangeHandicapAccess(e) {
+    this.setState({
+      handicapAccessable: e.target.checked
+    });
+  }
+
+  onChangeWaterVesselNeeded(e) {
+    this.setState({
+      waterVesselNeeded: e.target.checked
     });
   }
 
@@ -335,6 +335,12 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
               onOrganizationChange={this.onChangeOrganization}
+              accessible={this.state.handicapAccessable}
+              onAccessibleChange={this.onChangeHandicapAccess}
+              waterVesselNeeded={this.state.waterVesselNeeded}
+              onWaterVesselNeededChange={this.onChangeWaterVesselNeeded}
+              filtration={this.state.filtration}
+              onFiltrationChange={this.onChangeFiltration}
               tapServiceType={this.state.tapServiceType}
               onTapServiceTypeChange={this.onChangeTapServiceType}
               tapType={this.state.tapType}
@@ -401,6 +407,7 @@ export class AddResourceModal extends Component {
           )}
 
           {this.state.formStep === "shareSocials" && <ShareSocials />}
+          <Button onClick={() => console.log(this.state)}>print state</Button>
         </Modal>
 
         <button
