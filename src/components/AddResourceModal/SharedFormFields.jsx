@@ -35,6 +35,7 @@ function SharedFormFields({
           placeholder="Organization, store, facility, etc."
         />
       </Form.Group>
+      {/* TODO auto complete address based on google maps API */}
       <Form.Group
         controlId="address"
         value={address}
@@ -70,6 +71,7 @@ function SharedFormFields({
           type="textarea"
           rows="2"
           placeholder="Please describe the water site location"
+          // TODO: this should be dynamic based on form type
         />
       </Form.Group>
       <Form.Group
