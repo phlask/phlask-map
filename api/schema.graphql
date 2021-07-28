@@ -1,0 +1,100 @@
+# Types = Sheet/Table in Excel
+type Example {
+  id: Int # fields are columns
+}
+
+enum Access {
+  PUBLIC
+  PRIVATE_SHARED
+  PRIVATE
+  RESTRICTED
+}
+
+enum YesNoUnsure {
+  YES
+  NO
+  UNSURE
+}
+
+interface SharedFields {
+  description: String
+  phlaskStatement: String
+  normsAndRules: String
+  website: String
+  additionalInfo: String
+}
+
+enum WaterTapTypes {
+    DRINKING_FOUNTAIN
+    BOTTLE_FILLER
+    SINK
+    SODA_FOUNTAIN
+    WATER_DISPENSER
+    WATER_COOLER
+    OTHER
+}
+
+type WaterTap implements SharedFields {
+  access: Access!
+  name: String!
+  address: String!
+  hours: [String] # array of hours of availbility -- each entry is day of week, [Monday Hours, Tuesday Hours, Wednesday...]
+  service: SELF_SERVE | ASK_PROPRIETOR | UNSURE
+  type: WaterTapTypes
+  filtration: YesNoUnsure
+  accessible: YesNoUnsure
+  sparkling: YesNoUnsure
+  vesselNeeded: YesNoUnsure
+  idRequired: YesNoUnsure
+}
+
+enum FoodAccess  {
+    GOVERNMENT
+    BUSINESS
+    NONPROFIT
+    RELIGIOUS
+    GRASSROOTS
+    OTHER
+}
+
+enum FoodConsumptionTypes {
+    ONSITE
+    TAKEAWAY
+    DELIVERY
+}
+
+type Food implements SharedFields {
+  access: FoodAccess!
+  name: String!
+  address: String!
+  hours: [String] # array of hours of availbility -- each entry is day of week, [Monday Hours, Tuesday Hours, Wednesday...]
+  consumption: FoodConsumptionTypes
+  foodType: [PERISHABLE | NONPERSIHABLE | PREPARED | OTHER]  # idk if this works
+  accessible: YesNoUnsure
+  idRequired: YesNoUnsure
+  minorsOnly: YesNoUnsure
+}
+
+enum ForagingFoodTypes {
+    NUT
+    FRUIT
+    LEAVES
+    BARK
+    FLOWERS
+    MUSHROOM
+    ROOT
+    OTHER
+}
+
+type Foraging implements SharedFields {
+  access: Access!
+  name: String!
+  address: String!
+  hours: [String] # array of hours of availbility -- each entry is day of week, [Monday Hours, Tuesday Hours, Wednesday...]
+  genus: String
+  species: String
+  features: [SWEET | SAVORY | MEDICINAL] # idk if this works
+  type: ForagingFoodTypes
+  accessible: YesNoUnsure
+}
+
