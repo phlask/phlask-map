@@ -14,7 +14,8 @@ function SharedFormFields({
   description,
   onDescriptionChange,
   organization,
-  onOrganizationChange
+  onOrganizationChange,
+  siteCategory
 }) {
   return (
     <>
@@ -45,7 +46,7 @@ function SharedFormFields({
         <Form.Control
           className={styles.modalFormTextInput}
           type="text"
-          placeholder="Enter the address of this tap"
+          placeholder={`Enter the address of this ${siteCategory}`}
         />
       </Form.Group>
       <Form.Group
@@ -70,8 +71,7 @@ function SharedFormFields({
           className={styles.modalFormTextInput}
           type="textarea"
           rows="2"
-          placeholder="Please describe the water site location"
-          // TODO: this should be dynamic based on form type
+          placeholder={`Please describe the ${siteCategory}`}
         />
       </Form.Group>
       <Form.Group
@@ -83,7 +83,7 @@ function SharedFormFields({
         <Form.Control
           className={styles.modalFormTextInput}
           type="text"
-          placeholder="Who does this tap belong to?"
+          placeholder={`Who does this ${siteCategory} belong to?`}
         />
       </Form.Group>
     </>

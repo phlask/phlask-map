@@ -43,6 +43,7 @@ function AddBathroom({
             onDescriptionChange={onDescriptionChange}
             organization={organization}
             onChangeOrganization={onChangeOrganization}
+            siteCategory="bathroom"
           />
         </Form>
       </Modal.Body>

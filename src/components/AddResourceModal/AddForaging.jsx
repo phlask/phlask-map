@@ -50,6 +50,7 @@ function AddForaging({
             onDescriptionChange={onDescriptionChange}
             organization={organization}
             onChangeOrganization={onChangeOrganization}
+            siteCategory="foraging location"
           />
         </Form>
 

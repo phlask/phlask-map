@@ -62,6 +62,7 @@ function addWaterTap({
             onDescriptionChange={onDescriptionChange}
             organization={organization}
             onOrganizationChange={onOrganizationChange}
+            siteCategory="water tap"
           />
 
           <Accordion>

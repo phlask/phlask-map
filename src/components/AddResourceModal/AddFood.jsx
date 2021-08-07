@@ -49,6 +49,7 @@ function AddFood({
             onDescriptionChange={onDescriptionChange}
             organization={organization}
             onChangeOrganization={onChangeOrganization}
+            siteCategory="food site"
           />
 
           <Accordion>
