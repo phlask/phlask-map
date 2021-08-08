@@ -50,7 +50,8 @@ export class AddResourceModal extends Component {
     // ADD FOOD MODAL
     this.onChangeConsumptionType = this.onChangeConsumptionType.bind(this);
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
-
+    // ADD FORAGING MODAL FIELDS
+    this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -80,7 +81,9 @@ export class AddResourceModal extends Component {
       formStep: "chooseResource",
       // ADD FOOD MODAL FIELDS
       consumptionType: "",
-      foodType: ""
+      foodType: "",
+      // ADD FORAGING MODAL FIELDS
+      foragingFoodType: ""
     };
   }
 
@@ -226,6 +229,14 @@ export class AddResourceModal extends Component {
   onChangeFoodType(e) {
     this.setState({
       foodType: e.target.value
+    });
+  }
+
+  // ADD FORAGING MODAL FIELDS
+
+  onChangeForagingFoodType(e) {
+    this.setState({
+      foragingFoodType: e.target.value
     });
   }
 
@@ -466,6 +477,10 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
               onOrganizationChange={this.onChangeOrganization}
+              accessible={this.state.handicapAccessable}
+              onAccessibleChange={this.onChangeHandicapAccess}
+              foragingFoodType={this.state.foragingFoodType}
+              onForagingFoodTypeChange={this.onChangeForagingFoodType}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}

@@ -20,6 +20,10 @@ function AddForaging({
   onDescriptionChange,
   organization,
   onOrganizationChange,
+  accessible,
+  onAccessibleChange,
+  foragingFoodType,
+  onForagingFoodTypeChange,
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
@@ -69,44 +73,32 @@ function AddForaging({
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <div>
+              <Form.Check
+                checked={accessible}
+                onChange={onAccessibleChange}
+                className={styles.modalFormCheck}
+                type="checkbox"
+                label="Accessible"
+                value="accessible"
+              />
+
               <Form.Group
-                value={"stub"}
-                onChange={() => console.log("Add Foraging Stub")}
+                value={foragingFoodType}
+                onChange={onForagingFoodTypeChange}
               >
-                {/* THIS SHOULD BE A MULTIPICK */}
                 <Form.Label className={styles.modalFormLabel}>
                   Food Type
                 </Form.Label>
                 <Form.Control className={styles.modalFormSelect} as="select">
-                  {/* TODO: do we want to use whitespace for values? could lead to
-                    some odd parsing edge cases -- but if all current data follows
-                    this convention then we might have to go through a painful
-                    db migration to update old values */}
                   <option value="">Choose...</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group
-                value={"stub"}
-                onChange={() => console.log("Add Foraging Stub")}
-              >
-                <Form.Label className={styles.modalFormLabel}>
-                  Preparation Method
-                </Form.Label>
-                <Form.Control className={styles.modalFormSelect} as="select">
-                  <option value="">Choose...</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group
-                value={"stub"}
-                onChange={() => console.log("Add Foraging Stub")}
-              >
-                <Form.Label className={styles.modalFormLabel}>
-                  Plant Type
-                </Form.Label>
-                <Form.Control className={styles.modalFormSelect} as="select">
-                  <option value="">Choose...</option>
+                  <option value="nut">Nut</option>
+                  <option value="fruit">Fruit</option>
+                  <option value="leaves">Leaves</option>
+                  <option value="bark">Bark</option>
+                  <option value="flowers">Flowers</option>
+                  <option value="mushroom">Mushroom</option>
+                  <option value="root">Root</option>
+                  <option value="other">Other</option>
                 </Form.Control>
               </Form.Group>
 
