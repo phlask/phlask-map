@@ -321,7 +321,11 @@ export class AddResourceModal extends Component {
   }
 
   handleClose() {
-    this.setState({ show: false });
+    // on close we should reset form step so user can start over
+    // TODO
+    // reset the entire form state on close so we don't get
+    // input values from someone previously submitting a resource
+    this.setState({ show: false, formStep: "chooseResource" });
   }
 
   render() {
