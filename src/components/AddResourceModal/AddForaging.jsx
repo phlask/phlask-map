@@ -73,6 +73,7 @@ function AddForaging({
                 value={"stub"}
                 onChange={() => console.log("Add Foraging Stub")}
               >
+                {/* THIS SHOULD BE A MULTIPICK */}
                 <Form.Label className={styles.modalFormLabel}>
                   Food Type
                 </Form.Label>

@@ -47,6 +47,10 @@ export class AddResourceModal extends Component {
     this.onChangeChildrenOnly = this.onChangeChildrenOnly.bind(this);
     this.onChangeWaterVesselNeeded = this.onChangeWaterVesselNeeded.bind(this);
     this.onChangeFiltration = this.onChangeFiltration.bind(this);
+    // ADD FOOD MODAL
+    this.onChangeConsumptionType = this.onChangeConsumptionType.bind(this);
+    this.onChangeFoodType = this.onChangeFoodType.bind(this);
+
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -73,7 +77,10 @@ export class AddResourceModal extends Component {
       dbConnection: "",
       count: 0,
       show: false,
-      formStep: "chooseResource"
+      formStep: "chooseResource",
+      // ADD FOOD MODAL FIELDS
+      consumptionType: "",
+      foodType: ""
     };
   }
 
@@ -205,6 +212,20 @@ export class AddResourceModal extends Component {
   onChangeNormsAndRules(e) {
     this.setState({
       normsAndRules: e.target.value
+    });
+  }
+
+  // ADD FOOD MODAL FIELDS
+
+  onChangeConsumptionType(e) {
+    this.setState({
+      consumptionType: e.target.value
+    });
+  }
+
+  onChangeFoodType(e) {
+    this.setState({
+      foodType: e.target.value
     });
   }
 
@@ -391,6 +412,20 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
               onChangeOrganization={this.onChangeOrganization}
+              accessible={this.state.handicapAccessable}
+              onAccessibleChange={this.onChangeHandicapAccess}
+              idRequired={this.state.idRequired}
+              onIdRequiredChange={this.onChangeIdRequired}
+              childrenOnly={this.state.childrenOnly}
+              onChildrenOnlyChange={this.onChangeChildrenOnly}
+              consumptionType={this.state.consumptionType}
+              onConsumptionTypeChange={this.onChangeConsumptionType}
+              foodType={this.state.foodType}
+              onFoodTypeChange={this.onChangeFoodType}
+              phlaskStatement={this.state.phlaskStatement}
+              onPhlaskStatementChange={this.onChangePhlaskStatement}
+              normsAndRules={this.state.normsAndRules}
+              onNormsAndRulesChange={this.onChangeNormsAndRules}
             />
           )}
 
