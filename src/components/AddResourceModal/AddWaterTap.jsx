@@ -125,7 +125,7 @@ function addWaterTap({
                   <Form.Label className={styles.modalFormLabel}>
                     Service Type
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control className={styles.modalFormSelect} as="select">
                     {/* TODO: do we want to use whitespace for values? could lead to
                     some odd parsing edge cases -- but if all current data follows
                     this convention then we might have to go through a painful
@@ -140,7 +140,7 @@ function addWaterTap({
                   <Form.Label className={styles.modalFormLabel}>
                     Tap Type
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control className={styles.modalFormSelect} as="select">
                     <option value="">Choose...</option>
                     <option value="drinking fountain">Drinking Fountain</option>
                     <option value="bottle filter and fountain">
