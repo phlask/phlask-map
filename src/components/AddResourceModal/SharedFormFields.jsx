@@ -74,18 +74,6 @@ function SharedFormFields({
           placeholder={`Please describe the ${siteCategory}`}
         />
       </Form.Group>
-      <Form.Group
-        controlId="organization"
-        value={organization}
-        onChange={onOrganizationChange}
-      >
-        <Form.Label className={styles.modalFormLabel}>Organization</Form.Label>
-        <Form.Control
-          className={styles.modalFormTextInput}
-          type="text"
-          placeholder={`Who does this ${siteCategory} belong to?`}
-        />
-      </Form.Group>
     </>
   );
 }
