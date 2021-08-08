@@ -39,7 +39,8 @@ function AddForaging({
         <Form
           onSubmit={e => {
             e.preventDefault();
-            console.log("boop");
+            console.log("submitting foraging");
+            next();
           }}
         >
           <SharedFormFields
@@ -54,72 +55,82 @@ function AddForaging({
             onDescriptionChange={onDescriptionChange}
             siteCategory="foraging location"
           />
+
+          <Form.Group value={organization} onChange={onOrganizationChange}>
+            <Form.Label className={styles.modalFormLabel}>
+              Access Type
+            </Form.Label>
+            <Form.Control className={styles.modalFormSelect} as="select">
+              <option value="">Choose...</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+              <option value="private shared">Private (Shared)</option>
+              <option value="restricted">Restricted</option>
+              <option value="other">Other</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Accordion>
+            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
+              Additional Information
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <div>
+                <Form.Check
+                  checked={accessible}
+                  onChange={onAccessibleChange}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Accessible"
+                  value="accessible"
+                />
+
+                <Form.Group
+                  value={foragingFoodType}
+                  onChange={onForagingFoodTypeChange}
+                >
+                  <Form.Label className={styles.modalFormLabel}>
+                    Food Type
+                  </Form.Label>
+                  <Form.Control className={styles.modalFormSelect} as="select">
+                    <option value="">Choose...</option>
+                    <option value="nut">Nut</option>
+                    <option value="fruit">Fruit</option>
+                    <option value="leaves">Leaves</option>
+                    <option value="bark">Bark</option>
+                    <option value="flowers">Flowers</option>
+                    <option value="mushroom">Mushroom</option>
+                    <option value="root">Root</option>
+                    <option value="other">Other</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <SharedAccordionFields
+                  phlaskStatement={phlaskStatement}
+                  onPhlaskStatementChange={onPhlaskStatementChange}
+                  normsAndRules={normsAndRules}
+                  onNormsAndRulesChange={onNormsAndRulesChange}
+                />
+              </div>
+            </Accordion.Collapse>
+          </Accordion>
+
+          <Button
+            style={{ margin: "16px 0", borderRadius: "6px" }}
+            variant="secondary"
+            onClick={prev}
+          >
+            Back
+          </Button>
+          <Button
+            style={{ float: "right", margin: "16px 0", borderRadius: "6px" }}
+            variant="primary"
+            type="submit"
+          >
+            Submit
+          </Button>
         </Form>
-        <Form.Group value={organization} onChange={onOrganizationChange}>
-          <Form.Label className={styles.modalFormLabel}>Access Type</Form.Label>
-          <Form.Control className={styles.modalFormSelect} as="select">
-            <option value="">Choose...</option>
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-            <option value="private shared">Private (Shared)</option>
-            <option value="restricted">Restricted</option>
-            <option value="other">Other</option>
-          </Form.Control>
-        </Form.Group>
-
-        <Accordion>
-          <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
-            Additional Information
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <div>
-              <Form.Check
-                checked={accessible}
-                onChange={onAccessibleChange}
-                className={styles.modalFormCheck}
-                type="checkbox"
-                label="Accessible"
-                value="accessible"
-              />
-
-              <Form.Group
-                value={foragingFoodType}
-                onChange={onForagingFoodTypeChange}
-              >
-                <Form.Label className={styles.modalFormLabel}>
-                  Food Type
-                </Form.Label>
-                <Form.Control className={styles.modalFormSelect} as="select">
-                  <option value="">Choose...</option>
-                  <option value="nut">Nut</option>
-                  <option value="fruit">Fruit</option>
-                  <option value="leaves">Leaves</option>
-                  <option value="bark">Bark</option>
-                  <option value="flowers">Flowers</option>
-                  <option value="mushroom">Mushroom</option>
-                  <option value="root">Root</option>
-                  <option value="other">Other</option>
-                </Form.Control>
-              </Form.Group>
-
-              <SharedAccordionFields
-                phlaskStatement={phlaskStatement}
-                onPhlaskStatementChange={onPhlaskStatementChange}
-                normsAndRules={normsAndRules}
-                onNormsAndRulesChange={onNormsAndRulesChange}
-              />
-            </div>
-          </Accordion.Collapse>
-        </Accordion>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={prev}>
-          Select Another Resource
-        </Button>
-        <Button variant="primary" type="submit" onClick={() => next()}>
-          Submit
-        </Button>
-      </Modal.Footer>
     </>
   );
 }

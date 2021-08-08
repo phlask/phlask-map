@@ -44,7 +44,8 @@ function AddFood({
         <Form
           onSubmit={e => {
             e.preventDefault();
-            console.log("boop");
+            console.log("submitting food form");
+            next();
           }}
         >
           <SharedFormFields
@@ -149,17 +150,23 @@ function AddFood({
               </div>
             </Accordion.Collapse>
           </Accordion>
+
+          <Button
+            style={{ margin: "16px 0", borderRadius: "6px" }}
+            variant="secondary"
+            onClick={prev}
+          >
+            Back
+          </Button>
+          <Button
+            style={{ float: "right", margin: "16px 0", borderRadius: "6px" }}
+            variant="primary"
+            type="submit"
+          >
+            Submit
+          </Button>
         </Form>
       </Modal.Body>
-
-      <Modal.Footer>
-        <Button variant="secondary" onClick={prev}>
-          Select Another Resource
-        </Button>
-        <Button variant="primary" type="submit" onClick={() => next()}>
-          Submit
-        </Button>
-      </Modal.Footer>
     </>
   );
 }
