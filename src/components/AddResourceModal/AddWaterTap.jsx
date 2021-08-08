@@ -64,7 +64,7 @@ function addWaterTap({
           />
           <Form.Group value={organization} onChange={onOrganizationChange}>
             <Form.Label className={styles.modalFormLabel}>
-              Organization Type
+              Access Type
             </Form.Label>
             <Form.Control className={styles.modalFormSelect} as="select">
               <option value="">Choose...</option>

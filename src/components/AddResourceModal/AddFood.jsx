@@ -55,10 +55,11 @@ function AddFood({
             </Form.Label>
             <Form.Control className={styles.modalFormSelect} as="select">
               <option value="">Choose...</option>
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="private shared">Private (Shared)</option>
-              <option value="restricted">Restricted</option>
+              <option value="government">Government</option>
+              <option value="business">Business</option>
+              <option value="nonprofit">Non-Profit</option>
+              <option value="religious">Religious</option>
+              <option value="grassroots">Grassroots</option>
               <option value="other">Other</option>
             </Form.Control>
           </Form.Group>
