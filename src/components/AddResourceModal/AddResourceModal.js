@@ -444,6 +444,10 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
               onChangeOrganization={this.onChangeOrganization}
+              phlaskStatement={this.state.phlaskStatement}
+              onPhlaskStatementChange={this.onChangePhlaskStatement}
+              normsAndRules={this.state.normsAndRules}
+              onNormsAndRulesChange={this.onChangeNormsAndRules}
             />
           )}
 
@@ -462,6 +466,10 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
               onOrganizationChange={this.onChangeOrganization}
+              phlaskStatement={this.state.phlaskStatement}
+              onPhlaskStatementChange={this.onChangePhlaskStatement}
+              normsAndRules={this.state.normsAndRules}
+              onNormsAndRulesChange={this.onChangeNormsAndRules}
             />
           )}
 
