@@ -82,8 +82,6 @@ function addWaterTap({
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <div>
-                {/* TODO create states and change handlers for
-                checkboxes */}
                 <Form.Check
                   checked={accessible}
                   onChange={onAccessibleChange}
@@ -128,6 +126,7 @@ function addWaterTap({
                   label="Filtrated"
                   value="filtrated"
                 />
+                {/* TODO add sparkling checkbox? */}
 
                 <Form.Group
                   value={tapServiceType}
