@@ -9,6 +9,7 @@ import SharedAccordionFields from "./SharedAccordionFields";
 function AddForaging({
   prev,
   next,
+  onSubmit,
   onDrop,
   name,
   onNameChange,
@@ -40,6 +41,10 @@ function AddForaging({
           onSubmit={e => {
             e.preventDefault();
             console.log("submitting foraging");
+            // TODO
+            // when we've implemented appropritate logic to submit data
+            // to the appropriate collections we should uncomment this
+            // onSubmit(e);
             next();
           }}
         >

@@ -376,6 +376,7 @@ export class AddResourceModal extends Component {
             <AddWaterTap
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onSubmit={this.onSubmit}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -412,6 +413,7 @@ export class AddResourceModal extends Component {
             <AddFood
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onSubmit={this.onSubmit}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -444,6 +446,7 @@ export class AddResourceModal extends Component {
             <AddBathroom
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onSubmit={this.onSubmit}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -466,6 +469,7 @@ export class AddResourceModal extends Component {
             <AddForaging
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
+              onSubmit={this.onSubmit}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}

@@ -9,6 +9,7 @@ import SharedAccordionFields from "./SharedAccordionFields";
 function AddFood({
   prev,
   next,
+  onSubmit,
   onDrop,
   name,
   onNameChange,
@@ -45,6 +46,10 @@ function AddFood({
           onSubmit={e => {
             e.preventDefault();
             console.log("submitting food form");
+            // TODO
+            // when we've implemented appropritate logic to submit data
+            // to the appropriate collections we should uncomment this
+            // onSubmit(e);
             next();
           }}
         >

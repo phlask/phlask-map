@@ -9,6 +9,7 @@ import SharedAccordionFields from "./SharedAccordionFields";
 function AddBathroom({
   prev,
   next,
+  onSubmit,
   onDrop,
   name,
   onNameChange,
@@ -35,6 +36,10 @@ function AddBathroom({
           onSubmit={e => {
             e.preventDefault();
             console.log("submitting bathroom");
+            // TODO
+            // when we've implemented appropritate logic to submit data
+            // to the appropriate collections we should uncomment this
+            // onSubmit(e);
             next();
           }}
         >

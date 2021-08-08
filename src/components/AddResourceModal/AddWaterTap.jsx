@@ -9,6 +9,7 @@ import SharedAccordionFields from "./SharedAccordionFields";
 function addWaterTap({
   prev,
   next,
+  onSubmit,
   onDrop,
   name,
   onNameChange,
@@ -49,6 +50,10 @@ function addWaterTap({
           onSubmit={e => {
             e.preventDefault();
             console.log("submit tap");
+            // TODO
+            // when we've implemented appropritate logic to submit data
+            // to the appropriate collections we should uncomment this
+            // onSubmit(e);
             next();
           }}
         >
