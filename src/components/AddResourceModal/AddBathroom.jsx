@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./AddResourceModal.module.scss";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Accordion } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
+// eslint-disable-next-line import/no-unresolved
+import SharedAccordionFields from "./SharedAccordionFields";
 
 function AddBathroom({
   prev,
@@ -17,7 +19,11 @@ function AddBathroom({
   description,
   onDescriptionChange,
   organization,
-  onOrganizationChange
+  onOrganizationChange,
+  phlaskStatement,
+  onPhlaskStatementChange,
+  normsAndRules,
+  onNormsAndRulesChange
 }) {
   return (
     <>
@@ -56,6 +62,22 @@ function AddBathroom({
               <option value="other">Other</option>
             </Form.Control>
           </Form.Group>
+
+          <Accordion>
+            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
+              Additional Information
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <div>
+                <SharedAccordionFields
+                  phlaskStatement={phlaskStatement}
+                  onPhlaskStatementChange={onPhlaskStatementChange}
+                  normsAndRules={normsAndRules}
+                  onNormsAndRulesChange={onNormsAndRulesChange}
+                />
+              </div>
+            </Accordion.Collapse>
+          </Accordion>
         </Form>
       </Modal.Body>
       <Modal.Footer>
