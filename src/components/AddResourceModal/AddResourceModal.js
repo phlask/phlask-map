@@ -404,7 +404,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
-              onChangeOrganization={this.onChangeDescription}
+              onChangeOrganization={this.onChangeOrganization}
             />
           )}
 
@@ -422,7 +422,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
-              onChangeOrganization={this.onChangeDescription}
+              onOrganizationChange={this.onChangeOrganization}
             />
           )}
 

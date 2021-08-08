@@ -17,7 +17,7 @@ function AddBathroom({
   description,
   onDescriptionChange,
   organization,
-  onChangeOrganization
+  onOrganizationChange
 }) {
   return (
     <>
@@ -41,10 +41,21 @@ function AddBathroom({
             onWebsiteChange={onWebsiteChange}
             description={description}
             onDescriptionChange={onDescriptionChange}
-            organization={organization}
-            onChangeOrganization={onChangeOrganization}
             siteCategory="bathroom"
           />
+          <Form.Group value={organization} onChange={onOrganizationChange}>
+            <Form.Label className={styles.modalFormLabel}>
+              Organization Type
+            </Form.Label>
+            <Form.Control className={styles.modalFormSelect} as="select">
+              <option value="">Choose...</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+              <option value="private shared">Private (Shared)</option>
+              <option value="restricted">Restricted</option>
+              <option value="other">Other</option>
+            </Form.Control>
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>

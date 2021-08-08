@@ -13,8 +13,6 @@ function SharedFormFields({
   onWebsiteChange,
   description,
   onDescriptionChange,
-  organization,
-  onOrganizationChange,
   siteCategory
 }) {
   return (
