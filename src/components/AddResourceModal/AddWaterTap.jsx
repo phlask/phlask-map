@@ -182,14 +182,7 @@ function addWaterTap({
         <Button variant="secondary" onClick={prev}>
           Select Another Resource
         </Button>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={() => {
-            console.log();
-            next();
-          }}
-        >
+        <Button variant="primary" type="submit" onClick={() => next()}>
           Submit
         </Button>
       </Modal.Footer>
