@@ -25,6 +25,7 @@ import AddBathroom from "./AddBathroom";
 import AddForaging from "./AddForaging";
 // eslint-disable-next-line import/no-unresolved
 import AddWaterTap from "./AddWaterTap";
+import { connectToFirebase } from "./utils";
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -343,6 +344,11 @@ export class AddResourceModal extends Component {
 
       this.state.dbConnection
         .database()
+        // for this ref -- does it make sense to have databases for each resource type?
+        // could we have one database and have resource types exist as top level
+        // keys in the JSON tree???
+        // would this make writin easier??
+        // e.g. (`/waterTaps/${count+1}`) or (`/food/${count+1}`)
         .ref("/" + (this.state.count + 1).toString())
         .set(newTapData);
     });
