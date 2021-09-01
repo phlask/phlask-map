@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./AddResourceModal.module.scss";
 import { Modal, Form, Accordion, Button } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
+import * as firebase from "firebase";
+import { connectToFirebase } from "./utils";
 
 function AddForaging({
   prev,
   next,
   onSubmit,
+  onDbConnectionChange,
   onDrop,
   name,
   onNameChange,
@@ -30,6 +33,22 @@ function AddForaging({
   normsAndRules,
   onNormsAndRulesChange
 }) {
+  useEffect(() => {
+    // create connection to appropriate database
+    // based on resource type and hostname of the page
+    // (e.g. phlask.me, connect to prod)
+    const firebaseConnection = connectToFirebase(
+      window.location.hostname,
+      "foraging"
+    );
+    onDbConnectionChange(firebaseConnection);
+
+    // call back to delete app connection whenever component unmounts
+    return () => {
+      firebase.app("new").delete();
+    };
+  }, []);
+
   return (
     <>
       <Modal.Header closeButton>

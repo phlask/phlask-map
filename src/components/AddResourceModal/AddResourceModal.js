@@ -25,7 +25,6 @@ import AddBathroom from "./AddBathroom";
 import AddForaging from "./AddForaging";
 // eslint-disable-next-line import/no-unresolved
 import AddWaterTap from "./AddWaterTap";
-import { connectToFirebase } from "./utils";
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -53,6 +52,8 @@ export class AddResourceModal extends Component {
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
+    // BACKEND
+    this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -241,45 +242,15 @@ export class AddResourceModal extends Component {
     });
   }
 
-  connectToFirebase() {
-    const prod_config = {
-      apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
-      authDomain: "phlask-web-map-new-taps.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
-      projectId: "phlask-web-map-new-taps",
-      storageBucket: "phlask-web-map-new-taps.appspot.com",
-      messagingSenderId: "673087230724",
-      appId: "1:673087230724:web:2545788342843cccdcf651"
-    };
-
-    const beta_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-beta-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
-
-    const test_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-test-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
-    };
-
-    switch (window.location.hostname) {
-      case "phlask.me":
-        return firebase.initializeApp(prod_config, "new");
-      case "beta.phlask.me":
-        return firebase.initializeApp(beta_config, "new");
-      default:
-        return firebase.initializeApp(test_config, "new");
-    }
+  onChangeDbConnection(connection) {
+    this.setState(
+      {
+        dbConnection: connection
+      },
+      () => {
+        this.getCount();
+      }
+    );
   }
 
   getCount() {
@@ -303,17 +274,6 @@ export class AddResourceModal extends Component {
           }));
         }
       });
-  }
-
-  componentDidMount() {
-    this.setState(
-      {
-        dbConnection: this.connectToFirebase()
-      },
-      () => {
-        this.getCount();
-      }
-    );
   }
 
   onSubmit(e) {
@@ -344,11 +304,6 @@ export class AddResourceModal extends Component {
 
       this.state.dbConnection
         .database()
-        // for this ref -- does it make sense to have databases for each resource type?
-        // could we have one database and have resource types exist as top level
-        // keys in the JSON tree???
-        // would this make writin easier??
-        // e.g. (`/waterTaps/${count+1}`) or (`/food/${count+1}`)
         .ref("/" + (this.state.count + 1).toString())
         .set(newTapData);
     });
@@ -383,6 +338,7 @@ export class AddResourceModal extends Component {
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
               onSubmit={this.onSubmit}
+              onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -420,6 +376,7 @@ export class AddResourceModal extends Component {
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
               onSubmit={this.onSubmit}
+              onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -453,6 +410,7 @@ export class AddResourceModal extends Component {
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
               onSubmit={this.onSubmit}
+              onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
@@ -476,6 +434,7 @@ export class AddResourceModal extends Component {
               prev={() => this.onChangeFormStep("chooseResource")}
               next={() => this.onChangeFormStep("shareSocials")}
               onSubmit={this.onSubmit}
+              onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
               name={this.state.name}
               onNameChange={this.onNameChange}
