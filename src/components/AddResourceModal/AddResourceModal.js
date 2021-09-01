@@ -34,7 +34,6 @@ export class AddResourceModal extends Component {
     this.onNameChange = this.onChangeName.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
-    this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAccessToTap = this.onChangeAccessToTap.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
@@ -64,7 +63,6 @@ export class AddResourceModal extends Component {
       name: "",
       address: "",
       website: "",
-      city: "",
       description: "",
       accessToTap: "",
       organization: "",
@@ -139,12 +137,6 @@ export class AddResourceModal extends Component {
   onChangeWebsite(e) {
     this.setState({
       website: e.target.value
-    });
-  }
-
-  onChangeCity(e) {
-    this.setState({
-      city: e.target.value
     });
   }
 
