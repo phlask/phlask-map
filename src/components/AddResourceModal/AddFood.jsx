@@ -63,11 +63,7 @@ function AddFood({
         <Form
           onSubmit={e => {
             e.preventDefault();
-            console.log("submitting food form");
-            // TODO
-            // when we've implemented appropritate logic to submit data
-            // to the appropriate collections we should uncomment this
-            // onSubmit(e);
+            onSubmit(e);
             next();
           }}
         >

@@ -35,7 +35,6 @@ export class AddResourceModal extends Component {
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeAccessToTap = this.onChangeAccessToTap.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
     this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
     this.onChangeTapType = this.onChangeTapType.bind(this);
@@ -64,7 +63,6 @@ export class AddResourceModal extends Component {
       address: "",
       website: "",
       description: "",
-      accessToTap: "",
       organization: "",
       tapServiceType: "",
       tapType: "",
@@ -143,12 +141,6 @@ export class AddResourceModal extends Component {
   onChangeDescription(e) {
     this.setState({
       description: e.target.value
-    });
-  }
-
-  onChangeAccessToTap(e) {
-    this.setState({
-      accessToTap: e.target.value
     });
   }
 
@@ -278,18 +270,30 @@ export class AddResourceModal extends Component {
 
     Promise.all(upload_promises).then(images => {
       // All image uploads completed, loading tap record
-      const newTapData = {
+
+      /* Easier to construct one new data object than to
+       *  figure out which fields we need to submit for each resource type
+       *  and create new data objects specific for each resource type
+       *  and selectively pass it on to the submit function
+       */
+      const newData = {
         images: images,
+        name: this.state.name,
         address: this.state.address,
-        city: this.state.city,
         description: this.state.description,
-        access: this.state.accessToTap,
         organization: this.state.organization,
+        // TAP FIELDS
         filtration: this.state.filtration,
         handicap: this.state.handicapAccessable,
         service: this.state.tapServiceType,
         tap_type: this.state.tapType,
-        vessel: this.state.waterVessleNeeded,
+        vessel: this.state.waterVesselNeeded,
+        // FOOD FIELDS
+        food_type: this.state.foodType,
+        consumption_type: this.state.consumptionType,
+        // FORAGING FIELDS
+        foraging_food_type: this.state.foragingFoodType,
+        // SHARED FIELDS
         statement: this.state.phlaskStatement,
         norms_rules: this.state.normsAndRules
       };
@@ -297,7 +301,7 @@ export class AddResourceModal extends Component {
       this.state.dbConnection
         .database()
         .ref("/" + (this.state.count + 1).toString())
-        .set(newTapData);
+        .set(newData);
     });
   }
 
