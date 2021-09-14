@@ -128,7 +128,7 @@ export class AddResourceModal extends Component {
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target.value
+      address: e.target ? e.target.value : e
     });
   }
 

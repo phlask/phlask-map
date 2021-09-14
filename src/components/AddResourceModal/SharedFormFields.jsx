@@ -2,6 +2,11 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 import styles from "./AddResourceModal.module.scss";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng
+} from "react-places-autocomplete";
 
 function SharedFormFields({
   onDrop,
@@ -15,6 +20,18 @@ function SharedFormFields({
   onDescriptionChange,
   siteCategory
 }) {
+  // FOR ADDRESS AUTOFILL
+  const handleChange = address => {
+    onAddressChange(address);
+  };
+
+  const handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log("success", latLng))
+      .catch(error => console.error("error", error));
+  };
+
   return (
     <>
       <ImageUploader
@@ -46,6 +63,51 @@ function SharedFormFields({
           type="text"
           placeholder={`Enter the address of this ${siteCategory}`}
         />
+        <PlacesAutocomplete
+          classes={styles.modalAddressAutofill}
+          value={address}
+          onChange={handleChange}
+          onSelect={handleSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading
+          }) => (
+            <div>
+              <input
+                {...getInputProps({
+                  placeholder: "Search Places ...",
+                  className: "location-search-input"
+                })}
+              />
+              <div className="autocomplete-dropdown-container">
+                {loading && <div>Loading...</div>}
+                {suggestions.map((suggestion, i) => {
+                  const className = suggestion.active
+                    ? "suggestion-item--active"
+                    : "suggestion-item";
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                    : { backgroundColor: "#ffffff", cursor: "pointer" };
+                  return (
+                    <div
+                      key={i}
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style
+                      })}
+                    >
+                      <span>{suggestion.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </PlacesAutocomplete>
       </Form.Group>
       <Form.Group
         controlId="website"
