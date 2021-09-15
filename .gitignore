@@ -27,3 +27,6 @@ docker/
 # dev files
 resources/
 .env
+
+# testing
+cypress/videos/
