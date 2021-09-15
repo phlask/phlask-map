@@ -3,6 +3,7 @@ Code behind the PHLASK Web Map
 
 ## Running Locally
 ### Yarn
+1. Ensure you have [nodejs v12.20.0](https://nodejs.org/download/release/v12.20.0/) installed on your machine
 1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
 1. Run `yarn install`
 1. Run `yarn start`
