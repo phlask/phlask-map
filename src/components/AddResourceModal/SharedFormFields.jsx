@@ -8,6 +8,14 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 
+const addressStyles = {
+  width: "100%",
+  background: "#eaeef3",
+  padding: "6px 12px",
+  borderRadius: "4px",
+  border: "1px solid #ced4da"
+};
+
 function SharedFormFields({
   onDrop,
   name,
@@ -26,10 +34,7 @@ function SharedFormFields({
   };
 
   const handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log("success", latLng))
-      .catch(error => console.error("error", error));
+    onAddressChange(address);
   };
 
   return (
@@ -58,13 +63,7 @@ function SharedFormFields({
         onChange={onAddressChange}
       >
         <Form.Label className={styles.modalFormLabel}>Address</Form.Label>
-        <Form.Control
-          className={styles.modalFormTextInput}
-          type="text"
-          placeholder={`Enter the address of this ${siteCategory}`}
-        />
         <PlacesAutocomplete
-          classes={styles.modalAddressAutofill}
           value={address}
           onChange={handleChange}
           onSelect={handleSelect}
@@ -78,9 +77,10 @@ function SharedFormFields({
             <div>
               <input
                 {...getInputProps({
-                  placeholder: "Search Places ...",
-                  className: "location-search-input"
+                  placeholder: "Enter the address of this resource",
+                  className: "modalAddressAutofill"
                 })}
+                className={styles.modalAddressAutofill}
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
@@ -94,11 +94,11 @@ function SharedFormFields({
                     : { backgroundColor: "#ffffff", cursor: "pointer" };
                   return (
                     <div
-                      key={i}
                       {...getSuggestionItemProps(suggestion, {
                         className,
                         style
                       })}
+                      key={i}
                     >
                       <span>{suggestion.description}</span>
                     </div>
