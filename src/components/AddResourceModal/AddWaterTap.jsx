@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Form, Button, Accordion } from "react-bootstrap";
 import styles from "./AddResourceModal.module.scss";
 // eslint-disable-next-line import/no-unresolved
@@ -101,7 +103,13 @@ function AddWaterTap({
 
           <Accordion>
             <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
-              Additional Information
+              Additional Information{" "}
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={styles.filterIcon}
+                size="1x"
+                color="#525f75"
+              />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <div>

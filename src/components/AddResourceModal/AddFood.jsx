@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AddResourceModal.module.scss";
 import { Modal, Form, Accordion, Button } from "react-bootstrap";
 // eslint-disable-next-line import/no-unresolved
@@ -96,7 +98,13 @@ function AddFood({
 
           <Accordion>
             <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
-              Additional Information
+              Additional Information{" "}
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={styles.filterIcon}
+                size="1x"
+                color="#525f75"
+              />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <div>
