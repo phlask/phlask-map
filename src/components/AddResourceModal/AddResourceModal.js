@@ -310,11 +310,36 @@ export class AddResourceModal extends Component {
   }
 
   handleClose() {
-    // on close we should reset form step so user can start over
-    // TODO
-    // reset the entire form state on close so we don't get
-    // input values from someone previously submitting a resource
-    this.setState({ show: false, formStep: "chooseResource" });
+    // on close we should reset form step and
+    // form state so user can submit another resource
+    const resetState = {
+      pictures: [],
+      images: [],
+      name: "",
+      address: "",
+      website: "",
+      description: "",
+      organization: "",
+      tapServiceType: "",
+      tapType: "",
+      phlaskStatement: "",
+      normsAndRules: "",
+      filtration: false,
+      handicapAccessable: false,
+      waterVesselNeeded: false,
+      idRequired: false,
+      childrenOnly: false,
+      dbConnection: "",
+      count: 0,
+      show: false,
+      formStep: "chooseResource",
+      // ADD FOOD MODAL FIELDS
+      consumptionType: "",
+      foodType: "",
+      // ADD FORAGING MODAL FIELDS
+      foragingFoodType: ""
+    };
+    this.setState(resetState);
   }
 
   render() {
