@@ -238,6 +238,9 @@ export class AddResourceModal extends Component {
   }
 
   getCount() {
+    // need to reset count as switching between
+    // resources have different counts
+    this.setState({ count: 0 });
     this.state.dbConnection
       .database()
       .ref("/")
