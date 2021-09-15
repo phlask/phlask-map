@@ -454,7 +454,6 @@ export class AddResourceModal extends Component {
           )}
 
           {this.state.formStep === "shareSocials" && <ShareSocials />}
-          <Button onClick={() => console.log(this.state)}>print state</Button>
         </Modal>
 
         <button
