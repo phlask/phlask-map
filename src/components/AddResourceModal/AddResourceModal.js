@@ -408,7 +408,7 @@ export class AddResourceModal extends Component {
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
               website={this.state.website}
-              onWebsiteChange={this.onWebsiteChange}
+              onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
@@ -442,7 +442,7 @@ export class AddResourceModal extends Component {
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
               website={this.state.website}
-              onWebsiteChange={this.onWebsiteChange}
+              onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
@@ -466,7 +466,7 @@ export class AddResourceModal extends Component {
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
               website={this.state.website}
-              onWebsiteChange={this.onWebsiteChange}
+              onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
