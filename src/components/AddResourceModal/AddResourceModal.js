@@ -283,6 +283,7 @@ export class AddResourceModal extends Component {
         images: images,
         name: this.state.name,
         address: this.state.address,
+        website: this.state.website,
         description: this.state.description,
         organization: this.state.organization,
         // TAP FIELDS
