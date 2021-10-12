@@ -34,6 +34,25 @@ The PHLASK Map runs on a static page built with:
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
 
+## Testing
+This project uses [Cypress](https://www.cypress.io/) for testing.
+
+### Running Tests
+This project has been configed to run all tests in the `cypress/integration` directory. To run these tests:
+
+1. `cd` into the root (top-level) directory of the project
+2. ensure that you have all requirements installed with `yarn install` or `npm install` 
+3. run `npm run test`
+
+### Adding Tests
+Please refer to the `cypress.json` file for testing configurations.
+
+Tests follow the convention of being placed in a `<test-file-name>.spec.js` file where `<test-file-name>` is descriptive of the features/functionality the file tests for. Example, `water-tap-viewing.spec.js` tests feature related to viewing taps and the information displayed on the web page.
+
+To add new tests, create a `*.spec.js` file at the top level of `/cypress/integration`.
+
+Refer to `/cypress/integration/example` for the kinds of things cypress can test for -- NOTE the `*.spec.js` files are configured to not run when running `npm run test`.
+
 The site runs on:
 - AWS S3 (https://aws.amazon.com/s3/)
   - Stores the static files generated from the ReactJS build which present the map page 
