@@ -56,8 +56,7 @@ function AddBathroom({
         <Form
           onSubmit={e => {
             e.preventDefault();
-            onSubmit(e);
-            next();
+            onSubmit(e).then(() => {next()});
           }}
         >
           <SharedFormFields

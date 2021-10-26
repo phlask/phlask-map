@@ -268,10 +268,10 @@ export class AddResourceModal extends Component {
     var upload_promises = [];
     // Upload images
     this.state.pictures.forEach(picture =>
-      upload_promises.push(this.submitImage(picture))
+      {upload_promises.push(this.submitImage(picture))}
     );
 
-    Promise.all(upload_promises).then(images => {
+    return Promise.all(upload_promises).then(images => {
       // All image uploads completed, loading tap record
 
       /* Easier to construct one new data object than to
@@ -302,7 +302,7 @@ export class AddResourceModal extends Component {
         norms_rules: this.state.normsAndRules
       };
 
-      this.state.dbConnection
+      return this.state.dbConnection
         .database()
         .ref("/" + (this.state.count + 1).toString())
         .set(newData);

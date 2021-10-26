@@ -43,7 +43,7 @@ function SharedFormFields({
         withIcon={true}
         buttonText="Choose images"
         onChange={onDrop}
-        imgExtension={[".jpg", ".png", ".gif"]}
+        imgExtension={[".jpg", ".png", ".gif", ".jpeg"]}
         maxFileSize={5242880}
         withPreview={true}
       />
