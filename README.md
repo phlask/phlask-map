@@ -44,6 +44,9 @@ This project has been configed to run all tests in the `cypress/integration` dir
 2. ensure that you have all requirements installed with `yarn install` or `npm install` 
 3. run `npm run test`
 
+#### Testing in Docker
+TBD - This has not yet been tested.
+
 ### Adding Tests
 Please refer to the `cypress.json` file for testing configurations.
 
