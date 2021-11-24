@@ -1,3 +1,4 @@
 {
-  "watchForFileChanges": false
+  "watchForFileChanges": false,
+  "ignoreTestFiles": "**/examples/*.js"
 }

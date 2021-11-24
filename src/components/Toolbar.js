@@ -16,7 +16,7 @@ import phlaskImg from "./images/PHLASK Button.png";
 import WaterIcon from "./icons/WaterIcon";
 import FoodIcon from "./icons/FoodIcon";
 import { isMobile } from "react-device-detect";
-import AddTapModal from "./AddTapModal";
+import { AddResourceModal } from "./AddResourceModal";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -81,8 +81,6 @@ function getCoordinates() {
   });
 }
 
-
-
 function Toolbar(props) {
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -91,11 +89,10 @@ function Toolbar(props) {
     }
   }
 
-  function handleGA(type){
-    
+  function handleGA(type) {
     ReactGA.event({
       category: `Toolbar`,
-      action: 'MapChangedTo',
+      action: "MapChangedTo",
       label: `${type}`
     });
   }
@@ -177,7 +174,7 @@ function Toolbar(props) {
       >
         <FoodIcon />
       </button>
-      <AddTapModal />
+      <AddResourceModal />
     </div>
   );
 }
