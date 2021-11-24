@@ -24,8 +24,8 @@ function AddBathroom({
   onWebsiteChange,
   description,
   onDescriptionChange,
-  organization,
-  onOrganizationChange,
+  access,
+  onAccessChange,
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
@@ -71,7 +71,7 @@ function AddBathroom({
             onDescriptionChange={onDescriptionChange}
             siteCategory="bathroom"
           />
-          <Form.Group value={organization} onChange={onOrganizationChange}>
+          <Form.Group value={access} onChange={onAccessChange}>
             <Form.Label className={styles.modalFormLabel}>
               Access Type
             </Form.Label>

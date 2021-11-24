@@ -32,6 +32,7 @@ export class AddResourceModal extends Component {
     this.onChangeFormStep = this.onChangeFormStep.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onNameChange = this.onChangeName.bind(this);
+    this.onChangeAccess = this.onChangeAccess.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
@@ -60,6 +61,7 @@ export class AddResourceModal extends Component {
       pictures: [],
       images: [],
       name: "",
+      access: "",
       address: "",
       website: "",
       description: "",
@@ -126,6 +128,12 @@ export class AddResourceModal extends Component {
     });
   }
 
+  onChangeAccess(e) {
+    this.setState({
+      access: e.target.value
+    });
+  }
+
   onChangeAddress(e) {
     this.setState({
       address: e.target ? e.target.value : e
@@ -145,6 +153,7 @@ export class AddResourceModal extends Component {
   }
 
   onChangeOrganization(e) {
+    console.log("ORGANIZATION CHANGE TO " + e.target.value)
     this.setState({
       organization: e.target.value
     });
@@ -207,6 +216,7 @@ export class AddResourceModal extends Component {
   // ADD FOOD MODAL FIELDS
 
   onChangeConsumptionType(e) {
+    console.log("CONSUMPTION CHANGE TO " + e.target.value)
     this.setState({
       consumptionType: e.target.value
     });
@@ -282,6 +292,7 @@ export class AddResourceModal extends Component {
       const newData = {
         images: images,
         name: this.state.name,
+        access: this.state.access,
         address: this.state.address,
         website: this.state.website,
         description: this.state.description,
@@ -295,6 +306,8 @@ export class AddResourceModal extends Component {
         // FOOD FIELDS
         food_type: this.state.foodType,
         consumption_type: this.state.consumptionType,
+        id_required: this.state.idRequired,
+        children_only: this.state.childrenOnly,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
         // SHARED FIELDS
@@ -320,6 +333,7 @@ export class AddResourceModal extends Component {
       pictures: [],
       images: [],
       name: "",
+      access: "",
       address: "",
       website: "",
       description: "",
@@ -373,8 +387,8 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              organization={this.state.organization}
-              onOrganizationChange={this.onChangeOrganization}
+              access={this.state.access}
+              onAccessChange={this.onChangeAccess}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
@@ -412,7 +426,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               organization={this.state.organization}
-              onChangeOrganization={this.onChangeOrganization}
+              onOrganizationChange={this.onChangeOrganization}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
@@ -445,8 +459,8 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              organization={this.state.organization}
-              onChangeOrganization={this.onChangeOrganization}
+              access={this.state.access}
+              onAccessChange={this.onChangeAccess}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
@@ -469,8 +483,8 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              organization={this.state.organization}
-              onOrganizationChange={this.onChangeOrganization}
+              access={this.state.access}
+              onAccessChange={this.onChangeAccess}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               foragingFoodType={this.state.foragingFoodType}

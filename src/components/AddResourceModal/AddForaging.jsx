@@ -24,8 +24,8 @@ function AddForaging({
   onWebsiteChange,
   description,
   onDescriptionChange,
-  organization,
-  onOrganizationChange,
+  access,
+  onAccessChange,
   accessible,
   onAccessibleChange,
   foragingFoodType,
@@ -77,7 +77,7 @@ function AddForaging({
             siteCategory="foraging location"
           />
 
-          <Form.Group value={organization} onChange={onOrganizationChange}>
+          <Form.Group value={access} onChange={onAccessChange}>
             <Form.Label className={styles.modalFormLabel}>
               Access Type
             </Form.Label>
