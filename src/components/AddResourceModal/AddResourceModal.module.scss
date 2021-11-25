@@ -1,0 +1,98 @@
+.modal {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.modalHeader {
+  margin-bottom: 32px;
+}
+
+.modalBody {
+  padding: 0px 24px;
+}
+
+.modalContent {
+  height: 90vh;
+}
+
+.greyHeader {
+  color: #626262;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.modalButton {
+  display: block;
+  margin: 24px auto;
+  padding: 16px 32px;
+  min-width: 60%;
+}
+
+.modalFormLabel {
+  color: #525f75;
+  font-weight: 500;
+}
+
+.modalFormTextInput {
+  color: #000;
+  background: #eaeef3;
+}
+
+.modalFormSelect {
+  color: #525f75;
+  background: #eaeef3;
+}
+
+.modalFormCheck {
+  margin: 8px 0px;
+}
+
+.modalAddressAutofill {
+  color: #000;
+  width: 100%;
+  background: #eaeef3;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.socialShareMessage {
+  color: #626262;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.socialShareIconWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+  padding: 0px 64px;
+}
+
+.socialShareIcon {
+  color: #626262;
+  font-size: 2.25rem;
+  text-align: center;
+}
+
+.addButton {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0.35rem;
+  color: #999;
+
+  &:hover {
+    color: #666;
+  }
+
+  svg {
+    padding: 0.15rem;
+  }
+}
+
+.mobileAddButton {
+  right: 2%;
+}
