@@ -1,50 +1,53 @@
 import React, { Component } from "react";
 import { Marker } from "google-maps-react";
-import IndieMarker from './IndieMarker.js'
+import IndieMarker from "../IndieMarker/IndieMarker";
 import { connect } from "react-redux";
-import { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter } from "../actions";
-import makeGetVisibleTaps from '../selectors/tapSelectors';
+import {
+  getTaps,
+  toggleInfoWindow,
+  setSelectedPlace,
+  setMapCenter
+} from "../../actions";
+import makeGetVisibleTaps from "../../selectors/tapSelectors";
 
 export class MapMarkers extends Component {
-
   state = {
     shouldUpdate: true
-  }
+  };
 
   UNSAFE_componentWillMount() {
-    if(!this.props.allTaps.length){
-      this.props.getTaps()
+    if (!this.props.allTaps.length) {
+      this.props.getTaps();
     }
   }
-  
-  shouldComponentUpdate(nextProps){
-    
+
+  shouldComponentUpdate(nextProps) {
     return nextProps.visibleTaps === this.props.visibleTaps
       ? false
-      : this.state.shouldUpdate
+      : this.state.shouldUpdate;
   }
 
   // Prevent from updating after initial loading of Markers
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.setState({
       shouldUpdate: false
-    })
-    console.log('MM update');
+    });
+    console.log("MM update");
   }
 
   getIcon(access) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
         case "Public":
-          return require('./images/tap-marker-icons/Public.png')
+          return require("../images/tap-marker-icons/Public.png");
         case "Private-Shared":
-          return require('./images/tap-marker-icons/Shared.png')
+          return require("../images/tap-marker-icons/Shared.png");
         case "Private":
-          return require('./images/tap-marker-icons/Private.png')
+          return require("../images/tap-marker-icons/Private.png");
         case "Restricted":
-          return require('./images/tap-marker-icons/Restricted.png')
+          return require("../images/tap-marker-icons/Restricted.png");
         case "Semi-public":
-          return require('./images/tap-marker-icons/Shared.png')
+          return require("../images/tap-marker-icons/Shared.png");
         case "TrashAcademy":
           return "https://i.imgur.com/fXTeEKL.png";
         default:
@@ -54,7 +57,7 @@ export class MapMarkers extends Component {
       return "https://i.imgur.com/kKXG3TO.png";
     }
   }
-  
+
   // onMarkerClick(tap){
   //   this.props.toggleInfoWindow(true);
   //   this.props.setSelectedPlace(tap);
@@ -63,7 +66,7 @@ export class MapMarkers extends Component {
 
   render() {
     // console.log(this.props)
-    if(this.props.visibleTaps) {
+    if (this.props.visibleTaps) {
       return (
         <React.Fragment>
           <Marker
@@ -73,31 +76,27 @@ export class MapMarkers extends Component {
             name={"Current Pos"}
             position={this.props.mapCenter}
           />
-          {this.props.visibleTaps
-            .map((tap, index) => (
-              <IndieMarker
-                key={index}
-                tap={tap}
-                google={this.props.google}
-                map={this.props.map}
-                // onMarkerClick={this.onMarkerClick.bind(this)}
-                // getIcon={this.getIcon}
-                // accessTypesHidden={this.props.accessTypesHidden}
-
-              />
-
+          {this.props.visibleTaps.map((tap, index) => (
+            <IndieMarker
+              key={index}
+              tap={tap}
+              google={this.props.google}
+              map={this.props.map}
+              // onMarkerClick={this.onMarkerClick.bind(this)}
+              // getIcon={this.getIcon}
+              // accessTypesHidden={this.props.accessTypesHidden}
+            />
           ))}
         </React.Fragment>
       );
-    }
-    else return null;
+    } else return null;
   }
 }
 
 // class Markers extends React.Component{
 
 //   shouldComponentUpdate(nextProps){
-    
+
 //   }
 
 //   getIcon(access) {
@@ -155,7 +154,7 @@ export class MapMarkers extends Component {
 // }
 
 const makeMapStateToProps = () => {
-  const getVisibleTaps = makeGetVisibleTaps()
+  const getVisibleTaps = makeGetVisibleTaps();
   const mapStateToProps = (state, props) => {
     return {
       visibleTaps: getVisibleTaps(state, props),
@@ -164,11 +163,16 @@ const makeMapStateToProps = () => {
       accessTypesHidden: state.tapFilters.accessTypesHidden,
       allTaps: state.allTaps,
       mapCenter: state.mapCenter
-    }
-  }
-  return mapStateToProps
-}
+    };
+  };
+  return mapStateToProps;
+};
 
-const mapDispatchToProps = { getTaps, toggleInfoWindow, setSelectedPlace, setMapCenter };
+const mapDispatchToProps = {
+  getTaps,
+  toggleInfoWindow,
+  setSelectedPlace,
+  setMapCenter
+};
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);

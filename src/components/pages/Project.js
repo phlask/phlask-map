@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "../Head";
+import Head from "../Head/Head";
 import styles from "./Pages.module.scss";
 
 const Project = () => {

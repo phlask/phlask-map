@@ -7,15 +7,15 @@ import {
   toggleInfoWindow,
   toggleInfoWindowClass,
   PHLASK_TYPE_WATER
-} from "../actions";
+} from "../../actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
 import "./SelectedTap.css";
 import styles from "./SelectedTap.module.scss";
-import sampleImg from "./images/phlask-tessellation.png";
-import sampleImg2x from "./images/phlask-tessellation@2x.png";
-import phlaskGreen from "./images/phlaskGreen.png";
-import phlaskBlue from "./images/phlaskBlue.png";
+import sampleImg from "../images/phlask-tessellation.png";
+import sampleImg2x from "../images/phlask-tessellation@2x.png";
+import phlaskGreen from "../images/phlaskGreen.png";
+import phlaskBlue from "../images/phlaskBlue.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretLeft,
@@ -23,8 +23,8 @@ import {
   faCaretUp,
   faTimes
 } from "@fortawesome/free-solid-svg-icons";
-import SelectedTapIcons from "./SelectedTapIcons";
-import SelectedTapHours from "./SelectedTapHours";
+import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
+import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -59,19 +59,23 @@ class SelectedTap extends React.Component {
   }
 
   getWalkingDurationAndTimes = () => {
-    const orsAPIKey = '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
+    const orsAPIKey =
+      "5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc";
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
     ${this.props.userLocation.lat}&end=${this.props.selectedPlace.lon},${this.props.selectedPlace.lat}`)
-        .then(response => response.json())
-        .then(data => {
-            // duration is returned in seconds
-            let duration = Math.round((data.features[0].properties.summary.duration)/60);
-            // distance is returned in m = 0.00062 mi
-            let distance = ((data.features[0].properties.summary.distance)*0.00062).toFixed(1);
-            this.setState({walkingDuration: duration, 
-                          walkingDistance: distance});
-        });
-  }
+      .then(response => response.json())
+      .then(data => {
+        // duration is returned in seconds
+        let duration = Math.round(
+          data.features[0].properties.summary.duration / 60
+        );
+        // distance is returned in m = 0.00062 mi
+        let distance = (
+          data.features[0].properties.summary.distance * 0.00062
+        ).toFixed(1);
+        this.setState({ walkingDuration: duration, walkingDistance: distance });
+      });
+  };
 
   toggleInfoExpanded(shouldExpand) {
     if (!shouldExpand) {
@@ -126,7 +130,7 @@ class SelectedTap extends React.Component {
     this.props.toggleInfoWindowClass(shouldShow);
     // Animate in
     if (shouldShow) {
-      this.props.toggleInfoWindow(shouldShow);      
+      this.props.toggleInfoWindow(shouldShow);
     }
     // Animate Out
     else {
@@ -167,11 +171,11 @@ class SelectedTap extends React.Component {
     }
   }
 
-  handleGA(){
+  handleGA() {
     console.log(this.props.selectedPlace);
     ReactGA.event({
       category: `Tap - ${this.props.phlaskType}`,
-      action: 'InfoShown',
+      action: "InfoShown",
       label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`
     });
   }
@@ -374,8 +378,11 @@ class SelectedTap extends React.Component {
               />
             </div>
             {/* Walk Time & Info Icons  */}
-            <div className={styles.walkTime}>Estimated Walk Time: {this.state.walkingDuration} mins ({this.state.walkingDistance} mi)</div>
-           
+            <div className={styles.walkTime}>
+              Estimated Walk Time: {this.state.walkingDuration} mins (
+              {this.state.walkingDistance} mi)
+            </div>
+
             <SelectedTapIcons place={this.props.selectedPlace} />
 
             {/* Description */}

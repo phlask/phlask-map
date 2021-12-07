@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import waterImg from "./images/waterButton.png";
-import foodImg from "./images/foodButton.png";
-import phlaskImg from "./images/PHLASK Button.png";
+import waterImg from "../images/waterButton.png";
+import foodImg from "../images/foodButton.png";
+import phlaskImg from "../images/PHLASK Button.png";
 import styles from "./TutorialModal.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
-import schoolIcon from "./images/food-marker-icons/school.png";
-import charterSchoolIcon from "./images/food-marker-icons/charter-school.png";
-import useLocalStorage from '../hooks/useLocalStorage'
+import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
+import schoolIcon from "../images/food-marker-icons/school.png";
+import charterSchoolIcon from "../images/food-marker-icons/charter-school.png";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const TutorialModal = ({ showButton }) => {
   const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
-  const [showModalPreference, setShowModalPreference] = useLocalStorage('showModalAgain', true);
+  const [showModalPreference, setShowModalPreference] = useLocalStorage(
+    "showModalAgain",
+    true
+  );
   const [showModalCheckbox, setShowModalCheckbox] = useState(true);
   const [modalCheckbox, setModalCheckbox] = useState(false);
 
@@ -35,19 +38,19 @@ const TutorialModal = ({ showButton }) => {
   function handlePrev() {
     setModalStep(modalStep - 1);
   }
-  
-  const handleCheckboxChange = (event) => {
-    setModalCheckbox(event.target.checked)
-    if(modalCheckbox) {
-      setShowModalPreference(true)
+
+  const handleCheckboxChange = event => {
+    setModalCheckbox(event.target.checked);
+    if (modalCheckbox) {
+      setShowModalPreference(true);
     } else {
-      setShowModalPreference(false)
+      setShowModalPreference(false);
     }
-  }
-  
+  };
+
   useEffect(() => {
-    setShowModal(showModalPreference)
-  }, [])
+    setShowModal(showModalPreference);
+  }, []);
 
   const modalContent = {
     1: {
@@ -168,11 +171,17 @@ const TutorialModal = ({ showButton }) => {
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           {modalStep === 1 && showModalCheckbox ? (
-          <Form> 
-            <Form.Group controlId="formBasicCheckbox">
-                <Form.Check checked={modalCheckbox} onChange={handleCheckboxChange} type="checkbox" label="Don't show this again" className={`${styles.text} ${styles.checkbox}`}/>
-            </Form.Group>
-          </Form>
+            <Form>
+              <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                  checked={modalCheckbox}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  label="Don't show this again"
+                  className={`${styles.text} ${styles.checkbox}`}
+                />
+              </Form.Group>
+            </Form>
           ) : null}
           {modalStep !== 1 && (
             <Button variant="blue" onClick={handlePrev}>

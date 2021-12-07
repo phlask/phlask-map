@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Foot } from "./Foot";
+import { Foot } from "../Foot/Foot";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { hours } from "./hours.js";
+import { hours } from "../hours";
 import { isMobile } from "react-device-detect";
 import styles from "./SelectedTapHours.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       const hoursList = [];
 
       selectedPlace.hours.map((orgHours, index) => {
-        console.log(orgHours.open)
+        console.log(orgHours.open);
         const formattedHours = {
           day: hours.getDays(index),
           open:
@@ -30,7 +30,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               ? hours.getSimpleHours(orgHours.close)
               : null
         };
-        console.log(formattedHours)
+        console.log(formattedHours);
         hoursList.push(formattedHours);
       });
 
@@ -40,31 +40,22 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       for (let x = 0; x < day; x++) {
         hoursList.push(hoursList.shift());
       }
-      
+
       setHoursList(hoursList);
 
       setCurrentDay(new Date().getDay());
 
       if (selectedPlace.hours[currentDay] !== undefined) {
         if (
-          (
-            selectedPlace.hours[currentDay].open !== undefined ||
-            !selectedPlace.hours[currentDay].open
-          )
-          &&
-          (
-            selectedPlace.hours[currentDay].close !== undefined ||
-            selectedPlace.hours[currentDay].close
-          )
+          (selectedPlace.hours[currentDay].open !== undefined ||
+            !selectedPlace.hours[currentDay].open) &&
+          (selectedPlace.hours[currentDay].close !== undefined ||
+            selectedPlace.hours[currentDay].close)
         ) {
           setCurrentOrgHours({
             day: hours.getDays(currentDay),
-            open: hours.getSimpleHours(
-              selectedPlace.hours[currentDay].open
-            ),
-            close: hours.getSimpleHours(
-              selectedPlace.hours[currentDay].close
-            )
+            open: hours.getSimpleHours(selectedPlace.hours[currentDay].open),
+            close: hours.getSimpleHours(selectedPlace.hours[currentDay].close)
           });
           setIsOpen(
             hours.checkOpen(
@@ -179,11 +170,9 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
                     if (index !== 0) {
                       return (
                         <div className="tap-hours-list-item" key={index}>
-                          {
-                            hours.open
-                              ?`${hours.day} ${hours.open} - ${hours.close}`
-                              : `${hours.day} Closed`
-                          }
+                          {hours.open
+                            ? `${hours.day} ${hours.open} - ${hours.close}`
+                            : `${hours.day} Closed`}
                         </div>
                       );
                     }

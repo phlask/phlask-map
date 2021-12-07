@@ -2,11 +2,11 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
-import FoodOtherFilterIcon from "./icons/FoodOtherFilterIcon";
-import FoodSchoolFilterIcon from "./icons/FoodSchoolFilterIcon";
-import FoodRecreationFilterIcon from "./icons/FoodRecreationFilterIcon";
-import FoodCongregationFilterIcon from "./icons/FoodCongregationFilterIcon";
-import styles from "./Filter.module.scss";
+import FoodOtherFilterIcon from "../icons/FoodOtherFilterIcon";
+import FoodSchoolFilterIcon from "../icons/FoodSchoolFilterIcon";
+import FoodRecreationFilterIcon from "../icons/FoodRecreationFilterIcon";
+import FoodCongregationFilterIcon from "../icons/FoodCongregationFilterIcon";
+import styles from "../Filter/Filter.module.scss";
 import {
   OverlayTrigger,
   Popover,
@@ -20,7 +20,7 @@ import {
   setToggleStateFood,
   setFilteredFoodTypes,
   resetFilterFunction
-} from "../actions";
+} from "../../actions";
 
 export class FoodFilter extends React.Component {
   handleChange(event) {

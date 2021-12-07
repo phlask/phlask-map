@@ -1,23 +1,24 @@
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import React, { Component } from "react";
-import ReactTouchEvents from 'react-touch-events';
-import SearchBar from "./SearchBar";
+import ReactTouchEvents from "react-touch-events";
+import SearchBar from "../SearchBar/SearchBar";
 import styles from "./ReactGoogleMaps.module.scss";
 import { connect } from "react-redux";
-import SelectedTap from './SelectedTap'
-import { getTaps,
+import SelectedTap from "../SelectedTap/SelectedTap";
+import {
+  getTaps,
   setFilterFunction,
   toggleInfoWindow,
   setMapCenter,
   setUserLocation,
-  PHLASK_TYPE_WATER } from "../actions";
+  PHLASK_TYPE_WATER
+} from "../../actions";
 // import Legend from "./Legend";
-import MapMarkers from "./MapMarkers"
-import MapMarkersFood from "./MapMarkersFood"
+import MapMarkers from "../MapMarkers/MapMarkers";
+import MapMarkersFood from "../MapMarkersFood";
 // Temporary Food/Water Toggle
 import { isMobile } from "react-device-detect";
-import Toolbar from './Toolbar'
-
+import Toolbar from "../Toolbar/Toolbar";
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -63,7 +64,7 @@ import Toolbar from './Toolbar'
 //       closestTap.lon = distances[i].lon;
 //       // closestTap.organization = distances[i].organization;
 //       // closestTap.address = distances[i].address;
-      
+
 //     }
 //   }
 
@@ -84,8 +85,8 @@ function getLat() {
       function success(position) {
         // for when getting location is a success
         var mylat = parseFloat(position.coords.latitude.toFixed(5));
-        console.log('lat ' + mylat);
-        
+        console.log("lat " + mylat);
+
         return mylat;
       },
       function error(error_message) {
@@ -162,53 +163,59 @@ export class ReactGoogleMaps extends Component {
   //       unfilteredTaps: nextProps.tapsDisplayed
   //     });
   // }
-  
-  componentDidUpdate(prevProps){
-    if(prevProps !== this.props){
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
       this.setState({
         unfilteredTaps: prevProps.tapsDisplayed
       });
-      if (this.state.currlat !== this.props.mapCenter.lat || this.state.currlon !== this.props.mapCenter.lng){
+      if (
+        this.state.currlat !== this.props.mapCenter.lat ||
+        this.state.currlon !== this.props.mapCenter.lng
+      ) {
         this.setState({
           currlat: this.props.mapCenter.lat,
           currlon: this.props.mapCenter.lng
-        })
+        });
       }
     }
   }
-  
+
   componentDidMount() {
-
     // console.log('Lat: ' + getLat());
-    // console.log('Lon: ' + getLon()); 
+    // console.log('Lon: ' + getLon());
 
-    getCoordinates().then(position => {
-      if (isNaN(position.coords.latitude) || isNaN(position.coords.longitude)) {
-        this.setState({ 
-          currlat: parseFloat("39.952744"),
-          currlon: parseFloat("-75.163500")
-        });
-      } else {
-        this.props.setMapCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        })
-        this.props.setUserLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        })
-        this.setState({ 
-          currlat: position.coords.latitude,
-          currlon: position.coords.longitude
-         });
-      }
-    }, ()=>{
-      
-    });
+    getCoordinates().then(
+      position => {
+        if (
+          isNaN(position.coords.latitude) ||
+          isNaN(position.coords.longitude)
+        ) {
+          this.setState({
+            currlat: parseFloat("39.952744"),
+            currlon: parseFloat("-75.163500")
+          });
+        } else {
+          this.props.setMapCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+          this.props.setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+          this.setState({
+            currlat: position.coords.latitude,
+            currlon: position.coords.longitude
+          });
+        }
+      },
+      () => {}
+    );
   }
 
-  showInfoWindow(){
-    this.props.toggleInfoWindow(true)
+  showInfoWindow() {
+    this.props.toggleInfoWindow(true);
   }
 
   onMarkerClick = (props, marker, e) =>
@@ -219,7 +226,6 @@ export class ReactGoogleMaps extends Component {
       currlat: props.position.lat,
       currlon: props.position.lng
     });
-  
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -242,44 +248,49 @@ export class ReactGoogleMaps extends Component {
   toggleTapInfo = isExpanded => {
     this.setState({
       isExpanded: isExpanded
-    })
-  }
+    });
+  };
 
   searchForLocation = location => {
-    this.setState({ currlat: location.lat, currlon: location.lng, zoom: 16, searchedTap: {lat: location.lat, lng: location.lng} });
+    this.setState({
+      currlat: location.lat,
+      currlon: location.lng,
+      zoom: 16,
+      searchedTap: { lat: location.lat, lng: location.lng }
+    });
   };
-  
-  handleTap = (e) => {
+
+  handleTap = e => {
     if (e.target instanceof HTMLDivElement && this.props.showingInfoWindow) {
       this.props.toggleInfoWindow(false);
     }
-  }
+  };
 
   render() {
     // console.log("Rendered ReactGoogleMaps");
-    
-      return (
-        <div id="react-google-map" className={styles.mapContainer}>
-          {/* <ClosestTap/> */}
-          <ReactTouchEvents onTap={this.handleTap.bind(this)}>
-            <div>
-              <Map
-                google={this.props.google}
-                className={"map"}
-                style={style}
-                zoom={this.state.zoom}
-                zoomControl={!isMobile}
-                streetViewControl={false}
-                mapTypeControl={false}
-                rotateControl={false}
-                fullscreenControl={false}
-                initialCenter={{
-                  lat: this.state.currlat,
-                  lng: this.state.currlon
-                }}
-                center={{ lat: this.state.currlat, lng: this.state.currlon }}
-              >
-                {/* <TypeToggle/> */}
+
+    return (
+      <div id="react-google-map" className={styles.mapContainer}>
+        {/* <ClosestTap/> */}
+        <ReactTouchEvents onTap={this.handleTap.bind(this)}>
+          <div>
+            <Map
+              google={this.props.google}
+              className={"map"}
+              style={style}
+              zoom={this.state.zoom}
+              zoomControl={!isMobile}
+              streetViewControl={false}
+              mapTypeControl={false}
+              rotateControl={false}
+              fullscreenControl={false}
+              initialCenter={{
+                lat: this.state.currlat,
+                lng: this.state.currlon
+              }}
+              center={{ lat: this.state.currlat, lng: this.state.currlon }}
+            >
+              {/* <TypeToggle/> */}
 
               {/* FilteredTaps */}
 
@@ -289,49 +300,49 @@ export class ReactGoogleMaps extends Component {
               } */}
 
               {/* Issue: MapMarkers won't render when placed inside container? */}
-              {this.props.phlaskType === PHLASK_TYPE_WATER
+              {this.props.phlaskType === PHLASK_TYPE_WATER ? (
                 // Water
-                ? 
-                  <MapMarkers 
-                    map={this.props.map}
-                    google={this.props.google}
-                    mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-                  />
-                
-
+                <MapMarkers
+                  map={this.props.map}
+                  google={this.props.google}
+                  mapCenter={{
+                    lat: this.state.currlat,
+                    lng: this.state.currlon
+                  }}
+                />
+              ) : (
                 // Food
-                    
-                :   
-                  <MapMarkersFood 
-                    map={this.props.map}
-                    google={this.props.google}
-                    mapCenter={{ lat: this.state.currlat, lng: this.state.currlon }}
-                  />
-              }
-              
 
-                
+                <MapMarkersFood
+                  map={this.props.map}
+                  google={this.props.google}
+                  mapCenter={{
+                    lat: this.state.currlat,
+                    lng: this.state.currlon
+                  }}
+                />
+              )}
 
-                {this.state.searchedTap != null && 
-                  <Marker
-                    name={"Your Search Result"}
-                    position={this.state.searchedTap}
-                  />
-                }
-              </Map>
-            </div>
-          </ReactTouchEvents>
-            <div className={styles.searchBarContainer}>
-              <SearchBar
-                className="searchBar"
-                search={location => this.searchForLocation(location)}
-              />
-            </div>
-            <Toolbar/>
-            <SelectedTap></SelectedTap>
+              {this.state.searchedTap != null && (
+                <Marker
+                  name={"Your Search Result"}
+                  position={this.state.searchedTap}
+                />
+              )}
+            </Map>
+          </div>
+        </ReactTouchEvents>
+        <div className={styles.searchBarContainer}>
+          <SearchBar
+            className="searchBar"
+            search={location => this.searchForLocation(location)}
+          />
         </div>
-      );
-    }
+        <Toolbar />
+        <SelectedTap></SelectedTap>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -346,9 +357,18 @@ const mapStateToProps = state => ({
   // infoIsExpanded: state.infoIsExpanded
 });
 
-const mapDispatchToProps = { getTaps, setFilterFunction, toggleInfoWindow, setUserLocation, setMapCenter };
+const mapDispatchToProps = {
+  getTaps,
+  setFilterFunction,
+  toggleInfoWindow,
+  setUserLocation,
+  setMapCenter
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
   GoogleApiWrapper({
     apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
     LoadingContainer: LoadingContainer,

@@ -17,8 +17,8 @@ import {
   setToggleState,
   setFilteredTapTypes,
   resetFilterFunction
-} from "../actions";
-import phlaskFilterIcon from "./icons/PhlaskFilterIcon";
+} from "../../actions";
+import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
 
 export class Filter extends React.Component {
   handleChange(event) {
@@ -31,18 +31,16 @@ export class Filter extends React.Component {
     } else if (event.target.id === "openNow") {
       this.props.setToggleState("openNow", !this.props.openNow);
     } else console.log("error with toggle");
-    this.handleGA(event.target.id,!this.props[event.target.id]);
+    this.handleGA(event.target.id, !this.props[event.target.id]);
   }
 
-  handleGA(id, state){
-    
+  handleGA(id, state) {
     ReactGA.event({
       category: `Toolbar`,
-      action: 'FilterUpdate',
+      action: "FilterUpdate",
       label: `${id} = ${state} `
     });
   }
-
 
   render() {
     return (

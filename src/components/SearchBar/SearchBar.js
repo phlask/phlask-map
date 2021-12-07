@@ -1,7 +1,7 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
-import { toggleSearchBar } from "../actions";
+import { toggleSearchBar } from "../../actions";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
@@ -12,7 +12,7 @@ import {
   faSearchLocation,
   faChevronLeft
 } from "@fortawesome/free-solid-svg-icons";
-import TutorialModal from "./TutorialModal";
+import TutorialModal from "../TutorialModal/TutorialModal";
 
 class SearchBar extends React.Component {
   constructor(props) {

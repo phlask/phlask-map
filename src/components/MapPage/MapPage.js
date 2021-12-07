@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactGoogleMaps from "./ReactGoogleMaps";
+import ReactGoogleMaps from "../ReactGoogleMaps/ReactGoogleMaps";
 import styles from "./MapPage.module.scss";
 
 export class MapPage extends Component {

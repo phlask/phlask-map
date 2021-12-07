@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Pages.module.scss";
-import Head from "../Head";
+import Head from "../Head/Head";
 
 const Mission = () => {
   return (

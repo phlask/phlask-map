@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from "react";
 import "./Head.css";
-import logo from "./images/phlask-logo/phlask-logo.png";
-import logo2x from "./images/phlask-logo/phlask-logo@2x.png";
+import logo from "../images/phlask-logo/phlask-logo.png";
+import logo2x from "../images/phlask-logo/phlask-logo@2x.png";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 export class Head extends PureComponent {

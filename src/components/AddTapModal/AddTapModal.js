@@ -51,13 +51,13 @@ export class AddTapModal extends Component {
       normsAndRules: "",
       dbConnection: "",
       count: 0,
-      show: false,
+      show: false
     };
   }
 
   onDrop(picture) {
     this.setState({
-        pictures: picture
+      pictures: picture
     });
   }
 
@@ -65,23 +65,23 @@ export class AddTapModal extends Component {
     // Open a request for a new signed URL for S3 upload
     // Upload the image with a PUT request
     // Store the image URL in state.images
-    const imageType = imageFile.type
-    const submitUrl = "/submit-image?type=" + imageType
-    
+    const imageType = imageFile.type;
+    const submitUrl = "/submit-image?type=" + imageType;
+
     return fetch(submitUrl)
-    .then(response => response.json())
-    .then(data => {
-      return fetch(data.putURL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': imageFile.type
-        },
-        body: imageFile
-      }).then(() => {
-        return data.getURL
+      .then(response => response.json())
+      .then(data => {
+        return fetch(data.putURL, {
+          method: "PUT",
+          headers: {
+            "Content-Type": imageFile.type
+          },
+          body: imageFile
+        }).then(() => {
+          return data.getURL;
+        });
       })
-    })
-    .catch(console.error)
+      .catch(console.error);
   }
 
   onChangeAddress(e) {
@@ -176,7 +176,7 @@ export class AddTapModal extends Component {
       messagingSenderId: "428394983826",
       appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
     };
-    
+
     const test_config = {
       apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
       authDomain: "phlask-web-map.firebaseapp.com",
@@ -187,13 +187,13 @@ export class AddTapModal extends Component {
       appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
     };
 
-    switch(window.location.hostname) {
-      case 'phlask.me':
+    switch (window.location.hostname) {
+      case "phlask.me":
         return firebase.initializeApp(prod_config, "new");
-      case 'beta.phlask.me':
+      case "beta.phlask.me":
         return firebase.initializeApp(beta_config, "new");
       default:
-        return firebase.initializeApp(test_config, "new");    
+        return firebase.initializeApp(test_config, "new");
     }
   }
 
@@ -214,7 +214,7 @@ export class AddTapModal extends Component {
             continue;
           }
           this.setState((prevState, props) => ({
-            count: (prevState.count + 1)
+            count: prevState.count + 1
           }));
         }
       });
@@ -232,45 +232,42 @@ export class AddTapModal extends Component {
   }
 
   onSubmit(e) {
-
     e.preventDefault();
-    var upload_promises = []
+    var upload_promises = [];
     // Upload images
-    this.state.pictures.forEach(picture => 
-      upload_promises.push(
-        this.submitImage(picture)
-      )
-    )
+    this.state.pictures.forEach(picture =>
+      upload_promises.push(this.submitImage(picture))
+    );
 
-    Promise.all(upload_promises).then((images) => {
-        // All image uploads completed, loading tap record
-        const newTapData = {
-          images: images,
-          address: this.state.address,
-          city: this.state.city,
-          description: this.state.description,
-          access: this.state.accessToTap,
-          organization: this.state.organization,
-          filtration: this.state.filtration,
-          handicap: this.state.handicapAccessable,
-          service: this.state.tapServiceType,
-          tap_type: this.state.tapType,
-          vessel: this.state.waterVessleNeeded,
-          statement: this.state.phlaskStatement,
-          norms_rules: this.state.normsAndRules
-        };
+    Promise.all(upload_promises).then(images => {
+      // All image uploads completed, loading tap record
+      const newTapData = {
+        images: images,
+        address: this.state.address,
+        city: this.state.city,
+        description: this.state.description,
+        access: this.state.accessToTap,
+        organization: this.state.organization,
+        filtration: this.state.filtration,
+        handicap: this.state.handicapAccessable,
+        service: this.state.tapServiceType,
+        tap_type: this.state.tapType,
+        vessel: this.state.waterVessleNeeded,
+        statement: this.state.phlaskStatement,
+        norms_rules: this.state.normsAndRules
+      };
 
-        this.state.dbConnection
-          .database()
-          .ref("/" + (this.state.count + 1).toString())
-          .set(newTapData);
-    })
+      this.state.dbConnection
+        .database()
+        .ref("/" + (this.state.count + 1).toString())
+        .set(newTapData);
+    });
   }
-  
+
   handleShow() {
     this.setState({ show: true });
   }
-  
+
   handleClose() {
     this.setState({ show: false });
   }
@@ -288,7 +285,7 @@ export class AddTapModal extends Component {
         </Popover.Content>
       </Popover>
     );
-    
+
     return (
       <>
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -613,7 +610,11 @@ export class AddTapModal extends Component {
               <Button variant="secondary" onClick={this.handleClose}>
                 Close
               </Button>
-              <Button variant="primary" type="submit" onClick={this.handleClose}>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={this.handleClose}
+              >
                 Submit
               </Button>
             </Modal.Footer>
