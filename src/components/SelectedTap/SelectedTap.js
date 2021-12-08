@@ -7,7 +7,7 @@ import {
   toggleInfoWindow,
   toggleInfoWindowClass,
   PHLASK_TYPE_WATER
-} from "../../actions";
+} from "../../actions/actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
 import "./SelectedTap.css";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { hours } from "../hours";
+import { hours } from "../../helpers/hours";
 import { isMobile } from "react-device-detect";
 import styles from "./SelectedTapHours.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

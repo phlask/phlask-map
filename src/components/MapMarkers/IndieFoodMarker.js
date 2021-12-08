@@ -6,18 +6,18 @@ import {
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../actions";
-import makeGetVisibleTaps from "../selectors/foodOrgSelectors";
-import foodIcon from "./images/food-marker-icons/food-site.png";
-import foodOtherMarkerIcon from "./icons/FoodOtherMarkerIcon";
-import foodSchoolMarkerIcon from "./icons/FoodSchoolMarkerIcon";
-import foodRecreationMarkerIcon from "./icons/FoodRecreationMarkerIcon";
-import foodCongregationMarkerIcon from "./icons/FoodCongregationMarkerIcon";
-import FoodOtherFilterIcon from "./icons/FoodOtherFilterIcon";
-import FoodSchoolFilterIcon from "./icons/FoodSchoolFilterIcon";
-import FoodRecreationFilterIcon from "./icons/FoodRecreationFilterIcon";
-import FoodCongregationFilterIcon from "./icons/FoodCongregationFilterIcon";
-import "./IndieMarker/IndieMarker.css";
+} from "../../actions/actions";
+import makeGetVisibleTaps from "../../selectors/foodOrgSelectors";
+import foodIcon from "../images/food-marker-icons/food-site.png";
+import foodOtherMarkerIcon from "../icons/FoodOtherMarkerIcon";
+import foodSchoolMarkerIcon from "../icons/FoodSchoolMarkerIcon";
+import foodRecreationMarkerIcon from "../icons/FoodRecreationMarkerIcon";
+import foodCongregationMarkerIcon from "../icons/FoodCongregationMarkerIcon";
+import FoodOtherFilterIcon from "../icons/FoodOtherFilterIcon";
+import FoodSchoolFilterIcon from "../icons/FoodSchoolFilterIcon";
+import FoodRecreationFilterIcon from "../icons/FoodRecreationFilterIcon";
+import FoodCongregationFilterIcon from "../icons/FoodCongregationFilterIcon";
+import "../IndieMarker/IndieMarker.css";
 import { isMobile } from "react-device-detect";
 
 class IndieMarker extends React.Component {

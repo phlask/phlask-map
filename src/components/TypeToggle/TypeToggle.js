@@ -9,7 +9,7 @@ import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD
-} from "../actions";
+} from "../../actions/actions";
 
 function TypeToggle(props) {
   const [phlaskTypeIcon, setTypeIcon] = useState(foodButton);

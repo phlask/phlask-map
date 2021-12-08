@@ -20,7 +20,7 @@ import {
   setToggleStateFood,
   setFilteredFoodTypes,
   resetFilterFunction
-} from "../../actions";
+} from "../../actions/actions";
 
 export class FoodFilter extends React.Component {
   handleChange(event) {

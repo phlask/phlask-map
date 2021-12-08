@@ -7,7 +7,7 @@ import {
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../../actions";
+} from "../../actions/actions";
 import makeGetVisibleTaps from "../../selectors/tapSelectors";
 
 export class MapMarkers extends Component {

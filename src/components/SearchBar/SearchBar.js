@@ -1,7 +1,7 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
-import { toggleSearchBar } from "../../actions";
+import { toggleSearchBar } from "../../actions/actions";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng

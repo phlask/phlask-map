@@ -6,7 +6,7 @@ import {
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../../actions";
+} from "../../actions/actions";
 import makeGetVisibleTaps from "../../selectors/tapSelectors";
 import "./IndieMarker.css";
 import phlaskMarkerIcon from "../icons/PhlaskMarkerIcon";

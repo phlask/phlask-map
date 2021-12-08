@@ -7,7 +7,7 @@ import {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter
-} from "../../actions";
+} from "../../actions/actions";
 import { connect } from "react-redux";
 import Filter from "../Filter/Filter";
 import FoodFilter from "../FoodFilter/FoodFilter";

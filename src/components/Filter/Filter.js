@@ -17,7 +17,7 @@ import {
   setToggleState,
   setFilteredTapTypes,
   resetFilterFunction
-} from "../../actions";
+} from "../../actions/actions";
 import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
 
 export class Filter extends React.Component {

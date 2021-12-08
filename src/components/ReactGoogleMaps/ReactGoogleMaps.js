@@ -12,10 +12,10 @@ import {
   setMapCenter,
   setUserLocation,
   PHLASK_TYPE_WATER
-} from "../../actions";
+} from "../../actions/actions";
 // import Legend from "./Legend";
 import MapMarkers from "../MapMarkers/MapMarkers";
-import MapMarkersFood from "../MapMarkersFood";
+import MapMarkersFood from "../MapMarkers/MapMarkersFood";
 // Temporary Food/Water Toggle
 import { isMobile } from "react-device-detect";
 import Toolbar from "../Toolbar/Toolbar";
