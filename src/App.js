@@ -17,8 +17,6 @@ const trackingIdBeta = "UA-180456355-2";
 const trackingIdTest = "UA-180456355-3";
 
 function App(props) {
-  // window.addEventListener('resize',props.resizeWindow)
-
   switch (window.location.hostname) {
     case "phlask.me":
       ReactGA.initialize(trackingIdProd);
