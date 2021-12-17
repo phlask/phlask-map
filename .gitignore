@@ -6,8 +6,9 @@
 .cache/
 dist/
 coverage/
-# NodeJS
+# NodeJS / Yarn
 /node_modules
+.yarn
 
 # OS X
 .DS_Store

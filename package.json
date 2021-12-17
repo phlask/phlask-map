@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@mui/material": "^5.2.4",
     "bootstrap": "^4.3.1",
     "cypress": "^6.4.0",
     "firebase": "^6.2.0",
@@ -51,7 +54,7 @@
     "build": "react-scripts build",
     "test": "cypress run",
     "eject": "react-scripts eject",
-    "cypress":"cypress open",
+    "cypress": "cypress open",
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
     "format": "prettier \"src/**/*.{js,css,html}\" --write"
   },
