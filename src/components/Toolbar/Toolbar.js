@@ -155,12 +155,11 @@ function Toolbar(props) {
         <WaterIcon />
       </button>
       {isMobile && (
-        <button className={styles.closestTapButton}>
+        <button className={styles.closestTapButton} onClick={setClosest}>
           <img
             className="img"
             src={phlaskImg}
             alt=""
-            onClick={setClosest}
           ></img>
         </button>
       )}

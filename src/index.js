@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { waterConfig, foodConfig } from "./firebase/firebaseConfig";
-import * as firebase from "firebase";
+import firebase from "firebase";
 // import { resizeWindow } from './actions'
 
 if (!firebase.length) {

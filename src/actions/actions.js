@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import firebase from "firebase";
 
 export const RESIZE_WINDOW = "RESIZE_WINDOW"
 export const resizeWindow = (size) => ({

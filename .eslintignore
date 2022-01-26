@@ -1,0 +1,11 @@
+# Test directories
+cypress/
+*.test.js
+*.test.disabled.js
+
+# Build directory
+docker/
+
+# Unused files
+Legend.js
+TypeToggle.js

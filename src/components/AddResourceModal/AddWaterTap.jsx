@@ -7,7 +7,7 @@ import styles from "./AddResourceModal.module.scss";
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
-import * as firebase from "firebase";
+import firebase from "firebase";
 import { connectToFirebase } from "./utils";
 
 function AddWaterTap({

@@ -17,7 +17,7 @@ const Mission = () => {
         </p>
         <p>
           Water should remain abundant, clean and accessible to everyone.
-          PHLASK's mission is to help people find publicly available sources of
+          PHLASK&apos;s mission is to help people find publicly available sources of
           water, and to encourage private enterprises to provide public access
           to their water infrastructure - simply by PHLasking. Single-use water
           bottles are costly and wasteful. The PHLASK Ecosystem is a simple,

@@ -132,8 +132,19 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
             </div>
 
             {/* Current Day Hours */}
+            {/* Accessibility Note - This is using the Disclosure Pattern:
+            https://www.w3.org/TR/2021/NOTE-wai-aria-practices-1.2-20211129/examples/disclosure/disclosure-faq.html*/}
             <div
               id="current-hours"
+              role="button"
+              tabIndex={0}
+              aria-expanded="false"
+              onKeyDown={() => {
+                setIsHoursExpanded(true)
+              }}
+              onKeyUp={() => {
+                setIsHoursExpanded(false)
+              }}
               onClick={() => {
                 if (infoIsExpanded || !isMobile) {
                   setIsHoursExpanded(!isHoursExpanded);

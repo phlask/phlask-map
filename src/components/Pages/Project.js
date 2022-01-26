@@ -24,10 +24,10 @@ const Project = () => {
           While the Philadelphia Water Department maintains many public drinking
           fountains throughout the city, they are scarce when compared to the
           ubiquity of private taps at restaurants, shops, cafes, businesses and
-          even people's homes. While every citizen already has the right to ask
-          the proprietor to share water from their tap, this isn't a culturally
+          even people&apos;s homes. While every citizen already has the right to ask
+          the proprietor to share water from their tap, this isn&apos;t a culturally
           normalized behavior. Unspoken norms of patronage and privacy, coupled
-          with policies like "restroom is for customers only," give the
+          with policies like &ldquo;restroom is for customers only,&rdquo; give the
           impression that private businesses may not be willing to share water,
           which would discourage even asking in the first place.
         </p>

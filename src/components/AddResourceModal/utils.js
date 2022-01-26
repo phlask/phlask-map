@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import firebase from "firebase";
 
 export const connectToFirebase = (hostname, resourceType) => {
   // TODO -- OLD PROD CONFIG -- DOUBLECHECK IF THIS IS NEEDED
