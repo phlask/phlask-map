@@ -7,10 +7,16 @@
 
 .right-group {
   margin-left: auto;
+  margin-top: -1%;
 }
 
 .phlask-logo {
   overflow: visible;
 }
 
+.right-icon {
+  overflow: visible;
+  /* Gets rid of added fill from MUI SVG component */
+  color: transparent;
+}
 
