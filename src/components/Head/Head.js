@@ -17,10 +17,10 @@ export default function Head() {
           <SvgIcon className="phlask-logo" component={PhlaskIcon} />
           <Box className="right-group">
             <IconButton>
-              <SvgIcon component={SearchIcon} />
+              <SvgIcon  className="right-icon" component={SearchIcon} />
             </IconButton>
             <IconButton>
-              <SvgIcon component={SlidersIcon} />
+              <SvgIcon className="right-icon" component={SlidersIcon} />
             </IconButton>
           </Box>
         </Toolbar>
