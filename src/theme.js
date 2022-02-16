@@ -21,27 +21,31 @@ const theme = createTheme({
     },
     resources: {
       water: {
-        dark: "#00A5EE",
-        main: "#10B6FF",
-        light: "#55C8FB"
+        dark: "#456DBB",
+        main: "#5286E9",
+        light: "#6A9CFF"
       },
       food: {
-        dark: "#933C70",
-        main: "#B74B8C",
-        light: "#D750A1"
+        dark: "#F2853A",
+        main: "#FF9A55",
+        light: "#FFAE76"
       },
       foraging: {
-        dark: "# 489582",
+        dark: "#489582",
         main: "#5DA694",
         light: "#74B8A7"
       },
       bathrooms: {
-        dark: "#F2853A",
-        main: "#FF9A55",
-        light: "#FFAE76"
+        dark: "#8F8F8F",
+        main: "#9E9E9E",
+        light: "#BFBFBF"
       }
     },
-    // Somewhat placeholder names
+    highlight: {
+      dark: "#EFC715",
+      main: "#F4D85B",
+      light: "#FFE46A"
+    },
     global: {
       lightUI: {
         white1: "#FFFFFF",
@@ -59,22 +63,52 @@ const theme = createTheme({
         darkGrey3: "#2D3748"
       },
       error: "#73839E",
-      success: "#60718C"
+      success: "#60718C",
+      links: "#0000EE"
     }
   },
-  shadows: {
-    // shadows as seen in the design system figma
-  },
   typography: {
-    fontFamily: {
-      // What is the official Phlask font?
-    },
+    fontFamily: "Inter",
+    fontSize: 14,
+    pxToRem: theme.typography.pxToRem(),
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
     h1: {
-      fontFamily: ""
-      // fontWeight: ,
-      // fontSize: ,
-      // lineHeight: ,
-      // letterSpacing:
+      fontFamily: "Inter",
+      fontWeight: 500,
+      fontSize: "1.728rem"
+    },
+    h2: {
+      fontFamily: "Inter",
+      fontWeight: 500,
+      fontSize: "1.44rem"
+    },
+    subtitle1: {
+      fontFamily: "Inter",
+      fontWeight: 600,
+      fontSize: "1.2rem"
+    },
+    body1: {
+      fontFamily: "Inter",
+      fontWeight: 500,
+      fontSize: "1rem"
+    },
+    body2: {
+      fontFamily: "Inter",
+      fontWeight: 600,
+      fontSize: ".694rem"
+    },
+    button1: {
+      fontFamily: "Inter",
+      fontWeight: 600,
+      fontSize: ".579rem"
+    },
+    button2: {
+      fontFamily: "Inter",
+      fontWeight: 600,
+      fontSize: "1.2rem"
     }
   }
 });
