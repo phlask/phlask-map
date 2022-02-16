@@ -5,8 +5,11 @@ import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
 import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
 import { ReactComponent as SlidersIcon } from "../icons/SlidersIcon.svg";
+import { toggleSearchBar } from "../../actions/actions"
+
 
 export default function Head() {
+
   return (
     <Box>
       <AppBar>
@@ -16,7 +19,7 @@ export default function Head() {
           </IconButton>
           <SvgIcon className="phlask-logo" component={PhlaskIcon} />
           <Box className="right-group">
-            <IconButton>
+            <IconButton onClick={toggleSearchBar}>
               <SvgIcon  className="right-icon" component={SearchIcon} />
             </IconButton>
             <IconButton>
