@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     style: {
       primary: {
@@ -70,47 +70,41 @@ const theme = createTheme({
   typography: {
     fontFamily: "Inter",
     fontSize: 14,
-    pxToRem: theme.typography.pxToRem(),
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     fontWeightBold: 700,
     h1: {
-      fontFamily: "Inter",
       fontWeight: 500,
       fontSize: "1.728rem"
     },
     h2: {
-      fontFamily: "Inter",
       fontWeight: 500,
       fontSize: "1.44rem"
     },
     subtitle1: {
-      fontFamily: "Inter",
       fontWeight: 600,
       fontSize: "1.2rem"
     },
     body1: {
-      fontFamily: "Inter",
       fontWeight: 500,
       fontSize: "1rem"
     },
     body2: {
-      fontFamily: "Inter",
       fontWeight: 600,
       fontSize: ".694rem"
     },
     button1: {
-      fontFamily: "Inter",
       fontWeight: 600,
       fontSize: ".579rem"
     },
     button2: {
-      fontFamily: "Inter",
       fontWeight: 600,
       fontSize: "1.2rem"
     }
   }
 });
+
+theme = responsiveFontSizes(theme);
 
 export default theme;
