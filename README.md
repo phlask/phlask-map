@@ -2,6 +2,37 @@
 
 Code behind the PHLASK Web Map
 
+## Project Structure
+
+```
+.
+├── Dockerfile                         <-- Dockerfile defining container for local dev and deploy
+├── README.md
+├── _phlask.code-workspace
+├── assets
+├── contributing.md
+├── cypress                            <-- Unit tests
+│   ├── fixtures                       <-- Fixtures for mocked out data
+│   └── integration                    <-- Source files for unit tests
+├── cypress.json
+├── docker-compose.yml
+├── package-lock.json
+├── package.json
+├── public
+├── src                                <-- Source files for project
+│   ├── App.js
+│   ├── actions                        <-- TODO
+│   ├── components                     <-- Source for all React components
+│   ├── firebase                       <-- TODO
+│   ├── helpers                        <-- TODO
+│   ├── hooks                          <-- Custom hooks
+│   ├── reducers                       <-- Redux reducers
+│   ├── selectors                      <-- TODO
+│   └── theme.js                       <-- Theme file for Material UI
+├── yarn-error.log
+└── yarn.lock
+```
+
 ## Running Locally
 
 ### Docker (Recommended path for consistency across computers)
