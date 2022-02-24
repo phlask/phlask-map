@@ -41,9 +41,8 @@ Code behind the PHLASK Web Map
 
     - Follow installer instructions provided by Docker
 
-1.  Once installation is finished, confirm that docker has been installed successfully.
 1.  Open up a terminal (Powershell on Windows, Terminal on Mac, bash on Linux, or whatever your preferred terminal is)
-1.  Confirm Docker Desktop installed successfull: `docker --version`
+1.  Confirm Docker Desktop installed successful: `docker --version`
 
     Expected output:
 
