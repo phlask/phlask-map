@@ -67,7 +67,13 @@ Code behind the PHLASK Web Map
 
 1.  Run the container with docker-compose: `docker-compose up app`
 
-    Note: this may take awhile
+    Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
+
+    ```
+    Project is running at http://172.21.112.1/
+    ...
+    Starting the development server...
+    ```
 
 1.  Navigate to localhost:3000 on your browser.
 
