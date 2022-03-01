@@ -57,7 +57,13 @@ Code behind the PHLASK Web Map
 1.  Navigate to the root of the cloned repo: `cd phlask-map`
 1.  Build the container with docker-compose: `docker-compose build app`.
 
-    Note: this may take awhile
+    Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
+
+    ```
+    [+] Building 238.2s (12/12) FINISHED
+    ...
+    => => writing image sha256:c98c...
+    ```
 
 1.  Run the container with docker-compose: `docker-compose up app`
 
