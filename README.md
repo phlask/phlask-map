@@ -49,6 +49,7 @@ Code behind the PHLASK Web Map
     ```
       $ docker --version
       # something similar to below should be printed out
+      # older versions of Docker OK
       Docker version 20.10.12, build e91ed57
     ```
 
