@@ -21,13 +21,13 @@ Code behind the PHLASK Web Map
 ├── public
 ├── src                                <-- Source files for project
 │   ├── App.js
-│   ├── actions                        <-- TODO
+│   ├── actions                        <-- Source for all Redux actions
 │   ├── components                     <-- Source for all React components
-│   ├── firebase                       <-- TODO
-│   ├── helpers                        <-- TODO
+│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
+│   ├── helpers                        <-- Helper functions shared across components/pages
 │   ├── hooks                          <-- Custom hooks
 │   ├── reducers                       <-- Redux reducers
-│   ├── selectors                      <-- TODO
+│   ├── selectors                      <-- Source for all Redux selectors
 │   └── theme.js                       <-- Theme file for Material UI
 ├── yarn-error.log
 └── yarn.lock
