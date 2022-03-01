@@ -1,7 +1,9 @@
 import {
   AppBar,
   Box,
-  IconButton, styled, SvgIcon,
+  IconButton,
+  styled,
+  SvgIcon,
   Toolbar
 } from "@mui/material";
 import React from "react";
@@ -10,6 +12,7 @@ import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
 import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
 import { ReactComponent as SlidersIcon } from "../icons/SlidersIcon.svg";
+import SideBar from "../SideBar/SideBar";
 
 const HeadIcon = styled(SvgIcon)(({ theme }) => ({
   overflow: "visible",
@@ -17,8 +20,14 @@ const HeadIcon = styled(SvgIcon)(({ theme }) => ({
 }));
 
 export default function Head() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
   return (
-    <Box>
+    <>
+      <SideBar open={open} setOpen={setOpen} />
       <AppBar>
         <Toolbar
           sx={{
@@ -30,7 +39,7 @@ export default function Head() {
           }}
         >
           <IconButton>
-            <HeadIcon component={MenuIcon} />
+            <HeadIcon onClick={handleOpen} component={MenuIcon} />
           </IconButton>
           <HeadIcon component={PhlaskIcon} />
           <Box
@@ -48,6 +57,6 @@ export default function Head() {
           </Box>
         </Toolbar>
       </AppBar>
-    </Box>
+    </>
   );
 }
