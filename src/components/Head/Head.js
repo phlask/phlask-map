@@ -6,8 +6,8 @@ import {
   SvgIcon,
   Toolbar
 } from "@mui/material";
-import React from "react";
-import { toggleSearchBar } from "../../actions/actions";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
 import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
@@ -20,14 +20,25 @@ const HeadIcon = styled(SvgIcon)(({ theme }) => ({
 }));
 
 export default function Head() {
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
-  const handleOpen = () => {
-    setOpen(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const isSearchShown = useSelector(state => state.isSearchShown);
+
+  const toggleSearchBar = () => {
+    dispatch({
+      type: "TOGGLE_SEARCH_BAR"
+      // isShown: !isSearchShown
+    });
   };
+
+  const showSidebar = () => {
+    setSidebarOpen(true);
+  };
+
   return (
     <>
-      <SideBar open={open} setOpen={setOpen} />
+      <SideBar open={sidebarOpen} setOpen={setSidebarOpen} />
       <AppBar>
         <Toolbar
           sx={{
@@ -39,7 +50,7 @@ export default function Head() {
           }}
         >
           <IconButton>
-            <HeadIcon onClick={handleOpen} component={MenuIcon} />
+            <HeadIcon onClick={showSidebar} component={MenuIcon} />
           </IconButton>
           <HeadIcon component={PhlaskIcon} />
           <Box
