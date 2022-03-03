@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Filter } from "../Filter/Filter";
+import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
 import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
@@ -78,6 +79,7 @@ export default function Head() {
           </Box>
         </Toolbar>
       </AppBar>
+      <FilterDrawer />
     </>
   );
 }
