@@ -34,7 +34,7 @@ export default function Head() {
   
   const toggleSearchBar = () => {
     dispatch({
-      type: "TOGGLE_SEARCH_BAR"
+      type: "TOGGLE_SEARCH_BAR",
       // isShown: !isSearchShown
     });
   };
