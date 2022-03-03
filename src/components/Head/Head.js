@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Filter } from "../Filter/Filter";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
@@ -32,10 +31,10 @@ export default function Head() {
   const showSidebar = () => {
     setSidebarOpen(true);
   };
-  
+
   const toggleSearchBar = () => {
     dispatch({
-      type: "TOGGLE_SEARCH_BAR",
+      type: "TOGGLE_SEARCH_BAR"
       // isShown: !isSearchShown
     });
   };
@@ -63,11 +62,16 @@ export default function Head() {
           <IconButton>
             <HeadIcon onClick={showSidebar} component={MenuIcon} />
           </IconButton>
-          <HeadIcon component={PhlaskIcon} />
+          <HeadIcon
+            component={PhlaskIcon}
+            sx={{
+              marginTop: "-4%",
+            }}
+          />
           <Box
             sx={{
               marginLeft: "auto",
-              marginTop: "-1%"
+              marginTop: "-3%"
             }}
           >
             <IconButton onClick={toggleSearchBar}>
