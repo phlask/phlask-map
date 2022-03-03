@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function FilterDrawer() {
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
   const toggleFilterModal = () => {
     dispatch({
