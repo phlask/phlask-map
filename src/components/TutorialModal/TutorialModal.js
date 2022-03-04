@@ -57,7 +57,7 @@ const TutorialModal = ({ showButton }) => {
       title: <h3 className={styles.text}>Welcome to the PHLASK App!</h3>,
       body: (
         <p className={styles.text}>
-          Your tool for finding and sharing free resources in Philadelphia - all
+          Your tool--made more awesome by Gabe and Seif (ha-ha)--for finding and sharing free resources in Philadelphia - all
           you have to do is PHLask!
         </p>
       )
