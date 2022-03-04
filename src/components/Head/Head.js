@@ -59,13 +59,21 @@ export default function Head() {
             display: "flex"
           }}
         >
-          <IconButton>
-            <HeadIcon onClick={showSidebar} component={MenuIcon} />
+          <IconButton
+            onClick={showSidebar}
+            sx={{
+              marginTop: "-3%",
+              marginLeft: "-3%",
+              marginRight: "6%"
+            }}
+
+          >
+            <HeadIcon component={MenuIcon} />
           </IconButton>
           <HeadIcon
             component={PhlaskIcon}
             sx={{
-              marginTop: "-4%",
+              marginTop: "-5%"
             }}
           />
           <Box
@@ -74,7 +82,7 @@ export default function Head() {
               marginTop: "-3%"
             }}
           >
-            <IconButton onClick={toggleSearchBar}>
+            <IconButton sx={{marginLeft: "-10%", marginRight: "10%"}} onClick={toggleSearchBar}>
               <HeadIcon component={SearchIcon} />
             </IconButton>
             <IconButton onClick={toggleFilterModal}>
