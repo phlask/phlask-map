@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
 import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
@@ -66,23 +68,27 @@ export default function Head() {
               marginLeft: "-3%",
               marginRight: "6%"
             }}
-
           >
             <HeadIcon component={MenuIcon} />
           </IconButton>
-          <HeadIcon
-            component={PhlaskIcon}
-            sx={{
-              marginTop: "-5%"
-            }}
-          />
+          <Link to="/">
+            <HeadIcon
+              component={PhlaskIcon}
+              sx={{
+                marginTop: "-5%"
+              }}
+            />
+          </Link>
           <Box
             sx={{
               marginLeft: "auto",
               marginTop: "-3%"
             }}
           >
-            <IconButton sx={{marginLeft: "-10%", marginRight: "10%"}} onClick={toggleSearchBar}>
+            <IconButton
+              sx={{ marginLeft: "-10%", marginRight: "10%" }}
+              onClick={toggleSearchBar}
+            >
               <HeadIcon component={SearchIcon} />
             </IconButton>
             <IconButton onClick={toggleFilterModal}>
