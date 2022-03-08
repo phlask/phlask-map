@@ -64,9 +64,10 @@ export default function Head() {
           <IconButton
             onClick={showSidebar}
             sx={{
-              marginTop: "-3%",
-              marginLeft: "-3%",
-              marginRight: "6%"
+              position: "relative",
+              top: "-5px",
+              left: "-10px",
+              right: "6px"
             }}
           >
             <HeadIcon component={MenuIcon} />
@@ -75,14 +76,16 @@ export default function Head() {
             <HeadIcon
               component={PhlaskIcon}
               sx={{
-                marginTop: "-5%"
+                position: "relative",
+                top: "-10px",
               }}
             />
           </Link>
           <Box
             sx={{
+              position: "relative",
               marginLeft: "auto",
-              marginTop: "-3%"
+              top: "-4px"
             }}
           >
             <IconButton
