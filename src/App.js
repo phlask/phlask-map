@@ -36,7 +36,6 @@ function App(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Typography variant="h1">Testing the font</Typography>
       <Div100vh>
         <div className="page-wrapper">
           <Head />
