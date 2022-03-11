@@ -1,14 +1,10 @@
 import {
   AppBar,
   Box,
-  IconButton,
-  styled,
-  SvgIcon,
-  Toolbar
+  IconButton, Toolbar
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
@@ -16,11 +12,6 @@ import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
 import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
 import { ReactComponent as SlidersIcon } from "../icons/SlidersIcon.svg";
 import SideBar from "../SideBar/SideBar";
-
-const HeadIcon = styled(SvgIcon)(({ theme }) => ({
-  overflow: "visible",
-  color: "transparent"
-}));
 
 export default function Head() {
   const dispatch = useDispatch();
@@ -65,37 +56,34 @@ export default function Head() {
             onClick={showSidebar}
             sx={{
               position: "relative",
-              top: "-5px",
               left: "-10px",
               right: "6px"
             }}
           >
-            <HeadIcon component={MenuIcon} />
+            <MenuIcon />
           </IconButton>
           <Link to="/">
-            <HeadIcon
-              component={PhlaskIcon}
+            <PhlaskIcon
               sx={{
                 position: "relative",
-                top: "-10px",
+                top: "-10px"
               }}
             />
           </Link>
           <Box
             sx={{
               position: "relative",
-              marginLeft: "auto",
-              top: "-4px"
+              marginLeft: "auto"
             }}
           >
-            <IconButton
-              sx={{ marginLeft: "-10%", marginRight: "10%" }}
-              onClick={toggleSearchBar}
-            >
-              <HeadIcon component={SearchIcon} />
+            <IconButton onClick={toggleSearchBar}>
+              <SearchIcon />
             </IconButton>
-            <IconButton onClick={toggleFilterModal}>
-              <HeadIcon component={SlidersIcon} />
+            <IconButton
+              sx={{ marginRight: "-8px" }}
+              onClick={toggleFilterModal}
+            >
+              <SlidersIcon />
             </IconButton>
           </Box>
         </Toolbar>
