@@ -5,8 +5,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  styled,
-  SvgIcon
+  styled
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -19,7 +18,11 @@ import { ReactComponent as UsersIcon } from "../icons/UsersIcon.svg";
 
 const SidebarLink = styled(NavLink)(({ theme }) => ({
   color: "#000",
-  textDecoration: "none"
+  textDecoration: "none",
+  "&.active": {
+    color: "#000",
+    textDecoration: "none"
+  }
 }));
 
 export default function SideBar({ open, setOpen }) {
@@ -48,19 +51,17 @@ export default function SideBar({ open, setOpen }) {
           height: "50px"
         }}
       >
-        <IconButton onClick={handleClose}>
-          <SvgIcon
-            sx={{
-              overflow: "visible",
-              backgroundColor: "transparent",
-              boxShadow: "none",
-              marginRight: "15px",
-              marginTop: "-10px",
-              marginLeft: "10px"
-              
-            }}
-            component={CloseIcon}
-          />
+        <IconButton
+          sx={{
+            overflow: "visible",
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            marginRight: "10px",
+            marginLeft: "6px"
+          }}
+          onClick={handleClose}
+        >
+          <CloseIcon />
         </IconButton>
         <Link to="/" onClick={handleClose}>
           <PhlaskIcon />
