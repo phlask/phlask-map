@@ -17,10 +17,10 @@ import { ReactComponent as PlusCircleIcon } from "../icons/PlusCircle.svg";
 import { ReactComponent as UsersIcon } from "../icons/UsersIcon.svg";
 
 const SidebarLink = styled(NavLink)(({ theme }) => ({
-  color: "#000",
+  color: "#2D3748",
   textDecoration: "none",
   "&.active": {
-    color: "#000",
+    color: "#2D3748",
     textDecoration: "none"
   }
 }));
@@ -74,7 +74,7 @@ export default function SideBar({ open, setOpen }) {
             <ListItemIcon sx={{ marginLeft: "-1px" }}>
               <PhlaskNoTextIcon />
             </ListItemIcon>
-            <ListItemText>About</ListItemText>
+            <ListItemText sx={{ marginLeft: "-4px" }}>About</ListItemText>
           </ListItemButton>
         </SidebarLink>
 
