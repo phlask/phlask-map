@@ -43,7 +43,7 @@ jobs:
             "creator": {"S": "'${GITHUB_ACTOR}'"},
             "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
             "timeCreated": {"S": "'$(date +%s)'"},
-            "expirationTime": {"N": "'$(date +%s -d "+1 day")'"}
+            "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
           }'
       - name: Run the Google Lighthouse test
         env:
