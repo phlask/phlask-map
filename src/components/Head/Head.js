@@ -13,7 +13,6 @@ export default function Head() {
   const dispatch = useDispatch();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const state = useSelector(state => state);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
 
@@ -33,6 +32,11 @@ export default function Head() {
       type: "TOGGLE_FILTER_MODAL",
       isShown: !isFilterShown
     });
+  };
+
+  const pagePaths = /(\/mission)|(\/share)|(\/project)|(\/contribute)/;
+  const isNotMapPage = () => {
+    return window.location.pathname.match(pagePaths);
   };
 
   return (
@@ -67,7 +71,7 @@ export default function Head() {
             />
           </Link>
 
-          {window.location.pathname === "/" && (
+          {isNotMapPage() ? null : (
             <Box
               sx={{
                 position: "relative",
@@ -85,7 +89,6 @@ export default function Head() {
               </IconButton>
             </Box>
           )}
-          
         </Toolbar>
       </AppBar>
       <FilterDrawer />
