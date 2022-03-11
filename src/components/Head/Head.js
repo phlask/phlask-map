@@ -1,8 +1,4 @@
-import {
-  AppBar,
-  Box,
-  IconButton, Toolbar
-} from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -70,22 +66,26 @@ export default function Head() {
               }}
             />
           </Link>
-          <Box
-            sx={{
-              position: "relative",
-              marginLeft: "auto"
-            }}
-          >
-            <IconButton onClick={toggleSearchBar}>
-              <SearchIcon />
-            </IconButton>
-            <IconButton
-              sx={{ marginRight: "-8px" }}
-              onClick={toggleFilterModal}
+
+          {window.location.pathname === "/" && (
+            <Box
+              sx={{
+                position: "relative",
+                marginLeft: "auto"
+              }}
             >
-              <SlidersIcon />
-            </IconButton>
-          </Box>
+              <IconButton onClick={toggleSearchBar}>
+                <SearchIcon />
+              </IconButton>
+              <IconButton
+                sx={{ marginRight: "-8px" }}
+                onClick={toggleFilterModal}
+              >
+                <SlidersIcon />
+              </IconButton>
+            </Box>
+          )}
+          
         </Toolbar>
       </AppBar>
       <FilterDrawer />
