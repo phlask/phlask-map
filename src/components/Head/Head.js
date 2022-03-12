@@ -1,5 +1,5 @@
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
@@ -13,6 +13,7 @@ export default function Head() {
   const dispatch = useDispatch();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showMapControls, setShowMapControls] = useState(true);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
 
@@ -39,9 +40,20 @@ export default function Head() {
     return window.location.pathname.match(pagePaths);
   };
 
+  //On render, check if on map page to show or hide map controls
+  useEffect(() => {
+    if (isNotMapPage()) {
+      setShowMapControls(false);
+    }
+  }, [isNotMapPage, setShowMapControls]);
+
   return (
     <>
-      <SideBar open={sidebarOpen} setOpen={setSidebarOpen} />
+      <SideBar
+        open={sidebarOpen}
+        setOpen={setSidebarOpen}
+        showControls={setShowMapControls}
+      />
       <AppBar>
         <Toolbar
           sx={{
@@ -62,7 +74,7 @@ export default function Head() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/">
+          <Link to="/" onClick={() => setShowMapControls(true)}>
             <PhlaskIcon
               sx={{
                 position: "relative",
@@ -71,7 +83,7 @@ export default function Head() {
             />
           </Link>
 
-          {isNotMapPage() ? null : (
+          {showMapControls ? (
             <Box
               sx={{
                 position: "relative",
@@ -88,7 +100,7 @@ export default function Head() {
                 <SlidersIcon />
               </IconButton>
             </Box>
-          )}
+          ) : null}
         </Toolbar>
       </AppBar>
       <FilterDrawer />
