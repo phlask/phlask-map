@@ -25,10 +25,16 @@ const SidebarLink = styled(NavLink)(({ theme }) => ({
   }
 }));
 
-export default function SideBar({ open, setOpen }) {
+export default function SideBar({ open, setOpen, showControls }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleLogoClick = () => {
+    setOpen(false);
+    showControls(true);
+  };
+
 
   return (
     <Drawer
@@ -63,7 +69,7 @@ export default function SideBar({ open, setOpen }) {
         >
           <CloseIcon />
         </IconButton>
-        <Link to="/" onClick={handleClose}>
+        <Link to="/" onClick={handleLogoClick}>
           <PhlaskIcon />
         </Link>
       </Box>
