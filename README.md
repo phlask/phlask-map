@@ -2,7 +2,80 @@
 
 Code behind the PHLASK Web Map
 
+## Project Structure
+
+```
+.
+├── Dockerfile                         <-- Dockerfile defining container for local dev and deploy
+├── README.md
+├── _phlask.code-workspace
+├── assets
+├── contributing.md
+├── cypress                            <-- Unit tests
+│   ├── fixtures                       <-- Fixtures for mocked out data
+│   └── integration                    <-- Source files for unit tests
+├── cypress.json
+├── docker-compose.yml
+├── package-lock.json
+├── package.json
+├── public
+├── src                                <-- Source files for project
+│   ├── App.js
+│   ├── actions                        <-- Source for all Redux actions
+│   ├── components                     <-- Source for all React components
+│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
+│   ├── helpers                        <-- Helper functions shared across components/pages
+│   ├── hooks                          <-- Custom hooks
+│   ├── reducers                       <-- Redux reducers
+│   ├── selectors                      <-- Source for all Redux selectors
+│   └── theme.js                       <-- Theme file for Material UI
+├── yarn-error.log
+└── yarn.lock
+```
+
 ## Running Locally
+
+### Docker (Recommended path for consistency across computers)
+
+1.  Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+    - Follow installer instructions provided by Docker
+
+1.  Open up a terminal (Powershell on Windows, Terminal on Mac, bash on Linux, or whatever your preferred terminal is)
+1.  Confirm Docker Desktop installed successful: `docker --version`
+
+    Expected output:
+
+    ```
+      $ docker --version
+      # something similar to below should be printed out
+      # older versions of Docker OK
+      Docker version 20.10.12, build e91ed57
+    ```
+
+1.  Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
+1.  Navigate to the root of the cloned repo: `cd phlask-map`
+1.  Build the container with docker-compose: `docker-compose build app`.
+
+    Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
+
+    ```
+    [+] Building 238.2s (12/12) FINISHED
+    ...
+    => => writing image sha256:c98c...
+    ```
+
+1.  Run the container with docker-compose: `docker-compose up app`
+
+    Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
+
+    ```
+    Project is running at http://172.21.112.1/
+    ...
+    Starting the development server...
+    ```
+
+1.  Navigate to localhost:3000 on your browser.
 
 ### Yarn
 
@@ -10,12 +83,6 @@ Code behind the PHLASK Web Map
 1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
 1. Run `yarn install`
 1. Run `yarn start`
-
-### Docker (Recommended path for consistency across computers)
-
-1. You will need to have Docker installed: https://www.docker.com
-1. Once Docker is installed, run `docker-compose build app` and then `docker-compose up app` from the root of this repository.
-1. Navigate to localhost:3000 on your browser.
 
 ## Want to add something new or develop/report a fix for a bug you found?
 
