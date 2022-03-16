@@ -12,7 +12,7 @@ import Contribute from "./components/Pages/Contribute";
 import Head from "./components/Head/Head";
 import Div100vh from "react-div-100vh";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme"
+import theme from "./theme";
 
 const trackingIdProd = "UA-180456355-1";
 const trackingIdBeta = "UA-180456355-2";
