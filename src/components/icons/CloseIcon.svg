@@ -1,8 +1,6 @@
 <svg width="32" height="36" viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_3431_27185)">
 <path d="M26 6.5L6 26.5" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M6 6.5L26 26.5" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
 <defs>
 <filter id="filter0_d_3431_27185" x="-4" y="0.5" width="40" height="40" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
