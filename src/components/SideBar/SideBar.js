@@ -35,7 +35,6 @@ export default function SideBar({ open, setOpen, showControls }) {
     showControls(true);
   };
 
-
   return (
     <Drawer
       anchor="left"
@@ -63,15 +62,18 @@ export default function SideBar({ open, setOpen, showControls }) {
             backgroundColor: "transparent",
             boxShadow: "none",
             marginRight: "10px",
-            marginLeft: "6px"
+            marginLeft: "6px",
+            marginTop: "6px"
           }}
           onClick={handleClose}
         >
           <CloseIcon />
         </IconButton>
-        <Link to="/" onClick={handleLogoClick}>
-          <PhlaskIcon />
-        </Link>
+        <Box sx={{marginTop: "7px"}}>
+          <Link to="/" onClick={handleLogoClick}>
+            <PhlaskIcon />
+          </Link>
+        </Box>
       </Box>
 
       <List>
