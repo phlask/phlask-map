@@ -121,6 +121,12 @@ export const toggleSearchBar = (isShown) => ({
     isShown
 })
 
+export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL'
+export const toggleFilterModal = (isShown) => ({
+    type: TOGGLE_FILTER_MODAL,
+    isShown
+})
+
 export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
 export const toggleInfoWindow = (isShown) => ({
     type: TOGGLE_INFO_WINDOW,
