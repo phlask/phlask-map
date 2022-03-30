@@ -69,7 +69,7 @@ export default function SideBar({ open, setOpen, showControls }) {
         >
           <CloseIcon />
         </IconButton>
-        <Box sx={{marginTop: "7px"}}>
+        <Box sx={{ marginTop: "7px" }}>
           <Link to="/" onClick={handleLogoClick}>
             <PhlaskIcon />
           </Link>
@@ -91,7 +91,9 @@ export default function SideBar({ open, setOpen, showControls }) {
             <ListItemIcon sx={{ marginLeft: "-4px" }}>
               <PlusCircleIcon />
             </ListItemIcon>
-            <ListItemText>Add Resources</ListItemText>
+            <ListItemText sx={{ marginTop: "-4px" }}>
+              Add Resources
+            </ListItemText>
           </ListItemButton>
         </SidebarLink>
 
