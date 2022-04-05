@@ -86,7 +86,7 @@ function AddWaterTap({
             onDescriptionChange={onDescriptionChange}
             siteCategory="water tap"
           />
-          <Form.Group value={access} onChange={onAccessChange}>
+          <Form.Group value={access} onChange={onAccessChange} controlId='accessType'>
             <Form.Label className={styles.modalFormLabel}>
               Access Type
             </Form.Label>
