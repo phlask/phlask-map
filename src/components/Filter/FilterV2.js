@@ -1,48 +1,57 @@
-import { Popover, IconButton, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
+import { ReactComponent as ForagingIcon } from "../icons/ForagingIconV2.svg";
 import { ReactComponent as PhlaskFilterIcon } from "../icons/PhlaskFilterButton.svg";
+import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
+import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
 
 const FilterV2 = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  // Typical event.currentTarget pattern didn't work for popover
-  const buttonRef = useRef();
-
-  const handleClick = () => {
-    setAnchorEl(buttonRef.current);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  // id is set to help with Accessiblity
-  const id = open ? "simple popover" : undefined;
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
-      <IconButton onClick={handleClick} ref={buttonRef}>
+      <IconButton onClick={handleOpen}>
         <PhlaskFilterIcon />
       </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left"
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "right"
-        }}
-      >
-        <Typography>Water</Typography>
-        <Typography>Food</Typography>
-        <Typography>Foraging</Typography>
-        <Typography>Toilets</Typography>
-      </Popover>
+      <Modal open={open} onClose={handleClose}>
+        <Stack spacing={2} m={2} maxWidth={"sm"}>
+          <Stack direction="row">
+            <WaterIcon />
+            <Box display={"flex"} alignItems={"end"}>
+              <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                Water
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row">
+            <FoodIcon />
+            <Box display={"flex"} alignItems={"end"}>
+              <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                Food
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row">
+            <ForagingIcon />
+            <Box display={"flex"} alignItems={"end"}>
+              <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                Foraging
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row">
+            <ToiletIcon />
+            <Box display={"flex"} alignItems={"end"}>
+              <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                Toilets
+              </Typography>
+            </Box>
+          </Stack>
+        </Stack>
+      </Modal>
     </>
   );
 };
