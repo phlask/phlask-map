@@ -1,12 +1,11 @@
 describe('Crowdsourcing forms: Test Input for Water Tap', ()=> {
 
     beforeEach(() => {
-
-        cy.visit("http://localhost:3000");
-        cy.get('.close').click()
-        cy.get('.AddResourceModal_addButton__1Hq3E').click();
-        cy.get('.AddResourceModal_modalButton__35zHK:contains(Water Tap)')
-          .click()
+      cy.visit("http://localhost:3000");
+      cy.get('.close').click()
+      cy.get('.AddResourceModal_addButton__DW_4J').click();
+      cy.get('button:contains(Water Tap)')
+        .click()
     });
 
     it('should open the Additional Information tab', ()=> {
@@ -17,10 +16,9 @@ describe('Crowdsourcing forms: Test Input for Water Tap', ()=> {
         .should('have.class', 'show')
     })
 
-    it('should input name', () => {
+    it('should input and have value of name', () => {
 
     cy.get('label:contains(Name)')
-      .click()
       .type('Test')
       .parent()
       .invoke('attr', 'value')
@@ -28,76 +26,56 @@ describe('Crowdsourcing forms: Test Input for Water Tap', ()=> {
           
   })
 
-  it('should input street address', ()=> {
-    // The Address input does not have an id
-      cy.get('input[placeholder*="Enter the address of this resource"]')
-      .click()
+  it('should input and have value of street address', ()=> {
+      cy.get('input#address')
       .type('123 Example Street')
       .parent().parent()
       .invoke('attr', 'value')
       .should('eq', '123 Example Street')
     })
 
-    it('should input website', ()=> {
-      cy.get('label:contains(Website)')
-      .click()
-      .type('https://example.com')
-        
+    it('should input and have value of website', ()=> {
       cy.get('input#website')
-        .should('have.value', 'https://example.com')
+      .type('https://example.com')
+      .parent()
+      .invoke('attr', 'value')
+      .should('eq', 'https://example.com')
     })
 
-    it('should input a description', ()=> {
+    it('should input and have value of a description', ()=> {
       cy.get('input#description')
-        .click()
         .type('Description test')
-        .should('have.value', 'Description test')
+        .parent()
+        .invoke('attr', 'value')
+        .should('eq', 'Description test')
       })
 
-      it('should select an access type', ()=> {
-        cy.get('select.AddResourceModal_modalFormSelect__1uaJP')
-        .first()
+      it('should select and have value of an access type', ()=> {
+        cy.get('select#accessType')
         .select('Public')
         .parent()
         .invoke('attr', 'value')
         .should('eq', 'public')
       })
 
-      //submit an empty form
-      it('should submit a form', ()=> {
-        cy.get('button[type="submit"]')
-          .click()
-
-        cy.get('.modal-content')
-          .children()
-          .contains('Thanks for sharing')
-      })
-
       it('should submit a filled form', ()=> {
-        cy.get('label:contains(Name)')
-        .click()
+        cy.get('#name')
         .type('Test')
 
-        cy.get('input[placeholder*="Enter the address of this resource"]')
-        .click()
+        cy.get('input#address')
         .type('123 Example Street')
 
-        cy.get('label:contains(Website)')
-        .click()
+        cy.get('input#website')
         .type('https://example.com')
 
         cy.get('input#description')
-          .click()
           .type('Description test')
 
-        cy.get('select.AddResourceModal_modalFormSelect__1uaJP')
-          .first()
+        cy.get('select#accessType')
           .select('Public')
 
-        cy.pause()
-
-        cy.get('button[type="submit"]')
-          .click()
+        cy.get('form')
+          .submit()
 
         cy.get('.modal-content')
           .children()
