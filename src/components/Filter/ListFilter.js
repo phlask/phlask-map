@@ -7,7 +7,8 @@ import {
   ListItemIcon,
   Modal,
   Slide,
-  Typography
+  Typography,
+  ListItemButton
 } from "@mui/material";
 import React, { useState } from "react";
 import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
@@ -47,8 +48,8 @@ const ListFilter = () => {
           unmountOnExit
           timeout={250}
         >
-          <List sx={{ maxWidth: 250 }}>
-            <ListItem sx={{ alignItems: "end" }}>
+          <List sx={{ maxWidth: 185 }}>
+            <ListItemButton sx={{ alignItems: "end" }}>
               <ListItemIcon>
                 <WaterIcon />
               </ListItemIcon>
@@ -66,8 +67,8 @@ const ListFilter = () => {
                   Water
                 </Typography>
               </ListItemText>
-            </ListItem>
-            <ListItem sx={{ alignItems: "end" }}>
+            </ListItemButton>
+            <ListItemButton sx={{ alignItems: "end" }}>
               <ListItemIcon>
                 <FoodIcon />
               </ListItemIcon>
@@ -84,8 +85,8 @@ const ListFilter = () => {
                   Food
                 </Typography>
               </ListItemText>
-            </ListItem>
-            <ListItem sx={{ alignItems: "end" }}>
+            </ListItemButton>
+            <ListItemButton sx={{ alignItems: "end" }}>
               <ListItemIcon>
                 <ForagingIcon />
               </ListItemIcon>
@@ -102,8 +103,8 @@ const ListFilter = () => {
                   Foraging
                 </Typography>
               </ListItemText>
-            </ListItem>
-            <ListItem sx={{ alignItems: "end" }}>
+            </ListItemButton>
+            <ListItemButton sx={{ alignItems: "end" }}>
               <ListItemIcon>
                 <ToiletIcon />
               </ListItemIcon>
@@ -120,7 +121,7 @@ const ListFilter = () => {
                   Bathroom
                 </Typography>
               </ListItemText>
-            </ListItem>
+            </ListItemButton>
           </List>
         </Slide>
       </Modal>
