@@ -2,13 +2,12 @@ import {
   Box,
   IconButton,
   List,
-  ListItem,
-  ListItemText,
+  ListItemButton,
   ListItemIcon,
+  ListItemText,
   Modal,
   Slide,
-  Typography,
-  ListItemButton
+  Typography
 } from "@mui/material";
 import React, { useState } from "react";
 import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
@@ -26,7 +25,7 @@ const ListFilter = () => {
     <>
       <IconButton
         onClick={handleOpen}
-        size="large"
+        size="small"
         sx={{
           "&.MuiButtonBase-root:hover": {
             bgcolor: "transparent"
@@ -40,7 +39,16 @@ const ListFilter = () => {
           </Typography>
         </Box>
       </IconButton>
-      <Modal open={open} onClose={handleClose}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "end",
+          my: 3.5
+        }}
+      >
         <Slide
           direction="up"
           in={open}
@@ -48,14 +56,14 @@ const ListFilter = () => {
           unmountOnExit
           timeout={250}
         >
-          <List sx={{ maxWidth: 185 }}>
+          <List sx={{ maxWidth: 210 }}>
             <ListItemButton sx={{ alignItems: "end" }}>
               <ListItemIcon>
                 <WaterIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  variant="button1"
+                  variant="body1"
                   textAlign={"center"}
                   color={"black"}
                   mx={1.5}
@@ -74,7 +82,7 @@ const ListFilter = () => {
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  variant="button1"
+                  variant="body1"
                   textAlign={"center"}
                   mx={1.5}
                   bgcolor={"white"}
@@ -92,7 +100,7 @@ const ListFilter = () => {
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  variant="button1"
+                  variant="body1"
                   textAlign={"center"}
                   mx={1.5}
                   bgcolor={"white"}
@@ -110,9 +118,10 @@ const ListFilter = () => {
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  variant="button1"
+                  variant="body1"
                   textAlign={"center"}
                   mx={1.5}
+                  mb={0}
                   bgcolor={"white"}
                   p={0.5}
                   borderRadius={1}
