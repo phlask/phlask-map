@@ -1,16 +1,15 @@
 import {
   Box,
-  Link,
   IconButton,
   Modal,
-  Stack,
   Slide,
+  Stack,
   Typography
 } from "@mui/material";
 import React, { useState } from "react";
 import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
 import { ReactComponent as ForagingIcon } from "../icons/ForagingIconV2.svg";
-import { ReactComponent as PhlaskFilterIcon } from "../icons/PhlaskFilterButton.svg";
+import { ReactComponent as ResourcesPin } from "../icons/ResourcesPin.svg";
 import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
 import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
 
@@ -21,8 +20,21 @@ const FilterV2 = () => {
 
   return (
     <>
-      <IconButton onClick={handleOpen}>
-        <PhlaskFilterIcon />
+      <IconButton
+        onClick={handleOpen}
+        size="large"
+        sx={{
+          "&.MuiButtonBase-root:hover": {
+            bgcolor: "transparent"
+          }
+        }}
+      >
+        <Box>
+          <ResourcesPin />
+          <Typography size="small" color={"black"}>
+            Resources
+          </Typography>
+        </Box>
       </IconButton>
       <Modal open={open} onClose={handleClose}>
         <Slide
@@ -42,6 +54,7 @@ const FilterV2 = () => {
                   bgcolor={"white"}
                   p={0.5}
                   borderRadius={1}
+                  px={1}
                 >
                   Water
                 </Typography>
@@ -50,7 +63,13 @@ const FilterV2 = () => {
             <Stack direction="row">
               <FoodIcon />
               <Box display={"flex"} alignItems={"end"}>
-                <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                <Typography
+                  mx={1.5}
+                  bgcolor={"white"}
+                  p={0.5}
+                  borderRadius={1}
+                  px={1}
+                >
                   Food
                 </Typography>
               </Box>
@@ -58,7 +77,13 @@ const FilterV2 = () => {
             <Stack direction="row">
               <ForagingIcon />
               <Box display={"flex"} alignItems={"end"}>
-                <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
+                <Typography
+                  mx={1.5}
+                  bgcolor={"white"}
+                  p={0.5}
+                  borderRadius={1}
+                  px={1}
+                >
                   Foraging
                 </Typography>
               </Box>
@@ -66,8 +91,14 @@ const FilterV2 = () => {
             <Stack direction="row">
               <ToiletIcon />
               <Box display={"flex"} alignItems={"end"}>
-                <Typography mx={1.5} bgcolor={"white"} p={0.5} borderRadius={1}>
-                  Toilets
+                <Typography
+                  mx={1.5}
+                  bgcolor={"white"}
+                  p={0.5}
+                  borderRadius={1}
+                  px={1}
+                >
+                  Bathrooms
                 </Typography>
               </Box>
             </Stack>
