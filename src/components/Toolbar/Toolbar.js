@@ -9,7 +9,7 @@ import {
   setMapCenter
 } from "../../actions/actions";
 import { connect } from "react-redux";
-import Filter from "../Filter/Filter";
+import Filter from "../ResourceMenu/Filter";
 import FoodFilter from "../FoodFilter/FoodFilter";
 import styles from "./Toolbar.module.scss";
 import phlaskImg from "../images/PHLASK Button.png";
@@ -17,6 +17,7 @@ import WaterIcon from "../icons/WaterIcon";
 import FoodIcon from "../icons/FoodIcon";
 import { isMobile } from "react-device-detect";
 import { AddResourceModal } from "../AddResourceModal";
+import ResourceMenu from "../ResourceMenu/ResourceMenu";
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -152,15 +153,12 @@ function Toolbar(props) {
           switchType(PHLASK_TYPE_WATER);
         }}
       >
+        <ResourceMenu />
         <WaterIcon />
       </button>
       {isMobile && (
         <button className={styles.closestTapButton} onClick={setClosest}>
-          <img
-            className="img"
-            src={phlaskImg}
-            alt=""
-          ></img>
+          <img className="img" src={phlaskImg} alt=""></img>
         </button>
       )}
       <button

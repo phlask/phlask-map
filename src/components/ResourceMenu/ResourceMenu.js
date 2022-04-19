@@ -16,7 +16,7 @@ import { ReactComponent as ResourcesPin } from "../icons/ResourcesPin.svg";
 import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
 import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
 
-const ListFilter = () => {
+const ResourceMenu = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -138,4 +138,4 @@ const ListFilter = () => {
   );
 };
 
-export default ListFilter;
+export default ResourceMenu;
