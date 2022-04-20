@@ -122,77 +122,63 @@ function Toolbar(props) {
       .then(props.toggleInfoWindow(true));
   }
 
-return (
-  <BottomNavigation
-  showLabels
-  value={value}
-  onChange={(event, newValue) => {
-    setValue(newValue);
-  }}
->
-  <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-  <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-  <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-</BottomNavigation>
-);
-
-  // return (
-  //   <div
-  //     className={`${styles.toolbar} ${
-  //       isMobile ? styles.mobileToolbar : styles.desktopToolbar
-  //     }`}
-  //   >
-  //     {!isMobile && (
-  //       <h3
-  //         className={`
-  //           ${styles.title}
-  //           ${
-  //             props.phlaskType === PHLASK_TYPE_WATER
-  //               ? styles.waterTitle
-  //               : styles.foodTitle
-  //           }
-  //         `}
-  //       >
-  //         {props.phlaskType === PHLASK_TYPE_WATER ? "Water Map" : "Food Map"}
-  //       </h3>
-  //     )}
-  //     <div className={styles.filterButton}>
-  //       <button aria-label="show filters">
-  //         {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
-  //       </button>
-  //     </div>
-  //     <button
-  //       className={`${styles.toolbarButton} ${
-  //         styles.waterButton
-  //       } ${props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled}`}
-  //       onClick={() => {
-  //         switchType(PHLASK_TYPE_WATER);
-  //       }}
-  //     >
-  //       <WaterIcon />
-  //     </button>
-  //     {isMobile && (
-  //       <button className={styles.closestTapButton} onClick={setClosest}>
-  //         <img
-  //           className="img"
-  //           src={phlaskImg}
-  //           alt=""
-  //         ></img>
-  //       </button>
-  //     )}
-  //     <button
-  //       className={`${styles.toolbarButton} ${
-  //         styles.foodButton
-  //       } ${props.phlaskType === PHLASK_TYPE_WATER && styles.disabled}`}
-  //       onClick={() => {
-  //         switchType(PHLASK_TYPE_FOOD);
-  //       }}
-  //     >
-  //       <FoodIcon />
-  //     </button>
-  //     <AddResourceModal />
-  //   </div>
-  // );
+  return (
+    <div
+      className={`${styles.toolbar} ${
+        isMobile ? styles.mobileToolbar : styles.desktopToolbar
+      }`}
+    >
+      {!isMobile && (
+        <h3
+          className={`
+            ${styles.title}
+            ${
+              props.phlaskType === PHLASK_TYPE_WATER
+                ? styles.waterTitle
+                : styles.foodTitle
+            }
+          `}
+        >
+          {props.phlaskType === PHLASK_TYPE_WATER ? "Water Map" : "Food Map"}
+        </h3>
+      )}
+      <div className={styles.filterButton}>
+        <button aria-label="show filters">
+          {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
+        </button>
+      </div>
+      <button
+        className={`${styles.toolbarButton} ${
+          styles.waterButton
+        } ${props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled}`}
+        onClick={() => {
+          switchType(PHLASK_TYPE_WATER);
+        }}
+      >
+        <WaterIcon />
+      </button>
+      {isMobile && (
+        <button className={styles.closestTapButton} onClick={setClosest}>
+          <img
+            className="img"
+            src={phlaskImg}
+            alt=""
+          ></img>
+        </button>
+      )}
+      <button
+        className={`${styles.toolbarButton} ${
+          styles.foodButton
+        } ${props.phlaskType === PHLASK_TYPE_WATER && styles.disabled}`}
+        onClick={() => {
+          switchType(PHLASK_TYPE_FOOD);
+        }}
+      >
+        <FoodIcon />
+      </button>
+      <AddResourceModal />
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({

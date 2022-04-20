@@ -168,7 +168,14 @@ $foodColor: #8dc63f;
   }*/
 }
 
-.PHLASKbutton {
-  background: #5286E9;
-  border: 8px solid #FAFAFA;
+.PHLASKButton {
+  transform: scale(3) translateY(-8px);
+}
+
+.resourceButton {
+  transform: scale(1.2);
+}
+
+.contributeButton {
+  transform: scale(1.2);
 }

@@ -2,19 +2,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ResourceIcon from '../icons/ResourceIcon';
-import WaterIcon from '../icons/WaterIcon';
-import ContributeIcon from '../icons/ContributeIcon';
+import {ReactComponent as ResourceIcon} from '../icons/ResourceIcon.svg'
+import {ReactComponent as WaterIcon} from '../icons/WaterIcon.svg'
+import {ReactComponent as ContributeIcon} from '../icons/ContributeIcon.svg'
 import styles from "./Toolbar.module.scss";
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
+    <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}}>
       <BottomNavigation
         showLabels
         value={value}
@@ -23,9 +20,9 @@ export default function SimpleBottomNavigation() {
         }}
 
       >
-        <BottomNavigationAction label="Resources" icon={<ResourceIcon />} />
-        <BottomNavigationAction label="PHLASK" icon={<WaterIcon className={styles.PHLASKbutton}/>} />
-        <BottomNavigationAction label="Contribute" icon={<ContributeIcon />} />
+        <BottomNavigationAction label="Resources" icon={<ResourceIcon className={styles.resourceButton} />} />
+        <BottomNavigationAction label="PHLASK" icon={<WaterIcon className={styles.PHLASKButton} />} />
+        <BottomNavigationAction label="Contribute" icon={<ContributeIcon className={styles.contributeButton} />} />
       </BottomNavigation>
     </Box>
   );
