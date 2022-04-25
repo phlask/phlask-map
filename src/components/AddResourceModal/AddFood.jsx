@@ -7,7 +7,7 @@ import { Modal, Form, Accordion, Button } from "react-bootstrap";
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
 import { connectToFirebase } from "./utils";
 
 function AddFood({

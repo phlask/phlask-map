@@ -9,7 +9,6 @@ import {
   Accordion
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
-import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";

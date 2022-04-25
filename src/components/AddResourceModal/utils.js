@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
 
 export const connectToFirebase = (hostname, resourceType) => {
   // TODO -- OLD PROD CONFIG -- DOUBLECHECK IF THIS IS NEEDED

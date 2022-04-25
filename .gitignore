@@ -9,6 +9,8 @@ coverage/
 # NodeJS / Yarn
 /node_modules
 .yarn
+package-lock.json
+yarn-error.log
 
 # OS X
 .DS_Store

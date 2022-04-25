@@ -1,16 +1,16 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
-import ReactGA from "react-ga";
 import { MemoryRouter } from "react-router-dom";
 
 jest.mock("react-ga");
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
-  ReactDOM.render(
+  const root = createRoot(div);
+  root.render(
     <MemoryRouter>
       <Provider store={store}>
         <App />
@@ -18,5 +18,5 @@ it("renders without crashing", () => {
     </MemoryRouter>,
     div
   );
-  ReactDOM.unmountComponentAtNode(div);
+  root.unmount();
 });
