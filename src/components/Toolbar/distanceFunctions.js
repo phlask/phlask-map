@@ -1,7 +1,6 @@
-
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
-export function distance(lat1, lon1, lat2, lon2) {
+function distance(lat1, lon1, lat2, lon2) {
   var p = 0.017453292519943295;
   var a =
     0.5 -
@@ -15,7 +14,7 @@ export function distance(lat1, lon1, lat2, lon2) {
 
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
-function getClosest(data, userLocation) {
+export function getClosest(data, userLocation) {
   // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map((org, index) => {
@@ -26,7 +25,7 @@ function getClosest(data, userLocation) {
       address: org["address"],
       distance: distance(
         userLocation["lat"],
-        userLocation["lon"],
+        userLocation["lng"],
         org["lat"],
         org["lon"]
       ),
@@ -54,10 +53,4 @@ function getClosest(data, userLocation) {
   }
 
   return closestTap;
-}
-
-function getCoordinates() {
-  return new Promise(function(resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
 }
