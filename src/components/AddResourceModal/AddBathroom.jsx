@@ -7,7 +7,7 @@ import { Modal, Form, Button, Accordion } from "react-bootstrap";
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
-import firebase from "firebase/compat/app";
+import { deleteApp } from "firebase/app";
 import { connectToFirebase } from "./utils";
 
 function AddBathroom({
@@ -43,7 +43,7 @@ function AddBathroom({
 
     // call back to delete app connection whenever component unmounts
     return () => {
-      firebase.app("new").delete();
+      deleteApp(firebaseConnection);
     };
   }, []);
 
@@ -86,16 +86,11 @@ function AddBathroom({
           </Form.Group>
 
           <Accordion>
-            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
-              Additional Information{" "}
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className={styles.filterIcon}
-                size="1x"
-                color="#525f75"
-              />
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
+            <Accordion.Item eventKey="0">
+            <Accordion.Header className={styles.modalFormLabel}>
+              Additional Information
+            </Accordion.Header>
+            <Accordion.Body>
               <div>
                 <SharedAccordionFields
                   phlaskStatement={phlaskStatement}
@@ -104,7 +99,8 @@ function AddBathroom({
                   onNormsAndRulesChange={onNormsAndRulesChange}
                 />
               </div>
-            </Accordion.Collapse>
+            </Accordion.Body>
+            </Accordion.Item>
           </Accordion>
 
           <Button

@@ -1,4 +1,5 @@
-import firebase from "firebase/compat/app";
+// import firebase from "firebase/compat/app";
+import { initializeApp } from 'firebase/app';
 
 export const connectToFirebase = (hostname, resourceType) => {
   // TODO -- OLD PROD CONFIG -- DOUBLECHECK IF THIS IS NEEDED
@@ -32,5 +33,6 @@ export const connectToFirebase = (hostname, resourceType) => {
     appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
   };
 
-  return firebase.initializeApp(firebaseConfig, "new");
+  // return firebase.initializeApp(firebaseConfig, "new");
+  return initializeApp(firebaseConfig, "new");
 };
