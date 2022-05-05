@@ -44,6 +44,7 @@
   "devDependencies": {
     "eslint": "^8.13.0",
     "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-react": "^7.16.7",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -62,7 +63,7 @@
     "format": "prettier \"src/**/*.{js,css,html}\" --write"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "plugin:react/recommended"
   },
   "browserslist": [
     ">0.2%",

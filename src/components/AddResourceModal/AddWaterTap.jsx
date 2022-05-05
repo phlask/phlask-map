@@ -7,7 +7,6 @@ import styles from "./AddResourceModal.module.scss";
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
-// import firebase from "firebase/compat/app";
 import { deleteApp } from "firebase/app";
 import { connectToFirebase } from "./utils";
 
@@ -101,16 +100,10 @@ function AddWaterTap({
             </Form.Control>
           </Form.Group>
 
-          <Accordion  data-cy="AdditionalInformation">
+          <Accordion data-cy="AdditionalInformation">
             <Accordion.Item eventKey="0">
             <Accordion.Header className={styles.modalFormLabel}>
-              Additional Information{" "}
-              {/* <FontAwesomeIcon
-                icon={faChevronDown}
-                className={styles.filterIcon}
-                size="1x"
-                color="#525f75"
-              /> */}
+              Additional Information
             </Accordion.Header>
             <Accordion.Body>
               <div>
