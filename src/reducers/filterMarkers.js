@@ -16,6 +16,7 @@ const initialState = {
   infoIsExpanded: false,
   infoWindowClass: isMobile ? "info-window-out" : "info-window-out-desktop",
   isSearchShown: false,
+  isFilterShown: false,
   tapFilters: {
     filtered: false,
     handicap: false,
@@ -109,6 +110,9 @@ export default (state = initialState, act) => {
     case actions.TOGGLE_SEARCH_BAR:
       // console.log('Seach Bar Shown: ' + act.isShown);
       return { ...state, isSearchShown: act.isShown };
+    
+    case actions.TOGGLE_FILTER_MODAL:
+      return { ...state, isFilterShown: act.isShown };
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);
