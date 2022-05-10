@@ -7,7 +7,7 @@ import { Modal, Form, Accordion, Button } from "react-bootstrap";
 import SharedFormFields from "./SharedFormFields";
 // eslint-disable-next-line import/no-unresolved
 import SharedAccordionFields from "./SharedAccordionFields";
-import firebase from "firebase";
+import { deleteApp } from "firebase/app";
 import { connectToFirebase } from "./utils";
 
 function AddForaging({
@@ -47,7 +47,7 @@ function AddForaging({
 
     // call back to delete app connection whenever component unmounts
     return () => {
-      firebase.app("new").delete();
+      deleteApp(firebaseConnection);
     };
   }, []);
 
@@ -92,16 +92,11 @@ function AddForaging({
           </Form.Group>
 
           <Accordion>
-            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
-              Additional Information{" "}
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className={styles.filterIcon}
-                size="1x"
-                color="#525f75"
-              />
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header className={styles.modalFormLabel}>
+              Additional Information
+            </Accordion.Header>
+            <Accordion.Body>
               <div>
                 <Form.Check
                   checked={accessible}
@@ -139,7 +134,8 @@ function AddForaging({
                   onNormsAndRulesChange={onNormsAndRulesChange}
                 />
               </div>
-            </Accordion.Collapse>
+            </Accordion.Body>
+            </Accordion.Item>
           </Accordion>
 
           <Button

@@ -1,4 +1,6 @@
-import firebase from "firebase";
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from "firebase/database";
+import { waterConfig, foodConfig } from "../firebase/firebaseConfig";
 
 export const RESIZE_WINDOW = "RESIZE_WINDOW"
 export const resizeWindow = (size) => ({
@@ -60,11 +62,9 @@ export const getTapsSuccess = allTaps => ({
 });
 
 export const getTaps = () => dispatch => {
-  return firebase
-    .database()
-    .ref("/")
-    .once("value")
-    .then(snapshot => {
+  const app = initializeApp(waterConfig, 'water');
+  const database = getDatabase(app);
+  return onValue(ref(database, "/"), (snapshot) => {
       var allTaps = [];
       var item;
       for (item in snapshot.val()) {
@@ -80,6 +80,8 @@ export const getTaps = () => dispatch => {
         allTaps.push(snapshot.val()[item]);
       }
       dispatch(getTapsSuccess(allTaps));
+    }, {
+      onlyOnce: true
     });
 };
 
@@ -90,11 +92,9 @@ export const getFoodSuccess = allFoodOrgs => ({
 });
 
 export const getFoodOrgs = () => dispatch => {
-  return firebase.app('food')
-    .database()
-    .ref("/")
-    .once("value")
-    .then(snapshot => {
+  const app = initializeApp(foodConfig, 'food');
+  const database = getDatabase(app);
+  return onValue(ref(database, "/"), (snapshot) => {
       var allFoodOrgs = [];
       var item;
       for (item in snapshot.val()) {

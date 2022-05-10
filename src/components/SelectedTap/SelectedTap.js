@@ -25,6 +25,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
+import { Drawer } from "@mui/material";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -259,6 +260,22 @@ class SelectedTap extends React.Component {
   render() {
     if (this.props.showingInfoWindow) {
       return (
+        <div>
+        {isMobile && (
+          <div ref={this.refSelectedTap} id="tap-info-container-mobile">
+          <Drawer
+            anchor="bottom">
+            Amet incididunt ad mollit do labore exercitation do ipsum duis eu fugiat voluptate consectetur deserunt. Ipsum aliqua culpa adipisicing ea ad. Deserunt labore aute quis aliquip. Sit velit sint reprehenderit excepteur id commodo pariatur nostrud fugiat elit nisi. Minim cillum qui consequat ut. Ut id aliquip tempor do.
+
+Ullamco tempor aute laborum nisi id nostrud laborum exercitation magna. Nisi enim cillum tempor occaecat aliqua labore id mollit sunt elit quis dolore. Deserunt ad occaecat elit sit irure irure laboris laborum velit ut eiusmod aliqua labore deserunt. Officia laborum ut nostrud minim ex commodo eu tempor anim aliqua. Cillum in consequat eiusmod nulla sunt excepteur.
+
+Qui sint cillum aliquip sunt dolore tempor in. Excepteur Lorem deserunt pariatur nisi est sint. Lorem nulla proident incididunt commodo adipisicing irure mollit reprehenderit aliquip fugiat pariatur magna aliqua et. Elit ea eiusmod enim id et do nulla aute nisi sunt veniam.
+
+Esse elit pariatur est veniam ut commodo. Ipsum quis commodo id cupidatat sunt do pariatur ut. Do veniam tempor reprehenderit id sunt irure culpa consequat. Ullamco sunt sit dolore reprehenderit occaecat eu. Tempor ullamco labore incididunt culpa pariatur labore laboris non ut. In proident duis ad aute sunt dolor voluptate est duis ipsum ea reprehenderit cillum. Do ullamco quis veniam laborum nulla tempor reprehenderit ipsum sint occaecat.
+          </Drawer>
+          </div>
+        )}
+        {!isMobile && (
         <div
           ref={this.refSelectedTap}
           id={isMobile ? "tap-info-container-mobile" : "tap-info-container"}
@@ -443,6 +460,8 @@ class SelectedTap extends React.Component {
               )}
             </div>
           </div>
+        </div>
+        )}
         </div>
       );
     } else {
