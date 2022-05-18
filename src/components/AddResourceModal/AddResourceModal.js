@@ -9,7 +9,6 @@ import {
   Accordion
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
-import * as firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
@@ -25,6 +24,7 @@ import AddBathroom from "./AddBathroom";
 import AddForaging from "./AddForaging";
 // eslint-disable-next-line import/no-unresolved
 import AddWaterTap from "./AddWaterTap";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -251,11 +251,13 @@ export class AddResourceModal extends Component {
     // need to reset count as switching between
     // resources have different counts
     this.setState({ count: 0 });
-    this.state.dbConnection
-      .database()
-      .ref("/")
-      .once("value")
-      .then(snapshot => {
+    const database = getDatabase(this.state.dbConnection)
+    // this.state.dbConnection
+      // .database()
+      // .ref("/")
+      // .once("value")
+      // .then(snapshot => {
+    onValue(ref(database, "/"), (snapshot) => {
         for (let item in snapshot.val()) {
           if (snapshot.val()[item].access === "WM") {
             continue;
@@ -315,10 +317,8 @@ export class AddResourceModal extends Component {
         norms_rules: this.state.normsAndRules
       };
 
-      return this.state.dbConnection
-        .database()
-        .ref("/" + (this.state.count + 1).toString())
-        .set(newData);
+      const database = getDatabase(this.state.dbConnection);
+      set(ref(database, '/' + (this.state.count + 1).toString()), newData);
     });
   }
 
@@ -504,6 +504,7 @@ export class AddResourceModal extends Component {
           className={`${isMobile ? styles.mobileAddButton : ""} ${
             styles.addButton
           }`}
+          data-cy="AddResourceButton"
         >
           <FontAwesomeIcon icon={faPlus} size="2x" />
         </button>

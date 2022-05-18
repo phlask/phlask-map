@@ -95,8 +95,13 @@ class IndieMarker extends React.Component {
       );
       const offsetx = 0;
       // offset by half the height of modal minus height of the marker icon
-      const modalHeight = document.getElementById("tap-info-container-mobile")
-        .offsetHeight;
+      let modalHeight = 0;
+      try {
+        modalHeight = document.getElementById("tap-info-container-mobile")
+          .offsetHeight;
+      } catch (error) {
+        console.log("There was an error getting element in IndieMarker. This was lazily fixed for now.")
+      }
       const offsety = Math.floor(modalHeight / 2 - 20);
       var scale = Math.pow(2, this.props.map.getZoom());
       var worldCoordinateCenter = this.props.map

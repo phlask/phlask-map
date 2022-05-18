@@ -97,39 +97,39 @@ const TutorialModal = ({ showButton }) => {
       title: <h3 className={styles.text}>Legend</h3>,
       body: (
         <div className={styles.text}>
-          <p>
+          <span>
             Public{" "}
             <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
             <p>
               These taps are maintained by the City or publicly-funded
               enterprise
             </p>
-          </p>
-          <p>
+          </span>
+          <span>
             Shared{" "}
             <img src={phlaskFilterIcon("Shared", 25, 25)} alt="Public"></img>{" "}
             <p>
               Taps located in private enterprises that have either explicitly
               granted public access or function as a de-facto public space
             </p>
-          </p>{" "}
-          <p>
+          </span>{" "}
+          <span>
             Private{" "}
             <img src={phlaskFilterIcon("Private", 25, 25)} alt="Public"></img>{" "}
             <p>
               These taps are located in private businesses; public access is not
               guaranteed
             </p>
-          </p>{" "}
-          <p>
+          </span>{" "}
+          <span>
             Restricted{" "}
             <img
               src={phlaskFilterIcon("Restricted", 25, 25)}
               alt="Public"
             ></img>{" "}
             <p>These taps are restricted from public use</p>
-          </p>
-          <p>
+          </span>
+          <span>
             School{" "}
             <img
               className={styles.modalIcon}
@@ -145,7 +145,7 @@ const TutorialModal = ({ showButton }) => {
               Public, private and charter schools that offer free food and
               meals.
             </p>
-          </p>
+          </span>
           <p>
             Recreation Parks and recreation centers that offer free food and
             meals to the public
@@ -165,7 +165,9 @@ const TutorialModal = ({ showButton }) => {
   return (
     <>
       <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>{modalContent[modalStep].title}</Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalContent[modalStep].title}</Modal.Title>
+        </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           {modalContent[modalStep].body}
         </Modal.Body>
