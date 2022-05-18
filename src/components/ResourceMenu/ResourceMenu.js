@@ -15,11 +15,41 @@ import { ReactComponent as ForagingIcon } from "../icons/ForagingIconV2.svg";
 import { ReactComponent as ResourcesPin } from "../icons/ResourcesPin.svg";
 import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
 import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
+import { useDispatch, useSelector } from "react-redux";
+
+import ReactGA from "react-ga";
+import {
+  PHLASK_TYPE_WATER,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_BATHROOM,
+  TOGGLE_PHLASK_TYPE
+} from "../../actions/actions";
 
 const ResourceMenu = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const phlaskType = useSelector(state => state.phlaskType);
+
+  const dispatch = useDispatch();
+
+  const switchType = type => {
+    handleGA(type);
+    dispatch({
+      type: TOGGLE_PHLASK_TYPE,
+      mode: type
+    });
+  };
+
+  function handleGA(type) {
+    ReactGA.event({
+      category: `ResourceMenu`,
+      action: "MapChangedTo",
+      label: `${type}`
+    });
+  }
 
   return (
     <>
@@ -57,7 +87,10 @@ const ResourceMenu = () => {
           timeout={250}
         >
           <List sx={{ maxWidth: 210 }}>
-            <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemButton
+              sx={{ alignItems: "end" }}
+              onClick={() => switchType(PHLASK_TYPE_WATER)}
+            >
               <ListItemIcon>
                 <WaterIcon />
               </ListItemIcon>
@@ -76,7 +109,14 @@ const ResourceMenu = () => {
                 </Typography>
               </ListItemText>
             </ListItemButton>
-            <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemButton
+              sx={{ alignItems: "end" }}
+              onClick={() => {
+                {
+                  switchType(PHLASK_TYPE_FOOD);
+                }
+              }}
+            >
               <ListItemIcon>
                 <FoodIcon />
               </ListItemIcon>
@@ -94,7 +134,10 @@ const ResourceMenu = () => {
                 </Typography>
               </ListItemText>
             </ListItemButton>
-            <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemButton
+              sx={{ alignItems: "end" }}
+              onClick={() => switchType(PHLASK_TYPE_FORAGING)}
+            >
               <ListItemIcon>
                 <ForagingIcon />
               </ListItemIcon>
@@ -112,7 +155,10 @@ const ResourceMenu = () => {
                 </Typography>
               </ListItemText>
             </ListItemButton>
-            <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemButton
+              sx={{ alignItems: "end" }}
+              onClick={() => switchType(PHLASK_TYPE_BATHROOM)}
+            >
               <ListItemIcon>
                 <ToiletIcon />
               </ListItemIcon>
