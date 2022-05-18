@@ -1,10 +1,10 @@
 import firebase from "firebase";
 
-export const RESIZE_WINDOW = "RESIZE_WINDOW"
-export const resizeWindow = (size) => ({
+export const RESIZE_WINDOW = "RESIZE_WINDOW";
+export const resizeWindow = size => ({
   type: RESIZE_WINDOW,
   size
-})
+});
 
 // let mediaList = [
 //   ['mobile','(max-width: 500px)'],
@@ -20,7 +20,7 @@ export const resizeWindow = (size) => ({
 //           size = mediaList[x][0]
 //           console.log('Screensize: ' + size)
 //       }
-      
+
 //       // return
 //   }
 // }
@@ -90,7 +90,8 @@ export const getFoodSuccess = allFoodOrgs => ({
 });
 
 export const getFoodOrgs = () => dispatch => {
-  return firebase.app('food')
+  return firebase
+    .app("food")
     .database()
     .ref("/")
     .once("value")
@@ -103,69 +104,71 @@ export const getFoodOrgs = () => dispatch => {
       dispatch(getFoodSuccess(allFoodOrgs));
     });
 };
-export const SET_USER_LOCATION = 'SET_USER_LOCATION'
-export const setUserLocation = (coords) => ({
-    type: SET_USER_LOCATION,
-    coords
-})
+export const SET_USER_LOCATION = "SET_USER_LOCATION";
+export const setUserLocation = coords => ({
+  type: SET_USER_LOCATION,
+  coords
+});
 
-export const SET_MAP_CENTER = 'SET_MAP_CENTER'
-export const setMapCenter = (coords) => ({
-    type: SET_MAP_CENTER,
-    coords
-})
+export const SET_MAP_CENTER = "SET_MAP_CENTER";
+export const setMapCenter = coords => ({
+  type: SET_MAP_CENTER,
+  coords
+});
 
-export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR'
-export const toggleSearchBar = (isShown) => ({
-    type: TOGGLE_SEARCH_BAR,
-    isShown
-})
+export const TOGGLE_SEARCH_BAR = "TOGGLE_SEARCH_BAR";
+export const toggleSearchBar = isShown => ({
+  type: TOGGLE_SEARCH_BAR,
+  isShown
+});
 
-export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL'
-export const toggleFilterModal = (isShown) => ({
-    type: TOGGLE_FILTER_MODAL,
-    isShown
-})
+export const TOGGLE_FILTER_MODAL = "TOGGLE_FILTER_MODAL";
+export const toggleFilterModal = isShown => ({
+  type: TOGGLE_FILTER_MODAL,
+  isShown
+});
 
-export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW'
-export const toggleInfoWindow = (isShown) => ({
-    type: TOGGLE_INFO_WINDOW,
-    isShown
-})
+export const TOGGLE_INFO_WINDOW = "TOGGLE_INFO_WINDOW";
+export const toggleInfoWindow = isShown => ({
+  type: TOGGLE_INFO_WINDOW,
+  isShown
+});
 
-export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS'
-export const toggleInfoWindowClass = (isShown) => ({
-    type: TOGGLE_INFO_WINDOW_CLASS,
-    isShown
-})
+export const TOGGLE_INFO_WINDOW_CLASS = "TOGGLE_INFO_WINDOW_CLASS";
+export const toggleInfoWindowClass = isShown => ({
+  type: TOGGLE_INFO_WINDOW_CLASS,
+  isShown
+});
 
-export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED'
-export const toggleInfoExpanded = (isExpanded) => ({
+export const TOGGLE_INFO_EXPANDED = "TOGGLE_INFO_EXPANDED";
+export const toggleInfoExpanded = isExpanded => ({
   type: TOGGLE_INFO_EXPANDED,
   isExpanded
-})
+});
 export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
-  export const setFilteredTapTypes = tapType => ({
-    type: SET_FILTERED_TAP_TYPES,
-    tapType
-  }); 
+export const setFilteredTapTypes = tapType => ({
+  type: SET_FILTERED_TAP_TYPES,
+  tapType
+});
 export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
 export const setFilteredFoodTypes = foodType => ({
   type: SET_FILTERED_FOOD_TYPES,
   foodType
-}); 
+});
 
-export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE"
+export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE";
 export const setSelectedPlace = selectedPlace => ({
   type: SET_SELECTED_PLACE,
   selectedPlace
-})
+});
 
-export const TOGGLE_PHLASK_TYPE = "TOGGLE_PHLASK_TYPE"
+export const TOGGLE_PHLASK_TYPE = "TOGGLE_PHLASK_TYPE";
 export const togglePhlaskType = phlaskType => ({
   type: TOGGLE_PHLASK_TYPE,
   mode: phlaskType
-})
+});
 
-export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER"
-export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD"
+export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER";
+export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD";
+export const PHLASK_TYPE_FORAGING = "PHLASK_TYPE_FORAGING";
+export const PHLASK_TYPE_BATHROOM = "PHLASK_TYPE_BATHROOM";
