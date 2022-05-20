@@ -32,7 +32,7 @@ export class MapMarkers extends Component {
     this.setState({
       shouldUpdate: false
     });
-    console.log("MM update");
+    // console.log("MM update");
   }
 
   getIcon(access) {
