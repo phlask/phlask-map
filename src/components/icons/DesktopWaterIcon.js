@@ -1,6 +1,6 @@
 import React from "react";
 
-const OldWaterIcon = ({ color = "currentColor" }) => {
+const DesktopWaterIcon = ({ color = "currentColor" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -34,4 +34,4 @@ const OldWaterIcon = ({ color = "currentColor" }) => {
   );
 };
 
-export default OldWaterIcon;
+export default DesktopWaterIcon;

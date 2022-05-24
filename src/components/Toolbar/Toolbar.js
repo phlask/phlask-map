@@ -21,7 +21,7 @@ import { isMobile } from "react-device-detect";
 import { AddResourceModal } from "../AddResourceModal";
 
 import FoodIcon from "../icons/FoodIcon";
-import OldWaterIcon from "../icons/WaterIcon";
+import DesktopWaterIcon from "../icons/DesktopWaterIcon";
 
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -165,7 +165,7 @@ function Toolbar(props) {
           switchType(PHLASK_TYPE_WATER);
         }}
       >
-        <OldWaterIcon />
+        <DesktopWaterIcon />
       </button>
       {isMobile && (
         <button className={styles.closestTapButton} onClick={setClosest}>
