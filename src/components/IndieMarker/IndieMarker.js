@@ -5,7 +5,7 @@ import {
   getTaps,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter
+  setMapCenter,
 } from "../../actions/actions";
 import makeGetVisibleTaps from "../../selectors/tapSelectors";
 import "./IndieMarker.css";
@@ -20,8 +20,8 @@ class IndieMarker extends React.Component {
     markerVisibility: {
       visibility: this.props.visibleTaps.includes(this.props.tap)
         ? "visible"
-        : "hidden"
-    }
+        : "hidden",
+    },
   };
 
   componentWillUnmount() {
@@ -43,20 +43,19 @@ class IndieMarker extends React.Component {
 
   componentDidUpdate(prevProps) {
     // console.log("Did Update");
-
     // if(this.props.visibleTaps === prevProps.visibleTaps){
-      // this.setState(this.getIcon(this.props.tap.access))
+    // this.setState(this.getIcon(this.props.tap.access))
     // }
   }
 
   componentDidMount() {
     this.setState(
       {
-        icon: this.getIcon(this.props.tap.access)
+        icon: this.getIcon(this.props.tap.access),
       },
       () => {
         this.setState({
-          shouldUpdate: false
+          shouldUpdate: false,
         });
       }
     );
@@ -97,10 +96,13 @@ class IndieMarker extends React.Component {
       // offset by half the height of modal minus height of the marker icon
       let modalHeight = 0;
       try {
-        modalHeight = document.getElementById("tap-info-container-mobile")
-          .offsetHeight;
+        modalHeight = document.getElementById(
+          "tap-info-container-mobile"
+        ).offsetHeight;
       } catch (error) {
-        console.log("There was an error getting element in IndieMarker. This was lazily fixed for now.")
+        console.log(
+          "There was an error getting element in IndieMarker. This was lazily fixed for now."
+        );
       }
       const offsety = Math.floor(modalHeight / 2 - 20);
       var scale = Math.pow(2, this.props.map.getZoom());
@@ -184,7 +186,7 @@ const makeMapStateToProps = () => {
       // handicap: state.tapFilters.handicap,
       accessTypesHidden: state.tapFilters.accessTypesHidden,
       allTaps: state.allTaps,
-      mapCenter: state.mapCenter
+      mapCenter: state.mapCenter,
     };
   };
   return mapStateToProps;
@@ -194,7 +196,7 @@ const mapDispatchToProps = {
   getTaps,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter
+  setMapCenter,
 };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(IndieMarker);
