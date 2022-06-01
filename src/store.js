@@ -1,7 +1,16 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import filterMarkers from './reducers/filterMarkers';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import filterMarkers from "./reducers/filterMarkers";
 
-const store = createStore(filterMarkers, applyMiddleware(thunk));
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    trace: true,
+    traceLimit: 25,
+  }) || compose;
+
+const store = createStore(
+  filterMarkers,
+  composeEnhancers(applyMiddleware(thunk))
+);
 
 export default store;
