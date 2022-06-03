@@ -10,7 +10,7 @@ function HalfModalInfo(props) {
 
   const btnstyle =  {
       padding: '2px 10px',
-      margin: 1,
+      margin: '10px 0',
       fontSize: 11.67,
       borderRadius: '8px',
       textTransform: 'none',
