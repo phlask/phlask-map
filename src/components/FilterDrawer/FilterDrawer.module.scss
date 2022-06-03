@@ -1,0 +1,35 @@
+.filterDrawer {
+    border: 2px solid lime;
+}
+
+.desktopDrawer{
+    border: 2px solid magenta;
+}
+
+
+.mobileDrawer .MuiDrawer-paper {
+    border: 2px solid steelblue;
+    height: 60%;
+}
+
+
+.mobileDrawerHeading {
+    height: 20%;
+    background-color: #525F75;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.desktopDrawerHeading {
+    height: 20%;
+    background-color: #525F75;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MuiDrawer-paper {
+    border: 2px solid navy;
+    background: pink;
+}

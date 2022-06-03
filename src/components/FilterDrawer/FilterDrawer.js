@@ -1,6 +1,8 @@
 import { Box, SwipeableDrawer, Typography, Button, styled } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isMobile } from "react-device-detect";
+import styles from "./FilterDrawer.module.scss";
 
 
 const FilterButton = styled(Button)(({ theme }) => ({
@@ -21,25 +23,15 @@ export default function FilterDrawer() {
     };
     return (
         <SwipeableDrawer
-          anchor="bottom"
+          anchor={isMobile ? "bottom" : "right"}
           variant="temporary"
           open={isFilterShown}
           onOpen={toggleFilterModal}
           onClose={toggleFilterModal}
-          sx={{
-              "& .MuiDrawer-paper": {
-                  height: "60%"
-              }
-          }}
+          className={isMobile ? styles.mobileDrawer : styles.desktopDrawer}
         >
           <Box
-            sx={{
-                height: "20%",
-                backgroundColor: "#525F75",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
+          className={isMobile ? styles.mobileDrawerHeading : styles.desktopDrawerHeading}
           >
             <Typography variant="h6" color="white">
               Water Filter
