@@ -1,3 +1,4 @@
+
 .filterDrawer {
 
 }
@@ -13,7 +14,7 @@
 }
 
 
-.mobileDrawerHeading {
+.drawerHeading {
     height: 20%;
     background-color: #525F75;
     display: flex;
@@ -21,14 +22,25 @@
     align-items: center;
 }
 
-.desktopDrawerHeading {
-    height: 20%;
-    background-color: #525F75;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// .desktopDrawerHeading {
+//      height: 20%;
+//     background-color: #525F75;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
 
 .MuiDrawer-paper {
+
+}
+
+@media only screen and (max-width: 600px) {
+    .drawerHeading {
+
+    }
+
+.filterDrawer {
+    height: 60%;
+}
 
 }

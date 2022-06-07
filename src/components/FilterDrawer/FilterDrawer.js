@@ -29,17 +29,22 @@ export default function FilterDrawer() {
           onOpen={toggleFilterModal}
           onClose={toggleFilterModal}
           className={isMobile ? styles.mobileDrawer : styles.desktopDrawer}
+          style={{margin: "0 1em"}}
         >
           <Box
-          className={isMobile ? styles.mobileDrawerHeading : styles.desktopDrawerHeading}
+          className={styles.drawerHeading}
           >
             <Typography variant="h6" color="white">
               Water Filter
             </Typography>
           </Box>
-          <div>
-            <div className="d-flex flex-column" style={{margin: "0 1em"}}>
+          <div
 
+          >
+            <div
+              className="d-flex flex-column filter-drawer-body"
+              style={{margin: "0 1em"}}
+            >
               <div style={{margin: "1em auto"}}>
                 <Typography variant="h7" color="#525F75">
                   Features
@@ -63,7 +68,7 @@ export default function FilterDrawer() {
                 </div>
               </div>
 
-              <div style={{margin: "1em auto"}}>
+              <div className="mt-3">
                 <Typography variant="h7" color="#525F75">
                   Features
                 </Typography>
