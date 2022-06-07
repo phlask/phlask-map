@@ -95,7 +95,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
 
         {currentOrgHours && 
           <p>
-          <span>{currentOrgHours.day}</span> <span>{currentOrgHours.open}</span>-<span>{currentOrgHours.close}</span>
+          <span>&nbsp;-</span> <span>closes {currentOrgHours.close}</span>
           </p>
         }
 
