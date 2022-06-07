@@ -265,9 +265,11 @@ class SelectedTap extends React.Component {
         <div>
         {isMobile && (
           <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-            <HalfModal open={this.props.showingInfoWindow}
-                       onOpen={this.toggleInfoWindow.bind()}
-                       onClose={this.toggleInfoWindow.bind()}>
+              <HalfModal
+                open={this.props.showingInfoWindow}
+                onOpen={() => this.toggleInfoWindow(true)}
+                onClose={() => this.toggleInfoWindow(false)}
+              >
               <HalfModalInfo imageOfPlace={tempImages}
                              nameOfPlace={this.state.organization}
                              addressOfPlace={this.state.address}
