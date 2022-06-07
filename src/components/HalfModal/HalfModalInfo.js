@@ -1,7 +1,6 @@
 import styles from './HalfModalInfo.module.scss';
 import React from 'react';
 import { Button } from '@mui/material';
-import locationImage from '../images/phlask-tessellation@2x.png';
 import waterButton from '../images/waterButton.png';
 
 function HalfModalInfo(props) {
@@ -20,7 +19,7 @@ function HalfModalInfo(props) {
   return (
     <div className={styles.halfInfo}>
         <span className={styles.swipeIcon}></span>
-        <img src={locationImage} className={styles.locationImage}  alt='' />
+        <img src={imageOfPlace} className={styles.locationImage}  alt='' />
         <div className={styles.mainHalfInfo}>
         <img src={waterButton} alt='' />
             <div className={styles.mainHalfInfoText}>

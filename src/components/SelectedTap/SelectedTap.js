@@ -270,7 +270,7 @@ class SelectedTap extends React.Component {
                 onOpen={() => this.toggleInfoWindow(true)}
                 onClose={() => this.toggleInfoWindow(false)}
               >
-              <HalfModalInfo imageOfPlace={tempImages}
+              <HalfModalInfo imageOfPlace={tempImages.tapImg}
                              nameOfPlace={this.state.organization}
                              addressOfPlace={this.state.address}
                              estWalkTime={this.state.walkingDuration} >
