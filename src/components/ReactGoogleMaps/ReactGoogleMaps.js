@@ -362,17 +362,7 @@ export class ReactGoogleMaps extends Component {
           />
         </div>
         <Toolbar />
-       {isMobile && (
-          <>
-          <Button onClick={this.toggleDrawer()}>Open</Button>
-            <HalfModal open={this.state.anchor}
-                       onOpen={this.toggleDrawer()}
-                       onClose={this.toggleDrawer()}>
-              <HalfModalInfo />
-            </HalfModal>
-        </>
-        )} 
-          <SelectedTap></SelectedTap>
+        <SelectedTap></SelectedTap>
       </div>
     );
   }

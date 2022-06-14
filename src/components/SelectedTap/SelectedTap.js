@@ -468,14 +468,15 @@ class SelectedTap extends React.Component {
             </div>
           </div>
         </div>
-        )}
-        </div>
+    )}
+      </div>
       );
     } else {
       return null;
     }
   }
 }
+
 
 const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
