@@ -1,7 +1,8 @@
 import styles from './HalfModalInfo.module.scss';
 import React from 'react';
 import { Button } from '@mui/material';
-import waterButton from '../images/waterButton.png';
+import waterButton from '../images/Phlask_Button.svg';
+import directionButton from '../images/ArrowElbowUpRight.svg'
 
 function HalfModalInfo(props) {
 
@@ -16,6 +17,10 @@ function HalfModalInfo(props) {
       backgroundColor: '#00A5EE',
   }
 
+  const RightArrow = () => {
+    return <img src={directionButton} alt='' />
+  }
+
   return (
     <div className={styles.halfInfo}>
         <span className={styles.swipeIcon}></span>
@@ -27,7 +32,7 @@ function HalfModalInfo(props) {
                 <p className={styles.addressOfPlace}>{addressOfPlace}</p>
                 {/* <p><span className={styles.locationOpen}>Open</span> - Closes 10PM</p> */}
                 {props.children}
-                <Button variant="contained" disableElevation sx={btnstyle}>
+                <Button variant="contained" disableElevation sx={btnstyle} startIcon={<RightArrow />}>
                   Directions</Button>
                 <p>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
             </div>
