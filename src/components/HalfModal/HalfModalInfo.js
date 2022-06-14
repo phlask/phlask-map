@@ -9,9 +9,9 @@ function HalfModalInfo(props) {
   const {nameOfPlace, addressOfPlace, imageOfPlace, estWalkTime} = props;
 
   const btnstyle =  {
-      padding: '4px 15px',
+      padding: '8px 20px 8px 25px',
       margin: '10px 0',
-      fontSize: 14,
+      fontSize: 16,
       borderRadius: '8px',
       textTransform: 'none',
       backgroundColor: '#00A5EE',
