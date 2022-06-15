@@ -1,6 +1,7 @@
 # phlask-map
 Code behind the PHLASK Web Map
-My (Seif Sekalala's) Role: Project Manager and soft-dev trainee.
+
+>> My (Seif Sekalala's) Role: Project Manager and soft-dev trainee.
 
 ## Running Locally
 ### Yarn
