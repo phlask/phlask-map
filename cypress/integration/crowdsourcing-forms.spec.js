@@ -2,18 +2,17 @@ describe('Crowdsourcing forms: Test Input for Water Tap', ()=> {
 
     beforeEach(() => {
       cy.visit("http://localhost:3000");
-      cy.get('.close').click()
-      cy.get('.AddResourceModal_addButton__DW_4J').click();
+      cy.get('.btn-close').click() 
+      cy.get('[data-cy=AddResourceButton]').click();
       cy.get('button:contains(Water Tap)')
         .click()
     });
 
     it('should open the Additional Information tab', ()=> {
-      cy.get('.accordion > button')
+     cy.get('[data-cy=AdditionalInformation]') 
       .click()
-
-      cy.get('.accordion div.collapse')
-        .should('have.class', 'show')
+      cy.get('[data-cy=AdditionalInformation] div div')
+      .should('have.class', 'show')
     })
 
     it('should input and have value of name', () => {
