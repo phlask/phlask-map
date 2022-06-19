@@ -9,15 +9,16 @@
 
 .MuiSlider-root {
     color: #20b2aa;
+    border: 2px solid red;
 }
 
 .css-1lbumi1-MuiPaper-root-MuiDrawer-paper{
-
+    border: 2px solid red !important;
 }
 
 .mobileDrawer {
     maxHeight: 60% !important;
-
+    border: 2px solid red;
 }
 
 

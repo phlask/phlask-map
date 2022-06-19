@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isMobile } from "react-device-detect";
 import styles from "./FilterDrawer.module.scss";
+import "./FilterDrawer.css";
 
 
 const FilterButton = styled(Button)(({ theme }) => ({
@@ -10,6 +11,7 @@ const FilterButton = styled(Button)(({ theme }) => ({
     border: "1.5px solid #525F75",
     textTransform: "none",
 }));
+
 
 
 export default function FilterDrawer() {
@@ -30,16 +32,18 @@ export default function FilterDrawer() {
           onClose={toggleFilterModal}
           className={isMobile ? styles.mobileDrawer : styles.desktopDrawer}
           style={{margin: "0 1em"}}
+          elevation="10"
         >
           <Box
-          className={styles.drawerHeading}
+            className={styles.drawerHeading}
           >
             <Typography variant="h6" color="white">
               Water Filter
             </Typography>
           </Box>
           <div
-
+            style={{height: "100%"}}
+            className="p-4 d-flex flex-column justify-content-between"
           >
             <div
               className="d-flex flex-column filter-drawer-body"
@@ -79,16 +83,11 @@ export default function FilterDrawer() {
                   <FilterButton variant="outlined">Restricted</FilterButton>
                 </div>
               </div>
-
-              <div className="d-flex justify-content-between mt-3">
-                <Button style={{textTransform: "none", color: "#2D3748"}}>Clear All</Button>
-                <Button style={{textTransform: "none"}}variant="outlined">Apply</Button>
-              </div>
-
             </div>
-            <div>
-            </div>
-            <div>
+
+            <div className="d-flex justify-content-between mt-3">
+              <Button style={{textTransform: "none", color: "#2D3748"}}>Clear All</Button>
+              <Button style={{textTransform: "none"}}variant="outlined">Apply</Button>
             </div>
           </div>
         </SwipeableDrawer>

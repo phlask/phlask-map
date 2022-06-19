@@ -9,9 +9,6 @@
 
 .MuiSlider-root {
     color: #20b2aa;
-}
-
-.css-1lbumi1-MuiPaper-root-MuiDrawer-paper{
 
 }
 
@@ -29,13 +26,6 @@
     align-items: center;
 }
 
-// .desktopDrawerHeading {
-//      height: 20%;
-//     background-color: #525F75;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
 
 .MuiDrawer-paper {
 
@@ -46,8 +36,7 @@
 
     }
 
-.filterDrawer {
-    height: 60%;
-}
-
+    .filterDrawer {
+        height: 60%;
+    }
 }
