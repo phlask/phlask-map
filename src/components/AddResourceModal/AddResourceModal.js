@@ -6,7 +6,7 @@ import {
   Form,
   OverlayTrigger,
   Popover,
-  Accordion
+  Accordion,
 } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -83,7 +83,7 @@ export class AddResourceModal extends Component {
       consumptionType: "",
       foodType: "",
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: ""
+      foragingFoodType: "",
     };
   }
 
@@ -95,7 +95,7 @@ export class AddResourceModal extends Component {
 
   onDrop(picture) {
     this.setState({
-      pictures: picture
+      pictures: picture,
     });
   }
 
@@ -107,14 +107,14 @@ export class AddResourceModal extends Component {
     const submitUrl = "/submit-image?type=" + imageType;
 
     return fetch(submitUrl)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         return fetch(data.putURL, {
           method: "PUT",
           headers: {
-            "Content-Type": imageFile.type
+            "Content-Type": imageFile.type,
           },
-          body: imageFile
+          body: imageFile,
         }).then(() => {
           return data.getURL;
         });
@@ -124,107 +124,107 @@ export class AddResourceModal extends Component {
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value,
     });
   }
 
   onChangeAccess(e) {
     this.setState({
-      access: e.target.value
+      access: e.target.value,
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target ? e.target.value : e
+      address: e.target ? e.target.value : e,
     });
   }
 
   onChangeWebsite(e) {
     this.setState({
-      website: e.target.value
+      website: e.target.value,
     });
   }
 
   onChangeDescription(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   }
 
   onChangeOrganization(e) {
-    console.log("ORGANIZATION CHANGE TO " + e.target.value)
+    // console.log("ORGANIZATION CHANGE TO " + e.target.value)
     this.setState({
-      organization: e.target.value
+      organization: e.target.value,
     });
   }
 
   onChangeTapServiceType(e) {
     this.setState({
-      tapServiceType: e.target.value
+      tapServiceType: e.target.value,
     });
   }
 
   onChangeTapType(e) {
     this.setState({
-      tapType: e.target.value
+      tapType: e.target.value,
     });
   }
 
   onChangeFiltration(e) {
     this.setState({
-      filtration: e.target.checked
+      filtration: e.target.checked,
     });
   }
 
   onChangeHandicapAccess(e) {
     this.setState({
-      handicapAccessable: e.target.checked
+      handicapAccessable: e.target.checked,
     });
   }
 
   onChangeWaterVesselNeeded(e) {
     this.setState({
-      waterVesselNeeded: e.target.checked
+      waterVesselNeeded: e.target.checked,
     });
   }
 
   onChangeIdRequired(e) {
     this.setState({
-      idRequired: e.target.checked
+      idRequired: e.target.checked,
     });
   }
 
   onChangeChildrenOnly(e) {
     this.setState({
-      childrenOnly: e.target.checked
+      childrenOnly: e.target.checked,
     });
   }
 
   onChangePhlaskStatement(e) {
     this.setState({
-      phlaskStatement: e.target.value
+      phlaskStatement: e.target.value,
     });
   }
 
   onChangeNormsAndRules(e) {
     this.setState({
-      normsAndRules: e.target.value
+      normsAndRules: e.target.value,
     });
   }
 
   // ADD FOOD MODAL FIELDS
 
   onChangeConsumptionType(e) {
-    console.log("CONSUMPTION CHANGE TO " + e.target.value)
+    // console.log("CONSUMPTION CHANGE TO " + e.target.value)
     this.setState({
-      consumptionType: e.target.value
+      consumptionType: e.target.value,
     });
   }
 
   onChangeFoodType(e) {
     this.setState({
-      foodType: e.target.value
+      foodType: e.target.value,
     });
   }
 
@@ -232,14 +232,14 @@ export class AddResourceModal extends Component {
 
   onChangeForagingFoodType(e) {
     this.setState({
-      foragingFoodType: e.target.value
+      foragingFoodType: e.target.value,
     });
   }
 
   onChangeDbConnection(connection) {
     this.setState(
       {
-        dbConnection: connection
+        dbConnection: connection,
       },
       () => {
         this.getCount();
@@ -251,39 +251,39 @@ export class AddResourceModal extends Component {
     // need to reset count as switching between
     // resources have different counts
     this.setState({ count: 0 });
-    const database = getDatabase(this.state.dbConnection)
+    const database = getDatabase(this.state.dbConnection);
     // this.state.dbConnection
-      // .database()
-      // .ref("/")
-      // .once("value")
-      // .then(snapshot => {
+    // .database()
+    // .ref("/")
+    // .once("value")
+    // .then(snapshot => {
     onValue(ref(database, "/"), (snapshot) => {
-        for (let item in snapshot.val()) {
-          if (snapshot.val()[item].access === "WM") {
-            continue;
-          }
-          if (snapshot.val()[item].active === "N") {
-            continue;
-          }
-          if (snapshot.val()[item].access === "TrashAcademy") {
-            continue;
-          }
-          this.setState((prevState, props) => ({
-            count: prevState.count + 1
-          }));
+      for (let item in snapshot.val()) {
+        if (snapshot.val()[item].access === "WM") {
+          continue;
         }
-      });
+        if (snapshot.val()[item].active === "N") {
+          continue;
+        }
+        if (snapshot.val()[item].access === "TrashAcademy") {
+          continue;
+        }
+        this.setState((prevState, props) => ({
+          count: prevState.count + 1,
+        }));
+      }
+    });
   }
 
   onSubmit(e) {
     e.preventDefault();
     var upload_promises = [];
     // Upload images
-    this.state.pictures.forEach(picture =>
-      {upload_promises.push(this.submitImage(picture))}
-    );
+    this.state.pictures.forEach((picture) => {
+      upload_promises.push(this.submitImage(picture));
+    });
 
-    return Promise.all(upload_promises).then(images => {
+    return Promise.all(upload_promises).then((images) => {
       // All image uploads completed, loading tap record
 
       /* Easier to construct one new data object than to
@@ -314,11 +314,11 @@ export class AddResourceModal extends Component {
         foraging_food_type: this.state.foragingFoodType,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules
+        norms_rules: this.state.normsAndRules,
       };
 
       const database = getDatabase(this.state.dbConnection);
-      set(ref(database, '/' + (this.state.count + 1).toString()), newData);
+      set(ref(database, "/" + (this.state.count + 1).toString()), newData);
     });
   }
 
@@ -355,7 +355,7 @@ export class AddResourceModal extends Component {
       consumptionType: "",
       foodType: "",
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: ""
+      foragingFoodType: "",
     };
     this.setState(resetState);
   }
