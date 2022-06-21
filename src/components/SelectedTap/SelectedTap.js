@@ -6,7 +6,7 @@ import {
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass,
-  PHLASK_TYPE_WATER,
+  PHLASK_TYPE_WATER
 } from "../../actions/actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
@@ -21,7 +21,7 @@ import {
   faCaretLeft,
   faCaretDown,
   faCaretUp,
-  faTimes,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
@@ -29,7 +29,7 @@ import { Drawer } from "@mui/material";
 
 const tempImages = {
   tapImg: sampleImg,
-  tapImg2x: sampleImg2x,
+  tapImg2x: sampleImg2x
 };
 
 class SelectedTap extends React.Component {
@@ -49,14 +49,14 @@ class SelectedTap extends React.Component {
     accessible: this.props.selectedPlace.accessible,
     testIcons: {
       access: phlaskBlue,
-      accessibility: phlaskGreen,
+      accessibility: phlaskGreen
     },
     walkingDuration: 0,
-    walkingDistance: 0,
+    walkingDistance: 0
   };
 
   componentWillUnmount() {
-    // console.log("unmounting");
+    console.log("unmounting");
   }
 
   getWalkingDurationAndTimes = () => {
@@ -64,8 +64,8 @@ class SelectedTap extends React.Component {
       "5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc";
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
     ${this.props.userLocation.lat}&end=${this.props.selectedPlace.lon},${this.props.selectedPlace.lat}`)
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         // duration is returned in seconds
         let duration = Math.round(
           data.features[0].properties.summary.duration / 60
@@ -83,7 +83,7 @@ class SelectedTap extends React.Component {
       // Start animation before unmounting description
       setTimeout(() => {
         this.setState({
-          isDescriptionShown: shouldExpand,
+          isDescriptionShown: shouldExpand
         });
       }, this.state.animationSpeed);
       // Expand or Collapse
@@ -98,13 +98,13 @@ class SelectedTap extends React.Component {
         this.setState(
           {
             infoExpansionStyle: {
-              height: this.state.previewHeight,
-            },
+              height: this.state.previewHeight
+            }
           },
           () => {
             this.setState(
               {
-                isDescriptionShown: shouldExpand,
+                isDescriptionShown: shouldExpand
               },
               () => {
                 // Collapse
@@ -116,7 +116,7 @@ class SelectedTap extends React.Component {
       } else {
         this.setState(
           {
-            isDescriptionShown: shouldExpand,
+            isDescriptionShown: shouldExpand
           },
           () => {
             // Expand
@@ -148,9 +148,9 @@ class SelectedTap extends React.Component {
     this.setState(
       {
         infoExpansionStyle: {
-          height: shouldExpand ? "80%" : this.state.previewHeight,
+          height: shouldExpand ? "80%" : this.state.previewHeight
           // : '40vh'
-        },
+        }
       },
       () => {
         this.props.toggleInfoExpanded(shouldExpand);
@@ -173,11 +173,11 @@ class SelectedTap extends React.Component {
   }
 
   handleGA() {
-    // console.log(this.props.selectedPlace);
+    console.log(this.props.selectedPlace);
     ReactGA.event({
       category: `Tap - ${this.props.phlaskType}`,
       action: "InfoShown",
-      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`,
+      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`
     });
   }
 
@@ -193,7 +193,7 @@ class SelectedTap extends React.Component {
         ? selectedPlace.description
         : "Happy PHLasking",
       tapStatement: selectedPlace.statement,
-      tapNormsAndRules: selectedPlace.norms_rules,
+      tapNormsAndRules: selectedPlace.norms_rules
     });
   }
 
@@ -238,11 +238,11 @@ class SelectedTap extends React.Component {
         !this.state.isDescriptionShown
       ) {
         this.setState({
-          previewHeight: this.refSelectedTap.current.clientHeight,
+          previewHeight: this.refSelectedTap.current.clientHeight
         });
       }
     }
-    // console.log("Showing Info Window: " + this.props.showingInfoWindow);
+    console.log("Showing Info Window: " + this.props.showingInfoWindow);
   }
 
   componentDidMount() {
@@ -260,241 +260,190 @@ class SelectedTap extends React.Component {
   render() {
     if (this.props.showingInfoWindow) {
       return (
-        <div>
+        <div
+          ref={this.refSelectedTap}
+          id={isMobile ? "tap-info-container-mobile" : "tap-info-container"}
+          className={`${this.props.infoWindowClass} ${
+            isMobile ? styles.mobileContainer : styles.desktopContainer
+          }`}
+          style={isMobile ? this.state.infoExpansionStyle : {}}
+        >
           {isMobile && (
-            <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-              <Drawer anchor="bottom">
-                Amet incididunt ad mollit do labore exercitation do ipsum duis
-                eu fugiat voluptate consectetur deserunt. Ipsum aliqua culpa
-                adipisicing ea ad. Deserunt labore aute quis aliquip. Sit velit
-                sint reprehenderit excepteur id commodo pariatur nostrud fugiat
-                elit nisi. Minim cillum qui consequat ut. Ut id aliquip tempor
-                do. Ullamco tempor aute laborum nisi id nostrud laborum
-                exercitation magna. Nisi enim cillum tempor occaecat aliqua
-                labore id mollit sunt elit quis dolore. Deserunt ad occaecat
-                elit sit irure irure laboris laborum velit ut eiusmod aliqua
-                labore deserunt. Officia laborum ut nostrud minim ex commodo eu
-                tempor anim aliqua. Cillum in consequat eiusmod nulla sunt
-                excepteur. Qui sint cillum aliquip sunt dolore tempor in.
-                Excepteur Lorem deserunt pariatur nisi est sint. Lorem nulla
-                proident incididunt commodo adipisicing irure mollit
-                reprehenderit aliquip fugiat pariatur magna aliqua et. Elit ea
-                eiusmod enim id et do nulla aute nisi sunt veniam. Esse elit
-                pariatur est veniam ut commodo. Ipsum quis commodo id cupidatat
-                sunt do pariatur ut. Do veniam tempor reprehenderit id sunt
-                irure culpa consequat. Ullamco sunt sit dolore reprehenderit
-                occaecat eu. Tempor ullamco labore incididunt culpa pariatur
-                labore laboris non ut. In proident duis ad aute sunt dolor
-                voluptate est duis ipsum ea reprehenderit cillum. Do ullamco
-                quis veniam laborum nulla tempor reprehenderit ipsum sint
-                occaecat.
-              </Drawer>
+            <div className={styles.mobileButtons}>
+              {!this.state.isDescriptionShown ? (
+                <button
+                  aria-label="show description"
+                  className={styles.mobileButton}
+                  onClick={() => {
+                    this.toggleInfoExpanded(true);
+                  }}
+                >
+                  <FontAwesomeIcon color="#fff" size="2x" icon={faCaretUp} />
+                </button>
+              ) : (
+                <button
+                  aria-label="hide description"
+                  className={styles.mobileButton}
+                  onClick={() => {
+                    this.toggleInfoExpanded(false);
+                  }}
+                >
+                  <FontAwesomeIcon color="#fff" size="2x" icon={faCaretDown} />
+                </button>
+              )}
+              <button
+                aria-label="close"
+                className={styles.mobileButton}
+                onClick={() => {
+                  this.toggleInfoWindow(false);
+                }}
+              >
+                <FontAwesomeIcon color="#fff" size="2x" icon={faTimes} />
+              </button>
             </div>
           )}
           {!isMobile && (
-            <div
-              ref={this.refSelectedTap}
-              id={isMobile ? "tap-info-container-mobile" : "tap-info-container"}
-              className={`${this.props.infoWindowClass} ${
-                isMobile ? styles.mobileContainer : styles.desktopContainer
-              }`}
-              style={isMobile ? this.state.infoExpansionStyle : {}}
+            <button
+              className={styles.closeButton}
+              aria-label="Close"
+              onClick={() => {
+                this.toggleInfoWindow(false);
+              }}
             >
-              {isMobile && (
-                <div className={styles.mobileButtons}>
-                  {!this.state.isDescriptionShown ? (
-                    <button
-                      aria-label="show description"
-                      className={styles.mobileButton}
-                      onClick={() => {
-                        this.toggleInfoExpanded(true);
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        color="#fff"
-                        size="2x"
-                        icon={faCaretUp}
-                      />
-                    </button>
-                  ) : (
-                    <button
-                      aria-label="hide description"
-                      className={styles.mobileButton}
-                      onClick={() => {
-                        this.toggleInfoExpanded(false);
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        color="#fff"
-                        size="2x"
-                        icon={faCaretDown}
-                      />
-                    </button>
-                  )}
-                  <button
-                    aria-label="close"
-                    className={styles.mobileButton}
-                    onClick={() => {
-                      this.toggleInfoWindow(false);
-                    }}
-                  >
-                    <FontAwesomeIcon color="#fff" size="2x" icon={faTimes} />
-                  </button>
-                </div>
-              )}
-              {!isMobile && (
-                <button
-                  className={styles.closeButton}
-                  aria-label="Close"
-                  onClick={() => {
-                    this.toggleInfoWindow(false);
-                  }}
-                >
-                  <div
-                    id="close-arrow-desktop"
-                    className={styles.closeIconWrapper}
-                  >
-                    <FontAwesomeIcon
-                      className={styles.closeIcon}
-                      color="#999"
-                      icon={faCaretLeft}
-                    />
-                  </div>
-                </button>
-              )}
+              <div id="close-arrow-desktop" className={styles.closeIconWrapper}>
+                <FontAwesomeIcon
+                  className={styles.closeIcon}
+                  color="#999"
+                  icon={faCaretLeft}
+                />
+              </div>
+            </button>
+          )}
 
-              {/* Location Name */}
+          {/* Location Name */}
+          <div
+            ref={this.refContentArea}
+            className={
+              this.props.infoIsExpanded
+                ? styles.tapContentExpanded
+                : styles.tapContent
+            }
+          >
+            {/* Main Image */}
+
+            <div
+              id={isMobile ? "tap-info-img-box" : "tap-info-img-box-desktop"}
+            >
+              <img
+                id="tap-info-img"
+                // src={this.props.displayImg}
+                src={tempImages.tapImg}
+                srcSet={tempImages.tapImg + ", " + tempImages.tapImg2x + " 2x"}
+                alt=""
+              ></img>
+            </div>
+
+            <div id="tap-head-info">
+              {/* Tap Type Icon */}
+              <div id="tap-type-icon-container">
+                <div id="tap-type-icon">
+                  {this.props.phlaskType === PHLASK_TYPE_WATER ? (
+                    <img
+                      className="tap-info-icon-img"
+                      src={this.props.selectedPlace.infoIcon}
+                      alt=""
+                    ></img>
+                  ) : (
+                    this.props.selectedPlace.infoIcon
+                  )}
+                </div>
+              </div>
+
+              {/* Name & Address */}
               <div
-                ref={this.refContentArea}
-                className={
-                  this.props.infoIsExpanded
-                    ? styles.tapContentExpanded
-                    : styles.tapContent
+                id={
+                  isMobile
+                    ? "org-name-and-address"
+                    : "org-name-and-address-desktop"
                 }
               >
-                {/* Main Image */}
+                <div id="tap-organization-name">{this.state.organization}</div>
+                {this.state.address && (
+                  <h5 id="tap-info-address">{this.state.address}</h5>
+                )}
+              </div>
 
-                <div
-                  id={
-                    isMobile ? "tap-info-img-box" : "tap-info-img-box-desktop"
-                  }
-                >
-                  <img
-                    id="tap-info-img"
-                    // src={this.props.displayImg}
-                    src={tempImages.tapImg}
-                    srcSet={
-                      tempImages.tapImg + ", " + tempImages.tapImg2x + " 2x"
-                    }
-                    alt=""
-                  ></img>
-                </div>
+              <SelectedTapHours
+                infoIsExpanded={this.props.infoIsExpanded}
+                selectedPlace={this.props.selectedPlace}
+              />
+            </div>
+            {/* Walk Time & Info Icons  */}
+            <div className={styles.walkTime}>
+              Estimated Walk Time: {this.state.walkingDuration} mins (
+              {this.state.walkingDistance} mi)
+            </div>
 
-                <div id="tap-head-info">
-                  {/* Tap Type Icon */}
-                  <div id="tap-type-icon-container">
-                    <div id="tap-type-icon">
-                      {this.props.phlaskType === PHLASK_TYPE_WATER ? (
-                        <img
-                          className="tap-info-icon-img"
-                          src={this.props.selectedPlace.infoIcon}
-                          alt=""
-                        ></img>
-                      ) : (
-                        this.props.selectedPlace.infoIcon
-                      )}
-                    </div>
-                  </div>
+            <SelectedTapIcons place={this.props.selectedPlace} />
 
-                  {/* Name & Address */}
-                  <div
-                    id={
-                      isMobile
-                        ? "org-name-and-address"
-                        : "org-name-and-address-desktop"
-                    }
-                  >
-                    <div id="tap-organization-name">
-                      {this.state.organization}
-                    </div>
-                    {this.state.address && (
-                      <h5 id="tap-info-address">{this.state.address}</h5>
-                    )}
-                  </div>
+            {/* Description */}
 
-                  <SelectedTapHours
-                    infoIsExpanded={this.props.infoIsExpanded}
-                    selectedPlace={this.props.selectedPlace}
-                  />
-                </div>
-                {/* Walk Time & Info Icons  */}
-                <div className={styles.walkTime}>
-                  Estimated Walk Time: {this.state.walkingDuration} mins (
-                  {this.state.walkingDistance} mi)
-                </div>
-
-                <SelectedTapIcons place={this.props.selectedPlace} />
-
-                {/* Description */}
-
-                <div>
-                  {isMobile ? (
-                    <div id="arrow-description-toggle">
-                      {this.state.isDescriptionShown && (
-                        <div className={styles.description}>
-                          <div id="tap-info-description">
-                            {this.state.tapDescription && (
-                              <div className={styles.section}>
-                                <h3>Description</h3>
-                                <div>{this.state.tapDescription}</div>
-                              </div>
-                            )}
-                            {this.state.tapStatement && (
-                              <div className={styles.section}>
-                                <h3>Statement</h3>
-                                <div>{this.state.tapStatement}</div>
-                              </div>
-                            )}
-                            {this.state.tapNormsAndRules && (
-                              <div className={styles.section}>
-                                <h3>Norms &amp; Rules</h3>
-                                <div>{this.state.tapNormsAndRules}</div>
-                              </div>
-                            )}
+            <div>
+              {isMobile ? (
+                <div id="arrow-description-toggle">
+                  {this.state.isDescriptionShown && (
+                    <div className={styles.description}>
+                      <div id="tap-info-description">
+                        {this.state.tapDescription && (
+                          <div className={styles.section}>
+                            <h3>Description</h3>
+                            <div>{this.state.tapDescription}</div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div>
-                      <div className={styles.description}>
-                        <div id="tap-info-description">
-                          {this.state.tapDescription && (
-                            <div className={styles.section}>
-                              <h3>Description</h3>
-                              <div>{this.state.tapDescription}</div>
-                            </div>
-                          )}
-                          {this.state.tapStatement && (
-                            <div className={styles.section}>
-                              <h3>Statement</h3>
-                              <div>{this.state.tapStatement}</div>
-                            </div>
-                          )}
-                          {this.state.tapNormsAndRules && (
-                            <div className={styles.section}>
-                              <h3>Norms &amp; Rules</h3>
-                              <div>{this.state.tapNormsAndRules}</div>
-                            </div>
-                          )}
-                        </div>
+                        )}
+                        {this.state.tapStatement && (
+                          <div className={styles.section}>
+                            <h3>Statement</h3>
+                            <div>{this.state.tapStatement}</div>
+                          </div>
+                        )}
+                        {this.state.tapNormsAndRules && (
+                          <div className={styles.section}>
+                            <h3>Norms &amp; Rules</h3>
+                            <div>{this.state.tapNormsAndRules}</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <div className={styles.description}>
+                    <div id="tap-info-description">
+                      {this.state.tapDescription && (
+                        <div className={styles.section}>
+                          <h3>Description</h3>
+                          <div>{this.state.tapDescription}</div>
+                        </div>
+                      )}
+                      {this.state.tapStatement && (
+                        <div className={styles.section}>
+                          <h3>Statement</h3>
+                          <div>{this.state.tapStatement}</div>
+                        </div>
+                      )}
+                      {this.state.tapNormsAndRules && (
+                        <div className={styles.section}>
+                          <h3>Norms &amp; Rules</h3>
+                          <div>{this.state.tapNormsAndRules}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       );
     } else {
@@ -503,18 +452,18 @@ class SelectedTap extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
   infoIsExpanded: state.infoIsExpanded,
   infoWindowClass: state.infoWindowClass,
   selectedPlace: state.selectedPlace,
   phlaskType: state.phlaskType,
-  userLocation: state.userLocation,
+  userLocation: state.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass,
+  toggleInfoWindowClass
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedTap);
