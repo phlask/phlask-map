@@ -1,12 +1,11 @@
 import styles from './HalfModalInfo.module.scss';
 import React from 'react';
 import { Button } from '@mui/material';
-import waterButton from '../images/Phlask_Button.svg';
 import directionButton from '../images/ArrowElbowUpRight.svg'
 
 function HalfModalInfo(props) {
 
-  const {nameOfPlace, addressOfPlace, imageOfPlace, estWalkTime} = props;
+  const {nameOfPlace, addressOfPlace, imageOfPlace, estWalkTime, iconSrc } = props;
 
   const btnstyle =  {
       padding: '8px 20px 8px 25px',
@@ -26,7 +25,7 @@ function HalfModalInfo(props) {
         <span className={styles.swipeIcon}></span>
         <img src={imageOfPlace} className={styles.locationImage}  alt='' />
         <div className={styles.mainHalfInfo}>
-        <img src={waterButton} alt='' />
+          { iconSrc && <img src={iconSrc} alt='' /> }
             <div className={styles.mainHalfInfoText}>
                 <h2 className={styles.nameOfPlace}>{nameOfPlace}</h2>
                 <p className={styles.addressOfPlace}>{addressOfPlace}</p>

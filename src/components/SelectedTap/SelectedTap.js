@@ -273,7 +273,8 @@ class SelectedTap extends React.Component {
               <HalfModalInfo imageOfPlace={tempImages.tapImg}
                              nameOfPlace={this.state.organization}
                              addressOfPlace={this.state.address}
-                             estWalkTime={this.state.walkingDuration} >
+                             estWalkTime={this.state.walkingDuration}
+                             iconSrc={this.props.selectedPlace.infoIcon} >
                       <SelectedTapHours
                         infoIsExpanded={this.props.infoIsExpanded}
                         selectedPlace={this.props.selectedPlace}
