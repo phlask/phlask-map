@@ -19,6 +19,7 @@ import MapMarkersFood from "../MapMarkers/MapMarkersFood";
 // Temporary Food/Water Toggle
 import { isMobile } from "react-device-detect";
 import Toolbar from "../Toolbar/Toolbar";
+import { Drawer, Button } from "@mui/material";
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -265,6 +266,19 @@ export class ReactGoogleMaps extends Component {
       this.props.toggleInfoWindow(false);
     }
   };
+
+  toggleDrawer = () =>
+    (event) => {
+      if (
+        event.type === 'keydown' &&
+        (event.key === 'Tab' ||
+          event.key === 'Shift')
+      ) {
+        return;
+      }
+
+      this.setState({ anchor: open });
+    };
 
   render() {
     // console.log("Rendered ReactGoogleMaps");

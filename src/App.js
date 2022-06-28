@@ -1,8 +1,6 @@
 import React from "react";
 import ReactGA from "react-ga";
 import { Switch, Route } from "react-router";
-// import { connect } from 'react-redux'
-// import { resizeWindow } from './actions'
 import "./App.css";
 import MapPage from "./components/MapPage/MapPage";
 import Mission from "./components/Pages/Mission";
@@ -61,7 +59,4 @@ function App(props) {
   );
 }
 
-// const mapDispatchToProps = { resizeWindow }
-
-// export default connect(null,mapDispatchToProps)(App);
 export default App;

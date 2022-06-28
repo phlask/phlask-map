@@ -18,7 +18,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       const hoursList = [];
 
       selectedPlace.hours.map((orgHours, index) => {
-        console.log(orgHours.open);
+        // console.log(orgHours.open);
         const formattedHours = {
           day: hours.getDays(index),
           open:
@@ -30,7 +30,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               ? hours.getSimpleHours(orgHours.close)
               : null
         };
-        console.log(formattedHours);
+        // console.log(formattedHours);
         hoursList.push(formattedHours);
       });
 

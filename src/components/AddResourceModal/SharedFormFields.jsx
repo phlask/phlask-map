@@ -78,7 +78,8 @@ function SharedFormFields({
               <input
                 {...getInputProps({
                   placeholder: "Enter the address of this resource",
-                  className: "modalAddressAutofill"
+                  className: "modalAddressAutofill",
+                  id: "address"
                 })}
                 className={styles.modalAddressAutofill}
               />

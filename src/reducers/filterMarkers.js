@@ -145,8 +145,8 @@ export default (state = initialState, act) => {
         : { ...state, showingInfoWindow: act.isShown };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
-      console.log("Info Window Class: " + state.infoWindowClass);
-      console.log("Is Mobile: " + isMobile);
+      // console.log("Info Window Class: " + state.infoWindowClass);
+      // console.log("Is Mobile: " + isMobile);
 
       return {
         ...state,

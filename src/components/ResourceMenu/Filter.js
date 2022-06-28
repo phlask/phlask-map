@@ -54,7 +54,7 @@ export class Filter extends React.Component {
               isMobile ? styles.mobilePopover : styles.desktopPopover
             }`}
           >
-            <Popover.Content>
+            <Popover.Body>
               {/* // Legend button filters for tap type */}
               <Row className={styles.buttonRow}>
                 <Col>
@@ -219,16 +219,18 @@ export class Filter extends React.Component {
                   Reset
                 </Button>
               </Row>
-            </Popover.Content>
+            </Popover.Body>
           </Popover>
         }
       >
-        <FontAwesomeIcon
-          icon={faSlidersH}
-          className={styles.filterIcon}
-          size="3x"
-          color="#999"
-        />
+        <div /* Div used to avoid forwardRef error that would appear */>
+          <FontAwesomeIcon
+            icon={faSlidersH}
+            className={styles.filterIcon}
+            size="3x"
+            color="#999"
+          />
+        </div>
       </OverlayTrigger>
     );
   }
