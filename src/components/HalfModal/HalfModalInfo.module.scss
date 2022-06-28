@@ -6,7 +6,7 @@ $main-green: #5DA694;
     & * {
         margin: 0;
     }
-    padding: 10px 20px 50px;
+    padding: 10px 20px 40px;
 
     .locationImage {
         object-fit: cover;
@@ -26,21 +26,28 @@ $main-green: #5DA694;
         h2 {
             // font-size: 1.44rem;
              font-size: 20.16px;
+             line-height: 26px;
+             font-weight: 600;
         }
         p {
         //  font-size: 1rem;
             font-size: 14px;
             color: $dark-grey;
-            font-weight: 400;
+            font-weight: 500; 
         }
         .locationOpen {
             color: $main-green;
+        }
+
+        .estWalkTime {
+            font-weight: 600;
         }
 
         .walkTime {
             // font-size: 1rem;
             font-size: 14px;
             color: black;
+            font-weight: 600;
         }
         }
     }

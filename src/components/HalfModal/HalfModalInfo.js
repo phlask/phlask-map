@@ -8,7 +8,7 @@ function HalfModalInfo(props) {
   const {nameOfPlace, addressOfPlace, imageOfPlace, estWalkTime, iconSrc } = props;
 
   const btnstyle =  {
-      padding: '8px 20px 8px 25px',
+      padding: '6px 20px 6px 25px',
       margin: '10px 0',
       fontSize: 16,
       borderRadius: '8px',
@@ -33,7 +33,7 @@ function HalfModalInfo(props) {
                 {props.children}
                 <Button variant="contained" disableElevation sx={btnstyle} startIcon={<RightArrow />}>
                   Directions</Button>
-                <p>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
+                <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
             </div>
         </div>
     </div>
