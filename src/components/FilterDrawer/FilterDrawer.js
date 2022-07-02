@@ -89,7 +89,7 @@ export default function FilterDrawer() {
                 <Typography variant="h7" color="#525F75">
                   Features
                 </Typography>
-                <div className="d-flex mt-2">
+                <div className="d-flex mt-2" style={{gap: "0.5em"}}>
                   <FilterButton variant="outlined">Public</FilterButton>
                   <FilterButton variant="outlined">Private</FilterButton>
                   <FilterButton variant="outlined">Shared</FilterButton>
