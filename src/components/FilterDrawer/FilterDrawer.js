@@ -2,9 +2,19 @@ import { Box, SwipeableDrawer, Typography, Button, styled } from "@mui/material"
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isMobile } from "react-device-detect";
+
 import styles from "./FilterDrawer.module.scss";
 import "./FilterDrawer.css";
 
+const Puller = styled(Box)(({ theme }) => ({
+  width: 30,
+  height: 6,
+  backgroundColor: "rgba(232, 230, 227, 0.87)",
+  borderRadius: 3,
+  position: 'absolute',
+  top: 8,
+  left: 'calc(50% - 15px)',
+}));
 
 const FilterButton = styled(Button)(({ theme }) => ({
     color: "#2D3748",
@@ -34,10 +44,13 @@ export default function FilterDrawer() {
           style={{margin: "0 1em"}}
           elevation="10"
         >
+
           <Box
+            style={{padding: "1em"}}
             className={styles.drawerHeading}
           >
-            <Typography variant="h6" color="white">
+            <Puller/>
+            <Typography className="mt-1" variant="h6" color="white">
               Water Filter
             </Typography>
           </Box>
