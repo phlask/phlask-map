@@ -93,6 +93,29 @@ function getCoordinates() {
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
 
+  function toolbarButtonStyle(theme) {
+    return {
+      '& .MuiBottomNavigationAction-root': {
+        "margin-top": "10px",
+        "margin-bottom": "5px"        
+      },
+      '& .Mui-selected': {
+        // Resetting to the default value set by MUI
+        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L39
+        // color: "rgb(45, 55, 72)"
+        color: "#2D3748"
+      },
+      '& .MuiBottomNavigationAction-label': {
+        "padding-top": "2px",
+        color: "#2D3748"
+      },
+      '& .MuiBottomNavigationAction-label.Mui-selected': {
+        // Resetting to the default value set by MUI
+        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L62
+        "font-size": theme => theme.typography.pxToRem(12)
+      }}
+  }
+
   function switchType(type) {
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
@@ -190,7 +213,7 @@ function Toolbar(props) {
     </div>
     ): (
       // MOBILE VERSION OF THE TOOLBAR (V2)
-      <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}}>
+      <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, pb: "25px", pt: "10px", bgcolor: "white"}}>
         <BottomNavigation
           showLabels
           value={value}
@@ -199,9 +222,9 @@ function Toolbar(props) {
           }}
 
         >
-          <BottomNavigationAction label="Resources" icon={<ResourceIcon className={styles.resourceButton} />} />
-          <BottomNavigationAction label="PHLASK" icon={<WaterIcon className={styles.PHLASKButton} />} />
-          <BottomNavigationAction label="Contribute" icon={<ContributeIcon className={styles.contributeButton} />} />
+          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label="Resources" icon={<ResourceIcon className={styles.resourceButton} />} />
+          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label={<span>PHL<b>ASK</b></span>} icon={<WaterIcon className={styles.PHLASKButton} />} />
+          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label="Contribute" icon={<ContributeIcon className={styles.contributeButton} />} />
         </BottomNavigation>
       </Box>
     )}
