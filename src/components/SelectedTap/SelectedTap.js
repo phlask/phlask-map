@@ -25,7 +25,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
-import { Drawer } from "@mui/material";
+
+import HalfModal from "../HalfModal/HalfModal";
+import HalfModalInfo from "../HalfModal/HalfModalInfo";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -260,6 +262,28 @@ class SelectedTap extends React.Component {
   render() {
     if (this.props.showingInfoWindow) {
       return (
+        <div>
+        {isMobile && (
+          <div ref={this.refSelectedTap} id="tap-info-container-mobile">
+              <HalfModal
+                open={this.props.showingInfoWindow}
+                onOpen={() => this.toggleInfoWindow(true)}
+                onClose={() => this.toggleInfoWindow(false)}
+              >
+              <HalfModalInfo imageOfPlace={tempImages.tapImg}
+                             nameOfPlace={this.state.organization}
+                             addressOfPlace={this.state.address}
+                             estWalkTime={this.state.walkingDuration}
+                             iconSrc={this.props.selectedPlace.infoIcon} >
+                      <SelectedTapHours
+                        infoIsExpanded={this.props.infoIsExpanded}
+                        selectedPlace={this.props.selectedPlace}
+                      />
+              </HalfModalInfo>
+            </HalfModal>
+          </div>
+        )}
+        {!isMobile && (
         <div
           ref={this.refSelectedTap}
           id={isMobile ? "tap-info-container-mobile" : "tap-info-container"}
@@ -445,12 +469,15 @@ class SelectedTap extends React.Component {
             </div>
           </div>
         </div>
+    )}
+      </div>
       );
     } else {
       return null;
     }
   }
 }
+
 
 const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
