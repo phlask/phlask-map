@@ -32,7 +32,7 @@ class IndieMarker extends React.Component {
   };
 
   componentWillUnmount() {
-    console.log("unmount");
+    // console.log("unmount");
   }
 
   shouldComponentUpdate(nextProps) {
@@ -49,7 +49,7 @@ class IndieMarker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("Did Update");
+    // console.log("Did Update");
 
     // if(this.props.visibleTaps === prevProps.visibleTaps){
     //   this.setState(this.getIcon(this.props.tap.access))
@@ -146,7 +146,7 @@ class IndieMarker extends React.Component {
   }
 
   render() {
-    console.log("rendered marker");
+    // console.log("rendered marker");
 
     return (
       // Doesn't Render Marker as child of div,
