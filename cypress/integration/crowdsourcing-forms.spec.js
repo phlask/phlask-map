@@ -1,7 +1,7 @@
 describe('Crowdsourcing forms: Test Input for Water Tap', ()=> {
 
     beforeEach(() => {
-      // cy.visit("http://localhost:3000");
+      cy.visit("http://localhost:3000");
       cy.get('.btn-close').click() 
       cy.get('[data-cy=AddResourceButton]').click();
       cy.get('button:contains(Water Tap)')

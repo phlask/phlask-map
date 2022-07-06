@@ -18,7 +18,7 @@ services:
     - ".:/usr/src/app"
   prod_build:
     build: .
-    entrypoint: bash -c "mkdir -p testResults && yarn test --reporter json > testResults/jestResults.json && yarn build"
+    entrypoint: bash -c "mkdir -p testResults && yarn ci-test --reporter json > testResults/jestResults.json && yarn build"
     environment: 
       CI: "false"
     volumes:
