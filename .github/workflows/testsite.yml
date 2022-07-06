@@ -21,7 +21,7 @@ jobs:
         run: |
           echo Build started on `date`
           echo Building the webapp...
-          docker-compose run prod_build
+          sudo docker-compose run prod_build
           echo Build completed on `date`
           echo Pushing the webapp to S3...
           sudo apt-get update -y
