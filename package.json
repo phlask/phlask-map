@@ -56,9 +56,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "ci-start": "BROWSER=none yarn start",
     "build": "react-scripts build",
     "test": "cypress run",
-    "ci-test": "start-server-and-test 'yarn start' http://localhost:3000 'yarn test'",
+    "ci-test": "echo \"running start-server-and-test\" && start-server-and-test 'yarn ci-start' http://localhost:3000 'yarn test'",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
