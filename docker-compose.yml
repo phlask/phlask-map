@@ -20,7 +20,7 @@ services:
     build: .
     entrypoint: bash -c "mkdir -p testResults && yarn ci-test --reporter json > testResults/jestResults.json && yarn build"
     environment: 
-      CI: "true"
+      CI: "false"
       DEBUG: "start-server-and-test"
     volumes:
     - "./docker/build:/usr/src/app/build"
