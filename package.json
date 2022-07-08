@@ -52,14 +52,14 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.6.2",
     "react-scripts": "^5.0.1",
-    "start-server-and-test": "^1.14.0"
+    "wait-on": "^6.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "ci-start": "BROWSER=none yarn start",
     "build": "react-scripts build",
     "test": "cypress run",
-    "ci-test": "echo \"running start-server-and-test\" && start-server-and-test 'yarn ci-start' http://localhost:3000 'yarn test'",
+    "ci-test": "yarn ci-start & wait-on http://localhost:3000 && yarn test",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
