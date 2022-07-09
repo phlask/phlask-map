@@ -12,5 +12,6 @@
   "start_url": "/beta.phlask.me/",
   "display": "standalone",
   "theme_color": "#26A9E0",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "scope": "/"
 }

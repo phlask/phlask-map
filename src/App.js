@@ -29,6 +29,10 @@ function App(props) {
       ReactGA.initialize(trackingIdTest);
   }
 
+  React.useEffect(() => {
+    window.scrollTo(0, 1)
+  }, [])
+
   ReactGA.pageview(window.location.pathname + window.location.search);
   return (
     <ThemeProvider theme={theme}>
