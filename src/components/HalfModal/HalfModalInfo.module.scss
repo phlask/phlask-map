@@ -8,6 +8,24 @@ $main-green: #5DA694;
     }
     padding: 10px 20px 40px;
 
+    h2 {
+        // font-size: 1.44rem;
+         font-size: 20.16px;
+         line-height: 26px;
+         font-weight: 600;
+    }
+
+    h3 {
+        font-size: 14px;
+        font-weight: 600; 
+    }
+    p {
+    //  font-size: 1rem;
+        font-size: 14px;
+        color: $dark-grey;
+        font-weight: 500; 
+    }
+
     .locationImage {
         object-fit: cover;
         width: 100%;
@@ -23,18 +41,7 @@ $main-green: #5DA694;
 
         .mainHalfInfoText {
             margin-left: 10px;
-        h2 {
-            // font-size: 1.44rem;
-             font-size: 20.16px;
-             line-height: 26px;
-             font-weight: 600;
-        }
-        p {
-        //  font-size: 1rem;
-            font-size: 14px;
-            color: $dark-grey;
-            font-weight: 500; 
-        }
+
         .locationOpen {
             color: $main-green;
         }
@@ -51,7 +58,14 @@ $main-green: #5DA694;
         }
         }
     }
-
+    .halfInfoExpand {
+        .tagGroup {
+            margin: 10px 0px;
+        }
+        .details {
+            margin: 20px 0;
+        }
+    }
 }
 
 .swipeIcon {
@@ -64,3 +78,4 @@ $main-green: #5DA694;
     display: block;
 
 }
+
