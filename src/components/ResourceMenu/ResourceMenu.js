@@ -7,7 +7,7 @@ import {
   ListItemText,
   Modal,
   Slide,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
@@ -23,7 +23,7 @@ import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_BATHROOM,
-  TOGGLE_PHLASK_TYPE
+  TOGGLE_PHLASK_TYPE,
 } from "../../actions/actions";
 
 const ResourceMenu = () => {
@@ -31,25 +31,25 @@ const ResourceMenu = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const phlaskType = useSelector(state => state.phlaskType);
+  const phlaskType = useSelector((state) => state.phlaskType);
 
   const dispatch = useDispatch();
 
-  const switchType = type => {
-    handleGA(type);
+  const switchType = (type) => {
+    // handleGA(type);
     dispatch({
       type: TOGGLE_PHLASK_TYPE,
-      mode: type
+      mode: type,
     });
   };
 
-  function handleGA(type) {
-    ReactGA.event({
-      category: `ResourceMenu`,
-      action: "MapChangedTo",
-      label: `${type}`
-    });
-  }
+  // function handleGA(type) {
+  //   ReactGA.event({
+  //     category: `ResourceMenu`,
+  //     action: "MapChangedTo",
+  //     label: `${type}`,
+  //   });
+  // }
 
   return (
     <>
@@ -58,8 +58,8 @@ const ResourceMenu = () => {
         size="small"
         sx={{
           "&.MuiButtonBase-root:hover": {
-            bgcolor: "transparent"
-          }
+            bgcolor: "transparent",
+          },
         }}
       >
         <Box>
@@ -76,7 +76,7 @@ const ResourceMenu = () => {
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "end",
-          my: 3.5
+          my: 3.5,
         }}
       >
         <Slide
@@ -111,11 +111,7 @@ const ResourceMenu = () => {
             </ListItemButton>
             <ListItemButton
               sx={{ alignItems: "end" }}
-              onClick={() => {
-                {
-                  switchType(PHLASK_TYPE_FOOD);
-                }
-              }}
+              onClick={() => switchType(PHLASK_TYPE_FOOD)}
             >
               <ListItemIcon>
                 <FoodIcon />

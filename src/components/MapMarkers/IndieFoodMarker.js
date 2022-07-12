@@ -5,7 +5,7 @@ import {
   getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter
+  setMapCenter,
 } from "../../actions/actions";
 import makeGetVisibleTaps from "../../selectors/foodOrgSelectors";
 import foodIcon from "../images/food-marker-icons/food-site.png";
@@ -27,8 +27,8 @@ class IndieMarker extends React.Component {
     markerVisibility: {
       visibility: this.props.visibleTaps.includes(this.props.org)
         ? "visible"
-        : "hidden"
-    }
+        : "hidden",
+    },
   };
 
   componentWillUnmount() {
@@ -50,7 +50,6 @@ class IndieMarker extends React.Component {
 
   componentDidUpdate(prevProps) {
     // console.log("Did Update");
-
     // if(this.props.visibleTaps === prevProps.visibleTaps){
     //   this.setState(this.getIcon(this.props.tap.access))
     // }
@@ -59,11 +58,11 @@ class IndieMarker extends React.Component {
   componentDidMount() {
     this.setState(
       {
-        icon: this.getIcon(this.props.org.access)
+        icon: this.getIcon(this.props.org.access),
       },
       () => {
         this.setState({
-          shouldUpdate: false
+          shouldUpdate: false,
         });
       }
     );
@@ -120,8 +119,9 @@ class IndieMarker extends React.Component {
       );
       const offsetx = 0;
       // offset by half the height of modal minus height of the marker icon
-      const modalHeight = document.getElementById("tap-info-container-mobile")
-        .offsetHeight;
+      const modalHeight = document.getElementById(
+        "tap-info-container-mobile"
+      ).offsetHeight;
       const offsety = Math.floor(modalHeight / 2 - 20);
       var scale = Math.pow(2, this.props.map.getZoom());
       var worldCoordinateCenter = this.props.map
@@ -196,7 +196,7 @@ const makeMapStateToProps = () => {
       // handicap: state.tapFilters.handicap,
       accessTypesHidden: state.foodFilters.accessTypesHidden,
       allTaps: state.allFoodOrgs,
-      mapCenter: state.mapCenter
+      mapCenter: state.mapCenter,
     };
   };
   return mapStateToProps;
@@ -206,7 +206,7 @@ const mapDispatchToProps = {
   getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter
+  setMapCenter,
 };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(IndieMarker);
