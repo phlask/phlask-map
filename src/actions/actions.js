@@ -67,19 +67,20 @@ export const getTaps = () => (dispatch) => {
   return onValue(
     ref(database, "/"),
     (snapshot) => {
+      const snapshotVal = snapshot.val();
       var allTaps = [];
       var item;
-      for (item in snapshot.val()) {
-        if (snapshot.val()[item].access === "WM") {
+      for (item in snapshotVal) {
+        if (snapshotVal[item].access === "WM") {
           continue;
         }
-        if (snapshot.val()[item].active === "N") {
+        if (snapshotVal[item].active === "N") {
           continue;
         }
-        if (snapshot.val()[item].access === "TrashAcademy") {
+        if (snapshotVal[item].access === "TrashAcademy") {
           continue;
         }
-        allTaps.push(snapshot.val()[item]);
+        allTaps.push(snapshotVal[item]);
       }
       dispatch(getTapsSuccess(allTaps));
     },
@@ -99,10 +100,11 @@ export const getFoodOrgs = () => (dispatch) => {
   const app = initializeApp(foodConfig, "food");
   const database = getDatabase(app);
   return onValue(ref(database, "/"), (snapshot) => {
+    const snapshotVal = snapshot.val();
     var allFoodOrgs = [];
     var item;
-    for (item in snapshot.val()) {
-      allFoodOrgs.push(snapshot.val()[item]);
+    for (item in snapshotVal) {
+      allFoodOrgs.push(snapshotVal[item]);
     }
     dispatch(getFoodSuccess(allFoodOrgs));
   });
