@@ -1,4 +1,4 @@
-import styles from './HalfModalInfo.module.scss';
+import styles from './SelectedTapMobileInfo.module.scss';
 import { styled } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
 import { Button, Collapse } from '@mui/material';
@@ -8,7 +8,7 @@ import IconBtn from './IconBtn'
 
 import { ExportSvg, CaretDownSvg, ThreeDotSvg } from './Icons'
 
-function HalfModalInfo(props) {
+function SelectedTapMobileInfo(props) {
 
   const [tags, setTags] = useState([])
   const [toggleCollapse, setToggleCollapse] = useState(false)
@@ -84,17 +84,14 @@ function HalfModalInfo(props) {
     setToggleCollapse(false)
   }
 
-
   const toggleNativeShare = () => {
-
     if (navigator.share) {
-      console.log(document.title, window.location.href)
       navigator.share({
         title: document.title,
         url: window.location.href
       })
-        .then(() => console.log('Successful share'))
-        .catch(error => console.log('Error sharing:', error));
+        //.then(() => console.log('Successful share'))
+        // .catch(error => console.log('Error sharing:', error));
     }
   }
 
@@ -153,4 +150,4 @@ function HalfModalInfo(props) {
   );
 }
 
-export default HalfModalInfo;
+export default SelectedTapMobileInfo;

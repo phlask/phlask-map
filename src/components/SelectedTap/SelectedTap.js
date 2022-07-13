@@ -26,8 +26,8 @@ import {
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
 
-import HalfModal from "../HalfModal/HalfModal";
-import HalfModalInfo from "../HalfModal/HalfModalInfo";
+import SelectedTapMobile from "../SelectedTapMobile/SelectedTapMobile";
+import SelectedTapMobileInfo from "../SelectedTapMobile/SelectedTapMobileInfo";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -265,21 +265,21 @@ class SelectedTap extends React.Component {
         <div>
         {isMobile && (
           <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-              <HalfModal
+              <SelectedTapMobile
                 open={this.props.showingInfoWindow}
                 onOpen={() => this.toggleInfoWindow(true)}
                 onClose={() => this.toggleInfoWindow(false)}
                 selectedPlace={this.props.selectedPlace}
               >
-              <HalfModalInfo imageOfPlace={tempImages.tapImg}
+              <SelectedTapMobileInfo imageOfPlace={tempImages.tapImg}
                              estWalkTime={this.state.walkingDuration}
                              selectedPlace={this.props.selectedPlace}>
                       <SelectedTapHours
                         infoIsExpanded={this.props.infoIsExpanded}
                         selectedPlace={this.props.selectedPlace}
                       />
-              </HalfModalInfo>
-            </HalfModal>
+              </SelectedTapMobileInfo>
+            </SelectedTapMobile>
           </div>
         )}
         {!isMobile && (

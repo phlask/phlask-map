@@ -19,11 +19,6 @@ import MapMarkersFood from "../MapMarkers/MapMarkersFood";
 // Temporary Food/Water Toggle
 import { isMobile } from "react-device-detect";
 import Toolbar from "../Toolbar/Toolbar";
-import { Drawer, Button } from "@mui/material";
-
-import HalfModal from "../HalfModal/HalfModal";
-import HalfModalInfo from "../HalfModal/HalfModalInfo";
-
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SwipeableDrawer, Button, Collapse } from '@mui/material';
 
-export default function HalfModal(props) {
+export default function SelectedTapMobile(props) {
     return(
         <SwipeableDrawer anchor='bottom'
                 open={props.open}
