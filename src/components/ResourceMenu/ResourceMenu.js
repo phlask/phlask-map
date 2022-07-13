@@ -1,31 +1,24 @@
 import {
   Box,
   Dialog,
-  DialogContent,
-  Drawer,
   IconButton,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Modal,
-  Slide,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as FoodIcon } from "../icons/FoodIconV2.svg";
 import { ReactComponent as ForagingIcon } from "../icons/ForagingIconV2.svg";
 import { ReactComponent as ResourcesPin } from "../icons/ResourcesPin.svg";
 import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
 import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
-import { useDispatch, useSelector } from "react-redux";
 
-import ReactGA from "react-ga";
 import {
-  PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_WATER,
   TOGGLE_PHLASK_TYPE,
 } from "../../actions/actions";
 
@@ -80,6 +73,10 @@ const ResourceMenu = () => {
           style: {
             background: "transparent",
             boxShadow: "none",
+            position: "absolute",
+            bottom: "0vh",
+            left: "0vh",
+            transform: "translate(-20%, -1%)",
           },
         }}
       >
