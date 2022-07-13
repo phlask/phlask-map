@@ -1,20 +1,23 @@
 import styles from './HalfModalInfo.module.scss';
 import { styled } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
-import { Button, Collapse } from '@mui/material';
-import directionButton from '../images/ArrowElbowUpRight.svg'
+import { Button, Collapse,SvgIcon, IconButton } from '@mui/material';
+import directionButton from '../images/ArrowElbowUpRight.svg';
+
+// import {ReactComponent as DownArrow} from '../images/CaretDown.svg'
+// import {ReactComponent as ThreeDots} from '../images/DotsThree.svg'
+// import {ReactComponent as ExportIcon} from '../images/Export.svg'
+
+import { ExportIcon, CaretDown, ThreeDots } from './Icons'
 
 function HalfModalInfo(props) {
-    
+
   const [ tags, setTags ] = useState([])
   const [ toggleCollapse, setToggleCollapse ] = useState(false)
+  const [ pointerPositionY, setPointerPositionY ] = useState(0)
 
   const { imageOfPlace, estWalkTime, selectedPlace } = props;
-  // nameOfPlace={this.state.organization}
-  // addressOfPlace={this.state.address}
-  // estWalkTime={this.state.walkingDuration}
-  // iconSrc={this.props.selectedPlace.infoIcon}
-  
+
   const {organization, address, infoIcon } = selectedPlace;
 
   const btnstyle =  {
@@ -29,9 +32,6 @@ function HalfModalInfo(props) {
   const RightArrow = () => {
     return <img src={directionButton} alt='' />
   }
-
-  console.log(selectedPlace)
-
   const { filtration, handicap, service, sparkling, tap_type, vessel } = props.selectedPlace;
 
   const  { description, norms_rules } = props.selectedPlace;
@@ -39,15 +39,25 @@ function HalfModalInfo(props) {
   const BootstrapButton = styled(Button)({
     boxShadow: 'none',
     textTransform: 'none',
+    display: 'inline-block',
+    wordWrap: 'break-word',
     fontSize: 14,
     color: '#2D3748',
-    padding: '2px 5px',
-    margin: '2px 5px',
+    padding: '5px 7px',
+    margin: '0 5px',
+    marginBottom: "15px",
     border: '1px solid #2D3748',
     lineHeight: 1.5,
   });
   
+  const detectSwipe = e => {
+    setPointerPositionY(e.nativeEvent.offsetY)
 
+    if (!toggleCollapse) {
+       if (e.nativeEvent.offsetY < pointerPositionY) {
+      setToggleCollapse(true)
+    }}
+  } 
 
   useEffect(()=> {
       const showTags = () => {
@@ -73,21 +83,27 @@ function HalfModalInfo(props) {
       setTags(showTags())
   }, [])
 
-
-  const toggleBtn = () => {
-    setToggleCollapse((prev)=> !prev)
-}
-
   return (
-<div className={styles.halfInfo}>
-        <span className={styles.swipeIcon}></span>
+<div className={styles.halfInfo}
+      onPointerMove={detectSwipe}>
+
+        {!toggleCollapse &&  <button className={styles.swipeIcon}></button> }
+        {toggleCollapse &&  (
+          <div>
+              <IconButton color="primary" aria-label="upload picture" component="label">
+                <SvgIcon component={CaretDown} inheritViewBox />
+              </IconButton>
+            
+            <SvgIcon component={ExportIcon} inheritViewBox />
+            <SvgIcon component={ThreeDots} inheritViewBox />
+          </div>
+        )}
         <img src={imageOfPlace} className={styles.locationImage}  alt='' />
         <div className={styles.mainHalfInfo}>
           { infoIcon && <img src={infoIcon} alt='' /> }
             <div className={styles.mainHalfInfoText}>
                 <h2 className={styles.nameOfPlace}>{organization}</h2>
                 <p className={styles.addressOfPlace}>{address}</p>
-                {/* <p><span className={styles.locationOpen}>Open</span> - Closes 10PM</p> */}
                 {props.children}
                 <Button variant="contained" disableElevation sx={btnstyle} startIcon={<RightArrow />}>
                   Directions</Button>
@@ -95,16 +111,15 @@ function HalfModalInfo(props) {
             </div>
         </div>
 
-    <button onClick={toggleBtn}>test</button>
     <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
-        <hr/>
         <div className={styles.halfInfoExpand}>
           <div className={styles.tagGroup}>
+            <hr className={styles.topDivider}/>
             {tags.map((tag,  index)=>
                 <BootstrapButton size="small" variant="outlined" key={index}>{tag}</BootstrapButton>
             )}
+            <hr/>
           </div>
-        <hr/>
           <div className={styles.details}>
             <h3>Description</h3>
             <p>{description ? description : "N/A" }</p>
