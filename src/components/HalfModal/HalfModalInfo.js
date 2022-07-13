@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Button, Collapse,SvgIcon, IconButton } from '@mui/material';
 import directionButton from '../images/ArrowElbowUpRight.svg';
 
+import IconBtn from './IconBtn'
+
 // import {ReactComponent as DownArrow} from '../images/CaretDown.svg'
 // import {ReactComponent as ThreeDots} from '../images/DotsThree.svg'
 // import {ReactComponent as ExportIcon} from '../images/Export.svg'
 
-import { ExportIcon, CaretDown, ThreeDots } from './Icons'
+import { ExportSvg, CaretDownSvg, ThreeDotSvg } from './Icons'
 
 function HalfModalInfo(props) {
 
@@ -53,10 +55,17 @@ function HalfModalInfo(props) {
   const detectSwipe = e => {
     setPointerPositionY(e.nativeEvent.offsetY)
 
-    if (!toggleCollapse) {
-       if (e.nativeEvent.offsetY < pointerPositionY) {
+    if (!toggleCollapse && e.nativeEvent.offsetY < pointerPositionY) {
       setToggleCollapse(true)
-    }}
+    }
+
+    /*
+      // currently if you swipe down it will close the entire drawer regardless
+
+    if (toggleCollapse && e.nativeEvent.offsetY > pointerPositionY) {
+      setToggleCollapse(false)
+    }
+    */
   } 
 
   useEffect(()=> {
@@ -83,19 +92,24 @@ function HalfModalInfo(props) {
       setTags(showTags())
   }, [])
 
+
+  const minimizeModal = () => {
+    setToggleCollapse(false)
+  }
+
   return (
 <div className={styles.halfInfo}
       onPointerMove={detectSwipe}>
 
         {!toggleCollapse &&  <button className={styles.swipeIcon}></button> }
         {toggleCollapse &&  (
-          <div>
-              <IconButton color="primary" aria-label="upload picture" component="label">
-                <SvgIcon component={CaretDown} inheritViewBox />
-              </IconButton>
-            
-            <SvgIcon component={ExportIcon} inheritViewBox />
-            <SvgIcon component={ThreeDots} inheritViewBox />
+          <div className={styles.expandedToolBar}>
+              <IconBtn component={CaretDownSvg} ariaLabel='minimize window' onClick={minimizeModal}/>
+              <div>
+                <IconBtn component={ExportSvg} ariaLabel='export' />
+                <IconBtn component={ThreeDotSvg} ariaLabel='more' />
+              </div>
+              {/* Currently the three dot button does nothing */}
           </div>
         )}
         <img src={imageOfPlace} className={styles.locationImage}  alt='' />

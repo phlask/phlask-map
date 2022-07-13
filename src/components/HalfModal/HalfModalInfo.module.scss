@@ -76,6 +76,12 @@ $main-green: #5DA694;
             margin-bottom: 15px;
         }
     }
+
+    .expandedToolBar {
+        display: flex;
+        justify-content: space-between;
+    }
+
 }
 
 .swipeIcon {
