@@ -1,7 +1,7 @@
 import styles from './HalfModalInfo.module.scss';
 import { styled } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
-import { Button, Collapse,SvgIcon, IconButton } from '@mui/material';
+import { Button, Collapse } from '@mui/material';
 import directionButton from '../images/ArrowElbowUpRight.svg';
 
 import IconBtn from './IconBtn'
@@ -10,20 +10,20 @@ import { ExportSvg, CaretDownSvg, ThreeDotSvg } from './Icons'
 
 function HalfModalInfo(props) {
 
-  const [ tags, setTags ] = useState([])
-  const [ toggleCollapse, setToggleCollapse ] = useState(false)
-  const [ pointerPositionY, setPointerPositionY ] = useState(0)
+  const [tags, setTags] = useState([])
+  const [toggleCollapse, setToggleCollapse] = useState(false)
+  const [pointerPositionY, setPointerPositionY] = useState(0)
 
   const { imageOfPlace, estWalkTime, selectedPlace } = props;
-  const {organization, address, infoIcon } = selectedPlace;
+  const { organization, address, infoIcon } = selectedPlace;
 
-  const btnstyle =  {
-      padding: '6px 20px 6px 25px',
-      margin: '10px 0',
-      fontSize: 16,
-      borderRadius: '8px',
-      textTransform: 'none',
-      backgroundColor: '#00A5EE',
+  const btnstyle = {
+    padding: '6px 20px 6px 25px',
+    margin: '10px 0',
+    fontSize: 16,
+    borderRadius: '8px',
+    textTransform: 'none',
+    backgroundColor: '#00A5EE',
   }
 
   const RightArrow = () => {
@@ -31,9 +31,9 @@ function HalfModalInfo(props) {
   }
   const { filtration, handicap, service, sparkling, tap_type, vessel } = props.selectedPlace;
 
-  const  { description, norms_rules } = props.selectedPlace;
+  const { description, norms_rules } = props.selectedPlace;
 
-  const BootstrapButton = styled(Button)({
+  const TagButton = styled(Button)({
     boxShadow: 'none',
     textTransform: 'none',
     display: 'inline-block',
@@ -46,37 +46,37 @@ function HalfModalInfo(props) {
     border: '1px solid #2D3748',
     lineHeight: 1.5,
   });
-  
+
   const detectSwipe = e => {
     setPointerPositionY(e.nativeEvent.offsetY)
 
     if (!toggleCollapse && e.nativeEvent.offsetY < pointerPositionY) {
       setToggleCollapse(true)
     }
-  } 
+  }
 
-  useEffect(()=> {
-      const showTags = () => {
-          const shownTags = []
-          if (filtration === "yes") {
-              shownTags.push("Filtered")
-          }
-          if (handicap === "yes") {
-              shownTags.push("ADA Accessible")
-          }
-          if (service) {
-            shownTags.push(service)
-        }
-          if (vessel != "yes") {
-              shownTags.push("Vessel Needed")
-          }
+  useEffect(() => {
+    const showTags = () => {
+      const shownTags = []
+      if (filtration === "yes") {
+        shownTags.push("Filtered")
+      }
+      if (handicap === "yes") {
+        shownTags.push("ADA Accessible")
+      }
+      if (service) {
+        shownTags.push(service)
+      }
+      if (vessel != "yes") {
+        shownTags.push("Vessel Needed")
+      }
 
-        if (tap_type) {
-          shownTags.push(tap_type)
+      if (tap_type) {
+        shownTags.push(tap_type)
       }
-          return shownTags
-      }
-      setTags(showTags())
+      return shownTags
+    }
+    setTags(showTags())
   }, [])
 
 
@@ -87,57 +87,57 @@ function HalfModalInfo(props) {
 
   const toggleNativeShare = () => {
 
-      if (navigator.share) {
-        console.log(document.title, window.location.href)
-        navigator.share({
-          title: document.title,
-          url: window.location.href
-        })
+    if (navigator.share) {
+      console.log(document.title, window.location.href)
+      navigator.share({
+        title: document.title,
+        url: window.location.href
+      })
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing:', error));
-      }
+    }
   }
 
   return (
-<div className={styles.halfInfo}
+    <div className={styles.halfInfo}
       onPointerMove={detectSwipe}>
 
-        {!toggleCollapse &&  <button className={styles.swipeIcon}></button> }
-        {toggleCollapse &&  (
-          <div className={styles.expandedToolBar}>
-              <IconBtn component={CaretDownSvg} ariaLabel='minimize window' onClick={minimizeModal}/>
-              <div>
-                <IconBtn component={ExportSvg} ariaLabel='export' onClick={toggleNativeShare} />
-                <IconBtn component={ThreeDotSvg} ariaLabel='more' />
-              </div>
-              {/* Currently the three dot button does nothing */}
+      {!toggleCollapse && <button className={styles.swipeIcon}></button>}
+      {toggleCollapse && (
+        <div className={styles.expandedToolBar}>
+          <IconBtn component={CaretDownSvg} ariaLabel='minimize window' onClick={minimizeModal} />
+          <div>
+            <IconBtn component={ExportSvg} ariaLabel='export' onClick={toggleNativeShare} />
+            <IconBtn component={ThreeDotSvg} ariaLabel='more' />
           </div>
-        )}
-        <img src={imageOfPlace} className={styles.locationImage}  alt='' />
-        <div className={styles.mainHalfInfo}>
-          { infoIcon && <img src={infoIcon} alt='' /> }
-            <div className={styles.mainHalfInfoText}>
-                <h2 className={styles.nameOfPlace}>{organization}</h2>
-                <p className={styles.addressOfPlace}>{address}</p>
-                {props.children}
-                <Button variant="contained" disableElevation sx={btnstyle} startIcon={<RightArrow />}>
-                  Directions</Button>
-                <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
-            </div>
+          {/* Currently the three dot button does nothing */}
         </div>
+      )}
+      <img src={imageOfPlace} className={styles.locationImage} alt='' />
+      <div className={styles.mainHalfInfo}>
+        {infoIcon && <img src={infoIcon} alt='' />}
+        <div className={styles.mainHalfInfoText}>
+          <h2 className={styles.nameOfPlace}>{organization}</h2>
+          <p className={styles.addressOfPlace}>{address}</p>
+          {props.children}
+          <Button variant="contained" disableElevation sx={btnstyle} startIcon={<RightArrow />}>
+            Directions</Button>
+          <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
+        </div>
+      </div>
 
-    <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
+      <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
           <div className={styles.tagGroup}>
-            <hr className={styles.topDivider}/>
-            {tags.map((tag,  index)=>
-                <BootstrapButton size="small" variant="outlined" key={index}>{tag}</BootstrapButton>
+            <hr className={styles.topDivider} />
+            {tags.map((tag, index) =>
+              <TagButton size="small" variant="outlined" key={index}>{tag}</TagButton>
             )}
-            <hr/>
+            <hr />
           </div>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>{description ? description : "N/A" }</p>
+            <p>{description ? description : "N/A"}</p>
           </div>
           <div className={styles.details}>
             <h3>PHLASK Statement</h3>
@@ -148,8 +148,8 @@ function HalfModalInfo(props) {
             <p>{norms_rules ? norms_rules : "N/A"}</p>
           </div>
         </div>
-    </Collapse>
-</div>
+      </Collapse>
+    </div>
   );
 }
 
