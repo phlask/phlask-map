@@ -75,8 +75,8 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
   }, [selectedPlace]);
 
 
-  console.log(currentOrgHours)
-  console.log(typeof(currentOrgHours))
+  // console.log(currentOrgHours)
+  // console.log(typeof(currentOrgHours))
   return (
 <>
 {isMobile && 
