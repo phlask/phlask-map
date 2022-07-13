@@ -1,5 +1,8 @@
 import {
   Box,
+  Dialog,
+  DialogContent,
+  Drawer,
   IconButton,
   List,
   ListItemButton,
@@ -41,6 +44,7 @@ const ResourceMenu = () => {
       type: TOGGLE_PHLASK_TYPE,
       mode: type,
     });
+    handleClose();
   };
 
   // function handleGA(type) {
@@ -52,7 +56,7 @@ const ResourceMenu = () => {
   // }
 
   return (
-    <>
+    <Box>
       <IconButton
         onClick={handleOpen}
         size="small"
@@ -69,114 +73,102 @@ const ResourceMenu = () => {
           </Typography>
         </Box>
       </IconButton>
-      <Modal
+      <Dialog
         open={open}
         onClose={handleClose}
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "end",
-          my: 3.5,
+        PaperProps={{
+          style: {
+            background: "transparent",
+            boxShadow: "none",
+          },
         }}
       >
-        <Slide
-          direction="up"
-          in={open}
-          mountOnEnter
-          unmountOnExit
-          timeout={250}
-        >
-          <List sx={{ maxWidth: 210 }}>
-            <ListItemButton
-              sx={{ alignItems: "end" }}
-              onClick={() => switchType(PHLASK_TYPE_WATER)}
-            >
-              <ListItemIcon>
-                <WaterIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  variant="body1"
-                  textAlign={"center"}
-                  color={"black"}
-                  mx={1.5}
-                  bgcolor={"white"}
-                  p={0.5}
-                  borderRadius={1}
-                  px={1}
-                >
-                  Water
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-            <ListItemButton
-              sx={{ alignItems: "end" }}
-              onClick={() => switchType(PHLASK_TYPE_FOOD)}
-            >
-              <ListItemIcon>
-                <FoodIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  variant="body1"
-                  textAlign={"center"}
-                  mx={1.5}
-                  bgcolor={"white"}
-                  p={0.5}
-                  borderRadius={1}
-                  px={1}
-                >
-                  Food
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-            <ListItemButton
-              sx={{ alignItems: "end" }}
-              onClick={() => switchType(PHLASK_TYPE_FORAGING)}
-            >
-              <ListItemIcon>
-                <ForagingIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  variant="body1"
-                  textAlign={"center"}
-                  mx={1.5}
-                  bgcolor={"white"}
-                  p={0.5}
-                  borderRadius={1}
-                  px={1}
-                >
-                  Foraging
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-            <ListItemButton
-              sx={{ alignItems: "end" }}
-              onClick={() => switchType(PHLASK_TYPE_BATHROOM)}
-            >
-              <ListItemIcon>
-                <ToiletIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  variant="body1"
-                  textAlign={"center"}
-                  mx={1.5}
-                  mb={0}
-                  bgcolor={"white"}
-                  p={0.5}
-                  borderRadius={1}
-                  px={1}
-                >
-                  Bathroom
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-          </List>
-        </Slide>
-      </Modal>
-    </>
+        <List sx={{ maxWidth: 210 }}>
+          <ListItemButton
+            sx={{ alignItems: "end" }}
+            onClick={() => {
+              switchType(PHLASK_TYPE_WATER);
+            }}
+          >
+            <ListItemIcon>
+              <WaterIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography
+                variant="body1"
+                textAlign={"center"}
+                color={"black"}
+                mx={1.5}
+                bgcolor={"white"}
+                p={0.5}
+                borderRadius={1}
+                px={1}
+              >
+                Water
+              </Typography>
+            </ListItemText>
+          </ListItemButton>
+          <ListItemButton
+            sx={{ alignItems: "end" }}
+            onClick={() => switchType(PHLASK_TYPE_FOOD)}
+          >
+            <ListItemIcon>
+              <FoodIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography
+                variant="body1"
+                textAlign={"center"}
+                mx={1.5}
+                bgcolor={"white"}
+                p={0.5}
+                borderRadius={1}
+                px={1}
+              >
+                Food
+              </Typography>
+            </ListItemText>
+          </ListItemButton>
+          <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemIcon>
+              <ForagingIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography
+                variant="body1"
+                textAlign={"center"}
+                mx={1.5}
+                bgcolor={"white"}
+                p={0.5}
+                borderRadius={1}
+                px={1}
+              >
+                Foraging
+              </Typography>
+            </ListItemText>
+          </ListItemButton>
+          <ListItemButton sx={{ alignItems: "end" }}>
+            <ListItemIcon>
+              <ToiletIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography
+                variant="body1"
+                textAlign={"center"}
+                mx={1.5}
+                mb={0}
+                bgcolor={"white"}
+                p={0.5}
+                borderRadius={1}
+                px={1}
+              >
+                Bathroom
+              </Typography>
+            </ListItemText>
+          </ListItemButton>
+        </List>
+      </Dialog>
+    </Box>
   );
 };
 

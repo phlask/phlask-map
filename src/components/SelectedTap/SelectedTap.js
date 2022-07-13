@@ -6,7 +6,7 @@ import {
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass,
-  PHLASK_TYPE_WATER
+  PHLASK_TYPE_WATER,
 } from "../../actions/actions";
 import { isMobile } from "react-device-detect";
 // import { connect } from 'react-redux'
@@ -21,7 +21,7 @@ import {
   faCaretLeft,
   faCaretDown,
   faCaretUp,
-  faTimes
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
@@ -29,7 +29,7 @@ import { Drawer } from "@mui/material";
 
 const tempImages = {
   tapImg: sampleImg,
-  tapImg2x: sampleImg2x
+  tapImg2x: sampleImg2x,
 };
 
 class SelectedTap extends React.Component {
@@ -49,10 +49,10 @@ class SelectedTap extends React.Component {
     accessible: this.props.selectedPlace.accessible,
     testIcons: {
       access: phlaskBlue,
-      accessibility: phlaskGreen
+      accessibility: phlaskGreen,
     },
     walkingDuration: 0,
-    walkingDistance: 0
+    walkingDistance: 0,
   };
 
   componentWillUnmount() {
@@ -64,8 +64,8 @@ class SelectedTap extends React.Component {
       "5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc";
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
     ${this.props.userLocation.lat}&end=${this.props.selectedPlace.lon},${this.props.selectedPlace.lat}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // duration is returned in seconds
         let duration = Math.round(
           data.features[0].properties.summary.duration / 60
@@ -83,7 +83,7 @@ class SelectedTap extends React.Component {
       // Start animation before unmounting description
       setTimeout(() => {
         this.setState({
-          isDescriptionShown: shouldExpand
+          isDescriptionShown: shouldExpand,
         });
       }, this.state.animationSpeed);
       // Expand or Collapse
@@ -98,13 +98,13 @@ class SelectedTap extends React.Component {
         this.setState(
           {
             infoExpansionStyle: {
-              height: this.state.previewHeight
-            }
+              height: this.state.previewHeight,
+            },
           },
           () => {
             this.setState(
               {
-                isDescriptionShown: shouldExpand
+                isDescriptionShown: shouldExpand,
               },
               () => {
                 // Collapse
@@ -116,7 +116,7 @@ class SelectedTap extends React.Component {
       } else {
         this.setState(
           {
-            isDescriptionShown: shouldExpand
+            isDescriptionShown: shouldExpand,
           },
           () => {
             // Expand
@@ -148,9 +148,9 @@ class SelectedTap extends React.Component {
     this.setState(
       {
         infoExpansionStyle: {
-          height: shouldExpand ? "80%" : this.state.previewHeight
+          height: shouldExpand ? "80%" : this.state.previewHeight,
           // : '40vh'
-        }
+        },
       },
       () => {
         this.props.toggleInfoExpanded(shouldExpand);
@@ -173,11 +173,11 @@ class SelectedTap extends React.Component {
   }
 
   handleGA() {
-    console.log(this.props.selectedPlace);
+    // console.log(this.props.selectedPlace);
     ReactGA.event({
       category: `Tap - ${this.props.phlaskType}`,
       action: "InfoShown",
-      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`
+      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`,
     });
   }
 
@@ -193,7 +193,7 @@ class SelectedTap extends React.Component {
         ? selectedPlace.description
         : "Happy PHLasking",
       tapStatement: selectedPlace.statement,
-      tapNormsAndRules: selectedPlace.norms_rules
+      tapNormsAndRules: selectedPlace.norms_rules,
     });
   }
 
@@ -238,11 +238,11 @@ class SelectedTap extends React.Component {
         !this.state.isDescriptionShown
       ) {
         this.setState({
-          previewHeight: this.refSelectedTap.current.clientHeight
+          previewHeight: this.refSelectedTap.current.clientHeight,
         });
       }
     }
-    console.log("Showing Info Window: " + this.props.showingInfoWindow);
+    // console.log("Showing Info Window: " + this.props.showingInfoWindow);
   }
 
   componentDidMount() {
@@ -452,18 +452,18 @@ class SelectedTap extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   showingInfoWindow: state.showingInfoWindow,
   infoIsExpanded: state.infoIsExpanded,
   infoWindowClass: state.infoWindowClass,
   selectedPlace: state.selectedPlace,
   phlaskType: state.phlaskType,
-  userLocation: state.userLocation
+  userLocation: state.userLocation,
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass
+  toggleInfoWindowClass,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedTap);

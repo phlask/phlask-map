@@ -6,7 +6,7 @@ import {
   PHLASK_TYPE_FOOD,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  setMapCenter,
 } from "../../actions/actions";
 import { connect } from "react-redux";
 import Filter from "../ResourceMenu/Filter";
@@ -50,17 +50,17 @@ function getClosest(data, userLocation) {
         org["lat"],
         org["lon"]
       ),
-      id: index
+      id: index,
     };
   });
-  var minDistance = Math.min(...distances.map(d => d.distance));
+  var minDistance = Math.min(...distances.map((d) => d.distance));
 
   var closestTap = {
     organization: "",
     address: "",
     lat: "",
     lon: "",
-    id: ""
+    id: "",
   };
 
   for (var i = 0; i < distances.length; i++) {
@@ -77,7 +77,7 @@ function getClosest(data, userLocation) {
 }
 
 function getCoordinates() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
@@ -94,7 +94,7 @@ function Toolbar(props) {
     ReactGA.event({
       category: `Toolbar`,
       action: "MapChangedTo",
-      label: `${type}`
+      label: `${type}`,
     });
   }
 
@@ -105,7 +105,7 @@ function Toolbar(props) {
         : props.allFoodOrgs;
     const closest = getClosest(data, {
       lat: props.userLocation.lat,
-      lon: props.userLocation.lng
+      lon: props.userLocation.lng,
     });
     const place = new Promise(() => {
       props.setSelectedPlace(closest.id);
@@ -114,7 +114,7 @@ function Toolbar(props) {
       .then(
         props.setMapCenter({
           lat: closest.lat,
-          lng: closest.lon
+          lng: closest.lon,
         })
       )
       .then(props.toggleInfoWindow(true));
@@ -142,18 +142,22 @@ function Toolbar(props) {
       )}
       <div className={styles.filterButton}>
         <button aria-label="show filters">
-          {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
+          {props.phlaskType === PHLASK_TYPE_WATER ? (
+            <ResourceMenu />
+          ) : (
+            <ResourceMenu />
+          )}
         </button>
       </div>
       <button
-        className={`${styles.toolbarButton} ${
-          styles.waterButton
-        } ${props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled}`}
+        className={`${styles.toolbarButton} ${styles.waterButton} ${
+          props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled
+        }`}
         onClick={() => {
           switchType(PHLASK_TYPE_WATER);
         }}
       >
-        <ResourceMenu />
+        {/* <ResourceMenu /> */}
         <WaterIcon />
       </button>
       {isMobile && (
@@ -162,9 +166,9 @@ function Toolbar(props) {
         </button>
       )}
       <button
-        className={`${styles.toolbarButton} ${
-          styles.foodButton
-        } ${props.phlaskType === PHLASK_TYPE_WATER && styles.disabled}`}
+        className={`${styles.toolbarButton} ${styles.foodButton} ${
+          props.phlaskType === PHLASK_TYPE_WATER && styles.disabled
+        }`}
         onClick={() => {
           switchType(PHLASK_TYPE_FOOD);
         }}
@@ -176,11 +180,11 @@ function Toolbar(props) {
   );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
   allFoodOrgs: state.allFoodOrgs,
-  userLocation: state.userLocation
+  userLocation: state.userLocation,
 });
 
 const mapDispatchToProps = {
@@ -189,7 +193,7 @@ const mapDispatchToProps = {
   PHLASK_TYPE_WATER,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  setMapCenter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
