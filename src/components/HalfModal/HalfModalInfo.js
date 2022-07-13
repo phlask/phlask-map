@@ -6,10 +6,6 @@ import directionButton from '../images/ArrowElbowUpRight.svg';
 
 import IconBtn from './IconBtn'
 
-// import {ReactComponent as DownArrow} from '../images/CaretDown.svg'
-// import {ReactComponent as ThreeDots} from '../images/DotsThree.svg'
-// import {ReactComponent as ExportIcon} from '../images/Export.svg'
-
 import { ExportSvg, CaretDownSvg, ThreeDotSvg } from './Icons'
 
 function HalfModalInfo(props) {
@@ -18,11 +14,7 @@ function HalfModalInfo(props) {
   const [ toggleCollapse, setToggleCollapse ] = useState(false)
   const [ pointerPositionY, setPointerPositionY ] = useState(0)
 
-  const [ testState, setTestState ] = useState(false)
-
-
   const { imageOfPlace, estWalkTime, selectedPlace } = props;
-
   const {organization, address, infoIcon } = selectedPlace;
 
   const btnstyle =  {
@@ -61,14 +53,6 @@ function HalfModalInfo(props) {
     if (!toggleCollapse && e.nativeEvent.offsetY < pointerPositionY) {
       setToggleCollapse(true)
     }
-
-    /*
-      // currently if you swipe down it will close the entire drawer regardless
-
-    if (toggleCollapse && e.nativeEvent.offsetY > pointerPositionY) {
-      setToggleCollapse(false)
-    }
-    */
   } 
 
   useEffect(()=> {
@@ -140,7 +124,6 @@ function HalfModalInfo(props) {
                   Directions</Button>
                 <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
             </div>
-            {testState && <p>Hey it is there!</p>}
         </div>
 
     <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
