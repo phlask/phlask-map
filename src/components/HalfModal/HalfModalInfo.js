@@ -18,6 +18,9 @@ function HalfModalInfo(props) {
   const [ toggleCollapse, setToggleCollapse ] = useState(false)
   const [ pointerPositionY, setPointerPositionY ] = useState(0)
 
+  const [ testState, setTestState ] = useState(false)
+
+
   const { imageOfPlace, estWalkTime, selectedPlace } = props;
 
   const {organization, address, infoIcon } = selectedPlace;
@@ -97,6 +100,20 @@ function HalfModalInfo(props) {
     setToggleCollapse(false)
   }
 
+
+  const toggleNativeShare = () => {
+
+      if (navigator.share) {
+        console.log(document.title, window.location.href)
+        navigator.share({
+          title: document.title,
+          url: window.location.href
+        })
+        .then(() => console.log('Successful share'))
+        .catch(error => console.log('Error sharing:', error));
+      }
+  }
+
   return (
 <div className={styles.halfInfo}
       onPointerMove={detectSwipe}>
@@ -106,7 +123,7 @@ function HalfModalInfo(props) {
           <div className={styles.expandedToolBar}>
               <IconBtn component={CaretDownSvg} ariaLabel='minimize window' onClick={minimizeModal}/>
               <div>
-                <IconBtn component={ExportSvg} ariaLabel='export' />
+                <IconBtn component={ExportSvg} ariaLabel='export' onClick={toggleNativeShare} />
                 <IconBtn component={ThreeDotSvg} ariaLabel='more' />
               </div>
               {/* Currently the three dot button does nothing */}
@@ -123,6 +140,7 @@ function HalfModalInfo(props) {
                   Directions</Button>
                 <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
             </div>
+            {testState && <p>Hey it is there!</p>}
         </div>
 
     <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
