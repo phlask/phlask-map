@@ -14,14 +14,14 @@ function SelectedTapMobile(props) {
   const [ toggleCollapse, setToggleCollapse ] = useState(false)
   const [ pointerPositionY, setPointerPositionY ] = useState(0)
 
-  const { imageOfPlace, estWalkTime, selectedPlace } = props;
+  const { image, estWalkTime, selectedPlace } = props;
 
   const { organization, address, infoIcon } = selectedPlace;
 
   const { filtration, handicap, service, sparkling, tap_type, vessel } = selectedPlace;
   const { description, statement, norms_rules } = selectedPlace;
 
-  const btnstyle = {
+  const directionBtnStyle = {
     padding: '6px 20px 6px 25px',
     margin: '10px 0',
     fontSize: 16,
@@ -82,7 +82,6 @@ function SelectedTapMobile(props) {
     setToggleCollapse(false)
   }
 
-
   const toggleNativeShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -114,14 +113,14 @@ function SelectedTapMobile(props) {
           {/* Currently the three dot button does nothing */}
         </div>
       )}
-      <img src={imageOfPlace} className={styles.locationImage} alt='' />
+      <img src={image} className={styles.locationImage} alt='' />
       <div className={styles.mainHalfInfo}>
         {infoIcon && <img src={infoIcon} alt='' />}
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.nameOfPlace}>{organization}</h2>
-          <p className={styles.addressOfPlace}>{address}</p>
+          <h2 className={styles.organization}>{organization}</h2>
+          <p>{address}</p>
           {props.children}
-          <Button variant="contained" disableElevation sx={btnstyle} startIcon={<DirectionIcon />}>
+          <Button variant="contained" disableElevation sx={directionBtnStyle} startIcon={<DirectionIcon />}>
             Directions</Button>
           <p className={styles.estWalkTime}>Est. walking time: <span className={styles.walkTime}>{estWalkTime}min</span></p>
         </div>

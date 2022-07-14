@@ -272,7 +272,7 @@ class SelectedTap extends React.Component {
               onOpen={() => this.toggleInfoWindow(true)}
               onClose={() => this.toggleInfoWindow(false)}
               PaperProps={{ square: false }} >
-              <SelectedTapMobile imageOfPlace={tempImages.tapImg}
+              <SelectedTapMobile image={tempImages.tapImg}
                              estWalkTime={this.state.walkingDuration}
                              selectedPlace={this.props.selectedPlace}>
                         <SelectedTapHours
