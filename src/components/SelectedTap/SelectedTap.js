@@ -26,8 +26,9 @@ import {
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
 
+import { SwipeableDrawer } from '@mui/material';
+
 import SelectedTapMobile from "../SelectedTapMobile/SelectedTapMobile";
-import SelectedTapMobileInfo from "../SelectedTapMobile/SelectedTapMobileInfo";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -264,23 +265,23 @@ class SelectedTap extends React.Component {
       return (
         <div>
         {isMobile && (
-          <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-              <SelectedTapMobile
-                open={this.props.showingInfoWindow}
-                onOpen={() => this.toggleInfoWindow(true)}
-                onClose={() => this.toggleInfoWindow(false)}
-                selectedPlace={this.props.selectedPlace}
-              >
-              <SelectedTapMobileInfo imageOfPlace={tempImages.tapImg}
+        <div ref={this.refSelectedTap} id="tap-info-container-mobile">
+
+          <SwipeableDrawer anchor='bottom'
+              open={this.props.showingInfoWindow}
+              onOpen={() => this.toggleInfoWindow(true)}
+              onClose={() => this.toggleInfoWindow(false)}
+              PaperProps={{ square: false }} >
+              <SelectedTapMobile imageOfPlace={tempImages.tapImg}
                              estWalkTime={this.state.walkingDuration}
                              selectedPlace={this.props.selectedPlace}>
-                      <SelectedTapHours
-                        infoIsExpanded={this.props.infoIsExpanded}
-                        selectedPlace={this.props.selectedPlace}
-                      />
-              </SelectedTapMobileInfo>
-            </SelectedTapMobile>
-          </div>
+                        <SelectedTapHours
+                          infoIsExpanded={this.props.infoIsExpanded}
+                          selectedPlace={this.props.selectedPlace}
+                        />
+              </SelectedTapMobile>
+          </SwipeableDrawer >
+        </div>
         )}
         {!isMobile && (
         <div
