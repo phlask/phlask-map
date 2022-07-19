@@ -19,7 +19,6 @@ import MapMarkersFood from "../MapMarkers/MapMarkersFood";
 // Temporary Food/Water Toggle
 import { isMobile } from "react-device-detect";
 import Toolbar from "../Toolbar/Toolbar";
-import { Drawer, Button } from "@mui/material";
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -155,8 +154,10 @@ export class ReactGoogleMaps extends Component {
       unfilteredTaps: this.props.tapsDisplayed,
       filteredTaps: [],
       zoom: 16,
-      searchedTap: null
+      searchedTap: null,
+      anchor: false
     };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -219,6 +220,7 @@ export class ReactGoogleMaps extends Component {
     this.props.toggleInfoWindow(true);
   }
 
+  //toggle window goes here
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
@@ -228,6 +230,7 @@ export class ReactGoogleMaps extends Component {
       currlon: props.position.lng
     });
 
+    //close window goes here 
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -277,7 +280,8 @@ export class ReactGoogleMaps extends Component {
         return;
       }
 
-      this.setState({ anchor: open });
+      this.setState(prevState => ({anchor: !prevState.anchor}))
+
     };
 
   render() {
