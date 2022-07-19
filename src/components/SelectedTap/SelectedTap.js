@@ -25,7 +25,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SelectedTapIcons from "../SelectedTapIcons/SelectedTapIcons";
 import SelectedTapHours from "../SelectedTapHours/SelectedTapHours";
-import { Drawer } from "@mui/material";
+
+import { SwipeableDrawer } from '@mui/material';
+
+import SelectedTapMobile from "../SelectedTapMobile/SelectedTapMobile";
 
 const tempImages = {
   tapImg: sampleImg,
@@ -260,49 +263,33 @@ class SelectedTap extends React.Component {
   render() {
     if (this.props.showingInfoWindow) {
       return (
+        <div>
+        {isMobile && (
+        <div ref={this.refSelectedTap} id="tap-info-container-mobile">
+
+          <SwipeableDrawer anchor='bottom'
+              open={this.props.showingInfoWindow}
+              onOpen={() => this.toggleInfoWindow(true)}
+              onClose={() => this.toggleInfoWindow(false)}
+              PaperProps={{ square: false }} >
+              <SelectedTapMobile image={tempImages.tapImg}
+                             estWalkTime={this.state.walkingDuration}
+                             selectedPlace={this.props.selectedPlace}>
+                        <SelectedTapHours
+                          infoIsExpanded={this.props.infoIsExpanded}
+                          selectedPlace={this.props.selectedPlace}
+                        />
+              </SelectedTapMobile>
+          </SwipeableDrawer >
+        </div>
+        )}
+        {!isMobile && (
         <div
           ref={this.refSelectedTap}
-          id={isMobile ? "tap-info-container-mobile" : "tap-info-container"}
-          className={`${this.props.infoWindowClass} ${
-            isMobile ? styles.mobileContainer : styles.desktopContainer
-          }`}
-          style={isMobile ? this.state.infoExpansionStyle : {}}
+          id="tap-info-container"
+          className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
+          style={{}}
         >
-          {isMobile && (
-            <div className={styles.mobileButtons}>
-              {!this.state.isDescriptionShown ? (
-                <button
-                  aria-label="show description"
-                  className={styles.mobileButton}
-                  onClick={() => {
-                    this.toggleInfoExpanded(true);
-                  }}
-                >
-                  <FontAwesomeIcon color="#fff" size="2x" icon={faCaretUp} />
-                </button>
-              ) : (
-                <button
-                  aria-label="hide description"
-                  className={styles.mobileButton}
-                  onClick={() => {
-                    this.toggleInfoExpanded(false);
-                  }}
-                >
-                  <FontAwesomeIcon color="#fff" size="2x" icon={faCaretDown} />
-                </button>
-              )}
-              <button
-                aria-label="close"
-                className={styles.mobileButton}
-                onClick={() => {
-                  this.toggleInfoWindow(false);
-                }}
-              >
-                <FontAwesomeIcon color="#fff" size="2x" icon={faTimes} />
-              </button>
-            </div>
-          )}
-          {!isMobile && (
             <button
               className={styles.closeButton}
               aria-label="Close"
@@ -318,8 +305,6 @@ class SelectedTap extends React.Component {
                 />
               </div>
             </button>
-          )}
-
           {/* Location Name */}
           <div
             ref={this.refContentArea}
@@ -331,9 +316,7 @@ class SelectedTap extends React.Component {
           >
             {/* Main Image */}
 
-            <div
-              id={isMobile ? "tap-info-img-box" : "tap-info-img-box-desktop"}
-            >
+            <div id="tap-info-img-box-desktop" >
               <img
                 id="tap-info-img"
                 // src={this.props.displayImg}
@@ -360,13 +343,7 @@ class SelectedTap extends React.Component {
               </div>
 
               {/* Name & Address */}
-              <div
-                id={
-                  isMobile
-                    ? "org-name-and-address"
-                    : "org-name-and-address-desktop"
-                }
-              >
+              <div id="org-name-and-address-desktop">
                 <div id="tap-organization-name">{this.state.organization}</div>
                 {this.state.address && (
                   <h5 id="tap-info-address">{this.state.address}</h5>
@@ -387,36 +364,7 @@ class SelectedTap extends React.Component {
             <SelectedTapIcons place={this.props.selectedPlace} />
 
             {/* Description */}
-
             <div>
-              {isMobile ? (
-                <div id="arrow-description-toggle">
-                  {this.state.isDescriptionShown && (
-                    <div className={styles.description}>
-                      <div id="tap-info-description">
-                        {this.state.tapDescription && (
-                          <div className={styles.section}>
-                            <h3>Description</h3>
-                            <div>{this.state.tapDescription}</div>
-                          </div>
-                        )}
-                        {this.state.tapStatement && (
-                          <div className={styles.section}>
-                            <h3>Statement</h3>
-                            <div>{this.state.tapStatement}</div>
-                          </div>
-                        )}
-                        {this.state.tapNormsAndRules && (
-                          <div className={styles.section}>
-                            <h3>Norms &amp; Rules</h3>
-                            <div>{this.state.tapNormsAndRules}</div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
                 <div>
                   <div className={styles.description}>
                     <div id="tap-info-description">
@@ -441,16 +389,18 @@ class SelectedTap extends React.Component {
                     </div>
                   </div>
                 </div>
-              )}
             </div>
           </div>
         </div>
+    )}
+      </div>
       );
     } else {
       return null;
     }
   }
 }
+
 
 const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
