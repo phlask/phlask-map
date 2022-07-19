@@ -97,12 +97,11 @@ function Toolbar(props) {
     return {
       '& .MuiBottomNavigationAction-root': {
         "margin-top": "10px",
-        "margin-bottom": "5px"        
+        "margin-bottom": "5px"
       },
       '& .Mui-selected': {
         // Resetting to the default value set by MUI
         // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L39
-        // color: "rgb(45, 55, 72)"
         color: "#2D3748"
       },
       '& .MuiBottomNavigationAction-label': {
