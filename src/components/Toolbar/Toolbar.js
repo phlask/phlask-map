@@ -83,7 +83,6 @@ function getCoordinates() {
 
 function Toolbar(props) {
   function switchType(type) {
-    console.log(type);
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
       handleGA(type);

@@ -39,7 +39,7 @@ const TutorialModal = ({ showButton }) => {
     setModalStep(modalStep - 1);
   }
 
-  const handleCheckboxChange = event => {
+  const handleCheckboxChange = (event) => {
     setModalCheckbox(event.target.checked);
     if (modalCheckbox) {
       setShowModalPreference(true);
@@ -54,112 +54,32 @@ const TutorialModal = ({ showButton }) => {
 
   const modalContent = {
     1: {
-      title: <h3 className={styles.text}>Welcome to the PHLASK App!</h3>,
+      title: <h3 className={styles.text}>Find & Share free Resources</h3>,
       body: (
         <p className={styles.text}>
           Your tool for finding and sharing free resources in Philadelphia - all
           you have to do is PHLask!
         </p>
-      )
+      ),
     },
     2: {
-      title: <h3 className={styles.text}>Finding Water & Food</h3>,
+      title: <h3 className={styles.text}>Toggle Between Resources</h3>,
       body: (
         <p className={styles.text}>
-          The control panel at the bottom of the screen allows you to toggle
-          between WATER{" "}
-          <img src={waterImg} alt="" className={styles.modalIcon} /> and FOOD{" "}
-          <img className={styles.modalIcon} src={foodImg} alt="" /> interfaces.
-          Select the desired interface to search the city for free water and
-          food locations. Use the center PHLASK button{" "}
-          <img src={phlaskImg} alt="" className={styles.modalIcon} /> to find
-          the nearest source of water or food, depending on which interface is
-          toggled.
+          Switch easily between water and food resources. We also got foraging
+          and toilets for you.
         </p>
-      )
+      ),
     },
     3: {
-      title: <h3 className={styles.text}>Filter</h3>,
+      title: <h3 className={styles.text}>Hit the Phlask Button</h3>,
       body: (
         <p className={styles.text}>
-          What’s a water app without a filter? Click the{" "}
-          <FontAwesomeIcon
-            icon={faSlidersH}
-            className="filterIcon"
-            color="#999"
-          />{" "}
-          icon to filter the taps on the WATER and FOOD interfaces with more
-          specific criteria.
+          Use the PHLASK button to find the nearest location to you no matter
+          which resource is selected.
         </p>
-      )
+      ),
     },
-    4: {
-      title: <h3 className={styles.text}>Legend</h3>,
-      body: (
-        <div className={styles.text}>
-          <span>
-            Public{" "}
-            <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
-            <p>
-              These taps are maintained by the City or publicly-funded
-              enterprise
-            </p>
-          </span>
-          <span>
-            Shared{" "}
-            <img src={phlaskFilterIcon("Shared", 25, 25)} alt="Public"></img>{" "}
-            <p>
-              Taps located in private enterprises that have either explicitly
-              granted public access or function as a de-facto public space
-            </p>
-          </span>{" "}
-          <span>
-            Private{" "}
-            <img src={phlaskFilterIcon("Private", 25, 25)} alt="Public"></img>{" "}
-            <p>
-              These taps are located in private businesses; public access is not
-              guaranteed
-            </p>
-          </span>{" "}
-          <span>
-            Restricted{" "}
-            <img
-              src={phlaskFilterIcon("Restricted", 25, 25)}
-              alt="Public"
-            ></img>{" "}
-            <p>These taps are restricted from public use</p>
-          </span>
-          <span>
-            School{" "}
-            <img
-              className={styles.modalIcon}
-              src={schoolIcon}
-              alt="School"
-            ></img>{" "}
-            <img
-              className={styles.modalIcon}
-              src={charterSchoolIcon}
-              alt="Charter School"
-            ></img>
-            <p>
-              Public, private and charter schools that offer free food and
-              meals.
-            </p>
-          </span>
-          <p>
-            Recreation Parks and recreation centers that offer free food and
-            meals to the public
-          </p>
-          <p>
-            Congregation Houses of worship and religious congregations that
-            offer free food
-          </p>
-          <p>
-            Other Places offering free food that do not fit the above categories
-          </p>
-        </div>
-      )
-    }
   };
 
   return (
@@ -190,7 +110,7 @@ const TutorialModal = ({ showButton }) => {
               Previous
             </Button>
           )}
-          {modalStep !== 4 ? (
+          {modalStep !== 3 ? (
             <Button variant="blue" onClick={handleNext}>
               Next
             </Button>
