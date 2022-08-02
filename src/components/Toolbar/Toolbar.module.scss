@@ -167,7 +167,11 @@ $foodColor: #8dc63f;
 }
 
 .PHLASKButton {
-  transform: scale(2) translateY(-8px);
+  /*
+  The scaling applied here is to try to get the svg as close to the 69px size requirement as possible
+  Attempting to work with height/width properties directly does not seem to work while testing
+  */
+  transform: scale(2.314659) translateY(-8px);
 }
 
 .resourceButton {
