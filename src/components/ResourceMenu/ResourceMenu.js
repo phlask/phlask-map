@@ -17,7 +17,9 @@ import { ReactComponent as ToiletIcon } from "../icons/ToiletIconV2.svg";
 import { ReactComponent as WaterIcon } from "../icons/WaterIconV2.svg";
 
 import {
+  PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
   TOGGLE_PHLASK_TYPE,
 } from "../../actions/actions";
@@ -126,7 +128,10 @@ const ResourceMenu = () => {
               </Typography>
             </ListItemText>
           </ListItemButton>
-          <ListItemButton sx={{ alignItems: "end" }}>
+          <ListItemButton
+            sx={{ alignItems: "end" }}
+            onClick={() => switchType(PHLASK_TYPE_FORAGING)}
+          >
             <ListItemIcon>
               <ForagingIcon />
             </ListItemIcon>
@@ -144,7 +149,10 @@ const ResourceMenu = () => {
               </Typography>
             </ListItemText>
           </ListItemButton>
-          <ListItemButton sx={{ alignItems: "end" }}>
+          <ListItemButton
+            sx={{ alignItems: "end" }}
+            onClick={() => switchType(PHLASK_TYPE_BATHROOM)}
+          >
             <ListItemIcon>
               <ToiletIcon />
             </ListItemIcon>

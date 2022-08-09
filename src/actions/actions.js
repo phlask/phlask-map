@@ -1,6 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { waterConfig, foodConfig } from "../firebase/firebaseConfig";
+import { connectToFirebase } from "../components/AddResourceModal/utils";
+import {
+  waterConfig,
+  foodConfig,
+  foragingConfig,
+  bathroomConfig,
+} from "../firebase/firebaseConfig";
 
 export const RESIZE_WINDOW = "RESIZE_WINDOW";
 export const resizeWindow = (size) => ({
@@ -109,6 +115,27 @@ export const getFoodOrgs = () => (dispatch) => {
     dispatch(getFoodSuccess(allFoodOrgs));
   });
 };
+
+export const GET_FORAGING_SUCCESS = "GET_FORAGING_SUCCESS";
+export const getForagingSuccess = (allForagingTaps) => ({
+  type: GET_FORAGING_SUCCESS,
+  allForagingTaps,
+});
+
+export const getForagingTaps = () => (dispatch) => {
+  const app = initializeApp(foragingConfig, "foraging");
+  const database = getDatabase(app);
+  return onValue(ref(database, "/"), (snapshot) => {
+    const snapshotVal = snapshot.val();
+    let allFoodBathTaps = [];
+    let item;
+    for (item in snapshotVal) {
+      allFoodBathTaps.push(snapshotVal[item]);
+    }
+    dispatch(getForagingSuccess(allFoodBathTaps));
+  });
+};
+
 export const SET_USER_LOCATION = "SET_USER_LOCATION";
 export const setUserLocation = (coords) => ({
   type: SET_USER_LOCATION,
@@ -175,3 +202,5 @@ export const togglePhlaskType = (phlaskType) => ({
 
 export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER";
 export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD";
+export const PHLASK_TYPE_FORAGING = "PHLASK_TYPE_FORAGING";
+export const PHLASK_TYPE_BATHROOM = "PHLASK_TYPE_BATHROOM";
