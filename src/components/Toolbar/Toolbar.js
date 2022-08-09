@@ -1,22 +1,22 @@
-import React from "react";
-import ReactGA from "react-ga";
+import React from 'react';
+import ReactGA from 'react-ga';
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter,
-} from "../../actions/actions";
-import { connect } from "react-redux";
-import Filter from "../Filter/Filter";
-import FoodFilter from "../FoodFilter/FoodFilter";
-import styles from "./Toolbar.module.scss";
-import phlaskImg from "../images/PHLASK Button.png";
-import WaterIcon from "../icons/WaterIcon";
-import FoodIcon from "../icons/FoodIcon";
-import { isMobile } from "react-device-detect";
-import { AddResourceModal } from "../AddResourceModal";
+  setMapCenter
+} from '../../actions/actions';
+import { connect } from 'react-redux';
+import Filter from '../Filter/Filter';
+import FoodFilter from '../FoodFilter/FoodFilter';
+import styles from './Toolbar.module.scss';
+import phlaskImg from '../images/PHLASK Button.png';
+import WaterIcon from '../icons/WaterIcon';
+import FoodIcon from '../icons/FoodIcon';
+import { isMobile } from 'react-device-detect';
+import { AddResourceModal } from '../AddResourceModal';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -39,27 +39,27 @@ function getClosest(data, userLocation) {
   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map((org, index) => {
     return {
-      lat: org["lat"],
-      lon: org["lon"],
-      organization: org["organization"],
-      address: org["address"],
+      lat: org['lat'],
+      lon: org['lon'],
+      organization: org['organization'],
+      address: org['address'],
       distance: distance(
-        userLocation["lat"],
-        userLocation["lon"],
-        org["lat"],
-        org["lon"]
+        userLocation['lat'],
+        userLocation['lon'],
+        org['lat'],
+        org['lon']
       ),
-      id: index,
+      id: index
     };
   });
-  var minDistance = Math.min(...distances.map((d) => d.distance));
+  var minDistance = Math.min(...distances.map(d => d.distance));
 
   var closestTap = {
-    organization: "",
-    address: "",
-    lat: "",
-    lon: "",
-    id: "",
+    organization: '',
+    address: '',
+    lat: '',
+    lon: '',
+    id: ''
   };
 
   for (var i = 0; i < distances.length; i++) {
@@ -93,8 +93,8 @@ function Toolbar(props) {
   function handleGA(type) {
     ReactGA.event({
       category: `Toolbar`,
-      action: "MapChangedTo",
-      label: `${type}`,
+      action: 'MapChangedTo',
+      label: `${type}`
     });
   }
 
@@ -105,7 +105,7 @@ function Toolbar(props) {
         : props.allFoodOrgs;
     const closest = getClosest(data, {
       lat: props.userLocation.lat,
-      lon: props.userLocation.lng,
+      lon: props.userLocation.lng
     });
     const place = new Promise(() => {
       props.setSelectedPlace(closest.id);
@@ -114,7 +114,7 @@ function Toolbar(props) {
       .then(
         props.setMapCenter({
           lat: closest.lat,
-          lng: closest.lon,
+          lng: closest.lon
         })
       )
       .then(props.toggleInfoWindow(true));
@@ -137,7 +137,7 @@ function Toolbar(props) {
             }
           `}
         >
-          {props.phlaskType === PHLASK_TYPE_WATER ? "Water Map" : "Food Map"}
+          {props.phlaskType === PHLASK_TYPE_WATER ? 'Water Map' : 'Food Map'}
         </h3>
       )}
       <div className={styles.filterButton}>
@@ -175,11 +175,11 @@ function Toolbar(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
   allFoodOrgs: state.allFoodOrgs,
-  userLocation: state.userLocation,
+  userLocation: state.userLocation
 });
 
 const mapDispatchToProps = {
@@ -188,7 +188,7 @@ const mapDispatchToProps = {
   PHLASK_TYPE_WATER,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter,
+  setMapCenter
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

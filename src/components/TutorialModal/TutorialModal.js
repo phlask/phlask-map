@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import waterImg from "../images/waterButton.png";
-import foodImg from "../images/foodButton.png";
-import phlaskImg from "../images/PHLASK Button.png";
-import styles from "./TutorialModal.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSlidersH, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
-import schoolIcon from "../images/food-marker-icons/school.png";
-import charterSchoolIcon from "../images/food-marker-icons/charter-school.png";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import waterImg from '../images/waterButton.png';
+import foodImg from '../images/foodButton.png';
+import phlaskImg from '../images/PHLASK Button.png';
+import styles from './TutorialModal.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import schoolIcon from '../images/food-marker-icons/school.png';
+import charterSchoolIcon from '../images/food-marker-icons/charter-school.png';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const TutorialModal = ({ showButton }) => {
   const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
   const [showModalPreference, setShowModalPreference] = useLocalStorage(
-    "showModalAgain",
+    'showModalAgain',
     true
   );
   const [showModalCheckbox, setShowModalCheckbox] = useState(true);
@@ -67,11 +67,11 @@ const TutorialModal = ({ showButton }) => {
       body: (
         <p className={styles.text}>
           The control panel at the bottom of the screen allows you to toggle
-          between WATER{" "}
-          <img src={waterImg} alt="" className={styles.modalIcon} /> and FOOD{" "}
+          between WATER{' '}
+          <img src={waterImg} alt="" className={styles.modalIcon} /> and FOOD{' '}
           <img className={styles.modalIcon} src={foodImg} alt="" /> interfaces.
           Select the desired interface to search the city for free water and
-          food locations. Use the center PHLASK button{" "}
+          food locations. Use the center PHLASK button{' '}
           <img src={phlaskImg} alt="" className={styles.modalIcon} /> to find
           the nearest source of water or food, depending on which interface is
           toggled.
@@ -82,12 +82,12 @@ const TutorialModal = ({ showButton }) => {
       title: <h3 className={styles.text}>Filter</h3>,
       body: (
         <p className={styles.text}>
-          What’s a water app without a filter? Click the{" "}
+          What’s a water app without a filter? Click the{' '}
           <FontAwesomeIcon
             icon={faSlidersH}
             className="filterIcon"
             color="#999"
-          />{" "}
+          />{' '}
           icon to filter the taps on the WATER and FOOD interfaces with more
           specific criteria.
         </p>
@@ -98,44 +98,44 @@ const TutorialModal = ({ showButton }) => {
       body: (
         <div className={styles.text}>
           <span>
-            Public{" "}
-            <img src={phlaskFilterIcon("Public", 25, 25)} alt="Public"></img>{" "}
+            Public{' '}
+            <img src={phlaskFilterIcon('Public', 25, 25)} alt="Public"></img>{' '}
             <p>
               These taps are maintained by the City or publicly-funded
               enterprise
             </p>
           </span>
           <span>
-            Shared{" "}
-            <img src={phlaskFilterIcon("Shared", 25, 25)} alt="Public"></img>{" "}
+            Shared{' '}
+            <img src={phlaskFilterIcon('Shared', 25, 25)} alt="Public"></img>{' '}
             <p>
               Taps located in private enterprises that have either explicitly
               granted public access or function as a de-facto public space
             </p>
-          </span>{" "}
+          </span>{' '}
           <span>
-            Private{" "}
-            <img src={phlaskFilterIcon("Private", 25, 25)} alt="Public"></img>{" "}
+            Private{' '}
+            <img src={phlaskFilterIcon('Private', 25, 25)} alt="Public"></img>{' '}
             <p>
               These taps are located in private businesses; public access is not
               guaranteed
             </p>
-          </span>{" "}
+          </span>{' '}
           <span>
-            Restricted{" "}
+            Restricted{' '}
             <img
-              src={phlaskFilterIcon("Restricted", 25, 25)}
+              src={phlaskFilterIcon('Restricted', 25, 25)}
               alt="Public"
-            ></img>{" "}
+            ></img>{' '}
             <p>These taps are restricted from public use</p>
           </span>
           <span>
-            School{" "}
+            School{' '}
             <img
               className={styles.modalIcon}
               src={schoolIcon}
               alt="School"
-            ></img>{" "}
+            ></img>{' '}
             <img
               className={styles.modalIcon}
               src={charterSchoolIcon}

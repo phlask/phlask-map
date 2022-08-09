@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import foodButton from "./images/foodButton.png";
-import waterButton from "./images/phlaskBlue.png";
-import "./TypeToggle.css";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import foodButton from './images/foodButton.png';
+import waterButton from './images/phlaskBlue.png';
+import './TypeToggle.css';
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD
-} from "../../actions/actions";
+} from '../../actions/actions';
 
 function TypeToggle(props) {
   const [phlaskTypeIcon, setTypeIcon] = useState(foodButton);

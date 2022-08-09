@@ -1,13 +1,13 @@
-import React from "react";
-import styles from "./SelectedTapIcons.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAccessibleIcon } from "@fortawesome/free-brands-svg-icons";
+import React from 'react';
+import styles from './SelectedTapIcons.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAccessibleIcon } from '@fortawesome/free-brands-svg-icons';
 import {
   faFilter,
   faConciergeBell,
   faHandHoldingWater,
   faTint
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const SelectedTapIcons = ({ place }) => {
   const icons = [];
@@ -18,12 +18,13 @@ const SelectedTapIcons = ({ place }) => {
    * Yes
    * No
    */
-  if (place.handicap === "Yes" || place.handicap === "No") {
+  if (place.handicap === 'Yes' || place.handicap === 'No') {
     icons.push(
       <div className={styles.infoAttribute} key="handicap">
         <div
-          className={`${styles.iconWrapper} ${place.handicap === "No" &&
-            styles.strikethrough}`}
+          className={`${styles.iconWrapper} ${
+            place.handicap === 'No' && styles.strikethrough
+          }`}
         >
           <FontAwesomeIcon
             className={styles.infoIcon}
@@ -41,12 +42,13 @@ const SelectedTapIcons = ({ place }) => {
    * Yes
    * No
    */
-  if (place.filtration === "Yes" || place.filtration === "No") {
+  if (place.filtration === 'Yes' || place.filtration === 'No') {
     icons.push(
       <div className={styles.infoAttribute} key="filtration">
         <div
-          className={`${styles.iconWrapper} ${place.filtration === "No" &&
-            styles.strikethrough}`}
+          className={`${styles.iconWrapper} ${
+            place.filtration === 'No' && styles.strikethrough
+          }`}
         >
           <FontAwesomeIcon
             className={styles.infoIcon}
@@ -65,7 +67,7 @@ const SelectedTapIcons = ({ place }) => {
    * Self-serve
    * Ask propietor
    */
-  if (place.service === "Self-serve") {
+  if (place.service === 'Self-serve') {
     icons.push(
       <div className={styles.infoAttribute} key="service">
         <div className={styles.iconWrapper}>
@@ -77,7 +79,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Self-serve</span>
       </div>
     );
-  } else if (place.service === "Ask proprietor") {
+  } else if (place.service === 'Ask proprietor') {
     icons.push(
       <div className={styles.infoAttribute} key="service">
         <div className={styles.iconWrapper}>
@@ -98,7 +100,7 @@ const SelectedTapIcons = ({ place }) => {
    * Dedicated water dispenser
    * Water cooler
    */
-  if (place.tap_type === "Drinking Fountain") {
+  if (place.tap_type === 'Drinking Fountain') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -111,7 +113,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Drinking Fountain</span>
       </div>
     );
-  } else if (place.tap_type === "Bottle filler and fountain") {
+  } else if (place.tap_type === 'Bottle filler and fountain') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -124,7 +126,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Bottle Filler / Fountain</span>
       </div>
     );
-  } else if (place.tap_type === "Sink") {
+  } else if (place.tap_type === 'Sink') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -137,7 +139,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Sink</span>
       </div>
     );
-  } else if (place.tap_type === "Soda fountain") {
+  } else if (place.tap_type === 'Soda fountain') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -150,7 +152,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Soda fountain</span>
       </div>
     );
-  } else if (place.tap_type === "Dedicated water dispenser") {
+  } else if (place.tap_type === 'Dedicated water dispenser') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -163,7 +165,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Dispenser</span>
       </div>
     );
-  } else if (place.tap_type === "Water cooler") {
+  } else if (place.tap_type === 'Water cooler') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -184,12 +186,13 @@ const SelectedTapIcons = ({ place }) => {
    * yes
    * no
    */
-  if (place.vessel === "yes" || place.vessel === "no") {
+  if (place.vessel === 'yes' || place.vessel === 'no') {
     icons.push(
       <div className={styles.infoAttribute} key="vessel">
         <div
-          className={`${styles.iconWrapper} ${place.vessel === "No" &&
-            styles.strikethrough}`}
+          className={`${styles.iconWrapper} ${
+            place.vessel === 'No' && styles.strikethrough
+          }`}
         >
           <FontAwesomeIcon className={styles.infoIcon} icon={faTint} />
         </div>
@@ -203,7 +206,7 @@ const SelectedTapIcons = ({ place }) => {
    *
    * yes
    */
-  if (place.sparkling === "yes") {
+  if (place.sparkling === 'yes') {
     icons.push(
       <div className={styles.infoAttribute} key="sparkling">
         <div className={styles.iconWrapper}>
@@ -225,7 +228,7 @@ const SelectedTapIcons = ({ place }) => {
    * park & rec
    * congregation
    */
-  if (place.access === "school") {
+  if (place.access === 'school') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -238,7 +241,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>School</span>
       </div>
     );
-  } else if (place.access === "park & rec") {
+  } else if (place.access === 'park & rec') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -251,7 +254,7 @@ const SelectedTapIcons = ({ place }) => {
         <span className={styles.iconLabel}>Parks & Rec</span>
       </div>
     );
-  } else if (place.access === "congregation") {
+  } else if (place.access === 'congregation') {
     icons.push(
       <div className={styles.infoAttribute} key="tap_type">
         <div className={styles.iconWrapper}>
@@ -272,12 +275,13 @@ const SelectedTapIcons = ({ place }) => {
    * yes
    * no
    */
-  if (place.id_required === "yes" || place.id_required === "no") {
+  if (place.id_required === 'yes' || place.id_required === 'no') {
     icons.push(
       <div className={styles.infoAttribute} key="id_required">
         <div
-          className={`${styles.iconWrapper} ${place.id_required === "No" &&
-            styles.strikethrough}`}
+          className={`${styles.iconWrapper} ${
+            place.id_required === 'No' && styles.strikethrough
+          }`}
         >
           <FontAwesomeIcon className={styles.infoIcon} icon={faTint} />
         </div>
@@ -292,12 +296,13 @@ const SelectedTapIcons = ({ place }) => {
    * yes
    * no
    */
-  if (place.kid_only === "yes" || place.kid_only === "no") {
+  if (place.kid_only === 'yes' || place.kid_only === 'no') {
     icons.push(
       <div className={styles.infoAttribute} key="kid_only">
         <div
-          className={`${styles.iconWrapper} ${place.kid_only === "No" &&
-            styles.strikethrough}`}
+          className={`${styles.iconWrapper} ${
+            place.kid_only === 'No' && styles.strikethrough
+          }`}
         >
           <FontAwesomeIcon className={styles.infoIcon} icon={faTint} />
         </div>

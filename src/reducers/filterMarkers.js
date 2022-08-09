@@ -1,20 +1,20 @@
-import * as actions from "../actions/actions";
-import { isMobile } from "react-device-detect";
+import * as actions from '../actions/actions';
+import { isMobile } from 'react-device-detect';
 
 const initialState = {
-  screenSize: "",
+  screenSize: '',
   mapCenter: {
-    lat: parseFloat("39.952744"),
-    lng: parseFloat("-75.163500")
+    lat: parseFloat('39.952744'),
+    lng: parseFloat('-75.163500')
   },
   // Change to reflect user's current location
   userLocation: {
-    lat: parseFloat("39.952744"),
-    lng: parseFloat("-75.163500")
+    lat: parseFloat('39.952744'),
+    lng: parseFloat('-75.163500')
   },
   showingInfoWindow: false,
   infoIsExpanded: false,
-  infoWindowClass: isMobile ? "info-window-out" : "info-window-out-desktop",
+  infoWindowClass: isMobile ? 'info-window-out' : 'info-window-out-desktop',
   isSearchShown: false,
   isFilterShown: false,
   tapFilters: {
@@ -49,19 +49,19 @@ export default (state = initialState, act) => {
         tapFilters: {
           ...state.tapFilters,
           filtered:
-            act.toggle === "filtered"
+            act.toggle === 'filtered'
               ? act.toggleState
               : state.tapFilters.filtered,
           handicap:
-            act.toggle === "handicap"
+            act.toggle === 'handicap'
               ? act.toggleState
               : state.tapFilters.handicap,
           sparkling:
-            act.toggle === "sparkling"
+            act.toggle === 'sparkling'
               ? act.toggleState
               : state.tapFilters.sparkling,
           openNow:
-            act.toggle === "openNow"
+            act.toggle === 'openNow'
               ? act.toggleState
               : state.tapFilters.openNow
         }
@@ -73,15 +73,15 @@ export default (state = initialState, act) => {
         foodFilters: {
           ...state.foodFilters,
           idRequired:
-            act.toggle === "idRequired"
+            act.toggle === 'idRequired'
               ? act.toggleState
               : state.foodFilters.idRequired,
           kidOnly:
-            act.toggle === "kidOnly"
+            act.toggle === 'kidOnly'
               ? act.toggleState
               : state.foodFilters.kidOnly,
           openNow:
-            act.toggle === "openNow"
+            act.toggle === 'openNow'
               ? act.toggleState
               : state.foodFilters.openNow
         }
@@ -104,13 +104,13 @@ export default (state = initialState, act) => {
       };
 
     case actions.SET_FILTER_FUNCTION:
-      console.log("set filter func");
+      console.log('set filter func');
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.TOGGLE_SEARCH_BAR:
       // console.log('Seach Bar Shown: ' + act.isShown);
       return { ...state, isSearchShown: act.isShown };
-    
+
     case actions.TOGGLE_FILTER_MODAL:
       return { ...state, isFilterShown: act.isShown };
 
@@ -120,7 +120,7 @@ export default (state = initialState, act) => {
 
       // if passed Selected Place as an object, set selected place as the object
       // if passed an ID, locate the item using ID, then set selected place
-      return typeof act.selectedPlace === "object"
+      return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
             ...state,
@@ -139,8 +139,8 @@ export default (state = initialState, act) => {
             ...state,
             showingInfoWindow: act.isShown,
             infoWindowClass: isMobile
-              ? "info-window-in"
-              : "info-window-in-desktop"
+              ? 'info-window-in'
+              : 'info-window-in-desktop'
           }
         : { ...state, showingInfoWindow: act.isShown };
 
@@ -152,11 +152,11 @@ export default (state = initialState, act) => {
         ...state,
         infoWindowClass: isMobile
           ? act.isShown
-            ? "info-window-in"
-            : "info-window-out"
+            ? 'info-window-in'
+            : 'info-window-out'
           : act.isShown
-          ? "info-window-in-desktop"
-          : "info-window-out-desktop"
+          ? 'info-window-in-desktop'
+          : 'info-window-out-desktop'
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
@@ -227,8 +227,8 @@ export default (state = initialState, act) => {
         infoWindowClass:
           act.mode !== state.showingInfoWindow
             ? isMobile
-              ? "info-window-out"
-              : "info-window-out-desktop"
+              ? 'info-window-out'
+              : 'info-window-out-desktop'
             : state.infoWindowClass
       };
 

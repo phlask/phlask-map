@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from "./App";
-import { Provider } from "react-redux";
-import store from "./store";
-import { MemoryRouter } from "react-router-dom";
+import App from './App';
+import { Provider } from 'react-redux';
+import store from './store';
+import { MemoryRouter } from 'react-router-dom';
 
-jest.mock("react-ga");
+jest.mock('react-ga');
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
+it('renders without crashing', () => {
+  const div = document.createElement('div');
   const root = createRoot(div);
   root.render(
     <MemoryRouter>

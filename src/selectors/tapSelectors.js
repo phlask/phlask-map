@@ -1,6 +1,6 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
-import { hours } from "../helpers/hours";
+import { hours } from '../helpers/hours';
 
 const getTapFilters = state => state.tapFilters;
 
@@ -26,7 +26,7 @@ const makeGetVisibleTaps = () => {
     // If we want to filter for filtered taps (water filter)
     if (tapFilters.filtered) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => allTaps[key].filtration === "Yes")
+        .filter(key => allTaps[key].filtration === 'Yes')
         .reduce((obj, key) => {
           obj[key] = allTaps[key];
           return obj;
@@ -36,7 +36,7 @@ const makeGetVisibleTaps = () => {
     // If we want to filter for handicap-accessible taps
     if (tapFilters.handicap) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].handicap === "Yes")
+        .filter(key => filteredTaps[key].handicap === 'Yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;
@@ -46,7 +46,7 @@ const makeGetVisibleTaps = () => {
     // If we want to filter for taps that offer sparkling water
     if (tapFilters.sparkling) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].sparkling === "yes")
+        .filter(key => filteredTaps[key].sparkling === 'yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;

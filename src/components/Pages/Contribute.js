@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./Pages.module.scss";
+import React from 'react';
+import styles from './Pages.module.scss';
 
 const Contribute = () => {
   return (
