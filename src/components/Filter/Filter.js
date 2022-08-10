@@ -1,9 +1,9 @@
-import React from "react";
-import ReactGA from "react-ga";
-import { isMobile } from "react-device-detect";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
-import styles from "./Filter.module.scss";
+import React from 'react';
+import ReactGA from 'react-ga';
+import { isMobile } from 'react-device-detect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import styles from './Filter.module.scss';
 import {
   OverlayTrigger,
   Popover,
@@ -11,33 +11,33 @@ import {
   Button,
   Row,
   Col
-} from "react-bootstrap";
-import { connect } from "react-redux";
+} from 'react-bootstrap';
+import { connect } from 'react-redux';
 import {
   setToggleState,
   setFilteredTapTypes,
   resetFilterFunction
-} from "../../actions/actions";
-import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
+} from '../../actions/actions';
+import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
 
 export class Filter extends React.Component {
   handleChange(event) {
-    if (event.target.id === "filtered") {
-      this.props.setToggleState("filtered", !this.props.filtered);
-    } else if (event.target.id === "ada") {
-      this.props.setToggleState("handicap", !this.props.handicap);
-    } else if (event.target.id === "sparkling") {
-      this.props.setToggleState("sparkling", !this.props.sparkling);
-    } else if (event.target.id === "openNow") {
-      this.props.setToggleState("openNow", !this.props.openNow);
-    } else console.log("error with toggle");
+    if (event.target.id === 'filtered') {
+      this.props.setToggleState('filtered', !this.props.filtered);
+    } else if (event.target.id === 'ada') {
+      this.props.setToggleState('handicap', !this.props.handicap);
+    } else if (event.target.id === 'sparkling') {
+      this.props.setToggleState('sparkling', !this.props.sparkling);
+    } else if (event.target.id === 'openNow') {
+      this.props.setToggleState('openNow', !this.props.openNow);
+    } else console.log('error with toggle');
     this.handleGA(event.target.id, !this.props[event.target.id]);
   }
 
   handleGA(id, state) {
     ReactGA.event({
       category: `Toolbar`,
-      action: "FilterUpdate",
+      action: 'FilterUpdate',
       label: `${id} = ${state} `
     });
   }
@@ -47,7 +47,7 @@ export class Filter extends React.Component {
       <OverlayTrigger
         trigger="click"
         key="top"
-        placement={isMobile ? "top" : "top-end"}
+        placement={isMobile ? 'top' : 'top-end'}
         overlay={
           <Popover
             className={`${styles.filterPopover} ${
@@ -61,19 +61,19 @@ export class Filter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Public")
+                        this.props.accessTypesHidden.includes('Public')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
-                      onClick={() => this.props.setFilteredTapTypes("Public")}
+                      onClick={() => this.props.setFilteredTapTypes('Public')}
                     >
                       PUBLIC
                       <img
                         className={styles.tapIcon}
                         src={phlaskFilterIcon(
-                          this.props.accessTypesHidden.includes("Public")
-                            ? "disabled"
-                            : "Public",
+                          this.props.accessTypesHidden.includes('Public')
+                            ? 'disabled'
+                            : 'Public',
                           35,
                           35
                         )}
@@ -84,12 +84,12 @@ export class Filter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Private-Shared")
+                        this.props.accessTypesHidden.includes('Private-Shared')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
                       onClick={() =>
-                        this.props.setFilteredTapTypes("Private-Shared")
+                        this.props.setFilteredTapTypes('Private-Shared')
                       }
                     >
                       SHARED
@@ -97,10 +97,10 @@ export class Filter extends React.Component {
                         className={styles.tapIcon}
                         src={phlaskFilterIcon(
                           this.props.accessTypesHidden.includes(
-                            "Private-Shared"
+                            'Private-Shared'
                           )
-                            ? "disabled"
-                            : "Private-Shared",
+                            ? 'disabled'
+                            : 'Private-Shared',
                           35,
                           35
                         )}
@@ -111,19 +111,19 @@ export class Filter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Private")
+                        this.props.accessTypesHidden.includes('Private')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
-                      onClick={() => this.props.setFilteredTapTypes("Private")}
+                      onClick={() => this.props.setFilteredTapTypes('Private')}
                     >
                       PRIVATE
                       <img
                         className={styles.tapIcon}
                         src={phlaskFilterIcon(
-                          this.props.accessTypesHidden.includes("Private")
-                            ? "disabled"
-                            : "Private",
+                          this.props.accessTypesHidden.includes('Private')
+                            ? 'disabled'
+                            : 'Private',
                           35,
                           35
                         )}
@@ -134,21 +134,21 @@ export class Filter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Restricted")
+                        this.props.accessTypesHidden.includes('Restricted')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
                       onClick={() =>
-                        this.props.setFilteredTapTypes("Restricted")
+                        this.props.setFilteredTapTypes('Restricted')
                       }
                     >
                       RESTRICTED
                       <img
                         className={styles.tapIcon}
                         src={phlaskFilterIcon(
-                          this.props.accessTypesHidden.includes("Restricted")
-                            ? "disabled"
-                            : "Restricted",
+                          this.props.accessTypesHidden.includes('Restricted')
+                            ? 'disabled'
+                            : 'Restricted',
                           35,
                           35
                         )}

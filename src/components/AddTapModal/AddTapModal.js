@@ -1,5 +1,5 @@
-import styles from "./AddTapModal.module.scss";
-import React, { Component } from "react";
+import styles from './AddTapModal.module.scss';
+import React, { Component } from 'react';
 import {
   Modal,
   Button,
@@ -7,12 +7,12 @@ import {
   OverlayTrigger,
   Popover,
   Accordion
-} from "react-bootstrap";
-import ImageUploader from "react-images-upload";
-import firebase from "firebase/compat/app";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { isMobile } from "react-device-detect";
+} from 'react-bootstrap';
+import ImageUploader from 'react-images-upload';
+import firebase from 'firebase/compat/app';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { isMobile } from 'react-device-detect';
 
 export class AddTapModal extends Component {
   constructor(props) {
@@ -37,19 +37,19 @@ export class AddTapModal extends Component {
     this.state = {
       pictures: [],
       images: [],
-      address: "",
-      city: "",
-      description: "",
-      accessToTap: "",
-      organization: "",
-      filtration: "",
-      handicapAccessable: "",
-      tapServiceType: "",
-      tapType: "",
-      waterVessleNeeded: "",
-      phlaskStatement: "",
-      normsAndRules: "",
-      dbConnection: "",
+      address: '',
+      city: '',
+      description: '',
+      accessToTap: '',
+      organization: '',
+      filtration: '',
+      handicapAccessable: '',
+      tapServiceType: '',
+      tapType: '',
+      waterVessleNeeded: '',
+      phlaskStatement: '',
+      normsAndRules: '',
+      dbConnection: '',
       count: 0,
       show: false
     };
@@ -66,15 +66,15 @@ export class AddTapModal extends Component {
     // Upload the image with a PUT request
     // Store the image URL in state.images
     const imageType = imageFile.type;
-    const submitUrl = "/submit-image?type=" + imageType;
+    const submitUrl = '/submit-image?type=' + imageType;
 
     return fetch(submitUrl)
       .then(response => response.json())
       .then(data => {
         return fetch(data.putURL, {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": imageFile.type
+            'Content-Type': imageFile.type
           },
           body: imageFile
         }).then(() => {
@@ -158,59 +158,59 @@ export class AddTapModal extends Component {
 
   connectToFirebase() {
     const prod_config = {
-      apiKey: "AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8",
-      authDomain: "phlask-web-map-new-taps.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-new-taps.firebaseio.com",
-      projectId: "phlask-web-map-new-taps",
-      storageBucket: "phlask-web-map-new-taps.appspot.com",
-      messagingSenderId: "673087230724",
-      appId: "1:673087230724:web:2545788342843cccdcf651"
+      apiKey: 'AIzaSyA2E1tiV34Ou6CJU_wzlJtXxwATJXxi6K8',
+      authDomain: 'phlask-web-map-new-taps.firebaseapp.com',
+      databaseURL: 'https://phlask-web-map-new-taps.firebaseio.com',
+      projectId: 'phlask-web-map-new-taps',
+      storageBucket: 'phlask-web-map-new-taps.appspot.com',
+      messagingSenderId: '673087230724',
+      appId: '1:673087230724:web:2545788342843cccdcf651'
     };
 
     const beta_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-beta-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+      apiKey: 'AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc',
+      authDomain: 'phlask-web-map.firebaseapp.com',
+      databaseURL: 'https://phlask-web-map-beta-new.firebaseio.com/',
+      projectId: 'phlask-web-map',
+      storageBucket: 'phlask-web-map.appspot.com',
+      messagingSenderId: '428394983826',
+      appId: '1:428394983826:web:b81abdcfd5af5401e0514b'
     };
 
     const test_config = {
-      apiKey: "AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc",
-      authDomain: "phlask-web-map.firebaseapp.com",
-      databaseURL: "https://phlask-web-map-test-new.firebaseio.com/",
-      projectId: "phlask-web-map",
-      storageBucket: "phlask-web-map.appspot.com",
-      messagingSenderId: "428394983826",
-      appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+      apiKey: 'AIzaSyA1dTfOeX5aXeHViJqiV-mT2iFUaasRcZc',
+      authDomain: 'phlask-web-map.firebaseapp.com',
+      databaseURL: 'https://phlask-web-map-test-new.firebaseio.com/',
+      projectId: 'phlask-web-map',
+      storageBucket: 'phlask-web-map.appspot.com',
+      messagingSenderId: '428394983826',
+      appId: '1:428394983826:web:b81abdcfd5af5401e0514b'
     };
 
     switch (window.location.hostname) {
-      case "phlask.me":
-        return firebase.initializeApp(prod_config, "new");
-      case "beta.phlask.me":
-        return firebase.initializeApp(beta_config, "new");
+      case 'phlask.me':
+        return firebase.initializeApp(prod_config, 'new');
+      case 'beta.phlask.me':
+        return firebase.initializeApp(beta_config, 'new');
       default:
-        return firebase.initializeApp(test_config, "new");
+        return firebase.initializeApp(test_config, 'new');
     }
   }
 
   getCount() {
     this.state.dbConnection
       .database()
-      .ref("/")
-      .once("value")
+      .ref('/')
+      .once('value')
       .then(snapshot => {
         for (let item in snapshot.val()) {
-          if (snapshot.val()[item].access === "WM") {
+          if (snapshot.val()[item].access === 'WM') {
             continue;
           }
-          if (snapshot.val()[item].active === "N") {
+          if (snapshot.val()[item].active === 'N') {
             continue;
           }
-          if (snapshot.val()[item].access === "TrashAcademy") {
+          if (snapshot.val()[item].access === 'TrashAcademy') {
             continue;
           }
           this.setState((prevState, props) => ({
@@ -259,7 +259,7 @@ export class AddTapModal extends Component {
 
       this.state.dbConnection
         .database()
-        .ref("/" + (this.state.count + 1).toString())
+        .ref('/' + (this.state.count + 1).toString())
         .set(newTapData);
     });
   }
@@ -378,7 +378,7 @@ export class AddTapModal extends Component {
 
               <Accordion>
                 <Accordion.Toggle as={Button} eventKey="0">
-                  <h5 style={{ fontSize: "1rem", marginBottom: "10px" }}>
+                  <h5 style={{ fontSize: '1rem', marginBottom: '10px' }}>
                     Additional Information
                   </h5>
                 </Accordion.Toggle>
@@ -601,7 +601,7 @@ export class AddTapModal extends Component {
                 withIcon={true}
                 buttonText="Choose images"
                 onChange={this.onDrop}
-                imgExtension={[".jpg", ".png", ".gif"]}
+                imgExtension={['.jpg', '.png', '.gif']}
                 maxFileSize={5242880}
                 withPreview={true}
               />
@@ -623,7 +623,7 @@ export class AddTapModal extends Component {
 
         <button
           onClick={this.handleShow}
-          className={`${isMobile ? styles.mobileAddButton : ""} ${
+          className={`${isMobile ? styles.mobileAddButton : ''} ${
             styles.addButton
           }`}
         >

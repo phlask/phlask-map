@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const WaterIcon = ({ color = "currentColor" }) => {
+const WaterIcon = ({ color = 'currentColor' }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

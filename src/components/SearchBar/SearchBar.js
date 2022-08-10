@@ -1,24 +1,24 @@
-import React from "react";
-import { isMobile } from "react-device-detect";
-import { connect } from "react-redux";
-import { toggleSearchBar } from "../../actions/actions";
+import React from 'react';
+import { isMobile } from 'react-device-detect';
+import { connect } from 'react-redux';
+import { toggleSearchBar } from '../../actions/actions';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
-} from "react-places-autocomplete";
-import styles from "./SearchBar.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from 'react-places-autocomplete';
+import styles from './SearchBar.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearchLocation,
   faChevronLeft
-} from "@fortawesome/free-solid-svg-icons";
-import TutorialModal from "../TutorialModal/TutorialModal";
+} from '@fortawesome/free-solid-svg-icons';
+import TutorialModal from '../TutorialModal/TutorialModal';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "",
+      address: '',
       refSearchBar: React.createRef(),
       isSearchBarShown: false
     };
@@ -33,7 +33,7 @@ class SearchBar extends React.Component {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => this.props.search(latLng))
-      .catch(error => console.error("Error", error));
+      .catch(error => console.error('Error', error));
   };
 
   openSearch() {
@@ -82,13 +82,13 @@ class SearchBar extends React.Component {
               }) => (
                 <div
                   className={`${styles.searchBarContainer} ${
-                    loading || suggestions.length > 0 ? styles.hasDropdown : ""
+                    loading || suggestions.length > 0 ? styles.hasDropdown : ''
                   }`}
                 >
                   {/* type="search" is only HTML5 compliant */}
                   <input
                     {...getInputProps({
-                      placeholder: "Search For Taps Near..."
+                      placeholder: 'Search For Taps Near...'
                     })}
                     className={`${styles.searchInput} form-control`}
                     type="search"

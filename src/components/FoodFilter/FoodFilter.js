@@ -1,36 +1,36 @@
-import React from "react";
-import { isMobile } from "react-device-detect";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
-import FoodOtherFilterIcon from "../icons/FoodOtherFilterIcon";
-import FoodSchoolFilterIcon from "../icons/FoodSchoolFilterIcon";
-import FoodRecreationFilterIcon from "../icons/FoodRecreationFilterIcon";
-import FoodCongregationFilterIcon from "../icons/FoodCongregationFilterIcon";
-import styles from "../Filter/Filter.module.scss";
+import React from 'react';
+import { isMobile } from 'react-device-detect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import FoodOtherFilterIcon from '../icons/FoodOtherFilterIcon';
+import FoodSchoolFilterIcon from '../icons/FoodSchoolFilterIcon';
+import FoodRecreationFilterIcon from '../icons/FoodRecreationFilterIcon';
+import FoodCongregationFilterIcon from '../icons/FoodCongregationFilterIcon';
+import styles from '../Filter/Filter.module.scss';
 import {
   OverlayTrigger,
   Popover,
   Form,
   Button,
   Row,
-  Col,
-} from "react-bootstrap";
-import { connect } from "react-redux";
+  Col
+} from 'react-bootstrap';
+import { connect } from 'react-redux';
 import {
   setToggleStateFood,
   setFilteredFoodTypes,
-  resetFilterFunction,
-} from "../../actions/actions";
+  resetFilterFunction
+} from '../../actions/actions';
 
 export class FoodFilter extends React.Component {
   handleChange(event) {
-    if (event.target.id === "idRequired") {
-      this.props.setToggleStateFood("idRequired", !this.props.idRequired);
-    } else if (event.target.id === "kidOnly") {
-      this.props.setToggleStateFood("kidOnly", !this.props.kidOnly);
-    } else if (event.target.id === "openNow") {
-      this.props.setToggleStateFood("openNow", !this.props.openNow);
-    } else console.log("error with toggle");
+    if (event.target.id === 'idRequired') {
+      this.props.setToggleStateFood('idRequired', !this.props.idRequired);
+    } else if (event.target.id === 'kidOnly') {
+      this.props.setToggleStateFood('kidOnly', !this.props.kidOnly);
+    } else if (event.target.id === 'openNow') {
+      this.props.setToggleStateFood('openNow', !this.props.openNow);
+    } else console.log('error with toggle');
   }
 
   render() {
@@ -38,7 +38,7 @@ export class FoodFilter extends React.Component {
       <OverlayTrigger
         trigger="click"
         key="top"
-        placement={isMobile ? "top" : "top-end"}
+        placement={isMobile ? 'top' : 'top-end'}
         overlay={
           <Popover
             className={`${styles.filterPopover} ${
@@ -52,18 +52,18 @@ export class FoodFilter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Food Site")
+                        this.props.accessTypesHidden.includes('Food Site')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
                       onClick={() =>
-                        this.props.setFilteredFoodTypes("Food Site")
+                        this.props.setFilteredFoodTypes('Food Site')
                       }
                     >
                       OTHER
                       <FoodOtherFilterIcon
                         disabled={this.props.accessTypesHidden.includes(
-                          "Food Site"
+                          'Food Site'
                         )}
                       />
                     </button>
@@ -71,16 +71,16 @@ export class FoodFilter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("School")
+                        this.props.accessTypesHidden.includes('School')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
-                      onClick={() => this.props.setFilteredFoodTypes("School")}
+                      onClick={() => this.props.setFilteredFoodTypes('School')}
                     >
                       SCHOOL
                       <FoodSchoolFilterIcon
                         disabled={this.props.accessTypesHidden.includes(
-                          "School"
+                          'School'
                         )}
                       ></FoodSchoolFilterIcon>
                     </button>
@@ -88,18 +88,18 @@ export class FoodFilter extends React.Component {
                   <Row className={styles.legendRow}>
                     <button
                       className={
-                        this.props.accessTypesHidden.includes("Charter School")
+                        this.props.accessTypesHidden.includes('Charter School')
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
                       onClick={() =>
-                        this.props.setFilteredFoodTypes("Charter School")
+                        this.props.setFilteredFoodTypes('Charter School')
                       }
                     >
                       RECREATION
                       <FoodRecreationFilterIcon
                         disabled={this.props.accessTypesHidden.includes(
-                          "Charter School"
+                          'Charter School'
                         )}
                       ></FoodRecreationFilterIcon>
                     </button>
@@ -108,19 +108,19 @@ export class FoodFilter extends React.Component {
                     <button
                       className={
                         this.props.accessTypesHidden.includes(
-                          "PHA Community Center"
+                          'PHA Community Center'
                         )
                           ? styles.disabledTapButton
                           : styles.tapButton
                       }
                       onClick={() =>
-                        this.props.setFilteredFoodTypes("PHA Community Center")
+                        this.props.setFilteredFoodTypes('PHA Community Center')
                       }
                     >
                       CONGREGATION
                       <FoodCongregationFilterIcon
                         disabled={this.props.accessTypesHidden.includes(
-                          "PHA Community Center"
+                          'PHA Community Center'
                         )}
                       ></FoodCongregationFilterIcon>
                     </button>
@@ -136,7 +136,7 @@ export class FoodFilter extends React.Component {
                       id="openNow"
                       label=""
                       checked={this.props.openNow}
-                      onClick={(e) => this.handleChange(e)}
+                      onClick={e => this.handleChange(e)}
                       readOnly
                     />
                   </Row>
@@ -148,7 +148,7 @@ export class FoodFilter extends React.Component {
                       id="idRequired"
                       label=""
                       checked={this.props.idRequired}
-                      onClick={(e) => this.handleChange(e)}
+                      onClick={e => this.handleChange(e)}
                       readOnly
                     />
                   </Row>
@@ -160,7 +160,7 @@ export class FoodFilter extends React.Component {
                       id="kidOnly"
                       label=""
                       checked={this.props.kidOnly}
-                      onClick={(e) => this.handleChange(e)}
+                      onClick={e => this.handleChange(e)}
                       readOnly
                     />
                   </Row>
@@ -193,18 +193,18 @@ export class FoodFilter extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   idRequired: state.foodFilters.idRequired,
   kidOnly: state.foodFilters.kidOnly,
   openNow: state.foodFilters.openNow,
   accessTypesHidden: state.foodFilters.accessTypesHidden,
-  showingInfoWindow: state.showingInfoWindow,
+  showingInfoWindow: state.showingInfoWindow
 });
 
 const mapDispatchToProps = {
   setFilteredFoodTypes,
   setToggleStateFood,
-  resetFilterFunction,
+  resetFilterFunction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodFilter);
