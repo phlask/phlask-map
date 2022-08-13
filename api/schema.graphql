@@ -3,17 +3,24 @@ type Example {
   id: Int # fields are columns
 }
 
+type AvailabilityBlock {
+  open: String! # 24-hour formatted time, represented as 4 numbers (ex - 1300)
+  close: String! # 24-hour formatted time, represented as 4 numbers (ex - 1300)
+}
+
 enum Access {
   PUBLIC
   PRIVATE_SHARED
   PRIVATE
   RESTRICTED
+  WM # This is an older access type used for a limited-time event.
+  TRASH_ACADEMY # This is an older access type used for a limited-time event.
 }
 
 enum YesNoUnsure {
   YES
   NO
-  UNSURE
+  UNSURE # This is the default value when setting an argument of this type
 }
 
 interface SharedFields {
@@ -38,9 +45,9 @@ type WaterTap implements SharedFields {
   access: Access!
   name: String!
   address: String!
-  hours: [String] # array of hours of availbility -- each entry is day of week, [Monday Hours, Tuesday Hours, Wednesday...]
+  hours: [AvailabilityBlock] # array of hours of availbility -- each entry is day of week, [Sunday Hours, Monday Hours, Tuesday Hours...]
   service: SELF_SERVE | ASK_PROPRIETOR | UNSURE
-  type: WaterTapTypes
+  type: [WaterTapTypes]
   filtration: YesNoUnsure
   accessible: YesNoUnsure
   sparkling: YesNoUnsure
@@ -61,13 +68,14 @@ enum FoodConsumptionTypes {
     ONSITE
     TAKEAWAY
     DELIVERY
+    UNSURE # This is the default value when setting an argument of this type
 }
 
 type Food implements SharedFields {
   access: FoodAccess!
   name: String!
   address: String!
-  hours: [String] # array of hours of availbility -- each entry is day of week, [Monday Hours, Tuesday Hours, Wednesday...]
+  hours: [AvailabilityBlock] # array of hours of availbility -- each entry is day of week, [Sunday Hours, Monday Hours, Tuesday Hours...]
   consumption: FoodConsumptionTypes
   foodType: [PERISHABLE | NONPERSIHABLE | PREPARED | OTHER]  # idk if this works
   accessible: YesNoUnsure
