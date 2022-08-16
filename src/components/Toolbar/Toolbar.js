@@ -1,5 +1,5 @@
-import React from "react";
-import ReactGA from "react-ga";
+import React from 'react';
+import ReactGA from 'react-ga';
 import {
   togglePhlaskType,
   PHLASK_TYPE_WATER,
@@ -7,21 +7,21 @@ import {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter
-} from "../../actions/actions";
-import { connect } from "react-redux";
-import Filter from "../Filter/Filter";
-import FoodFilter from "../FoodFilter/FoodFilter";
-import styles from "./Toolbar.module.scss";
-import phlaskImg from "../images/PHLASK Button.png";
+} from '../../actions/actions';
+import { connect } from 'react-redux';
+import Filter from '../Filter/Filter';
+import FoodFilter from '../FoodFilter/FoodFilter';
+import styles from './Toolbar.module.scss';
+import phlaskImg from '../images/PHLASK Button.png';
 
-import {ReactComponent as ResourceIcon} from '../icons/ResourceIcon.svg'
-import {ReactComponent as WaterIcon} from '../icons/WaterIcon.svg'
-import {ReactComponent as ContributeIcon} from '../icons/ContributeIcon.svg'
-import { isMobile } from "react-device-detect";
-import { AddResourceModal } from "../AddResourceModal";
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
+import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
+import { isMobile } from 'react-device-detect';
+import { AddResourceModal } from '../AddResourceModal';
 
-import FoodIcon from "../icons/FoodIcon";
-import DesktopWaterIcon from "../icons/DesktopWaterIcon";
+import FoodIcon from '../icons/FoodIcon';
+import DesktopWaterIcon from '../icons/DesktopWaterIcon';
 
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -48,15 +48,15 @@ function getClosest(data, userLocation) {
   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map((org, index) => {
     return {
-      lat: org["lat"],
-      lon: org["lon"],
-      organization: org["organization"],
-      address: org["address"],
+      lat: org['lat'],
+      lon: org['lon'],
+      organization: org['organization'],
+      address: org['address'],
       distance: distance(
-        userLocation["lat"],
-        userLocation["lon"],
-        org["lat"],
-        org["lon"]
+        userLocation['lat'],
+        userLocation['lon'],
+        org['lat'],
+        org['lon']
       ),
       id: index
     };
@@ -64,11 +64,11 @@ function getClosest(data, userLocation) {
   var minDistance = Math.min(...distances.map(d => d.distance));
 
   var closestTap = {
-    organization: "",
-    address: "",
-    lat: "",
-    lon: "",
-    id: ""
+    organization: '',
+    address: '',
+    lat: '',
+    lon: '',
+    id: ''
   };
 
   for (var i = 0; i < distances.length; i++) {
@@ -85,7 +85,7 @@ function getClosest(data, userLocation) {
 }
 
 function getCoordinates() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
@@ -96,23 +96,24 @@ function Toolbar(props) {
   function toolbarButtonStyle(theme) {
     return {
       '& .MuiBottomNavigationAction-root': {
-        "margin-top": "10px",
-        "margin-bottom": "5px"
+        'margin-top': '10px',
+        'margin-bottom': '5px'
       },
       '& .Mui-selected': {
         // Resetting to the default value set by MUI
         // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L39
-        color: "#2D3748"
+        color: '#2D3748'
       },
       '& .MuiBottomNavigationAction-label': {
-        "padding-top": "2px",
-        color: "#2D3748"
+        'padding-top': '2px',
+        color: '#2D3748'
       },
       '& .MuiBottomNavigationAction-label.Mui-selected': {
         // Resetting to the default value set by MUI
         // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L62
-        "font-size": theme => theme.typography.pxToRem(12)
-      }}
+        'font-size': theme => theme.typography.pxToRem(12)
+      }
+    };
   }
 
   function switchType(type) {
@@ -125,7 +126,7 @@ function Toolbar(props) {
   function handleGA(type) {
     ReactGA.event({
       category: `Toolbar`,
-      action: "MapChangedTo",
+      action: 'MapChangedTo',
       label: `${type}`
     });
   }
@@ -154,15 +155,16 @@ function Toolbar(props) {
 
   return (
     <>
-    ${!isMobile ? (
-    <div
-      className={`${styles.toolbar} ${
-        isMobile ? styles.mobileToolbar : styles.desktopToolbar
-      }`}
-    >
-      {!isMobile && (
-        <h3
-          className={`
+      $
+      {!isMobile ? (
+        <div
+          className={`${styles.toolbar} ${
+            isMobile ? styles.mobileToolbar : styles.desktopToolbar
+          }`}
+        >
+          {!isMobile && (
+            <h3
+              className={`
             ${styles.title}
             ${
               props.phlaskType === PHLASK_TYPE_WATER
@@ -170,63 +172,90 @@ function Toolbar(props) {
                 : styles.foodTitle
             }
           `}
-        >
-          {props.phlaskType === PHLASK_TYPE_WATER ? "Water Map" : "Food Map"}
-        </h3>
-      )}
-      <div className={styles.filterButton}>
-        <button aria-label="show filters">
-          {props.phlaskType === PHLASK_TYPE_WATER ? <Filter /> : <FoodFilter />}
-        </button>
-      </div>
-      <button
-        className={`${styles.toolbarButton} ${
-          styles.waterButton
-        } ${props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled}`}
-        onClick={() => {
-          switchType(PHLASK_TYPE_WATER);
-        }}
-      >
-        <DesktopWaterIcon />
-      </button>
-      {isMobile && (
-        <button className={styles.closestTapButton} onClick={setClosest}>
-          <img
-            className="img"
-            src={phlaskImg}
-            alt=""
-          ></img>
-        </button>
-      )}
-      <button
-        className={`${styles.toolbarButton} ${
-          styles.foodButton
-        } ${props.phlaskType === PHLASK_TYPE_WATER && styles.disabled}`}
-        onClick={() => {
-          switchType(PHLASK_TYPE_FOOD);
-        }}
-      >
-        <FoodIcon />
-      </button>
-      <AddResourceModal />
-    </div>
-    ): (
-      // MOBILE VERSION OF THE TOOLBAR (V2)
-      <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, pb: "25px", pt: "10px", bgcolor: "white"}}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
+            >
+              {props.phlaskType === PHLASK_TYPE_WATER
+                ? 'Water Map'
+                : 'Food Map'}
+            </h3>
+          )}
+          <div className={styles.filterButton}>
+            <button aria-label="show filters">
+              {props.phlaskType === PHLASK_TYPE_WATER ? (
+                <Filter />
+              ) : (
+                <FoodFilter />
+              )}
+            </button>
+          </div>
+          <button
+            className={`${styles.toolbarButton} ${styles.waterButton} ${
+              props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled
+            }`}
+            onClick={() => {
+              switchType(PHLASK_TYPE_WATER);
+            }}
+          >
+            <DesktopWaterIcon />
+          </button>
+          {isMobile && (
+            <button className={styles.closestTapButton} onClick={setClosest}>
+              <img className="img" src={phlaskImg} alt=""></img>
+            </button>
+          )}
+          <button
+            className={`${styles.toolbarButton} ${styles.foodButton} ${
+              props.phlaskType === PHLASK_TYPE_WATER && styles.disabled
+            }`}
+            onClick={() => {
+              switchType(PHLASK_TYPE_FOOD);
+            }}
+          >
+            <FoodIcon />
+          </button>
+          <AddResourceModal />
+        </div>
+      ) : (
+        // MOBILE VERSION OF THE TOOLBAR (V2)
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            pb: '25px',
+            pt: '10px',
+            bgcolor: 'white'
           }}
-
         >
-          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label="Resources" icon={<ResourceIcon className={styles.resourceButton} />} />
-          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label={<span>PHL<b>ASK</b></span>} icon={<WaterIcon className={styles.PHLASKButton} />} />
-          <BottomNavigationAction sx={(theme) => toolbarButtonStyle(theme)} label="Contribute" icon={<ContributeIcon className={styles.contributeButton} />} />
-        </BottomNavigation>
-      </Box>
-    )}
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              sx={theme => toolbarButtonStyle(theme)}
+              label="Resources"
+              icon={<ResourceIcon className={styles.resourceButton} />}
+            />
+            <BottomNavigationAction
+              sx={theme => toolbarButtonStyle(theme)}
+              label={
+                <span>
+                  PHL<b>ASK</b>
+                </span>
+              }
+              icon={<WaterIcon className={styles.PHLASKButton} />}
+            />
+            <BottomNavigationAction
+              sx={theme => toolbarButtonStyle(theme)}
+              label="Contribute"
+              icon={<ContributeIcon className={styles.contributeButton} />}
+            />
+          </BottomNavigation>
+        </Box>
+      )}
     </>
   );
 }

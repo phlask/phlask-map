@@ -1,13 +1,13 @@
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import FilterDrawer from "../FilterDrawer/FilterDrawer";
-import { ReactComponent as MenuIcon } from "../icons/HamburgerMenu.svg";
-import { ReactComponent as PhlaskIcon } from "../icons/PHLASK_v2.svg";
-import { ReactComponent as SearchIcon } from "../icons/SearchIcon.svg";
-import { ReactComponent as SlidersIcon } from "../icons/SlidersIcon.svg";
-import SideBar from "../SideBar/SideBar";
+import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
+import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
+import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
+import SideBar from '../SideBar/SideBar';
 
 export default function Head() {
   const dispatch = useDispatch();
@@ -23,14 +23,14 @@ export default function Head() {
 
   const toggleSearchBar = () => {
     dispatch({
-      type: "TOGGLE_SEARCH_BAR"
+      type: 'TOGGLE_SEARCH_BAR'
       // isShown: !isSearchShown
     });
   };
 
   const toggleFilterModal = () => {
     dispatch({
-      type: "TOGGLE_FILTER_MODAL",
+      type: 'TOGGLE_FILTER_MODAL',
       isShown: !isFilterShown
     });
   };
@@ -57,19 +57,19 @@ export default function Head() {
       <AppBar>
         <Toolbar
           sx={{
-            backgroundColor: "#fff",
-            color: "#fff",
+            backgroundColor: '#fff',
+            color: '#fff',
             boxShadow:
-              "0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 0 rgba(0, 0, 0, 0.24)",
-            display: "flex"
+              '0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 0 rgba(0, 0, 0, 0.24)',
+            display: 'flex'
           }}
         >
           <IconButton
             onClick={showSidebar}
             sx={{
-              position: "relative",
-              left: "-10px",
-              right: "6px"
+              position: 'relative',
+              left: '-10px',
+              right: '6px'
             }}
           >
             <MenuIcon />
@@ -77,8 +77,8 @@ export default function Head() {
           <Link to="/" onClick={() => setShowMapControls(true)}>
             <PhlaskIcon
               sx={{
-                position: "relative",
-                top: "-10px"
+                position: 'relative',
+                top: '-10px'
               }}
             />
           </Link>
@@ -86,15 +86,15 @@ export default function Head() {
           {showMapControls ? (
             <Box
               sx={{
-                position: "relative",
-                marginLeft: "auto"
+                position: 'relative',
+                marginLeft: 'auto'
               }}
             >
               <IconButton onClick={toggleSearchBar}>
                 <SearchIcon />
               </IconButton>
               <IconButton
-                sx={{ marginRight: "-8px" }}
+                sx={{ marginRight: '-8px' }}
                 onClick={toggleFilterModal}
               >
                 <SlidersIcon />

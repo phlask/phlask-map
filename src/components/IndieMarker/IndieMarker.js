@@ -1,27 +1,27 @@
-import React from "react";
-import { Marker } from "google-maps-react";
-import { connect } from "react-redux";
+import React from 'react';
+import { Marker } from 'google-maps-react';
+import { connect } from 'react-redux';
 import {
   getTaps,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter,
-} from "../../actions/actions";
-import makeGetVisibleTaps from "../../selectors/tapSelectors";
-import "./IndieMarker.css";
-import phlaskMarkerIcon from "../icons/PhlaskMarkerIcon";
-import phlaskFilterIcon from "../icons/PhlaskFilterIcon";
-import { isMobile } from "react-device-detect";
+  setMapCenter
+} from '../../actions/actions';
+import makeGetVisibleTaps from '../../selectors/tapSelectors';
+import './IndieMarker.css';
+import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
+import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import { isMobile } from 'react-device-detect';
 
 class IndieMarker extends React.Component {
   state = {
-    icon: "",
+    icon: '',
     shouldUpdate: true,
     markerVisibility: {
       visibility: this.props.visibleTaps.includes(this.props.tap)
-        ? "visible"
-        : "hidden",
-    },
+        ? 'visible'
+        : 'hidden'
+    }
   };
 
   componentWillUnmount() {
@@ -51,11 +51,11 @@ class IndieMarker extends React.Component {
   componentDidMount() {
     this.setState(
       {
-        icon: this.getIcon(this.props.tap.access),
+        icon: this.getIcon(this.props.tap.access)
       },
       () => {
         this.setState({
-          shouldUpdate: false,
+          shouldUpdate: false
         });
       }
     );
@@ -64,21 +64,21 @@ class IndieMarker extends React.Component {
   getIcon(access, isForSelection = false) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
-        case "Public":
-        case "Private-Shared":
-        case "Private":
-        case "Restricted":
-        case "Semi-public":
+        case 'Public':
+        case 'Private-Shared':
+        case 'Private':
+        case 'Restricted':
+        case 'Semi-public':
           return !isForSelection
             ? { url: phlaskMarkerIcon(access, 48, 48) }
             : phlaskFilterIcon(access, 35, 35);
-        case "TrashAcademy":
-          return "https://i.imgur.com/fXTeEKL.png";
+        case 'TrashAcademy':
+          return 'https://i.imgur.com/fXTeEKL.png';
         default:
-          return "https://i.imgur.com/kKXG3TO.png";
+          return 'https://i.imgur.com/kKXG3TO.png';
       }
     } else {
-      return "https://i.imgur.com/kKXG3TO.png";
+      return 'https://i.imgur.com/kKXG3TO.png';
     }
   }
 
@@ -97,11 +97,11 @@ class IndieMarker extends React.Component {
       let modalHeight = 0;
       try {
         modalHeight = document.getElementById(
-          "tap-info-container-mobile"
+          'tap-info-container-mobile'
         ).offsetHeight;
       } catch (error) {
         console.log(
-          "There was an error getting element in IndieMarker. This was lazily fixed for now."
+          'There was an error getting element in IndieMarker. This was lazily fixed for now.'
         );
       }
       const offsety = Math.floor(modalHeight / 2 - 20);
@@ -155,7 +155,7 @@ class IndieMarker extends React.Component {
             handicap={this.props.tap.handicap}
             service={this.props.tap.service}
             sparkling={
-              "sparkling" in this.props.tap ? this.props.tap.sparkling : "no"
+              'sparkling' in this.props.tap ? this.props.tap.sparkling : 'no'
             }
             tap_type={this.props.tap.tap_type}
             norms_rules={this.props.tap.norms_rules}
@@ -186,7 +186,7 @@ const makeMapStateToProps = () => {
       // handicap: state.tapFilters.handicap,
       accessTypesHidden: state.tapFilters.accessTypesHidden,
       allTaps: state.allTaps,
-      mapCenter: state.mapCenter,
+      mapCenter: state.mapCenter
     };
   };
   return mapStateToProps;
@@ -196,7 +196,7 @@ const mapDispatchToProps = {
   getTaps,
   toggleInfoWindow,
   setSelectedPlace,
-  setMapCenter,
+  setMapCenter
 };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(IndieMarker);

@@ -1,33 +1,33 @@
-import React from "react";
-import { Marker } from "google-maps-react";
-import { connect } from "react-redux";
+import React from 'react';
+import { Marker } from 'google-maps-react';
+import { connect } from 'react-redux';
 import {
   getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../../actions/actions";
-import makeGetVisibleTaps from "../../selectors/foodOrgSelectors";
-import foodIcon from "../images/food-marker-icons/food-site.png";
-import foodOtherMarkerIcon from "../icons/FoodOtherMarkerIcon";
-import foodSchoolMarkerIcon from "../icons/FoodSchoolMarkerIcon";
-import foodRecreationMarkerIcon from "../icons/FoodRecreationMarkerIcon";
-import foodCongregationMarkerIcon from "../icons/FoodCongregationMarkerIcon";
-import FoodOtherFilterIcon from "../icons/FoodOtherFilterIcon";
-import FoodSchoolFilterIcon from "../icons/FoodSchoolFilterIcon";
-import FoodRecreationFilterIcon from "../icons/FoodRecreationFilterIcon";
-import FoodCongregationFilterIcon from "../icons/FoodCongregationFilterIcon";
-import "../IndieMarker/IndieMarker.css";
-import { isMobile } from "react-device-detect";
+} from '../../actions/actions';
+import makeGetVisibleTaps from '../../selectors/foodOrgSelectors';
+import foodIcon from '../images/food-marker-icons/food-site.png';
+import foodOtherMarkerIcon from '../icons/FoodOtherMarkerIcon';
+import foodSchoolMarkerIcon from '../icons/FoodSchoolMarkerIcon';
+import foodRecreationMarkerIcon from '../icons/FoodRecreationMarkerIcon';
+import foodCongregationMarkerIcon from '../icons/FoodCongregationMarkerIcon';
+import FoodOtherFilterIcon from '../icons/FoodOtherFilterIcon';
+import FoodSchoolFilterIcon from '../icons/FoodSchoolFilterIcon';
+import FoodRecreationFilterIcon from '../icons/FoodRecreationFilterIcon';
+import FoodCongregationFilterIcon from '../icons/FoodCongregationFilterIcon';
+import '../IndieMarker/IndieMarker.css';
+import { isMobile } from 'react-device-detect';
 
 class IndieMarker extends React.Component {
   state = {
-    icon: "",
+    icon: '',
     shouldUpdate: true,
     markerVisibility: {
       visibility: this.props.visibleTaps.includes(this.props.org)
-        ? "visible"
-        : "hidden"
+        ? 'visible'
+        : 'hidden'
     }
   };
 
@@ -50,7 +50,6 @@ class IndieMarker extends React.Component {
 
   componentDidUpdate(prevProps) {
     // console.log("Did Update");
-
     // if(this.props.visibleTaps === prevProps.visibleTaps){
     //   this.setState(this.getIcon(this.props.tap.access))
     // }
@@ -72,25 +71,25 @@ class IndieMarker extends React.Component {
   getIcon(access, isForSelection = false) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
-        case "Food Site":
+        case 'Food Site':
           return !isForSelection ? (
             { url: foodOtherMarkerIcon(48, 48) }
           ) : (
             <FoodOtherFilterIcon />
           );
-        case "School":
+        case 'School':
           return !isForSelection ? (
             { url: foodSchoolMarkerIcon(48, 48) }
           ) : (
             <FoodSchoolFilterIcon />
           );
-        case "Charter School":
+        case 'Charter School':
           return !isForSelection ? (
             { url: foodRecreationMarkerIcon(48, 48) }
           ) : (
             <FoodRecreationFilterIcon />
           );
-        case "PHA Community Center":
+        case 'PHA Community Center':
           return !isForSelection ? (
             { url: foodCongregationMarkerIcon(48, 48) }
           ) : (
@@ -120,8 +119,9 @@ class IndieMarker extends React.Component {
       );
       const offsetx = 0;
       // offset by half the height of modal minus height of the marker icon
-      const modalHeight = document.getElementById("tap-info-container-mobile")
-        .offsetHeight;
+      const modalHeight = document.getElementById(
+        'tap-info-container-mobile'
+      ).offsetHeight;
       const offsety = Math.floor(modalHeight / 2 - 20);
       var scale = Math.pow(2, this.props.map.getZoom());
       var worldCoordinateCenter = this.props.map
@@ -167,8 +167,8 @@ class IndieMarker extends React.Component {
             organization={this.props.org.organization}
             address={this.props.org.address}
             hours={this.props.org.hours}
-            idRequired={this.props.org.id_required === "yes" ? true : false}
-            kidOnly={this.props.org.kid_only === "yes" ? true : false}
+            idRequired={this.props.org.id_required === 'yes' ? true : false}
+            kidOnly={this.props.org.kid_only === 'yes' ? true : false}
             description={this.props.org.description}
             img={this.props.org.images}
             onClick={this.onMarkerClick.bind(this)}

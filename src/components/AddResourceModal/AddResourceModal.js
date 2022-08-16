@@ -1,30 +1,30 @@
-import styles from "./AddResourceModal.module.scss";
-import React, { Component } from "react";
+import styles from './AddResourceModal.module.scss';
+import React, { Component } from 'react';
 import {
   Modal,
   Button,
   Form,
   OverlayTrigger,
   Popover,
-  Accordion,
-} from "react-bootstrap";
-import ImageUploader from "react-images-upload";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { isMobile } from "react-device-detect";
+  Accordion
+} from 'react-bootstrap';
+import ImageUploader from 'react-images-upload';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { isMobile } from 'react-device-detect';
 // eslint-disable-next-line import/no-unresolved
-import ChooseResource from "./ChooseResource";
+import ChooseResource from './ChooseResource';
 // eslint-disable-next-line import/no-unresolved
-import ShareSocials from "./ShareSocials";
+import ShareSocials from './ShareSocials';
 // eslint-disable-next-line import/no-unresolved
-import AddFood from "./AddFood";
+import AddFood from './AddFood';
 // eslint-disable-next-line import/no-unresolved
-import AddBathroom from "./AddBathroom";
+import AddBathroom from './AddBathroom';
 // eslint-disable-next-line import/no-unresolved
-import AddForaging from "./AddForaging";
+import AddForaging from './AddForaging';
 // eslint-disable-next-line import/no-unresolved
-import AddWaterTap from "./AddWaterTap";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import AddWaterTap from './AddWaterTap';
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -60,30 +60,30 @@ export class AddResourceModal extends Component {
     this.state = {
       pictures: [],
       images: [],
-      name: "",
-      access: "",
-      address: "",
-      website: "",
-      description: "",
-      organization: "",
-      tapServiceType: "",
-      tapType: "",
-      phlaskStatement: "",
-      normsAndRules: "",
+      name: '',
+      access: '',
+      address: '',
+      website: '',
+      description: '',
+      organization: '',
+      tapServiceType: '',
+      tapType: '',
+      phlaskStatement: '',
+      normsAndRules: '',
       filtration: false,
       handicapAccessable: false,
       waterVesselNeeded: false,
       idRequired: false,
       childrenOnly: false,
-      dbConnection: "",
+      dbConnection: '',
       count: 0,
       show: false,
-      formStep: "chooseResource",
+      formStep: 'chooseResource',
       // ADD FOOD MODAL FIELDS
-      consumptionType: "",
-      foodType: "",
+      consumptionType: '',
+      foodType: '',
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: "",
+      foragingFoodType: ''
     };
   }
 
@@ -95,7 +95,7 @@ export class AddResourceModal extends Component {
 
   onDrop(picture) {
     this.setState({
-      pictures: picture,
+      pictures: picture
     });
   }
 
@@ -104,17 +104,17 @@ export class AddResourceModal extends Component {
     // Upload the image with a PUT request
     // Store the image URL in state.images
     const imageType = imageFile.type;
-    const submitUrl = "/submit-image?type=" + imageType;
+    const submitUrl = '/submit-image?type=' + imageType;
 
     return fetch(submitUrl)
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         return fetch(data.putURL, {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": imageFile.type,
+            'Content-Type': imageFile.type
           },
-          body: imageFile,
+          body: imageFile
         }).then(() => {
           return data.getURL;
         });
@@ -124,92 +124,92 @@ export class AddResourceModal extends Component {
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value,
+      name: e.target.value
     });
   }
 
   onChangeAccess(e) {
     this.setState({
-      access: e.target.value,
+      access: e.target.value
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target ? e.target.value : e,
+      address: e.target ? e.target.value : e
     });
   }
 
   onChangeWebsite(e) {
     this.setState({
-      website: e.target.value,
+      website: e.target.value
     });
   }
 
   onChangeDescription(e) {
     this.setState({
-      description: e.target.value,
+      description: e.target.value
     });
   }
 
   onChangeOrganization(e) {
     // console.log("ORGANIZATION CHANGE TO " + e.target.value)
     this.setState({
-      organization: e.target.value,
+      organization: e.target.value
     });
   }
 
   onChangeTapServiceType(e) {
     this.setState({
-      tapServiceType: e.target.value,
+      tapServiceType: e.target.value
     });
   }
 
   onChangeTapType(e) {
     this.setState({
-      tapType: e.target.value,
+      tapType: e.target.value
     });
   }
 
   onChangeFiltration(e) {
     this.setState({
-      filtration: e.target.checked,
+      filtration: e.target.checked
     });
   }
 
   onChangeHandicapAccess(e) {
     this.setState({
-      handicapAccessable: e.target.checked,
+      handicapAccessable: e.target.checked
     });
   }
 
   onChangeWaterVesselNeeded(e) {
     this.setState({
-      waterVesselNeeded: e.target.checked,
+      waterVesselNeeded: e.target.checked
     });
   }
 
   onChangeIdRequired(e) {
     this.setState({
-      idRequired: e.target.checked,
+      idRequired: e.target.checked
     });
   }
 
   onChangeChildrenOnly(e) {
     this.setState({
-      childrenOnly: e.target.checked,
+      childrenOnly: e.target.checked
     });
   }
 
   onChangePhlaskStatement(e) {
     this.setState({
-      phlaskStatement: e.target.value,
+      phlaskStatement: e.target.value
     });
   }
 
   onChangeNormsAndRules(e) {
     this.setState({
-      normsAndRules: e.target.value,
+      normsAndRules: e.target.value
     });
   }
 
@@ -218,13 +218,13 @@ export class AddResourceModal extends Component {
   onChangeConsumptionType(e) {
     // console.log("CONSUMPTION CHANGE TO " + e.target.value)
     this.setState({
-      consumptionType: e.target.value,
+      consumptionType: e.target.value
     });
   }
 
   onChangeFoodType(e) {
     this.setState({
-      foodType: e.target.value,
+      foodType: e.target.value
     });
   }
 
@@ -232,14 +232,14 @@ export class AddResourceModal extends Component {
 
   onChangeForagingFoodType(e) {
     this.setState({
-      foragingFoodType: e.target.value,
+      foragingFoodType: e.target.value
     });
   }
 
   onChangeDbConnection(connection) {
     this.setState(
       {
-        dbConnection: connection,
+        dbConnection: connection
       },
       () => {
         this.getCount();
@@ -257,19 +257,19 @@ export class AddResourceModal extends Component {
     // .ref("/")
     // .once("value")
     // .then(snapshot => {
-    onValue(ref(database, "/"), (snapshot) => {
+    onValue(ref(database, '/'), snapshot => {
       for (let item in snapshot.val()) {
-        if (snapshot.val()[item].access === "WM") {
+        if (snapshot.val()[item].access === 'WM') {
           continue;
         }
-        if (snapshot.val()[item].active === "N") {
+        if (snapshot.val()[item].active === 'N') {
           continue;
         }
-        if (snapshot.val()[item].access === "TrashAcademy") {
+        if (snapshot.val()[item].access === 'TrashAcademy') {
           continue;
         }
         this.setState((prevState, props) => ({
-          count: prevState.count + 1,
+          count: prevState.count + 1
         }));
       }
     });
@@ -279,11 +279,11 @@ export class AddResourceModal extends Component {
     e.preventDefault();
     var upload_promises = [];
     // Upload images
-    this.state.pictures.forEach((picture) => {
+    this.state.pictures.forEach(picture => {
       upload_promises.push(this.submitImage(picture));
     });
 
-    return Promise.all(upload_promises).then((images) => {
+    return Promise.all(upload_promises).then(images => {
       // All image uploads completed, loading tap record
 
       /* Easier to construct one new data object than to
@@ -314,11 +314,11 @@ export class AddResourceModal extends Component {
         foraging_food_type: this.state.foragingFoodType,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules,
+        norms_rules: this.state.normsAndRules
       };
 
       const database = getDatabase(this.state.dbConnection);
-      set(ref(database, "/" + (this.state.count + 1).toString()), newData);
+      set(ref(database, '/' + (this.state.count + 1).toString()), newData);
     });
   }
 
@@ -332,30 +332,30 @@ export class AddResourceModal extends Component {
     const resetState = {
       pictures: [],
       images: [],
-      name: "",
-      access: "",
-      address: "",
-      website: "",
-      description: "",
-      organization: "",
-      tapServiceType: "",
-      tapType: "",
-      phlaskStatement: "",
-      normsAndRules: "",
+      name: '',
+      access: '',
+      address: '',
+      website: '',
+      description: '',
+      organization: '',
+      tapServiceType: '',
+      tapType: '',
+      phlaskStatement: '',
+      normsAndRules: '',
       filtration: false,
       handicapAccessable: false,
       waterVesselNeeded: false,
       idRequired: false,
       childrenOnly: false,
-      dbConnection: "",
+      dbConnection: '',
       count: 0,
       show: false,
-      formStep: "chooseResource",
+      formStep: 'chooseResource',
       // ADD FOOD MODAL FIELDS
-      consumptionType: "",
-      foodType: "",
+      consumptionType: '',
+      foodType: '',
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: "",
+      foragingFoodType: ''
     };
     this.setState(resetState);
   }
@@ -368,14 +368,14 @@ export class AddResourceModal extends Component {
           onHide={this.handleClose}
           className={styles.modal}
         >
-          {this.state.formStep === "chooseResource" && (
+          {this.state.formStep === 'chooseResource' && (
             <ChooseResource setFormStep={this.onChangeFormStep} />
           )}
 
-          {this.state.formStep === "addWaterTap" && (
+          {this.state.formStep === 'addWaterTap' && (
             <AddWaterTap
-              prev={() => this.onChangeFormStep("chooseResource")}
-              next={() => this.onChangeFormStep("shareSocials")}
+              prev={() => this.onChangeFormStep('chooseResource')}
+              next={() => this.onChangeFormStep('shareSocials')}
               onSubmit={this.onSubmit}
               onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
@@ -410,10 +410,10 @@ export class AddResourceModal extends Component {
             />
           )}
 
-          {this.state.formStep === "addFood" && (
+          {this.state.formStep === 'addFood' && (
             <AddFood
-              prev={() => this.onChangeFormStep("chooseResource")}
-              next={() => this.onChangeFormStep("shareSocials")}
+              prev={() => this.onChangeFormStep('chooseResource')}
+              next={() => this.onChangeFormStep('shareSocials')}
               onSubmit={this.onSubmit}
               onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
@@ -444,10 +444,10 @@ export class AddResourceModal extends Component {
             />
           )}
 
-          {this.state.formStep === "addBathroom" && (
+          {this.state.formStep === 'addBathroom' && (
             <AddBathroom
-              prev={() => this.onChangeFormStep("chooseResource")}
-              next={() => this.onChangeFormStep("shareSocials")}
+              prev={() => this.onChangeFormStep('chooseResource')}
+              next={() => this.onChangeFormStep('shareSocials')}
               onSubmit={this.onSubmit}
               onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
@@ -468,10 +468,10 @@ export class AddResourceModal extends Component {
             />
           )}
 
-          {this.state.formStep === "addForaging" && (
+          {this.state.formStep === 'addForaging' && (
             <AddForaging
-              prev={() => this.onChangeFormStep("chooseResource")}
-              next={() => this.onChangeFormStep("shareSocials")}
+              prev={() => this.onChangeFormStep('chooseResource')}
+              next={() => this.onChangeFormStep('shareSocials')}
               onSubmit={this.onSubmit}
               onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}
@@ -496,12 +496,12 @@ export class AddResourceModal extends Component {
             />
           )}
 
-          {this.state.formStep === "shareSocials" && <ShareSocials />}
+          {this.state.formStep === 'shareSocials' && <ShareSocials />}
         </Modal>
 
         <button
           onClick={this.handleShow}
-          className={`${isMobile ? styles.mobileAddButton : ""} ${
+          className={`${isMobile ? styles.mobileAddButton : ''} ${
             styles.addButton
           }`}
           data-cy="AddResourceButton"

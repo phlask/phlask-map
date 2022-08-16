@@ -56,7 +56,9 @@ function AddBathroom({
         <Form
           onSubmit={e => {
             e.preventDefault();
-            onSubmit(e).then(() => {next()});
+            onSubmit(e).then(() => {
+              next();
+            });
           }}
         >
           <SharedFormFields
@@ -87,19 +89,19 @@ function AddBathroom({
 
           <Accordion>
             <Accordion.Item eventKey="0">
-            <Accordion.Header className={styles.modalFormLabel}>
-              Additional Information
-            </Accordion.Header>
-            <Accordion.Body>
-              <div>
-                <SharedAccordionFields
-                  phlaskStatement={phlaskStatement}
-                  onPhlaskStatementChange={onPhlaskStatementChange}
-                  normsAndRules={normsAndRules}
-                  onNormsAndRulesChange={onNormsAndRulesChange}
-                />
-              </div>
-            </Accordion.Body>
+              <Accordion.Header className={styles.modalFormLabel}>
+                Additional Information
+              </Accordion.Header>
+              <Accordion.Body>
+                <div>
+                  <SharedAccordionFields
+                    phlaskStatement={phlaskStatement}
+                    onPhlaskStatementChange={onPhlaskStatementChange}
+                    normsAndRules={normsAndRules}
+                    onNormsAndRulesChange={onNormsAndRulesChange}
+                  />
+                </div>
+              </Accordion.Body>
             </Accordion.Item>
           </Accordion>
 

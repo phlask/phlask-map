@@ -14,24 +14,24 @@ export const connectToFirebase = (hostname, resourceType) => {
 
   let environment;
 
-  if (hostname === "phlask.me") {
-    environment = "prod";
-  } else if (hostname === "beta.phlask.me") {
-    environment = "beta";
+  if (hostname === 'phlask.me') {
+    environment = 'prod';
+  } else if (hostname === 'beta.phlask.me') {
+    environment = 'beta';
   } else {
-    environment = "test";
+    environment = 'test';
   }
 
   const firebaseConfig = {
-    apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
-    authDomain: "phlask-web-map.firebaseapp.com",
+    apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
+    authDomain: 'phlask-web-map.firebaseapp.com',
     databaseURL: `https://phlask-web-map-${environment}-${resourceType}-verify.firebaseio.com`,
-    projectId: "phlask-web-map-new-taps",
-    storageBucket: "phlask-web-map.appspot.com",
-    messagingSenderId: "428394983826",
-    appId: "1:428394983826:web:b81abdcfd5af5401e0514b"
+    projectId: 'phlask-web-map-new-taps',
+    storageBucket: 'phlask-web-map.appspot.com',
+    messagingSenderId: '428394983826',
+    appId: '1:428394983826:web:b81abdcfd5af5401e0514b'
   };
 
   // return firebase.initializeApp(firebaseConfig, "new");
-  return initializeApp(firebaseConfig, "new");
+  return initializeApp(firebaseConfig, 'new');
 };

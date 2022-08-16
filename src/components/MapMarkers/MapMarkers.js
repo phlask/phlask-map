@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Marker } from "google-maps-react";
-import IndieMarker from "../IndieMarker/IndieMarker";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Marker } from 'google-maps-react';
+import IndieMarker from '../IndieMarker/IndieMarker';
+import { connect } from 'react-redux';
 import {
   getTaps,
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../../actions/actions";
-import makeGetVisibleTaps from "../../selectors/tapSelectors";
+} from '../../actions/actions';
+import makeGetVisibleTaps from '../../selectors/tapSelectors';
 
 export class MapMarkers extends Component {
   state = {
@@ -38,23 +38,23 @@ export class MapMarkers extends Component {
   getIcon(access) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
-        case "Public":
-          return require("../images/tap-marker-icons/Public.png");
-        case "Private-Shared":
-          return require("../images/tap-marker-icons/Shared.png");
-        case "Private":
-          return require("../images/tap-marker-icons/Private.png");
-        case "Restricted":
-          return require("../images/tap-marker-icons/Restricted.png");
-        case "Semi-public":
-          return require("../images/tap-marker-icons/Shared.png");
-        case "TrashAcademy":
-          return "https://i.imgur.com/fXTeEKL.png";
+        case 'Public':
+          return require('../images/tap-marker-icons/Public.png');
+        case 'Private-Shared':
+          return require('../images/tap-marker-icons/Shared.png');
+        case 'Private':
+          return require('../images/tap-marker-icons/Private.png');
+        case 'Restricted':
+          return require('../images/tap-marker-icons/Restricted.png');
+        case 'Semi-public':
+          return require('../images/tap-marker-icons/Shared.png');
+        case 'TrashAcademy':
+          return 'https://i.imgur.com/fXTeEKL.png';
         default:
-          return "https://i.imgur.com/kKXG3TO.png";
+          return 'https://i.imgur.com/kKXG3TO.png';
       }
     } else {
-      return "https://i.imgur.com/kKXG3TO.png";
+      return 'https://i.imgur.com/kKXG3TO.png';
     }
   }
 
@@ -73,7 +73,7 @@ export class MapMarkers extends Component {
             map={this.props.map}
             google={this.props.google}
             key="current_pos"
-            name={"Current Pos"}
+            name={'Current Pos'}
             position={this.props.mapCenter}
           />
           {this.props.visibleTaps.map((tap, index) => (
