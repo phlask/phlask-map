@@ -70,6 +70,8 @@ export const getTapsSuccess = (allTaps) => ({
 export const getTaps = () => (dispatch) => {
   const app = initializeApp(waterConfig, "water");
   const database = getDatabase(app);
+  console.log("running getTaps from action.js");
+
   return onValue(
     ref(database, "/"),
     (snapshot) => {
@@ -105,6 +107,9 @@ export const getFoodSuccess = (allFoodOrgs) => ({
 export const getFoodOrgs = () => (dispatch) => {
   const app = initializeApp(foodConfig, "food");
   const database = getDatabase(app);
+
+  console.log("running getFoodOrgs map");
+
   return onValue(ref(database, "/"), (snapshot) => {
     const snapshotVal = snapshot.val();
     var allFoodOrgs = [];
@@ -127,12 +132,34 @@ export const getForagingTaps = () => (dispatch) => {
   const database = getDatabase(app);
   return onValue(ref(database, "/"), (snapshot) => {
     const snapshotVal = snapshot.val();
-    let allFoodBathTaps = [];
+    let allForagingTaps = [];
     let item;
     for (item in snapshotVal) {
-      allFoodBathTaps.push(snapshotVal[item]);
+      allForagingTaps.push(snapshotVal[item]);
     }
-    dispatch(getForagingSuccess(allFoodBathTaps));
+    dispatch(getForagingSuccess(allForagingTaps));
+  });
+};
+
+export const GET_BATHROOM_SUCCESS = "GET_BATHROOM_SUCCESS";
+export const getBathroomSuccess = (allBathroomTaps) => ({
+  type: GET_BATHROOM_SUCCESS,
+  allBathroomTaps,
+});
+
+export const getBathroomTaps = () => (dispatch) => {
+  const app = initializeApp(bathroomConfig, "bathroom");
+  console.log("running here");
+  const database = getDatabase(app);
+
+  return onValue(ref(database, "/"), (snapshot) => {
+    const snapshotVal = snapshot.val();
+    let allBathTaps = [];
+    let item;
+    for (item in snapshotVal) {
+      allBathTaps.push(snapshotVal[item]);
+    }
+    dispatch(getForagingSuccess(allBathTaps));
   });
 };
 
