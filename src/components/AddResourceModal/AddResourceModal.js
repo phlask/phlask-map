@@ -83,7 +83,12 @@ export class AddResourceModal extends Component {
       consumptionType: '',
       foodType: '',
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: ''
+      foragingFoodType: '',
+      // BATHROOM
+      changingTable: false,
+      genderNeutral: false,
+      familyBathroom: false,
+      singleOccupancy: false
     };
   }
 
@@ -236,6 +241,37 @@ export class AddResourceModal extends Component {
     });
   }
 
+
+  // ADD BATHROOM MODAL FIELDS
+
+  onChangeChangingTable(e) {
+      this.setState({
+        changingTable: e.target.checked
+      });
+  }
+
+  onChangeGenderNeutral(e) {
+    this.setState({
+      genderNeutral: e.target.checked
+    });
+}
+
+  onChangeFamilyBathroom(e) {
+    this.setState({
+      familyBathroom: e.target.checked
+    });
+  }
+
+  onChangeSingleOccupancy(e) {
+    this.setState({
+      singleOccupancy: e.target.checked
+    });
+  }
+
+
+
+
+  // Database
   onChangeDbConnection(connection) {
     this.setState(
       {
@@ -312,9 +348,15 @@ export class AddResourceModal extends Component {
         children_only: this.state.childrenOnly,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
+        // BATHROOM FIELDS
+        changing_table: this.state.changingTable,
+        gender_neutral: this.state.genderNeutral,
+        family_bathroom: this.state.familyBathroom,
+        single_occupancy: this.state.singleOccupancy,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules
+        norms_rules: this.state.normsAndRules,
+
       };
 
       const database = getDatabase(this.state.dbConnection);
