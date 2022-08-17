@@ -37,7 +37,12 @@ function AddBathroom({
   familyBathroom,
   onChangeFamilyBathroom,
   singleOccupancy,
-  onChangeSingleOccupancy
+  onChangeSingleOccupancy,
+  accessible,
+  onAccessibleChange,
+  idRequired,
+  onIdRequiredChange
+
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -102,6 +107,61 @@ function AddBathroom({
               </Accordion.Header>
               <Accordion.Body>
                 <div>
+
+                <Form.Check
+                  checked={accessible}
+                  onChange={onAccessibleChange}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Accessible"
+                  value="accessible"
+                />
+
+                <Form.Check
+                  checked={idRequired}
+                  onChange={onIdRequiredChange}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="ID Required"
+                  value="idRequired"
+                />
+
+                <Form.Check
+                  checked={changingTable}
+                  onChange={onChangeChangingTable}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="changing table"
+                  value="changingTable"
+                />
+
+              <Form.Check
+                  checked={genderNeutral}
+                  onChange={onChangeGenderNeutral}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="gender neutral"
+                  value="genderNeutral"
+                />
+
+              <Form.Check
+                  checked={familyBathroom}
+                  onChange={onChangeFamilyBathroom}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="family bathroom"
+                  value="familyBathroom"
+                />
+
+              <Form.Check
+                  checked={singleOccupancy}
+                  onChange={onChangeSingleOccupancy}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="single occupancy"
+                  value="singleOccupancy"
+                />
+
                   <SharedAccordionFields
                     phlaskStatement={phlaskStatement}
                     onPhlaskStatementChange={onPhlaskStatementChange}
