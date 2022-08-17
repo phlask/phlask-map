@@ -29,7 +29,15 @@ function AddBathroom({
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
-  onNormsAndRulesChange
+  onNormsAndRulesChange,
+  changingTable,            
+  onChangeChangingTable, 
+  genderNeutral,
+  onChangeGenderNeutral,
+  familyBathroom,
+  onChangeFamilyBathroom,
+  singleOccupancy,
+  onChangeSingleOccupancy
 }) {
   useEffect(() => {
     // create connection to appropriate database
