@@ -51,6 +51,13 @@ export class AddResourceModal extends Component {
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
+    //  BATHROOM MODAL
+    this.onChangeChangingTable = this.onChangeChangingTable.bind(this); 
+    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this); 
+    this.onChangeFamilyBathroom = this.onChangeFamilyBathroom.bind(this);
+    this.onChangeSingleOccupancy = this.onChangeFamilyBathroom.bind(this);
+
+
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -507,6 +514,15 @@ export class AddResourceModal extends Component {
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
+
+              changingTable={this.state.changingTable}            
+              onChangeChangingTable={this.onChangeChangingTable} 
+              genderNeutral={this.state.genderNeutral}
+              onChangeGenderNeutral={this.onChangeGenderNeutral}
+              familyBathroom={this.state.familyBathroom}
+              onChangeFamilyBathroom={this.onChangeFamilyBathroom}
+              singleOccupancy={this.state.singleOccupancy}
+              onChangeSingleOccupancy={this.onChangeSingleOccupancy} 
             />
           )}
 
