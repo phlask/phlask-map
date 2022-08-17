@@ -131,7 +131,7 @@ function AddBathroom({
                   onChange={onChangeChangingTable}
                   className={styles.modalFormCheck}
                   type="checkbox"
-                  label="Changing Table"
+                  label="Changing table"
                   value="changingTable"
                 />
 
@@ -140,7 +140,7 @@ function AddBathroom({
                   onChange={onChangeGenderNeutral}
                   className={styles.modalFormCheck}
                   type="checkbox"
-                  label="Gender Neutral"
+                  label="Gender neutral"
                   value="genderNeutral"
                 />
 
@@ -149,7 +149,7 @@ function AddBathroom({
                   onChange={onChangeFamilyBathroom}
                   className={styles.modalFormCheck}
                   type="checkbox"
-                  label="Family Bathroom"
+                  label="Family bathroom"
                   value="familyBathroom"
                 />
 
@@ -158,7 +158,7 @@ function AddBathroom({
                   onChange={onChangeSingleOccupancy}
                   className={styles.modalFormCheck}
                   type="checkbox"
-                  label="Single Occupancy"
+                  label="Single occupancy"
                   value="singleOccupancy"
                 />
 
