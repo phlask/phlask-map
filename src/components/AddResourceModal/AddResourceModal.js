@@ -82,7 +82,7 @@ export class AddResourceModal extends Component {
       // ADD FOOD MODAL FIELDS
       consumptionType: "",
       foodType: "",
-      // ADD FORAGING MODAL FIELDS
+      // ADD FORAGING MODAL FIELDS 
       foragingFoodType: ""
     };
   }
