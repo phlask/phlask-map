@@ -99,11 +99,16 @@ function AddBathroom({
           </Form.Group>
 
           <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header className={styles.modalFormLabel}>
-                Additional Information
-              </Accordion.Header>
-              <Accordion.Body>
+            <Accordion.Toggle className={styles.modalFormLabel} eventKey="0">
+              Additional Information{" "}
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={styles.filterIcon}
+                size="1x"
+                color="#525f75"
+              />
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
                 <div>
 
                 <Form.Check
@@ -160,15 +165,14 @@ function AddBathroom({
                   value="singleOccupancy"
                 />
 
-                  <SharedAccordionFields
-                    phlaskStatement={phlaskStatement}
-                    onPhlaskStatementChange={onPhlaskStatementChange}
-                    normsAndRules={normsAndRules}
-                    onNormsAndRulesChange={onNormsAndRulesChange}
-                  />
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+                <SharedAccordionFields
+                  phlaskStatement={phlaskStatement}
+                  onPhlaskStatementChange={onPhlaskStatementChange}
+                  normsAndRules={normsAndRules}
+                  onNormsAndRulesChange={onNormsAndRulesChange}
+                />
+              </div>
+            </Accordion.Collapse>
           </Accordion>
 
           <Button
