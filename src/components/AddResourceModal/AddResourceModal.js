@@ -51,6 +51,13 @@ export class AddResourceModal extends Component {
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
+    //  BATHROOM MODAL
+    this.onChangeChangingTable = this.onChangeChangingTable.bind(this); 
+    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this); 
+    this.onChangeFamilyBathroom = this.onChangeFamilyBathroom.bind(this);
+    this.onChangeSingleOccupancy = this.onChangeSingleOccupancy.bind(this);
+
+
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -82,8 +89,13 @@ export class AddResourceModal extends Component {
       // ADD FOOD MODAL FIELDS
       consumptionType: "",
       foodType: "",
-      // ADD FORAGING MODAL FIELDS 
-      foragingFoodType: ""
+      // ADD FORAGING MODAL FIELDS
+      foragingFoodType: '',
+      // BATHROOM
+      changingTable: false,
+      genderNeutral: false,
+      familyBathroom: false,
+      singleOccupancy: false
     };
   }
 
@@ -236,6 +248,37 @@ export class AddResourceModal extends Component {
     });
   }
 
+
+  // ADD BATHROOM MODAL FIELDS
+
+  onChangeChangingTable(e) {
+      this.setState({
+        changingTable: e.target.checked
+      });
+  }
+
+  onChangeGenderNeutral(e) {
+    this.setState({
+      genderNeutral: e.target.checked
+    });
+}
+
+  onChangeFamilyBathroom(e) {
+    this.setState({
+      familyBathroom: e.target.checked
+    });
+  }
+
+  onChangeSingleOccupancy(e) {
+    this.setState({
+      singleOccupancy: e.target.checked
+    });
+  }
+
+
+
+
+  // Database
   onChangeDbConnection(connection) {
     this.setState(
       {
@@ -310,9 +353,15 @@ export class AddResourceModal extends Component {
         children_only: this.state.childrenOnly,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
+        // BATHROOM FIELDS
+        changing_table: this.state.changingTable,
+        gender_neutral: this.state.genderNeutral,
+        family_bathroom: this.state.familyBathroom,
+        single_occupancy: this.state.singleOccupancy,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules
+        norms_rules: this.state.normsAndRules,
+
       };
 
       return this.state.dbConnection
@@ -355,7 +404,12 @@ export class AddResourceModal extends Component {
       consumptionType: "",
       foodType: "",
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: ""
+      foragingFoodType: '',
+      // ADD BATHROOM MODAL FIELDS
+      changingTable: false,
+      genderNeutral: false,
+      familyBathroom: false,
+      singleOccupancy: false,
     };
     this.setState(resetState);
   }
@@ -465,6 +519,20 @@ export class AddResourceModal extends Component {
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
+
+              accessible={this.state.handicapAccessable}
+              onAccessibleChange={this.onChangeHandicapAccess}
+              idRequired={this.state.idRequired}
+              onIdRequiredChange={this.onChangeIdRequired}
+
+              changingTable={this.state.changingTable}            
+              onChangeChangingTable={this.onChangeChangingTable} 
+              genderNeutral={this.state.genderNeutral}
+              onChangeGenderNeutral={this.onChangeGenderNeutral}
+              familyBathroom={this.state.familyBathroom}
+              onChangeFamilyBathroom={this.onChangeFamilyBathroom}
+              singleOccupancy={this.state.singleOccupancy}
+              onChangeSingleOccupancy={this.onChangeSingleOccupancy} 
             />
           )}
 

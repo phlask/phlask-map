@@ -29,7 +29,20 @@ function AddBathroom({
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
-  onNormsAndRulesChange
+  onNormsAndRulesChange,
+  changingTable,            
+  onChangeChangingTable, 
+  genderNeutral,
+  onChangeGenderNeutral,
+  familyBathroom,
+  onChangeFamilyBathroom,
+  singleOccupancy,
+  onChangeSingleOccupancy,
+  accessible,
+  onAccessibleChange,
+  idRequired,
+  onIdRequiredChange
+
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -94,9 +107,64 @@ function AddBathroom({
                 size="1x"
                 color="#525f75"
               />
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <div>
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <div>
+
+                <Form.Check
+                  checked={accessible}
+                  onChange={onAccessibleChange}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Accessible"
+                  value="accessible"
+                />
+
+                <Form.Check
+                  checked={idRequired}
+                  onChange={onIdRequiredChange}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="ID Required"
+                  value="idRequired"
+                />
+
+                <Form.Check
+                  checked={changingTable}
+                  onChange={onChangeChangingTable}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Changing table"
+                  value="changingTable"
+                />
+
+              <Form.Check
+                  checked={genderNeutral}
+                  onChange={onChangeGenderNeutral}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Gender neutral"
+                  value="genderNeutral"
+                />
+
+              <Form.Check
+                  checked={familyBathroom}
+                  onChange={onChangeFamilyBathroom}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Family bathroom"
+                  value="familyBathroom"
+                />
+
+              <Form.Check
+                  checked={singleOccupancy}
+                  onChange={onChangeSingleOccupancy}
+                  className={styles.modalFormCheck}
+                  type="checkbox"
+                  label="Single occupancy"
+                  value="singleOccupancy"
+                />
+
                 <SharedAccordionFields
                   phlaskStatement={phlaskStatement}
                   onPhlaskStatementChange={onPhlaskStatementChange}
