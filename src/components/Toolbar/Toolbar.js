@@ -9,7 +9,7 @@ import {
   setMapCenter
 } from '../../actions/actions';
 import { connect } from 'react-redux';
-import Filter from '../Filter/Filter';
+import Filter from '../ResourceMenu/Filter';
 import FoodFilter from '../FoodFilter/FoodFilter';
 import styles from './Toolbar.module.scss';
 import phlaskImg from '../images/PHLASK Button.png';
