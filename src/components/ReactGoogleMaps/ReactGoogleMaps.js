@@ -1,7 +1,10 @@
-import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import ReactTouchEvents from "react-touch-events";
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import React, { Component } from 'react';
+import ReactTouchEvents from 'react-touch-events';
+import SearchBar from '../SearchBar/SearchBar';
+import styles from './ReactGoogleMaps.module.scss';
+import { connect } from 'react-redux';
+import SelectedTap from '../SelectedTap/SelectedTap';
 import {
   getTaps,
   PHLASK_TYPE_BATHROOM,
@@ -11,18 +14,15 @@ import {
   setFilterFunction,
   setMapCenter,
   setUserLocation,
-  toggleInfoWindow,
-} from "../../actions/actions";
-import SearchBar from "../SearchBar/SearchBar";
-import SelectedTap from "../SelectedTap/SelectedTap";
-import styles from "./ReactGoogleMaps.module.scss";
+  toggleInfoWindow
+} from '../../actions/actions';
 // import Legend from "./Legend";
-import MapMarkers from "../MapMarkers/MapMarkers";
-import MapMarkersFood from "../MapMarkers/MapMarkersFood";
+import MapMarkers from '../MapMarkers/MapMarkers';
+import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
-import { isMobile } from "react-device-detect";
-import Toolbar from "../Toolbar/Toolbar";
-import MapMarkersMapper from "../MapMarkers/MapMarkersMapper";
+import { isMobile } from 'react-device-detect';
+import Toolbar from '../Toolbar/Toolbar';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -83,20 +83,20 @@ function getCoordinates() {
 
 //gets the users latitude
 function getLat() {
-  if ("geolocation" in navigator) {
+  if ('geolocation' in navigator) {
     // check if geolocation is supported/enabled on current browser
     navigator.geolocation.getCurrentPosition(
       function success(position) {
         // for when getting location is a success
         var mylat = parseFloat(position.coords.latitude.toFixed(5));
-        console.log("lat " + mylat);
+        console.log('lat ' + mylat);
 
         return mylat;
       },
       function error(error_message) {
         // for when getting location results in an error
         console.error(
-          "An error has occured while retrieving location",
+          'An error has occured while retrieving location',
           error_message
         );
       }
@@ -104,13 +104,13 @@ function getLat() {
   } else {
     // geolocation is not supported
     // get your location some other way
-    console.log("geolocation is not enabled on this browser");
+    console.log('geolocation is not enabled on this browser');
   }
 }
 
 //gets the users longitutude
 function getLon() {
-  if ("geolocation" in navigator) {
+  if ('geolocation' in navigator) {
     // check if geolocation is supported/enabled on current browser
     navigator.geolocation.getCurrentPosition(
       function success(position) {
@@ -121,7 +121,7 @@ function getLon() {
       function error(error_message) {
         // for when getting location results in an error
         console.error(
-          "An error has occured while retrieving location",
+          'An error has occured while retrieving location',
           error_message
         );
       }
@@ -129,16 +129,16 @@ function getLon() {
   } else {
     // geolocation is not supported
     // get your location some other way
-    console.log("geolocation is not enabled on this browser");
+    console.log('geolocation is not enabled on this browser');
   }
 }
 
-const LoadingContainer = (props) => <div>Looking for water!</div>;
+const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
-  width: "100%",
-  height: "100%",
-  position: "relative",
+  width: '100%',
+  height: '100%',
+  position: 'relative'
 };
 
 export class ReactGoogleMaps extends Component {
@@ -159,7 +159,9 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
+      anchor: false
     };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -171,7 +173,7 @@ export class ReactGoogleMaps extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
-        unfilteredTaps: prevProps.tapsDisplayed,
+        unfilteredTaps: prevProps.tapsDisplayed
       });
       if (
         this.state.currlat !== this.props.mapCenter.lat ||
@@ -179,7 +181,7 @@ export class ReactGoogleMaps extends Component {
       ) {
         this.setState({
           currlat: this.props.mapCenter.lat,
-          currlon: this.props.mapCenter.lng,
+          currlon: this.props.mapCenter.lng
         });
       }
     }
@@ -190,27 +192,27 @@ export class ReactGoogleMaps extends Component {
     // console.log('Lon: ' + getLon());
 
     getCoordinates().then(
-      (position) => {
+      position => {
         if (
           isNaN(position.coords.latitude) ||
           isNaN(position.coords.longitude)
         ) {
           this.setState({
-            currlat: parseFloat("39.952744"),
-            currlon: parseFloat("-75.163500"),
+            currlat: parseFloat('39.952744'),
+            currlon: parseFloat('-75.163500')
           });
         } else {
           this.props.setMapCenter({
             lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lng: position.coords.longitude
           });
           this.props.setUserLocation({
             lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lng: position.coords.longitude
           });
           this.setState({
             currlat: position.coords.latitude,
-            currlon: position.coords.longitude,
+            currlon: position.coords.longitude
           });
         }
       },
@@ -222,63 +224,67 @@ export class ReactGoogleMaps extends Component {
     this.props.toggleInfoWindow(true);
   }
 
+  //toggle window goes here
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
       currlat: props.position.lat,
-      currlon: props.position.lng,
+      currlon: props.position.lng
     });
 
-  onClose = (props) => {
+  //close window goes here
+  onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
+        activeMarker: null
       });
     }
   };
 
-  onMapClicked = (props) => {
+  onMapClicked = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
+        activeMarker: null
       });
     }
   };
 
-  toggleTapInfo = (isExpanded) => {
+  toggleTapInfo = isExpanded => {
     this.setState({
-      isExpanded: isExpanded,
+      isExpanded: isExpanded
     });
   };
 
-  searchForLocation = (location) => {
+  searchForLocation = location => {
     this.setState({
       currlat: location.lat,
       currlon: location.lng,
       zoom: 16,
-      searchedTap: { lat: location.lat, lng: location.lng },
+      searchedTap: { lat: location.lat, lng: location.lng }
     });
   };
 
-  handleTap = (e) => {
+  handleTap = e => {
     if (e.target instanceof HTMLDivElement && this.props.showingInfoWindow) {
       this.props.toggleInfoWindow(false);
     }
   };
 
-  toggleDrawer = () => (event) => {
+  toggleDrawer = () => event => {
     if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
 
-    this.setState({ anchor: open });
+    this.setState(prevState => ({
+      anchor: !prevState.anchor
+    }));
   };
 
   render() {
@@ -291,7 +297,7 @@ export class ReactGoogleMaps extends Component {
           <div>
             <Map
               google={this.props.google}
-              className={"map"}
+              className={'map'}
               style={style}
               zoom={this.state.zoom}
               zoomControl={!isMobile}
@@ -301,9 +307,12 @@ export class ReactGoogleMaps extends Component {
               fullscreenControl={false}
               initialCenter={{
                 lat: this.state.currlat,
-                lng: this.state.currlon,
+                lng: this.state.currlon
               }}
-              center={{ lat: this.state.currlat, lng: this.state.currlon }}
+              center={{
+                lat: this.state.currlat,
+                lng: this.state.currlon
+              }}
             >
               {/* <TypeToggle/> */}
 
@@ -321,13 +330,13 @@ export class ReactGoogleMaps extends Component {
                 google={this.props.google}
                 mapCenter={{
                   lat: this.state.currlat,
-                  lng: this.state.currlon,
+                  lng: this.state.currlon
                 }}
               />
 
               {this.state.searchedTap != null && (
                 <Marker
-                  name={"Your Search Result"}
+                  name={'Your Search Result'}
                   position={this.state.searchedTap}
                 />
               )}
@@ -337,7 +346,7 @@ export class ReactGoogleMaps extends Component {
         <div className={styles.searchBarContainer}>
           <SearchBar
             className="searchBar"
-            search={(location) => this.searchForLocation(location)}
+            search={location => this.searchForLocation(location)}
           />
         </div>
         <Toolbar />
@@ -347,7 +356,7 @@ export class ReactGoogleMaps extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   filtered: state.filtered,
   handicap: state.handicap,
   allTaps: state.allTaps,
@@ -355,7 +364,7 @@ const mapStateToProps = (state) => ({
   filterFunction: state.filterFunction,
   mapCenter: state.mapCenter,
   phlaskType: state.phlaskType,
-  showingInfoWindow: state.showingInfoWindow,
+  showingInfoWindow: state.showingInfoWindow
   // infoIsExpanded: state.infoIsExpanded
 });
 
@@ -364,7 +373,7 @@ const mapDispatchToProps = {
   setFilterFunction,
   toggleInfoWindow,
   setUserLocation,
-  setMapCenter,
+  setMapCenter
 };
 
 export default connect(
@@ -372,8 +381,8 @@ export default connect(
   mapDispatchToProps
 )(
   GoogleApiWrapper({
-    apiKey: "AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I",
+    apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
     LoadingContainer: LoadingContainer,
-    version: "quarterly",
+    version: 'quarterly'
   })(ReactGoogleMaps)
 );

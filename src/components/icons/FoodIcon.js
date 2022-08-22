@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const FoodIcon = ({ color = "currentColor" }) => {
+const FoodIcon = ({ color = 'currentColor' }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

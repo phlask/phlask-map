@@ -1,17 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
-import { connectToFirebase } from "../components/AddResourceModal/utils";
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { connectToFirebase } from '../components/AddResourceModal/utils';
 import {
   waterConfig,
   foodConfig,
   foragingConfig,
-  bathroomConfig,
-} from "../firebase/firebaseConfig";
+  bathroomConfig
+} from '../firebase/firebaseConfig';
 
-export const RESIZE_WINDOW = "RESIZE_WINDOW";
-export const resizeWindow = (size) => ({
+export const RESIZE_WINDOW = 'RESIZE_WINDOW';
+export const resizeWindow = size => ({
   type: RESIZE_WINDOW,
-  size,
+  size
 });
 
 // let mediaList = [
@@ -33,59 +33,57 @@ export const resizeWindow = (size) => ({
 //   }
 // }
 
-export const SET_TOGGLE_STATE = "SET_TOGGLE_STATE";
+export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE,
   toggle,
-  toggleState,
+  toggleState
 });
 
-export const SET_TOGGLE_STATE_FOOD = "SET_TOGGLE_STATE_FOOD";
+export const SET_TOGGLE_STATE_FOOD = 'SET_TOGGLE_STATE_FOOD';
 export const setToggleStateFood = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE_FOOD,
   toggle,
-  toggleState,
+  toggleState
 });
 
-export const SET_FILTER_FUNCTION = "SET_FILTER_FUNCTION";
+export const SET_FILTER_FUNCTION = 'SET_FILTER_FUNCTION';
 export const setFilterFunction = () => ({
-  type: SET_FILTER_FUNCTION,
+  type: SET_FILTER_FUNCTION
 });
 
-export const RESET_FILTER_FUNCTION = "RESET_FILTER_FUNCTION";
+export const RESET_FILTER_FUNCTION = 'RESET_FILTER_FUNCTION';
 export const resetFilterFunction = () => ({
-  type: RESET_FILTER_FUNCTION,
+  type: RESET_FILTER_FUNCTION
 });
 
 /* User should select which type ( food or water) to display before retrieving data.
   First choice would be set as default
 */
 
-export const GET_TAPS_SUCCESS = "GET_TAPS_SUCCESS";
-export const getTapsSuccess = (allTaps) => ({
+export const GET_TAPS_SUCCESS = 'GET_TAPS_SUCCESS';
+export const getTapsSuccess = allTaps => ({
   type: GET_TAPS_SUCCESS,
-  allTaps,
+  allTaps
 });
 
-export const getTaps = () => (dispatch) => {
-  const app = initializeApp(waterConfig, "water");
+export const getTaps = () => dispatch => {
+  const app = initializeApp(waterConfig, 'water');
   const database = getDatabase(app);
-  console.log("running getTaps from action.js");
-
   return onValue(
-    ref(database, "/"),
-    (snapshot) => {
+    ref(database, '/'),
+    snapshot => {
       const snapshotVal = snapshot.val();
       var allTaps = [];
       var item;
       for (item in snapshotVal) {
-        if (snapshotVal[item].access === "WM") {
+        if (snapshotVal[item].access === 'WM') {
           continue;
         }
-        if (snapshotVal[item].active === "N") {
+        if (snapshotVal[item].active === 'N') {
           continue;
         }
-        if (snapshotVal[item].access === "TrashAcademy") {
+        if (snapshotVal[item].access === 'TrashAcademy') {
           continue;
         }
         allTaps.push(snapshotVal[item]);
@@ -93,24 +91,21 @@ export const getTaps = () => (dispatch) => {
       dispatch(getTapsSuccess(allTaps));
     },
     {
-      onlyOnce: true,
+      onlyOnce: true
     }
   );
 };
 
-export const GET_FOOD_SUCCESS = "GET_FOOD_SUCCESS";
-export const getFoodSuccess = (allFoodOrgs) => ({
+export const GET_FOOD_SUCCESS = 'GET_FOOD_SUCCESS';
+export const getFoodSuccess = allFoodOrgs => ({
   type: GET_FOOD_SUCCESS,
-  allFoodOrgs,
+  allFoodOrgs
 });
 
-export const getFoodOrgs = () => (dispatch) => {
-  const app = initializeApp(foodConfig, "food");
+export const getFoodOrgs = () => dispatch => {
+  const app = initializeApp(foodConfig, 'food');
   const database = getDatabase(app);
-
-  console.log("running getFoodOrgs map");
-
-  return onValue(ref(database, "/"), (snapshot) => {
+  return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
     var allFoodOrgs = [];
     var item;
@@ -121,16 +116,16 @@ export const getFoodOrgs = () => (dispatch) => {
   });
 };
 
-export const GET_FORAGING_SUCCESS = "GET_FORAGING_SUCCESS";
-export const getForagingSuccess = (allForagingTaps) => ({
+export const GET_FORAGING_SUCCESS = 'GET_FORAGING_SUCCESS';
+export const getForagingSuccess = allForagingTaps => ({
   type: GET_FORAGING_SUCCESS,
-  allForagingTaps,
+  allForagingTaps
 });
 
-export const getForagingTaps = () => (dispatch) => {
-  const app = initializeApp(foragingConfig, "foraging");
+export const getForagingTaps = () => dispatch => {
+  const app = initializeApp(foragingConfig, 'foraging');
   const database = getDatabase(app);
-  return onValue(ref(database, "/"), (snapshot) => {
+  return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
     let allForagingTaps = [];
     let item;
@@ -141,18 +136,18 @@ export const getForagingTaps = () => (dispatch) => {
   });
 };
 
-export const GET_BATHROOM_SUCCESS = "GET_BATHROOM_SUCCESS";
-export const getBathroomSuccess = (allBathroomTaps) => ({
+export const GET_BATHROOM_SUCCESS = 'GET_BATHROOM_SUCCESS';
+export const getBathroomSuccess = allBathroomTaps => ({
   type: GET_BATHROOM_SUCCESS,
-  allBathroomTaps,
+  allBathroomTaps
 });
 
-export const getBathroomTaps = () => (dispatch) => {
-  const app = initializeApp(bathroomConfig, "bathroom");
-  console.log("running here");
+export const getBathroomTaps = () => dispatch => {
+  const app = initializeApp(bathroomConfig, 'bathroom');
+  console.log('running here');
   const database = getDatabase(app);
 
-  return onValue(ref(database, "/"), (snapshot) => {
+  return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
     let allBathTaps = [];
     let item;
@@ -163,71 +158,71 @@ export const getBathroomTaps = () => (dispatch) => {
   });
 };
 
-export const SET_USER_LOCATION = "SET_USER_LOCATION";
-export const setUserLocation = (coords) => ({
+export const SET_USER_LOCATION = 'SET_USER_LOCATION';
+export const setUserLocation = coords => ({
   type: SET_USER_LOCATION,
-  coords,
+  coords
 });
 
-export const SET_MAP_CENTER = "SET_MAP_CENTER";
-export const setMapCenter = (coords) => ({
+export const SET_MAP_CENTER = 'SET_MAP_CENTER';
+export const setMapCenter = coords => ({
   type: SET_MAP_CENTER,
-  coords,
+  coords
 });
 
-export const TOGGLE_SEARCH_BAR = "TOGGLE_SEARCH_BAR";
-export const toggleSearchBar = (isShown) => ({
+export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
+export const toggleSearchBar = isShown => ({
   type: TOGGLE_SEARCH_BAR,
-  isShown,
+  isShown
 });
 
-export const TOGGLE_FILTER_MODAL = "TOGGLE_FILTER_MODAL";
-export const toggleFilterModal = (isShown) => ({
+export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL';
+export const toggleFilterModal = isShown => ({
   type: TOGGLE_FILTER_MODAL,
-  isShown,
+  isShown
 });
 
-export const TOGGLE_INFO_WINDOW = "TOGGLE_INFO_WINDOW";
-export const toggleInfoWindow = (isShown) => ({
+export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW';
+export const toggleInfoWindow = isShown => ({
   type: TOGGLE_INFO_WINDOW,
-  isShown,
+  isShown
 });
 
-export const TOGGLE_INFO_WINDOW_CLASS = "TOGGLE_INFO_WINDOW_CLASS";
-export const toggleInfoWindowClass = (isShown) => ({
+export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS';
+export const toggleInfoWindowClass = isShown => ({
   type: TOGGLE_INFO_WINDOW_CLASS,
-  isShown,
+  isShown
 });
 
-export const TOGGLE_INFO_EXPANDED = "TOGGLE_INFO_EXPANDED";
-export const toggleInfoExpanded = (isExpanded) => ({
+export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED';
+export const toggleInfoExpanded = isExpanded => ({
   type: TOGGLE_INFO_EXPANDED,
-  isExpanded,
+  isExpanded
 });
-export const SET_FILTERED_TAP_TYPES = "SET_FILTERED_TAP_TYPES";
-export const setFilteredTapTypes = (tapType) => ({
+export const SET_FILTERED_TAP_TYPES = 'SET_FILTERED_TAP_TYPES';
+export const setFilteredTapTypes = tapType => ({
   type: SET_FILTERED_TAP_TYPES,
-  tapType,
+  tapType
 });
-export const SET_FILTERED_FOOD_TYPES = "SET_FILTERED_FOOD_TYPES";
-export const setFilteredFoodTypes = (foodType) => ({
+export const SET_FILTERED_FOOD_TYPES = 'SET_FILTERED_FOOD_TYPES';
+export const setFilteredFoodTypes = foodType => ({
   type: SET_FILTERED_FOOD_TYPES,
-  foodType,
+  foodType
 });
 
-export const SET_SELECTED_PLACE = "SET_SELECTED_PLACE";
-export const setSelectedPlace = (selectedPlace) => ({
+export const SET_SELECTED_PLACE = 'SET_SELECTED_PLACE';
+export const setSelectedPlace = selectedPlace => ({
   type: SET_SELECTED_PLACE,
-  selectedPlace,
+  selectedPlace
 });
 
-export const TOGGLE_PHLASK_TYPE = "TOGGLE_PHLASK_TYPE";
-export const togglePhlaskType = (phlaskType) => ({
+export const TOGGLE_PHLASK_TYPE = 'TOGGLE_PHLASK_TYPE';
+export const togglePhlaskType = phlaskType => ({
   type: TOGGLE_PHLASK_TYPE,
-  mode: phlaskType,
+  mode: phlaskType
 });
 
-export const PHLASK_TYPE_WATER = "PHLASK_TYPE_WATER";
-export const PHLASK_TYPE_FOOD = "PHLASK_TYPE_FOOD";
-export const PHLASK_TYPE_FORAGING = "PHLASK_TYPE_FORAGING";
-export const PHLASK_TYPE_BATHROOM = "PHLASK_TYPE_BATHROOM";
+export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
+export const PHLASK_TYPE_FOOD = 'PHLASK_TYPE_FOOD';
+export const PHLASK_TYPE_FORAGING = 'PHLASK_TYPE_FORAGING';
+export const PHLASK_TYPE_BATHROOM = 'PHLASK_TYPE_BATHROOM';

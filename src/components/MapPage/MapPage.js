@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import ReactGoogleMaps from "../ReactGoogleMaps/ReactGoogleMaps";
-import styles from "./MapPage.module.scss";
+import React, { Component } from 'react';
+import ReactGoogleMaps from '../ReactGoogleMaps/ReactGoogleMaps';
+import styles from './MapPage.module.scss';
 
 export class MapPage extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export class MapPage extends Component {
     this.state = {
       ada: false,
       filtered: false,
-      tapsDisplayed: ["Public", "Private", "Private-Shared", "Restricted"]
+      tapsDisplayed: ['Public', 'Private', 'Private-Shared', 'Restricted']
     };
 
     this.legendButton = this.legendButton.bind(this);
@@ -32,9 +32,9 @@ export class MapPage extends Component {
 
   toggleSwitch(type, position) {
     switch (type) {
-      case "ada":
+      case 'ada':
         return this.setState({ ada: position });
-      case "filtered":
+      case 'filtered':
         return this.setState({ filtered: position });
       default:
         return this.state;

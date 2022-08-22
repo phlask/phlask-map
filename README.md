@@ -84,6 +84,12 @@ Code behind the PHLASK Web Map
 1. Run `yarn install`
 1. Run `yarn start`
 
+## Recommended Development tools
+
+### Code formatting
+
+We use Prettier to ensure a consistent code formatting across the project, if you are running VSCode, please make sure to install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), the project configuration will ensure that Prettier is set as your default formatter as well.
+
 ## Want to add something new or develop/report a fix for a bug you found?
 
 See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!

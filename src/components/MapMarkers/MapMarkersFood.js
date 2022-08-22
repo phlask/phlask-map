@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Marker } from "google-maps-react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Marker } from 'google-maps-react';
+import { connect } from 'react-redux';
 import {
   getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
-} from "../../actions/actions";
-import makeGetVisibleTaps from "../../selectors/foodOrgSelectors";
-import foodIcon from "../images/food-marker-icons/food-site.png";
-import IndieFoodMarker from "./IndieFoodMarker";
+} from '../../actions/actions';
+import makeGetVisibleTaps from '../../selectors/foodOrgSelectors';
+import foodIcon from '../images/food-marker-icons/food-site.png';
+import IndieFoodMarker from './IndieFoodMarker';
 
 export class MapMarkersFood extends Component {
   UNSAFE_componentWillMount() {
@@ -25,16 +25,16 @@ export class MapMarkersFood extends Component {
   getIcon(access) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
-        case "Food Site":
-          return require("../images/food-marker-icons/food-site.png");
-        case "School":
-          return require("../images/food-marker-icons/school.png");
-        case "Charter School":
-          return require("../images/food-marker-icons/charter-school.png");
-        case "PHA Community Center":
-          return require("../images/food-marker-icons/pha.png");
+        case 'Food Site':
+          return require('../images/food-marker-icons/food-site.png');
+        case 'School':
+          return require('../images/food-marker-icons/school.png');
+        case 'Charter School':
+          return require('../images/food-marker-icons/charter-school.png');
+        case 'PHA Community Center':
+          return require('../images/food-marker-icons/pha.png');
         default:
-          return "../images/foodIcon.png";
+          return '../images/foodIcon.png';
       }
     } else {
       return { foodIcon };
@@ -57,7 +57,7 @@ export class MapMarkersFood extends Component {
               map={this.props.map}
               google={this.props.google}
               key="current_pos"
-              name={"Current Pos"}
+              name={'Current Pos'}
               position={this.props.mapCenter}
               // onClick={this.onMarkerClick}
             />

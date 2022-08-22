@@ -1,6 +1,6 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
-import { hours } from "../helpers/hours";
+import { hours } from '../helpers/hours';
 
 const getTapFilters = state => state.foodFilters;
 
@@ -13,7 +13,7 @@ const makeGetVisibleTaps = () => {
     // If we want to filter for Orgs that are Kids Only
     if (tapFilters.kidOnly) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].kid_only === "yes")
+        .filter(key => filteredTaps[key].kid_only === 'yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;
@@ -23,7 +23,7 @@ const makeGetVisibleTaps = () => {
     // If we want to filter for Orgs that require ID
     if (tapFilters.idRequired) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].id_required === "yes")
+        .filter(key => filteredTaps[key].id_required === 'yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;
