@@ -32,7 +32,7 @@ export const hours = {
       return hours === 2400 ? '12:00am' : 'Exceeded 2400 hours';
     }
 
-    const time = hours.split('');
+    const time = hours.time.split('');
     const minute = time[2] + time[3];
 
     // Check for minutes exceeding 59
