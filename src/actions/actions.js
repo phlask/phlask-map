@@ -1,11 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { connectToFirebase } from '../components/AddResourceModal/utils';
+import { getDatabase, onValue, ref } from 'firebase/database';
 import {
-  waterConfig,
+  bathroomConfig,
   foodConfig,
   foragingConfig,
-  bathroomConfig
+  waterConfig
 } from '../firebase/firebaseConfig';
 
 export const RESIZE_WINDOW = 'RESIZE_WINDOW';
@@ -220,6 +219,12 @@ export const TOGGLE_PHLASK_TYPE = 'TOGGLE_PHLASK_TYPE';
 export const togglePhlaskType = phlaskType => ({
   type: TOGGLE_PHLASK_TYPE,
   mode: phlaskType
+});
+
+export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
+export const toggleResourceMenu = isShown => ({
+  type: TOGGLE_RESOURCE_MENU,
+  isShown
 });
 
 export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
