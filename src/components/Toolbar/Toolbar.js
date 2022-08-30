@@ -1,32 +1,33 @@
 import React from 'react';
 import ReactGA from 'react-ga';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  togglePhlaskType,
-  PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_WATER,
+  setMapCenter,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter,
+  togglePhlaskType,
   TOGGLE_RESOURCE_MENU
 } from '../../actions/actions';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import Filter from '../ResourceMenu/Filter';
 import FoodFilter from '../FoodFilter/FoodFilter';
-import styles from './Toolbar.module.scss';
 import phlaskImg from '../images/PHLASK Button.png';
+import Filter from '../ResourceMenu/Filter';
+import styles from './Toolbar.module.scss';
 
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { isMobile } from 'react-device-detect';
 import { AddResourceModal } from '../AddResourceModal';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
+import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
 
-import FoodIcon from '../icons/FoodIcon';
 import DesktopWaterIcon from '../icons/DesktopWaterIcon';
+import FoodIcon from '../icons/FoodIcon';
 
-import Box from '@mui/material/Box';
+import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Box from '@mui/material/Box';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -240,30 +241,38 @@ function Toolbar(props) {
         >
           <BottomNavigation
             showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
+            // value={value}
+            // onChange={(event, newValue) => {
+            //   setValue(newValue);
+            // }}
           >
             <BottomNavigationAction
               sx={theme => toolbarButtonStyle(theme)}
-              label="Resources"
+              label={<Typography fontSize={'small'}>Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() => toggleResourceMenu()}
             />
             <ResourceMenu />
             <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
+              // sx={theme => toolbarButtonStyle(theme)}
+              sx={(theme => toolbarButtonStyle(theme), { paddingBottom: 6 })}
               label={
-                <span>
+                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
                   PHL<b>ASK</b>
-                </span>
+                </Typography>
               }
-              icon={<WaterIcon className={styles.PHLASKButton} />}
+              // icon={<WaterIcon className={styles.PHLASKButton} />}
+              icon={
+                <SvgIcon
+                  component={WaterIcon}
+                  sx={{ fontSize: 90 }}
+                  inheritViewBox={true}
+                />
+              }
             />
             <BottomNavigationAction
               sx={theme => toolbarButtonStyle(theme)}
-              label="Contribute"
+              label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
             />
           </BottomNavigation>
