@@ -6,9 +6,10 @@ import {
   PHLASK_TYPE_FOOD,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  setMapCenter,
+  TOGGLE_RESOURCE_MENU
 } from '../../actions/actions';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Filter from '../ResourceMenu/Filter';
 import FoodFilter from '../FoodFilter/FoodFilter';
 import styles from './Toolbar.module.scss';
@@ -26,6 +27,7 @@ import DesktopWaterIcon from '../icons/DesktopWaterIcon';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import ResourceMenu from '../ResourceMenu/ResourceMenu';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -92,12 +94,21 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
+
+  const isResourceMenuShown = useSelector(state => state.isResourceMenuShown);
+
+  const toggleResourceMenu = () => {
+    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: !isResourceMenuShown });
+  };
 
   function toolbarButtonStyle(theme) {
     return {
       '& .MuiBottomNavigationAction-root': {
-        'margin-top': '10px',
-        'margin-bottom': '5px'
+        marginTop: '10px',
+        marginBottom: '5px'
       },
       '& .Mui-selected': {
         // Resetting to the default value set by MUI
@@ -105,13 +116,13 @@ function Toolbar(props) {
         color: '#2D3748'
       },
       '& .MuiBottomNavigationAction-label': {
-        'padding-top': '2px',
+        paddingTop: '2px',
         color: '#2D3748'
       },
       '& .MuiBottomNavigationAction-label.Mui-selected': {
         // Resetting to the default value set by MUI
         // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L62
-        'font-size': theme => theme.typography.pxToRem(12)
+        fontSize: theme => theme.typography.pxToRem(12)
       }
     };
   }
@@ -238,7 +249,9 @@ function Toolbar(props) {
               sx={theme => toolbarButtonStyle(theme)}
               label="Resources"
               icon={<ResourceIcon className={styles.resourceButton} />}
+              onClick={() => toggleResourceMenu()}
             />
+            <ResourceMenu />
             <BottomNavigationAction
               sx={theme => toolbarButtonStyle(theme)}
               label={
