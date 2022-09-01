@@ -29,7 +29,7 @@ const ResourceMenu = () => {
   const isResourceMenuShown = useSelector(state => state.isResourceMenuShown);
 
   const toggleResourceMenu = () => {
-    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: !isResourceMenuShown });
+    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: isResourceMenuShown });
   };
 
   const switchType = type => {

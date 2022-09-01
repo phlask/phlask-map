@@ -8,7 +8,7 @@ import {
   setSelectedPlace,
   toggleInfoWindow,
   togglePhlaskType,
-  TOGGLE_RESOURCE_MENU
+  toggleResourceMenu
 } from '../../actions/actions';
 import FoodFilter from '../FoodFilter/FoodFilter';
 import phlaskImg from '../images/PHLASK Button.png';
@@ -96,14 +96,6 @@ function getCoordinates() {
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-
-  const dispatch = useDispatch();
-
-  const isResourceMenuShown = useSelector(state => state.isResourceMenuShown);
-
-  const toggleResourceMenu = () => {
-    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: !isResourceMenuShown });
-  };
 
   function toolbarButtonStyle(theme) {
     return {
@@ -250,7 +242,9 @@ function Toolbar(props) {
               sx={theme => toolbarButtonStyle(theme)}
               label={<Typography fontSize={'small'}>Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() => toggleResourceMenu()}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
             />
             <ResourceMenu />
             <BottomNavigationAction
@@ -286,7 +280,8 @@ const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
   allFoodOrgs: state.allFoodOrgs,
-  userLocation: state.userLocation
+  userLocation: state.userLocation,
+  isResourceMenuShown: state.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
@@ -295,7 +290,8 @@ const mapDispatchToProps = {
   PHLASK_TYPE_WATER,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  setMapCenter,
+  toggleResourceMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

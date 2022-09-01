@@ -143,7 +143,6 @@ export const getBathroomSuccess = allBathroomTaps => ({
 
 export const getBathroomTaps = () => dispatch => {
   const app = initializeApp(bathroomConfig, 'bathroom');
-  console.log('running here');
   const database = getDatabase(app);
 
   return onValue(ref(database, '/'), snapshot => {

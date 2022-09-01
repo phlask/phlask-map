@@ -116,7 +116,7 @@ export default (state = initialState, act) => {
       return { ...state, isFilterShown: act.isShown };
 
     case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: act.isShown };
+      return { ...state, isResourceMenuShown: !act.isShown };
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);
