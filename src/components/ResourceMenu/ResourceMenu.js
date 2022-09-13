@@ -9,11 +9,8 @@ import {
   Typography
 } from '@mui/material';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
-import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
-import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 import {
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
@@ -22,7 +19,10 @@ import {
   TOGGLE_PHLASK_TYPE,
   TOGGLE_RESOURCE_MENU
 } from '../../actions/actions';
-import ReactGA from 'react-ga';
+import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
+import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
+import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
+import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 
 const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const dispatch = useDispatch();
