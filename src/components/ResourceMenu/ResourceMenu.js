@@ -6,6 +6,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Slide,
   Typography
 } from '@mui/material';
 import React from 'react';
@@ -83,11 +84,13 @@ const ResourceMenu = () => {
   return (
     <Box>
       <Dialog
+        BackdropProps={{ transitionDuration: 400 }}
         open={isResourceMenuShown}
         onClose={() => toggleResourceMenu()}
         PaperProps={{
           style: {
             background: 'transparent',
+            overflow: 'visible',
             boxShadow: 'none',
             position: 'absolute',
             bottom: '0vh',
@@ -96,28 +99,35 @@ const ResourceMenu = () => {
           }
         }}
       >
-        <List sx={{ maxWidth: 210 }}>
-          <ListItemEntry
-            resourceType={'Water'}
-            icon={<WaterIcon />}
-            actionLabel={PHLASK_TYPE_WATER}
-          />
-          <ListItemEntry
-            resourceType={'Food'}
-            icon={<FoodIcon />}
-            actionLabel={PHLASK_TYPE_FOOD}
-          />
-          <ListItemEntry
-            resourceType={'Foraging'}
-            icon={<ForagingIcon />}
-            actionLabel={PHLASK_TYPE_FORAGING}
-          />
-          <ListItemEntry
-            resourceType={'Bathroom'}
-            icon={<ToiletIcon />}
-            actionLabel={PHLASK_TYPE_BATHROOM}
-          />
-        </List>
+        <Slide
+          direction="up"
+          in={isResourceMenuShown}
+          mountOnEnter
+          unmountOnExit
+        >
+          <List sx={{ maxWidth: 210 }}>
+            <ListItemEntry
+              resourceType={'Water'}
+              icon={<WaterIcon />}
+              actionLabel={PHLASK_TYPE_WATER}
+            />
+            <ListItemEntry
+              resourceType={'Food'}
+              icon={<FoodIcon />}
+              actionLabel={PHLASK_TYPE_FOOD}
+            />
+            <ListItemEntry
+              resourceType={'Foraging'}
+              icon={<ForagingIcon />}
+              actionLabel={PHLASK_TYPE_FORAGING}
+            />
+            <ListItemEntry
+              resourceType={'Bathroom'}
+              icon={<ToiletIcon />}
+              actionLabel={PHLASK_TYPE_BATHROOM}
+            />
+          </List>
+        </Slide>
       </Dialog>
     </Box>
   );
