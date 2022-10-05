@@ -121,9 +121,9 @@ class IndieMarker extends React.Component {
         .getProjection()
         .fromPointToLatLng(worldCoordinateNewCenter);
       const newLatlng = { lat: newCenter.lat(), lng: newCenter.lng() };
-      this.props.setMapCenter(newLatlng);
+      // this.props.setMapCenter(newLatlng);
     } else {
-      this.props.setMapCenter(tap.position);
+      // this.props.setMapCenter(tap.position);
     }
   }
 
