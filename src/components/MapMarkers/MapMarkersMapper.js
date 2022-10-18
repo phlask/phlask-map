@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
-} from "../../actions/actions";
-import MapMarkers from "./MapMarkers";
-import MapMarkersFood from "./MapMarkersFood";
+  PHLASK_TYPE_WATER
+} from '../../actions/actions';
+import MapMarkers from './MapMarkers';
+import MapMarkersFood from './MapMarkersFood';
 
 const MapMarkersMapper = ({ phlaskType, map, google, mapCenter }) => {
   const marker = {
@@ -20,13 +20,13 @@ const MapMarkersMapper = ({ phlaskType, map, google, mapCenter }) => {
       <MapMarkersFood map={map} google={google} mapCenter={mapCenter} />
     ),
     [PHLASK_TYPE_FORAGING]: (
-      // Foraging
+      // TODO: Add Foraging Map Markers
       <></>
     ),
     [PHLASK_TYPE_BATHROOM]: (
-      // BATHROOM
+      // TODO: Add Bathroom Map Markers
       <></>
-    ),
+    )
   }[phlaskType];
 
   return marker;

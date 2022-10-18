@@ -47,8 +47,6 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 function getClosest(data, userLocation) {
-  // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-  // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map((org, index) => {
     return {
       lat: org['lat'],
@@ -231,13 +229,7 @@ function Toolbar(props) {
             bgcolor: 'white'
           }}
         >
-          <BottomNavigation
-            showLabels
-            // value={value}
-            // onChange={(event, newValue) => {
-            //   setValue(newValue);
-            // }}
-          >
+          <BottomNavigation showLabels>
             <BottomNavigationAction
               sx={theme => toolbarButtonStyle(theme)}
               label={<Typography fontSize={'small'}>Resources</Typography>}
@@ -248,14 +240,12 @@ function Toolbar(props) {
             />
             <ResourceMenu />
             <BottomNavigationAction
-              // sx={theme => toolbarButtonStyle(theme)}
               sx={(theme => toolbarButtonStyle(theme), { paddingBottom: 6 })}
               label={
                 <Typography fontSize={'small'} color={'black'} marginTop={-1}>
                   PHL<b>ASK</b>
                 </Typography>
               }
-              // icon={<WaterIcon className={styles.PHLASKButton} />}
               icon={
                 <SvgIcon
                   component={WaterIcon}
