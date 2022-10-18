@@ -1,3 +1,4 @@
+import { KeyTwoTone } from '@mui/icons-material';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import {
@@ -73,20 +74,15 @@ export const getTaps = () => dispatch => {
     ref(database, '/'),
     snapshot => {
       const snapshotVal = snapshot.val();
-      var allTaps = [];
-      var item;
-      for (item in snapshotVal) {
-        if (snapshotVal[item].access === 'WM') {
-          continue;
-        }
-        if (snapshotVal[item].active === 'N') {
-          continue;
-        }
-        if (snapshotVal[item].access === 'TrashAcademy') {
-          continue;
-        }
-        allTaps.push(snapshotVal[item]);
-      }
+      // TODO: Clean up Firebase DB for this one-off edge case
+      var allTaps = Object.values(
+        snapshotVal.filter(
+          key =>
+            key.access != 'WM' &&
+            key.access != 'N' &&
+            key.access != 'TrashAcademy'
+        )
+      );
       dispatch(getTapsSuccess(allTaps));
     },
     {
@@ -106,11 +102,7 @@ export const getFoodOrgs = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    var allFoodOrgs = [];
-    var item;
-    for (item in snapshotVal) {
-      allFoodOrgs.push(snapshotVal[item]);
-    }
+    var allFoodOrgs = Object.values(snapshotVal);
     dispatch(getFoodSuccess(allFoodOrgs));
   });
 };
@@ -126,11 +118,7 @@ export const getForagingTaps = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    let allForagingTaps = [];
-    let item;
-    for (item in snapshotVal) {
-      allForagingTaps.push(snapshotVal[item]);
-    }
+    let allForagingTaps = Object.values(snapshotVal);
     dispatch(getForagingSuccess(allForagingTaps));
   });
 };
@@ -147,11 +135,7 @@ export const getBathroomTaps = () => dispatch => {
 
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    let allBathTaps = [];
-    let item;
-    for (item in snapshotVal) {
-      allBathTaps.push(snapshotVal[item]);
-    }
+    let allBathTaps = Object.values(snapshotVal);
     dispatch(getForagingSuccess(allBathTaps));
   });
 };
