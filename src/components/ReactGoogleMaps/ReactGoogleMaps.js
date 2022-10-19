@@ -287,8 +287,6 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.state.currlat, this.state.currlon);
-
     return (
       <div id="react-google-map" className={styles.mapContainer}>
         {/* <ClosestTap/> */}
