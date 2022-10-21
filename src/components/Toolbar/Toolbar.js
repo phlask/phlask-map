@@ -26,9 +26,10 @@ import FoodIcon from '../icons/FoodIcon';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import { styled, css } from '@mui/material';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -94,29 +95,6 @@ function getCoordinates() {
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-
-  function toolbarButtonStyle(theme) {
-    return {
-      '& .MuiBottomNavigationAction-root': {
-        marginTop: '10px',
-        marginBottom: '5px'
-      },
-      '& .Mui-selected': {
-        // Resetting to the default value set by MUI
-        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L39
-        color: '#2D3748'
-      },
-      '& .MuiBottomNavigationAction-label': {
-        paddingTop: '2px',
-        color: '#2D3748'
-      },
-      '& .MuiBottomNavigationAction-label.Mui-selected': {
-        // Resetting to the default value set by MUI
-        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L62
-        fontSize: theme => theme.typography.pxToRem(12)
-      }
-    };
-  }
 
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -230,8 +208,7 @@ function Toolbar(props) {
           }}
         >
           <BottomNavigation showLabels>
-            <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
+            <NavigationItem
               label={<Typography fontSize={'small'}>Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
@@ -239,8 +216,8 @@ function Toolbar(props) {
               }
             />
             <ResourceMenu />
-            <BottomNavigationAction
-              sx={(theme => toolbarButtonStyle(theme), { paddingBottom: 6 })}
+            <NavigationItem
+              central
               label={
                 <Typography fontSize={'small'} color={'black'} marginTop={-1}>
                   PHL<b>ASK</b>
@@ -254,8 +231,7 @@ function Toolbar(props) {
                 />
               }
             />
-            <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
+            <NavigationItem
               label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
             />
