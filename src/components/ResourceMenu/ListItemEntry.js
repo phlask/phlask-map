@@ -1,26 +1,23 @@
-import {
-  Grid,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
 import ReactGA from 'react-ga';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  TOGGLE_PHLASK_TYPE,
-  TOGGLE_RESOURCE_MENU
-} from '../../actions/actions';
+import { useDispatch } from 'react-redux';
+import * as Action from '../../actions/actions';
+import { isResourceMenuShown } from '../../hooks/selectors';
 
 const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const dispatch = useDispatch();
 
-  const isResourceMenuShown = useSelector(state => state.isResourceMenuShown);
-
   const toggleResourceMenu = () => {
-    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: isResourceMenuShown });
+    dispatch({
+      type: Action.TOGGLE_RESOURCE_MENU,
+      isShown: isResourceMenuShown
+    });
   };
 
   function handleGA(type) {
@@ -34,7 +31,7 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const switchType = type => {
     handleGA(type);
     dispatch({
-      type: TOGGLE_PHLASK_TYPE,
+      type: Action.TOGGLE_PHLASK_TYPE,
       mode: type
     });
     toggleResourceMenu();

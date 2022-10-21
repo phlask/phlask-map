@@ -1,13 +1,11 @@
-import { Box, Dialog, List, Slide } from '@mui/material';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import List from '@mui/material/List';
+import Slide from '@mui/material/Slide';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
-  TOGGLE_RESOURCE_MENU
-} from '../../actions/actions';
+import { useDispatch } from 'react-redux';
+import * as Action from '../../actions/actions';
+import { isResourceMenuShown } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
@@ -18,28 +16,33 @@ const listItems = [
   {
     resourceType: 'Water',
     icon: <WaterIcon />,
-    actionLabel: PHLASK_TYPE_WATER
+    actionLabel: Action.PHLASK_TYPE_WATER
   },
-  { resourceType: 'Food', icon: <FoodIcon />, actionLabel: PHLASK_TYPE_FOOD },
+  {
+    resourceType: 'Food',
+    icon: <FoodIcon />,
+    actionLabel: Action.PHLASK_TYPE_FOOD
+  },
   {
     resourceType: 'Foraging',
     icon: <ForagingIcon />,
-    actionLabel: PHLASK_TYPE_FORAGING
+    actionLabel: Action.PHLASK_TYPE_FORAGING
   },
   {
     resourceType: 'Bathroom',
     icon: <ToiletIcon />,
-    actionLabel: PHLASK_TYPE_BATHROOM
+    actionLabel: Action.PHLASK_TYPE_BATHROOM
   }
 ];
 
 const ResourceMenu = () => {
   const dispatch = useDispatch();
 
-  const isResourceMenuShown = useSelector(state => state.isResourceMenuShown);
-
   const toggleResourceMenu = () => {
-    dispatch({ type: TOGGLE_RESOURCE_MENU, isShown: isResourceMenuShown });
+    dispatch({
+      type: Action.TOGGLE_RESOURCE_MENU,
+      isShown: isResourceMenuShown
+    });
   };
 
   return (
@@ -68,12 +71,7 @@ const ResourceMenu = () => {
         >
           <List sx={{ maxWidth: 210 }}>
             {listItems?.map(entry => (
-              <ListItemEntry
-                key={entry.resourceType}
-                resourceType={entry.resourceType}
-                icon={entry.icon}
-                actionLabel={entry.actionLabel}
-              />
+              <ListItemEntry key={entry.resourceType} {...entry} />
             ))}
           </List>
         </Slide>
