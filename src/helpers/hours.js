@@ -26,7 +26,6 @@ export const hours = {
         eg: "6pm" or "3:30pm"
     */
   getSimpleHours: function getSimpleHours(hours) {
-    console.log(hours);
     // Check for 12:00am or hours exceeding 2400
     const intHours = parseInt(hours);
     if (intHours >= 2400) {
