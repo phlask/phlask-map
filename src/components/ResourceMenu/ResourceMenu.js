@@ -5,7 +5,7 @@ import Slide from '@mui/material/Slide';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import * as Action from '../../actions/actions';
-import { isResourceMenuShown } from '../../hooks/selectors';
+import { useIsResourceMenuShown } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
@@ -37,6 +37,7 @@ const listItems = [
 
 const ResourceMenu = () => {
   const dispatch = useDispatch();
+  const isResourceMenuShown = useIsResourceMenuShown();
 
   const toggleResourceMenu = () => {
     dispatch({

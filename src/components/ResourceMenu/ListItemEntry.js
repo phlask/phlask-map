@@ -8,10 +8,11 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
 import * as Action from '../../actions/actions';
-import { isResourceMenuShown } from '../../hooks/selectors';
+import { useIsResourceMenuShown } from '../../hooks/selectors';
 
 const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const dispatch = useDispatch();
+  const isResourceMenuShown = useIsResourceMenuShown();
 
   const toggleResourceMenu = () => {
     dispatch({

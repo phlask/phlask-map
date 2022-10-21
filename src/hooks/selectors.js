@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 
-export const isResourceMenuShown = useSelector(
-  state => state.isResourceMenuShown
-);
+export const useIsResourceMenuShown = () => {
+  const resourceMenu = useSelector(state => state.isResourceMenuShown);
+  return resourceMenu;
+};
