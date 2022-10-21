@@ -1,4 +1,3 @@
-import { KeyTwoTone } from '@mui/icons-material';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import {
@@ -13,25 +12,6 @@ export const resizeWindow = size => ({
   type: RESIZE_WINDOW,
   size
 });
-
-// let mediaList = [
-//   ['mobile','(max-width: 500px)'],
-//   ['tablet','(max-width: 800px)'],
-//   ['computer','(max-width: 1400px)'],
-//   ['xl', '(min-width: 1400px)']
-// ]
-
-// let size = ''
-// for (let x  = 0; x < mediaList.length; x++){
-//   if(window.matchMedia(mediaList[x][1]).matches){
-//       if (state.screenSize !== mediaList[x][0]){
-//           size = mediaList[x][0]
-//           console.log('Screensize: ' + size)
-//       }
-
-//       // return
-//   }
-// }
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -75,13 +55,11 @@ export const getTaps = () => dispatch => {
     snapshot => {
       const snapshotVal = snapshot.val();
       // TODO: Clean up Firebase DB for this one-off edge case
-      var allTaps = Object.values(
-        snapshotVal.filter(
-          key =>
-            key.access != 'WM' &&
-            key.access != 'N' &&
-            key.access != 'TrashAcademy'
-        )
+      var allTaps = snapshotVal.filter(
+        key =>
+          key.access != 'WM' &&
+          key.access != 'N' &&
+          key.access != 'TrashAcademy'
       );
       dispatch(getTapsSuccess(allTaps));
     },
@@ -102,8 +80,7 @@ export const getFoodOrgs = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    var allFoodOrgs = Object.values(snapshotVal);
-    dispatch(getFoodSuccess(allFoodOrgs));
+    dispatch(getFoodSuccess(snapshotVal));
   });
 };
 
@@ -118,8 +95,7 @@ export const getForagingTaps = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    let allForagingTaps = Object.values(snapshotVal);
-    dispatch(getForagingSuccess(allForagingTaps));
+    dispatch(getForagingSuccess(snapshotVal));
   });
 };
 
@@ -135,8 +111,7 @@ export const getBathroomTaps = () => dispatch => {
 
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    let allBathTaps = Object.values(snapshotVal);
-    dispatch(getForagingSuccess(allBathTaps));
+    dispatch(getForagingSuccess(snapshotVal));
   });
 };
 
