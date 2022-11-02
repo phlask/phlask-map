@@ -32,7 +32,9 @@ export const hours = {
       return hours === 2400 ? '12:00am' : 'Exceeded 2400 hours';
     }
 
-    const time = hours.split('');
+    // TODO: Address difference between Water and Food taps when it comes to the hours key in the Firebase DB
+    // Water taps have an `hours` key with day and time values while Food taps do not
+    const time = hours.time ? hours.time.split() : hours.split();
     const minute = time[2] + time[3];
 
     // Check for minutes exceeding 59

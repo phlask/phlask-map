@@ -1,31 +1,35 @@
 import React from 'react';
 import ReactGA from 'react-ga';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  togglePhlaskType,
-  PHLASK_TYPE_WATER,
   PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_WATER,
+  setMapCenter,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  togglePhlaskType,
+  toggleResourceMenu
 } from '../../actions/actions';
-import { connect } from 'react-redux';
-import Filter from '../Filter/Filter';
 import FoodFilter from '../FoodFilter/FoodFilter';
-import styles from './Toolbar.module.scss';
 import phlaskImg from '../images/PHLASK Button.png';
+import Filter from '../ResourceMenu/Filter';
+import styles from './Toolbar.module.scss';
 
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { isMobile } from 'react-device-detect';
 import { AddResourceModal } from '../AddResourceModal';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
+import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
 
-import FoodIcon from '../icons/FoodIcon';
 import DesktopWaterIcon from '../icons/DesktopWaterIcon';
+import FoodIcon from '../icons/FoodIcon';
 
-import Box from '@mui/material/Box';
+import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import NavigationItem from './NavigationItem';
+import Box from '@mui/material/Box';
+import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import { styled, css } from '@mui/material';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -44,8 +48,6 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 function getClosest(data, userLocation) {
-  // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-  // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map((org, index) => {
     return {
       lat: org['lat'],
@@ -92,29 +94,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-
-  function toolbarButtonStyle(theme) {
-    return {
-      '& .MuiBottomNavigationAction-root': {
-        'margin-top': '10px',
-        'margin-bottom': '5px'
-      },
-      '& .Mui-selected': {
-        // Resetting to the default value set by MUI
-        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L39
-        color: '#2D3748'
-      },
-      '& .MuiBottomNavigationAction-label': {
-        'padding-top': '2px',
-        color: '#2D3748'
-      },
-      '& .MuiBottomNavigationAction-label.Mui-selected': {
-        // Resetting to the default value set by MUI
-        // from https://github.com/mui/material-ui/blob/master/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js#L62
-        'font-size': theme => theme.typography.pxToRem(12)
-      }
-    };
-  }
+  const [open, setOpen] = React.useState(false);
 
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -227,30 +207,32 @@ function Toolbar(props) {
             bgcolor: 'white'
           }}
         >
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
-              label="Resources"
+          <BottomNavigation showLabels>
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-            />
-            <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
-              label={
-                <span>
-                  PHL<b>ASK</b>
-                </span>
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
               }
-              icon={<WaterIcon className={styles.PHLASKButton} />}
             />
-            <BottomNavigationAction
-              sx={theme => toolbarButtonStyle(theme)}
-              label="Contribute"
+            <ResourceMenu />
+            <NavigationItem
+              central
+              label={
+                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                  PHL<b>ASK</b>
+                </Typography>
+              }
+              icon={
+                <SvgIcon
+                  component={WaterIcon}
+                  sx={{ fontSize: 90 }}
+                  inheritViewBox={true}
+                />
+              }
+            />
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
             />
           </BottomNavigation>
@@ -264,7 +246,8 @@ const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
   allFoodOrgs: state.allFoodOrgs,
-  userLocation: state.userLocation
+  userLocation: state.userLocation,
+  isResourceMenuShown: state.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
@@ -273,7 +256,8 @@ const mapDispatchToProps = {
   PHLASK_TYPE_WATER,
   setSelectedPlace,
   toggleInfoWindow,
-  setMapCenter
+  setMapCenter,
+  toggleResourceMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

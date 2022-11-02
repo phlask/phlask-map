@@ -1,31 +1,17 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { waterConfig, foodConfig } from '../firebase/firebaseConfig';
+import { getDatabase, onValue, ref } from 'firebase/database';
+import {
+  bathroomConfig,
+  foodConfig,
+  foragingConfig,
+  waterConfig
+} from '../firebase/firebaseConfig';
 
 export const RESIZE_WINDOW = 'RESIZE_WINDOW';
 export const resizeWindow = size => ({
   type: RESIZE_WINDOW,
   size
 });
-
-// let mediaList = [
-//   ['mobile','(max-width: 500px)'],
-//   ['tablet','(max-width: 800px)'],
-//   ['computer','(max-width: 1400px)'],
-//   ['xl', '(min-width: 1400px)']
-// ]
-
-// let size = ''
-// for (let x  = 0; x < mediaList.length; x++){
-//   if(window.matchMedia(mediaList[x][1]).matches){
-//       if (state.screenSize !== mediaList[x][0]){
-//           size = mediaList[x][0]
-//           console.log('Screensize: ' + size)
-//       }
-
-//       // return
-//   }
-// }
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -68,20 +54,13 @@ export const getTaps = () => dispatch => {
     ref(database, '/'),
     snapshot => {
       const snapshotVal = snapshot.val();
-      var allTaps = [];
-      var item;
-      for (item in snapshotVal) {
-        if (snapshotVal[item].access === 'WM') {
-          continue;
-        }
-        if (snapshotVal[item].active === 'N') {
-          continue;
-        }
-        if (snapshotVal[item].access === 'TrashAcademy') {
-          continue;
-        }
-        allTaps.push(snapshotVal[item]);
-      }
+      // TODO: Clean up Firebase DB for this one-off edge case
+      var allTaps = snapshotVal.filter(
+        key =>
+          key.access != 'WM' &&
+          key.access != 'N' &&
+          key.access != 'TrashAcademy'
+      );
       dispatch(getTapsSuccess(allTaps));
     },
     {
@@ -101,14 +80,41 @@ export const getFoodOrgs = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    var allFoodOrgs = [];
-    var item;
-    for (item in snapshotVal) {
-      allFoodOrgs.push(snapshotVal[item]);
-    }
-    dispatch(getFoodSuccess(allFoodOrgs));
+    dispatch(getFoodSuccess(snapshotVal));
   });
 };
+
+export const GET_FORAGING_SUCCESS = 'GET_FORAGING_SUCCESS';
+export const getForagingSuccess = allForagingTaps => ({
+  type: GET_FORAGING_SUCCESS,
+  allForagingTaps
+});
+
+export const getForagingTaps = () => dispatch => {
+  const app = initializeApp(foragingConfig, 'foraging');
+  const database = getDatabase(app);
+  return onValue(ref(database, '/'), snapshot => {
+    const snapshotVal = snapshot.val();
+    dispatch(getForagingSuccess(snapshotVal));
+  });
+};
+
+export const GET_BATHROOM_SUCCESS = 'GET_BATHROOM_SUCCESS';
+export const getBathroomSuccess = allBathroomTaps => ({
+  type: GET_BATHROOM_SUCCESS,
+  allBathroomTaps
+});
+
+export const getBathroomTaps = () => dispatch => {
+  const app = initializeApp(bathroomConfig, 'bathroom');
+  const database = getDatabase(app);
+
+  return onValue(ref(database, '/'), snapshot => {
+    const snapshotVal = snapshot.val();
+    dispatch(getForagingSuccess(snapshotVal));
+  });
+};
+
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({
   type: SET_USER_LOCATION,
@@ -173,5 +179,13 @@ export const togglePhlaskType = phlaskType => ({
   mode: phlaskType
 });
 
+export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
+export const toggleResourceMenu = isShown => ({
+  type: TOGGLE_RESOURCE_MENU,
+  isShown
+});
+
 export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
 export const PHLASK_TYPE_FOOD = 'PHLASK_TYPE_FOOD';
+export const PHLASK_TYPE_FORAGING = 'PHLASK_TYPE_FORAGING';
+export const PHLASK_TYPE_BATHROOM = 'PHLASK_TYPE_BATHROOM';

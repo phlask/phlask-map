@@ -6,7 +6,7 @@ import FoodOtherFilterIcon from '../icons/FoodOtherFilterIcon';
 import FoodSchoolFilterIcon from '../icons/FoodSchoolFilterIcon';
 import FoodRecreationFilterIcon from '../icons/FoodRecreationFilterIcon';
 import FoodCongregationFilterIcon from '../icons/FoodCongregationFilterIcon';
-import styles from '../Filter/Filter.module.scss';
+import styles from '../ResourceMenu/Filter.module.scss';
 import {
   OverlayTrigger,
   Popover,

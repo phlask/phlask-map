@@ -17,6 +17,7 @@ const initialState = {
   infoWindowClass: isMobile ? 'info-window-out' : 'info-window-out-desktop',
   isSearchShown: false,
   isFilterShown: false,
+  isResourceMenuShown: false,
   tapFilters: {
     filtered: false,
     handicap: false,
@@ -113,6 +114,9 @@ export default (state = initialState, act) => {
 
     case actions.TOGGLE_FILTER_MODAL:
       return { ...state, isFilterShown: act.isShown };
+
+    case actions.TOGGLE_RESOURCE_MENU:
+      return { ...state, isResourceMenuShown: !act.isShown };
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);

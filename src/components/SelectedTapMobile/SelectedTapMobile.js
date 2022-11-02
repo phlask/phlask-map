@@ -98,19 +98,19 @@ function SelectedTapMobile(props) {
         <button className={styles.swipeIcon}></button>
       ) : (
         <div className={styles.expandedToolBar}>
-          <IconButton color="primary" ariaLabel="" onClick={minimizeModal}>
+          <IconButton color="primary" aria-label="" onClick={minimizeModal}>
             <CaretDownSvg />
           </IconButton>
           <div>
             <IconButton
               color="primary"
-              ariaLabel="export"
+              aria-label="export"
               component="label"
               onClick={toggleNativeShare}
             >
               <ExportSvg />
             </IconButton>
-            <IconButton color="primary" ariaLabel="more" component="label">
+            <IconButton color="primary" aria-label="more" component="label">
               <ThreeDotSvg />
             </IconButton>
           </div>

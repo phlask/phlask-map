@@ -58,10 +58,6 @@ class SelectedTap extends React.Component {
     walkingDistance: 0
   };
 
-  componentWillUnmount() {
-    console.log('unmounting');
-  }
-
   getWalkingDurationAndTimes = () => {
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
@@ -145,14 +141,10 @@ class SelectedTap extends React.Component {
   }
 
   animateInfoExpansion(shouldExpand) {
-    // if(shouldExpand){
-    //     this.refContentArea.current.scrollTop = 0
-    // }
     this.setState(
       {
         infoExpansionStyle: {
           height: shouldExpand ? '80%' : this.state.previewHeight
-          // : '40vh'
         }
       },
       () => {
@@ -163,20 +155,13 @@ class SelectedTap extends React.Component {
 
   handleSwipe(direction) {
     if (direction === 'top') {
-      // console.log('Top')
       this.toggleInfoExpanded(true);
     } else if (direction === 'bottom') {
-      // console.log('Bottom');
       this.toggleInfoExpanded(false);
-    } else if (direction === 'left') {
-      // console.log('Left');
-    } else if (direction === 'right') {
-      // console.log('Right');
     }
   }
 
   handleGA() {
-    console.log(this.props.selectedPlace);
     ReactGA.event({
       category: `Tap - ${this.props.phlaskType}`,
       action: 'InfoShown',
@@ -200,35 +185,6 @@ class SelectedTap extends React.Component {
     });
   }
 
-  // getAccess(){
-  //     if(this.props.selectedPlace.access === undefined || this.props.selectedPlace.access.length === 0){
-  //         console.log('Access is not defined for this entry');
-  //         return null
-  //     }
-  //     else {
-  //         let access = tempUnverified
-  //         switch(this.props.selectedPlace.access){
-  //             case 'Public': access = phlaskBlue
-  //                 break
-  //             case 'Semi-public': access = phlaskGreen
-  //                 break
-  //             case 'Private-Shared': access = phlaskGreen
-  //                 break
-  //             case 'Private': access = phlaskYellow
-  //                 break
-  //             case 'Restricted': access = phlaskRed
-  //                 break
-  //             case 'Unverified': access = tempUnverified
-  //                 break
-  //             // case 'TrashAcademy': access = trashAcademyIcon
-  //             //     break
-  //             // case 'Water Monsters': access = waterMonstersIcon
-  //             //     break
-  //         }
-  //         return this.props.selectedPlace.icon
-  //     }
-  // }
-
   componentDidUpdate(prevProps) {
     if (this.props.showingInfoWindow) {
       if (this.props.selectedPlace !== prevProps.selectedPlace) {
@@ -245,19 +201,10 @@ class SelectedTap extends React.Component {
         });
       }
     }
-    console.log('Showing Info Window: ' + this.props.showingInfoWindow);
   }
 
   componentDidMount() {
     this.setCurrentDate();
-    // console.log('Height: ' + this.refSelectedTap.current.clientHeight);
-
-    // this.setState({
-    //     previewHeight: this.refSelectedTap.current.clientHeight,
-    //     infoExpansionStyle: {
-    //         height: this.refSelectedTap.current.clientHeight
-    //     }
-    // })
   }
 
   render() {
@@ -325,7 +272,6 @@ class SelectedTap extends React.Component {
                 <div id="tap-info-img-box-desktop">
                   <img
                     id="tap-info-img"
-                    // src={this.props.displayImg}
                     src={tempImages.tapImg}
                     srcSet={
                       tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'

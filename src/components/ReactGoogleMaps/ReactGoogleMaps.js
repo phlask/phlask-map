@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 import SelectedTap from '../SelectedTap/SelectedTap';
 import {
   getTaps,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
   setFilterFunction,
-  toggleInfoWindow,
   setMapCenter,
   setUserLocation,
-  PHLASK_TYPE_WATER
+  toggleInfoWindow
 } from '../../actions/actions';
 // import Legend from "./Legend";
 import MapMarkers from '../MapMarkers/MapMarkers';
@@ -19,6 +22,7 @@ import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
 import { isMobile } from 'react-device-detect';
 import Toolbar from '../Toolbar/Toolbar';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -320,28 +324,15 @@ export class ReactGoogleMaps extends Component {
               } */}
 
               {/* Issue: MapMarkers won't render when placed inside container? */}
-              {this.props.phlaskType === PHLASK_TYPE_WATER ? (
-                // Water
-                <MapMarkers
-                  map={this.props.map}
-                  google={this.props.google}
-                  mapCenter={{
-                    lat: this.state.currlat,
-                    lng: this.state.currlon
-                  }}
-                />
-              ) : (
-                // Food
-
-                <MapMarkersFood
-                  map={this.props.map}
-                  google={this.props.google}
-                  mapCenter={{
-                    lat: this.state.currlat,
-                    lng: this.state.currlon
-                  }}
-                />
-              )}
+              <MapMarkersMapper
+                phlaskType={this.props.phlaskType}
+                map={this.props.map}
+                google={this.props.google}
+                mapCenter={{
+                  lat: this.state.currlat,
+                  lng: this.state.currlon
+                }}
+              />
 
               {this.state.searchedTap != null && (
                 <Marker
