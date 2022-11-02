@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
 import ReactGA from 'react-ga';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../actions/actions';
-import { useIsResourceMenuShown } from '../../hooks/selectors';
+import { isResourceMenuShownSelector } from '../../hooks/selectors';
 
 const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const dispatch = useDispatch();
-  const isResourceMenuShown = useIsResourceMenuShown();
+  const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
   const toggleResourceMenu = () => {
     dispatch({

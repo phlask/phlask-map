@@ -3,14 +3,14 @@ import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../actions/actions';
-import { useIsResourceMenuShown } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 import ListItemEntry from './ListItemEntry';
+import { isResourceMenuShownSelector } from '../../hooks/selectors';
 
 const listItems = [
   {
@@ -37,7 +37,7 @@ const listItems = [
 
 const ResourceMenu = () => {
   const dispatch = useDispatch();
-  const isResourceMenuShown = useIsResourceMenuShown();
+  const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
   const toggleResourceMenu = () => {
     dispatch({
