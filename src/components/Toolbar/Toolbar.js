@@ -4,6 +4,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_BATHROOM,
   setMapCenter,
   setSelectedPlace,
   toggleInfoWindow,
@@ -19,10 +21,13 @@ import { isMobile } from 'react-device-detect';
 import { AddResourceModal } from '../AddResourceModal';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIcon.svg';
 
 import DesktopWaterIcon from '../icons/DesktopWaterIcon';
-import FoodIcon from '../icons/FoodIcon';
+
+import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
+import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
+import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
+import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -30,6 +35,7 @@ import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import { styled, css } from '@mui/material';
+import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -95,6 +101,15 @@ function getCoordinates() {
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+  const phlaskType = useSelector(phlaskTypeSelector);
+
+  const selectedResourceIcon = {
+    [PHLASK_TYPE_WATER]: WaterIcon,
+    [PHLASK_TYPE_FOOD]: FoodIcon,
+    [PHLASK_TYPE_FORAGING]: ForagingIcon,
+    [PHLASK_TYPE_BATHROOM]: ToiletIcon,
+    default: WaterIcon
+  }[phlaskType ?? 'default'];
 
   function switchType(type) {
     if (props.phlaskType !== type) {
@@ -225,7 +240,7 @@ function Toolbar(props) {
               }
               icon={
                 <SvgIcon
-                  component={WaterIcon}
+                  component={selectedResourceIcon}
                   sx={{ fontSize: 90 }}
                   inheritViewBox={true}
                 />
