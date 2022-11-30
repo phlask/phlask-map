@@ -1,30 +1,288 @@
 import styles from './AddResourceModal.module.scss';
 import React, { Component } from 'react';
-import {
-  Modal,
-  Button,
-  Form,
-  OverlayTrigger,
-  Popover,
-  Accordion
-} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import ImageUploader from 'react-images-upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { isMobile } from 'react-device-detect';
-// eslint-disable-next-line import/no-unresolved
 import ChooseResource from './ChooseResource';
-// eslint-disable-next-line import/no-unresolved
 import ShareSocials from './ShareSocials';
-// eslint-disable-next-line import/no-unresolved
 import AddFood from './AddFood';
-// eslint-disable-next-line import/no-unresolved
 import AddBathroom from './AddBathroom';
-// eslint-disable-next-line import/no-unresolved
 import AddForaging from './AddForaging';
-// eslint-disable-next-line import/no-unresolved
 import AddWaterTap from './AddWaterTap';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
+
+// const AddResourceModal = () => {
+//   const [pictures, setPictures] = React.useState([]);
+//   const [name, setName] = React.useState('');
+//   const [access, setAccess] = React.useState('');
+//   const [address, setAddress] = React.useState('');
+//   const [website, setWebsite] = React.useState('');
+//   const [description, setDescription] = React.useState('');
+//   const [organization, setOrganization] = React.useState('');
+//   const [tapServiceType, setTapServiceType] = React.useState('');
+//   const [tapType, setTapType] = React.useState('');
+//   const [phlaskStatement, setPhlaskStatement] = React.useState('');
+//   const [normsAndRules, setNormsAndRules] = React.useState('');
+//   const [filtration, setFiltration] = React.useState(false);
+//   const [handicapAccessible, setHandicapAccessible] = React.useState(false);
+//   const [waterVesselNeeded, setWaterVesselNeeded] = React.useState(false);
+//   const [idRequired, setIdRequired] = React.useState(false);
+//   const [childrenOnly, setChildrenOnly] = React.useState(false);
+//   const [dbConnection, setDbConnection] = React.useState('');
+//   const [count, setCount] = React.useState(0);
+//   const [show, setShow] = React.useState(false);
+//   const [formStep, setFormStep] = React.useState('chooseResource');
+//   const [consumptionType, setConsumptionType] = React.useState('');
+//   const [foodType, setFoodType] = React.useState('');
+//   const [foragingFoodType, setForagingFoodType] = React.useState('');
+//   const [changingTable, setChangingTable] = React.useState(false);
+//   const [genderNeutral, setGenderNeutral] = React.useState(false);
+//   const [familyBathroom, setFamilyBathroom] = React.useState(false);
+//   const [singleOccupancy, setSingleOccupancy] = React.useState(false);
+
+//   const onChangeDbConnection = value => {
+//     setDbConnection(value);
+//     setCount(0);
+//     const database = getDatabase(dbConnection);
+//     onValue(ref(database, '/'), snapshot => {
+//       const snapshotVal = snapshot.val();
+//       for (let item in snapshotVal) {
+//         if (snapshotVal[item].access === 'WM') {
+//           continue;
+//         }
+//         if (snapshotVal[item].active === 'N') {
+//           continue;
+//         }
+//         if (snapshotVal[item].access === 'TrashAcademy') {
+//           continue;
+//         }
+//         setCount(prevState => prevState + 1);
+//       }
+//     });
+//   };
+
+//   const onDrop = picture => {
+//     setPictures(picture);
+//   };
+
+//   const onNameChange = name => {
+//     setName(name);
+//   };
+
+//   const submitImage = async picture => {};
+
+//   const onSubmit = e => {
+//     e.preventDefault();
+//     const upload_promises = pictures.map(picture => submitImage(picture));
+//     // Upload images
+//     this.state.pictures.forEach(picture => {
+//       upload_promises.push(this.submitImage(picture));
+//     });
+
+//     return Promise.all(upload_promises).then(images => {
+//       // All image uploads completed, loading tap record
+
+//       /* Easier to construct one new data object than to
+//        *  figure out which fields we need to submit for each resource type
+//        *  and create new data objects specific for each resource type
+//        *  and selectively pass it on to the submit function
+//        */
+//       const newData = {
+//         images: images,
+//         name: this.state.name,
+//         access: this.state.access,
+//         address: this.state.address,
+//         website: this.state.website,
+//         description: this.state.description,
+//         organization: this.state.organization,
+//         // TAP FIELDS
+//         filtration: this.state.filtration,
+//         handicap: this.state.handicapAccessable,
+//         service: this.state.tapServiceType,
+//         tap_type: this.state.tapType,
+//         vessel: this.state.waterVesselNeeded,
+//         // FOOD FIELDS
+//         food_type: this.state.foodType,
+//         consumption_type: this.state.consumptionType,
+//         id_required: this.state.idRequired,
+//         children_only: this.state.childrenOnly,
+//         // FORAGING FIELDS
+//         foraging_food_type: this.state.foragingFoodType,
+//         // BATHROOM FIELDS
+//         changing_table: this.state.changingTable,
+//         gender_neutral: this.state.genderNeutral,
+//         family_bathroom: this.state.familyBathroom,
+//         single_occupancy: this.state.singleOccupancy,
+//         // SHARED FIELDS
+//         statement: this.state.phlaskStatement,
+//         norms_rules: this.state.normsAndRules
+//       };
+
+//       const database = getDatabase(this.state.dbConnection);
+//       set(ref(database, '/' + (this.state.count + 1).toString()), newData);
+//     });
+//   };
+
+//   return (
+//     <>
+//       <Modal show={show} onHide={this.handleClose} className={styles.modal}>
+//         {formStep === 'chooseResource' && (
+//           <ChooseResource setFormStep={this.onChangeFormStep} />
+//         )}
+
+//         {formStep === 'addWaterTap' && (
+//           <AddWaterTap
+//             prev={() => setFormStep('chooseResource')}
+//             next={() => setFormStep('shareSocials')}
+//             onSubmit={this.onSubmit}
+//             onDbConnectionChange={onChangeDbConnection}
+//             onDrop={onDrop}
+//             name={name}
+//             onNameChange={onNameChange}
+//             address={address}
+//             onAddressChange={this.onChangeAddress}
+//             website={this.state.website}
+//             onWebsiteChange={this.onChangeWebsite}
+//             description={this.state.description}
+//             onDescriptionChange={this.onChangeDescription}
+//             access={this.state.access}
+//             onAccessChange={this.onChangeAccess}
+//             accessible={this.state.handicapAccessable}
+//             onAccessibleChange={this.onChangeHandicapAccess}
+//             idRequired={this.state.idRequired}
+//             onIdRequiredChange={this.onChangeIdRequired}
+//             childrenOnly={this.state.childrenOnly}
+//             onChildrenOnlyChange={this.onChangeChildrenOnly}
+//             waterVesselNeeded={this.state.waterVesselNeeded}
+//             onWaterVesselNeededChange={this.onChangeWaterVesselNeeded}
+//             filtration={this.state.filtration}
+//             onFiltrationChange={this.onChangeFiltration}
+//             tapServiceType={this.state.tapServiceType}
+//             onTapServiceTypeChange={this.onChangeTapServiceType}
+//             tapType={this.state.tapType}
+//             onTapTypeChange={this.onChangeTapType}
+//             phlaskStatement={this.state.phlaskStatement}
+//             onPhlaskStatementChange={this.onChangePhlaskStatement}
+//             normsAndRules={this.state.normsAndRules}
+//             onNormsAndRulesChange={this.onChangeNormsAndRules}
+//           />
+//         )}
+
+//         {formStep === 'addFood' && (
+//           <AddFood
+//             prev={() => setFormStep('chooseResource')}
+//             next={() => setFormStep('shareSocials')}
+//             onSubmit={this.onSubmit}
+//             onDbConnectionChange={this.onChangeDbConnection}
+//             onDrop={onDrop}
+//             name={name}
+//             onNameChange={onNameChange}
+//             address={address}
+//             onAddressChange={this.onChangeAddress}
+//             website={this.state.website}
+//             onWebsiteChange={this.onChangeWebsite}
+//             description={this.state.description}
+//             onDescriptionChange={this.onChangeDescription}
+//             organization={this.state.organization}
+//             onOrganizationChange={this.onChangeOrganization}
+//             accessible={this.state.handicapAccessable}
+//             onAccessibleChange={this.onChangeHandicapAccess}
+//             idRequired={this.state.idRequired}
+//             onIdRequiredChange={this.onChangeIdRequired}
+//             childrenOnly={this.state.childrenOnly}
+//             onChildrenOnlyChange={this.onChangeChildrenOnly}
+//             consumptionType={this.state.consumptionType}
+//             onConsumptionTypeChange={this.onChangeConsumptionType}
+//             foodType={this.state.foodType}
+//             onFoodTypeChange={this.onChangeFoodType}
+//             phlaskStatement={this.state.phlaskStatement}
+//             onPhlaskStatementChange={this.onChangePhlaskStatement}
+//             normsAndRules={this.state.normsAndRules}
+//             onNormsAndRulesChange={this.onChangeNormsAndRules}
+//           />
+//         )}
+
+//         {formStep === 'addBathroom' && (
+//           <AddBathroom
+//             prev={() => setFormStep('chooseResource')}
+//             next={() => setFormStep('shareSocials')}
+//             onSubmit={this.onSubmit}
+//             onDbConnectionChange={this.onChangeDbConnection}
+//             onDrop={onDrop}
+//             name={name}
+//             onNameChange={onNameChange}
+//             address={address}
+//             onAddressChange={this.onChangeAddress}
+//             website={this.state.website}
+//             onWebsiteChange={this.onChangeWebsite}
+//             description={this.state.description}
+//             onDescriptionChange={this.onChangeDescription}
+//             access={this.state.access}
+//             onAccessChange={this.onChangeAccess}
+//             phlaskStatement={this.state.phlaskStatement}
+//             onPhlaskStatementChange={this.onChangePhlaskStatement}
+//             normsAndRules={this.state.normsAndRules}
+//             onNormsAndRulesChange={this.onChangeNormsAndRules}
+//             accessible={this.state.handicapAccessable}
+//             onAccessibleChange={this.onChangeHandicapAccess}
+//             idRequired={this.state.idRequired}
+//             onIdRequiredChange={this.onChangeIdRequired}
+//             changingTable={this.state.changingTable}
+//             onChangeChangingTable={this.onChangeChangingTable}
+//             genderNeutral={this.state.genderNeutral}
+//             onChangeGenderNeutral={this.onChangeGenderNeutral}
+//             familyBathroom={this.state.familyBathroom}
+//             onChangeFamilyBathroom={this.onChangeFamilyBathroom}
+//             singleOccupancy={this.state.singleOccupancy}
+//             onChangeSingleOccupancy={this.onChangeSingleOccupancy}
+//           />
+//         )}
+
+//         {formStep === 'addForaging' && (
+//           <AddForaging
+//             prev={() => setFormStep('chooseResource')}
+//             next={() => setFormStep('shareSocials')}
+//             onSubmit={this.onSubmit}
+//             onDbConnectionChange={this.onChangeDbConnection}
+//             onDrop={onDrop}
+//             name={name}
+//             onNameChange={onNameChange}
+//             address={address}
+//             onAddressChange={this.onChangeAddress}
+//             website={this.state.website}
+//             onWebsiteChange={this.onChangeWebsite}
+//             description={this.state.description}
+//             onDescriptionChange={this.onChangeDescription}
+//             access={this.state.access}
+//             onAccessChange={this.onChangeAccess}
+//             accessible={this.state.handicapAccessable}
+//             onAccessibleChange={this.onChangeHandicapAccess}
+//             foragingFoodType={this.state.foragingFoodType}
+//             onForagingFoodTypeChange={this.onChangeForagingFoodType}
+//             phlaskStatement={this.state.phlaskStatement}
+//             onPhlaskStatementChange={this.onChangePhlaskStatement}
+//             normsAndRules={this.state.normsAndRules}
+//             onNormsAndRulesChange={this.onChangeNormsAndRules}
+//           />
+//         )}
+
+//         {formStep === 'shareSocials' && <ShareSocials />}
+//       </Modal>
+
+//       <button
+//         onClick={this.handleShow}
+//         className={`${isMobile ? styles.mobileAddButton : ''} ${
+//           styles.addButton
+//         }`}
+//         data-cy="AddResourceButton"
+//       >
+//         <FontAwesomeIcon icon={faPlus} size="2x" />
+//       </button>
+//     </>
+//   );
+// };
 
 export class AddResourceModal extends Component {
   constructor(props) {
@@ -52,11 +310,10 @@ export class AddResourceModal extends Component {
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     //  BATHROOM MODAL
-    this.onChangeChangingTable = this.onChangeChangingTable.bind(this); 
-    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this); 
+    this.onChangeChangingTable = this.onChangeChangingTable.bind(this);
+    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this);
     this.onChangeFamilyBathroom = this.onChangeFamilyBathroom.bind(this);
     this.onChangeSingleOccupancy = this.onChangeSingleOccupancy.bind(this);
-
 
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
@@ -248,20 +505,19 @@ export class AddResourceModal extends Component {
     });
   }
 
-
   // ADD BATHROOM MODAL FIELDS
 
   onChangeChangingTable(e) {
-      this.setState({
-        changingTable: e.target.checked
-      });
+    this.setState({
+      changingTable: e.target.checked
+    });
   }
 
   onChangeGenderNeutral(e) {
     this.setState({
       genderNeutral: e.target.checked
     });
-}
+  }
 
   onChangeFamilyBathroom(e) {
     this.setState({
@@ -274,9 +530,6 @@ export class AddResourceModal extends Component {
       singleOccupancy: e.target.checked
     });
   }
-
-
-
 
   // Database
   onChangeDbConnection(connection) {
@@ -362,8 +615,7 @@ export class AddResourceModal extends Component {
         single_occupancy: this.state.singleOccupancy,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules,
-
+        norms_rules: this.state.normsAndRules
       };
 
       const database = getDatabase(this.state.dbConnection);
@@ -409,7 +661,7 @@ export class AddResourceModal extends Component {
       changingTable: false,
       genderNeutral: false,
       familyBathroom: false,
-      singleOccupancy: false,
+      singleOccupancy: false
     };
     this.setState(resetState);
   }
@@ -519,20 +771,18 @@ export class AddResourceModal extends Component {
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
-
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
               onIdRequiredChange={this.onChangeIdRequired}
-
-              changingTable={this.state.changingTable}            
-              onChangeChangingTable={this.onChangeChangingTable} 
+              changingTable={this.state.changingTable}
+              onChangeChangingTable={this.onChangeChangingTable}
               genderNeutral={this.state.genderNeutral}
               onChangeGenderNeutral={this.onChangeGenderNeutral}
               familyBathroom={this.state.familyBathroom}
               onChangeFamilyBathroom={this.onChangeFamilyBathroom}
               singleOccupancy={this.state.singleOccupancy}
-              onChangeSingleOccupancy={this.onChangeSingleOccupancy} 
+              onChangeSingleOccupancy={this.onChangeSingleOccupancy}
             />
           )}
 
