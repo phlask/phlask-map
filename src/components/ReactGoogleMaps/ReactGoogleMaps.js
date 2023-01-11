@@ -162,6 +162,7 @@ export class ReactGoogleMaps extends Component {
       anchor: false
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -175,15 +176,6 @@ export class ReactGoogleMaps extends Component {
       this.setState({
         unfilteredTaps: prevProps.tapsDisplayed
       });
-      if (
-        this.state.currlat !== this.props.mapCenter.lat ||
-        this.state.currlon !== this.props.mapCenter.lng
-      ) {
-        this.setState({
-          currlat: this.props.mapCenter.lat,
-          currlon: this.props.mapCenter.lng
-        });
-      }
     }
   }
 
@@ -253,6 +245,13 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
+  onDragEnd = (_, map) => {
+    this.setState({
+      currlat: map.center.lat(),
+      currlon: map.center.lng(),
+    });
+  }
+
   toggleTapInfo = isExpanded => {
     this.setState({
       isExpanded: isExpanded
@@ -288,8 +287,6 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    // console.log("Rendered ReactGoogleMaps");
-
     return (
       <div id="react-google-map" className={styles.mapContainer}>
         {/* <ClosestTap/> */}
@@ -305,6 +302,7 @@ export class ReactGoogleMaps extends Component {
               mapTypeControl={false}
               rotateControl={false}
               fullscreenControl={false}
+              onDragend={this.onDragEnd}
               initialCenter={{
                 lat: this.state.currlat,
                 lng: this.state.currlon
