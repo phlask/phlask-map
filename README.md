@@ -50,7 +50,7 @@ Code behind the PHLASK Web Map
       $ docker --version
       # something similar to below should be printed out
       # older versions of Docker OK
-      Docker version 20.10.12, build e91ed57
+      Docker version x.y.z, build xxx
     ```
 
 1.  Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
@@ -79,7 +79,7 @@ Code behind the PHLASK Web Map
 
 ### Yarn
 
-1. Ensure you have [nodejs v12.20.0](https://nodejs.org/download/release/v12.20.0/) installed on your machine
+1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine
 1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
 1. Run `yarn install`
 1. Run `yarn start`
@@ -128,7 +128,7 @@ This project has been configed to run all tests in the `cypress/integration` dir
 
 1. `cd` into the root (top-level) directory of the project
 2. ensure that you have all requirements installed with `yarn install` or `npm install`
-3. run `npm run test`
+3. run `yarn test`
 
 #### Testing in Docker
 
@@ -151,3 +151,5 @@ The site runs on:
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
+- Google Firebase Realtime Database (https://firebase.google.com/docs/database)
+  - Stores the tap data used to generate the information on our site
