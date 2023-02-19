@@ -5,26 +5,32 @@ Code behind the PHLASK Web Map
 ## Project Structure
 
 ```
-├── admin
-│   ├── admin_classes.py          <-- Custom Firebase's SDK Module Phlask use cases
-│   ├── test.py                   <-- Testing script for new functions added to module
-│   └── requirements.txt          <-- Required dependencies for usage 
-├── aws_lambda                    <-- Componenets used in AWS for lambda functions
-├── dashboard
-|   ├──templates                  <-- Flask template HTML files located here
-|   ├──docker-compose.yml
-|   ├──Dockerfile                 <-- Dockerfile defining container for local dev and deploy
-│   ├── admin_classes.py          <-- Custom Firebase's SDK Module Phlask use cases
-│   ├── app.py                    <-- Main Flask app located 
-│   ├── static                    <-- Static Assets for Webapp located here
-│   └── integration               <-- Source files for unit tests
-├── slackbot
-|   ├── bot.py                    <-- Slackbot database update script located here 
-│   └── requirements.txt          <-- Required dependencies for usage 
-├── cypress.json
-├── .env                          <-- Input Credentials/Paths for Slackbot & Firebase(not for dashboard usage)
+.
+├── Dockerfile                         <-- Dockerfile defining container for local dev and deploy
 ├── README.md
-└── cleanup.py                    <-- Script to clean up credentials and paths (call this before pushing commits)
+├── _phlask.code-workspace
+├── assets
+├── contributing.md
+├── cypress                            <-- Unit tests
+│   ├── fixtures                       <-- Fixtures for mocked out data
+│   └── integration                    <-- Source files for unit tests
+├── cypress.json
+├── docker-compose.yml
+├── package-lock.json
+├── package.json
+├── public
+├── src                                <-- Source files for project
+│   ├── App.js
+│   ├── actions                        <-- Source for all Redux actions
+│   ├── components                     <-- Source for all React components
+│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
+│   ├── helpers                        <-- Helper functions shared across components/pages
+│   ├── hooks                          <-- Custom hooks
+│   ├── reducers                       <-- Redux reducers
+│   ├── selectors                      <-- Source for all Redux selectors
+│   └── theme.js                       <-- Theme file for Material UI
+├── yarn-error.log
+└── yarn.lock
 
 ```
 
