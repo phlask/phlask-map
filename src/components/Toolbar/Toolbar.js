@@ -18,7 +18,7 @@ import Filter from '../ResourceMenu/Filter';
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-import { AddResourceModal } from '../AddResourceModal';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
@@ -207,7 +207,7 @@ function Toolbar(props) {
           >
             <FoodIcon />
           </button>
-          <AddResourceModal />
+          <AddResourceModalV2 />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)

@@ -1,6 +1,48 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
 let theme = createTheme({
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: 'water' },
+          style: {
+            textTransform: 'none',
+            background: "#5285e9",
+            color: "#ffffff",
+            margin: "20px auto",
+          },
+        },
+        {
+          props: { variant: 'food' },
+          style: {
+            textTransform: 'none',
+            background: "#ff9a55",
+            color: "#ffffff",
+            margin: "20px auto",
+          },
+        },
+        {
+          props: { variant: 'foraging' },
+          style: {
+            textTransform: 'none',
+            background: "#5da694",
+            color: "#ffffff",
+            margin: "20px auto",
+          },
+        },
+        {
+          props: { variant: 'bathrooms' },
+          style: {
+            textTransform: 'none',
+            background: "#7c7c7c",
+            color: "#ffffff",
+            margin: "20px auto",
+          },
+        },
+      ],
+    },
+  },
   palette: {
     style: {
       primary: {
