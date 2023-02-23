@@ -3,6 +3,7 @@ import {
   SwipeableDrawer,
   Typography,
   Checkbox,
+  Switch,
   FormGroup,
   FormControl,
   FormControlLabel,
@@ -71,7 +72,8 @@ export default function FilterDrawer() {
           backgroundColor: '#525F75',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          marginBottom: '1%'
         }}
       >
         <Typography variant="h6" color="white">
@@ -83,47 +85,49 @@ export default function FilterDrawer() {
         <Grid xs={1}></Grid>
         <Grid xs={3}>
           <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="Open Now" />
+            <FormControlLabel control={<Switch />} label="Open Now" />
             <FormControlLabel
-              control={<Checkbox />}
+              control={<Switch />}
               label="Handicap Accessible"
             />
-            <FormControlLabel control={<Checkbox />} label="Filtration" />
-            <FormControlLabel control={<Checkbox />} label="Vessel" />
-            <FormControlLabel control={<Checkbox />} label="Sparkling" />
-            <FormControlLabel control={<Checkbox />} label="ID Required" />
-            <FormControlLabel control={<Checkbox />} label="Kids Only" />
+            <FormControlLabel control={<Switch />} label="Filtration" />
+            <FormControlLabel control={<Switch />} label="Vessel" />
+            <FormControlLabel control={<Switch />} label="Sparkling" />
+            <FormControlLabel control={<Switch />} label="ID Required" />
+            <FormControlLabel control={<Switch />} label="Kids Only" />
           </FormGroup>
         </Grid>
-        <Grid xs={1}>
-          <FormControl fullWidth>
-            <InputLabel>Service</InputLabel>
-            <Select label="Service">
-              <MenuItem>Self-Serve</MenuItem>
-              <MenuItem>Ask Proprietor</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Tap Type</InputLabel>
-            <Select label="Tap Type">
-              <MenuItem>Drinking Fountain</MenuItem>
-              <MenuItem>Bottle Filter + Fountain</MenuItem>
-              <MenuItem>Sink</MenuItem>
-              <MenuItem>Soda Fountain</MenuItem>
-              <MenuItem>Dedicated Water Dispenser</MenuItem>
-              <MenuItem>Water Cooler</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Access</InputLabel>
-            <Select label="Tap Type">
-              <MenuItem>School</MenuItem>
-              <MenuItem>Park & Rec</MenuItem>
-              <MenuItem>Congretation</MenuItem>
-            </Select>
-          </FormControl>
+        <Grid xs={2}>
+          <Typography>Service</Typography>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="Self-Serve" />
+            <FormControlLabel control={<Checkbox />} label="Ask Proprietor" />
+          </FormGroup>
+        </Grid>
+        <Grid xs={2}>
+          <Typography>Access</Typography>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="School" />
+            <FormControlLabel control={<Checkbox />} label="Park & Rec" />
+            <FormControlLabel control={<Checkbox />} label="Congregation" />
+          </FormGroup>
+        </Grid>
+        <Grid xs={2}>
+          <Typography>Tap Type</Typography>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Drinking Fountain"
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Bottle Filter + Fountain"
+            />
+            <FormControlLabel control={<Checkbox />} label="Sink" />
+            <FormControlLabel control={<Checkbox />} label="Soda Fountain" />
+            <FormControlLabel control={<Checkbox />} label="Water Dispenser" />
+            <FormControlLabel control={<Checkbox />} label="Water Cooler" />
+          </FormGroup>
         </Grid>
       </Grid>
     </SwipeableDrawer>
