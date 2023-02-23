@@ -1,16 +1,28 @@
-import { Box, SwipeableDrawer, Typography } from '@mui/material';
+import {
+  Box,
+  SwipeableDrawer,
+  Typography,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+  Grid
+} from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // water filter button
 /* TODO: build filter checkbox that only shows places with selected attributes
   categories:
+  booleans:
     handicap?
     filtration?
     vessel?
     sparkling?
     id_required?
     kid_only?
+    open_now?
+
+  selections:
     service
       -Self-serve
       -Ask proprietor
@@ -62,6 +74,15 @@ export default function FilterDrawer() {
           Water Filter
         </Typography>
       </Box>
+      <FormGroup>
+        <FormControlLabel control={<Checkbox />} label="Open Now" />
+        <FormControlLabel control={<Checkbox />} label="Handicap Accessible" />
+        <FormControlLabel control={<Checkbox />} label="Filtration" />
+        <FormControlLabel control={<Checkbox />} label="Vessel" />
+        <FormControlLabel control={<Checkbox />} label="Sparkling" />
+        <FormControlLabel control={<Checkbox />} label="ID Required" />
+        <FormControlLabel control={<Checkbox />} label="Kids Only" />
+      </FormGroup>
     </SwipeableDrawer>
   );
 }
