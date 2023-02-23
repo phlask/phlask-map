@@ -4,8 +4,12 @@ import {
   Typography,
   Checkbox,
   FormGroup,
+  FormControl,
   FormControlLabel,
-  Grid
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel
 } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,15 +78,54 @@ export default function FilterDrawer() {
           Water Filter
         </Typography>
       </Box>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Open Now" />
-        <FormControlLabel control={<Checkbox />} label="Handicap Accessible" />
-        <FormControlLabel control={<Checkbox />} label="Filtration" />
-        <FormControlLabel control={<Checkbox />} label="Vessel" />
-        <FormControlLabel control={<Checkbox />} label="Sparkling" />
-        <FormControlLabel control={<Checkbox />} label="ID Required" />
-        <FormControlLabel control={<Checkbox />} label="Kids Only" />
-      </FormGroup>
+      {/* checkboxes */}
+      <Grid container>
+        <Grid xs={1}></Grid>
+        <Grid xs={3}>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="Open Now" />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Handicap Accessible"
+            />
+            <FormControlLabel control={<Checkbox />} label="Filtration" />
+            <FormControlLabel control={<Checkbox />} label="Vessel" />
+            <FormControlLabel control={<Checkbox />} label="Sparkling" />
+            <FormControlLabel control={<Checkbox />} label="ID Required" />
+            <FormControlLabel control={<Checkbox />} label="Kids Only" />
+          </FormGroup>
+        </Grid>
+        <Grid xs={1}>
+          <FormControl fullWidth>
+            <InputLabel>Service</InputLabel>
+            <Select label="Service">
+              <MenuItem>Self-Serve</MenuItem>
+              <MenuItem>Ask Proprietor</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel>Tap Type</InputLabel>
+            <Select label="Tap Type">
+              <MenuItem>Drinking Fountain</MenuItem>
+              <MenuItem>Bottle Filter + Fountain</MenuItem>
+              <MenuItem>Sink</MenuItem>
+              <MenuItem>Soda Fountain</MenuItem>
+              <MenuItem>Dedicated Water Dispenser</MenuItem>
+              <MenuItem>Water Cooler</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel>Access</InputLabel>
+            <Select label="Tap Type">
+              <MenuItem>School</MenuItem>
+              <MenuItem>Park & Rec</MenuItem>
+              <MenuItem>Congretation</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
     </SwipeableDrawer>
   );
 }
