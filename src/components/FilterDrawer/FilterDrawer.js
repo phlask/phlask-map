@@ -2,6 +2,31 @@ import { Box, SwipeableDrawer, Typography } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+// water filter button
+/* TODO: build filter checkbox that only shows places with selected attributes
+  categories:
+    handicap?
+    filtration?
+    vessel?
+    sparkling?
+    id_required?
+    kid_only?
+    service
+      -Self-serve
+      -Ask proprietor
+    tap_type
+      -Drinking Fountain
+      -Bottle Filter + Fountain
+      -Sink
+      -Soda Fountain
+      -Dedicated Water Dispenser
+      -Water Cooler
+    access
+      -school
+      -park & rec
+      -congregation
+
+*/
 export default function FilterDrawer() {
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
