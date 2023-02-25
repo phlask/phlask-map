@@ -1,0 +1,39 @@
+name: Lighthouse Test
+on: [workflow_call]
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+env:
+  AWS_DEFAULT_REGION: us-east-2
+
+#     aws dynamodb update-item --table-name test-page-list --key '{
+#       "gitHash": {"S": "'${GITHUB_SHA}'"}
+#     }' --update-expression "SET #G = :g" --expression-attribute-names '{
+#       "#G": "gistID"
+#     }' --expression-attribute-values '{
+#       ":g":{"S": "'${GID}'"}
+#     }'
+
+jobs:
+  lighthouse-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: mkdir -p ${{ github.workspace }}/tmp/artifacts/lighthouse
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
+          role-session-name: github-${GITHUB_SHA}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Run Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}
+          urls: https://test.phlask.me/${GITHUB_SHA}/
+      - name: Upload Lighthouse Test Result to S3
+        run: |
+          for x in ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result*.html; do
+              mv -- $x ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
+          done
+          aws s3 cp ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html

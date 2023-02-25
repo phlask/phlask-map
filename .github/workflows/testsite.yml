@@ -80,3 +80,6 @@ jobs:
           }' --expression-attribute-values '{
             ":g":{"S": "'${GID}'"}
           }'
+  lighthouse-testing:
+    uses: .github/workflows/lighthouse_testing.yml
+    secrets: inherit
