@@ -1,7 +1,6 @@
 name: Test Site on S3
 
 on: [push, pull_request]
-
 env:
   AWS_DEFAULT_REGION: us-east-2
 permissions:
