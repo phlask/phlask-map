@@ -34,8 +34,6 @@ jobs:
           urls: https://beta.phlask.me/
       - name: Upload Lighthouse Test Result to S3
         run: |
-          for x in ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result*.html; do
-              mv -- $x ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
-          done
+          mv ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result-*.html ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
           aws s3 cp ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html
         shell: bash
