@@ -3,8 +3,6 @@ on: [workflow_call]
 permissions:
   id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
-env:
-  AWS_DEFAULT_REGION: us-east-2
 
 #     aws dynamodb update-item --table-name test-page-list --key '{
 #       "gitHash": {"S": "'${GITHUB_SHA}'"}
@@ -30,9 +28,15 @@ jobs:
         uses: foo-software/lighthouse-check-action@master
         with:
           outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${{ github.sha }}
-          # urls: https://test.phlask.me/${{ github.sha }}/
-          urls: https://beta.phlask.me/
+          urls: https://test.phlask.me/${{ github.sha }}/
       - name: Upload Lighthouse Test Result to S3
         run: |
           mv ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/report-*.html ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
           aws s3 cp ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html --acl public-read
+          aws dynamodb update-item --table-name test-page-list --key '{
+            "gitHash": {"S": "'${GITHUB_SHA}'"}
+          }' --update-expression "SET #G = :g" --expression-attribute-names '{
+            "#G": "lighthouseTestAvailable"
+          }' --expression-attribute-values '{
+            ":g":{"S": "true"}
+          }'
