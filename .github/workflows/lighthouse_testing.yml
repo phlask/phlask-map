@@ -24,13 +24,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
-          role-session-name: github-${GITHUB_SHA}
+          role-session-name: github-${{ env.GITHUB_SHA }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
-          outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}
-          urls: https://test.phlask.me/${GITHUB_SHA}/
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${{ env.GITHUB_SHA }}
+          urls: https://test.phlask.me/${{ env.GITHUB_SHA }}/
       - name: Upload Lighthouse Test Result to S3
         run: |
           for x in ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result*.html; do

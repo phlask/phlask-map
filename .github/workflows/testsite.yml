@@ -81,5 +81,6 @@ jobs:
       #       ":g":{"S": "'${GID}'"}
       #     }'
   lighthouse-testing:
+    needs: build
     uses: ./.github/workflows/lighthouse_testing.yml
     secrets: inherit
