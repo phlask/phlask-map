@@ -24,16 +24,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
-          role-session-name: github-${{ env.GITHUB_SHA }}
+          role-session-name: github-${{ github.sha }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
-          outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${{ env.GITHUB_SHA }}
-          urls: https://test.phlask.me/${{ env.GITHUB_SHA }}/
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts/lighthouse/${{ github.sha }}
+          urls: https://test.phlask.me/${{ github.sha }}/
       - name: Upload Lighthouse Test Result to S3
         run: |
-          for x in ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result*.html; do
-              mv -- $x ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
+          for x in ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/result*.html; do
+              mv -- $x ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
           done
-          aws s3 cp ${{ github.workspace }}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html
+          aws s3 cp ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html
