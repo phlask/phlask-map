@@ -7,14 +7,6 @@ permissions:
   id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
 
-#     aws dynamodb update-item --table-name test-page-list --key '{
-#       "gitHash": {"S": "'${GITHUB_SHA}'"}
-#     }' --update-expression "SET #G = :g" --expression-attribute-names '{
-#       "#G": "gistID"
-#     }' --expression-attribute-values '{
-#       ":g":{"S": "'${GID}'"}
-#     }'
-
 jobs:
   lighthouse-check:
     runs-on: ubuntu-latest

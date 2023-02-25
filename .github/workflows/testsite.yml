@@ -1,44 +1,14 @@
 name: Test Site on S3
 
 on: [push, pull_request]
-env:
-  AWS_DEFAULT_REGION: us-east-2
 permissions:
   id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    steps:
-      - uses: actions/checkout@v1
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
-          role-session-name: github-${{ github.sha }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: Build and Deploy the map
-        run: |
-          echo Build started on `date`
-          echo Building the webapp...
-          docker-compose run prod_build
-          echo Build completed on `date`
-          echo Pushing the webapp to S3...
-          aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
-          aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read
-          echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
-      - name: Record the test build
-        run: |
-          echo Recording the test build...
-          aws --region us-east-1 dynamodb put-item --table-name test-page-list --item '{
-            "gitHash": {"S": "'${GITHUB_SHA}'"},
-            "creator": {"S": "'${GITHUB_ACTOR}'"},
-            "branch": {"S": "'${GITHUB_REF_NAME}'"},
-            "timeCreated": {"S": "'$(date +%s)'"},
-            "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
-          }'
+    uses: ./.github/workflows/build_testsite.yml
+    secrets: inherit
   lighthouse-testing:
     needs: build
     uses: ./.github/workflows/lighthouse_testing.yml
