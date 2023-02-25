@@ -41,7 +41,7 @@ jobs:
           aws dynamodb put-item --table-name test-page-list --item '{
             "gitHash": {"S": "'${GITHUB_SHA}'"},
             "creator": {"S": "'${GITHUB_ACTOR}'"},
-            "branch": {"S": "${{ GITHUB_REF_NAME }}"},
+            "branch": {"S": "'${GITHUB_REF_NAME}'"},
             "timeCreated": {"S": "'$(date +%s)'"},
             "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
           }'
