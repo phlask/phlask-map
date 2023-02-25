@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       # Ref for branch name splitting: https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      # - name: Extract branch name
+      #   shell: bash
+      #   run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+      #   id: extract_branch
       - name: Build and Deploy the map
         env:
           AWS_DEFAULT_REGION: us-east-2
@@ -41,7 +41,7 @@ jobs:
           aws dynamodb put-item --table-name test-page-list --item '{
             "gitHash": {"S": "'${GITHUB_SHA}'"},
             "creator": {"S": "'${GITHUB_ACTOR}'"},
-            "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
+            "branch": {"S": "${{ GITHUB_REF_NAME }}"},
             "timeCreated": {"S": "'$(date +%s)'"},
             "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
           }'
@@ -81,6 +81,6 @@ jobs:
       #       ":g":{"S": "'${GID}'"}
       #     }'
   lighthouse-testing:
-    needs: build
+    # needs: build
     uses: ./.github/workflows/lighthouse_testing.yml
     secrets: inherit
