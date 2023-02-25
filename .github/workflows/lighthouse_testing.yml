@@ -33,7 +33,7 @@ jobs:
         run: |
           mv ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/report-*.html ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html
           aws s3 cp ${GITHUB_WORKSPACE}/tmp/artifacts/lighthouse/${GITHUB_SHA}/lighthouse_result.html s3://test.phlask.me/${GITHUB_SHA}/testResults/lighthouse_result.html --acl public-read
-          aws dynamodb update-item --region us-east-1 --table-name test-page-list --key '{
+          aws --region us-east-1 dynamodb update-item --table-name test-page-list --key '{
             "gitHash": {"S": "'${GITHUB_SHA}'"}
           }' --update-expression "SET #G = :g" --expression-attribute-names '{
             "#G": "lighthouseTestAvailable"

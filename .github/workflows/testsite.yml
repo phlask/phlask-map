@@ -33,7 +33,7 @@ jobs:
       - name: Record the test build
         run: |
           echo Recording the test build...
-          aws dynamodb put-item ---region us-east-1 -table-name test-page-list --item '{
+          aws --region us-east-1 dynamodb put-item -table-name test-page-list --item '{
             "gitHash": {"S": "'${GITHUB_SHA}'"},
             "creator": {"S": "'${GITHUB_ACTOR}'"},
             "branch": {"S": "'${GITHUB_REF_NAME}'"},
