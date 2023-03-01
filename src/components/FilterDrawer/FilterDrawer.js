@@ -2,48 +2,16 @@ import {
   Box,
   SwipeableDrawer,
   Typography,
-  Checkbox,
-  Switch,
-  FormGroup,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Select,
-  MenuItem,
-  InputLabel
+  Button,
+  ButtonGroup,
+  Grid
 } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import filterMarkers from '../../reducers/filterMarkers';
+import './filterDrawer.css';
+import FilterButton from './FilterButton/FilterButton';
 
-// water filter button
-/* TODO: build filter checkbox that only shows places with selected attributes
-  categories:
-  booleans:
-    handicap?
-    filtration?
-    vessel?
-    sparkling?
-    id_required?
-    kid_only?
-    open_now?
-
-  selections:
-    service
-      -Self-serve
-      -Ask proprietor
-    tap_type
-      -Drinking Fountain
-      -Bottle Filter + Fountain
-      -Sink
-      -Soda Fountain
-      -Dedicated Water Dispenser
-      -Water Cooler
-    access
-      -school
-      -park & rec
-      -congregation
-
-*/
 export default function FilterDrawer() {
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
@@ -52,6 +20,24 @@ export default function FilterDrawer() {
       type: 'TOGGLE_FILTER_MODAL',
       isShown: !isFilterShown
     });
+  };
+  const featureFilter = [
+    'Vessel Needed',
+    'ADA Accessible',
+    'Open Now',
+    'Filtered',
+    'Self-Serve'
+  ];
+
+  const tapTypeFilter = [
+    'Drinking Fountain',
+    'Soda Dispenser',
+    'Water Cooler',
+    'Bottle Filter'
+  ];
+
+  const FilterBuilder = filterList => {
+    return filterList.map((s, i) => <FilterButton key={i} filter={s} />);
   };
   return (
     <SwipeableDrawer
@@ -68,68 +54,41 @@ export default function FilterDrawer() {
     >
       <Box
         sx={{
-          height: '20%',
+          height: '14%',
           backgroundColor: '#525F75',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom: '1%'
+          paddingTop: '5%'
         }}
       >
-        <Typography variant="h6" color="white">
+        <Typography variant="h5" color="white">
           Water Filter
         </Typography>
       </Box>
-      {/* checkboxes */}
-      <Grid container>
-        <Grid xs={1}></Grid>
-        <Grid xs={3}>
-          <FormGroup>
-            <FormControlLabel control={<Switch />} label="Open Now" />
-            <FormControlLabel
-              control={<Switch />}
-              label="Handicap Accessible"
-            />
-            <FormControlLabel control={<Switch />} label="Filtration" />
-            <FormControlLabel control={<Switch />} label="Vessel" />
-            <FormControlLabel control={<Switch />} label="Sparkling" />
-            <FormControlLabel control={<Switch />} label="ID Required" />
-            <FormControlLabel control={<Switch />} label="Kids Only" />
-          </FormGroup>
+      <Box className="filterGroup">
+        <Typography className="filterFont">Features</Typography>
+        <Grid container spacing={1}>
+          {FilterBuilder(featureFilter)}
         </Grid>
-        <Grid xs={2}>
-          <Typography>Service</Typography>
-          <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="Self-Serve" />
-            <FormControlLabel control={<Checkbox />} label="Ask Proprietor" />
-          </FormGroup>
+      </Box>
+      <Box className="filterGroup">
+        <Typography className="filterFont">Tap Type</Typography>
+        <Grid container spacing={1}>
+          {FilterBuilder(tapTypeFilter)}
         </Grid>
-        <Grid xs={2}>
-          <Typography>Access</Typography>
-          <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="School" />
-            <FormControlLabel control={<Checkbox />} label="Park & Rec" />
-            <FormControlLabel control={<Checkbox />} label="Congregation" />
-          </FormGroup>
+      </Box>
+      <Box className="filterGroup">
+        <Grid Container>
+          <Typography className="filterFont">Organization Type</Typography>
+          <ButtonGroup variant="outlined" aria-label="outlined button group">
+            <Button className="filterButton">Public</Button>
+            <Button className="filterButton">Private</Button>
+            <Button className="filterButton">Shared</Button>
+            <Button className="filterButton">Restricted</Button>
+          </ButtonGroup>
         </Grid>
-        <Grid xs={2}>
-          <Typography>Tap Type</Typography>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Drinking Fountain"
-            />
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Bottle Filter + Fountain"
-            />
-            <FormControlLabel control={<Checkbox />} label="Sink" />
-            <FormControlLabel control={<Checkbox />} label="Soda Fountain" />
-            <FormControlLabel control={<Checkbox />} label="Water Dispenser" />
-            <FormControlLabel control={<Checkbox />} label="Water Cooler" />
-          </FormGroup>
-        </Grid>
-      </Grid>
+      </Box>
     </SwipeableDrawer>
   );
 }
