@@ -1,5 +1,7 @@
 .filterButton {
   font-size: 12px;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 .filterFont {
   font-size: 14px;
@@ -8,7 +10,21 @@
 
 .filterGroup {
   padding: 1%;
-  margin-left: 1%;
-  margin-right: 1%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 2%;
+}
+
+.clearButton {
+  display: block;
+  float: left;
+}
+
+.applyButton {
+  display: block;
+  float: right;
+}
+
+.bottomButtons {
+  margin-top: 7%;
 }

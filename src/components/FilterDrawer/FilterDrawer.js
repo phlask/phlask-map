@@ -48,7 +48,7 @@ export default function FilterDrawer() {
       onClose={toggleFilterModal}
       sx={{
         '& .MuiDrawer-paper': {
-          height: '60%'
+          height: '50%'
         }
       }}
     >
@@ -87,6 +87,14 @@ export default function FilterDrawer() {
             <Button className="filterButton">Shared</Button>
             <Button className="filterButton">Restricted</Button>
           </ButtonGroup>
+        </Grid>
+        <Grid className="bottomButtons" Container>
+          <Button className=" clearButton" variant="text">
+            Clear All
+          </Button>
+          <Button className=" applyButton" variant="outlined">
+            Apply
+          </Button>
         </Grid>
       </Box>
     </SwipeableDrawer>
