@@ -253,6 +253,7 @@ function Toolbar(props) {
           </BottomNavigation>
         </Box>
       )}
+      <AddResourceModalV2 />
     </>
   );
 }
