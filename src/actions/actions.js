@@ -55,6 +55,7 @@ export const getTaps = () => dispatch => {
     snapshot => {
       const snapshotVal = snapshot.val();
       // TODO: Clean up Firebase DB for this one-off edge case
+      // NOTE: The code block below is filtering out tap with access-types that are no longer used
       var allTaps = snapshotVal.filter(
         key =>
           key.access != 'WM' &&

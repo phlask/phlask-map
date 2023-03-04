@@ -11,6 +11,7 @@ import makeGetVisibleTaps from '../../selectors/tapSelectors';
 import './IndieMarker.css';
 import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
 import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import { cleanUpForRedux } from '../MapMarkers/utils';
 
 class IndieMarker extends React.Component {
   state = {
@@ -83,7 +84,7 @@ class IndieMarker extends React.Component {
 
   onMarkerClick(tap) {
     this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(tap);
+    this.props.setSelectedPlace(cleanUpForRedux(tap));
   }
 
   render() {

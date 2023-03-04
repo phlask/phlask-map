@@ -105,7 +105,7 @@ export default (state = initialState, act) => {
       };
 
     case actions.SET_FILTER_FUNCTION:
-      console.log('set filter func');
+      // console.log('set filter func');
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.TOGGLE_SEARCH_BAR:
