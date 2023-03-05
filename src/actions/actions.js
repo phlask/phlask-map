@@ -7,12 +7,6 @@ import {
   waterConfig
 } from '../firebase/firebaseConfig';
 
-export const RESIZE_WINDOW = 'RESIZE_WINDOW';
-export const resizeWindow = size => ({
-  type: RESIZE_WINDOW,
-  size
-});
-
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
   type: SET_TOGGLE_STATE,
