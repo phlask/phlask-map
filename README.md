@@ -85,17 +85,24 @@ Code behind the PHLASK Web Map
 1. Run `yarn install`
 1. Run `yarn start`
 
-## Recommended Development tools
+## Recommended Development Tools
 
-### Code formatting
+### Code Formatting
 
 We use Prettier to ensure a consistent code formatting across the project, if you are running VSCode, please make sure to install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), the project configuration will ensure that Prettier is set as your default formatter as well.
+
+### Redux State Viewing
+During development, you may need to make changes to components which interact with Redux state. If you would like to have a better idea of the values in the Redux state while in development, install the Redux DevTools using the instructions here: https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
+
+For a guide on how to use the extension check the [Docs section of their documentation](https://github.com/reduxjs/redux-devtools/tree/main/extension#docs). This video in particular may be useful: https://egghead.io/lessons/javascript-getting-started-with-redux-dev-tools
+
+For more information on how to understand/use the PHLASK Map Redux state, see our [Redux Guide](redux_guide.md)
 
 ## Want to add something new or develop/report a fix for a bug you found?
 
 See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!
 
-## Branching strategy
+## Branching Strategy
 
 ![png](assets/images/phlaskgitPipelines.png)
 
@@ -114,8 +121,15 @@ The PHLASK Map runs on a static page built with:
 
 - ReactJS (https://reactjs.org)
   - Builds the static content that composes the map page
+- Redux (https://redux.js.org/)
+  - Provides a single state which is accessible across the application.
+  - This is used to simplify passing state properties when they need to be modified by child/sibling components.
+  - For more information on how to understand/use our Redux state, see our [Redux Guide](redux_guide.md)
+- Material UI (https://mui.com/)
+  - Provides pre-built components and simplifies consistent styling across the project
 - React Bootstrap (https://react-bootstrap.netlify.com)
   - Provides pre-built components with Bootstrap-styling baked-in
+  - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
 
