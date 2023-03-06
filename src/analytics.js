@@ -1,11 +1,11 @@
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 const trackingIdProd = 'UA-180456355-1';
-const trackingIdBeta = 'UA-180456355-2';
-const trackingIdTest = 'UA-180456355-3';
+const trackingIdBeta = 'G-MQDZENNPXK';
+const trackingIdTest = "G-KGJ72QEWMY";
 
 // initiatize google analytics
-export const initGA = () => {
+export const initAnalytics = () => {
   switch (window.location.hostname) {
     case 'phlask.me':
       ReactGA.initialize(trackingIdProd);
@@ -16,10 +16,9 @@ export const initGA = () => {
     default:
       ReactGA.initialize(trackingIdTest);
   }
-  ReactGA.pageview(window.location.pathname + window.location.search);
 };
 
 // track pageviews
-export const GApageView = page => {
-  ReactGA.pageview(page);
+export const logPageView = page => {
+  ReactGA.send({hitType: "pageview", page: window.location.pathname + window.location.search})
 };
