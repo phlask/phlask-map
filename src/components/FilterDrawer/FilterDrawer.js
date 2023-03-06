@@ -12,6 +12,8 @@ import filterMarkers from '../../reducers/filterMarkers';
 import './filterDrawer.css';
 import FilterButton from './FilterButton/FilterButton';
 
+//currently the buttons are there visually but do not do anything
+//TODO: connect the buttons to the redux selectors
 export default function FilterDrawer() {
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
@@ -21,24 +23,7 @@ export default function FilterDrawer() {
       isShown: !isFilterShown
     });
   };
-  const featureFilter = [
-    'Vessel Needed',
-    'ADA Accessible',
-    'Open Now',
-    'Filtered',
-    'Self-Serve'
-  ];
 
-  const tapTypeFilter = [
-    'Drinking Fountain',
-    'Soda Dispenser',
-    'Water Cooler',
-    'Bottle Filter'
-  ];
-
-  const FilterBuilder = filterList => {
-    return filterList.map((s, i) => <FilterButton key={i} filter={s} />);
-  };
   return (
     <SwipeableDrawer
       anchor="bottom"
@@ -69,13 +54,19 @@ export default function FilterDrawer() {
       <Box className="filterGroup">
         <Typography className="filterFont">Features</Typography>
         <Grid container spacing={1}>
-          {FilterBuilder(featureFilter)}
+          <FilterButton filter={'Vessel Needed'} />
+          <FilterButton filter={'ADA Accessible'} />
+          <FilterButton filter={'Open Now'} />
+          <FilterButton filter={'Self-Serve'} />
         </Grid>
       </Box>
       <Box className="filterGroup">
         <Typography className="filterFont">Tap Type</Typography>
         <Grid container spacing={1}>
-          {FilterBuilder(tapTypeFilter)}
+          <FilterButton filter={'Drinking Fountain'} />
+          <FilterButton filter={'Soda Dispenser'} />
+          <FilterButton filter={'Water Cooler'} />
+          <FilterButton filter={'Bottle Filter'} />
         </Grid>
       </Box>
       <Box className="filterGroup">
