@@ -22,7 +22,7 @@ const initialState = {
     filtered: false,
     handicap: false,
     sparkling: false,
-    openNow: false,
+    openNow: false, // reach to this
     accessTypesHidden: []
   },
   foodFilters: {
@@ -48,6 +48,7 @@ export default (state = initialState, act) => {
       return {
         ...state,
         tapFilters: {
+          //hit tapFilters
           ...state.tapFilters,
           filtered:
             act.toggle === 'filtered'
@@ -61,6 +62,7 @@ export default (state = initialState, act) => {
             act.toggle === 'sparkling'
               ? act.toggleState
               : state.tapFilters.sparkling,
+          //hit this
           openNow:
             act.toggle === 'openNow'
               ? act.toggleState

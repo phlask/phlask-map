@@ -28,3 +28,27 @@
 .bottomButtons {
   margin-top: 7%;
 }
+@media only screen and (min-width: 768px) {
+  div.filterGroup {
+    /* background-color: green !important; */
+  }
+  div.MuiPaper-elevation {
+    height: 500px !important;
+    width: 30vw;
+    min-width: 400px;
+    border-radius: 5px;
+    bottom: 5rem;
+    left: 1rem;
+    align-items: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
+  }
+  .filterBox {
+    /* background-color: red !important; */
+    width: 100%;
+
+    padding-right: 0;
+  }
+  .filterButton {
+    /* background-color: red !important; */
+  }
+}

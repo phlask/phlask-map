@@ -26,6 +26,7 @@ export default function FilterDrawer() {
 
   return (
     <SwipeableDrawer
+      className="swipeDrawer"
       anchor="bottom"
       variant="temporary"
       open={isFilterShown}
@@ -38,6 +39,7 @@ export default function FilterDrawer() {
       }}
     >
       <Box
+        className="filterBox"
         sx={{
           height: '14%',
           backgroundColor: '#525F75',
