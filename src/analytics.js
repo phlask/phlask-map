@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga4';
 
-const trackingIdProd = 'UA-180456355-1';
+const trackingIdProd = 'G-SN3F4Z4MPK';
 const trackingIdBeta = 'G-MQDZENNPXK';
 const trackingIdTest = "G-KGJ72QEWMY";
 
