@@ -3,7 +3,7 @@
   flex-direction: row;
   width: 100%;
   justify-content: flex-start;
-  padding: 1rem 0 0 1rem;
+  align-items: center;
   pointer-events: none;
 
   .searchBarContainer {
@@ -113,6 +113,7 @@
   overflow: hidden;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
   border-top: 1px solid #dadce0;
+  color: black;
 
   & > div {
     cursor: pointer;

@@ -12,152 +12,114 @@ import {
   faSearchLocation,
   faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
-import TutorialModal from '../TutorialModal/TutorialModal';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-      refSearchBar: React.createRef(),
-      isSearchBarShown: false
-    };
-  }
+const SearchBar = ({ search, isSearchShown }) => {
+  const [address, setAddress] = React.useState('');
+  const searchBarRef = React.useRef(null);
+  const [isSearchBarShown, setIsSearchBarShown] = React.useState(false);
 
-  handleChange = address => {
-    this.setState({ address });
-  };
-
-  handleSelect = address => {
-    this.setState({ address });
+  const handleSelect = address => {
+    setAddress(address);
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.search(latLng))
-      .catch(error => console.error('Error', error));
+      .then(latLng => search(latLng))
+      .catch(() => {
+        /* no-op */
+      });
   };
 
-  openSearch() {
-    this.setSearchDisplayType(true);
-  }
+  const setSearchDisplayType = (shouldToggle = false) => {
+    if (isMobile) return setIsSearchBarShown(shouldToggle);
+    return setIsSearchBarShown(true);
+  };
 
-  setSearchDisplayType(shouldToggle = false) {
-    if (isMobile) {
-      this.setState({
-        isSearchBarShown: shouldToggle
-      });
-    } else {
-      this.setState({
-        isSearchBarShown: true
-      });
-    }
-  }
+  React.useLayoutEffect(() => {
+    if (isSearchShown) searchBarRef?.current?.focus();
+  }, [isSearchShown]);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isSearchShown && !prevProps.isSearchShown) {
-      this.state.refSearchBar.current.focus();
-    }
-  }
+  const openSearch = () => {
+    setSearchDisplayType(true);
+  };
 
-  componentDidMount() {
-    this.setSearchDisplayType();
-  }
+  React.useEffect(() => {
+    setSearchDisplayType();
+  }, []);
 
-  render() {
-    return (
-      <>
-        {this.state.isSearchBarShown ? (
-          <div
-            className={isMobile ? styles.mobileSearch : styles.desktopSearch}
+  return (
+    <>
+      {isSearchBarShown || !isMobile ? (
+        <div className={isMobile ? styles.mobileSearch : styles.desktopSearch}>
+          <PlacesAutocomplete
+            value={address}
+            onChange={setAddress}
+            onSelect={handleSelect}
           >
-            <PlacesAutocomplete
-              value={this.state.address}
-              onChange={this.handleChange}
-              onSelect={this.handleSelect}
-            >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading
-              }) => (
-                <div
-                  className={`${styles.searchBarContainer} ${
-                    loading || suggestions.length > 0 ? styles.hasDropdown : ''
-                  }`}
-                >
-                  {/* type="search" is only HTML5 compliant */}
-                  <input
-                    {...getInputProps({
-                      placeholder: 'Search For Taps Near...'
-                    })}
-                    className={`${styles.searchInput} form-control`}
-                    type="search"
-                    ref={this.state.refSearchBar}
-                  />
-                  {loading && (
-                    <div className={styles.autocompleteDropdown}>
-                      Loading...
-                    </div>
-                  )}
-                  {suggestions.length > 0 && (
-                    <div className={styles.autocompleteDropdown}>
-                      {suggestions.map(suggestion => {
-                        const className = suggestion.active
-                          ? styles.suggestionItemActive
-                          : styles.suggestionItem;
-                        return (
-                          <div
-                            key={suggestion.id}
-                            {...getSuggestionItemProps(suggestion, {
-                              className
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
-            </PlacesAutocomplete>
-            {isMobile ? (
-              <button
-                className={styles.mobileCloseButton}
-                onClick={() => {
-                  this.setSearchDisplayType(false);
-                }}
-                aria-label="Close the search bar"
+            {({
+              getInputProps,
+              suggestions,
+              getSuggestionItemProps,
+              loading
+            }) => (
+              <div
+                className={`${styles.searchBarContainer} ${
+                  loading || suggestions.length > 0 ? styles.hasDropdown : ''
+                }`}
               >
-                <FontAwesomeIcon
-                  className={styles.mobileIcon}
-                  icon={faChevronLeft}
+                {/* type="search" is only HTML5 compliant */}
+                <input
+                  {...getInputProps({
+                    placeholder: 'Search For Taps Near...'
+                  })}
+                  className={`${styles.searchInput} form-control`}
+                  type="search"
+                  ref={searchBarRef}
                 />
-              </button>
-            ) : (
-              []
+                {loading && (
+                  <div className={styles.autocompleteDropdown}>Loading...</div>
+                )}
+                {suggestions.length > 0 && (
+                  <div className={styles.autocompleteDropdown}>
+                    {suggestions.map(suggestion => {
+                      const className = suggestion.active
+                        ? styles.suggestionItemActive
+                        : styles.suggestionItem;
+                      return (
+                        <div
+                          key={suggestion.placeId}
+                          {...getSuggestionItemProps(suggestion, {
+                            className
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             )}
-          </div>
-        ) : (
-          <button
-            className={styles.mobileSearchButton}
-            onClick={this.openSearch.bind(this)}
-            aria-label="Search for a location"
-          >
-            <FontAwesomeIcon
-              className={styles.mobileIcon}
-              icon={faSearchLocation}
-            />
-          </button>
-        )}
-
-        <TutorialModal
-          showButton={isMobile ? !this.state.isSearchBarShown : true}
-        />
-      </>
-    );
-  }
-}
+          </PlacesAutocomplete>
+          {isMobile ? (
+            <button
+              className={styles.mobileCloseButton}
+              onClick={() => {
+                setSearchDisplayType(false);
+              }}
+              aria-label="Close the search bar"
+            >
+              <FontAwesomeIcon
+                className={styles.mobileIcon}
+                icon={faChevronLeft}
+              />
+            </button>
+          ) : (
+            []
+          )}
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 const mapStateToProps = state => ({
   isSearchShown: state.isSearchShown

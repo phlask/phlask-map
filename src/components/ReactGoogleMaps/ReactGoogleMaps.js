@@ -23,6 +23,7 @@ import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 import { isMobile } from 'react-device-detect';
 import Toolbar from '../Toolbar/Toolbar';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import TutorialModal from '../TutorialModal/TutorialModal';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -344,10 +345,7 @@ export class ReactGoogleMaps extends Component {
           </div>
         </ReactTouchEvents>
         <div className={styles.searchBarContainer}>
-          <SearchBar
-            className="searchBar"
-            search={location => this.searchForLocation(location)}
-          />
+          <TutorialModal showButton={isMobile} />
         </div>
         <Toolbar />
         <SelectedTap></SelectedTap>

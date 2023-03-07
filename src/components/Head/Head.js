@@ -1,4 +1,5 @@
-import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { GoogleApiWrapper } from 'google-maps-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,8 +9,13 @@ import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
 import SideBar from '../SideBar/SideBar';
+import SearchBar from '../SearchBar/SearchBar';
 
-export default function Head() {
+function Head() {
+  const isMobile = useMediaQuery(theme =>
+    theme.breakpoints.down(theme.breakpoints.values.md)
+  );
+
   const dispatch = useDispatch();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -64,16 +70,18 @@ export default function Head() {
             display: 'flex'
           }}
         >
-          <IconButton
-            onClick={showSidebar}
-            sx={{
-              position: 'relative',
-              left: '-10px',
-              right: '6px'
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {isMobile && (
+            <IconButton
+              onClick={showSidebar}
+              sx={{
+                position: 'relative',
+                left: '-10px',
+                right: '6px'
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Link to="/" onClick={() => setShowMapControls(true)}>
             <PhlaskIcon
               sx={{
@@ -87,12 +95,21 @@ export default function Head() {
             <Box
               sx={{
                 position: 'relative',
-                marginLeft: 'auto'
+                marginLeft: 'auto',
+                display: 'flex'
               }}
             >
-              <IconButton onClick={toggleSearchBar}>
-                <SearchIcon />
-              </IconButton>
+              {isSearchShown ||
+                (!isMobile && (
+                  <SearchBar
+                    search={location => this.searchForLocation(location)}
+                  />
+                ))}
+              {isMobile && (
+                <IconButton onClick={toggleSearchBar}>
+                  <SearchIcon />
+                </IconButton>
+              )}
               <IconButton
                 sx={{ marginRight: '-8px' }}
                 onClick={toggleFilterModal}
@@ -107,3 +124,9 @@ export default function Head() {
     </>
   );
 }
+
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
+  version: 'quarterly',
+  LoadingContainer: () => <></>
+})(Head);
