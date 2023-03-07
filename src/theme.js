@@ -10,7 +10,9 @@ let theme = createTheme({
             textTransform: 'none',
             background: '#5285e9',
             color: '#ffffff',
-            margin: '20px auto',
+            margin: '0 auto',
+            padding: '4px, 0px, 8px, 0px',
+            fontSize: '1.25rem',
             '&:hover': {
               background: '#bacef6'
             }
@@ -22,7 +24,8 @@ let theme = createTheme({
             textTransform: 'none',
             background: '#ff9a55',
             color: '#ffffff',
-            margin: '20px auto',
+            margin: '0 auto',
+            fontSize: '1.25rem',
             '&:hover': {
               background: '#ffd7bb'
             }
@@ -34,7 +37,8 @@ let theme = createTheme({
             textTransform: 'none',
             background: '#5da694',
             color: '#ffffff',
-            margin: '20px auto',
+            margin: '0 auto',
+            fontSize: '1.25rem',
             '&:hover': {
               background: '#bedbd4'
             }
@@ -46,7 +50,8 @@ let theme = createTheme({
             textTransform: 'none',
             background: '#7c7c7c',
             color: '#ffffff',
-            margin: '20px auto',
+            margin: '0 auto',
+            fontSize: '1.25rem',
             '&:hover': {
               background: '#cbcbcb'
             }
