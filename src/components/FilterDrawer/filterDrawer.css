@@ -42,6 +42,7 @@
     align-items: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
   }
+
   .filterBox {
     /* background-color: red !important; */
     width: 100%;

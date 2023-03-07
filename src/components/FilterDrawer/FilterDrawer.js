@@ -6,6 +6,12 @@ import {
   ButtonGroup,
   Grid
 } from '@mui/material';
+import { connect } from 'react-redux';
+import {
+  setToggleState,
+  setFilteredTapTypes,
+  resetFilterFunction
+} from '../../actions/actions';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import filterMarkers from '../../reducers/filterMarkers';
@@ -14,7 +20,7 @@ import FilterButton from './FilterButton/FilterButton';
 
 //currently the buttons are there visually but do not do anything
 //TODO: connect the buttons to the redux selectors
-export default function FilterDrawer() {
+function FilterDrawer() {
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
   const toggleFilterModal = () => {
@@ -22,6 +28,19 @@ export default function FilterDrawer() {
       type: 'TOGGLE_FILTER_MODAL',
       isShown: !isFilterShown
     });
+  };
+
+  const handleChange = event => {
+    if (event.target.id === 'filtered') {
+      this.props.setToggleState('filtered', !this.props.filtered);
+    } else if (event.target.id === 'ada') {
+      this.props.setToggleState('handicap', !this.props.handicap);
+    } else if (event.target.id === 'sparkling') {
+      this.props.setToggleState('sparkling', !this.props.sparkling);
+    } else if (event.target.id === 'openNow') {
+      this.props.setToggleState('openNow', !this.props.openNow);
+    } else console.log('error with toggle');
+    this.handleGA(event.target.id, !this.props[event.target.id]);
   };
 
   return (
@@ -58,7 +77,11 @@ export default function FilterDrawer() {
         <Grid container spacing={1}>
           <FilterButton filter={'Vessel Needed'} />
           <FilterButton filter={'ADA Accessible'} />
-          <FilterButton filter={'Open Now'} />
+          <FilterButton
+            id={'openNow'}
+            filter={'Open Now'}
+            onClick={e => this.handleChange(e)}
+          />
           <FilterButton filter={'Self-Serve'} />
         </Grid>
       </Box>
@@ -93,3 +116,19 @@ export default function FilterDrawer() {
     </SwipeableDrawer>
   );
 }
+const mapStateToProps = state => ({
+  filtered: state.tapFilters.filtered,
+  handicap: state.tapFilters.handicap,
+  sparkling: state.tapFilters.sparkling,
+  openNow: state.tapFilters.openNow,
+  accessTypesHidden: state.tapFilters.accessTypesHidden,
+  showingInfoWindow: state.showingInfoWindow
+});
+
+const mapDispatchToProps = {
+  setFilteredTapTypes,
+  setToggleState,
+  resetFilterFunction
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterDrawer);
