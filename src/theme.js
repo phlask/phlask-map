@@ -8,40 +8,52 @@ let theme = createTheme({
           props: { variant: 'water' },
           style: {
             textTransform: 'none',
-            background: "#5285e9",
-            color: "#ffffff",
-            margin: "20px auto",
-          },
+            background: '#5285e9',
+            color: '#ffffff',
+            margin: '20px auto',
+            '&:hover': {
+              background: '#bacef6'
+            }
+          }
         },
         {
           props: { variant: 'food' },
           style: {
             textTransform: 'none',
-            background: "#ff9a55",
-            color: "#ffffff",
-            margin: "20px auto",
-          },
+            background: '#ff9a55',
+            color: '#ffffff',
+            margin: '20px auto',
+            '&:hover': {
+              background: '#ffd7bb'
+            }
+          }
         },
         {
           props: { variant: 'foraging' },
           style: {
             textTransform: 'none',
-            background: "#5da694",
-            color: "#ffffff",
-            margin: "20px auto",
-          },
+            background: '#5da694',
+            color: '#ffffff',
+            margin: '20px auto',
+            '&:hover': {
+              background: '#bedbd4'
+            }
+          }
         },
         {
           props: { variant: 'bathrooms' },
           style: {
             textTransform: 'none',
-            background: "#7c7c7c",
-            color: "#ffffff",
-            margin: "20px auto",
-          },
-        },
-      ],
-    },
+            background: '#7c7c7c',
+            color: '#ffffff',
+            margin: '20px auto',
+            '&:hover': {
+              background: '#cbcbcb'
+            }
+          }
+        }
+      ]
+    }
   },
   palette: {
     style: {
