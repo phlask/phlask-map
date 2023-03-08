@@ -8,7 +8,6 @@ import {
   setMapCenter
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/foodOrgSelectors';
-import foodIcon from '../images/food-marker-icons/food-site.png';
 import IndieFoodMarker from './IndieFoodMarker';
 
 export function MapMarkersFood({

@@ -1,0 +1,37 @@
+name: Deploy Test Site on S3
+
+on: [workflow_call]
+env:
+  AWS_DEFAULT_REGION: us-east-2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
+          role-session-name: github-${{ github.sha }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Build and Deploy the Map
+        run: |
+          echo Build started on `date`
+          echo Building the webapp...
+          docker-compose run prod_build
+          echo Build completed on `date`
+          echo Pushing the webapp to S3...
+          aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
+          aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read
+          echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
+      - name: Record the test build
+        run: |
+          echo Recording the test build...
+          aws --region us-east-1 dynamodb put-item --table-name test-page-list --item '{
+            "gitHash": {"S": "'${GITHUB_SHA}'"},
+            "creator": {"S": "'${GITHUB_ACTOR}'"},
+            "branch": {"S": "'${GITHUB_REF_NAME}'"},
+            "timeCreated": {"S": "'$(date +%s)'"},
+            "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
+          }'
