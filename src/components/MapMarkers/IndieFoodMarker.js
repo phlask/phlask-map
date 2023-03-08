@@ -18,6 +18,7 @@ import FoodSchoolFilterIcon from '../icons/FoodSchoolFilterIcon';
 import FoodRecreationFilterIcon from '../icons/FoodRecreationFilterIcon';
 import FoodCongregationFilterIcon from '../icons/FoodCongregationFilterIcon';
 import '../IndieMarker/IndieMarker.css';
+import { cleanUpForRedux } from './utils';
 
 class IndieMarker extends React.Component {
   state = {
@@ -108,7 +109,7 @@ class IndieMarker extends React.Component {
 
   onMarkerClick(org) {
     this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(org);
+    this.props.setSelectedPlace(cleanUpForRedux(org));
   }
 
   render() {
