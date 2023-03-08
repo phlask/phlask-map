@@ -11,16 +11,15 @@ import { DialogContent } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
 
-const AddResourceModalV2 = () => {
-  const [open, setOpen] = React.useState(false);
+const AddResourceModalV2 = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const onClose = () => setOpen(false);
+  const onClose = () => props.setOpen(false);
 
   return (
     <>
-      <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
+      <Dialog open={props.open} onClose={onClose} fullScreen={fullScreen}>
         <IconButton
           aria-label="close"
           onClick={onClose}
@@ -38,16 +37,6 @@ const AddResourceModalV2 = () => {
           <ChooseResource setFormStep={() => {}} />
         </DialogContent>
       </Dialog>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={`${isMobile ? styles.mobileAddButton : ''} ${
-          styles.addButton
-        }`}
-        data-cy="AddResourceButton"
-      >
-        <FontAwesomeIcon icon={faPlus} size="2x" />
-      </button>
     </>
   );
 };

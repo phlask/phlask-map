@@ -100,7 +100,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
 
   const selectedResourceIcon = {
@@ -249,11 +249,14 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
+              onClick={() =>
+                setOpenResourceModal(true)
+              }
             />
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2 />
+      <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
     </>
   );
 }
