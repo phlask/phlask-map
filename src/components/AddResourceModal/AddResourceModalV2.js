@@ -1,10 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Dialog from '@mui/material/Dialog';
 import ChooseResource from './ChooseResource';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { isMobile } from 'react-device-detect';
-import styles from './AddResourceModal.module.scss';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { DialogContent } from '@mui/material';
