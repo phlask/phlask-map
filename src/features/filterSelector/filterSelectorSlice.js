@@ -42,7 +42,7 @@ export const filterSelectorSlice = createSlice({
   name: 'filterSelector',
   initialState,
   reducers: {
-    tapFilters: {
+    toggleTapFilters: {
       filtered: state => {
         state.tapFilters.filter ? false : true;
       },
@@ -56,7 +56,7 @@ export const filterSelectorSlice = createSlice({
         state.tapFilters.openNow ? false : true;
       }
     },
-    foodFilters: {
+    toggleFoodFilters: {
       idRequired: state => {
         state.foodFilters.idRequired ? false : true;
       },

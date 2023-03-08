@@ -1,20 +1,20 @@
 import React from 'react';
+import { useState, useDispatch } from 'react';
 import { Box, SwipeableDrawer, Typography, Button, Grid } from '@mui/material';
-
+import './FilterButton.css';
 const FilterButton = props => {
   const handleClick = () => {
-    console.log('filter button', props.filter);
+    props.toggle(!props.active);
   };
+
   return (
-    <Grid item>
-      <Button
-        onClick={handleClick}
-        className="filterButton"
-        variant={`outlined`}
-      >
-        {props.filter}
-      </Button>
-    </Grid>
+    <Button
+      onClick={handleClick}
+      className={`filterButton `}
+      variant={`${props.active ? 'contained' : 'outlined'}`}
+    >
+      {props.filter}
+    </Button>
   );
 };
 

@@ -12,6 +12,7 @@ import {
   setFilteredTapTypes,
   resetFilterFunction
 } from '../../actions/actions';
+import { useState, useEffect } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import filterMarkers from '../../reducers/filterMarkers';
@@ -20,9 +21,28 @@ import FilterButton from './FilterButton/FilterButton';
 
 //currently the buttons are there visually but do not do anything
 //TODO: connect the buttons to the redux selectors
-function FilterDrawer() {
+const FilterDrawer = props => {
+  //Features
+  const [vessel, toggleVessel] = useState(false);
+  const [ADA, toggleADA] = useState(false);
+  const [open, toggleOpen] = useState(false);
+  const [selfServe, toggleSelfServe] = useState(false);
+
+  //Tap Type
+  const [fountain, toggleFountain] = useState(false);
+  const [soda, toggleSoda] = useState(false);
+  const [cooler, toggleCooler] = useState(false);
+  const [bottle, toggleBottle] = useState(false);
+
+  //Org Type
+  const [publicOrg, togglePublicOrg] = useState(false);
+  const [privateOrg, togglePrivateOrg] = useState(false);
+  const [sharedOrg, toggleSharedOrg] = useState(false);
+  const [restrictedOrg, toggleRestrictedOrg] = useState(false);
+
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
+
   const toggleFilterModal = () => {
     dispatch({
       type: 'TOGGLE_FILTER_MODAL',
@@ -30,6 +50,7 @@ function FilterDrawer() {
     });
   };
 
+  //taken from filter.js
   const handleChange = event => {
     if (event.target.id === 'filtered') {
       this.props.setToggleState('filtered', !this.props.filtered);
@@ -41,6 +62,23 @@ function FilterDrawer() {
       this.props.setToggleState('openNow', !this.props.openNow);
     } else console.log('error with toggle');
     this.handleGA(event.target.id, !this.props[event.target.id]);
+  };
+
+  const clearAll = () => {
+    toggleVessel(false);
+    toggleADA(false);
+    toggleOpen(false);
+    toggleSelfServe(false);
+
+    toggleFountain(false);
+    toggleSoda(false);
+    toggleCooler(false);
+    toggleBottle(false);
+
+    togglePublicOrg(false);
+    togglePrivateOrg(false);
+    toggleSharedOrg(false);
+    toggleRestrictedOrg(false);
   };
 
   return (
@@ -75,37 +113,97 @@ function FilterDrawer() {
       <Box className="filterGroup">
         <Typography className="filterFont">Features</Typography>
         <Grid container spacing={1}>
-          <FilterButton filter={'Vessel Needed'} />
-          <FilterButton filter={'ADA Accessible'} />
-          <FilterButton
-            id={'openNow'}
-            filter={'Open Now'}
-            onClick={e => this.handleChange(e)}
-          />
-          <FilterButton filter={'Self-Serve'} />
+          <Grid item>
+            <FilterButton
+              active={vessel}
+              toggle={toggleVessel}
+              filter={'Vessel Needed'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={ADA}
+              toggle={toggleADA}
+              filter={'ADA Accessible'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={open}
+              toggle={toggleOpen}
+              filter={'Open Now'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={selfServe}
+              toggle={toggleSelfServe}
+              filter={'Self-Serve'}
+            />
+          </Grid>
         </Grid>
       </Box>
       <Box className="filterGroup">
         <Typography className="filterFont">Tap Type</Typography>
         <Grid container spacing={1}>
-          <FilterButton filter={'Drinking Fountain'} />
-          <FilterButton filter={'Soda Dispenser'} />
-          <FilterButton filter={'Water Cooler'} />
-          <FilterButton filter={'Bottle Filter'} />
+          <Grid item>
+            <FilterButton
+              active={fountain}
+              toggle={toggleFountain}
+              filter={'Drinking Fountain'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={soda}
+              toggle={toggleSoda}
+              filter={'Soda Dispenser'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={cooler}
+              toggle={toggleCooler}
+              filter={'Water Cooler'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={bottle}
+              toggle={toggleBottle}
+              filter={'Bottle Filter'}
+            />
+          </Grid>
         </Grid>
       </Box>
       <Box className="filterGroup">
         <Grid Container>
           <Typography className="filterFont">Organization Type</Typography>
-          <ButtonGroup variant="outlined" aria-label="outlined button group">
-            <Button className="filterButton">Public</Button>
-            <Button className="filterButton">Private</Button>
-            <Button className="filterButton">Shared</Button>
-            <Button className="filterButton">Restricted</Button>
+          <ButtonGroup aria-label="outlined button group">
+            <FilterButton
+              active={publicOrg}
+              toggle={togglePublicOrg}
+              filter={'Public'}
+            />
+            <FilterButton
+              active={privateOrg}
+              toggle={togglePrivateOrg}
+              filter={'Private'}
+            />
+            <FilterButton
+              active={sharedOrg}
+              toggle={toggleSharedOrg}
+              filter={'Shared'}
+            />
+            <FilterButton
+              active={restrictedOrg}
+              toggle={toggleRestrictedOrg}
+              filter={'Restricted'}
+            />
           </ButtonGroup>
         </Grid>
         <Grid className="bottomButtons" Container>
-          <Button className=" clearButton" variant="text">
+          <Button onClick={clearAll} className=" clearButton" variant="text">
             Clear All
           </Button>
           <Button className=" applyButton" variant="outlined">
@@ -115,7 +213,9 @@ function FilterDrawer() {
       </Box>
     </SwipeableDrawer>
   );
-}
+};
+
+//taken from filter.js
 const mapStateToProps = state => ({
   filtered: state.tapFilters.filtered,
   handicap: state.tapFilters.handicap,
