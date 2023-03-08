@@ -1,82 +1,15 @@
 name: Test Site on S3
 
 on: [push, pull_request]
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    steps:
-      - uses: actions/checkout@v1
-      # Ref for branch name splitting: https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      - name: Build and Deploy the map
-        env:
-          AWS_DEFAULT_REGION: us-east-2
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          echo Build started on `date`
-          echo Building the webapp...
-          docker-compose run prod_build
-          echo Build completed on `date`
-          echo Pushing the webapp to S3...
-          sudo apt-get update -y
-          sudo apt-get install python3-setuptools
-          sudo apt-get install -y python3-pip
-          sudo pip3 install awscli --upgrade --user
-          aws s3 sync docker/build s3://test.phlask.me/${GITHUB_SHA} --acl public-read --delete
-          aws s3 sync docker/testResults s3://test.phlask.me/${GITHUB_SHA}/testResults --acl public-read --delete
-          echo "Test site for this run can be accessed at: https://test.phlask.me/${GITHUB_SHA}"
-      - name: Record the test build
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          echo Recording the test build...
-          aws dynamodb put-item --table-name test-page-list --item '{
-            "gitHash": {"S": "'${GITHUB_SHA}'"},
-            "creator": {"S": "'${GITHUB_ACTOR}'"},
-            "branch": {"S": "${{ steps.extract_branch.outputs.branch }}"},
-            "timeCreated": {"S": "'$(date +%s)'"},
-            "expirationTime": {"N": "'$(date +%s -d "+7 day")'"}
-          }'
-      - name: Run the Google Lighthouse test
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        # https://github.com/GoogleChrome/lighthouse/blob/master/docs/headless-chrome.md
-        run: |
-          sudo apt -f install
-          sudo apt-get install -y curl
-          curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-          sudo apt-get install -y nodejs chromium-browser jq
-          sudo npm install -g lighthouse
-          
-          sudo lighthouse "https://test.phlask.me/${GITHUB_SHA}/" --chrome-flags="--no-sandbox --headless" \
-            --output json \
-          | jq -r "{ description: \"Phlask Test Results - ${GITHUB_SHA}\", public: \"false\", files: {\"$(date "+%Y%m%d").lighthouse.report.json\": {content: (. | tostring) }}}" \
-          | curl -sS -X POST -H 'Content-Type: application/json' \
-              -u ${{ secrets.GITHUB_PHLASK_USER }}:${{ secrets.GITHUB_PHLASK_TOKEN }} \
-              -d @- https://api.github.com/gists > results.gist
-          
-          # Let's be nice and add the Lighthouse Viewer link in the Gist description.
-          export GID=$(cat results.gist | jq -r '.id') && \
-          curl -sS -X POST -H 'Content-Type: application/json' \
-            -u ${{ secrets.GITHUB_PHLASK_USER }}:${{ secrets.GITHUB_PHLASK_TOKEN }} \
-            -d "{ \"description\": \"Phlask Test Results - ${GITHUB_SHA} - Lighthouse: https://googlechrome.github.io/lighthouse/viewer/?gist=${GID}\" }" "https://api.github.com/gists/${GID}" > updated.gist
-            
-          echo Updating the test build record...
-
-          aws dynamodb update-item --table-name test-page-list --key '{
-            "gitHash": {"S": "'${GITHUB_SHA}'"}
-          }' --update-expression "SET #G = :g" --expression-attribute-names '{
-            "#G": "gistID"
-          }' --expression-attribute-values '{
-            ":g":{"S": "'${GID}'"}
-          }'
+    uses: ./.github/workflows/build_testsite.yml
+    secrets: inherit
+  lighthouse-testing:
+    needs: build
+    uses: ./.github/workflows/lighthouse_testing.yml
+    secrets: inherit
