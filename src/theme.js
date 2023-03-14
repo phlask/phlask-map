@@ -15,6 +15,9 @@ let theme = createTheme({
             fontSize: '1.25rem',
             '&:hover': {
               background: '#bacef6'
+            },
+            '&:active': {
+              background: '#bacef6'
             }
           }
         },
@@ -27,6 +30,9 @@ let theme = createTheme({
             margin: '0 auto',
             fontSize: '1.25rem',
             '&:hover': {
+              background: '#ffd7bb'
+            },
+            '&:active': {
               background: '#ffd7bb'
             }
           }
@@ -41,6 +47,9 @@ let theme = createTheme({
             fontSize: '1.25rem',
             '&:hover': {
               background: '#bedbd4'
+            },
+            '&:active': {
+              background: '#bedbd4'
             }
           }
         },
@@ -53,6 +62,9 @@ let theme = createTheme({
             margin: '0 auto',
             fontSize: '1.25rem',
             '&:hover': {
+              background: '#cbcbcb'
+            },
+            '&:active': {
               background: '#cbcbcb'
             }
           }
