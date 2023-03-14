@@ -18,7 +18,8 @@ let theme = createTheme({
             },
             '&:active': {
               background: '#bacef6'
-            }
+            },
+            paddingTop: '15.12px'
           }
         },
         {
@@ -34,7 +35,8 @@ let theme = createTheme({
             },
             '&:active': {
               background: '#ffd7bb'
-            }
+            },
+            paddingTop: '15.12px'
           }
         },
         {
@@ -50,7 +52,8 @@ let theme = createTheme({
             },
             '&:active': {
               background: '#bedbd4'
-            }
+            },
+            paddingTop: '15.12px'
           }
         },
         {
@@ -66,7 +69,8 @@ let theme = createTheme({
             },
             '&:active': {
               background: '#cbcbcb'
-            }
+            },
+            paddingTop: '15.12px'
           }
         }
       ]
