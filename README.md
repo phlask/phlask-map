@@ -92,11 +92,20 @@ Code behind the PHLASK Web Map
 We use Prettier to ensure a consistent code formatting across the project, if you are running VSCode, please make sure to install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), the project configuration will ensure that Prettier is set as your default formatter as well.
 
 ### Redux State Viewing
+
 During development, you may need to make changes to components which interact with Redux state. If you would like to have a better idea of the values in the Redux state while in development, install the Redux DevTools using the instructions here: https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
 
 For a guide on how to use the extension check the [Docs section of their documentation](https://github.com/reduxjs/redux-devtools/tree/main/extension#docs). This video in particular may be useful: https://egghead.io/lessons/javascript-getting-started-with-redux-dev-tools
 
 For more information on how to understand/use the PHLASK Map Redux state, see our [Redux Guide](redux_guide.md)
+
+### Storybook
+
+We use Storybook for documentation and testing of the PHLask components and design system.
+
+You can run `yarn storybook` in order to access it.
+
+We highly recommend for any new collaborators to access Storybook in order to get more familiar with our components and how to use them.
 
 ## Want to add something new or develop/report a fix for a bug you found?
 
@@ -132,6 +141,7 @@ The PHLASK Map runs on a static page built with:
   - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
+- Story
 
 ## Testing
 
