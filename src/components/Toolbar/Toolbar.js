@@ -29,6 +29,9 @@ import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg'
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import NavigationItem from './NavigationItem';
@@ -207,7 +210,16 @@ function Toolbar(props) {
           >
             <FoodIcon />
           </button>
-          <AddResourceModalV2 />
+
+          <button
+            className={styles.addButton}
+            onClick={() => {
+              setOpenResourceModal(true)
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} size="2x" />
+          </button>
+          <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
