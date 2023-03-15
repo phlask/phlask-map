@@ -1,10 +1,17 @@
 import React from 'react';
-import { useState, useDispatch } from 'react';
+import { useState } from 'react';
 import { Box, SwipeableDrawer, Typography, Button, Grid } from '@mui/material';
 import './FilterButton.css';
+import { useDispatch, useSelector } from 'react-redux';
+
 const FilterButton = props => {
+  const dispatch = useDispatch();
+
   const handleClick = () => {
-    props.toggle(!props.active);
+    props.toggle();
+    if (props.action) {
+      dispatch(props.action);
+    }
   };
 
   return (

@@ -42,6 +42,7 @@ const FilterDrawer = props => {
 
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
+  const openNow = useSelector(state => state.tapFilters.openNow);
 
   const toggleFilterModal = () => {
     dispatch({
@@ -50,18 +51,13 @@ const FilterDrawer = props => {
     });
   };
 
-  //taken from filter.js
-  const handleChange = event => {
-    if (event.target.id === 'filtered') {
-      this.props.setToggleState('filtered', !this.props.filtered);
-    } else if (event.target.id === 'ada') {
-      this.props.setToggleState('handicap', !this.props.handicap);
-    } else if (event.target.id === 'sparkling') {
-      this.props.setToggleState('sparkling', !this.props.sparkling);
-    } else if (event.target.id === 'openNow') {
-      this.props.setToggleState('openNow', !this.props.openNow);
-    } else console.log('error with toggle');
-    this.handleGA(event.target.id, !this.props[event.target.id]);
+  const toggleOpenNow = () => {
+    console.log('toggle pressed');
+    dispatch({
+      type: 'SET_TOGGLE_STATE',
+      toggle: openNow,
+      toggleState: !openNow
+    });
   };
 
   const clearAll = () => {
@@ -131,6 +127,11 @@ const FilterDrawer = props => {
             <FilterButton
               active={open}
               toggle={toggleOpen}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'openNow',
+                toggleState: !openNow
+              }}
               filter={'Open Now'}
             />
           </Grid>
