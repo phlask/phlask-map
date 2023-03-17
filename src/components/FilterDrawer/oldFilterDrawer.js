@@ -1,136 +1,232 @@
-//redux toggle examples at Filter.js line 23
+import {
+  Box,
+  SwipeableDrawer,
+  Typography,
+  Button,
+  ButtonGroup,
+  Grid
+} from '@mui/material';
+import { connect } from 'react-redux';
+import {
+  setToggleState,
+  setFilteredTapTypes,
+  resetFilterFunction
+} from '../../actions/actions';
+import { useState, useEffect } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import filterMarkers from '../../reducers/filterMarkers';
+import './filterDrawer.css';
+import FilterButton from './FilterButton/FilterButton';
 
-// import {
-//   Box,
-//   SwipeableDrawer,
-//   Typography,
-//   Checkbox,
-//   Switch,
-//   FormGroup,
-//   FormControlLabel,
-//   Grid
-// } from '@mui/material';
-// import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import filterMarkers from '../../reducers/filterMarkers';
+//currently the buttons are there visually but do not do anything
+//TODO: connect the buttons to the redux selectors
+const FilterDrawer = props => {
+  //Features
+  const [vessel, toggleVessel] = useState(false);
+  const [ADA, toggleADA] = useState(false);
+  const [open, toggleOpen] = useState(false);
+  const [selfServe, toggleSelfServe] = useState(false);
 
-// // water filter button
-// /*TODO: build filter checkbox that only shows places with selected attributes
-//   TODO: connect checkboxes/ switches to filter functions
-//   categories:
-//   booleans:
-//     handicap?
-//     filtration?
-//     vessel?
-//     sparkling?
-//     id_required?
-//     kid_only?
-//     open_now?
+  const filtered = useSelector(state => state.tapFilters.filtered);
+  const handicap = useSelector(state => state.tapFilters.handicap);
+  const openNow = useSelector(state => state.tapFilters.openNow);
+  const sparkling = useSelector(state => state.tapFilters.sparkling);
 
-//   selections:
-//     service
-//       -Self-serve
-//       -Ask proprietor
-//     tap_type
-//       -Drinking Fountain
-//       -Bottle Filter + Fountain
-//       -Sink
-//       -Soda Fountain
-//       -Dedicated Water Dispenser
-//       -Water Cooler
-//     access
-//       -school
-//       -park & rec
-//       -congregation
+  //Tap Type
+  const [fountain, toggleFountain] = useState(false);
+  const [soda, toggleSoda] = useState(false);
+  const [cooler, toggleCooler] = useState(false);
+  const [bottle, toggleBottle] = useState(false);
 
-// */
-// export default function FilterDrawer() {
-//   const dispatch = useDispatch();
-//   const isFilterShown = useSelector(state => state.isFilterShown);
-//   const toggleFilterModal = () => {
-//     dispatch({
-//       type: 'TOGGLE_FILTER_MODAL',
-//       isShown: !isFilterShown
-//     });
-//   };
-//   return (
-//     <SwipeableDrawer
-//       anchor="bottom"
-//       variant="temporary"
-//       open={isFilterShown}
-//       onOpen={toggleFilterModal}
-//       onClose={toggleFilterModal}
-//       sx={{
-//         '& .MuiDrawer-paper': {
-//           height: '60%'
-//         }
-//       }}
-//     >
-//       <Box
-//         sx={{
-//           height: '20%',
-//           backgroundColor: '#525F75',
-//           display: 'flex',
-//           justifyContent: 'center',
-//           alignItems: 'center',
-//           marginBottom: '1%'
-//         }}
-//       >
-//         <Typography variant="h6" color="white">
-//           Water Filter
-//         </Typography>
-//       </Box>
-//       {/* Switches */}
-//       <Grid container>
-//         <Grid xs={1}></Grid>
-//         <Grid xs={3}>
-//           <FormGroup>
-//             <FormControlLabel control={<Switch />} label="Open Now" />
-//             <FormControlLabel
-//               control={<Switch />}
-//               label="Handicap Accessible"
-//             />
-//             <FormControlLabel control={<Switch />} label="Filtration" />
-//             <FormControlLabel control={<Switch />} label="Vessel" />
-//             <FormControlLabel control={<Switch />} label="Sparkling" />
-//             <FormControlLabel control={<Switch />} label="ID Required" />
-//             <FormControlLabel control={<Switch />} label="Kids Only" />
-//           </FormGroup>
-//         </Grid>
-//         {/* Checkboxes */}
-//         <Grid xs={2}>
-//           <Typography>Service</Typography>
-//           <FormGroup>
-//             <FormControlLabel control={<Checkbox />} label="Self-Serve" />
-//             <FormControlLabel control={<Checkbox />} label="Ask Proprietor" />
-//           </FormGroup>
-//         </Grid>
-//         <Grid xs={2}>
-//           <Typography>Access</Typography>
-//           <FormGroup>
-//             <FormControlLabel control={<Checkbox />} label="School" />
-//             <FormControlLabel control={<Checkbox />} label="Park & Rec" />
-//             <FormControlLabel control={<Checkbox />} label="Congregation" />
-//           </FormGroup>
-//         </Grid>
-//         <Grid xs={2}>
-//           <Typography>Tap Type</Typography>
-//           <FormGroup>
-//             <FormControlLabel
-//               control={<Checkbox />}
-//               label="Drinking Fountain"
-//             />
-//             <FormControlLabel
-//               control={<Checkbox />}
-//               label="Bottle Filter + Fountain"
-//             />
-//             <FormControlLabel control={<Checkbox />} label="Sink" />
-//             <FormControlLabel control={<Checkbox />} label="Soda Fountain" />
-//             <FormControlLabel control={<Checkbox />} label="Water Dispenser" />
-//             <FormControlLabel control={<Checkbox />} label="Water Cooler" />
-//           </FormGroup>
-//         </Grid>
-//       </Grid>
-//     </SwipeableDrawer>
-//   );
-// }
+  //Org Type
+  const [publicOrg, togglePublicOrg] = useState(false);
+  const [privateOrg, togglePrivateOrg] = useState(false);
+  const [sharedOrg, toggleSharedOrg] = useState(false);
+  const [restrictedOrg, toggleRestrictedOrg] = useState(false);
+
+  const dispatch = useDispatch();
+  const isFilterShown = useSelector(state => state.isFilterShown);
+
+  const toggleFilterModal = () => {
+    dispatch({
+      type: 'TOGGLE_FILTER_MODAL',
+      isShown: !isFilterShown
+    });
+  };
+
+  const clearAll = () => {
+    console.log('clear all button pressed');
+  };
+
+  return (
+    <SwipeableDrawer
+      className="swipeDrawer"
+      anchor="bottom"
+      variant="temporary"
+      open={isFilterShown}
+      onOpen={toggleFilterModal}
+      onClose={toggleFilterModal}
+      sx={{
+        '& .MuiDrawer-paper': {
+          height: '50%'
+        }
+      }}
+    >
+      <Box
+        className="filterBox"
+        sx={{
+          height: '14%',
+          backgroundColor: '#525F75',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: '5%'
+        }}
+      >
+        <Typography variant="h5" color="white">
+          Water Filter
+        </Typography>
+      </Box>
+      <Box className="filterGroup">
+        <Typography className="filterFont">Features</Typography>
+        <Grid container spacing={1}>
+          <Grid item>
+            <FilterButton
+              active={filtered}
+              toggle={toggleVessel}
+              filter={'Filtered'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'filtered',
+                toggleState: !filtered
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={handicap}
+              toggle={toggleADA}
+              filter={'ADA Accessible'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'handicap',
+                toggleState: !handicap
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={openNow}
+              toggle={toggleOpen}
+              filter={'Open Now'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'openNow',
+                toggleState: !openNow
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={sparkling}
+              toggle={toggleSelfServe}
+              filter={'Sparkling'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'sparkling',
+                toggleState: !sparkling
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box className="filterGroup">
+        <Typography className="filterFont">Tap Type</Typography>
+        <Grid container spacing={1}>
+          <Grid item>
+            <FilterButton
+              active={fountain}
+              toggle={toggleFountain}
+              filter={'Drinking Fountain'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={soda}
+              toggle={toggleSoda}
+              filter={'Soda Dispenser'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={cooler}
+              toggle={toggleCooler}
+              filter={'Water Cooler'}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={bottle}
+              toggle={toggleBottle}
+              filter={'Bottle Filter'}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box className="filterGroup">
+        <Grid Container>
+          <Typography className="filterFont">Organization Type</Typography>
+          <ButtonGroup aria-label="outlined button group">
+            <FilterButton
+              active={publicOrg}
+              toggle={togglePublicOrg}
+              filter={'Public'}
+            />
+            <FilterButton
+              active={privateOrg}
+              toggle={togglePrivateOrg}
+              filter={'Private'}
+            />
+            <FilterButton
+              active={sharedOrg}
+              toggle={toggleSharedOrg}
+              filter={'Shared'}
+            />
+            <FilterButton
+              active={restrictedOrg}
+              toggle={toggleRestrictedOrg}
+              filter={'Restricted'}
+            />
+          </ButtonGroup>
+        </Grid>
+        <Grid className="bottomButtons" Container>
+          <Button onClick={clearAll} className=" clearButton" variant="text">
+            Clear All
+          </Button>
+          <Button className=" applyButton" variant="outlined">
+            Apply
+          </Button>
+        </Grid>
+      </Box>
+    </SwipeableDrawer>
+  );
+};
+
+//taken from filter.js
+const mapStateToProps = state => ({
+  filtered: state.tapFilters.filtered,
+  handicap: state.tapFilters.handicap,
+  sparkling: state.tapFilters.sparkling,
+  openNow: state.tapFilters.openNow,
+  accessTypesHidden: state.tapFilters.accessTypesHidden,
+  showingInfoWindow: state.showingInfoWindow
+});
+
+const mapDispatchToProps = {
+  setFilteredTapTypes,
+  setToggleState,
+  resetFilterFunction
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterDrawer);

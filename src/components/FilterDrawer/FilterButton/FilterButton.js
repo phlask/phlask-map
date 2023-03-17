@@ -8,7 +8,6 @@ const FilterButton = props => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    props.toggle();
     if (props.action) {
       dispatch(props.action);
     }

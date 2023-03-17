@@ -27,6 +27,13 @@ const FilterDrawer = props => {
   const [ADA, toggleADA] = useState(false);
   const [open, toggleOpen] = useState(false);
   const [selfServe, toggleSelfServe] = useState(false);
+  const [sparkle, toggleSparkle] = useState(false);
+  const [test, toggleTest] = useState(false);
+
+  const filtered = useSelector(state => state.tapFilters.filtered);
+  const handicap = useSelector(state => state.tapFilters.handicap);
+  const openNow = useSelector(state => state.tapFilters.openNow);
+  const sparkling = useSelector(state => state.tapFilters.sparkling);
 
   //Tap Type
   const [fountain, toggleFountain] = useState(false);
@@ -42,7 +49,6 @@ const FilterDrawer = props => {
 
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
-  const openNow = useSelector(state => state.tapFilters.openNow);
 
   const toggleFilterModal = () => {
     dispatch({
@@ -51,30 +57,45 @@ const FilterDrawer = props => {
     });
   };
 
-  const toggleOpenNow = () => {
-    console.log('toggle pressed');
-    dispatch({
-      type: 'SET_TOGGLE_STATE',
-      toggle: openNow,
-      toggleState: !openNow
-    });
-  };
-
   const clearAll = () => {
-    toggleVessel(false);
-    toggleADA(false);
-    toggleOpen(false);
-    toggleSelfServe(false);
+    console.log('clear all button pressed');
+  };
+  // Way to dynamically add filters. Does not work right now.
+  const fList = [
+    {
+      active: openNow,
+      toggle: toggleOpen,
+      filter: 'Open Now'
+    },
+    {
+      active: handicap,
+      toggle: toggleADA,
+      filter: 'ADA Accessible'
+    },
+    {
+      active: test,
+      toggle: toggleTest,
+      filter: 'A Test'
+    }
+  ];
 
-    toggleFountain(false);
-    toggleSoda(false);
-    toggleCooler(false);
-    toggleBottle(false);
-
-    togglePublicOrg(false);
-    togglePrivateOrg(false);
-    toggleSharedOrg(false);
-    toggleRestrictedOrg(false);
+  const filterBuilder = (list = fList) => {
+    return list.map(item => (
+      <>
+        <Grid item>
+          <FilterButton
+            active={item.active}
+            toggle={item.toggle}
+            filter={item.filter}
+            action={{
+              type: 'SET_TOGGLE_STATE',
+              toggle: 'openNow',
+              toggleState: !openNow
+            }}
+          />
+        </Grid>
+      </>
+    ));
   };
 
   return (
@@ -111,35 +132,38 @@ const FilterDrawer = props => {
         <Grid container spacing={1}>
           <Grid item>
             <FilterButton
-              active={vessel}
-              toggle={toggleVessel}
-              filter={'Vessel Needed'}
-            />
-          </Grid>
-          <Grid item>
-            <FilterButton
-              active={ADA}
-              toggle={toggleADA}
-              filter={'ADA Accessible'}
-            />
-          </Grid>
-          <Grid item>
-            <FilterButton
-              active={open}
+              active={openNow}
               toggle={toggleOpen}
+              filter={'Open Now'}
               action={{
                 type: 'SET_TOGGLE_STATE',
                 toggle: 'openNow',
                 toggleState: !openNow
               }}
-              filter={'Open Now'}
             />
           </Grid>
           <Grid item>
             <FilterButton
-              active={selfServe}
+              active={handicap}
+              toggle={toggleADA}
+              filter={'ADA Accessible'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'handicap',
+                toggleState: !handicap
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <FilterButton
+              active={sparkling}
               toggle={toggleSelfServe}
-              filter={'Self-Serve'}
+              filter={'Sparkling'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'sparkling',
+                toggleState: !sparkling
+              }}
             />
           </Grid>
         </Grid>
@@ -152,7 +176,24 @@ const FilterDrawer = props => {
               active={fountain}
               toggle={toggleFountain}
               filter={'Drinking Fountain'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'fountain',
+                toggleState: !fountain
+              }}
             />
+            <Grid item>
+              <FilterButton
+                active={sparkling}
+                toggle={toggleSelfServe}
+                filter={'Sparkling'}
+                action={{
+                  type: 'SET_TOGGLE_STATE',
+                  toggle: 'sparkling',
+                  toggleState: !sparkling
+                }}
+              />
+            </Grid>
           </Grid>
           <Grid item>
             <FilterButton
