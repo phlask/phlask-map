@@ -11,6 +11,8 @@ const FilterButton = props => {
     if (props.action) {
       dispatch(props.action);
     }
+    console.log('action test');
+    console.log(props.action);
   };
 
   return (

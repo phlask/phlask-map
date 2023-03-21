@@ -19,29 +19,25 @@ import filterMarkers from '../../reducers/filterMarkers';
 import './filterDrawer.css';
 import FilterButton from './FilterButton/FilterButton';
 
-//currently the buttons are there visually but do not do anything
-//TODO: connect the buttons to the redux selectors
 const FilterDrawer = props => {
-  //Features
-  const [vessel, toggleVessel] = useState(false);
-  const [ADA, toggleADA] = useState(false);
-  const [open, toggleOpen] = useState(false);
-  const [selfServe, toggleSelfServe] = useState(false);
-  const [sparkle, toggleSparkle] = useState(false);
-  const [test, toggleTest] = useState(false);
-
+  //tap filters
+  //Currently these are the only filters implemented.
   const filtered = useSelector(state => state.tapFilters.filtered);
   const handicap = useSelector(state => state.tapFilters.handicap);
   const openNow = useSelector(state => state.tapFilters.openNow);
   const sparkling = useSelector(state => state.tapFilters.sparkling);
 
   //Tap Type
+  //These are not connected to anything and are not implemented within the redux state at the moment.
+  //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
   const [fountain, toggleFountain] = useState(false);
   const [soda, toggleSoda] = useState(false);
   const [cooler, toggleCooler] = useState(false);
   const [bottle, toggleBottle] = useState(false);
 
   //Org Type
+  //these also do nothing
+  //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
   const [publicOrg, togglePublicOrg] = useState(false);
   const [privateOrg, togglePrivateOrg] = useState(false);
   const [sharedOrg, toggleSharedOrg] = useState(false);
@@ -59,43 +55,6 @@ const FilterDrawer = props => {
 
   const clearAll = () => {
     console.log('clear all button pressed');
-  };
-  // Way to dynamically add filters. Does not work right now.
-  const fList = [
-    {
-      active: openNow,
-      toggle: toggleOpen,
-      filter: 'Open Now'
-    },
-    {
-      active: handicap,
-      toggle: toggleADA,
-      filter: 'ADA Accessible'
-    },
-    {
-      active: test,
-      toggle: toggleTest,
-      filter: 'A Test'
-    }
-  ];
-
-  const filterBuilder = (list = fList) => {
-    return list.map(item => (
-      <>
-        <Grid item>
-          <FilterButton
-            active={item.active}
-            toggle={item.toggle}
-            filter={item.filter}
-            action={{
-              type: 'SET_TOGGLE_STATE',
-              toggle: 'openNow',
-              toggleState: !openNow
-            }}
-          />
-        </Grid>
-      </>
-    ));
   };
 
   return (
@@ -133,7 +92,6 @@ const FilterDrawer = props => {
           <Grid item>
             <FilterButton
               active={openNow}
-              toggle={toggleOpen}
               filter={'Open Now'}
               action={{
                 type: 'SET_TOGGLE_STATE',
@@ -145,7 +103,6 @@ const FilterDrawer = props => {
           <Grid item>
             <FilterButton
               active={handicap}
-              toggle={toggleADA}
               filter={'ADA Accessible'}
               action={{
                 type: 'SET_TOGGLE_STATE',
@@ -157,7 +114,6 @@ const FilterDrawer = props => {
           <Grid item>
             <FilterButton
               active={sparkling}
-              toggle={toggleSelfServe}
               filter={'Sparkling'}
               action={{
                 type: 'SET_TOGGLE_STATE',
@@ -174,7 +130,6 @@ const FilterDrawer = props => {
           <Grid item>
             <FilterButton
               active={fountain}
-              toggle={toggleFountain}
               filter={'Drinking Fountain'}
               action={{
                 type: 'SET_TOGGLE_STATE',
@@ -182,39 +137,15 @@ const FilterDrawer = props => {
                 toggleState: !fountain
               }}
             />
-            <Grid item>
-              <FilterButton
-                active={sparkling}
-                toggle={toggleSelfServe}
-                filter={'Sparkling'}
-                action={{
-                  type: 'SET_TOGGLE_STATE',
-                  toggle: 'sparkling',
-                  toggleState: !sparkling
-                }}
-              />
-            </Grid>
           </Grid>
           <Grid item>
-            <FilterButton
-              active={soda}
-              toggle={toggleSoda}
-              filter={'Soda Dispenser'}
-            />
+            <FilterButton active={soda} filter={'Soda Dispenser'} />
           </Grid>
           <Grid item>
-            <FilterButton
-              active={cooler}
-              toggle={toggleCooler}
-              filter={'Water Cooler'}
-            />
+            <FilterButton active={cooler} filter={'Water Cooler'} />
           </Grid>
           <Grid item>
-            <FilterButton
-              active={bottle}
-              toggle={toggleBottle}
-              filter={'Bottle Filter'}
-            />
+            <FilterButton active={bottle} filter={'Bottle Filter'} />
           </Grid>
         </Grid>
       </Box>
@@ -222,26 +153,10 @@ const FilterDrawer = props => {
         <Grid Container>
           <Typography className="filterFont">Organization Type</Typography>
           <ButtonGroup aria-label="outlined button group">
-            <FilterButton
-              active={publicOrg}
-              toggle={togglePublicOrg}
-              filter={'Public'}
-            />
-            <FilterButton
-              active={privateOrg}
-              toggle={togglePrivateOrg}
-              filter={'Private'}
-            />
-            <FilterButton
-              active={sharedOrg}
-              toggle={toggleSharedOrg}
-              filter={'Shared'}
-            />
-            <FilterButton
-              active={restrictedOrg}
-              toggle={toggleRestrictedOrg}
-              filter={'Restricted'}
-            />
+            <FilterButton active={publicOrg} filter={'Public'} />
+            <FilterButton active={privateOrg} filter={'Private'} />
+            <FilterButton active={sharedOrg} filter={'Shared'} />
+            <FilterButton active={restrictedOrg} filter={'Restricted'} />
           </ButtonGroup>
         </Grid>
         <Grid className="bottomButtons" Container>
@@ -257,20 +172,4 @@ const FilterDrawer = props => {
   );
 };
 
-//taken from filter.js
-const mapStateToProps = state => ({
-  filtered: state.tapFilters.filtered,
-  handicap: state.tapFilters.handicap,
-  sparkling: state.tapFilters.sparkling,
-  openNow: state.tapFilters.openNow,
-  accessTypesHidden: state.tapFilters.accessTypesHidden,
-  showingInfoWindow: state.showingInfoWindow
-});
-
-const mapDispatchToProps = {
-  setFilteredTapTypes,
-  setToggleState,
-  resetFilterFunction
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterDrawer);
+export default FilterDrawer;
