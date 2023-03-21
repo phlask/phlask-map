@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { isMobile } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';

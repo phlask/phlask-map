@@ -9041,10 +9041,10 @@ react-flip-move@^3.0.4:
   resolved "https://registry.npmjs.org/react-flip-move/-/react-flip-move-3.0.4.tgz"
   integrity sha512-HyUVv9g3t/BS7Yz9HgrtYSWyRNdR2F81nkj+C5iRY675AwlqCLB5JU9mnZWg0cdVz7IM4iquoyZx70vzZv3Z8Q==
 
-react-ga@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/react-ga/-/react-ga-3.3.0.tgz"
-  integrity sha512-o8RScHj6Lb8cwy3GMrVH6NJvL+y0zpJvKtc0+wmH7Bt23rszJmnqEQxRbyrqUzk9DTJIHoP42bfO5rswC9SWBQ==
+react-ga4@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-ga4/-/react-ga4-2.0.0.tgz#d125807cc30b087a6aa24401ec5f1f1c2d176fe9"
+  integrity sha512-WHi98hMunzh4ngRdNil8NN6Qly3ZZUkprhbgSqA+NFzovp8zqpYV3jcbKL9FnMdeBQHGhv8AVNCT2oFEE+EFXA==
 
 react-images-upload@^1.2.8:
   version "1.2.8"
