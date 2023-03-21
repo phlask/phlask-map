@@ -16,11 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/beta-access
-          role-session-name: github-${{ github.sha }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/beta-access
+        role-session-name: github-${{ github.sha }}
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}
     - name: Build and Deploy the Map
       run: |
          echo Build started on `date`
