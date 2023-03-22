@@ -1,6 +1,81 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
 let theme = createTheme({
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: 'water' },
+          style: {
+            textTransform: 'none',
+            background: '#5285e9',
+            color: '#ffffff',
+            margin: '0 auto',
+            padding: '4px, 0px, 8px, 0px',
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#bacef6'
+            },
+            '&:active': {
+              background: '#bacef6'
+            },
+            paddingTop: '15.12px'
+          }
+        },
+        {
+          props: { variant: 'food' },
+          style: {
+            textTransform: 'none',
+            background: '#ff9a55',
+            color: '#ffffff',
+            margin: '0 auto',
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#ffd7bb'
+            },
+            '&:active': {
+              background: '#ffd7bb'
+            },
+            paddingTop: '15.12px'
+          }
+        },
+        {
+          props: { variant: 'foraging' },
+          style: {
+            textTransform: 'none',
+            background: '#5da694',
+            color: '#ffffff',
+            margin: '0 auto',
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#bedbd4'
+            },
+            '&:active': {
+              background: '#bedbd4'
+            },
+            paddingTop: '15.12px'
+          }
+        },
+        {
+          props: { variant: 'bathrooms' },
+          style: {
+            textTransform: 'none',
+            background: '#7c7c7c',
+            color: '#ffffff',
+            margin: '0 auto',
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#cbcbcb'
+            },
+            '&:active': {
+              background: '#cbcbcb'
+            },
+            paddingTop: '15.12px'
+          }
+        }
+      ]
+    }
+  },
   palette: {
     style: {
       primary: {

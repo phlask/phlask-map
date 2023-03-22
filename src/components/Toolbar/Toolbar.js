@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {
   PHLASK_TYPE_FOOD,
@@ -18,7 +18,7 @@ import Filter from '../ResourceMenu/Filter';
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-import { AddResourceModal } from '../AddResourceModal';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
@@ -28,6 +28,9 @@ import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
+
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -100,7 +103,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
 
   const selectedResourceIcon = {
@@ -207,7 +210,16 @@ function Toolbar(props) {
           >
             <FoodIcon />
           </button>
-          <AddResourceModal />
+
+          <button
+            className={styles.addButton}
+            onClick={() => {
+              setOpenResourceModal(true)
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} size="2x" />
+          </button>
+          <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
@@ -249,10 +261,14 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
+              onClick={() =>
+                setOpenResourceModal(true)
+              }
             />
           </BottomNavigation>
         </Box>
       )}
+      <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
     </>
   );
 }

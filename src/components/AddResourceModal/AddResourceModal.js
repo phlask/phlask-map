@@ -8,6 +8,7 @@ import {
   Popover,
   Accordion
 } from 'react-bootstrap';
+import Dialog from '@mui/material/Dialog';
 import ImageUploader from 'react-images-upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -417,9 +418,9 @@ export class AddResourceModal extends Component {
   render() {
     return (
       <>
-        <Modal
-          show={this.state.show}
-          onHide={this.handleClose}
+        <Dialog
+          open={this.state.show}
+          onClose={this.handleClose}
           className={styles.modal}
         >
           {this.state.formStep === 'chooseResource' && (
@@ -565,7 +566,7 @@ export class AddResourceModal extends Component {
           )}
 
           {this.state.formStep === 'shareSocials' && <ShareSocials />}
-        </Modal>
+        </Dialog>
 
         <button
           onClick={this.handleShow}

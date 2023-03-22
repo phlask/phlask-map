@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactGA from 'react-ga';
 import { Switch, Route } from 'react-router';
 import './App.css';
 import MapPage from './components/MapPage/MapPage';
@@ -12,24 +11,12 @@ import Div100vh from 'react-div-100vh';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import { CssBaseline } from '@mui/material';
-
-const trackingIdProd = 'UA-180456355-1';
-const trackingIdBeta = 'UA-180456355-2';
-const trackingIdTest = 'UA-180456355-3';
+import { logPageView, initAnalytics } from './analytics';
 
 function App(props) {
-  switch (window.location.hostname) {
-    case 'phlask.me':
-      ReactGA.initialize(trackingIdProd);
-      break;
-    case 'beta.phlask.me':
-      ReactGA.initialize(trackingIdBeta);
-      break;
-    default:
-      ReactGA.initialize(trackingIdTest);
-  }
+  initAnalytics();
 
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  logPageView();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

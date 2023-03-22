@@ -25,7 +25,7 @@
     "react-device-detect": "^2.2.2",
     "react-div-100vh": "^0.7.0",
     "react-dom": "^17.0.0",
-    "react-ga": "^3.3.0",
+    "react-ga4": "^2.0.0",
     "react-images-upload": "^1.2.8",
     "react-location": "^3.3.4",
     "react-places-autocomplete": "^7.3.0",
