@@ -141,7 +141,8 @@ The PHLASK Map runs on a static page built with:
   - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
-- Story
+- Storybook (https://storybook.js.org/)
+  - Enables developers to see standalone versions of the components used throughout this site
 
 ## Testing
 
