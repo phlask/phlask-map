@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   MenuList,
   MenuItem,
   ListItemIcon,
@@ -14,6 +15,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import Sidebar from '../SideBar/SideBar';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
@@ -25,6 +27,7 @@ import { ReactComponent as IDIcon } from '../icons/ModalIDRequired.svg';
 import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
 import { borderRadius } from '@mui/system';
+import { isMobile } from 'react-device-detect';
 
 const SidebarLink = styled(NavLink)(({ theme }) => ({
   color: '#2D3748',
@@ -53,7 +56,8 @@ export default function Head() {
   const dispatch = useDispatch();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showMapControls, setShowMapControls] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showMapControls, setShowMapControls] = useState(false);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
 
@@ -83,6 +87,10 @@ export default function Head() {
     });
   };
 
+  const showSidebar = () => {
+    setSidebarOpen(true);
+  };
+
   const pagePaths = /(\/mission)|(\/share)|(\/project)|(\/contribute)/;
   const isNotMapPage = () => {
     return window.location.pathname.match(pagePaths);
@@ -97,6 +105,13 @@ export default function Head() {
 
   return (
     <>
+      {isMobile ?? (
+        <Sidebar
+          open={sidebarOpen}
+          setOpen={setSidebarOpen}
+          showControls={setShowMapControls}
+        />
+      )}
       <AppBar
         sx={{
           width: '310px',
@@ -204,6 +219,24 @@ export default function Head() {
               </Grow>
             )}
           </Popper>
+          {showMapControls ? (
+            <Box
+              sx={{
+                position: 'relative',
+                marginLeft: 'auto'
+              }}
+            >
+              <IconButton onClick={toggleSearchBar}>
+                <SearchIcon />
+              </IconButton>
+              <IconButton
+                sx={{ marginRight: '-8px' }}
+                onClick={toggleFilterModal}
+              >
+                <SlidersIcon />
+              </IconButton>
+            </Box>
+          ) : null}
         </Toolbar>
       </AppBar>
       <FilterDrawer />
