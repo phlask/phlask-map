@@ -36,12 +36,10 @@ const FilterDrawer = props => {
   const [bottle, toggleBottle] = useState(false);
 
   //Org Type
-  //these also do nothing
-  //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
-  const [publicOrg, togglePublicOrg] = useState(false);
-  const [privateOrg, togglePrivateOrg] = useState(false);
-  const [sharedOrg, toggleSharedOrg] = useState(false);
-  const [restrictedOrg, toggleRestrictedOrg] = useState(false);
+  const publicOrg = useSelector(state => state.tapFilters.publicOrg);
+  const privateOrg = useSelector(state => state.tapFilters.privateOrg);
+  const sharedOrg = useSelector(state => state.tapFilters.sharedOrg);
+  const restrictedOrg = useSelector(state => state.tapFilters.restrictedOrg);
 
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
@@ -153,10 +151,42 @@ const FilterDrawer = props => {
         <Grid Container>
           <Typography className="filterFont">Organization Type</Typography>
           <ButtonGroup aria-label="outlined button group">
-            <FilterButton active={publicOrg} filter={'Public'} />
-            <FilterButton active={privateOrg} filter={'Private'} />
-            <FilterButton active={sharedOrg} filter={'Shared'} />
-            <FilterButton active={restrictedOrg} filter={'Restricted'} />
+            <FilterButton
+              active={publicOrg}
+              filter={'Public'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'publicOrg',
+                toggleState: !publicOrg
+              }}
+            />
+            <FilterButton
+              active={privateOrg}
+              filter={'Private'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'privateOrg',
+                toggleState: !privateOrg
+              }}
+            />
+            <FilterButton
+              active={sharedOrg}
+              filter={'Shared'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'sharedOrg',
+                toggleState: !sharedOrg
+              }}
+            />
+            <FilterButton
+              active={restrictedOrg}
+              filter={'Restricted'}
+              action={{
+                type: 'SET_TOGGLE_STATE',
+                toggle: 'restrictedOrg',
+                toggleState: !restrictedOrg
+              }}
+            />
           </ButtonGroup>
         </Grid>
         <Grid className="bottomButtons" Container>

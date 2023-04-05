@@ -79,7 +79,20 @@ const makeGetVisibleTaps = () => {
         }, []);
     }
 
+    // console.log(tapFilters)
+
+    // TODO: This implementation has a quirky bug at the moment
+    // When filtering out Shared taps and then filtering/unfiltering other types
+    // The other filter does not appear to take effect.
+    // Unfiltering Shared taps seems to reset this behavior.
+    // Checking the tapFilters seems to show filter conditions are working properly.
     filteredTaps = Object.keys(filteredTaps)
+      .filter(
+        key => (tapFilters.publicOrg && filteredTaps[key].access === 'Public') ||
+                (tapFilters.privateOrg && filteredTaps[key].access === 'Private') ||
+                (tapFilters.sharedOrg && filteredTaps[key].access === 'Private-Shared') ||
+                (tapFilters.restrictedOrg && filteredTaps[key].access === 'Restricted')
+      )
       .filter(
         key => !tapFilters.accessTypesHidden.includes(filteredTaps[key].access)
       )

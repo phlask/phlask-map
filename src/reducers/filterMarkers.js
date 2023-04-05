@@ -23,6 +23,10 @@ const initialState = {
     handicap: false,
     sparkling: false,
     openNow: false, // reach to this
+    publicOrg: true,
+    privateOrg: true,
+    sharedOrg: true,
+    restrictedOrg: true,
     accessTypesHidden: []
   },
   foodFilters: {
@@ -64,7 +68,23 @@ export default (state = initialState, act) => {
           openNow:
             act.toggle === 'openNow'
               ? act.toggleState
-              : state.tapFilters.openNow
+              : state.tapFilters.openNow,
+          publicOrg:
+            act.toggle === 'publicOrg'
+              ? act.toggleState
+              : state.tapFilters.publicOrg,
+          privateOrg:
+            act.toggle === 'privateOrg'
+              ? act.toggleState
+              : state.tapFilters.privateOrg,
+          sharedOrg:
+            act.toggle === 'sharedOrg'
+              ? act.toggleState
+              : state.tapFilters.sharedOrg,
+          restrictedOrg:
+            act.toggle === 'restrictedOrg'
+              ? act.toggleState
+              : state.tapFilters.restrictedOrg
         }
       };
 
