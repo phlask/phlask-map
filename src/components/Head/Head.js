@@ -28,6 +28,7 @@ import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
 import { borderRadius } from '@mui/system';
 import { isMobile } from 'react-device-detect';
+import styles from './Head.module.scss';
 
 const SidebarLink = styled(NavLink)(({ theme }) => ({
   color: '#2D3748',
@@ -63,9 +64,17 @@ export default function Head() {
 
   const toggleMenu = () => {
     if (menuOpen) {
-      setMenuOpen(false);
+      if (isMobile) {
+        setSidebarOpen(false);
+      } else {
+        setMenuOpen(false);
+      }
     } else {
-      setMenuOpen(true);
+      if (isMobile) {
+        setSidebarOpen(true);
+      } else {
+        setMenuOpen(true);
+      }
     }
   };
 
@@ -113,14 +122,7 @@ export default function Head() {
         />
       )}
       <AppBar
-        sx={{
-          width: '310px',
-          height: '75px',
-          margin: '25px auto 0 25px',
-          left: '0',
-          right: 'auto',
-          borderRadius: '10px'
-        }}
+        className={`${isMobile ? styles.mobileHead : styles.desktopHead}`}
       >
         <Toolbar
           sx={{
@@ -128,10 +130,7 @@ export default function Head() {
             color: '#fff',
             boxShadow:
               '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            borderRadius: menuOpen ? '10px 10px 0 0' : '10px',
-            height: '100%'
+            display: 'flex'
           }}
         >
           <IconButton
