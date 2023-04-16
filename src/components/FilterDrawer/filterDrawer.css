@@ -29,14 +29,17 @@
   margin-top: 7%;
 }
 @media only screen and (min-width: 769px) {
+  Box.filterbox {
+  }
   div.MuiPaper-elevation {
-    height: 500px !important;
+    height: 28rem !important;
     width: 30vw;
     min-width: 400px;
     /* border-radius: 5px; */
     top: 4rem;
     left: 70%;
     right: 0%;
+    padding-bottom: 1rem;
     align-items: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
   }

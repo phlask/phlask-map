@@ -72,12 +72,13 @@ const FilterDrawer = props => {
       <Box
         className="filterBox"
         sx={{
-          height: '14%',
+          // height: '14%',
+          height: '6rem',
           backgroundColor: '#525F75',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          paddingTop: '5%'
+          paddingTop: '0rem'
         }}
       >
         <Typography variant="h5" color="white">
