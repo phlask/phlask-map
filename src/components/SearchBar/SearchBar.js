@@ -152,6 +152,7 @@ class SearchBar extends React.Component {
         )}
 
         <TutorialModal
+          className="tutorialModal"
           showButton={isMobile ? !this.state.isSearchBarShown : true}
         />
       </>
