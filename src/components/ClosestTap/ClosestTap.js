@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -107,24 +107,26 @@ function getLon() {
   }
 }
 
-export class ClosestTap extends Component {
-  constructor(props) {
-    super(props);
+export const ClosestTap = props => {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      text: 'Click for nearest tap!'
-    };
+  //   this.state = {
+  //     text: 'Click for nearest tap!'
+  //   };
 
-    // this.change = this.change.bind(this);
-  }
+  const [text, setText] = useState('Click for nearest tap!');
 
-  setClosest() {
-    const closest = getClosest(this.props.allTaps, {
-      lat: this.props.userLocation.lat,
-      lon: this.props.userLocation.lng
+  // this.change = this.change.bind(this);
+  // }
+
+  const setClosest = () => {
+    const closest = getClosest(props.allTaps, {
+      lat: props.userLocation.lat,
+      lon: props.userLocation.lng
     });
     console.log(closest);
-  }
+  };
 
   // change(){
   //   if(this.props.lat === "" || this.props.lon === ""){
@@ -155,18 +157,14 @@ export class ClosestTap extends Component {
   //   }
   // }
 
-  render() {
-    return (
-      <div className="closestTap">
-        <Card>
-          <Card.Header onClick={this.setClosest.bind(this)}>
-            {this.state.text}
-          </Card.Header>
-        </Card>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="closestTap">
+      <Card>
+        <Card.Header onClick={setClosest}>{text}</Card.Header>
+      </Card>
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   userLocation: state.userLocation,

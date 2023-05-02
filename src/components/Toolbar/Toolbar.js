@@ -39,7 +39,7 @@ import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
-function distance(lat1, lon1, lat2, lon2) {
+const distance = (lat1, lon1, lat2, lon2) => {
   var p = 0.017453292519943295;
   var a =
     0.5 -
@@ -49,11 +49,11 @@ function distance(lat1, lon1, lat2, lon2) {
       (1 - Math.cos((lon2 - lon1) * p))) /
       2;
   return 12742 * Math.asin(Math.sqrt(a));
-}
+};
 
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
-function getClosest(data, userLocation) {
+const getClosest = (data, userLocation) => {
   var distances = data.map((org, index) => {
     return {
       lat: org['lat'],
@@ -90,15 +90,15 @@ function getClosest(data, userLocation) {
   }
 
   return closestTap;
-}
+};
 
-function getCoordinates() {
+const getCoordinates = () => {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
-}
+};
 
-function Toolbar(props) {
+const Toolbar = props => {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
@@ -111,22 +111,22 @@ function Toolbar(props) {
     default: WaterIcon
   }[phlaskType ?? 'default'];
 
-  function switchType(type) {
+  const switchType = type => {
     if (props.phlaskType !== type) {
       props.togglePhlaskType(type);
       handleGA(type);
     }
-  }
+  };
 
-  function handleGA(type) {
+  const handleGA = type => {
     ReactGA.event({
       category: `Toolbar`,
       action: 'MapChangedTo',
       label: `${type}`
     });
-  }
+  };
 
-  function setClosest() {
+  const setClosest = () => {
     const data =
       props.phlaskType === PHLASK_TYPE_WATER
         ? props.allTaps
@@ -146,7 +146,7 @@ function Toolbar(props) {
         })
       )
       .then(props.toggleInfoWindow(true));
-  }
+  };
 
   return (
     <>
@@ -255,7 +255,7 @@ function Toolbar(props) {
       )}
     </>
   );
-}
+};
 
 const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
