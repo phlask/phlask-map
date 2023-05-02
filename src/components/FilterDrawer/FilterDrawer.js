@@ -30,6 +30,7 @@ const FilterDrawer = props => {
   //Tap Type
   //These are not connected to anything and are not implemented within the redux state at the moment.
   //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
+  // TODO: how do I turn this into a form that executes upon apply?
   const [fountain, toggleFountain] = useState(false);
   const [soda, toggleSoda] = useState(false);
   const [cooler, toggleCooler] = useState(false);
@@ -53,6 +54,10 @@ const FilterDrawer = props => {
 
   const clearAll = () => {
     console.log('clear all button pressed');
+  };
+
+  const applyFilters = () => {
+    console.log('apply filters');
   };
 
   return (
@@ -194,7 +199,11 @@ const FilterDrawer = props => {
           <Button onClick={clearAll} className=" clearButton" variant="text">
             Clear All
           </Button>
-          <Button className=" applyButton" variant="outlined">
+          <Button
+            className=" applyButton"
+            variant="outlined"
+            onClick={applyFilters}
+          >
             Apply
           </Button>
         </Grid>
