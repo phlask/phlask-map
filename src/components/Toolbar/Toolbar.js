@@ -7,6 +7,7 @@ import {
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_BATHROOM,
   setMapCenter,
+  setUserLocation,
   setSelectedPlace,
   toggleInfoWindow,
   togglePhlaskType,
@@ -16,6 +17,7 @@ import FoodFilter from '../FoodFilter/FoodFilter';
 import phlaskImg from '../images/PHLASK Button.png';
 import Filter from '../ResourceMenu/Filter';
 import styles from './Toolbar.module.scss';
+import ClosestTap from '../ClosestTap/ClosestTap';
 
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
@@ -56,24 +58,31 @@ function distance(lat1, lon1, lat2, lon2) {
 
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
-function getClosest(data, userLocation) {
-  var distances = data.map((org, index) => {
-    return {
-      lat: org['lat'],
-      lon: org['lon'],
-      organization: org['organization'],
-      address: org['address'],
-      distance: distance(
-        userLocation['lat'],
-        userLocation['lon'],
-        org['lat'],
-        org['lon']
-      ),
-      id: index
-    };
-  });
-  var minDistance = Math.min(...distances.map(d => d.distance));
 
+//looping through data to get list of locations 
+  function getClosest(data, userLocation) {
+    console.log(data, "is data")
+   var distances = data.map((org, index) => {
+    //i added this terniary
+    if(org?.lat && org?.lon){
+      return {
+        lat: org['lat'],
+        lon: org['lon'],
+        organization: org['organization'],
+        address: org['address'],
+        distance: distance(
+          userLocation['lat'],
+          userLocation['lon'],
+          org['lat'],
+          org['lon']
+        ),
+        id: index
+      };
+
+    }
+  }).filter(Boolean)
+
+  var minDistance = Math.min(...distances.map(d => d.distance));
   var closestTap = {
     organization: '',
     address: '',
@@ -91,9 +100,12 @@ function getClosest(data, userLocation) {
       closestTap.id = distances[i].id;
     }
   }
-
+  console.log(closestTap, "is closest tap")
   return closestTap;
+
 }
+
+
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -101,11 +113,14 @@ function getCoordinates() {
   });
 }
 
+
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
-
+  const dispatch = useDispatch();
+  const property_name = useSelector(state => state)
+  
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
     [PHLASK_TYPE_FOOD]: FoodIcon,
@@ -129,17 +144,39 @@ function Toolbar(props) {
     });
   }
 
-  function setClosest() {
-    const data =
-      props.phlaskType === PHLASK_TYPE_WATER
-        ? props.allTaps
-        : props.allFoodOrgs;
+
+
+
+  async function setClosest() {
+    
+    // let data;
+    // switch (true){
+    //   case (props.phlaskType === PHLASK_TYPE_WATER):
+    //   case (props.phlaskType === PHLASK_TYPE_FOOD):
+    //   case (props.phlaskType === PHLASK_TYPE_FORAGING):
+    //   case (props.phlaskType === PHLASK_TYPE_BATHROOM):
+    //      data = props?.allTaps;
+    //     break;
+    //   default: 
+    //     data = props?.allFoodOrgs
+    // }
+    
+//if the user clicks very fast, it crashes
+console.log(props)
+   const data = await
+      props.phlaskType === PHLASK_TYPE_WATER 
+        ? props?.allTaps
+        : props?.allFoodOrgs;
+
+    
     const closest = getClosest(data, {
       lat: props.userLocation.lat,
       lon: props.userLocation.lng
     });
+
     const place = new Promise(() => {
-      props.setSelectedPlace(closest.id);
+    
+        props.setSelectedPlace(closest.id);
     });
     place
       .then(
@@ -149,6 +186,10 @@ function Toolbar(props) {
         })
       )
       .then(props.toggleInfoWindow(true));
+     
+  }
+   function closestButtonClicked(){
+     setClosest();
   }
 
   return (
@@ -162,6 +203,7 @@ function Toolbar(props) {
         >
           {!isMobile && (
             <h3
+              onClick={closestButtonClicked}
               className={`
             ${styles.title}
             ${
@@ -255,6 +297,7 @@ function Toolbar(props) {
                   component={selectedResourceIcon}
                   sx={{ fontSize: 90 }}
                   inheritViewBox={true}
+                  onClick={closestButtonClicked}
                 />
               }
             />
@@ -288,6 +331,7 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
+  setUserLocation,
   toggleResourceMenu
 };
 

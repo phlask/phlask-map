@@ -106,7 +106,7 @@ export const getBathroomTaps = () => dispatch => {
 
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    dispatch(getForagingSuccess(snapshotVal));
+    dispatch(getBathroomSuccess(snapshotVal));
   });
 };
 

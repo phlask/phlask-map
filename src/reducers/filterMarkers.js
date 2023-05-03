@@ -97,6 +97,10 @@ export default (state = initialState, act) => {
         allFoodOrgs: act.allFoodOrgs,
         filteredOrgs: act.allFoodOrgs
       };
+      
+    case actions.GET_BATHROOM_SUCCESS:
+        return { ...state, allBathroomTaps: act.allBathroomTaps };
+    
 
     case actions.SET_FILTER_FUNCTION:
       // console.log('set filter func');
