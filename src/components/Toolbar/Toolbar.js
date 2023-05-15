@@ -22,12 +22,14 @@ import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
-import DesktopWaterIcon from '../icons/DesktopWaterIcon';
+// import DesktopWaterIcon from '../icons/DesktopWaterIcon';
 
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -176,6 +178,8 @@ function Toolbar(props) {
                 : 'Food Map'}
             </h3>
           )}
+          <SearchIcon />
+          <PlusCircleIcon />
           <div className={styles.filterButton}>
             <button aria-label="show filters">
               {props.phlaskType === PHLASK_TYPE_WATER ? (
@@ -193,7 +197,9 @@ function Toolbar(props) {
               switchType(PHLASK_TYPE_WATER);
             }}
           >
-            <DesktopWaterIcon />
+            <SearchIcon />
+
+            {/* <DesktopWaterIcon /> */}
           </button>
           {isMobile && (
             <button className={styles.closestTapButton} onClick={setClosest}>
@@ -214,12 +220,15 @@ function Toolbar(props) {
           <button
             className={styles.addButton}
             onClick={() => {
-              setOpenResourceModal(true)
+              setOpenResourceModal(true);
             }}
           >
             <FontAwesomeIcon icon={faPlus} size="2x" />
           </button>
-          <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
+          <AddResourceModalV2
+            open={openResourceModal}
+            setOpen={setOpenResourceModal}
+          />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
@@ -261,14 +270,15 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() =>
-                setOpenResourceModal(true)
-              }
+              onClick={() => setOpenResourceModal(true)}
             />
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
+      <AddResourceModalV2
+        open={openResourceModal}
+        setOpen={setOpenResourceModal}
+      />
     </>
   );
 }
