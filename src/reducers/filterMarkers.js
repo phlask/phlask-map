@@ -22,7 +22,7 @@ const initialState = {
     filtered: false,
     handicap: false,
     sparkling: false,
-    openNow: false, // reach to this
+    openNow: false,
     accessTypesHidden: []
   },
   foodFilters: {

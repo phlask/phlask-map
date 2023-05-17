@@ -54,7 +54,7 @@ export default function Head() {
         setOpen={setSidebarOpen}
         showControls={setShowMapControls}
       />
-      <AppBar>
+      <AppBar sx={{ zIndex: 1300 }}>
         <Toolbar
           sx={{
             backgroundColor: '#fff',
