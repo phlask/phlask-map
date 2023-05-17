@@ -60,7 +60,7 @@ const FilterDrawer = props => {
   return (
     <SwipeableDrawer
       className="swipeDrawer"
-      anchor="bottom"
+      anchor="left"
       variant="temporary"
       open={isFilterShown}
       onOpen={toggleFilterModal}
