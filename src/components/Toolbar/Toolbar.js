@@ -31,7 +31,6 @@ import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { SvgIcon, Typography } from '@mui/material';
@@ -179,7 +178,6 @@ function Toolbar(props) {
             </h3>
           )}
           <SearchIcon />
-          <PlusCircleIcon />
           <div className={styles.filterButton}>
             <button aria-label="show filters">
               {props.phlaskType === PHLASK_TYPE_WATER ? (
@@ -223,7 +221,7 @@ function Toolbar(props) {
               setOpenResourceModal(true);
             }}
           >
-            <FontAwesomeIcon icon={faPlus} size="2x" />
+            <PlusCircleIcon />
           </button>
           <AddResourceModalV2
             open={openResourceModal}
