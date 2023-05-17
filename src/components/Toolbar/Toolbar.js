@@ -102,9 +102,11 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
+  const isFilterShown = useSelector(state => state.isFilterShown);
 
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
@@ -150,6 +152,12 @@ function Toolbar(props) {
       )
       .then(props.toggleInfoWindow(true));
   }
+  const toggleFilterModal = () => {
+    dispatch({
+      type: 'TOGGLE_FILTER_MODAL',
+      isShown: !isFilterShown
+    });
+  };
 
   return (
     <>
@@ -176,8 +184,9 @@ function Toolbar(props) {
                 : 'Food Map'}
             </h3>
           )}
+          {/* filter button */}
           <div className={styles.filterButton}>
-            <button aria-label="show filters">
+            <button aria-label="show filters" onClick={toggleFilterModal}>
               {props.phlaskType === PHLASK_TYPE_WATER ? (
                 <Filter />
               ) : (
