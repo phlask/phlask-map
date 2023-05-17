@@ -36,11 +36,9 @@
     height: 500px !important;
     width: 30vw;
     min-width: 400px;
-    /* border-radius: 5px; */
+    border-radius: 5px;
     bottom: 5rem;
-    /* left: 1rem; */
-    top: 4rem;
-    right: 0;
+    left: 1rem;
     align-items: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
   }
