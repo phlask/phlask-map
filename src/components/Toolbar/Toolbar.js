@@ -181,6 +181,7 @@ function Toolbar(props) {
                 : 'Food Map'}
             </h3>
           )}
+          {/* filter button */}
           <div className={styles.filterButton}>
             <button aria-label="show filters" onClick={toggleFilterModal}>
               {props.phlaskType === PHLASK_TYPE_WATER ? (
