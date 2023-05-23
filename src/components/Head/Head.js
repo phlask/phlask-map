@@ -1,7 +1,8 @@
 import {
   AppBar,
   Box,
-  MenuList,
+  Button,
+  Collapse,
   MenuItem,
   ListItemIcon,
   ListItemText,
@@ -9,12 +10,15 @@ import {
   Toolbar,
   Paper,
   Popper,
+  Stack,
   styled,
-  Grow
+  Grow,
+  Tabs,
+  Tab
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import Sidebar from '../SideBar/SideBar';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
@@ -28,23 +32,39 @@ import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
 import { borderRadius } from '@mui/system';
 import { isMobile } from 'react-device-detect';
-import styles from './Head.module.scss';
+import Contribute from '../Pages/Contribute';
+import Mission from '../Pages/Mission';
+import Share from '../Pages/Share';
+import Project from '../Pages/Project';
 
-const SidebarLink = styled(NavLink)(({ theme }) => ({
+const DropLink = styled(Button)(({ theme }) => ({
   color: '#2D3748',
+  backgroundColor: 'transparent',
+  width: 'fit-content',
   textDecoration: 'none',
-  '&.active': {
-    color: '#2D3748',
-    textDecoration: 'none'
-  },
+  padding: '0 10px 0 0',
+  margin: '10px 0 10px 25px',
+  borderRadius: '24px',
   '& span': {
     fontSize: '16px',
-    marginLeft: '10px'
+    marginLeft: '10px',
+    borderRadius: '24px'
+  },
+  '& li': {
+    padding: '0px',
+    justifyContent: 'center'
+  },
+  '& svg': {
+    width: '40px',
+    height: '41px'
+  },
+  '&:hover': {
+    backgroundColor: '#0a58ca',
+    color: '#ffffff'
   }
 }));
 
 const NavIcon = styled(ListItemIcon)(({ theme }) => ({
-  marginLeft: '25px',
   width: '30px',
   height: '30px',
   '& svg': {
@@ -59,27 +79,17 @@ export default function Head() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
+  const [menuExpand, setMenuExpand] = useState(false);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
 
   const toggleMenu = () => {
-    if (menuOpen) {
-      if (isMobile) {
-        setSidebarOpen(false);
-      } else {
-        setMenuOpen(false);
-      }
-    } else {
-      if (isMobile) {
-        setSidebarOpen(true);
-      } else {
-        setMenuOpen(true);
-      }
-    }
+    setMenuOpen(prev => !prev);
   };
 
   const handleClose = () => {
     setMenuOpen(false);
+    setSidebarOpen(false);
   };
 
   const toggleSearchBar = () => {
@@ -114,15 +124,26 @@ export default function Head() {
 
   return (
     <>
-      {isMobile ?? (
+      {isMobile ? (
         <Sidebar
           open={sidebarOpen}
           setOpen={setSidebarOpen}
           showControls={setShowMapControls}
         />
-      )}
+      ) : null}
       <AppBar
-        className={`${isMobile ? styles.mobileHead : styles.desktopHead}`}
+        sx={
+          isMobile
+            ? {}
+            : {
+                width: '310px',
+                height: '75px',
+                margin: '25px auto 0 25px',
+                borderRadius: menuOpen ? '10px 10px 0 0' : '10px',
+                left: '0',
+                right: 'auto'
+              }
+        }
       >
         <Toolbar
           sx={{
@@ -130,11 +151,13 @@ export default function Head() {
             color: '#fff',
             boxShadow:
               '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
-            display: 'flex'
+            display: 'flex',
+            height: '100%',
+            borderRadius: isMobile ? '' : menuOpen ? '10px 10px 0 0' : '10px'
           }}
         >
           <IconButton
-            onClick={toggleMenu}
+            onClick={isMobile ? setSidebarOpen : toggleMenu}
             sx={{
               position: 'relative',
               left: '-10px',
@@ -142,7 +165,9 @@ export default function Head() {
             }}
           >
             <MenuIcon style={{ display: menuOpen ? 'none' : 'block' }} />
-            <CloseIcon style={{ display: menuOpen ? 'block' : 'none' }} />
+            {isMobile ? null : (
+              <CloseIcon style={{ display: menuOpen ? 'block' : 'none' }} />
+            )}
           </IconButton>
           <Link to="/" onClick={() => setShowMapControls(true)}>
             <PhlaskIcon
@@ -152,77 +177,89 @@ export default function Head() {
               }}
             />
           </Link>
-          <Popper
-            anchorEl={document.getElementsByTagName('header')[0]}
-            open={menuOpen}
-            onClose={handleClose}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === 'bottom-start' ? 'left top' : 'left bottom'
-                }}
-              >
-                <Paper
-                  sx={{
-                    width: '310px',
-                    padding: '0 0 1rem',
-                    borderRadius: '0 0 10px 10px'
+          {!isMobile ? (
+            <Popper
+              anchorEl={document.getElementsByTagName('header')[0]}
+              open={menuOpen}
+              onClose={handleClose}
+              placement="bottom-start"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === 'bottom-start' ? 'left top' : 'left bottom'
                   }}
                 >
-                  <MenuList>
-                    <SidebarLink to="mission" onClick={handleClose}>
-                      <MenuItem>
-                        <NavIcon>
-                          <PhlaskNoTextIcon />
-                        </NavIcon>
-                        <ListItemText>About</ListItemText>
-                      </MenuItem>
-                    </SidebarLink>
+                  <Paper
+                    sx={{
+                      width: '310px',
+                      padding: '0 0 1rem',
+                      borderRadius: '0 0 10px 10px'
+                    }}
+                  >
+                    <Router>
+                      <Tabs orientation="vertical">
+                        <DropLink
+                          component={Link}
+                          to="/mission"
+                          startIcon={<PhlaskNoTextIcon />}
+                        >
+                          About
+                        </DropLink>
 
-                    <SidebarLink to="share" onClick={handleClose}>
-                      <MenuItem>
-                        <NavIcon>
-                          <PlusCircleIcon />
-                        </NavIcon>
-                        <ListItemText sx={{ paddingBottom: '5px' }}>
+                        <DropLink
+                          component={Link}
+                          to="/share"
+                          startIcon={<PlusCircleIcon />}
+                        >
                           How to PHLASK
-                        </ListItemText>
-                      </MenuItem>
-                    </SidebarLink>
+                        </DropLink>
 
-                    <SidebarLink to="contribute" onClick={handleClose}>
-                      <MenuItem>
-                        <NavIcon>
-                          <UsersIcon />
-                        </NavIcon>
-                        <ListItemText>Join the team</ListItemText>
-                      </MenuItem>
-                    </SidebarLink>
+                        <DropLink
+                          component={Link}
+                          to="/contribute"
+                          startIcon={<UsersIcon />}
+                        >
+                          Join the team
+                        </DropLink>
 
-                    <SidebarLink to="project" onClick={handleClose}>
-                      <MenuItem>
-                        <NavIcon>
-                          <IDIcon />
-                        </NavIcon>
-                        <ListItemText>Acknowledgements</ListItemText>
-                      </MenuItem>
-                    </SidebarLink>
-                  </MenuList>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-          {showMapControls ? (
+                        <DropLink
+                          component={Link}
+                          to="/project"
+                          startIcon={<IDIcon />}
+                        >
+                          Acknowledgements
+                        </DropLink>
+                      </Tabs>
+
+                      <Switch>
+                        <Tab>
+                          <Mission />
+                        </Tab>
+                        <Route path={`/share`}>
+                          <Share />
+                        </Route>
+                        <Route path={`/contribute`}>
+                          <Contribute />
+                        </Route>
+                        <Route path={`/project`}>
+                          <Project />
+                        </Route>
+                      </Switch>
+                    </Router>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          ) : (
             <Box
               sx={{
                 position: 'relative',
-                marginLeft: 'auto'
+                marginLeft: isMobile ? 'auto' : '25px'
               }}
             >
               <IconButton onClick={toggleSearchBar}>
@@ -235,7 +272,7 @@ export default function Head() {
                 <SlidersIcon />
               </IconButton>
             </Box>
-          ) : null}
+          )}
         </Toolbar>
       </AppBar>
       <FilterDrawer />
