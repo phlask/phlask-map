@@ -32,6 +32,8 @@ const initialState = {
   },
   allTaps: [],
   allFoodOrgs: [],
+  allBathroomTaps: [],
+  allForagingTaps: [],
   selectedPlace: {},
   phlaskType: actions.PHLASK_TYPE_WATER
 };

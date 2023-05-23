@@ -61,25 +61,23 @@ function distance(lat1, lon1, lat2, lon2) {
 
 //looping through data to get list of locations 
   function getClosest(data, userLocation) {
-    console.log(data, "is data")
-   var distances = data.map((org, index) => {
+    var distances = data.map((org, index) => {
     //i added this terniary
-    if(org?.lat && org?.lon){
-      return {
-        lat: org['lat'],
-        lon: org['lon'],
-        organization: org['organization'],
-        address: org['address'],
-        distance: distance(
-          userLocation['lat'],
-          userLocation['lon'],
-          org['lat'],
-          org['lon']
-        ),
-        id: index
-      };
-
-    }
+      if(org?.lat && org?.lon){
+        return {
+          lat: org['lat'],
+          lon: org['lon'],
+          organization: org['organization'],
+          address: org['address'],
+          distance: distance(
+            userLocation['lat'],
+            userLocation['lon'],
+            org['lat'],
+            org['lon']
+          ),
+          id: index
+        };
+      }
   }).filter(Boolean)
 
   var minDistance = Math.min(...distances.map(d => d.distance));
@@ -100,7 +98,6 @@ function distance(lat1, lon1, lat2, lon2) {
       closestTap.id = distances[i].id;
     }
   }
-  console.log(closestTap, "is closest tap")
   return closestTap;
 
 }
@@ -144,40 +141,38 @@ function Toolbar(props) {
     });
   }
 
-
-
-
   async function setClosest() {
-    
-    // let data;
-    // switch (true){
-    //   case (props.phlaskType === PHLASK_TYPE_WATER):
-    //   case (props.phlaskType === PHLASK_TYPE_FOOD):
-    //   case (props.phlaskType === PHLASK_TYPE_FORAGING):
-    //   case (props.phlaskType === PHLASK_TYPE_BATHROOM):
-    //      data = props?.allTaps;
-    //     break;
-    //   default: 
-    //     data = props?.allFoodOrgs
-    // }
-    
-//if the user clicks very fast, it crashes
-console.log(props)
-   const data = await
-      props.phlaskType === PHLASK_TYPE_WATER 
-        ? props?.allTaps
-        : props?.allFoodOrgs;
+    // If the user clicks very fast, it crashes.
+    // NOTE: This was left as an acceptable scenario for now, 
+    // as it is difficult for a user to do this reliably due to the popup of the location panel.
+    // This may be reproducible on Desktop.
+    let data;
+    switch (props.phlaskType){
+      case (PHLASK_TYPE_WATER):
+        data = props?.allTaps;
+        break;
+      case (PHLASK_TYPE_FOOD):
+        data = props?.allFoodOrgs
+        break;
+      case (PHLASK_TYPE_FORAGING):
+        data = props?.allForagingTaps;
+        break;
+      case (PHLASK_TYPE_BATHROOM):
+        data = props?.allBathroomTaps;
+        break;
+      default:
+        data = props?.allTaps
+    }
 
-    
     const closest = getClosest(data, {
       lat: props.userLocation.lat,
       lon: props.userLocation.lng
     });
 
     const place = new Promise(() => {
-    
-        props.setSelectedPlace(closest.id);
+      props.setSelectedPlace(closest.id);
     });
+
     place
       .then(
         props.setMapCenter({
@@ -186,10 +181,10 @@ console.log(props)
         })
       )
       .then(props.toggleInfoWindow(true));
-     
   }
-   function closestButtonClicked(){
-     setClosest();
+
+  function closestButtonClicked(){
+    setClosest();
   }
 
   return (
@@ -205,13 +200,13 @@ console.log(props)
             <h3
               onClick={closestButtonClicked}
               className={`
-            ${styles.title}
-            ${
-              props.phlaskType === PHLASK_TYPE_WATER
-                ? styles.waterTitle
-                : styles.foodTitle
-            }
-          `}
+                ${styles.title}
+                ${
+                  props.phlaskType === PHLASK_TYPE_WATER
+                    ? styles.waterTitle
+                    : styles.foodTitle
+                }
+              `}
             >
               {props.phlaskType === PHLASK_TYPE_WATER
                 ? 'Water Map'
@@ -320,6 +315,8 @@ const mapStateToProps = state => ({
   phlaskType: state.phlaskType,
   allTaps: state.allTaps,
   allFoodOrgs: state.allFoodOrgs,
+  allBathroomTaps: state.allBathroomTaps,
+  allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
   isResourceMenuShown: state.isResourceMenuShown
 });
