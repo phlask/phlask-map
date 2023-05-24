@@ -59,10 +59,11 @@ class SelectedTap extends React.Component {
   };
 
   getWalkingDurationAndTimes = () => {
+    if (!this.props.selectedPlace) return;
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
-    ${this.props.userLocation.lat}&end=${this.props.selectedPlace.lon},${this.props.selectedPlace.lat}`)
+    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.lon},${this.props.selectedPlace?.lat}`)
       .then(response => response.json())
       .then(data => {
         // duration is returned in seconds
@@ -165,7 +166,7 @@ class SelectedTap extends React.Component {
     ReactGA.event({
       category: `Tap - ${this.props.phlaskType}`,
       action: 'InfoShown',
-      label: `${this.props.selectedPlace.organization}, ${this.props.selectedPlace.address}`
+      label: `${this.props.selectedPlace?.organization}, ${this.props.selectedPlace?.address}`
     });
   }
 
@@ -175,13 +176,13 @@ class SelectedTap extends React.Component {
     const selectedPlace = this.props.selectedPlace;
 
     this.setState({
-      organization: selectedPlace.organization,
-      address: selectedPlace.address,
-      tapDescription: selectedPlace.description
-        ? selectedPlace.description
+      organization: selectedPlace?.organization,
+      address: selectedPlace?.address,
+      tapDescription: selectedPlace?.description
+        ? selectedPlace?.description
         : 'Happy PHLasking',
-      tapStatement: selectedPlace.statement,
-      tapNormsAndRules: selectedPlace.norms_rules
+      tapStatement: selectedPlace?.statement,
+      tapNormsAndRules: selectedPlace?.norms_rules
     });
   }
 
@@ -213,24 +214,26 @@ class SelectedTap extends React.Component {
         <div>
           {isMobile && (
             <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-              <SwipeableDrawer
-                anchor="bottom"
-                open={this.props.showingInfoWindow}
-                onOpen={() => this.toggleInfoWindow(true)}
-                onClose={() => this.toggleInfoWindow(false)}
-                PaperProps={{ square: false }}
-              >
-                <SelectedTapMobile
-                  image={tempImages.tapImg}
-                  estWalkTime={this.state.walkingDuration}
-                  selectedPlace={this.props.selectedPlace}
+              {this.props.selectedPlace && (
+                <SwipeableDrawer
+                  anchor="bottom"
+                  open={this.props.showingInfoWindow}
+                  onOpen={() => this.toggleInfoWindow(true)}
+                  onClose={() => this.toggleInfoWindow(false)}
+                  PaperProps={{ square: false }}
                 >
-                  <SelectedTapHours
-                    infoIsExpanded={this.props.infoIsExpanded}
+                  <SelectedTapMobile
+                    image={tempImages.tapImg}
+                    estWalkTime={this.state.walkingDuration}
                     selectedPlace={this.props.selectedPlace}
-                  />
-                </SelectedTapMobile>
-              </SwipeableDrawer>
+                  >
+                    <SelectedTapHours
+                      infoIsExpanded={this.props.infoIsExpanded}
+                      selectedPlace={this.props.selectedPlace}
+                    />
+                  </SelectedTapMobile>
+                </SwipeableDrawer>
+              )}
             </div>
           )}
           {!isMobile && (
@@ -287,11 +290,11 @@ class SelectedTap extends React.Component {
                       {this.props.phlaskType === PHLASK_TYPE_WATER ? (
                         <img
                           className="tap-info-icon-img"
-                          src={this.props.selectedPlace.infoIcon}
+                          src={this.props.selectedPlace?.infoIcon}
                           alt=""
                         ></img>
                       ) : (
-                        this.props.selectedPlace.infoIcon
+                        this.props.selectedPlace?.infoIcon
                       )}
                     </div>
                   </div>
