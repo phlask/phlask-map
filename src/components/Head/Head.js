@@ -57,7 +57,7 @@ export default function Head() {
       <AppBar>
         <Toolbar
           sx={{
-            backgroundColor: '#fff',
+            backgroundColor: '#23456',
             color: '#fff',
             boxShadow:
               '0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 0 rgba(0, 0, 0, 0.24)',
