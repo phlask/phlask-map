@@ -5,12 +5,18 @@ import { ReactComponent as WaterIconCR } from '../icons/WaterIconChooseResource.
 import { ReactComponent as FoodIconCR } from '../icons/FoodIconChooseResource.svg';
 import { ReactComponent as ForagingIconCR } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as ToiletIconCR } from '../icons/ToiletIconChooseResource.svg';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 function ChooseResource({ setFormStep }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <div className={styles.dialog}>
-      <h2 className={styles.greyHeader}>Add a Resource</h2>
-      <h3 className={styles.subHeader}>
+    <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
+      <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
+        Add a Resource
+      </h2>
+      <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
         Choose the type of resource you like
         <br />
         to add and submit the form.
@@ -18,7 +24,7 @@ function ChooseResource({ setFormStep }) {
       <div className={styles.buttonWrapper}>
         <Button
           className={styles.modalButton}
-          variant="water"
+          variant={isMobile ? 'water' : 'waterDesktop'}
           onClick={() => setFormStep('addWaterTap')}
         >
           <WaterIconCR />
@@ -26,7 +32,7 @@ function ChooseResource({ setFormStep }) {
         </Button>
         <Button
           className={styles.modalButton}
-          variant="food"
+          variant={isMobile ? 'food' : 'foodDesktop'}
           onClick={() => setFormStep('addFood')}
         >
           <FoodIconCR />
@@ -34,7 +40,7 @@ function ChooseResource({ setFormStep }) {
         </Button>
         <Button
           className={styles.modalButton}
-          variant="bathrooms"
+          variant={isMobile ? 'bathrooms' : 'bathroomsDesktop'}
           onClick={() => setFormStep('addBathroom')}
         >
           <ToiletIconCR />
@@ -45,7 +51,7 @@ function ChooseResource({ setFormStep }) {
           about this next week */}
         <Button
           className={styles.modalButton}
-          variant="foraging"
+          variant={isMobile ? 'foraging' : 'foragingDesktop'}
           onClick={() => setFormStep('addForaging')}
         >
           <ForagingIconCR />

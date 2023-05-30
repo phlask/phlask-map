@@ -24,16 +24,37 @@
   height: 100%;
 }
 
+.dialogDesktop {
+  align-items: center;
+  justify-content: center;
+  width: 660px;
+  height: 314px;
+  left: 25px;
+  top: 372px;
+}
+
 .greyHeader {
   color: #626262;
   font-size: 24px;
   text-align: center;
 }
 
+.greyHeaderDesktop {
+  color: #626262;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .subHeader {
   font-size: 14px;
   text-align: center;
   margin-bottom: 40px;
+}
+
+.subHeaderDesktop {
+  font-size: 14px;
+  text-align: center;
 }
 
 .modalButton {

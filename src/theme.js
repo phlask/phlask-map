@@ -72,6 +72,107 @@ let theme = createTheme({
             },
             paddingTop: '15.12px'
           }
+        },
+        {
+          props: { variant: 'waterDesktop' },
+          style: {
+            position: 'absolute',
+            height: '80px',
+            width: '209px',
+            left: '124.75px',
+            top: '150px',
+
+            radius: '8px',
+            padding: '4px 0px 8px 0px',
+            gap: '2px',
+            alignItems: 'center',
+
+            background: '#5285e9',
+            color: '#ffffff',
+
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#bacef6'
+            },
+            '&:active': {
+              background: '#bacef6'
+            }
+          }
+        },
+        {
+          props: { variant: 'foodDesktop' },
+          style: {
+            position: 'absolute',
+            height: '80px',
+            width: '209px',
+            left: '124.75px',
+            top: '254px',
+            radius: '8px',
+            padding: '4px 0px 7px 0px',
+            gap: '2px',
+            alignItems: 'center',
+
+            background: '#ff9a55',
+            color: '#ffffff',
+
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#ffd7bb'
+            },
+            '&:active': {
+              background: '#ffd7bb'
+            }
+          }
+        },
+        {
+          props: { variant: 'foragingDesktop' },
+          style: {
+            position: 'absolute',
+            height: '80px',
+            width: '209px',
+            left: '374.25px',
+            top: '150px',
+
+            radius: '8px',
+            padding: '4px 0px 8px 0px',
+            gap: '2px',
+            alignItems: 'center',
+
+            background: '#5da694',
+            color: '#ffffff',
+
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#bedbd4'
+            },
+            '&:active': {
+              background: '#bedbd4'
+            }
+          }
+        },
+        {
+          props: { variant: 'bathroomsDesktop' },
+          style: {
+            position: 'absolute',
+            height: '80px',
+            width: '209px',
+            left: '374.25px',
+            top: '254px',
+            radius: '8px',
+            padding: '4px 0px 8px 0px',
+            gap: '2px',
+            alignItems: 'center',
+
+            background: '#7c7c7c',
+            color: '#ffffff',
+            fontSize: '1.25rem',
+            '&:hover': {
+              background: '#cbcbcb'
+            },
+            '&:active': {
+              background: '#cbcbcb'
+            }
+          }
         }
       ]
     }
