@@ -12,12 +12,29 @@ import {
   setFilteredTapTypes,
   resetFilterFunction
 } from '../../actions/actions';
-import { useState, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import filterMarkers from '../../reducers/filterMarkers';
 import './filterDrawer.css';
 import FilterButton from './FilterButton/FilterButton';
+
+const initialState = {
+  filtered: false,
+  handicap: false,
+  sparkling: false,
+  openNow: false
+};
+
+const SET_TAP_STATE = 'SET_TAP_STATE';
+
+const tapReducer = (state = initialState, action) => {
+  console.log(action);
+  if (action.type === SET_TAP_STATE) {
+    return { ...state, [action.payload]: !state[action.payload] };
+  }
+  throw new Error('unknown action at tapReducer');
+};
 
 const FilterDrawer = props => {
   //tap filters
@@ -26,6 +43,8 @@ const FilterDrawer = props => {
   const handicap = useSelector(state => state.tapFilters.handicap);
   const openNow = useSelector(state => state.tapFilters.openNow);
   const sparkling = useSelector(state => state.tapFilters.sparkling);
+
+  const [tapState, tapDispatch] = useReducer(tapReducer, initialState);
 
   //Tap Type
   //These are not connected to anything and are not implemented within the redux state at the moment.
@@ -57,17 +76,20 @@ const FilterDrawer = props => {
     console.log('clear all button pressed');
   };
 
+  console.log(tapState);
+
   return (
     <SwipeableDrawer
       className="swipeDrawer"
-      anchor="left"
+      anchor="bottom"
       variant="temporary"
       open={isFilterShown}
       onOpen={toggleFilterModal}
       onClose={toggleFilterModal}
       sx={{
         '& .MuiDrawer-paper': {
-          height: '50%'
+          height: '50%',
+          bottom: '5rem'
         }
       }}
     >
@@ -89,6 +111,17 @@ const FilterDrawer = props => {
       <Box className="filterGroup">
         <Typography className="filterFont">Features</Typography>
         <Grid container spacing={1}>
+          <Grid item>
+            <Button
+              className={`filterButton `}
+              variant={tapState.openNow ? 'contained' : 'outlined'}
+              onClick={() => {
+                tapDispatch({ payload: 'openNow', type: 'SET_TAP_STATE' });
+              }}
+            >
+              Open Now
+            </Button>
+          </Grid>
           <Grid item>
             <FilterButton
               active={openNow}

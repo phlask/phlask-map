@@ -22,6 +22,7 @@ import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
 import { isMobile } from 'react-device-detect';
 import Toolbar from '../Toolbar/Toolbar';
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
@@ -248,9 +249,9 @@ export class ReactGoogleMaps extends Component {
   onDragEnd = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
-      currlon: map.center.lng(),
+      currlon: map.center.lng()
     });
-  }
+  };
 
   toggleTapInfo = isExpanded => {
     this.setState({
@@ -347,6 +348,8 @@ export class ReactGoogleMaps extends Component {
             search={location => this.searchForLocation(location)}
           />
         </div>
+        {/* //TODO: hang filter drawer on toolbar */}
+        <FilterDrawer />
         <Toolbar />
         <SelectedTap></SelectedTap>
       </div>

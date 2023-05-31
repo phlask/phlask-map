@@ -37,8 +37,8 @@
     width: 30vw;
     min-width: 400px;
     border-radius: 5px;
-    bottom: 0;
-    top: 10rem;
+    /* bottom: 10rem; */
+    /* /* top: 10rem; */
     left: 1rem;
     align-items: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
@@ -54,7 +54,4 @@
   .swipeDrawer {
     padding-left: 100%;
   }
-}
-
-SwipeableDrawer {
 }
