@@ -6,7 +6,6 @@ import {
   ButtonGroup,
   Grid
 } from '@mui/material';
-import { connect } from 'react-redux';
 import {
   setToggleState,
   setFilteredTapTypes,
@@ -17,7 +16,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import filterMarkers from '../../reducers/filterMarkers';
 import './filterDrawer.css';
-import FilterButton from './FilterButton/FilterButton';
 
 const initialState = {
   filtered: false,
@@ -36,31 +34,17 @@ const tapReducer = (state = initialState, action) => {
   throw new Error('unknown action at tapReducer');
 };
 
+// !Currently Does Not Work
+// TODO: use apply button to change redux state to react state
 const FilterDrawer = props => {
   //tap filters
-  //Currently these are the only filters implemented.
+  // !!!!!!!!!!!!!These are currently unused
   const filtered = useSelector(state => state.tapFilters.filtered);
   const handicap = useSelector(state => state.tapFilters.handicap);
   const openNow = useSelector(state => state.tapFilters.openNow);
   const sparkling = useSelector(state => state.tapFilters.sparkling);
 
   const [tapState, tapDispatch] = useReducer(tapReducer, initialState);
-
-  //Tap Type
-  //These are not connected to anything and are not implemented within the redux state at the moment.
-  //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
-  const [fountain, toggleFountain] = useState(false);
-  const [soda, toggleSoda] = useState(false);
-  const [cooler, toggleCooler] = useState(false);
-  const [bottle, toggleBottle] = useState(false);
-
-  //Org Type
-  //these also do nothing
-  //TODO: These hooks should be replaced with the correct redux hooks when they are added to the state
-  const [publicOrg, togglePublicOrg] = useState(false);
-  const [privateOrg, togglePrivateOrg] = useState(false);
-  const [sharedOrg, toggleSharedOrg] = useState(false);
-  const [restrictedOrg, toggleRestrictedOrg] = useState(false);
 
   const dispatch = useDispatch();
   const isFilterShown = useSelector(state => state.isFilterShown);
@@ -77,6 +61,8 @@ const FilterDrawer = props => {
   };
 
   console.log(tapState);
+
+  const applyAll = () => {};
 
   return (
     <SwipeableDrawer
@@ -123,37 +109,26 @@ const FilterDrawer = props => {
             </Button>
           </Grid>
           <Grid item>
-            <FilterButton
-              active={openNow}
-              filter={'Open Now'}
-              action={{
-                type: 'SET_TOGGLE_STATE',
-                toggle: 'openNow',
-                toggleState: !openNow
+            <Button
+              className={`filterButton `}
+              variant={tapState.handicap ? 'contained' : 'outlined'}
+              onClick={() => {
+                tapDispatch({ payload: 'handicap', type: 'SET_TAP_STATE' });
               }}
-            />
+            >
+              ADA Accessible
+            </Button>
           </Grid>
           <Grid item>
-            <FilterButton
-              active={handicap}
-              filter={'ADA Accessible'}
-              action={{
-                type: 'SET_TOGGLE_STATE',
-                toggle: 'handicap',
-                toggleState: !handicap
+            <Button
+              className={`filterButton `}
+              variant={tapState.sparkling ? 'contained' : 'outlined'}
+              onClick={() => {
+                tapDispatch({ payload: 'sparkling', type: 'SET_TAP_STATE' });
               }}
-            />
-          </Grid>
-          <Grid item>
-            <FilterButton
-              active={sparkling}
-              filter={'Sparkling'}
-              action={{
-                type: 'SET_TOGGLE_STATE',
-                toggle: 'sparkling',
-                toggleState: !sparkling
-              }}
-            />
+            >
+              Sparkling
+            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -161,24 +136,24 @@ const FilterDrawer = props => {
         <Typography className="filterFont">Tap Type</Typography>
         <Grid container spacing={1}>
           <Grid item>
-            <FilterButton
-              active={fountain}
-              filter={'Drinking Fountain'}
-              action={{
-                type: 'SET_TOGGLE_STATE',
-                toggle: 'fountain',
-                toggleState: !fountain
-              }}
-            />
+            <Button className="filterButton" variant="outlined">
+              Drinking Fountain
+            </Button>
           </Grid>
           <Grid item>
-            <FilterButton active={soda} filter={'Soda Dispenser'} />
+            <Button className="filterButton" variant="outlined">
+              Soda Dispenser
+            </Button>
           </Grid>
           <Grid item>
-            <FilterButton active={cooler} filter={'Water Cooler'} />
+            <Button className="filterButton" variant="outlined">
+              Water Cooler
+            </Button>
           </Grid>
           <Grid item>
-            <FilterButton active={bottle} filter={'Bottle Filter'} />
+            <Button className="filterButton" variant="outlined">
+              Bottle Filter
+            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -186,10 +161,18 @@ const FilterDrawer = props => {
         <Grid Container>
           <Typography className="filterFont">Organization Type</Typography>
           <ButtonGroup aria-label="outlined button group">
-            <FilterButton active={publicOrg} filter={'Public'} />
-            <FilterButton active={privateOrg} filter={'Private'} />
-            <FilterButton active={sharedOrg} filter={'Shared'} />
-            <FilterButton active={restrictedOrg} filter={'Restricted'} />
+            <Button className="filterButton" variant="outlined">
+              Public
+            </Button>
+            <Button className="filterButton" variant="outlined">
+              Private
+            </Button>
+            <Button className="filterButton" variant="outlined">
+              Shared
+            </Button>
+            <Button className="filterButton" variant="outlined">
+              Restricted
+            </Button>
           </ButtonGroup>
         </Grid>
         <Grid className="bottomButtons" Container>
