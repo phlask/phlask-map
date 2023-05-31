@@ -14,7 +14,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-import TutorialModal from '../TutorialModal/TutorialModal';
 import SearchIcon from '@mui/icons-material/Search';
 
 class SearchBar extends React.Component {
@@ -158,10 +157,6 @@ class SearchBar extends React.Component {
             />
           </button>
         )}
-
-        <TutorialModal
-          showButton={isMobile ? !this.state.isSearchBarShown : true}
-        />
       </>
     );
   }

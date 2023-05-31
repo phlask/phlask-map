@@ -2,6 +2,7 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import ReactTouchEvents from 'react-touch-events';
 import SearchBar from '../SearchBar/SearchBar';
+import TutorialModal from '../TutorialModal/TutorialModal';
 import styles from './ReactGoogleMaps.module.scss';
 import { connect } from 'react-redux';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -23,6 +24,7 @@ import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 import { isMobile } from 'react-device-detect';
 import Toolbar from '../Toolbar/Toolbar';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import Stack from '@mui/material/Stack';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -248,9 +250,9 @@ export class ReactGoogleMaps extends Component {
   onDragEnd = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
-      currlon: map.center.lng(),
+      currlon: map.center.lng()
     });
-  }
+  };
 
   toggleTapInfo = isExpanded => {
     this.setState({
@@ -342,10 +344,15 @@ export class ReactGoogleMaps extends Component {
           </div>
         </ReactTouchEvents>
         <div className={styles.searchBarContainer}>
-          <SearchBar
-            className="searchBar"
-            search={location => this.searchForLocation(location)}
-          />
+          <Stack direction="row">
+            <SearchBar
+              className="searchBar"
+              search={location => this.searchForLocation(location)}
+            />
+            <TutorialModal
+              showButton={isMobile ? !this.state.isSearchBarShown : true}
+            />
+          </Stack>
         </div>
         <Toolbar />
         <SelectedTap></SelectedTap>
