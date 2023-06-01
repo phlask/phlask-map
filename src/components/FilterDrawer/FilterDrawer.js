@@ -6,12 +6,7 @@ import {
   ButtonGroup,
   Grid
 } from '@mui/material';
-import {
-  setToggleState,
-  setFilteredTapTypes,
-  resetFilterFunction
-} from '../../actions/actions';
-import { useState, useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import filterMarkers from '../../reducers/filterMarkers';
@@ -25,24 +20,31 @@ const initialState = {
 };
 
 const SET_TAP_STATE = 'SET_TAP_STATE';
+const RESET_TAP_STATE = 'RESET_TAP_STATE';
 
 const tapReducer = (state = initialState, action) => {
   console.log(action);
   if (action.type === SET_TAP_STATE) {
     return { ...state, [action.payload]: !state[action.payload] };
   }
-  throw new Error('unknown action at tapReducer');
+  if (action.type === RESET_TAP_STATE) {
+    return {
+      filtered: false,
+      handicap: false,
+      sparkling: false,
+      openNow: false
+    };
+  }
+  throw new Error('unknown action at tapReducer in FilterDrawer component');
 };
 
 // !Currently Does Not Work
 // TODO: use apply button to change redux state to react state
 const FilterDrawer = props => {
-  //tap filters
-  // !!!!!!!!!!!!!These are currently unused
-  const filtered = useSelector(state => state.tapFilters.filtered);
-  const handicap = useSelector(state => state.tapFilters.handicap);
-  const openNow = useSelector(state => state.tapFilters.openNow);
-  const sparkling = useSelector(state => state.tapFilters.sparkling);
+  // const filtered = useSelector(state => state.tapFilters.filtered);
+  // const handicap = useSelector(state => state.tapFilters.handicap);
+  // const openNow = useSelector(state => state.tapFilters.openNow);
+  // const sparkling = useSelector(state => state.tapFilters.sparkling);
 
   const [tapState, tapDispatch] = useReducer(tapReducer, initialState);
 
@@ -55,14 +57,7 @@ const FilterDrawer = props => {
       isShown: !isFilterShown
     });
   };
-
-  const clearAll = () => {
-    console.log('clear all button pressed');
-  };
-
   console.log(tapState);
-
-  const applyAll = () => {};
 
   return (
     <SwipeableDrawer
@@ -176,10 +171,16 @@ const FilterDrawer = props => {
           </ButtonGroup>
         </Grid>
         <Grid className="bottomButtons" Container>
-          <Button onClick={clearAll} className=" clearButton" variant="text">
+          <Button
+            onClick={() => {
+              tapDispatch({ type: 'RESET_TAP_STATE' });
+            }}
+            className="clearButton"
+            variant="text"
+          >
             Clear All
           </Button>
-          <Button className=" applyButton" variant="outlined">
+          <Button className="applyButton" variant="outlined">
             Apply
           </Button>
         </Grid>
