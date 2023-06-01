@@ -46,12 +46,8 @@ const tapReducer = (state = initialState, action) => {
 // !Currently Does Not Work Because...
 // TODO: use apply button to change redux state to react state
 const FilterDrawer = props => {
-  // const filtered = useSelector(state => state.tapFilters.filtered);
-  // const handicap = useSelector(state => state.tapFilters.handicap);
-  // const openNow = useSelector(state => state.tapFilters.openNow);
-  // const sparkling = useSelector(state => state.tapFilters.sparkling);
   const tapFilters = useSelector(state => state.tapFilters);
-  console.log('tapFilters', tapFilters);
+  // console.log('tapFilters', tapFilters);
 
   const [tapState, tapDispatch] = useReducer(tapReducer, initialState);
 
@@ -64,18 +60,7 @@ const FilterDrawer = props => {
       isShown: !isFilterShown
     });
   };
-  console.log(tapState);
-
-  // !example of previous action filter which touches the redux state
-  // <FilterButton
-  //   active={sparkling}
-  //   filter={'Sparkling'}
-  //   action={{
-  //     type: 'SET_TOGGLE_STATE',
-  //     toggle: 'sparkling',
-  //     toggleState: !sparkling
-  //   }}
-  // />;
+  // console.log(tapState);
 
   return (
     <SwipeableDrawer
