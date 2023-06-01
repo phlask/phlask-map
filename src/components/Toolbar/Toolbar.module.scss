@@ -1,5 +1,6 @@
 $waterColor: #27aae1;
 $foodColor: #8dc63f;
+$searchColor: #8dc63f;
 
 .toolbar {
   position: absolute;
@@ -80,11 +81,11 @@ $foodColor: #8dc63f;
   }
 }
 
-.foodButton {
-  color: $foodColor;
+.searchButton {
+  color: $searchColor;
 
   :focus {
-    box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+    box-shadow: 0 0 0 0.2rem rgba($searchColor, 0.3);
   }
 }
 
@@ -127,8 +128,8 @@ $foodColor: #8dc63f;
 }
 
 .desktopToolbar {
-  height: 50px;
-  width: 30vw;
+  height: 84px;
+  width: 708px;
   min-width: 400px;
   padding: 0 7.8rem 0 1rem;
   border-radius: 5px;
@@ -153,28 +154,29 @@ $foodColor: #8dc63f;
     box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
   }
 
-  .addButton {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: 0.35rem;
-    color: #999;
+  // .contributeButton {
+  //   width: 40px;
+  //   height: 40px;
+  //   position: absolute;
+  //   right: 0.35rem;
+  //   color: #999;
 
-    &:hover {
-      color: #666;
-    }
+  //   &:hover {
+  //     color: #666;
+  //   }
 
-    svg {
-      padding: 0.15rem;
-    }
-  }
+  //   svg {
+  //     padding: 0.15rem;
+  //   }
+  // }
 
   .filterButton {
-    box-sizing: content-box;
-    right: 1rem;
-    padding-left: 1rem;
-    padding-right: 2rem;
-    border-left: 1px solid #ccc;
+    // box-sizing: content-box;
+    // right: 1rem;
+    // padding-left: 1rem;
+    // padding-right: 2rem;
+    // border-left: 1px solid #ccc;
+    transform: scale(1);
   }
 
   /*.infoButton {
@@ -188,6 +190,10 @@ $foodColor: #8dc63f;
   Attempting to work with height/width properties directly does not seem to work while testing
   */
   transform: scale(2.314659) translateY(-8px);
+}
+
+.phlaskWaterButton {
+  color: #27aae1;
 }
 
 .resourceButton {

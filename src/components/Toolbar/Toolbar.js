@@ -16,6 +16,7 @@ import {
 import FoodFilter from '../FoodFilter/FoodFilter';
 import phlaskImg from '../images/PHLASK Button.png';
 import Filter from '../ResourceMenu/Filter';
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import styles from './Toolbar.module.scss';
 import ClosestTap from '../ClosestTap/ClosestTap';
 
@@ -24,16 +25,12 @@ import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
-// import DesktopWaterIcon from '../icons/DesktopWaterIcon';
-
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -60,11 +57,12 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 
-//looping through data to get list of locations 
-  function getClosest(data, userLocation) {
-    var distances = data.map((org, index) => {
-    //i added this terniary
-      if(org?.lat && org?.lon){
+//looping through data to get list of locations
+function getClosest(data, userLocation) {
+  var distances = data
+    .map((org, index) => {
+      //i added this terniary
+      if (org?.lat && org?.lon) {
         return {
           lat: org['lat'],
           lon: org['lon'],
@@ -79,7 +77,8 @@ function distance(lat1, lon1, lat2, lon2) {
           id: index
         };
       }
-  }).filter(Boolean)
+    })
+    .filter(Boolean);
 
   var minDistance = Math.min(...distances.map(d => d.distance));
   var closestTap = {
@@ -100,10 +99,7 @@ function distance(lat1, lon1, lat2, lon2) {
     }
   }
   return closestTap;
-
 }
-
-
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -111,14 +107,13 @@ function getCoordinates() {
   });
 }
 
-
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
-  const property_name = useSelector(state => state)
-  
+  const property_name = useSelector(state => state);
+
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
     [PHLASK_TYPE_FOOD]: FoodIcon,
@@ -144,25 +139,25 @@ function Toolbar(props) {
 
   async function setClosest() {
     // If the user clicks very fast, it crashes.
-    // NOTE: This was left as an acceptable scenario for now, 
+    // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
     let data;
-    switch (props.phlaskType){
-      case (PHLASK_TYPE_WATER):
+    switch (props.phlaskType) {
+      case PHLASK_TYPE_WATER:
         data = props?.allTaps;
         break;
-      case (PHLASK_TYPE_FOOD):
-        data = props?.allFoodOrgs
+      case PHLASK_TYPE_FOOD:
+        data = props?.allFoodOrgs;
         break;
-      case (PHLASK_TYPE_FORAGING):
+      case PHLASK_TYPE_FORAGING:
         data = props?.allForagingTaps;
         break;
-      case (PHLASK_TYPE_BATHROOM):
+      case PHLASK_TYPE_BATHROOM:
         data = props?.allBathroomTaps;
         break;
       default:
-        data = props?.allTaps
+        data = props?.allTaps;
     }
 
     const closest = getClosest(data, {
@@ -184,7 +179,7 @@ function Toolbar(props) {
       .then(props.toggleInfoWindow(true));
   }
 
-  function closestButtonClicked(){
+  function closestButtonClicked() {
     setClosest();
   }
 
@@ -197,7 +192,11 @@ function Toolbar(props) {
             isMobile ? styles.mobileToolbar : styles.desktopToolbar
           }`}
         >
-          {!isMobile && (
+          <NavigationItem
+            icon={<phlaskWater className={styles.phlaskWaterButton} />}
+            onClick={() => props.toggleResourceMenu(props.isResourceMenuShown)}
+          />
+          {/* {!isMobile && (
             <h3
               onClick={closestButtonClicked}
               className={`
@@ -213,9 +212,41 @@ function Toolbar(props) {
                 ? 'Water Map'
                 : 'Food Map'}
             </h3>
-          )}
-          <SearchIcon />
-          <div className={styles.filterButton}>
+          )} */}
+          {/* // DESKTOP VERSION OF THE TOOLBAR (V2) */}
+          <BottomNavigation showLabels>
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Resources</Typography>}
+              icon={<ResourceIcon className={styles.resourceButton} />}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
+            />
+            <ResourceMenu />
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Filter</Typography>}
+              icon={<FilterIcon className={styles.FilterButton} />}
+              onClick={() => props.toggleFilterModal(props.isFilterShown)}
+            />
+            <FilterDrawer />
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              icon={<ContributeIcon className={styles.contributeButton} />}
+              onClick={() => {
+                setOpenResourceModal(true);
+              }}
+            />
+            <NavigationItem
+              label={<Typography fontSize={'small'}>Search</Typography>}
+              icon={<SearchIcon className={styles.searchButton} />}
+              onClick={() => {
+                setOpenResourceModal(true);
+              }}
+            />
+            <NavigationItem />
+          </BottomNavigation>
+          {/* <SearchIcon /> */}
+          {/* <div className={styles.filterButton}>
             <button aria-label="show filters">
               {props.phlaskType === PHLASK_TYPE_WATER ? (
                 <Filter />
@@ -232,38 +263,31 @@ function Toolbar(props) {
               switchType(PHLASK_TYPE_WATER);
             }}
           >
-            <SearchIcon />
-
-            {/* <DesktopWaterIcon /> */}
+            <DesktopWaterIcon />
           </button>
           {isMobile && (
             <button className={styles.closestTapButton} onClick={setClosest}>
               <img className="img" src={phlaskImg} alt=""></img>
             </button>
-          )}
-          <button
-            className={`${styles.toolbarButton} ${styles.foodButton} ${
+          )} */}
+          {/* <button
+            className={`${styles.toolbarButton} ${styles.searcButton} ${
               props.phlaskType === PHLASK_TYPE_WATER && styles.disabled
             }`}
             onClick={() => {
               switchType(PHLASK_TYPE_FOOD);
             }}
           >
-            <FoodIcon />
-          </button>
-
-          <button
+            <SearchIcon />
+          </button> */}
+          {/* <button
             className={styles.addButton}
             onClick={() => {
               setOpenResourceModal(true);
             }}
           >
-            <PlusCircleIcon />
-          </button>
-          <AddResourceModalV2
-            open={openResourceModal}
-            setOpen={setOpenResourceModal}
-          />
+            <ContributeIcon />
+          </button> */}
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)

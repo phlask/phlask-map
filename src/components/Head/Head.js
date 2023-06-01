@@ -6,7 +6,7 @@ import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
 import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
+// import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
 import SideBar from '../SideBar/SideBar';
 
 export default function Head() {
@@ -97,7 +97,7 @@ export default function Head() {
                 sx={{ marginRight: '-8px' }}
                 onClick={toggleFilterModal}
               >
-                <SlidersIcon />
+                {/* <SlidersIcon /> */}
               </IconButton>
             </Box>
           ) : null}
