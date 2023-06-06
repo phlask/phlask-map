@@ -53,11 +53,10 @@ export class AddResourceModal extends Component {
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     //  BATHROOM MODAL
-    this.onChangeChangingTable = this.onChangeChangingTable.bind(this); 
-    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this); 
+    this.onChangeChangingTable = this.onChangeChangingTable.bind(this);
+    this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this);
     this.onChangeFamilyBathroom = this.onChangeFamilyBathroom.bind(this);
     this.onChangeSingleOccupancy = this.onChangeSingleOccupancy.bind(this);
-
 
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
@@ -249,20 +248,19 @@ export class AddResourceModal extends Component {
     });
   }
 
-
   // ADD BATHROOM MODAL FIELDS
 
   onChangeChangingTable(e) {
-      this.setState({
-        changingTable: e.target.checked
-      });
+    this.setState({
+      changingTable: e.target.checked
+    });
   }
 
   onChangeGenderNeutral(e) {
     this.setState({
       genderNeutral: e.target.checked
     });
-}
+  }
 
   onChangeFamilyBathroom(e) {
     this.setState({
@@ -275,9 +273,6 @@ export class AddResourceModal extends Component {
       singleOccupancy: e.target.checked
     });
   }
-
-
-
 
   // Database
   onChangeDbConnection(connection) {
@@ -363,8 +358,7 @@ export class AddResourceModal extends Component {
         single_occupancy: this.state.singleOccupancy,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules,
-
+        norms_rules: this.state.normsAndRules
       };
 
       const database = getDatabase(this.state.dbConnection);
@@ -410,7 +404,7 @@ export class AddResourceModal extends Component {
       changingTable: false,
       genderNeutral: false,
       familyBathroom: false,
-      singleOccupancy: false,
+      singleOccupancy: false
     };
     this.setState(resetState);
   }
@@ -520,20 +514,18 @@ export class AddResourceModal extends Component {
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
-
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
               onIdRequiredChange={this.onChangeIdRequired}
-
-              changingTable={this.state.changingTable}            
-              onChangeChangingTable={this.onChangeChangingTable} 
+              changingTable={this.state.changingTable}
+              onChangeChangingTable={this.onChangeChangingTable}
               genderNeutral={this.state.genderNeutral}
               onChangeGenderNeutral={this.onChangeGenderNeutral}
               familyBathroom={this.state.familyBathroom}
               onChangeFamilyBathroom={this.onChangeFamilyBathroom}
               singleOccupancy={this.state.singleOccupancy}
-              onChangeSingleOccupancy={this.onChangeSingleOccupancy} 
+              onChangeSingleOccupancy={this.onChangeSingleOccupancy}
             />
           )}
 

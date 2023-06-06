@@ -6,10 +6,17 @@ import { useTheme } from '@mui/material/styles';
 import { DialogContent } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
+import { useForm } from 'react-hook-form';
+import { FormControl, TextField, Button } from '@mui/material';
 
-const AddResourceModalV2 = (props) => {
+const AddResourceModalV2 = props => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { handleSubmit, register } = useForm();
+  const onSubmit = data => {
+    console.log(data);
+  };
 
   const onClose = () => props.setOpen(false);
 

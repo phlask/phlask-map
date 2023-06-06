@@ -20,7 +20,8 @@ import styles from './Toolbar.module.scss';
 import ClosestTap from '../ClosestTap/ClosestTap';
 
 import { isMobile } from 'react-device-detect';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+// import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+import AddResourceModal from '../AddResourceModal/AddResourceModal';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
@@ -59,11 +60,12 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 
-//looping through data to get list of locations 
-  function getClosest(data, userLocation) {
-    var distances = data.map((org, index) => {
-    //i added this terniary
-      if(org?.lat && org?.lon){
+//looping through data to get list of locations
+function getClosest(data, userLocation) {
+  var distances = data
+    .map((org, index) => {
+      //i added this terniary
+      if (org?.lat && org?.lon) {
         return {
           lat: org['lat'],
           lon: org['lon'],
@@ -78,7 +80,8 @@ function distance(lat1, lon1, lat2, lon2) {
           id: index
         };
       }
-  }).filter(Boolean)
+    })
+    .filter(Boolean);
 
   var minDistance = Math.min(...distances.map(d => d.distance));
   var closestTap = {
@@ -99,10 +102,7 @@ function distance(lat1, lon1, lat2, lon2) {
     }
   }
   return closestTap;
-
 }
-
-
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -110,14 +110,13 @@ function getCoordinates() {
   });
 }
 
-
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
   const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
-  const property_name = useSelector(state => state)
-  
+  const property_name = useSelector(state => state);
+
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
     [PHLASK_TYPE_FOOD]: FoodIcon,
@@ -143,25 +142,25 @@ function Toolbar(props) {
 
   async function setClosest() {
     // If the user clicks very fast, it crashes.
-    // NOTE: This was left as an acceptable scenario for now, 
+    // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
     let data;
-    switch (props.phlaskType){
-      case (PHLASK_TYPE_WATER):
+    switch (props.phlaskType) {
+      case PHLASK_TYPE_WATER:
         data = props?.allTaps;
         break;
-      case (PHLASK_TYPE_FOOD):
-        data = props?.allFoodOrgs
+      case PHLASK_TYPE_FOOD:
+        data = props?.allFoodOrgs;
         break;
-      case (PHLASK_TYPE_FORAGING):
+      case PHLASK_TYPE_FORAGING:
         data = props?.allForagingTaps;
         break;
-      case (PHLASK_TYPE_BATHROOM):
+      case PHLASK_TYPE_BATHROOM:
         data = props?.allBathroomTaps;
         break;
       default:
-        data = props?.allTaps
+        data = props?.allTaps;
     }
 
     const closest = getClosest(data, {
@@ -183,7 +182,7 @@ function Toolbar(props) {
       .then(props.toggleInfoWindow(true));
   }
 
-  function closestButtonClicked(){
+  function closestButtonClicked() {
     setClosest();
   }
 
@@ -251,12 +250,15 @@ function Toolbar(props) {
           <button
             className={styles.addButton}
             onClick={() => {
-              setOpenResourceModal(true)
+              setOpenResourceModal(true);
             }}
           >
             <FontAwesomeIcon icon={faPlus} size="2x" />
           </button>
-          <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
+          <AddResourceModal
+            open={openResourceModal}
+            setOpen={setOpenResourceModal}
+          />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
@@ -299,14 +301,19 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize={'small'}>Contribute</Typography>}
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() =>
-                setOpenResourceModal(true)
-              }
+              onClick={() => setOpenResourceModal(true)}
             />
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
+      {/* <AddResourceModalV2
+        open={openResourceModal}
+        setOpen={setOpenResourceModal}
+      /> */}
+      <AddResourceModal
+        open={openResourceModal}
+        setOpen={setOpenResourceModal}
+      />
     </>
   );
 }
