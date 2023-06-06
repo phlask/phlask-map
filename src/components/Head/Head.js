@@ -14,7 +14,8 @@ import {
   styled,
   Grow,
   Tabs,
-  Tab
+  Tab,
+  Fade
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -196,13 +197,18 @@ export default function Head() {
                 >
                   <Paper
                     sx={{
-                      width: '310px',
                       padding: '0 0 1rem',
-                      borderRadius: '0 0 10px 10px'
+                      borderRadius: '0 0 10px 10px',
+                      display: 'flex'
                     }}
                   >
                     <Router>
-                      <Tabs orientation="vertical">
+                      <Tabs
+                        orientation="vertical"
+                        sx={{
+                          width: '310px'
+                        }}
+                      >
                         <DropLink
                           component={Link}
                           to="/mission"
@@ -236,20 +242,22 @@ export default function Head() {
                         </DropLink>
                       </Tabs>
 
-                      <Switch>
-                        <Tab>
-                          <Mission />
-                        </Tab>
-                        <Route path={`/share`}>
-                          <Share />
-                        </Route>
-                        <Route path={`/contribute`}>
-                          <Contribute />
-                        </Route>
-                        <Route path={`/project`}>
-                          <Project />
-                        </Route>
-                      </Switch>
+                      <Fade in={menuExpand}>
+                        <Switch>
+                          <Route path={`/mission`}>
+                            <Mission />
+                          </Route>
+                          <Route path={`/share`}>
+                            <Share />
+                          </Route>
+                          <Route path={`/contribute`}>
+                            <Contribute />
+                          </Route>
+                          <Route path={`/project`}>
+                            <Project />
+                          </Route>
+                        </Switch>
+                      </Fade>
                     </Router>
                   </Paper>
                 </Grow>
