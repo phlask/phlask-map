@@ -14,8 +14,7 @@ import {
   styled,
   Grow,
   Tabs,
-  Tab,
-  Fade
+  Tab
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -126,164 +125,163 @@ export default function Head() {
   return (
     <>
       {isMobile ? (
-        <Sidebar
-          open={sidebarOpen}
-          setOpen={setSidebarOpen}
-          showControls={setShowMapControls}
-        />
-      ) : null}
-      <AppBar
-        sx={
-          isMobile
-            ? {}
-            : {
-                width: '310px',
-                height: '75px',
-                margin: '25px auto 0 25px',
-                borderRadius: menuOpen ? '10px 10px 0 0' : '10px',
-                left: '0',
-                right: 'auto'
-              }
-        }
-      >
-        <Toolbar
-          sx={{
-            backgroundColor: '#fff',
-            color: '#fff',
-            boxShadow:
-              '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
-            display: 'flex',
-            height: '100%',
-            borderRadius: isMobile ? '' : menuOpen ? '10px 10px 0 0' : '10px'
-          }}
-        >
-          <IconButton
-            onClick={isMobile ? setSidebarOpen : toggleMenu}
-            sx={{
-              position: 'relative',
-              left: '-10px',
-              right: '6px'
-            }}
-          >
-            <MenuIcon style={{ display: menuOpen ? 'none' : 'block' }} />
-            {isMobile ? null : (
-              <CloseIcon style={{ display: menuOpen ? 'block' : 'none' }} />
-            )}
-          </IconButton>
-          <Link to="/" onClick={() => setShowMapControls(true)}>
-            <PhlaskIcon
+        <>
+          <Sidebar
+            open={sidebarOpen}
+            setOpen={setSidebarOpen}
+            showControls={setShowMapControls}
+          />
+          <AppBar>
+            <Toolbar
               sx={{
-                position: 'relative',
-                top: '-10px'
+                backgroundColor: '#fff',
+                color: '#fff',
+                boxShadow:
+                  '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
+                display: 'flex'
               }}
-            />
-          </Link>
-          {!isMobile ? (
-            <Popper
-              anchorEl={document.getElementsByTagName('header')[0]}
-              open={menuOpen}
-              onClose={handleClose}
-              placement="bottom-start"
-              transition
-              disablePortal
             >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === 'bottom-start' ? 'left top' : 'left bottom'
+              <IconButton
+                onClick={setSidebarOpen}
+                sx={{
+                  position: 'relative',
+                  left: '-10px',
+                  right: '6px'
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Link to="/" onClick={() => setShowMapControls(true)}>
+                <PhlaskIcon
+                  sx={{
+                    position: 'relative',
+                    top: '-10px'
+                  }}
+                />
+              </Link>
+
+              {showMapControls ? (
+                <Box
+                  sx={{
+                    position: 'relative',
+                    marginLeft: isMobile ? 'auto' : '25px'
                   }}
                 >
-                  <Paper
-                    sx={{
-                      padding: '0 0 1rem',
-                      borderRadius: '0 0 10px 10px',
-                      display: 'flex'
-                    }}
+                  <IconButton onClick={toggleSearchBar}>
+                    <SearchIcon />
+                  </IconButton>
+                  <IconButton
+                    sx={{ marginRight: '-8px' }}
+                    onClick={toggleFilterModal}
                   >
-                    <Router>
-                      <Tabs
-                        orientation="vertical"
-                        sx={{
-                          width: '310px'
-                        }}
-                      >
-                        <DropLink
-                          component={Link}
-                          to="/mission"
-                          startIcon={<PhlaskNoTextIcon />}
-                        >
-                          About
-                        </DropLink>
-
-                        <DropLink
-                          component={Link}
-                          to="/share"
-                          startIcon={<PlusCircleIcon />}
-                        >
-                          How to PHLASK
-                        </DropLink>
-
-                        <DropLink
-                          component={Link}
-                          to="/contribute"
-                          startIcon={<UsersIcon />}
-                        >
-                          Join the team
-                        </DropLink>
-
-                        <DropLink
-                          component={Link}
-                          to="/project"
-                          startIcon={<IDIcon />}
-                        >
-                          Acknowledgements
-                        </DropLink>
-                      </Tabs>
-
-                      <Fade in={menuExpand}>
-                        <Switch>
-                          <Route path={`/mission`}>
-                            <Mission />
-                          </Route>
-                          <Route path={`/share`}>
-                            <Share />
-                          </Route>
-                          <Route path={`/contribute`}>
-                            <Contribute />
-                          </Route>
-                          <Route path={`/project`}>
-                            <Project />
-                          </Route>
-                        </Switch>
-                      </Fade>
-                    </Router>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          ) : (
-            <Box
+                    <SlidersIcon />
+                  </IconButton>
+                </Box>
+              ) : null}
+            </Toolbar>
+          </AppBar>
+          <FilterDrawer />
+        </>
+      ) : (
+        <>
+          <Paper
+            sx={{
+              width: '310px',
+              height: '75px',
+              borderRadius: '10px',
+              margin: '25px auto 0 25px',
+              boxShadow:
+                '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
+              left: '0',
+              right: 'auto'
+            }}
+          >
+            <IconButton
+              onClick={setSidebarOpen}
               sx={{
                 position: 'relative',
-                marginLeft: isMobile ? 'auto' : '25px'
+                left: '-10px',
+                right: '6px'
               }}
             >
-              <IconButton onClick={toggleSearchBar}>
-                <SearchIcon />
-              </IconButton>
-              <IconButton
-                sx={{ marginRight: '-8px' }}
-                onClick={toggleFilterModal}
+              <MenuIcon />
+            </IconButton>
+            <Link to="/" onClick={() => setShowMapControls(true)}>
+              <PhlaskIcon
+                sx={{
+                  position: 'relative',
+                  top: '-10px'
+                }}
+              />
+            </Link>
+          </Paper>
+          <Popper
+            open={menuOpen}
+            onClose={handleClose}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === 'bottom-start' ? 'left top' : 'left bottom'
+                }}
               >
-                <SlidersIcon />
-              </IconButton>
-            </Box>
-          )}
-        </Toolbar>
-      </AppBar>
-      <FilterDrawer />
+                <Router>
+                  <Tabs orientation="vertical">
+                    <DropLink
+                      component={Link}
+                      to="/mission"
+                      startIcon={<PhlaskNoTextIcon />}
+                    >
+                      About
+                    </DropLink>
+                    <DropLink
+                      component={Link}
+                      to="/share"
+                      startIcon={<PlusCircleIcon />}
+                    >
+                      How to PHLASK
+                    </DropLink>
+                    <DropLink
+                      component={Link}
+                      to="/contribute"
+                      startIcon={<UsersIcon />}
+                    >
+                      Join the team
+                    </DropLink>
+                    <DropLink
+                      component={Link}
+                      to="/project"
+                      startIcon={<IDIcon />}
+                    >
+                      Acknowledgements
+                    </DropLink>
+                  </Tabs>
+
+                  <Switch>
+                    <Route path={`/about`}>
+                      <Mission />
+                    </Route>
+                    <Route path={`/share`}>
+                      <Share />
+                    </Route>
+                    <Route path={`/contribute`}>
+                      <Contribute />
+                    </Route>
+                    <Route path={`/project`}>
+                      <Project />
+                    </Route>
+                  </Switch>
+                </Router>
+              </Grow>
+            )}
+          </Popper>
+        </>
+      )}
     </>
   );
 }
