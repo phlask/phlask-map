@@ -219,7 +219,6 @@ function Toolbar(props) {
           >
             <FontAwesomeIcon icon={faPlus} size="2x" />
           </button>
-          <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
@@ -268,7 +267,6 @@ function Toolbar(props) {
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2 open={openResourceModal} setOpen={setOpenResourceModal} />
     </>
   );
 }
