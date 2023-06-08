@@ -38,7 +38,11 @@ const BATHROOM_HELPFUL_INFO = [
   'Also has water fountain'
 ];
 
-const ORGANIZATION_TYPE = ['Open access', 'Restricted', 'Unsure'];
+const ORGANIZATION_TYPE = [
+  { accessType: 'Open access', explanation: 'Public site, open to all' },
+  { accessType: 'Restricted', explanation: 'May not be open to all' },
+  { accessType: 'Unsure', explanation: '' }
+];
 
 function AddBathroom({
   prev,
@@ -90,110 +94,118 @@ function AddBathroom({
   }, []);
 
   return (
-    <>
-      <Box>
-        <Card
-          style={{ overflow: 'auto', width: '355px', justifyContent: 'center' }}
+    <Card
+      style={{
+        overflow: 'scroll',
+        scrollbarWidth: 'none',
+        justifyContent: 'center'
+      }}
+    >
+      <Typography className={sty.mobileHeader} color="common.white">
+        Add Bathroom Resource
+      </Typography>
+      <CardContent>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            onSubmit(e).then(() => {
+              next();
+            });
+          }}
         >
-          <Typography className={sty.mobileHeader} color="common.white">
-            Add Bathroom Resource
-          </Typography>
-          <CardContent>
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                onSubmit(e).then(() => {
-                  next();
-                });
+          <Stack spacing={4} alignContent="center">
+            <SharedFormFields
+              onDrop={onDrop}
+              name={name}
+              onNameChange={onNameChange}
+              address={address}
+              onAddressChange={onAddressChange}
+              website={website}
+              onWebsiteChange={onWebsiteChange}
+              description={description}
+              onDescriptionChange={onDescriptionChange}
+              siteCategory="bathroom"
+            />
+            <TextField
+              variant="outlined"
+              onChange={e => console.log('')}
+              select
+              label="Organization Type"
+              InputLabelProps={{ shrink: true }}
+            >
+              {ORGANIZATION_TYPE.map(orgType => {
+                return (
+                  <MenuItem key={orgType.accessType} value={orgType.accessType}>
+                    <Stack>
+                      {orgType.accessType}
+                      <FormHelperText>{orgType.explanation}</FormHelperText>
+                    </Stack>
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+
+            <FormGroup>
+              <Typography>Helpful info</Typography>
+              <Grid container>
+                {BATHROOM_HELPFUL_INFO.map(info => {
+                  return (
+                    <>
+                      <Grid item as="label" htmlFor={info} xs={8}>
+                        <Box
+                          height="100%"
+                          width="100%"
+                          display="flex"
+                          justifyContent="center"
+                          flexDirection="column"
+                        >
+                          <Typography paddingLeft="2.5rem" fontSize={13}>
+                            {info}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid
+                        as="label"
+                        htmlFor={info}
+                        item
+                        align="center"
+                        xs={4}
+                      >
+                        <Box
+                          display="flex"
+                          justifyContent="center"
+                          flexDirection="column"
+                        >
+                          <Checkbox paddingLeft="1.5rem" id={info} />
+                        </Box>
+                      </Grid>
+                    </>
+                  );
+                })}
+              </Grid>
+            </FormGroup>
+            <TextField
+              id="guidelines"
+              label="Community guideLines"
+              helperText="Share tips on respectful PHLASKing at this location."
+              InputLabelProps={{ shrink: true }}
+              multiline
+              maxRows={2}
+            />
+            <Button
+              variant="contained"
+              borderRadius="8px"
+              style={{
+                width: '25%',
+                margin: '3.5rem auto 1.5rem auto',
+                color: 'white',
+                backgroundColor: '#7C7C7C'
               }}
             >
-              <Stack spacing={4} alignContent="center">
-                <SharedFormFields
-                  onDrop={onDrop}
-                  name={name}
-                  onNameChange={onNameChange}
-                  address={address}
-                  onAddressChange={onAddressChange}
-                  website={website}
-                  onWebsiteChange={onWebsiteChange}
-                  description={description}
-                  onDescriptionChange={onDescriptionChange}
-                  siteCategory="bathroom"
-                />
-                <TextField
-                  style={{ width: '100%' }}
-                  variant="outlined"
-                  onChange={e => console.log('')}
-                  select
-                  label="Organization Type"
-                  InputLabelProps={{ shrink: true }}
-                >
-                  {ORGANIZATION_TYPE.map(orgType => {
-                    return (
-                      <MenuItem key={orgType} value={orgType}>
-                        {orgType}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
-
-                <FormGroup>
-                  <Typography>Helpful info</Typography>
-                  <Grid container>
-                    {BATHROOM_HELPFUL_INFO.map(info => {
-                      return (
-                        <>
-                          <Grid item xs={8}>
-                            <Typography
-                              textAlign="left"
-                              paddingLeft={3}
-                              paddingTop={1.5}
-                              fontSize={13}
-                            >
-                              {info}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={1} paddingLeft={7}>
-                            <Checkbox />
-                          </Grid>
-                        </>
-                      );
-                    })}
-
-                    <FormControlLabel
-                  labelPlacement="start"
-                  control={<Checkbox style={{ paddingLeft: '100px' }} />}
-                  label="Wheelchair accessible"
-                />
-                <FormControlLabel
-                  labelPlacement="start"
-                  control={<Checkbox />}
-                  label="Also has water fountain"
-                />
-                  </Grid>
-                </FormGroup>
-                <TextField
-                  id="guidelines"
-                  label="Community guideLines"
-                  helperText="Share tips on respectful PHLASKing at this location."
-                  InputLabelProps={{ shrink: true }}
-                  multiline
-                  maxRows={2}
-                />
-                <Button
-                  variant="contained"
-                  borderRadius="8px"
-                  style={{
-                    width: '25%',
-                    margin: 'auto auto',
-                    color: 'white',
-                    backgroundColor: '#7C7C7C'
-                  }}
-                >
-                  Submit
-                </Button>
-              </Stack>
-              {/* <Form.Group value={access} onChange={onAccessChange}>
+              Submit
+            </Button>
+          </Stack>
+          {/* <Form.Group value={access} onChange={onAccessChange}>
               <Form.Label className={styles.modalFormLabel}>
                 Access Type
               </Form.Label>
@@ -278,11 +290,9 @@ function AddBathroom({
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion> */}
-            </form>
-          </CardContent>
-        </Card>
-      </Box>
-    </>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 
