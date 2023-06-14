@@ -134,11 +134,15 @@ function AddBathroom({
               InputLabelProps={{ shrink: true }}
             >
               {ORGANIZATION_TYPE.map(orgType => {
+                const { accessType, explanation } = orgType;
+
                 return (
-                  <MenuItem key={orgType.accessType} value={orgType.accessType}>
+                  <MenuItem key={accessType} value={accessType}>
                     <Stack>
-                      {orgType.accessType}
-                      <FormHelperText>{orgType.explanation}</FormHelperText>
+                      {accessType}
+                      {explanation && (
+                        <FormHelperText>{explanation}</FormHelperText>
+                      )}
                     </Stack>
                   </MenuItem>
                 );
