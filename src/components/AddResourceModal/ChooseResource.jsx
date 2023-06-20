@@ -7,10 +7,10 @@ import { ReactComponent as ForagingIconCR } from '../icons/ForagingIconChooseRes
 import { ReactComponent as ToiletIconCR } from '../icons/ToiletIconChooseResource.svg';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { isMobile } from 'react-device-detect';
 
 function ChooseResource({ setFormStep }) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
       <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>

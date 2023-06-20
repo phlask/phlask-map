@@ -7,6 +7,7 @@ import { DialogContent } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
 import styles from './AddResourceModal.module.scss';
+import { isMobile } from 'react-device-detect';
 
 const AddResourceModalV2 = props => {
   const theme = useTheme();
@@ -21,9 +22,11 @@ const AddResourceModalV2 = props => {
       onClose={onClose}
       fullScreen={fullScreen}
       sx={{
-        position: !fullScreen ? 'absolute' : null,
-        top: !fullScreen ? '55vh' : null,
-        left: !fullScreen ? '-69vw' : null
+        position: !isMobile ? 'absolute' : null,
+        // top: !isMobile ? '55vh' : null,
+        // left: !isMobile ? '-69vw' : null
+        bottom: !isMobile ? '-40rem' : null,
+        left: !isMobile ? '-104rem' : null
       }}
     >
       {fullScreen && (
