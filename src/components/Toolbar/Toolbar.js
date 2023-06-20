@@ -31,6 +31,7 @@ import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
+import { ReactComponent as PhlaskWater } from '../icons/phlaskWater.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -192,29 +193,13 @@ function Toolbar(props) {
             isMobile ? styles.mobileToolbar : styles.desktopToolbar
           }`}
         >
-          <NavigationItem
-            icon={<phlaskWater className={styles.phlaskWaterButton} />}
-            onClick={() => props.toggleResourceMenu(props.isResourceMenuShown)}
-          />
-          {/* {!isMobile && (
-            <h3
-              onClick={closestButtonClicked}
-              className={`
-                ${styles.title}
-                ${
-                  props.phlaskType === PHLASK_TYPE_WATER
-                    ? styles.waterTitle
-                    : styles.foodTitle
-                }
-              `}
-            >
-              {props.phlaskType === PHLASK_TYPE_WATER
-                ? 'Water Map'
-                : 'Food Map'}
-            </h3>
-          )} */}
-          {/* // DESKTOP VERSION OF THE TOOLBAR (V2) */}
           <BottomNavigation showLabels>
+            <NavigationItem
+              icon={<PhlaskWater className={styles.phlaskWaterButton} />}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
+            />
             <NavigationItem
               label={<Typography fontSize={'small'}>Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
@@ -245,49 +230,6 @@ function Toolbar(props) {
             />
             <NavigationItem />
           </BottomNavigation>
-          {/* <SearchIcon /> */}
-          {/* <div className={styles.filterButton}>
-            <button aria-label="show filters">
-              {props.phlaskType === PHLASK_TYPE_WATER ? (
-                <Filter />
-              ) : (
-                <FoodFilter />
-              )}
-            </button>
-          </div>
-          <button
-            className={`${styles.toolbarButton} ${styles.waterButton} ${
-              props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled
-            }`}
-            onClick={() => {
-              switchType(PHLASK_TYPE_WATER);
-            }}
-          >
-            <DesktopWaterIcon />
-          </button>
-          {isMobile && (
-            <button className={styles.closestTapButton} onClick={setClosest}>
-              <img className="img" src={phlaskImg} alt=""></img>
-            </button>
-          )} */}
-          {/* <button
-            className={`${styles.toolbarButton} ${styles.searcButton} ${
-              props.phlaskType === PHLASK_TYPE_WATER && styles.disabled
-            }`}
-            onClick={() => {
-              switchType(PHLASK_TYPE_FOOD);
-            }}
-          >
-            <SearchIcon />
-          </button> */}
-          {/* <button
-            className={styles.addButton}
-            onClick={() => {
-              setOpenResourceModal(true);
-            }}
-          >
-            <ContributeIcon />
-          </button> */}
         </div>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
