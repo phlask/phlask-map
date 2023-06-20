@@ -9,7 +9,7 @@ import {
   IconButton,
   Toolbar,
   Paper,
-  Popper,
+  Popover,
   Stack,
   styled,
   Grow,
@@ -76,19 +76,20 @@ const NavIcon = styled(ListItemIcon)(({ theme }) => ({
 export default function Head() {
   const dispatch = useDispatch();
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
   const [menuExpand, setMenuExpand] = useState(false);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
+  const open = Boolean(anchorEl);
 
-  const toggleMenu = () => {
-    setMenuOpen(prev => !prev);
-  };
+  const handlePopover = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  }
 
   const handleClose = () => {
-    setMenuOpen(false);
+    setAnchorEl(null);
     setSidebarOpen(false);
   };
 
@@ -183,40 +184,48 @@ export default function Head() {
           <FilterDrawer />
         </>
       ) : (
-        <>
+        <Box
+          sx={{
+            backgroundColor: 'transparent',
+            position: 'absolute',
+            maxWidth: '100%',
+            zIndex: '9',
+            margin: '25px auto 0 25px'
+          }}
+        >
           <Paper
+            elevation = {3}
             sx={{
+              padding: '15px',
+              backgroundColor: '#fff',
               width: '310px',
               height: '75px',
-              borderRadius: '10px',
-              margin: '25px auto 0 25px',
-              boxShadow:
-                '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
-              left: '0',
-              right: 'auto'
+              boxShadow: '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
             }}
           >
             <IconButton
-              onClick={setSidebarOpen}
-              sx={{
-                position: 'relative',
-                left: '-10px',
-                right: '6px'
-              }}
+              onClick={handlePopover}
             >
               <MenuIcon />
             </IconButton>
-            <Link to="/" onClick={() => setShowMapControls(true)}>
+            <Button 
+              href="/" 
+              sx={{
+                marginLeft: '20px'
+              }}
+              onClick={() => setShowMapControls(true)}
+            >
               <PhlaskIcon
                 sx={{
                   position: 'relative',
                   top: '-10px'
                 }}
               />
-            </Link>
+            </Button>
           </Paper>
-          <Popper
-            open={menuOpen}
+          <Popover
+            anchorEl={anchorEl}
+            open={open}
             onClose={handleClose}
             placement="bottom-start"
             transition
@@ -230,57 +239,59 @@ export default function Head() {
                     placement === 'bottom-start' ? 'left top' : 'left bottom'
                 }}
               >
-                <Router>
-                  <Tabs orientation="vertical">
-                    <DropLink
-                      component={Link}
-                      to="/mission"
-                      startIcon={<PhlaskNoTextIcon />}
-                    >
-                      About
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/share"
-                      startIcon={<PlusCircleIcon />}
-                    >
-                      How to PHLASK
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/contribute"
-                      startIcon={<UsersIcon />}
-                    >
-                      Join the team
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/project"
-                      startIcon={<IDIcon />}
-                    >
-                      Acknowledgements
-                    </DropLink>
-                  </Tabs>
+                <Paper>
+                  <Router>
+                    <Tabs orientation="vertical">
+                      <DropLink
+                        component={Link}
+                        to="/mission"
+                        startIcon={<PhlaskNoTextIcon />}
+                      >
+                        About
+                      </DropLink>
+                      <DropLink
+                        component={Link}
+                        to="/share"
+                        startIcon={<PlusCircleIcon />}
+                      >
+                        How to PHLASK
+                      </DropLink>
+                      <DropLink
+                        component={Link}
+                        to="/contribute"
+                        startIcon={<UsersIcon />}
+                      >
+                        Join the team
+                      </DropLink>
+                      <DropLink
+                        component={Link}
+                        to="/project"
+                        startIcon={<IDIcon />}
+                      >
+                        Acknowledgements
+                      </DropLink>
+                    </Tabs>
 
-                  <Switch>
-                    <Route path={`/about`}>
-                      <Mission />
-                    </Route>
-                    <Route path={`/share`}>
-                      <Share />
-                    </Route>
-                    <Route path={`/contribute`}>
-                      <Contribute />
-                    </Route>
-                    <Route path={`/project`}>
-                      <Project />
-                    </Route>
-                  </Switch>
-                </Router>
+                    <Switch>
+                      <Route path={`/about`}>
+                        <Mission />
+                      </Route>
+                      <Route path={`/share`}>
+                        <Share />
+                      </Route>
+                      <Route path={`/contribute`}>
+                        <Contribute />
+                      </Route>
+                      <Route path={`/project`}>
+                        <Project />
+                      </Route>
+                    </Switch>
+                  </Router>
+                </Paper>
               </Grow>
             )}
-          </Popper>
-        </>
+          </Popover>
+        </Box>
       )}
     </>
   );
