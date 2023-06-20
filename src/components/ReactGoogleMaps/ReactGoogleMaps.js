@@ -343,8 +343,8 @@ export class ReactGoogleMaps extends Component {
             </Map>
           </div>
         </ReactTouchEvents>
-        <div className={styles.searchBarContainer}>
-          <Stack direction="row">
+        <Stack position="absolute" bottom="0px" height="143px" width="34%">
+          <Stack direction="row" spacing={2}>
             <SearchBar
               className="searchBar"
               search={location => this.searchForLocation(location)}
@@ -353,8 +353,8 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-        </div>
-        <Toolbar />
+          <Toolbar />
+        </Stack>
         <SelectedTap></SelectedTap>
       </div>
     );
