@@ -19,6 +19,7 @@ import Filter from '../ResourceMenu/Filter';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import styles from './Toolbar.module.scss';
 import ClosestTap from '../ClosestTap/ClosestTap';
+import Button from '@mui/material/Button';
 
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
@@ -188,49 +189,77 @@ function Toolbar(props) {
     <>
       $
       {!isMobile ? (
-        <div
-          className={`${styles.toolbar} ${
-            isMobile ? styles.mobileToolbar : styles.desktopToolbar
-          }`}
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'absolute',
+            left: '32px',
+            bottom: '32px',
+            backgroundColor: 'white',
+            minWidth: '400px',
+            justifyContent: 'space-between',
+            zIndex: 1
+          }}
         >
-          <BottomNavigation showLabels>
-            <NavigationItem
-              icon={<PhlaskWater className={styles.phlaskWaterButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
-            />
-            <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
-              icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
-            />
-            <ResourceMenu />
-            <NavigationItem
-              label={<Typography fontSize={'small'}>Filter</Typography>}
-              icon={<FilterIcon className={styles.FilterButton} />}
-              onClick={() => props.toggleFilterModal(props.isFilterShown)}
-            />
-            <FilterDrawer />
-            <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
-              icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => {
-                setOpenResourceModal(true);
-              }}
-            />
-            <NavigationItem
-              label={<Typography fontSize={'small'}>Search</Typography>}
-              icon={<SearchIcon className={styles.searchButton} />}
-              onClick={() => {
-                setOpenResourceModal(true);
-              }}
-            />
-            <NavigationItem />
-          </BottomNavigation>
-        </div>
+          <Button
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+          >
+            <PhlaskWater />
+          </Button>
+          <Button
+            variant="blue"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <ResourceIcon />
+            <Typography fontSize={'small'}>Resources</Typography>
+          </Button>
+          <Button
+            variant="blue"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <FilterIcon />
+            <Typography fontSize={'small'}>Filter</Typography>
+          </Button>
+          <Button
+            variant="blue"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <SearchIcon />
+            <Typography fontSize={'small'}>Search</Typography>
+          </Button>
+          <Button
+            variant="blue"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <ContributeIcon />
+            <Typography fontSize={'small'}>Contribute</Typography>
+          </Button>
+        </Box>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
         <Box

@@ -139,92 +139,22 @@ $searchColor: #8dc63f;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
 
-  // .waterButton:hover {
-  //   box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
-  // }
+  .phlaskWaterButton {
+    width: 300px;
+  }
 
-  // .foodButton {
-  //   margin-left: 0.5rem;
+  .filterButton {
+    width: 100px;
+    height: 100px;
+  }
 
-  //   &:hover {
-  //     box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
-  //   }
-  // }
+  .resourceButton {
+    width: 100px;
+    height: 100px;
+  }
 
-  // .toolbarButton.disabled:hover {
-  //   box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
-  // }
-
-  // .contributeButton {
-  //   width: 40px;
-  //   height: 40px;
-  //   position: absolute;
-  //   right: 0.35rem;
-  //   color: #999;
-
-  //   &:hover {
-  //     color: #666;
-  //   }
-
-  //   svg {
-  //     padding: 0.15rem;
-  //   }
-  // }
-
-  // .filterButton {
-  //   width: 100px;
-  //   height: 100px;
-  //   // box-sizing: content-box;
-  //   // right: 1rem;
-  //   // padding-left: 1rem;
-  //   // padding-right: 2rem;
-  //   // border-left: 1px solid #ccc;
-  //   // transform: scale(1);
-  // }
-
-  /*.infoButton {
-    top: 17%;
-  }*/
-}
-
-// .PHLASKButton {
-//   /*
-//   The scaling applied here is to try to get the svg as close to the 69px size requirement as possible
-//   Attempting to work with height/width properties directly does not seem to work while testing
-//   */
-//   transform: scale(2.314659) translateY(-8px);
-// }
-
-.phlaskWaterButton {
-  width: 300px;
-  // margin-left: 50px;
-  // height: 500px;
-  // margin-top: 10px;
-  // margin-bottom: 10px;
-  // transform: scale(1);
-}
-
-.filterButton {
-  width: 100px;
-  height: 100px;
-  // box-sizing: content-box;
-  // right: 1rem;
-  // padding-left: 1rem;
-  // padding-right: 2rem;
-  // border-left: 1px solid #ccc;
-  // transform: scale(1);
-}
-
-.resourceButton {
-  width: 100px;
-  height: 100px;
-  // margin-top: 10px;
-  // margin-bottom: 5px;
-  // transform: scale(1);
-}
-
-.contributeButton {
-  width: 100px;
-  height: 100px;
-  // transform: scale(1);
+  .contributeButton {
+    width: 100px;
+    height: 100px;
+  }
 }
