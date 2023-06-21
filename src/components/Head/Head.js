@@ -14,7 +14,6 @@ import {
   styled,
   Grow,
   Tabs,
-  Tab
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,32 +34,41 @@ import { isMobile } from 'react-device-detect';
 import Contribute from '../Pages/Contribute';
 import Mission from '../Pages/Mission';
 import Share from '../Pages/Share';
-import Project from '../Pages/Project';
+import Contact from '../DesktopPages/Contact';
 
 const DropLink = styled(Button)(({ theme }) => ({
   color: '#2D3748',
   backgroundColor: 'transparent',
   width: 'fit-content',
   textDecoration: 'none',
-  padding: '0 10px 0 0',
-  margin: '10px 0 10px 25px',
+  margin: '10px 25px',
   borderRadius: '24px',
+  padding: '0 20px',
   '& span': {
     fontSize: '16px',
-    marginLeft: '10px',
-    borderRadius: '24px'
-  },
-  '& li': {
-    padding: '0px',
-    justifyContent: 'center'
+    borderRadius: '24px',
   },
   '& svg': {
-    width: '40px',
-    height: '41px'
+    width: '36px',
+    height: '36px',
+    margin: '4px 0'
   },
   '&:hover': {
     backgroundColor: '#0a58ca',
-    color: '#ffffff'
+    color: '#fff'
+  },
+  '&:nth-child(1):hover svg path': {
+    stroke: '#fff',
+    fill: '#fff'
+  },
+  '&:nth-child(2):hover svg path': {
+    stroke: '#fff'
+  },
+  '&:nth-child(3):hover svg path': {
+    stroke: '#fff'
+  },
+  '&:nth-child(4):hover svg path': {
+    stroke: '#fff'
   }
 }));
 
@@ -85,7 +93,7 @@ export default function Head() {
   const open = Boolean(anchorEl);
 
   const handlePopover = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setAnchorEl(anchorEl ? null : event.currentTarget.parentNode);
   }
 
   const handleClose = () => {
@@ -194,9 +202,8 @@ export default function Head() {
           }}
         >
           <Paper
-            elevation = {3}
+            elevation={3}
             sx={{
-              padding: '15px',
               backgroundColor: '#fff',
               width: '310px',
               height: '75px',
@@ -204,14 +211,17 @@ export default function Head() {
             }}
           >
             <IconButton
+              sx={{
+                margin: '15px'
+              }}
               onClick={handlePopover}
             >
               <MenuIcon />
             </IconButton>
-            <Button 
-              href="/" 
+            <Button
+              href="/"
               sx={{
-                marginLeft: '20px'
+                margin: '15px'
               }}
               onClick={() => setShowMapControls(true)}
             >
@@ -225,71 +235,101 @@ export default function Head() {
           </Paper>
           <Popover
             anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left'
+            }}
             open={open}
             onClose={handleClose}
-            placement="bottom-start"
             transition
             disablePortal
           >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === 'bottom-start' ? 'left top' : 'left bottom'
+            <Paper>
+              <Box
+                width={310}
+              >
+                <IconButton
+                  sx={{
+                    margin: '15px'
+                  }}
+                  onClick={handlePopover}
+                >
+                  <CloseIcon />
+                </IconButton>
+                <Button
+                  href="/"
+                  sx={{
+                    margin: '15px'
+                  }}
+                  onClick={() => setShowMapControls(true)}
+                >
+                  <PhlaskIcon
+                    sx={{
+                      position: 'relative',
+                      top: '-10px'
+                    }}
+                  />
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex'
                 }}
               >
-                <Paper>
-                  <Router>
-                    <Tabs orientation="vertical">
-                      <DropLink
-                        component={Link}
-                        to="/mission"
-                        startIcon={<PhlaskNoTextIcon />}
-                      >
-                        About
-                      </DropLink>
-                      <DropLink
-                        component={Link}
-                        to="/share"
-                        startIcon={<PlusCircleIcon />}
-                      >
-                        How to PHLASK
-                      </DropLink>
-                      <DropLink
-                        component={Link}
-                        to="/contribute"
-                        startIcon={<UsersIcon />}
-                      >
-                        Join the team
-                      </DropLink>
-                      <DropLink
-                        component={Link}
-                        to="/project"
-                        startIcon={<IDIcon />}
-                      >
-                        Acknowledgements
-                      </DropLink>
-                    </Tabs>
-
-                    <Switch>
-                      <Route path={`/about`}>
-                        <Mission />
-                      </Route>
-                      <Route path={`/share`}>
-                        <Share />
-                      </Route>
-                      <Route path={`/contribute`}>
-                        <Contribute />
-                      </Route>
-                      <Route path={`/project`}>
-                        <Project />
-                      </Route>
-                    </Switch>
-                  </Router>
-                </Paper>
-              </Grow>
-            )}
+              <Router>
+                <Tabs
+                  orientation="vertical"
+                  sx={{
+                    padding: '0 0 15px',
+                    width: '310px'
+                  }}
+                >
+                  <DropLink
+                    component={Link}
+                    to="/mission"
+                    startIcon={<PhlaskNoTextIcon />}
+                  >
+                    About
+                  </DropLink>
+                  <DropLink
+                    component={Link}
+                    to="/share"
+                    startIcon={<PlusCircleIcon />}
+                  >
+                    How it works
+                  </DropLink>
+                  <DropLink
+                    component={Link}
+                    to="/contribute"
+                    startIcon={<UsersIcon />}
+                  >
+                    Join the team
+                  </DropLink>
+                  <DropLink
+                    component={Link}
+                    to="/contact"
+                    startIcon={<IDIcon />}
+                  >
+                    Contact
+                  </DropLink>
+                </Tabs>
+                <Switch>
+                  <Route path={`/mission`}>
+                    <Mission />
+                  </Route>
+                  <Route path={`/share`}>
+                    <Share />
+                  </Route>
+                  <Route path={`/contribute`}>
+                    <Contribute />
+                  </Route>
+                  <Route path={`/contact`}>
+                    <Contact />
+                  </Route>
+                </Switch>
+              </Router>
+              </Box>
+            </Paper>
           </Popover>
         </Box>
       )}
