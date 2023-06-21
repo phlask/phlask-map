@@ -12,7 +12,9 @@ import {
   faSearchLocation,
   faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
-import TutorialModal from '../TutorialModal/TutorialModal';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -86,13 +88,18 @@ class SearchBar extends React.Component {
                   }`}
                 >
                   {/* type="search" is only HTML5 compliant */}
-                  <input
+                  <Input
                     {...getInputProps({
-                      placeholder: 'Search For Taps Near...'
+                      placeholder: 'Search For Resources Near...'
                     })}
                     className={`${styles.searchInput} form-control`}
                     type="search"
                     ref={this.state.refSearchBar}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    }
                   />
                   {loading && (
                     <div className={styles.autocompleteDropdown}>
@@ -150,10 +157,6 @@ class SearchBar extends React.Component {
             />
           </button>
         )}
-
-        <TutorialModal
-          showButton={isMobile ? !this.state.isSearchBarShown : true}
-        />
       </>
     );
   }
