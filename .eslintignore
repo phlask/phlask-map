@@ -5,6 +5,7 @@ cypress/
 
 # Build directory
 docker/
+build/
 
 # Unused files
 Legend.js
