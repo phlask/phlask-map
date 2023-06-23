@@ -379,11 +379,15 @@ function AddBathroom({
               id="guidelines"
               label="Community guideLines"
               name="guidelines"
+              value={normsAndRules}
               InputLabelProps={{ shrink: true }}
               multiline
               maxRows={2}
               FormHelperTextProps={{ fontSize: '11.67' }}
               helperText="Share tips on respectful PHLASKing at this location."
+              {...register('guidelines', {
+                onChange: onNormsAndRulesChange
+              })}
             />
             <Button
               type="submit"
