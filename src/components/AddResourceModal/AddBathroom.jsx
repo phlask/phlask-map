@@ -136,18 +136,6 @@ function AddBathroom({
           })}
         >
           <Stack spacing={4} alignContent="center">
-            {/* <SharedFormFields
-              onDrop={onDrop}
-              name={name}
-              onNameChange={onNameChange}
-              address={address}
-              onAddressChange={onAddressChange}
-              website={website}
-              onWebsiteChange={onWebsiteChange}
-              description={description}
-              onDescriptionChange={onDescriptionChange}
-              siteCategory="bathroom"
-            /> */}
             <ImageUploader
               withIcon={true}
               buttonText="Choose images"
@@ -382,91 +370,6 @@ function AddBathroom({
               Submit
             </Button>
           </Stack>
-          {/* <Form.Group value={access} onChange={onAccessChange}>
-              <Form.Label className={styles.modalFormLabel}>
-                Access Type
-              </Form.Label>
-              <Form.Control className={styles.modalFormSelect} as="select">
-                <option value="">Choose...</option>
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-                <option value="private shared">Private (Shared)</option>
-                <option value="restricted">Restricted</option>
-                <option value="other">Other</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header className={styles.modalFormLabel}>
-                  Additional Information
-                </Accordion.Header>
-                <Accordion.Body>
-                  <div>
-                    <Form.Check
-                      checked={accessible}
-                      onChange={onAccessibleChange}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="Accessible"
-                      value="accessible"
-                    />
-
-                    <Form.Check
-                      checked={idRequired}
-                      onChange={onIdRequiredChange}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="ID Required"
-                      value="idRequired"
-                    />
-
-                    <Form.Check
-                      checked={changingTable}
-                      onChange={onChangeChangingTable}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="Changing table"
-                      value="changingTable"
-                    />
-
-                    <Form.Check
-                      checked={genderNeutral}
-                      onChange={onChangeGenderNeutral}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="Gender neutral"
-                      value="genderNeutral"
-                    />
-
-                    <Form.Check
-                      checked={familyBathroom}
-                      onChange={onChangeFamilyBathroom}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="Family bathroom"
-                      value="familyBathroom"
-                    />
-
-                    <Form.Check
-                      checked={singleOccupancy}
-                      onChange={onChangeSingleOccupancy}
-                      className={styles.modalFormCheck}
-                      type="checkbox"
-                      label="Single occupancy"
-                      value="singleOccupancy"
-                    />
-
-                    <SharedAccordionFields
-                      phlaskStatement={phlaskStatement}
-                      onPhlaskStatementChange={onPhlaskStatementChange}
-                      normsAndRules={normsAndRules}
-                      onNormsAndRulesChange={onNormsAndRulesChange}
-                    />
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion> */}
         </form>
       </CardContent>
     </Card>
