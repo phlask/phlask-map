@@ -240,8 +240,10 @@ function AddBathroom({
                   name="website"
                   label="Website"
                   value={website}
-                  {...register('address', {
-                    pattern: [],
+                  {...register('website', {
+                    // regex meaning 1 or more characters, followed by exactly 1 ".",
+                    // followed by a 2 or 3 letter top level domain (.com, .io, .edu)
+                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/,
                     onChange: onWebsiteChange
                   })}
                   error={errors.website ? true : false}
