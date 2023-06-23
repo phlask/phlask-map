@@ -72,7 +72,7 @@ function AddBathroom({
   onAccessChange,
   phlaskStatement,
   onPhlaskStatementChange,
-  normsAndRules,
+  normsAndRules, // May need to rename "NormsAndRules" to "Guidelines"
   onNormsAndRulesChange,
   changingTable,
   onChangeChangingTable,
@@ -161,15 +161,19 @@ function AddBathroom({
               <Stack spacing={4} justifyContent="center">
                 <TextField
                   id="name"
-                  label="Name"
                   name="name"
+                  label="Name"
+                  value={name}
                   helperText={
                     <span>
                       {errors.name && requiredFieldMsg}
                       Enter a name for the resource. (Example: City Hall)
                     </span>
                   }
-                  {...register('name', { required: true })}
+                  {...register('name', {
+                    required: true,
+                    onChange: onNameChange
+                  })}
                   error={errors.name ? true : false}
                   InputLabelProps={{ shrink: true }}
                 />
@@ -187,10 +191,9 @@ function AddBathroom({
                     <div>
                       <TextField
                         id="address"
-                        label="Street address *"
                         name="address"
+                        label="Street address *"
                         value={address}
-                        onChange={onAddressChange}
                         helperText={
                           <Stack>
                             {errors.address && requiredFieldMsg}
@@ -200,7 +203,10 @@ function AddBathroom({
                             </Link>
                           </Stack>
                         }
-                        {...register('address', { required: true })}
+                        {...register('address', {
+                          required: true,
+                          onChange: onAddressChange
+                        })}
                         error={errors.address ? true : false}
                         FormHelperTextProps={{
                           sx: { marginLeft: 'auto', marginRight: 0 },
@@ -243,13 +249,28 @@ function AddBathroom({
                 </PlacesAutocomplete>
                 <TextField
                   id="website"
+                  name="website"
                   label="Website"
+                  value={website}
+                  {...register('address', {
+                    pattern: [],
+                    onChange: onWebsiteChange
+                  })}
+                  error={errors.website ? true : false}
+                  helperText={
+                    errors.website && <span>Website is not valid</span>
+                  }
                   InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   id="description"
+                  name="description"
                   label="Description"
+                  value={description}
                   helperText="Explain how to access the resource."
+                  {...register('description', {
+                    onChange: onDescriptionChange
+                  })}
                   InputLabelProps={{ shrink: true }}
                   multiline
                   maxRows={2}
@@ -258,14 +279,17 @@ function AddBathroom({
             </FormControl>
             <TextField
               variant="outlined"
-              name="organization"
               id="organization"
+              name="organization"
+              label="Organization Type"
               onChange={e => console.log('')}
               select
-              label="Organization Type"
-              value=""
+              value={access}
               helperText={errors.organization && requiredFieldMsg}
-              {...register('organization', { required: true })}
+              {...register('organization', {
+                required: true,
+                onChange: onAccessChange
+              })}
               error={errors.organization ? true : false}
               InputLabelProps={{ shrink: true }}
             >
