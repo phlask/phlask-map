@@ -22,6 +22,7 @@ import Input from '@mui/material/Input';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
+import { useForm, Controller } from 'react-hook-form';
 
 const addressStyles = {
   width: '100%',
@@ -55,6 +56,12 @@ function SharedFormFields({
     onAddressChange(address);
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+
   return (
     <>
       <ImageUploader
@@ -71,8 +78,11 @@ function SharedFormFields({
           <TextField
             id="name"
             label="Name"
+            name="name"
             helperText="Enter a name for the resource. (Example: City Hall)"
             InputLabelProps={{ shrink: true }}
+            {...register('name', { required: true })}
+            error={errors.name ? true : false}
           />
           <PlacesAutocomplete
             value={address}
