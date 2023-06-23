@@ -298,7 +298,6 @@ function AddBathroom({
               id="organization"
               name="organization"
               label="Organization Type"
-              onChange={e => console.log('')}
               select
               value={access}
               helperText={errors.organization && requiredFieldMsg}

@@ -91,6 +91,9 @@ export class AddResourceModal extends Component {
       foodType: '',
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
+      medicinal: false,
+      inSeason: false,
+      communityGarden: false,
       // BATHROOM
       changingTable: false,
       genderNeutral: false,
@@ -249,6 +252,24 @@ export class AddResourceModal extends Component {
     });
   }
 
+  onChangeMedicinal(e) {
+    this.setState({
+      medicinal: e.target.checked
+    });
+  }
+
+  onChangeInSeason(e) {
+    this.setState({
+      inSeason: e.target.checked
+    });
+  }
+
+  onChangeCommuntiyGarden(e) {
+    this.setState({
+      communityGarden: e.target.checked
+    });
+  }
+
   // ADD BATHROOM MODAL FIELDS
 
   onChangeChangingTable(e) {
@@ -358,11 +379,15 @@ export class AddResourceModal extends Component {
         children_only: this.state.childrenOnly,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
+        medicinal: this.state.medicinal,
+        in_season: this.state.inSeason,
+        community_garden: this.state.communityGarden,
         // BATHROOM FIELDS
         changing_table: this.state.changingTable,
         gender_neutral: this.state.genderNeutral,
         family_bathroom: this.state.familyBathroom,
         single_occupancy: this.state.singleOccupancy,
+        has_fountain: this.state.hasFountain,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
         norms_rules: this.state.normsAndRules
@@ -407,11 +432,15 @@ export class AddResourceModal extends Component {
       foodType: '',
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
+      medicinal: false,
+      inSeason: false,
+      communityGarden: false,
       // ADD BATHROOM MODAL FIELDS
       changingTable: false,
       genderNeutral: false,
       familyBathroom: false,
-      singleOccupancy: false
+      singleOccupancy: false,
+      hasFountain: false
     };
     this.setState(resetState);
   }
@@ -563,6 +592,12 @@ export class AddResourceModal extends Component {
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
+              medicinal={this.state.medicinal}
+              onChangeMedicinal={this.state.onChangeMedicinal}
+              inSeason={this.state.inSeason}
+              onChangeInSeason={this.state.onChangeInSeason}
+              communityGarden={this.state.communityGarden}
+              onChangeCommuntiyGarden={this.state.onChangeCommuntiyGarden}
             />
           )}
 
