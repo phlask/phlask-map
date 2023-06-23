@@ -39,15 +39,6 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 
-const BATHROOM_HELPFUL_INFO = [
-  'Wheelchair accessible',
-  'Gender neutral',
-  'Changing table',
-  'Single occupancy',
-  'Family bathroom',
-  'Also has water fountain'
-];
-
 const ORGANIZATION_TYPE = [
   { accessType: 'Open access', explanation: 'Public site, open to all' },
   { accessType: 'Restricted', explanation: 'May not be open to all' },
@@ -84,6 +75,8 @@ function AddBathroom({
   onChangeSingleOccupancy,
   accessible,
   onAccessibleChange,
+  hasFoutain,
+  onChangeHasFountain,
   idRequired,
   onIdRequiredChange
 }) {
@@ -102,6 +95,39 @@ function AddBathroom({
       deleteApp(firebaseConnection);
     };
   }, []);
+
+  const BATHROOM_HELPFUL_INFO = [
+    {
+      label: 'Wheelchair accessible',
+      value: accessible,
+      onChange: onAccessibleChange
+    },
+    {
+      label: 'Gender neutral',
+      value: genderNeutral,
+      onChange: onChangeGenderNeutral
+    },
+    {
+      label: 'Changing table',
+      value: changingTable,
+      onChange: onChangeChangingTable
+    },
+    {
+      label: 'Single occupancy',
+      value: singleOccupancy,
+      onChange: onChangeSingleOccupancy
+    },
+    {
+      label: 'Family bathroom',
+      value: familyBathroom,
+      onChange: onChangeFamilyBathroom
+    },
+    {
+      label: 'Also has water fountain',
+      value: hasFoutain,
+      onChange: onChangeHasFountain
+    }
+  ];
 
   const {
     register,
@@ -242,7 +268,7 @@ function AddBathroom({
                   value={website}
                   {...register('website', {
                     // regex meaning 1 or more characters, followed by exactly 1 ".",
-                    // followed by a 2 or 3 letter top level domain (.com, .io, .edu)
+                    // followed by a 2 or 3 letter top level domain (e.g.: .com, .io, .edu)
                     pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/,
                     onChange: onWebsiteChange
                   })}
@@ -304,8 +330,8 @@ function AddBathroom({
               <Grid container>
                 {BATHROOM_HELPFUL_INFO.map(info => {
                   return (
-                    <React.Fragment key={info}>
-                      <Grid item as="label" htmlFor={info} xs={8}>
+                    <React.Fragment key={info.label}>
+                      <Grid item as="label" htmlFor={info.label} xs={8}>
                         <Box
                           height="100%"
                           width="100%"
@@ -315,16 +341,15 @@ function AddBathroom({
                         >
                           <Typography
                             style={{ paddingLeft: '2.5rem' }}
-                            // paddingLeft="2.5rem"
                             fontSize={13}
                           >
-                            {info}
+                            {info.label}
                           </Typography>
                         </Box>
                       </Grid>
                       <Grid
                         as="label"
-                        htmlFor={info}
+                        htmlFor={info.label}
                         item
                         align="center"
                         xs={4}
@@ -336,7 +361,12 @@ function AddBathroom({
                         >
                           <Checkbox
                             style={{ paddingLeft: '1.5rem' }}
-                            id={info}
+                            id={info.label}
+                            name={info.label}
+                            value={info.value}
+                            {...register(info.label, {
+                              onChange: info.onChange
+                            })}
                           />
                         </Box>
                       </Grid>
@@ -359,7 +389,7 @@ function AddBathroom({
               type="submit"
               variant="contained"
               onClick={handleSubmit(() => {
-                console.log('submitted');
+                console.log(BATHROOM_HELPFUL_INFO);
               })}
               style={{
                 borderRadius: '8px',

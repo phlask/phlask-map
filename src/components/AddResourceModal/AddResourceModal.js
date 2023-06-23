@@ -95,7 +95,8 @@ export class AddResourceModal extends Component {
       changingTable: false,
       genderNeutral: false,
       familyBathroom: false,
-      singleOccupancy: false
+      singleOccupancy: false,
+      hasFountain: false
     };
   }
 
@@ -271,6 +272,12 @@ export class AddResourceModal extends Component {
   onChangeSingleOccupancy(e) {
     this.setState({
       singleOccupancy: e.target.checked
+    });
+  }
+
+  onChangeHasFountain(e) {
+    this.setState({
+      hasFountain: e.target.checked
     });
   }
 
@@ -526,6 +533,8 @@ export class AddResourceModal extends Component {
               onChangeFamilyBathroom={this.onChangeFamilyBathroom}
               singleOccupancy={this.state.singleOccupancy}
               onChangeSingleOccupancy={this.onChangeSingleOccupancy}
+              hasFountain={this.state.hasFountain}
+              onChangeHasFountain={this.onChangeHasFountain}
             />
           )}
 
