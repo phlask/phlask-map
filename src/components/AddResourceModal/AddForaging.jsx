@@ -138,7 +138,7 @@ function AddForaging({
         alignItems="flex-end"
         padding="0px 20px 10px"
         height="88px"
-        backgroundColor="7C7C7C" //CHANGE THIS LATER
+        backgroundColor="#5DA694" //CHANGE THIS LATER
         color="common.white"
       >
         {/* Add a Foraging Resource */}
@@ -157,6 +157,7 @@ function AddForaging({
             <ImageUploader
               withIcon={true}
               buttonText="Choose images"
+              buttonStyles={{ backgroundColor: '#5DA694' }}
               onChange={onDrop}
               imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
               maxFileSize={5242880}
@@ -415,7 +416,7 @@ function AddForaging({
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
                 color: 'white',
-                backgroundColor: '#7C7C7C'
+                backgroundColor: '#5DA694'
               }}
             >
               Submit

@@ -165,6 +165,7 @@ function AddBathroom({
             <ImageUploader
               withIcon={true}
               buttonText="Choose images"
+              buttonStyles={{ backgroundColor: '#7C7C7C' }}
               onChange={onDrop}
               imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
               maxFileSize={5242880}
