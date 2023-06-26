@@ -1,14 +1,55 @@
-import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import styles from "./AddResourceModal.module.scss";
-import { Modal, Form, Accordion, Button } from "react-bootstrap";
+import React, { useEffect } from 'react';
+import ImageUploader from 'react-images-upload';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng
+} from 'react-places-autocomplete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import styles from './AddResourceModal.module.scss';
+import { Modal, Form, Accordion, Button } from 'react-bootstrap';
 // eslint-disable-next-line import/no-unresolved
-import SharedFormFields from "./SharedFormFields";
+import SharedFormFields from './SharedFormFields';
 // eslint-disable-next-line import/no-unresolved
-import SharedAccordionFields from "./SharedAccordionFields";
-import { deleteApp } from "firebase/app";
-import { connectToFirebase } from "./utils";
+import SharedAccordionFields from './SharedAccordionFields';
+import { deleteApp } from 'firebase/app';
+import { connectToFirebase } from './utils';
+import { useForm } from 'react-hook-form';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  FormGroup,
+  Grid,
+  IconButton,
+  Link,
+  MenuItem,
+  Stack,
+  Typography,
+  FormControl,
+  Input,
+  InputLabel,
+  FormHelperText,
+  FormControlLabel,
+  Checkbox,
+  TextField
+} from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+
+const FOOD_TYPE = [
+  { accessType: 'Perishable', explanation: 'Fruit, vegetables, dairy, etc.' },
+  {
+    accessType: 'Non-perishable',
+    explanation: 'Canned, boxed, pantry items, etc.'
+  },
+  { accessType: 'Prepared food and meals', explanation: '' },
+  { accessType: 'Other' }
+];
+
+const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
+const DISTRIBUTION_TYPE = ['Eat on site', 'Delivery', 'Pickup', 'Other'];
 
 function AddFood({
   prev,
@@ -32,7 +73,7 @@ function AddFood({
   onIdRequiredChange,
   childrenOnly,
   onChildrenOnlyChange,
-  consumptionType,
+  consumptionType, // Distribution Type
   onConsumptionTypeChange,
   foodType,
   onFoodTypeChange,
@@ -47,7 +88,7 @@ function AddFood({
     // (e.g. phlask.me, connect to prod)
     const firebaseConnection = connectToFirebase(
       window.location.hostname,
-      "food"
+      'food'
     );
     onDbConnectionChange(firebaseConnection);
 
@@ -56,140 +97,335 @@ function AddFood({
       deleteApp(firebaseConnection);
     };
   }, []);
+
+  const FOOD_HELPFUL_INFO = [
+    {
+      label: 'Wheelchair accessible',
+      value: accessible,
+      onChange: onAccessibleChange
+    },
+    {
+      label: 'ID Required',
+      value: idRequired,
+      onChange: onIdRequiredChange
+    },
+    {
+      label: 'Youth (under 18) only',
+      value: childrenOnly,
+      onChange: onChildrenOnlyChange
+    },
+    {
+      label: 'Community fridges, etc.',
+      value: '',
+      onChange: onChildrenOnlyChange //change later
+    }
+  ];
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+
+  const requiredFieldMsg = (
+    <span>
+      *This field is required* <br />
+    </span>
+  );
+
   return (
-    <>
-      <Modal.Header closeButton>
-        <Modal.Title>Add Food</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form
-          onSubmit={e => {
+    <Card
+      style={{
+        overflow: 'scroll',
+        scrollbarWidth: 'none',
+        justifyContent: 'center'
+      }}
+    >
+      {/* <Typography className={sty.mobileHeader} color="common.white"> */}
+      <Typography
+        display="flex"
+        flexDirection="row"
+        alignItems="flex-end"
+        padding="0px 20px 10px"
+        height="88px"
+        backgroundColor="orange"
+        color="common.white"
+      >
+        Add a Food Resource
+      </Typography>
+      <CardContent>
+        <form
+          onSubmit={handleSubmit(e => {
             e.preventDefault();
-            onSubmit(e).then(() => {next()});
-          }}
+            onSubmit(e).then(() => {
+              next();
+            });
+          })}
         >
-          <SharedFormFields
-            onDrop={onDrop}
-            name={name}
-            onNameChange={onNameChange}
-            address={address}
-            onAddressChange={onAddressChange}
-            website={website}
-            onWebsiteChange={onWebsiteChange}
-            description={description}
-            onDescriptionChange={onDescriptionChange}
-            siteCategory="food site"
-          />
-          <Form.Group value={organization} onChange={onOrganizationChange}>
-            <Form.Label className={styles.modalFormLabel}>
-              Organization Type
-            </Form.Label>
-            <Form.Control className={styles.modalFormSelect} as="select">
-              <option value="">Choose...</option>
-              <option value="government">Government</option>
-              <option value="business">Business</option>
-              <option value="nonprofit">Non-Profit</option>
-              <option value="religious">Religious</option>
-              <option value="grassroots">Grassroots</option>
-              <option value="other">Other</option>
-            </Form.Control>
-          </Form.Group>
+          <Stack spacing={4} alignContent="center">
+            <ImageUploader
+              withIcon={true}
+              buttonText="Choose images"
+              buttonStyles={{ backgroundColor: 'orange' }}
+              onChange={onDrop}
+              imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
+              maxFileSize={5242880}
+              withPreview={true}
+            />
 
-          <Accordion data-cy="AdditionalInformation">
-            <Accordion.Item eventKey="0">
-            <Accordion.Header className={styles.modalFormLabel}>
-              Additional Information
-            </Accordion.Header>
-            <Accordion.Body>
-              <div>
-                <Form.Check
-                  checked={accessible}
-                  onChange={onAccessibleChange}
-                  className={styles.modalFormCheck}
-                  type="checkbox"
-                  label="Accessible"
-                  value="accessible"
+            <FormControl>
+              <Stack spacing={4} justifyContent="center">
+                <TextField
+                  id="name"
+                  name="name"
+                  label="Name"
+                  value={name}
+                  helperText={
+                    <span>
+                      {errors.name && requiredFieldMsg}
+                      Enter a name for the resource. (Example: City Hall)
+                    </span>
+                  }
+                  {...register('name', {
+                    required: true,
+                    onChange: onNameChange
+                  })}
+                  error={errors.name ? true : false}
+                  InputLabelProps={{ shrink: true }}
                 />
-
-                <Form.Check
-                  checked={idRequired}
-                  onChange={onIdRequiredChange}
-                  className={styles.modalFormCheck}
-                  type="checkbox"
-                  label="ID Required"
-                  value="idRequired"
-                />
-
-                <Form.Check
-                  checked={childrenOnly}
-                  onChange={onChildrenOnlyChange}
-                  className={styles.modalFormCheck}
-                  type="checkbox"
-                  label="Children and minors only"
-                  value="childrenOnly"
-                />
-
-                <Form.Group
-                  value={consumptionType}
-                  onChange={onConsumptionTypeChange}
+                <PlacesAutocomplete
+                  value={address}
+                  onChange={onAddressChange}
+                  onSelect={onAddressChange}
                 >
-                  <Form.Label className={styles.modalFormLabel}>
-                    Consumption Type
-                  </Form.Label>
-                  <Form.Control className={styles.modalFormSelect} as="select">
-                    {/* TODO: do we want to use whitespace for values? could lead to
-                    some odd parsing edge cases -- but if all current data follows
-                    this convention then we might have to go through a painful
-                    db migration to update old values */}
-                    <option value="">Choose...</option>
-                    <option value="onsite">Onsite</option>
-                    <option value="takeaway">Takeaway</option>
-                    <option value="delivery">Delivery</option>
-                    <option value="other">Other</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group value={foodType} onChange={onFoodTypeChange}>
-                  <Form.Label className={styles.modalFormLabel}>
-                    Food Type
-                  </Form.Label>
-                  <Form.Control className={styles.modalFormSelect} as="select">
-                    <option value="">Choose...</option>
-                    <option value="perishable">Perishable</option>
-                    <option value="nonperishable">Non-perishable</option>
-                    <option value="prepared">Prepared</option>
-                    <option value="other">Other</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <SharedAccordionFields
-                  phlaskStatement={phlaskStatement}
-                  onPhlaskStatementChange={onPhlaskStatementChange}
-                  normsAndRules={normsAndRules}
-                  onNormsAndRulesChange={onNormsAndRulesChange}
+                  {({
+                    getInputProps,
+                    suggestions,
+                    getSuggestionItemProps,
+                    loading
+                  }) => (
+                    <div>
+                      <TextField
+                        id="address"
+                        name="address"
+                        label="Street address *"
+                        value={address}
+                        helperText={
+                          <Stack>
+                            {errors.address && requiredFieldMsg}
+                            <Link>
+                              {'Use my location instead  '}
+                              <MyLocationIcon sx={{ fontSize: 10 }} />
+                            </Link>
+                          </Stack>
+                        }
+                        {...register('address', {
+                          required: true,
+                          onChange: onAddressChange
+                        })}
+                        error={errors.address ? true : false}
+                        FormHelperTextProps={{
+                          sx: { marginLeft: 'auto', marginRight: 0 },
+                          onClick: () =>
+                            alert('Use My Location onClick PlaceHolder!')
+                        }}
+                        style={{ backgroundColor: 'white' }}
+                        InputLabelProps={{ shrink: true }}
+                        {...getInputProps({
+                          className: 'modalAddressAutofill',
+                          id: 'address'
+                        })}
+                        className={styles.modalAddressAutofill}
+                      />
+                      <div className="autocomplete-dropdown-container">
+                        {loading && <div>Loading...</div>}
+                        {suggestions.map((suggestion, i) => {
+                          const className = suggestion.active
+                            ? 'suggestion-item--active'
+                            : 'suggestion-item';
+                          // inline style for demonstration purpose
+                          const style = suggestion.active
+                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, {
+                                className,
+                                style
+                              })}
+                              key={i}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </PlacesAutocomplete>
+                <TextField
+                  id="website"
+                  name="website"
+                  label="Website"
+                  value={website}
+                  {...register('website', {
+                    // regex meaning 1 or more characters, followed by exactly 1 ".",
+                    // followed by a 2 or 3 letter top level domain (e.g.: .com, .io, .edu)
+                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/,
+                    onChange: onWebsiteChange
+                  })}
+                  error={errors.website ? true : false}
+                  helperText={
+                    errors.website && <span>Website is not valid</span>
+                  }
+                  InputLabelProps={{ shrink: true }}
                 />
-              </div>
-            </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-
-          <Button
-            style={{ margin: "16px 0", borderRadius: "6px" }}
-            variant="secondary"
-            onClick={prev}
-          >
-            Back
-          </Button>
-          <Button
-            style={{ float: "right", margin: "16px 0", borderRadius: "6px" }}
-            variant="primary"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Form>
-      </Modal.Body>
-    </>
+                <TextField
+                  id="description"
+                  name="description"
+                  label="Description"
+                  value={description}
+                  helperText="Explain how to access the resource."
+                  {...register('description', {
+                    onChange: onDescriptionChange
+                  })}
+                  InputLabelProps={{ shrink: true }}
+                  multiline
+                  maxRows={2}
+                />
+              </Stack>
+            </FormControl>
+            <TextField
+              variant="outlined"
+              id="organization"
+              name="organization"
+              label="Organization Type"
+              select
+              value={organization}
+              helperText={errors.organization && requiredFieldMsg}
+              {...register('organization', {
+                required: true,
+                onChange: onOrganizationChange
+              })}
+              error={errors.organization ? true : false}
+              InputLabelProps={{ shrink: true }}
+            >
+              {ORGANIZATION_TYPE.map(orgType => {
+                return (
+                  // <MenuItem key={orgType} value={accessType}>
+                  <MenuItem key={orgType} value={orgType}>
+                    {orgType}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+            <FormGroup>
+              <Typography>Helpful info</Typography>
+              <Grid container>
+                {FOOD_HELPFUL_INFO.map(info => {
+                  return (
+                    <React.Fragment key={info.label}>
+                      <Grid item as="label" htmlFor={info.label} xs={8}>
+                        <Box
+                          height="100%"
+                          width="100%"
+                          display="flex"
+                          justifyContent="center"
+                          flexDirection="column"
+                        >
+                          <Typography
+                            style={{ paddingLeft: '2.5rem' }}
+                            fontSize={13}
+                          >
+                            {info.label}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid
+                        as="label"
+                        htmlFor={info.label}
+                        item
+                        align="center"
+                        xs={4}
+                      >
+                        <Box
+                          display="flex"
+                          justifyContent="center"
+                          flexDirection="column"
+                        >
+                          <Checkbox
+                            style={{ paddingLeft: '1.5rem' }}
+                            id={info.label}
+                            name={info.label}
+                            value={info.value}
+                            {...register(info.label, {
+                              onChange: info.onChange
+                            })}
+                          />
+                        </Box>
+                      </Grid>
+                    </React.Fragment>
+                  );
+                })}
+              </Grid>
+            </FormGroup>
+            {/* <TextField
+              variant="outlined"
+              id="foodType"
+              name="foodType"
+              label="Food Type"
+              select
+              value={foodType}
+              helperText={errors.forageType && requiredFieldMsg}
+              {...register('foodType', {
+                required: true,
+                onChange: onFoodTypeChange
+              })}
+              error={errors.foodType ? true : false}
+              InputLabelProps={{ shrink: true }}
+            >
+              {FORAGE_TYPE.map(type => {
+                return (
+                  <MenuItem key={type} value={type}>
+                    {type}
+                  </MenuItem>
+                );
+              })}
+            </TextField> */}
+            <TextField
+              id="guidelines"
+              label="Community guideLines"
+              name="guidelines"
+              value={normsAndRules}
+              InputLabelProps={{ shrink: true }}
+              multiline
+              maxRows={2}
+              FormHelperTextProps={{ fontSize: '11.67' }}
+              helperText="Share tips on respectful PHLASKing at this location."
+              {...register('guidelines', {
+                onChange: onNormsAndRulesChange
+              })}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={handleSubmit(() => {
+                console.log('submit');
+              })}
+              style={{
+                borderRadius: '8px',
+                width: '25%',
+                margin: '3.5rem auto 1.5rem auto',
+                color: 'white',
+                backgroundColor: 'orange' //Change later
+              }}
+            >
+              Submit
+            </Button>
+          </Stack>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 

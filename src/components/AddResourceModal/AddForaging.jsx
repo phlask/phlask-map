@@ -138,7 +138,7 @@ function AddForaging({
         alignItems="flex-end"
         padding="0px 20px 10px"
         height="88px"
-        backgroundColor="#5DA694" //CHANGE THIS LATER
+        backgroundColor="#5DA694"
         color="common.white"
       >
         {/* Add a Foraging Resource */}
