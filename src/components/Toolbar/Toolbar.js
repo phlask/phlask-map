@@ -201,13 +201,12 @@ function Toolbar(props) {
             zIndex: 1
           }}
         >
+          {/* DESKTOP VERSION OF THE TOOLBAR (V2) */}
           <IconButton
             sx={{
               display: 'flex',
-              minwidth: '188px',
-              width: '100%',
+              minWidth: '188px',
               flexDirection: 'column'
-              // alignItems: 'center'
             }}
           >
             <PhlaskWater />
