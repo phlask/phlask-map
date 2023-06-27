@@ -96,9 +96,7 @@ export default function Head() {
               <IconButton
                 sx={{ marginRight: '-8px' }}
                 onClick={toggleFilterModal}
-              >
-                {/* <SlidersIcon /> */}
-              </IconButton>
+              ></IconButton>
             </Box>
           ) : null}
         </Toolbar>
