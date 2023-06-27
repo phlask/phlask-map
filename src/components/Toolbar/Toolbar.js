@@ -19,7 +19,7 @@ import Filter from '../ResourceMenu/Filter';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import styles from './Toolbar.module.scss';
 import ClosestTap from '../ClosestTap/ClosestTap';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/Button';
 
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
@@ -201,17 +201,18 @@ function Toolbar(props) {
             zIndex: 1
           }}
         >
-          <Button
+          <IconButton
             sx={{
-              height: '100%',
               display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center'
+              minwidth: '188px',
+              width: '100%',
+              flexDirection: 'column'
+              // alignItems: 'center'
             }}
           >
             <PhlaskWater />
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             variant="blue"
             sx={{
               width: '100%',
@@ -222,8 +223,8 @@ function Toolbar(props) {
           >
             <ResourceIcon />
             <Typography fontSize={'small'}>Resources</Typography>
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             variant="blue"
             sx={{
               width: '100%',
@@ -234,8 +235,8 @@ function Toolbar(props) {
           >
             <FilterIcon />
             <Typography fontSize={'small'}>Filter</Typography>
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             variant="blue"
             sx={{
               width: '100%',
@@ -246,8 +247,8 @@ function Toolbar(props) {
           >
             <SearchIcon />
             <Typography fontSize={'small'}>Search</Typography>
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             variant="blue"
             sx={{
               width: '100%',
@@ -258,7 +259,7 @@ function Toolbar(props) {
           >
             <ContributeIcon />
             <Typography fontSize={'small'}>Contribute</Typography>
-          </Button>
+          </IconButton>
         </Box>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
