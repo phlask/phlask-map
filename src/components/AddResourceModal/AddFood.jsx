@@ -73,6 +73,8 @@ function AddFood({
   onIdRequiredChange,
   childrenOnly,
   onChildrenOnlyChange,
+  communityFridges,
+  onCommunityFridgeChanges,
   consumptionType, // Distribution Type
   onConsumptionTypeChange,
   foodType,
@@ -116,8 +118,8 @@ function AddFood({
     },
     {
       label: 'Community fridges, etc.',
-      value: '',
-      onChange: onChildrenOnlyChange //change later
+      value: communityFridges,
+      onChange: onCommunityFridgeChanges
     }
   ];
 

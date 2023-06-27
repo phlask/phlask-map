@@ -52,6 +52,7 @@ export class AddResourceModal extends Component {
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
+    this.onChangeMedicinal = this.onChangeMedicinal.bind(this);
     //  BATHROOM MODAL
     this.onChangeChangingTable = this.onChangeChangingTable.bind(this);
     this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this);
@@ -89,6 +90,7 @@ export class AddResourceModal extends Component {
       // ADD FOOD MODAL FIELDS
       consumptionType: '',
       foodType: '',
+      communityFridges: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
       medicinal: false,
@@ -244,6 +246,12 @@ export class AddResourceModal extends Component {
     });
   }
 
+  onChangeCommunityFridges(e) {
+    this.setState({
+      communityFridges: e.target.checked
+    });
+  }
+
   // ADD FORAGING MODAL FIELDS
 
   onChangeForagingFoodType(e) {
@@ -377,6 +385,7 @@ export class AddResourceModal extends Component {
         consumption_type: this.state.consumptionType,
         id_required: this.state.idRequired,
         children_only: this.state.childrenOnly,
+        community_fridges: this.state.communityFridges,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
         medicinal: this.state.medicinal,
@@ -430,6 +439,7 @@ export class AddResourceModal extends Component {
       // ADD FOOD MODAL FIELDS
       consumptionType: '',
       foodType: '',
+      communityFridges: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
       medicinal: false,
@@ -518,6 +528,8 @@ export class AddResourceModal extends Component {
               onIdRequiredChange={this.onChangeIdRequired}
               childrenOnly={this.state.childrenOnly}
               onChildrenOnlyChange={this.onChangeChildrenOnly}
+              communityFridges={this.state.communityFridges}
+              onCommunityFridgesChange={this.onChangeCommunityFridges}
               consumptionType={this.state.consumptionType}
               onConsumptionTypeChange={this.onChangeConsumptionType}
               foodType={this.state.foodType}
@@ -593,11 +605,11 @@ export class AddResourceModal extends Component {
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
               medicinal={this.state.medicinal}
-              onChangeMedicinal={this.state.onChangeMedicinal}
+              onChangeMedicinal={this.onChangeMedicinal}
               inSeason={this.state.inSeason}
-              onChangeInSeason={this.state.onChangeInSeason}
+              onChangeInSeason={this.onChangeInSeason}
               communityGarden={this.state.communityGarden}
-              onChangeCommuntiyGarden={this.state.onChangeCommuntiyGarden}
+              onChangeCommuntiyGarden={this.onChangeCommuntiyGarden}
             />
           )}
 
