@@ -380,9 +380,11 @@ function AddForaging({
                             id={info.label}
                             name={info.label}
                             value={info.value}
-                            {...register(info.label, {
-                              onChange: info.onChange
-                            })}
+                            inputRef={{
+                              ...register(info.label, {
+                                onChange: info.onChange
+                              })
+                            }}
                           />
                         </Box>
                       </Grid>
