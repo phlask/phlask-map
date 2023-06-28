@@ -23,6 +23,8 @@ import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 import { isMobile } from 'react-device-detect';
 import Toolbar from '../Toolbar/Toolbar';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import { Stack } from '@mui/material';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -159,7 +161,8 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      openResourceModal: false
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -248,9 +251,9 @@ export class ReactGoogleMaps extends Component {
   onDragEnd = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
-      currlon: map.center.lng(),
+      currlon: map.center.lng()
     });
-  }
+  };
 
   toggleTapInfo = isExpanded => {
     this.setState({
@@ -347,7 +350,27 @@ export class ReactGoogleMaps extends Component {
             search={location => this.searchForLocation(location)}
           />
         </div>
-        <Toolbar />
+        <div>
+          {/* TODO: Rebuild the openResourceModal and setOpenResourceModal properties, since this is still class-based 
+              The intent behind this change is to have the Toolbar and AddResourceModal visually contained in the same bottom-left area so that we can take
+              the responsibility of positioning away from each and keep their presentation relative to their parent container */}
+          <AddResourceModalV2
+            open={this.state.openResourceModal}
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />
+          <Toolbar
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />{' '}
+          {/* TODO: Remove position-related styling from this component */}
+        </div>
         <SelectedTap></SelectedTap>
       </div>
     );

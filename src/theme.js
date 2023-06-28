@@ -3,6 +3,9 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 let theme = createTheme({
   components: {
     MuiButton: {
+      styleOverrides: {
+        boxShadow: '0px 1px 4px 0px rgba(0, 0, 0, 0.15)'
+      },
       variants: [
         {
           props: { variant: 'water' },
@@ -80,9 +83,10 @@ let theme = createTheme({
             height: '80px',
             width: '209px',
             left: '124.75px',
-            top: '150px',
+            top: '40px',
+            boxShadow: '0px 1px 4px 0px rgba(0, 0, 0, 0.15)',
 
-            radius: '8px',
+            borderRadius: '8px',
             padding: '4px 0px 8px 0px',
             gap: '2px',
             alignItems: 'center',
@@ -106,8 +110,9 @@ let theme = createTheme({
             height: '80px',
             width: '209px',
             left: '124.75px',
-            top: '254px',
-            radius: '8px',
+            top: '144px',
+            boxShadow: '0px 1px 4px 0px rgba(0, 0, 0, 0.15)',
+            borderRadius: '8px',
             padding: '4px 0px 7px 0px',
             gap: '2px',
             alignItems: 'center',
@@ -131,9 +136,9 @@ let theme = createTheme({
             height: '80px',
             width: '209px',
             left: '374.25px',
-            top: '150px',
-
-            radius: '8px',
+            top: '40px',
+            boxShadow: '0px 1px 4px 0px rgba(0, 0, 0, 0.15)',
+            borderRadius: '8px',
             padding: '4px 0px 8px 0px',
             gap: '2px',
             alignItems: 'center',
@@ -157,8 +162,9 @@ let theme = createTheme({
             height: '80px',
             width: '209px',
             left: '374.25px',
-            top: '254px',
-            radius: '8px',
+            top: '144px',
+            boxShadow: '0px 1px 4px 0px rgba(0, 0, 0, 0.15)',
+            borderRadius: '8px',
             padding: '4px 0px 8px 0px',
             gap: '2px',
             alignItems: 'center',
@@ -172,6 +178,21 @@ let theme = createTheme({
             '&:active': {
               background: '#cbcbcb'
             }
+          }
+        }
+      ]
+    },
+    MuiBox: {
+      variants: [
+        {
+          props: { variant: 'desktop' },
+          style: {
+            borderRadius: '10px',
+            position: 'absolute',
+            top: '840px',
+            left: '20px',
+            boxShadow: 3,
+            background: 'white'
           }
         }
       ]
