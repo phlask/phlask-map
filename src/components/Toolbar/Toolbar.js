@@ -189,7 +189,6 @@ function Toolbar(props) {
 
   return (
     <>
-      $
       {!isMobile ? (
         <div
           className={`${styles.toolbar} ${
@@ -268,7 +267,8 @@ function Toolbar(props) {
             right: 0,
             pb: '25px',
             pt: '10px',
-            bgcolor: 'white'
+            bgcolor: 'white',
+            zIndex: 20,
           }}
         >
           <BottomNavigation showLabels>

@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { connect } from 'react-redux';
-import { toggleSearchBar } from '../../actions/actions';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
@@ -9,72 +7,50 @@ import PlacesAutocomplete, {
 import styles from './SearchBar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSearchLocation,
-  faChevronLeft
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-      refSearchBar: React.createRef(),
-      isSearchBarShown: false
-    };
-  }
+export default function SearchBar ({search}) {
+  const dispatch = useDispatch();
+  const isSearchShown = useSelector(state => state.isSearchShown);
 
-  handleChange = address => {
-    this.setState({ address });
+  const refSearchBar = useRef();
+  const [address, setAddress] = useState('');
+
+  const handleChange = value => {
+    setAddress(value)
   };
 
-  handleSelect = address => {
-    this.setState({ address });
-    geocodeByAddress(address)
+  const closeSearch = () => {
+    dispatch({
+      type: 'TOGGLE_SEARCH_BAR',
+      isShown: false
+    });
+  }
+
+  const handleSelect = selectedAddress => {
+    closeSearch()
+    setAddress(selectedAddress)
+    geocodeByAddress(selectedAddress)
       .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.search(latLng))
+      .then(latLng => search(latLng))
       .catch(error => console.error('Error', error));
   };
 
-  openSearch() {
-    this.setSearchDisplayType(true);
-  }
-
-  setSearchDisplayType(shouldToggle = false) {
-    if (isMobile) {
-      this.setState({
-        isSearchBarShown: shouldToggle
-      });
-    } else {
-      this.setState({
-        isSearchBarShown: true
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isSearchShown && !prevProps.isSearchShown) {
-      this.state.refSearchBar.current.focus();
-    }
-  }
-
-  componentDidMount() {
-    this.setSearchDisplayType();
-  }
-
-  render() {
     return (
       <>
-        {this.state.isSearchBarShown ? (
+        {(isSearchShown || !isMobile) && (
           <div
             className={isMobile ? styles.mobileSearch : styles.desktopSearch}
           >
             <PlacesAutocomplete
-              value={this.state.address}
-              onChange={this.handleChange}
-              onSelect={this.handleSelect}
+              value={address}
+              onChange={handleChange}
+              onSelect={handleSelect}
             >
               {({
                 getInputProps,
@@ -94,7 +70,7 @@ class SearchBar extends React.Component {
                     })}
                     className={`${styles.searchInput} form-control`}
                     type="search"
-                    ref={this.state.refSearchBar}
+                    ref={refSearchBar}
                     startAdornment={
                       <InputAdornment position="start">
                         <SearchIcon />
@@ -131,41 +107,22 @@ class SearchBar extends React.Component {
             {isMobile ? (
               <button
                 className={styles.mobileCloseButton}
-                onClick={() => {
-                  this.setSearchDisplayType(false);
-                }}
+                onClick={closeSearch}
                 aria-label="Close the search bar"
               >
                 <FontAwesomeIcon
                   className={styles.mobileIcon}
-                  icon={faChevronLeft}
+                  icon={faTimes}
                 />
               </button>
             ) : (
               []
             )}
           </div>
-        ) : (
-          <button
-            className={styles.mobileSearchButton}
-            onClick={this.openSearch.bind(this)}
-            aria-label="Search for a location"
-          >
-            <FontAwesomeIcon
-              className={styles.mobileIcon}
-              icon={faSearchLocation}
-            />
-          </button>
         )}
       </>
     );
-  }
 }
 
-const mapStateToProps = state => ({
-  isSearchShown: state.isSearchShown
-});
 
-const mapDispatchToProps = { toggleSearchBar };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

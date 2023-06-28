@@ -8,6 +8,7 @@ import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
 import SideBar from '../SideBar/SideBar';
+import zIndex from '@mui/material/styles/zIndex';
 
 export default function Head() {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ export default function Head() {
 
   const toggleSearchBar = () => {
     dispatch({
-      type: 'TOGGLE_SEARCH_BAR'
-      // isShown: !isSearchShown
+      type: 'TOGGLE_SEARCH_BAR',
+      isShown: true
     });
   };
 
@@ -54,14 +55,14 @@ export default function Head() {
         setOpen={setSidebarOpen}
         showControls={setShowMapControls}
       />
-      <AppBar>
+      <AppBar sx={{zIndex: 1}}>
         <Toolbar
           sx={{
             backgroundColor: '#fff',
             color: '#fff',
             boxShadow:
               '0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 0 rgba(0, 0, 0, 0.24)',
-            display: 'flex'
+            display: 'flex',
           }}
         >
           <IconButton
