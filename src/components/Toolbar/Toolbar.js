@@ -39,7 +39,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
-import { styled, css } from '@mui/material';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -216,48 +215,52 @@ function Toolbar(props) {
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              flexDirection: 'column'
             }}
           >
             <ResourceIcon />
-            <Typography fontSize={'small'}>Resources</Typography>
+            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+              Resources
+            </Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              flexDirection: 'column'
             }}
           >
             <FilterIcon />
-            <Typography fontSize={'small'}>Filter</Typography>
+            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+              Filter
+            </Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              flexDirection: 'column'
             }}
           >
             <SearchIcon />
-            <Typography fontSize={'small'}>Search</Typography>
+            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+              Search
+            </Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              flexDirection: 'column'
             }}
           >
             <ContributeIcon />
-            <Typography fontSize={'small'}>Contribute</Typography>
+            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+              Contribute
+            </Typography>
           </IconButton>
         </Box>
       ) : (
