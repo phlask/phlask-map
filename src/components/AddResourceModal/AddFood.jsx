@@ -8,7 +8,6 @@ import PlacesAutocomplete, {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './AddResourceModal.module.scss';
-import { Modal, Form, Accordion, Button } from 'react-bootstrap';
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from './SharedFormFields';
 // eslint-disable-next-line import/no-unresolved
@@ -17,7 +16,11 @@ import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
 import { useForm } from 'react-hook-form';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -37,6 +40,7 @@ import {
   TextField
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const FOOD_TYPE = [
   { accessType: 'Perishable', explanation: 'Fruit, vegetables, dairy, etc.' },
@@ -371,6 +375,72 @@ function AddFood({
                 })}
               </Grid>
             </FormGroup>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Food Type</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container>
+                  {FOOD_TYPE.map(type => {
+                    const { accessType, explanation } = type;
+
+                    return (
+                      <React.Fragment key={accessType}>
+                        <Grid item as="label" htmlFor={accessType} xs={8}>
+                          <Box
+                            height="100%"
+                            width="100%"
+                            display="flex"
+                            justifyContent="center"
+                            flexDirection="column"
+                          >
+                            <Typography
+                              style={{ paddingLeft: '1.5rem' }}
+                              fontSize={13}
+                            >
+                              {accessType}
+                              {explanation && (
+                                <FormHelperText>{explanation}</FormHelperText>
+                              )}
+                              <br />
+                            </Typography>
+                          </Box>
+                        </Grid>
+                        <Grid
+                          as="label"
+                          htmlFor={accessType}
+                          item
+                          align="center"
+                          xs={4}
+                        >
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            flexDirection="column"
+                          >
+                            <Checkbox
+                              style={{ paddingLeft: '2.5rem' }}
+                              id={accessType}
+                              name={accessType}
+                              value={false} // change info.value
+                              inputRef={{
+                                ...register(accessType, {
+                                  onChange: () => {} // change info.onChange
+                                })
+                              }}
+                            />
+                          </Box>
+                        </Grid>
+                      </React.Fragment>
+                    );
+                  })}
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
             {/* <TextField
               variant="outlined"
               id="foodType"
