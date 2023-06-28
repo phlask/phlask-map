@@ -77,6 +77,8 @@ function AddFood({
   onIdRequiredChange,
   childrenOnly,
   onChildrenOnlyChange,
+  communityFridges,
+  onCommunityFridgeChanges,
   consumptionType, // Distribution Type
   onConsumptionTypeChange,
   foodType,
@@ -120,8 +122,8 @@ function AddFood({
     },
     {
       label: 'Community fridges, etc.',
-      value: '',
-      onChange: onChildrenOnlyChange //change later
+      value: communityFridges,
+      onChange: onCommunityFridgeChanges
     }
   ];
 
@@ -152,7 +154,7 @@ function AddFood({
         alignItems="flex-end"
         padding="0px 20px 10px"
         height="88px"
-        backgroundColor="orange"
+        backgroundColor="#FF9A55"
         color="common.white"
       >
         Add a Food Resource
@@ -170,7 +172,7 @@ function AddFood({
             <ImageUploader
               withIcon={true}
               buttonText="Choose images"
-              buttonStyles={{ backgroundColor: 'orange' }}
+              buttonStyles={{ backgroundColor: '#FF9A55' }}
               onChange={onDrop}
               imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
               maxFileSize={5242880}
@@ -489,7 +491,7 @@ function AddFood({
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
                 color: 'white',
-                backgroundColor: 'orange' //Change later
+                backgroundColor: '#FF9A55' //Change later
               }}
             >
               Submit
