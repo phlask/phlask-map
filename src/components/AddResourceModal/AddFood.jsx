@@ -386,61 +386,37 @@ function AddFood({
                     </MenuItem>
                   );
                 })}
-                {/* <Grid container>
-                  {FOOD_TYPE.map(type => {
-                    const { accessType, explanation } = type;
-
-                    return (
-                      <React.Fragment key={accessType}>
-                        <Grid item as="label" htmlFor={accessType} xs={8}>
-                          <Box
-                            height="100%"
-                            width="100%"
-                            display="flex"
-                            justifyContent="center"
-                            flexDirection="column"
-                          >
-                            <Typography
-                              style={{ paddingLeft: '1.5rem' }}
-                              fontSize={13}
-                            >
-                              {accessType}
-                              {explanation && (
-                                <FormHelperText>{explanation}</FormHelperText>
-                              )}
-                              <br />
-                            </Typography>
-                          </Box>
-                        </Grid>
-                        <Grid
-                          as="label"
-                          htmlFor={accessType}
-                          item
-                          align="center"
-                          xs={4}
-                        >
-                          <Box
-                            display="flex"
-                            justifyContent="center"
-                            flexDirection="column"
-                          >
-                            <Checkbox
-                              style={{ paddingLeft: '2.5rem' }}
-                              id={accessType}
-                              name={accessType}
-                              value={false} // change info.value
-                              inputRef={{
-                                ...register(accessType, {
-                                  onChange: () => {} // change info.onChange
-                                })
-                              }}
-                            />
-                          </Box>
-                        </Grid>
-                      </React.Fragment>
-                    );
-                  })}
-                </Grid> */}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Distribution Type</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {DISTRIBUTION_TYPE.map(type => {
+                  return (
+                    <MenuItem key={type} as="label" htmlFor={type} second>
+                      <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
+                        {type}
+                      </Typography>
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        id={type}
+                        name={type}
+                        value={false} // change info.value
+                        inputRef={{
+                          ...register(type, {
+                            onChange: () => {} // change info.onChange
+                          })
+                        }}
+                      />
+                    </MenuItem>
+                  );
+                })}
               </AccordionDetails>
             </Accordion>
             {/* <TextField
