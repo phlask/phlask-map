@@ -327,55 +327,32 @@ function AddFood({
             </TextField>
             <FormGroup>
               <Typography>Helpful info</Typography>
-              <Grid container>
-                {FOOD_HELPFUL_INFO.map(info => {
-                  return (
-                    <React.Fragment key={info.label}>
-                      <Grid item as="label" htmlFor={info.label} xs={8}>
-                        <Box
-                          height="100%"
-                          width="100%"
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Typography
-                            style={{ paddingLeft: '2.5rem' }}
-                            fontSize={13}
-                          >
-                            {info.label}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid
-                        as="label"
-                        htmlFor={info.label}
-                        item
-                        align="center"
-                        xs={4}
-                      >
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Checkbox
-                            style={{ paddingLeft: '1.5rem' }}
-                            id={info.label}
-                            name={info.label}
-                            value={info.value}
-                            inputRef={{
-                              ...register(info.label, {
-                                onChange: info.onChange
-                              })
-                            }}
-                          />
-                        </Box>
-                      </Grid>
-                    </React.Fragment>
-                  );
-                })}
-              </Grid>
+              {/* <Grid container> */}
+              {FOOD_HELPFUL_INFO.map(info => {
+                return (
+                  <MenuItem
+                    dense={true}
+                    key={info.label}
+                    as="label"
+                    htmlFor={info.label}
+                  >
+                    <Typography style={{ paddingLeft: '2.5rem' }} fontSize={13}>
+                      {info.label}
+                    </Typography>
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '2.5rem' }}
+                      id={info.label}
+                      name={info.label}
+                      value={false} // change info.value
+                      inputRef={{
+                        ...register(info.label, {
+                          onChange: () => {} // change info.onChange
+                        })
+                      }}
+                    />
+                  </MenuItem>
+                );
+              })}
             </FormGroup>
             <Accordion>
               <AccordionSummary
