@@ -8,7 +8,6 @@ import PlacesAutocomplete, {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './AddResourceModal.module.scss';
-import { Modal, Form, Accordion, Button } from 'react-bootstrap';
 // eslint-disable-next-line import/no-unresolved
 import SharedFormFields from './SharedFormFields';
 // eslint-disable-next-line import/no-unresolved
@@ -17,7 +16,11 @@ import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
 import { useForm } from 'react-hook-form';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -37,6 +40,7 @@ import {
   TextField
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ORGANIZATION_TYPE = [
   { accessType: 'Open access', explanation: 'Public site, open to all' },
@@ -44,7 +48,7 @@ const ORGANIZATION_TYPE = [
   { accessType: 'Unsure', explanation: '' }
 ];
 
-// const FORAGE_TYPE = ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers', 'Root'];
+const FORAGE_TYPE = ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers', 'Root'];
 
 function AddForaging({
   prev,
@@ -316,82 +320,59 @@ function AddForaging({
                 );
               })}
             </TextField>
-
-            {/* <TextField
-              variant="outlined"
-              id="forageType"
-              name="forageType"
-              label="Forage Type"
-              select
-              value={foragingFoodType}
-              helperText={errors.forageType && requiredFieldMsg}
-              {...register('organization', {
-                required: true,
-                onChange: onForagingFoodTypeChange
-              })}
-              error={errors.forageType ? true : false}
-              InputLabelProps={{ shrink: true }}
-            >
-              {FORAGE_TYPE.map(type => {
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Forage Type</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {FORAGE_TYPE.map(type => {
+                  return (
+                    <MenuItem key={type} as="label" htmlFor={type}>
+                      <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
+                        {type}
+                      </Typography>
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        id={type}
+                        name={type}
+                        value={false} // change info.value
+                        inputRef={{
+                          ...register(type, {
+                            onChange: () => {} // change info.onChange
+                          })
+                        }}
+                      />
+                    </MenuItem>
+                  );
+                })}
+              </AccordionDetails>
+            </Accordion>
+            <FormGroup>
+              <Typography>Helpful info</Typography>
+              {FORAGING_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem key={type} value={type}>
-                    {type}
+                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                    <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
+                      {info.label}
+                    </Typography>
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                      id={info.label}
+                      name={info.label}
+                      value={false} // change info.value
+                      inputRef={{
+                        ...register(info.label, {
+                          onChange: () => {} // change info.onChange
+                        })
+                      }}
+                    />
                   </MenuItem>
                 );
               })}
-            </TextField> */}
-
-            <FormGroup>
-              <Typography>Helpful info</Typography>
-              <Grid container>
-                {FORAGING_HELPFUL_INFO.map(info => {
-                  return (
-                    <React.Fragment key={info.label}>
-                      <Grid item as="label" htmlFor={info.label} xs={8}>
-                        <Box
-                          height="100%"
-                          width="100%"
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Typography
-                            style={{ paddingLeft: '2.5rem' }}
-                            fontSize={13}
-                          >
-                            {info.label}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid
-                        as="label"
-                        htmlFor={info.label}
-                        item
-                        align="center"
-                        xs={4}
-                      >
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Checkbox
-                            style={{ paddingLeft: '1.5rem' }}
-                            id={info.label}
-                            name={info.label}
-                            value={info.value}
-                            inputRef={{
-                              ...register(info.label, {
-                                onChange: info.onChange
-                              })
-                            }}
-                          />
-                        </Box>
-                      </Grid>
-                    </React.Fragment>
-                  );
-                })}
-              </Grid>
             </FormGroup>
             <TextField
               id="guidelines"

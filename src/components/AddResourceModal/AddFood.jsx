@@ -327,7 +327,6 @@ function AddFood({
             </TextField>
             <FormGroup>
               <Typography>Helpful info</Typography>
-              {/* <Grid container> */}
               {FOOD_HELPFUL_INFO.map(info => {
                 return (
                   <MenuItem key={info.label} as="label" htmlFor={info.label}>
