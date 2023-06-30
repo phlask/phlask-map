@@ -330,17 +330,12 @@ function AddFood({
               {/* <Grid container> */}
               {FOOD_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem
-                    dense={true}
-                    key={info.label}
-                    as="label"
-                    htmlFor={info.label}
-                  >
-                    <Typography style={{ paddingLeft: '2.5rem' }} fontSize={13}>
+                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                    <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
                     <Checkbox
-                      style={{ marginLeft: 'auto', marginRight: '2.5rem' }}
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
                       id={info.label}
                       name={info.label}
                       value={false} // change info.value
@@ -363,7 +358,36 @@ function AddFood({
                 <Typography>Food Type</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid container>
+                {FOOD_TYPE.map(type => {
+                  const { accessType, explanation } = type;
+                  return (
+                    <MenuItem
+                      key={accessType}
+                      as="label"
+                      htmlFor={accessType}
+                      second
+                    >
+                      <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
+                        {accessType}
+                        {explanation && (
+                          <FormHelperText>{explanation}</FormHelperText>
+                        )}
+                      </Typography>
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        id={accessType}
+                        name={accessType}
+                        value={false} // change info.value
+                        inputRef={{
+                          ...register(accessType, {
+                            onChange: () => {} // change info.onChange
+                          })
+                        }}
+                      />
+                    </MenuItem>
+                  );
+                })}
+                {/* <Grid container>
                   {FOOD_TYPE.map(type => {
                     const { accessType, explanation } = type;
 
@@ -417,7 +441,7 @@ function AddFood({
                       </React.Fragment>
                     );
                   })}
-                </Grid>
+                </Grid> */}
               </AccordionDetails>
             </Accordion>
             {/* <TextField
