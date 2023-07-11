@@ -1,19 +1,18 @@
-import styles from './SelectedTapMobileInfo.module.scss';
+import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useState, useEffect } from 'react';
-import { Button, IconButton, Collapse } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import styles from './SelectedTapMobileInfo.module.scss';
 
 import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
-import { ReactComponent as ExportSvg } from '../images/Export.svg';
 import { ReactComponent as CaretDownSvg } from '../images/CaretDown.svg';
 import { ReactComponent as ThreeDotSvg } from '../images/DotsThree.svg';
+import { ReactComponent as ExportSvg } from '../images/Export.svg';
 
 function SelectedTapMobile(props) {
   const [tags, setTags] = useState([]);
-  const [toggleCollapse, setToggleCollapse] = useState(false);
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
-  const { image, estWalkTime, selectedPlace } = props;
+  const { image, estWalkTime, selectedPlace, infoCollapse, setInfoCollapse } = props;
 
   const { organization, address, infoIcon } = selectedPlace;
 
@@ -72,13 +71,13 @@ function SelectedTapMobile(props) {
   const detectSwipe = e => {
     setPointerPositionY(e.nativeEvent.offsetY);
 
-    if (!toggleCollapse && e.nativeEvent.offsetY < pointerPositionY) {
-      setToggleCollapse(true);
+    if (!infoCollapse && e.nativeEvent.offsetY < 0) {
+      setInfoCollapse(true);
     }
   };
 
   const minimizeModal = () => {
-    setToggleCollapse(false);
+    setInfoCollapse(false);
   };
 
   const toggleNativeShare = () => {
@@ -94,7 +93,7 @@ function SelectedTapMobile(props) {
 
   return (
     <div className={styles.halfInfo} onPointerMove={detectSwipe}>
-      {!toggleCollapse ? (
+      {!infoCollapse ? (
         <button className={styles.swipeIcon}></button>
       ) : (
         <div className={styles.expandedToolBar}>
@@ -139,7 +138,7 @@ function SelectedTapMobile(props) {
         </div>
       </div>
 
-      <Collapse in={toggleCollapse} timeout="auto" unmountOnExit>
+      <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
           <div className={styles.tagGroup}>
             <hr className={styles.topDivider} />
