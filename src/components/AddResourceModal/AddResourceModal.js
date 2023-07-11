@@ -8,6 +8,8 @@ import {
   Popover,
   Accordion
 } from 'react-bootstrap';
+
+import getCurrentAddress from '../ReactGoogleMaps/ReactGoogleMaps';
 import Dialog from '@mui/material/Dialog';
 import ImageUploader from 'react-images-upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -156,6 +158,15 @@ export class AddResourceModal extends Component {
     this.setState({
       address: e.target ? e.target.value : e
     });
+  }
+
+  onClickAddress() {
+    const currAddressLocation = getCurrentAddress();
+    if (currAddressLocation) {
+      this.setState({
+        address: currAddressLocation
+      });
+    }
   }
 
   onChangeWebsite(e) {
@@ -552,6 +563,7 @@ export class AddResourceModal extends Component {
               onNameChange={this.onNameChange}
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
+              onAddressClick={this.onClickAddress}
               website={this.state.website}
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
@@ -590,6 +602,7 @@ export class AddResourceModal extends Component {
               onNameChange={this.onNameChange}
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
+              onAddressClick={this.onClickAddress}
               website={this.state.website}
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}

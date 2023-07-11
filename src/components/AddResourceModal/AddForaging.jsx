@@ -60,6 +60,7 @@ function AddForaging({
   onNameChange,
   address,
   onAddressChange,
+  onAddressClick,
   website,
   onWebsiteChange,
   description,
@@ -114,6 +115,14 @@ function AddForaging({
       onChange: onChangeCommunityGarden
     }
   ];
+
+  // const addressLinkOnClick = () => {
+  //   const currAddress = getCurrentAddress();
+
+  //   if (currAddress) {
+  //     address = currAddress;
+  //   }
+  // };
 
   const {
     register,
@@ -221,8 +230,7 @@ function AddForaging({
                         error={errors.address ? true : false}
                         FormHelperTextProps={{
                           sx: { marginLeft: 'auto', marginRight: 0 },
-                          onClick: () =>
-                            alert('Use My Location onClick PlaceHolder!')
+                          onClick: onAddressClick
                         }}
                         style={{ backgroundColor: 'white' }}
                         InputLabelProps={{ shrink: true }}
