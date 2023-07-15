@@ -172,7 +172,7 @@ function Toolbar(props) {
           lng: closest.lon
         })
       )
-      .then(props.toggleInfoWindow(true))
+      .then(props.toggleInfoWindow(true));
   }
 
   function closestButtonClicked() {
