@@ -309,10 +309,10 @@ export class ReactGoogleMaps extends Component {
                 lat: this.state.currlat,
                 lng: this.state.currlon
               }}
-              // center={{
-              //   lat: this.state.currlat,
-              //   lng: this.state.currlon
-              // }}
+              center={{
+                lat: this.state.currlat,
+                lng: this.state.currlon
+              }}
             >
               {/* <TypeToggle/> */}
 
