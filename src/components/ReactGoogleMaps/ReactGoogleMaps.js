@@ -155,7 +155,8 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onIdle = this.onIdle.bind(this);
@@ -247,6 +248,10 @@ export class ReactGoogleMaps extends Component {
       currlon: map.center.lng()
     });
   };
+  
+  onReady = (_, map) => {
+    this.setState({ map: map });
+  };
 
   toggleTapInfo = isExpanded => {
     this.setState({
@@ -299,6 +304,7 @@ export class ReactGoogleMaps extends Component {
               rotateControl={false}
               fullscreenControl={false}
               onIdle={this.onIdle}
+              onReady={this.onReady}
               initialCenter={{
                 lat: this.state.currlat,
                 lng: this.state.currlon
@@ -347,7 +353,7 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-          <Toolbar />
+          <Toolbar map={this.state.map}/>
         </Stack>
         <SelectedTap></SelectedTap>
       </div>
