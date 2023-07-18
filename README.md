@@ -80,7 +80,11 @@ Code behind the PHLASK Web Map
 
 ### Yarn
 
-1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine
+1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine.
+   - You can also use use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
+   - once you have install nvm
+   - run `nvm install` <- this will download the required verison (only required on the first installation)
+   - run `nvm use` sets that to the active version of node in your terminal
 1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
 1. Run `yarn install`
 1. Run `yarn start`

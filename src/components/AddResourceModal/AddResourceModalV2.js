@@ -17,7 +17,7 @@ const AddResourceModalV2 = props => {
   const onClose = () => props.setOpen(false);
 
   const refNode = createRef();
-  useOnClickOutside(refNode, () => onClose());
+  //useOnClickOutside(refNode, () => onClose());
 
   return (
     <>

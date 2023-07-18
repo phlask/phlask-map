@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import ClosestTap from '../ClosestTap/ClosestTap';
 export class Foot extends Component {
   render() {
     return (

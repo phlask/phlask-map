@@ -2,6 +2,7 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import ReactTouchEvents from 'react-touch-events';
 import SearchBar from '../SearchBar/SearchBar';
+import TutorialModal from '../TutorialModal/TutorialModal';
 import styles from './ReactGoogleMaps.module.scss';
 import { connect } from 'react-redux';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -344,16 +345,16 @@ export class ReactGoogleMaps extends Component {
             </Map>
           </div>
         </ReactTouchEvents>
-        <div className={styles.searchBarContainer}>
-          <SearchBar
-            className="searchBar"
-            search={location => this.searchForLocation(location)}
-          />
-        </div>
-        <div>
-          {/* TODO: Rebuild the openResourceModal and setOpenResourceModal properties, since this is still class-based 
-              The intent behind this change is to have the Toolbar and AddResourceModal visually contained in the same bottom-left area so that we can take
-              the responsibility of positioning away from each and keep their presentation relative to their parent container */}
+        <Stack position="absolute" bottom="0px" height="143px" width="34%">
+          <Stack direction="row" spacing={2}>
+            <SearchBar
+              className="searchBar"
+              search={location => this.searchForLocation(location)}
+            />
+            <TutorialModal
+              showButton={isMobile ? !this.state.isSearchBarShown : true}
+            />
+          </Stack>
           <AddResourceModalV2
             open={this.state.openResourceModal}
             setOpen={() =>
@@ -370,7 +371,7 @@ export class ReactGoogleMaps extends Component {
             }
           />{' '}
           {/* TODO: Remove position-related styling from this component */}
-        </div>
+        </Stack>
         <SelectedTap></SelectedTap>
       </div>
     );

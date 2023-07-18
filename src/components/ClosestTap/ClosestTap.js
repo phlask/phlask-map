@@ -47,8 +47,8 @@ function getClosest(data, v) {
       closestTap.address = distances[i].address;
     }
   }
-
   return closestTap;
+ 
 }
 
 function getCoordinates() {
