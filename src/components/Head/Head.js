@@ -6,7 +6,7 @@ import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
 import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
+// import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
 import SideBar from '../SideBar/SideBar';
 
 export default function Head() {
@@ -57,7 +57,7 @@ export default function Head() {
       <AppBar>
         <Toolbar
           sx={{
-            backgroundColor: '#fff',
+            backgroundColor: '#23456',
             color: '#fff',
             boxShadow:
               '0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 0 rgba(0, 0, 0, 0.24)',
@@ -96,9 +96,7 @@ export default function Head() {
               <IconButton
                 sx={{ marginRight: '-8px' }}
                 onClick={toggleFilterModal}
-              >
-                <SlidersIcon />
-              </IconButton>
+              ></IconButton>
             </Box>
           ) : null}
         </Toolbar>

@@ -46,24 +46,24 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/node-logger": "^6.5.16",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-actions": "^7.0.10",
+    "@storybook/addon-essentials": "^7.0.10",
+    "@storybook/addon-interactions": "^7.0.10",
+    "@storybook/addon-links": "^7.0.10",
+    "@storybook/node-logger": "^7.0.10",
+    "@storybook/react": "^7.0.10",
+    "@storybook/react-webpack5": "^7.0.10",
+    "@storybook/testing-library": "^0.1.0",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-storybook": "^0.6.11",
+    "eslint-plugin-storybook": "^0.6.12",
     "pre-commit": "^1.2.2",
     "prettier": "^2.6.2",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "storybook": "^7.0.10"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -73,8 +73,8 @@
     "cypress": "cypress open",
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
     "format": "prettier \"src/**/*.{js,css,html}\" --write",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook": "storybook dev -p 6006 -s public",
+    "build-storybook": "storybook build -s public"
   },
   "eslintConfig": {
     "extends": "plugin:react/recommended",
