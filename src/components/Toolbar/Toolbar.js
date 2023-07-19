@@ -205,7 +205,8 @@ function Toolbar(props) {
             sx={{
               display: 'flex',
               minWidth: '188px',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <PhlaskWater />
@@ -215,53 +216,48 @@ function Toolbar(props) {
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ResourceIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Resources
-            </Typography>
+            <Typography fontSize={'small'}>Resources</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <FilterIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Filter
-            </Typography>
+            <Typography fontSize={'small'}>Filter</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <SearchIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Search
-            </Typography>
+            <Typography fontSize={'small'}>Search</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ContributeIcon />
-            <Typography
-              style={{ textTransform: 'none', whiteSpace: 'nowrap' }}
-              fontSize={'small'}
-            >
+            <Typography noWrap fontSize={'small'}>
               Add Site
             </Typography>
           </IconButton>
