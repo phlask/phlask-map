@@ -258,8 +258,11 @@ function Toolbar(props) {
             }}
           >
             <ContributeIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Contribute
+            <Typography
+              style={{ textTransform: 'none', whiteSpace: 'nowrap' }}
+              fontSize={'small'}
+            >
+              Add Site
             </Typography>
           </IconButton>
         </Box>
