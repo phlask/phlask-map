@@ -1,45 +1,41 @@
+import IconButton from '@mui/material/Button';
 import React from 'react';
 import ReactGA from 'react-ga4';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
   setMapCenter,
-  setUserLocation,
   setSelectedPlace,
+  setUserLocation,
   toggleInfoWindow,
   togglePhlaskType,
   toggleResourceMenu
 } from '../../actions/actions';
-import FoodFilter from '../FoodFilter/FoodFilter';
-import phlaskImg from '../images/PHLASK Button.png';
-import Filter from '../ResourceMenu/Filter';
-import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import styles from './Toolbar.module.scss';
-import ClosestTap from '../ClosestTap/ClosestTap';
-import IconButton from '@mui/material/Button';
 
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
+import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
-import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
-import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+
 import { ReactComponent as PhlaskWater } from '../icons/phlaskWater.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -194,8 +190,14 @@ function Toolbar(props) {
             position: 'absolute',
             left: '32px',
             bottom: '32px',
+            px: '40px',
+            py: '12px',
+            gap: '40px',
             backgroundColor: 'white',
+            boxShadow:
+              '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
             minWidth: '400px',
+            borderRadius: '10px',
             justifyContent: 'space-between',
             zIndex: 1
           }}
@@ -205,60 +207,108 @@ function Toolbar(props) {
             sx={{
               display: 'flex',
               minWidth: '188px',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              p: 0
             }}
+            onClick={closestButtonClicked}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <PhlaskWater />
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              p: 0,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter:
+                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+              }
             }}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
-            <ResourceIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+            <ResourceIcon style={{ color: '#f80' }} />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
               Resources
             </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              p: 0,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter:
+                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+              }
             }}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <FilterIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
               Filter
             </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              p: 0,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter:
+                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+              }
             }}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <SearchIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
               Search
             </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              p: 0,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter:
+                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+              }
             }}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <ContributeIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
               Contribute
             </Typography>
           </IconButton>
