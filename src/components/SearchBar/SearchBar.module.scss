@@ -1,13 +1,16 @@
 .desktopSearch {
-  display: flex;
-  flex-direction: row;
-  width: 84%;
+  // display: flex;
+  // flex-direction: row;
+  position: absolute;
+  left: 32px;
+  bottom: 145px;
+
   justify-content: flex-start;
-  padding: 1rem 0 0 1rem;
+  padding: 0;
   pointer-events: none;
 
   .searchBarContainer {
-    width: 30vw;
+    width: 688px;
     min-width: 400px;
   }
 

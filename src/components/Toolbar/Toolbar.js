@@ -7,12 +7,17 @@ import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
   setMapCenter,
   setSelectedPlace,
+  setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  togglePhlaskType,
-  toggleResourceMenu
+  togglePhlaskType
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -110,6 +115,8 @@ function Toolbar(props) {
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
+  const blackToGrayFilter =
+    'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
@@ -180,6 +187,14 @@ function Toolbar(props) {
     setClosest();
   }
 
+  function toolbarClicked(modal) {
+    if (props.toolbarModal == modal) {
+      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+    } else {
+      props.setToolbarModal(modal);
+    }
+  }
+
   return (
     <>
       $
@@ -223,12 +238,16 @@ function Toolbar(props) {
               display: 'flex',
               flexDirection: 'column',
               p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                  ? blackToGrayFilter
+                  : 'none',
               '&:hover': {
                 backgroundColor: 'transparent',
-                filter:
-                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+                filter: blackToGrayFilter
               }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             disableFocusRipple={true}
             disableRipple={true}
           >
@@ -247,12 +266,16 @@ function Toolbar(props) {
               display: 'flex',
               flexDirection: 'column',
               p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_FILTER
+                  ? blackToGrayFilter
+                  : 'none',
               '&:hover': {
                 backgroundColor: 'transparent',
-                filter:
-                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+                filter: blackToGrayFilter
               }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
             disableFocusRipple={true}
             disableRipple={true}
           >
@@ -271,12 +294,16 @@ function Toolbar(props) {
               display: 'flex',
               flexDirection: 'column',
               p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_SEARCH
+                  ? blackToGrayFilter
+                  : 'none',
               '&:hover': {
                 backgroundColor: 'transparent',
-                filter:
-                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+                filter: blackToGrayFilter
               }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
             disableFocusRipple={true}
             disableRipple={true}
           >
@@ -295,12 +322,16 @@ function Toolbar(props) {
               display: 'flex',
               flexDirection: 'column',
               p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                  ? blackToGrayFilter
+                  : 'none',
               '&:hover': {
                 backgroundColor: 'transparent',
-                filter:
-                  'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)'
+                filter: blackToGrayFilter
               }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             disableFocusRipple={true}
             disableRipple={true}
           >
@@ -374,18 +405,25 @@ const mapStateToProps = state => ({
   allBathroomTaps: state.allBathroomTaps,
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
-  isResourceMenuShown: state.isResourceMenuShown
+  toolbarModal: state.toolbarModal
 });
 
 const mapDispatchToProps = {
   togglePhlaskType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FORAGING,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal,
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation,
-  toggleResourceMenu
+  setUserLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

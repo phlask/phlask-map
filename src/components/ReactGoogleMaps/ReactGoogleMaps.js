@@ -1,30 +1,34 @@
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
-import ReactTouchEvents from 'react-touch-events';
-import SearchBar from '../SearchBar/SearchBar';
-import TutorialModal from '../TutorialModal/TutorialModal';
-import styles from './ReactGoogleMaps.module.scss';
 import { connect } from 'react-redux';
-import SelectedTap from '../SelectedTap/SelectedTap';
+import ReactTouchEvents from 'react-touch-events';
 import {
-  getTaps,
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  getTaps,
   setFilterFunction,
   setMapCenter,
+  setToolbarModal,
   setUserLocation,
   toggleInfoWindow
 } from '../../actions/actions';
+import SearchBar from '../SearchBar/SearchBar';
+import SelectedTap from '../SelectedTap/SelectedTap';
+import TutorialModal from '../TutorialModal/TutorialModal';
+import styles from './ReactGoogleMaps.module.scss';
 // import Legend from "./Legend";
-import MapMarkers from '../MapMarkers/MapMarkers';
-import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
-import { isMobile } from 'react-device-detect';
-import Toolbar from '../Toolbar/Toolbar';
-import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Stack from '@mui/material/Stack';
+import { isMobile } from 'react-device-detect';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import Toolbar from '../Toolbar/Toolbar';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -165,6 +169,7 @@ export class ReactGoogleMaps extends Component {
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
+    console.log(this.props);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -378,7 +383,17 @@ const mapDispatchToProps = {
   setFilterFunction,
   toggleInfoWindow,
   setUserLocation,
-  setMapCenter
+  setMapCenter,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER
 };
 
 export default connect(
