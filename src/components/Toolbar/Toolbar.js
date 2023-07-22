@@ -186,7 +186,6 @@ function Toolbar(props) {
 
   return (
     <>
-      $
       {!isMobile ? (
         <Box
           sx={{
@@ -273,7 +272,8 @@ function Toolbar(props) {
             right: 0,
             pb: '25px',
             pt: '10px',
-            bgcolor: 'white'
+            bgcolor: 'white',
+            zIndex: 20,
           }}
         >
           <BottomNavigation showLabels>

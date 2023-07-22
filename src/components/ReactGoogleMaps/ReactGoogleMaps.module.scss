@@ -8,3 +8,11 @@
   position: relative;
   height: 100%;
 }
+
+.popupBackground {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 10;
+}

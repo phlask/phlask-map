@@ -161,7 +161,8 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      isSearchShown: false,
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -343,18 +344,16 @@ export class ReactGoogleMaps extends Component {
             </Map>
           </div>
         </ReactTouchEvents>
-        <Stack position="absolute" bottom="0px" height="143px" width="34%">
+        {this.props.isSearchShown &&  <div className={styles.popupBackground}/>}
+        <Stack position="absolute" top={isMobile && "70px"} bottom={!isMobile && "0px"} height={!isMobile && "143px"} width={isMobile ? "100%": "34%"}>
           <Stack direction="row" spacing={2}>
             <SearchBar
               className="searchBar"
               search={location => this.searchForLocation(location)}
             />
-            <TutorialModal
-              showButton={isMobile ? !this.state.isSearchBarShown : true}
-            />
           </Stack>
           <Toolbar />
-        </Stack>
+         </Stack>
         <SelectedTap></SelectedTap>
       </div>
     );
@@ -369,7 +368,8 @@ const mapStateToProps = state => ({
   filterFunction: state.filterFunction,
   mapCenter: state.mapCenter,
   phlaskType: state.phlaskType,
-  showingInfoWindow: state.showingInfoWindow
+  showingInfoWindow: state.showingInfoWindow,
+  isSearchShown: state.isSearchShown
   // infoIsExpanded: state.infoIsExpanded
 });
 

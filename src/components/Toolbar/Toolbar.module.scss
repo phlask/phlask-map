@@ -7,6 +7,7 @@ $searchColor: #8dc63f;
   display: flex;
   background-color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 20;
 
   img {
     height: 100%;
