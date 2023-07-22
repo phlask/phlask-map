@@ -4,5 +4,16 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "16"
     }
+  },
+  "postCreateCommand": "yarn install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode"
+      ]
+    },
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
   }
 }
