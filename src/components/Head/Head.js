@@ -25,7 +25,7 @@ import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as PhlaskNoTextIcon } from '../icons/PhlaskNoText.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as SlidersIcon } from '../icons/SlidersIcon.svg';
+import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as IDIcon } from '../icons/ModalIDRequired.svg';
 import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
@@ -80,6 +80,7 @@ const NavIcon = styled(ListItemIcon)(({ theme }) => ({
     height: 'auto'
   }
 }));
+import SideBar from '../SideBar/SideBar';
 
 export default function Head() {
   const dispatch = useDispatch();
@@ -129,6 +130,9 @@ export default function Head() {
     if (isNotMapPage()) {
       setShowMapControls(false);
     }
+    else {
+      setShowMapControls(true);
+    }
   }, [isNotMapPage, setShowMapControls]);
 
   return (
@@ -173,7 +177,7 @@ export default function Head() {
                 <Box
                   sx={{
                     position: 'relative',
-                    marginLeft: isMobile ? 'auto' : '25px'
+                    marginLeft: 'auto'
                   }}
                 >
                   <IconButton onClick={toggleSearchBar}>
@@ -183,7 +187,7 @@ export default function Head() {
                     sx={{ marginRight: '-8px' }}
                     onClick={toggleFilterModal}
                   >
-                    <SlidersIcon />
+                    <FilterIcon />
                   </IconButton>
                 </Box>
               ) : null}
