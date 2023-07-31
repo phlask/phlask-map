@@ -263,7 +263,6 @@ class SelectedTap extends React.Component {
             {' '}
             {/* Desktop dialog panel */}
             <Dialog
-              // sx={{ position: 'absolute', right: 20 }}
               open={true} // Set this to true to make the dialog visible
               PaperProps={{ sx: { position: 'absolute', right: 20 } }}
               classes={{ paper: classes.topRightDialog }} // Apply the custom class
