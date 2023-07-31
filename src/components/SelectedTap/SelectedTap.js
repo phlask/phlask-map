@@ -261,6 +261,7 @@ class SelectedTap extends React.Component {
         {!isMobile && this.props.showingInfoWindow && (
           <div>
             {' '}
+            {/* Desktop dialog panel */}
             <Dialog
               // sx={{ position: 'absolute', right: 20 }}
               open={true} // Set this to true to make the dialog visible
