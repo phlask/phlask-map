@@ -13,18 +13,14 @@ function ChooseResource({ setFormStep }) {
   const theme = useTheme();
   return (
     <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
-      {isMobile && (
-        <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
-          Add a Resource
-        </h2>
-      )}
-      {isMobile && (
-        <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
-          Choose the type of resource you like
-          <br />
-          to add and submit the form.
-        </h3>
-      )}
+      <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
+        {isMobile ? 'Add a Resource' : 'Add a Site'}
+      </h2>
+      <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
+        Choose the type of resource you like
+        <br />
+        to add and submit the form.
+      </h3>
       <div className={styles.buttonWrapper}>
         <Button
           className={styles.modalButton}

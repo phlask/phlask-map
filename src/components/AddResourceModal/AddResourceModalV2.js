@@ -7,7 +7,6 @@ import { Box, DialogContent } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
 import styles from './AddResourceModal.module.scss';
-import { isMobile } from 'react-device-detect';
 import useOnClickOutside from './useOnClickOutside';
 
 const AddResourceModalV2 = props => {
@@ -21,7 +20,7 @@ const AddResourceModalV2 = props => {
 
   return (
     <>
-      {!isMobile ? (
+      {fullScreen ? (
         props.open && (
           <Box
             ref={refNode}
@@ -47,8 +46,8 @@ const AddResourceModalV2 = props => {
           hideBackdrop={true}
           sx={{
             position: !fullScreen ? 'absolute' : null,
-            top: !fullScreen ? '55vh' : null,
-            left: !fullScreen ? '-69vw' : null
+            top: !fullScreen ? '48vh' : null,
+            left: !fullScreen ? '-57vw' : null
           }}
         >
           {fullScreen && (

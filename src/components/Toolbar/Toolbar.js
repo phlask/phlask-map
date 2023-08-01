@@ -251,6 +251,7 @@ function Toolbar(props) {
           </IconButton>
           <IconButton
             variant="blue"
+            onClick={() => props.setOpen()}
             sx={{
               width: '100%',
               display: 'flex',

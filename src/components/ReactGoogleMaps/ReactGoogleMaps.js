@@ -372,7 +372,7 @@ export class ReactGoogleMaps extends Component {
           />{' '}
           {/* TODO: Remove position-related styling from this component */}
         </Stack>
-        <SelectedTap></SelectedTap>
+        <SelectedTap />
       </div>
     );
   }
