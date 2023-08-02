@@ -260,7 +260,6 @@ class SelectedTap extends React.Component {
         )}
         {!isMobile && this.props.showingInfoWindow && (
           <div>
-            {' '}
             {/* Desktop dialog panel */}
             <Dialog
               open={true} // Set this to true to make the dialog visible
@@ -396,7 +395,6 @@ class SelectedTap extends React.Component {
     );
   }
 }
-// };
 const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
   infoIsExpanded: state.infoIsExpanded,
