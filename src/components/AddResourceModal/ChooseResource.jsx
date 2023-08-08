@@ -26,6 +26,11 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'water' : 'waterDesktop'}
           onClick={() => setFormStep('addWaterTap')}
+          sx={{
+            textTransform: 'capitalize',
+            fontSize: '20px',
+            lineHeight: '1'
+          }}
         >
           <WaterIconCR />
           <span>Water</span>
@@ -34,6 +39,11 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'food' : 'foodDesktop'}
           onClick={() => setFormStep('addFood')}
+          sx={{
+            textTransform: 'capitalize',
+            fontSize: '20px',
+            lineHeight: '1'
+          }}
         >
           <FoodIconCR />
           Food
@@ -42,9 +52,14 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'bathrooms' : 'bathroomsDesktop'}
           onClick={() => setFormStep('addBathroom')}
+          sx={{
+            textTransform: 'capitalize',
+            fontSize: '20px',
+            lineHeight: '1'
+          }}
         >
           <ToiletIconCR />
-          Bathroom
+          Bathrooms
         </Button>
         {/* this copy is different than the copy from the figma page,
           this might be a bit more clear? can make a point to ask 
@@ -53,6 +68,11 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'foraging' : 'foragingDesktop'}
           onClick={() => setFormStep('addForaging')}
+          sx={{
+            textTransform: 'capitalize',
+            fontSize: '20px',
+            lineHeight: '1'
+          }}
         >
           <ForagingIconCR />
           Foraging

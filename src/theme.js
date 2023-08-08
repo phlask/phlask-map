@@ -10,7 +10,7 @@ let theme = createTheme({
         {
           props: { variant: 'water' },
           style: {
-            textTransform: 'none',
+            textTransform: 'capitalize',
             background: '#5285e9',
             color: '#ffffff',
             margin: '0 auto',
@@ -28,7 +28,7 @@ let theme = createTheme({
         {
           props: { variant: 'food' },
           style: {
-            textTransform: 'none',
+            textTransform: 'capitalize',
             background: '#ff9a55',
             color: '#ffffff',
             margin: '0 auto',

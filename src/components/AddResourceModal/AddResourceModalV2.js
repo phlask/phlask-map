@@ -46,7 +46,7 @@ const AddResourceModalV2 = props => {
           hideBackdrop={true}
           sx={{
             position: !fullScreen ? 'absolute' : null,
-            top: !fullScreen ? '48vh' : null,
+            top: !fullScreen ? '372px' : null,
             left: !fullScreen ? '-57vw' : null
           }}
         >
