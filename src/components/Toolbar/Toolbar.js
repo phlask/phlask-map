@@ -221,7 +221,7 @@ function Toolbar(props) {
             }}
           >
             <ResourceIcon />
-            <Typography fontSize={'small'}>Resources</Typography>
+            <Typography fontSize="small">Resources</Typography>
           </IconButton>
           <IconButton
             variant="blue"
@@ -233,7 +233,7 @@ function Toolbar(props) {
             }}
           >
             <FilterIcon />
-            <Typography fontSize={'small'}>Filter</Typography>
+            <Typography fontSize="small">Filter</Typography>
           </IconButton>
           <IconButton
             variant="blue"
@@ -245,7 +245,7 @@ function Toolbar(props) {
             }}
           >
             <SearchIcon />
-            <Typography fontSize={'small'}>Search</Typography>
+            <Typography fontSize="small">Search</Typography>
           </IconButton>
           <IconButton
             variant="blue"
@@ -257,7 +257,7 @@ function Toolbar(props) {
             }}
           >
             <ContributeIcon />
-            <Typography noWrap fontSize={'small'}>
+            <Typography noWrap fontSize="small">
               Add Site
             </Typography>
           </IconButton>
