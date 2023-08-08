@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import ChooseResource from './ChooseResource';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Box, DialogContent } from '@mui/material';
+import { Box, DialogContent, Popover } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
 import styles from './AddResourceModal.module.scss';
@@ -38,17 +38,20 @@ const AddResourceModalV2 = props => {
           </Box>
         )
       ) : (
-        <Dialog
+        <Popover
           maxWidth="md"
           open={props.open}
           onClose={onClose}
-          fullScreen={fullScreen}
-          hideBackdrop={true}
-          sx={{
-            position: !fullScreen ? 'absolute' : null,
-            top: !fullScreen ? '372px' : null,
-            left: !fullScreen ? '-57vw' : null
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
           }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          anchorReference="anchorPosition"
+          anchorPosition={{ bottom: 108, left: 32 }}
         >
           {fullScreen && (
             <IconButton
@@ -69,7 +72,7 @@ const AddResourceModalV2 = props => {
           <DialogContent>
             <ChooseResource setFormStep={() => {}} />
           </DialogContent>
-        </Dialog>
+        </Popover>
       )}
     </>
   );
