@@ -277,7 +277,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
+              label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
                 props.toggleResourceMenu(props.isResourceMenuShown)
@@ -287,7 +287,7 @@ function Toolbar(props) {
             <NavigationItem
               central
               label={
-                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                <Typography fontSize="small" color="black" marginTop="-1">
                   PHL<b>ASK</b>
                 </Typography>
               }
@@ -301,7 +301,11 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              label={
+                <Typography noWrap fontSize="small">
+                  Add Site
+                </Typography>
+              }
               icon={<ContributeIcon className={styles.contributeButton} />}
               onClick={() => setOpenResourceModal(true)}
             />
