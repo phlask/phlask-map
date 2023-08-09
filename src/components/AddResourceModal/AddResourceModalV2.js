@@ -1,13 +1,10 @@
 import React, { createRef, useEffect, useRef } from 'react';
-import Dialog from '@mui/material/Dialog';
 import ChooseResource from './ChooseResource';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Box, DialogContent, Popover, Paper } from '@mui/material';
+import { Box, DialogContent, Paper } from '@mui/material';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import IconButton from '@mui/material/IconButton';
-import styles from './AddResourceModal.module.scss';
-import useOnClickOutside from './useOnClickOutside';
 
 const AddResourceModalV2 = props => {
   const theme = useTheme();
@@ -96,42 +93,6 @@ const AddResourceModalV2 = props => {
           </DialogContent>
         </Paper>
        )
-        // <Popover
-        //   maxWidth="md"
-        //   open={props.open}
-        //   onClose={onClose}
-        //   anchorOrigin={{
-        //     vertical: 'bottom',
-        //     horizontal: 'left',
-        //   }}
-        //   // transformOrigin={{
-        //   //   vertical: 'bottom',
-        //   //   horizontal: 'left',
-        //   // }}
-        //   // anchorEl={anchorEl}
-        //   anchorReference="anchorPosition"
-        //   anchorPosition={{ bottom: 108, left: 32 }}
-        // >
-        //   {fullScreen && (
-        //     <IconButton
-        //       aria-label="close"
-        //       onClick={onClose}
-        //       sx={{
-        //         position: 'absolute',
-        //         right: 20,
-        //         top: 48,
-        //         color: theme => theme.palette.grey[500]
-        //       }}
-        //       size="large"
-        //     >
-        //       <CloseIcon />
-        //     </IconButton>
-        //   )}
-
-        //   <DialogContent>
-        //     <ChooseResource setFormStep={() => {}} />
-        //   </DialogContent>
-        // </Popover>
       )}
     </>
   );
