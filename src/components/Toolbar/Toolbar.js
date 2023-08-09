@@ -27,7 +27,7 @@ import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg'
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as PhlaskWater } from '../icons/phlaskWater.svg';
+import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -203,7 +203,7 @@ function Toolbar(props) {
               flexDirection: 'column'
             }}
           >
-            <PhlaskWater />
+            <PhlaskButton />
           </IconButton>
           <IconButton
             variant="blue"
