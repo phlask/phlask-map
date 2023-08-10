@@ -200,7 +200,8 @@ function Toolbar(props) {
             sx={{
               display: 'flex',
               minWidth: '188px',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <PhlaskButton />
@@ -210,51 +211,49 @@ function Toolbar(props) {
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ResourceIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Resources
-            </Typography>
+            <Typography fontSize="small">Resources</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <FilterIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Filter
-            </Typography>
+            <Typography fontSize="small">Filter</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <SearchIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Search
-            </Typography>
+            <Typography fontSize="small">Search</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ContributeIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Contribute
+            <Typography noWrap fontSize="small">
+              Add Site
             </Typography>
           </IconButton>
         </Box>
@@ -273,7 +272,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
+              label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
                 props.toggleResourceMenu(props.isResourceMenuShown)
@@ -283,7 +282,7 @@ function Toolbar(props) {
             <NavigationItem
               central
               label={
-                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                <Typography fontSize="small" color="black" marginTop="-1">
                   PHL<b>ASK</b>
                 </Typography>
               }
@@ -297,7 +296,11 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              label={
+                <Typography noWrap fontSize="small">
+                  Add Site
+                </Typography>
+              }
               icon={<ContributeIcon className={styles.contributeButton} />}
               onClick={() => setOpenResourceModal(true)}
             />
