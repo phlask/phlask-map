@@ -1,45 +1,40 @@
+import IconButton from '@mui/material/Button';
 import React from 'react';
 import ReactGA from 'react-ga4';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
   setMapCenter,
-  setUserLocation,
   setSelectedPlace,
+  setUserLocation,
   toggleInfoWindow,
   togglePhlaskType,
   toggleResourceMenu
 } from '../../actions/actions';
-import FoodFilter from '../FoodFilter/FoodFilter';
-import phlaskImg from '../images/PHLASK Button.png';
-import Filter from '../ResourceMenu/Filter';
-import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import styles from './Toolbar.module.scss';
-import ClosestTap from '../ClosestTap/ClosestTap';
-import IconButton from '@mui/material/Button';
 
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
+import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
-import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
-import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -172,7 +167,7 @@ function Toolbar(props) {
 
     place
       .then(
-        props.setMapCenter({
+        props.map.panTo({
           lat: closest.lat,
           lng: closest.lon
         })
@@ -205,7 +200,8 @@ function Toolbar(props) {
             sx={{
               display: 'flex',
               minWidth: '188px',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <PhlaskButton />
@@ -215,51 +211,49 @@ function Toolbar(props) {
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ResourceIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Resources
-            </Typography>
+            <Typography fontSize="small">Resources</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <FilterIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Filter
-            </Typography>
+            <Typography fontSize="small">Filter</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <SearchIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Search
-            </Typography>
+            <Typography fontSize="small">Search</Typography>
           </IconButton>
           <IconButton
             variant="blue"
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              textTransform: 'none'
             }}
           >
             <ContributeIcon />
-            <Typography style={{ textTransform: 'none' }} fontSize={'small'}>
-              Contribute
+            <Typography noWrap fontSize="small">
+              Add Site
             </Typography>
           </IconButton>
         </Box>
@@ -278,7 +272,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
+              label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
                 props.toggleResourceMenu(props.isResourceMenuShown)
@@ -288,7 +282,7 @@ function Toolbar(props) {
             <NavigationItem
               central
               label={
-                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                <Typography fontSize="small" color="black" marginTop="-1">
                   PHL<b>ASK</b>
                 </Typography>
               }
@@ -302,7 +296,11 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              label={
+                <Typography noWrap fontSize="small">
+                  Add Site
+                </Typography>
+              }
               icon={<ContributeIcon className={styles.contributeButton} />}
               onClick={() => setOpenResourceModal(true)}
             />

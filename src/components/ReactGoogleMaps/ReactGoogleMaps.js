@@ -1,30 +1,24 @@
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
-import ReactTouchEvents from 'react-touch-events';
-import SearchBar from '../SearchBar/SearchBar';
-import TutorialModal from '../TutorialModal/TutorialModal';
-import styles from './ReactGoogleMaps.module.scss';
 import { connect } from 'react-redux';
-import SelectedTap from '../SelectedTap/SelectedTap';
+import ReactTouchEvents from 'react-touch-events';
 import {
   getTaps,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
   setFilterFunction,
   setMapCenter,
   setUserLocation,
   toggleInfoWindow
 } from '../../actions/actions';
+import SearchBar from '../SearchBar/SearchBar';
+import SelectedTap from '../SelectedTap/SelectedTap';
+import TutorialModal from '../TutorialModal/TutorialModal';
+import styles from './ReactGoogleMaps.module.scss';
 // import Legend from "./Legend";
-import MapMarkers from '../MapMarkers/MapMarkers';
-import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
-import { isMobile } from 'react-device-detect';
-import Toolbar from '../Toolbar/Toolbar';
-import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Stack from '@mui/material/Stack';
+import { isMobile } from 'react-device-detect';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import Toolbar from '../Toolbar/Toolbar';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -161,10 +155,11 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.onDragEnd = this.onDragEnd.bind(this);
+    this.onIdle = this.onIdle.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -247,11 +242,15 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
-  onDragEnd = (_, map) => {
+  onIdle = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
       currlon: map.center.lng()
     });
+  };
+  
+  onReady = (_, map) => {
+    this.setState({ map: map });
   };
 
   toggleTapInfo = isExpanded => {
@@ -304,7 +303,8 @@ export class ReactGoogleMaps extends Component {
               mapTypeControl={false}
               rotateControl={false}
               fullscreenControl={false}
-              onDragend={this.onDragEnd}
+              onIdle={this.onIdle}
+              onReady={this.onReady}
               initialCenter={{
                 lat: this.state.currlat,
                 lng: this.state.currlon
@@ -353,7 +353,7 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-          <Toolbar />
+          <Toolbar map={this.state.map}/>
         </Stack>
         <SelectedTap></SelectedTap>
       </div>

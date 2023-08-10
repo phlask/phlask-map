@@ -1,12 +1,13 @@
-$dark-grey: #2D3748;
-$light-grey: #60718C;
-$lighter-grey: #E9EEF4;
+$dark-grey: #2d3748;
+$light-grey: #60718c;
+$lighter-grey: #e9eef4;
 
 .halfInfo {
   & * {
     margin: 0;
     font-size: 14px;
-    }
+    height: 100vh;
+  }
 
   padding: 10px 20px 40px;
 
@@ -28,7 +29,7 @@ $lighter-grey: #E9EEF4;
   }
 
   .swipeIcon {
-    content: " ";
+    content: ' ';
     height: 4px;
     width: 24px;
     border-radius: 25%;
@@ -52,7 +53,7 @@ $lighter-grey: #E9EEF4;
 
     .mainHalfInfoText {
       margin-left: 10px;
-    
+
       .organization {
         margin-bottom: 6px;
       }
@@ -63,12 +64,12 @@ $lighter-grey: #E9EEF4;
 
       .walkTime {
         font-size: 1em; //font-size: 14px;
-        color: #2D3748;
+        color: #2d3748;
         font-weight: 600;
       }
     }
   }
-  
+
   .halfInfoExpand {
     .tagGroup {
       margin-top: 15px;
