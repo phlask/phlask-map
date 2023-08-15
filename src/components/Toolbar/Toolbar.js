@@ -105,7 +105,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-  const [openResourceModal, setOpenResourceModal] = React.useState(false);
+
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
@@ -244,6 +244,7 @@ function Toolbar(props) {
           </IconButton>
           <IconButton
             variant="blue"
+            onClick={() => props.setOpen()}
             sx={{
               width: '100%',
               display: 'flex',
@@ -302,15 +303,11 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => setOpenResourceModal(true)}
+              onClick={() => props.setOpen()}
             />
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2
-        open={openResourceModal}
-        setOpen={setOpenResourceModal}
-      />
     </>
   );
 }

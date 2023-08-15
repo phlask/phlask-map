@@ -24,10 +24,35 @@
   height: 100%;
 }
 
+.dialogDesktop {
+  align-items: center;
+  justify-content: center;
+  width: 660px;
+  height: 314px;
+  left: 25px;
+  top: 372px;
+}
+
+.boxDesktop {
+  background: white;
+  border-radius: 5px;
+  position: 'absolute';
+  top: 840px;
+  left: 20px;
+  filter: drop-shadow(0px 3px 8px 0px);
+}
+
 .greyHeader {
   color: #626262;
   font-size: 24px;
   text-align: center;
+}
+
+.greyHeaderDesktop {
+  color: black;
+  font-size: 24.19px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .subHeader {
@@ -36,12 +61,19 @@
   margin-bottom: 40px;
 }
 
+.subHeaderDesktop {
+  font-size: 14px;
+  text-align: center;
+  color: grey;
+}
+
 .modalButton {
   display: flex;
   flex-direction: column;
   width: 209px;
   gap: 8px;
   height: 93px;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 .buttonWrapper {

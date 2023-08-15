@@ -15,10 +15,11 @@ import TutorialModal from '../TutorialModal/TutorialModal';
 import styles from './ReactGoogleMaps.module.scss';
 // import Legend from "./Legend";
 // Temporary Food/Water Toggle
-import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
-import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import { Stack } from '@mui/material';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -156,6 +157,7 @@ export class ReactGoogleMaps extends Component {
       zoom: 16,
       searchedTap: null,
       anchor: false,
+      openResourceModal: false,
       map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
@@ -353,9 +355,24 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-          <Toolbar map={this.state.map}/>
+          <AddResourceModalV2
+            open={this.state.openResourceModal}
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />
+          <Toolbar
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />{' '}
+          {/* TODO: Remove position-related styling from this component */}
         </Stack>
-        <SelectedTap></SelectedTap>
+        <SelectedTap />
       </div>
     );
   }
