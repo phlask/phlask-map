@@ -20,7 +20,7 @@ import phlaskGreen from '../images/phlaskGreen.png';
 import './SelectedTap.css';
 import styles from './SelectedTap.module.scss';
 
-import { SwipeableDrawer } from '@mui/material';
+import { Paper, SwipeableDrawer } from '@mui/material';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
 import {
@@ -261,134 +261,131 @@ class SelectedTap extends React.Component {
         {!isMobile && this.props.showingInfoWindow && (
           <div>
             {/* Desktop dialog panel */}
-            <Dialog
-              open={true} // Set this to true to make the dialog visible
-              PaperProps={{ sx: { position: 'absolute', right: 20 } }}
-              classes={{ paper: classes.topRightDialog }} // Apply the custom class
+            <Paper
+              sx={{
+                position: 'absolute',
+                right: '32px',
+                top: '50%',
+                transform: 'translateY(-50%)'
+              }}
             >
               {/* <DialogTitle>Dialog Title</DialogTitle> */}
-              <DialogContent>
-                <div
-                  ref={this.refSelectedTap}
-                  id="tap-info-container"
-                  className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
-                  style={{}}
+
+              <div
+                ref={this.refSelectedTap}
+                id="tap-info-container"
+                className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
+                style={{}}
+              >
+                <button
+                  className={styles.closeButton}
+                  aria-label="Close"
+                  onClick={() => {
+                    this.toggleInfoWindow(false);
+                  }}
                 >
-                  <button
-                    className={styles.closeButton}
-                    aria-label="Close"
-                    onClick={() => {
-                      this.toggleInfoWindow(false);
-                    }}
-                  >
-                    <div
-                      id="close-arrow-desktop"
-                      className={styles.closeIconWrapper}
-                    >
-                      <FontAwesomeIcon
-                        className={styles.closeIcon}
-                        color="#999"
-                        icon={faCaretLeft}
-                      />
-                    </div>
-                  </button>
-                  {/* Location Name */}
                   <div
-                    ref={this.refContentArea}
-                    className={
-                      this.props.infoIsExpanded
-                        ? styles.tapContentExpanded
-                        : styles.tapContent
-                    }
+                    id="close-arrow-desktop"
+                    className={styles.closeIconWrapper}
                   >
-                    {/* Main Image */}
+                    <FontAwesomeIcon
+                      className={styles.closeIcon}
+                      color="#999"
+                      icon={faCaretLeft}
+                    />
+                  </div>
+                </button>
+                {/* Location Name */}
+                <div
+                  ref={this.refContentArea}
+                  className={
+                    this.props.infoIsExpanded
+                      ? styles.tapContentExpanded
+                      : styles.tapContent
+                  }
+                >
+                  {/* Main Image */}
 
-                    <div id="tap-info-img-box-desktop">
-                      <img
-                        id="tap-info-img"
-                        src={tempImages.tapImg}
-                        srcSet={
-                          tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                        }
-                        alt=""
-                      ></img>
-                    </div>
+                  <div id="tap-info-img-box-desktop">
+                    <img
+                      id="tap-info-img"
+                      src={tempImages.tapImg}
+                      srcSet={
+                        tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
+                      }
+                      alt=""
+                    ></img>
+                  </div>
 
-                    <div id="tap-head-info">
-                      {/* Tap Type Icon */}
-                      <div id="tap-type-icon-container">
-                        <div id="tap-type-icon">
-                          {this.props.phlaskType === PHLASK_TYPE_WATER ? (
-                            <img
-                              className="tap-info-icon-img"
-                              src={this.props.selectedPlace?.infoIcon}
-                              alt=""
-                            ></img>
-                          ) : (
-                            this.props.selectedPlace?.infoIcon
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Name & Address */}
-                      <div id="org-name-and-address-desktop">
-                        <div id="tap-organization-name">
-                          {this.state.organization}
-                        </div>
-                        {this.state.address && (
-                          <h5 id="tap-info-address">{this.state.address}</h5>
+                  <div id="tap-head-info">
+                    {/* Tap Type Icon */}
+                    <div id="tap-type-icon-container">
+                      <div id="tap-type-icon">
+                        {this.props.phlaskType === PHLASK_TYPE_WATER ? (
+                          <img
+                            className="tap-info-icon-img"
+                            src={this.props.selectedPlace?.infoIcon}
+                            alt=""
+                          ></img>
+                        ) : (
+                          this.props.selectedPlace?.infoIcon
                         )}
                       </div>
-
-                      <SelectedTapHours
-                        infoIsExpanded={this.props.infoIsExpanded}
-                        selectedPlace={this.props.selectedPlace}
-                      />
-                    </div>
-                    {/* Walk Time & Info Icons  */}
-                    <div className={styles.walkTime}>
-                      Estimated Walk Time: {this.state.walkingDuration} mins (
-                      {this.state.walkingDistance} mi)
                     </div>
 
-                    <SelectedTapIcons place={this.props.selectedPlace} />
+                    {/* Name & Address */}
+                    <div id="org-name-and-address-desktop">
+                      <div id="tap-organization-name">
+                        {this.state.organization}
+                      </div>
+                      {this.state.address && (
+                        <h5 id="tap-info-address">{this.state.address}</h5>
+                      )}
+                    </div>
 
-                    {/* Description */}
+                    <SelectedTapHours
+                      infoIsExpanded={this.props.infoIsExpanded}
+                      selectedPlace={this.props.selectedPlace}
+                    />
+                  </div>
+                  {/* Walk Time & Info Icons  */}
+                  <div className={styles.walkTime}>
+                    Estimated Walk Time: {this.state.walkingDuration} mins (
+                    {this.state.walkingDistance} mi)
+                  </div>
+
+                  <SelectedTapIcons place={this.props.selectedPlace} />
+
+                  {/* Description */}
+                  <div>
                     <div>
-                      <div>
-                        <div className={styles.description}>
-                          <div id="tap-info-description">
-                            {this.state.tapDescription && (
-                              <div className={styles.section}>
-                                <h3>Description</h3>
-                                <div>{this.state.tapDescription}</div>
-                              </div>
-                            )}
-                            {this.state.tapStatement && (
-                              <div className={styles.section}>
-                                <h3>Statement</h3>
-                                <div>{this.state.tapStatement}</div>
-                              </div>
-                            )}
-                            {this.state.tapNormsAndRules && (
-                              <div className={styles.section}>
-                                <h3>Norms &amp; Rules</h3>
-                                <div>{this.state.tapNormsAndRules}</div>
-                              </div>
-                            )}
-                          </div>
+                      <div className={styles.description}>
+                        <div id="tap-info-description">
+                          {this.state.tapDescription && (
+                            <div className={styles.section}>
+                              <h3>Description</h3>
+                              <div>{this.state.tapDescription}</div>
+                            </div>
+                          )}
+                          {this.state.tapStatement && (
+                            <div className={styles.section}>
+                              <h3>Statement</h3>
+                              <div>{this.state.tapStatement}</div>
+                            </div>
+                          )}
+                          {this.state.tapNormsAndRules && (
+                            <div className={styles.section}>
+                              <h3>Norms &amp; Rules</h3>
+                              <div>{this.state.tapNormsAndRules}</div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </DialogContent>
-              <DialogActions>
-                {/* <Button variant="contained" color="primary">
-                  Close
-                </Button> */}
-              </DialogActions>
-            </Dialog>
+              </div>
+            </Paper>
           </div>
         )}
       </div>

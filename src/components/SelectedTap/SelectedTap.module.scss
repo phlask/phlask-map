@@ -154,10 +154,10 @@
 }
 .desktopContainer {
   position: relative;
-  width: 30%;
-  min-width: 400px;
-  max-height: calc(100vh - 220px);
-  margin: 16px 0 0 16px;
+  // width: 30%;
+  // min-width: 400px;
+  // max-height: calc(100vh - 220px);
+  // margin: 16px 0 0 16px;
   animation-name: info-modal-in-desktop;
   animation-duration: 0.6s;
   animation-fill-mode: forward;
@@ -165,7 +165,7 @@
   transition: 0.6s all ease-in-out;
 
   .tapContent {
-    max-height: calc(100vh - 220px);
+    // max-height: calc(100vh - 220px);
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
