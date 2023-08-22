@@ -10,6 +10,7 @@ import {
   setMapCenter,
   setSelectedPlace,
   setUserLocation,
+  toggleFilterModal,
   toggleInfoWindow,
   togglePhlaskType,
   toggleResourceMenu
@@ -17,7 +18,6 @@ import {
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
@@ -26,8 +26,8 @@ import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
-import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -226,6 +226,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               textTransform: 'none'
             }}
+            onClick={() => props.setOpenFilter()}
           >
             <FilterIcon />
             <Typography fontSize="small">Filter</Typography>
@@ -244,13 +245,13 @@ function Toolbar(props) {
           </IconButton>
           <IconButton
             variant="blue"
-            onClick={() => props.setOpen()}
             sx={{
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
               textTransform: 'none'
             }}
+            onClick={() => props.setOpenResourceModal()}
           >
             <ContributeIcon />
             <Typography noWrap fontSize="small">
@@ -275,9 +276,7 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
+              onClick={() => props.setOpenResourceModal()}
             />
             <ResourceMenu />
             <NavigationItem
@@ -303,7 +302,7 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => props.setOpen()}
+              onClick={() => props.setOpenResourceModal()}
             />
           </BottomNavigation>
         </Box>
@@ -319,7 +318,8 @@ const mapStateToProps = state => ({
   allBathroomTaps: state.allBathroomTaps,
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
-  isResourceMenuShown: state.isResourceMenuShown
+  isResourceMenuShown: state.isResourceMenuShown,
+  isFilterShown: state.isFilterShown
 });
 
 const mapDispatchToProps = {
@@ -330,7 +330,8 @@ const mapDispatchToProps = {
   toggleInfoWindow,
   setMapCenter,
   setUserLocation,
-  toggleResourceMenu
+  toggleResourceMenu,
+  toggleFilterModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
