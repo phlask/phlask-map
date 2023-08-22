@@ -10,16 +10,12 @@ const FilterTags = props => (
         key={key}
         className={
           styles.filterTag +
-          (props.value && props.value.includes(key)
+          (props.activeTags[props.filterType][props.index][key]
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          if (props.activeTags[props.fitlerType][props.index].includes(key)) {
-            props.setValue(props.value.filter(t => t != key));
-          } else {
-            props.setActiveTags.setValue([...props.value, key]);
-          }
+          props.handleTag(0, props.filterType, props.index, key);
         }}
       >
         <p>{tag}</p>
@@ -35,14 +31,12 @@ const FilterTagsExclusive = props => (
         key={key}
         className={
           styles.filterTagExclusive +
-          (props.value == key ? ' ' + styles.filterTagSelected : '')
+          (props.activeTags[props.filterType][props.index] == key
+            ? ' ' + styles.filterTagSelected
+            : '')
         }
         onClick={() => {
-          if (props.value != key) {
-            props.setValue(key);
-          } else {
-            props.setValue();
-          }
+          props.handleTag(1, props.filterType, props.index, key);
         }}
       >
         <p>{tag}</p>
@@ -97,6 +91,8 @@ export default function Filter(props) {
                                     tags={category.tags}
                                     filterType={filterType}
                                     index={index}
+                                    handleTag={props.handleTag}
+                                    activeTags={props.activeTags}
                                   />
                                 </>
                               );
@@ -110,6 +106,8 @@ export default function Filter(props) {
                                     tags={category.tags}
                                     filterType={filterType}
                                     index={index}
+                                    handleTag={props.handleTag}
+                                    activeTags={props.activeTags}
                                   />
                                 </>
                               );

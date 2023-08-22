@@ -275,7 +275,6 @@ export class ReactGoogleMaps extends Component {
       });
       this.state.activeFilterTags[key] = data;
     }
-    console.log(this.state.activeFilterTags);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -403,7 +402,22 @@ export class ReactGoogleMaps extends Component {
     }));
   };
 
-  handleTag = () => event => {};
+  handleTag = (type, filterType, index, key) => {
+    if (type == 0) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      activeFilterTags_[filterType][index][key] =
+        !activeFilterTags_[filterType][index][key];
+      this.setState({ activeFilterTags: activeFilterTags_ });
+    } else if (type == 1) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      if (activeFilterTags_[filterType][index] == key) {
+        activeFilterTags_[filterType][index] = null;
+      } else {
+        activeFilterTags_[filterType][index] = key;
+      }
+      this.setState({ activeFilterTags: activeFilterTags_ });
+    }
+  };
 
   render() {
     return (
@@ -481,6 +495,7 @@ export class ReactGoogleMaps extends Component {
             open={this.state.openFilter}
             filters={filters}
             handleTag={this.handleTag}
+            activeTags={this.state.activeFilterTags}
           />
           <AddResourceModalV2
             open={this.state.openResourceModal}

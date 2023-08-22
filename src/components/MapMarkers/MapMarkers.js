@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
 import { Marker } from 'google-maps-react';
-import IndieMarker from '../IndieMarker/IndieMarker';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   getTaps,
-  toggleInfoWindow,
+  setMapCenter,
   setSelectedPlace,
-  setMapCenter
+  toggleInfoWindow
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
+import IndieMarker from '../IndieMarker/IndieMarker';
 
 export function MapMarkers({
   allTaps = [],
@@ -32,9 +32,10 @@ export function MapMarkers({
         name="Current Pos"
         position={mapCenter}
       />
-      {visibleTaps.map((tap, index) => (
-        <IndieMarker key={index} tap={tap} google={google} map={map} />
-      ))}
+      {visibleTaps.map((tap, index) => {
+        console.log(tap);
+        return <IndieMarker key={index} tap={tap} google={google} map={map} />;
+      })}
     </>
   );
 }
