@@ -1,28 +1,34 @@
+import {
+  faChevronLeft,
+  faSearchLocation
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SearchIcon from '@mui/icons-material/Search';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { connect } from 'react-redux';
-import { toggleSearchBar } from '../../actions/actions';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
-import styles from './SearchBar.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import {
-  faSearchLocation,
-  faChevronLeft
-} from '@fortawesome/free-solid-svg-icons';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal
+} from '../../actions/actions';
+import styles from './SearchBar.module.scss';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       address: '',
-      refSearchBar: React.createRef(),
-      isSearchBarShown: false
+      refSearchBar: React.createRef()
     };
   }
 
@@ -38,36 +44,20 @@ class SearchBar extends React.Component {
       .catch(error => console.error('Error', error));
   };
 
-  openSearch() {
-    this.setSearchDisplayType(true);
-  }
-
-  setSearchDisplayType(shouldToggle = false) {
-    if (isMobile) {
-      this.setState({
-        isSearchBarShown: shouldToggle
-      });
-    } else {
-      this.setState({
-        isSearchBarShown: true
-      });
-    }
-  }
-
   componentDidUpdate(prevProps) {
-    if (this.props.isSearchShown && !prevProps.isSearchShown) {
-      this.state.refSearchBar.current.focus();
-    }
+    // if (this.props.isSearchShown && !prevProps.isSearchShown) {
+    //   this.state.refSearchBar.current.focus();
+    // }
   }
 
   componentDidMount() {
-    this.setSearchDisplayType();
+    // this.setSearchDisplayType();
   }
 
   render() {
     return (
       <>
-        {this.state.isSearchBarShown ? (
+        {this.props.toolbarModal == TOOLBAR_MODAL_SEARCH ? (
           <div
             className={isMobile ? styles.mobileSearch : styles.desktopSearch}
           >
@@ -132,7 +122,7 @@ class SearchBar extends React.Component {
               <button
                 className={styles.mobileCloseButton}
                 onClick={() => {
-                  this.setSearchDisplayType(false);
+                  // this.setSearchDisplayType(false);
                 }}
                 aria-label="Close the search bar"
               >
@@ -148,7 +138,7 @@ class SearchBar extends React.Component {
         ) : (
           <button
             className={styles.mobileSearchButton}
-            onClick={this.openSearch.bind(this)}
+            // onClick={this.openSearch.bind(this)}
             aria-label="Search for a location"
           >
             <FontAwesomeIcon
@@ -163,9 +153,16 @@ class SearchBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isSearchShown: state.isSearchShown
+  toolbarModal: state.toolbarModal
 });
 
-const mapDispatchToProps = { toggleSearchBar };
+const mapDispatchToProps = {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

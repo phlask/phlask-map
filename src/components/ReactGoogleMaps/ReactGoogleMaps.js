@@ -3,9 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
   getTaps,
   setFilterFunction,
   setMapCenter,
+  setToolbarModal,
   setUserLocation,
   toggleInfoWindow
 } from '../../actions/actions';
@@ -15,10 +25,10 @@ import TutorialModal from '../TutorialModal/TutorialModal';
 import styles from './ReactGoogleMaps.module.scss';
 // import Legend from "./Legend";
 // Temporary Food/Water Toggle
+import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
-import Toolbar from '../Toolbar/Toolbar';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
-import { Stack } from '@mui/material';
+import Toolbar from '../Toolbar/Toolbar';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
@@ -161,6 +171,7 @@ export class ReactGoogleMaps extends Component {
       map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    console.log(this.props);
     this.onIdle = this.onIdle.bind(this);
   }
 
@@ -395,7 +406,17 @@ const mapDispatchToProps = {
   setFilterFunction,
   toggleInfoWindow,
   setUserLocation,
-  setMapCenter
+  setMapCenter,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER
 };
 
 export default connect(
