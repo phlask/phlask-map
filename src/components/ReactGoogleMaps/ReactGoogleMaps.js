@@ -29,6 +29,8 @@ import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
+import { Stack } from '@mui/material';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -165,11 +167,14 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      openResourceModal: false,
+      map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
     console.log(this.props);
+    this.onIdle = this.onIdle.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -252,11 +257,15 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
-  onDragEnd = (_, map) => {
+  onIdle = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
       currlon: map.center.lng()
     });
+  };
+  
+  onReady = (_, map) => {
+    this.setState({ map: map });
   };
 
   toggleTapInfo = isExpanded => {
@@ -309,7 +318,8 @@ export class ReactGoogleMaps extends Component {
               mapTypeControl={false}
               rotateControl={false}
               fullscreenControl={false}
-              onDragend={this.onDragEnd}
+              onIdle={this.onIdle}
+              onReady={this.onReady}
               initialCenter={{
                 lat: this.state.currlat,
                 lng: this.state.currlon
@@ -358,9 +368,24 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-          <Toolbar />
+          <AddResourceModalV2
+            open={this.state.openResourceModal}
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />
+          <Toolbar
+            setOpen={() =>
+              this.setState(prev => {
+                return { openResourceModal: !prev.openResourceModal };
+              })
+            }
+          />{' '}
+          {/* TODO: Remove position-related styling from this component */}
         </Stack>
-        <SelectedTap></SelectedTap>
+        <SelectedTap />
       </div>
     );
   }

@@ -111,7 +111,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-  const [openResourceModal, setOpenResourceModal] = React.useState(false);
+
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
@@ -175,7 +175,7 @@ function Toolbar(props) {
 
     place
       .then(
-        props.setMapCenter({
+        props.map.panTo({
           lat: closest.lat,
           lng: closest.lon
         })
@@ -229,7 +229,7 @@ function Toolbar(props) {
             disableFocusRipple={true}
             disableRipple={true}
           >
-            <PhlaskWater />
+            <PhlaskButton />
           </IconButton>
           <IconButton
             variant="text"
@@ -340,7 +340,7 @@ function Toolbar(props) {
               style={{ textTransform: 'none', color: 'black' }}
               fontSize={'small'}
             >
-              Contribute
+              Add Site
             </Typography>
           </IconButton>
         </Box>
@@ -359,7 +359,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
+              label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
                 props.toggleResourceMenu(props.isResourceMenuShown)
@@ -369,7 +369,7 @@ function Toolbar(props) {
             <NavigationItem
               central
               label={
-                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                <Typography fontSize="small" color="black" marginTop="-1">
                   PHL<b>ASK</b>
                 </Typography>
               }
@@ -383,17 +383,17 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              label={
+                <Typography noWrap fontSize="small">
+                  Add Site
+                </Typography>
+              }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => setOpenResourceModal(true)}
+              onClick={() => props.setOpen()}
             />
           </BottomNavigation>
         </Box>
       )}
-      <AddResourceModalV2
-        open={openResourceModal}
-        setOpen={setOpenResourceModal}
-      />
     </>
   );
 }
