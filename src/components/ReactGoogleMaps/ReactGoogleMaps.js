@@ -29,7 +29,6 @@ import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
-import { Stack } from '@mui/material';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
@@ -172,7 +171,6 @@ export class ReactGoogleMaps extends Component {
       map: null
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.onDragEnd = this.onDragEnd.bind(this);
     console.log(this.props);
     this.onIdle = this.onIdle.bind(this);
   }
