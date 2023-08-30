@@ -1,17 +1,55 @@
+.page {
+  max-height: calc(100vh - 76px - 32px - 50px - 25px - 25px);
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.pageHeader {
+  margin: 0;
+  margin-bottom: 40px;
+  color: #60718c;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.pageSubheader {
+  margin: 0;
+  margin-bottom: 10px;
+  color: #2d3748;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+}
+
 .pageText {
-  width: 60%;
-  margin: 5% auto 0;
+  margin: 0;
+  margin-bottom: 20px;
+  color: #2d3748;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
 }
 
-.blockquote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
+.pageLink {
+  color: #033e8c;
+  text-decoration: none;
 }
 
-@media screen and (min-width: 992px) {
-  .pageText {
-    margin-top: 0;
-  }
+// Contact page specific
+.pageContactSection {
+  margin-bottom: 20px;
+}
+
+.pageContactLabel {
+  margin: 0;
+  margin-bottom: 5px;
+  color: #2d3748;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
 }
