@@ -125,10 +125,9 @@ export default function Head() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
   const [menuExpand, setMenuExpand] = useState(false);
-  const [pageExpandVertical, setPageExpandVertical] = useState(false);
+  const [pageExpand, setPageExpand] = useState(false);
   const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
   const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
-  const [pageExpandHorizontal, setPageExpandHorizontal] = useState(false);
   const [shownPage, setShownPage] = useState(null);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
@@ -138,8 +137,7 @@ export default function Head() {
     if (menuExpand) {
       setVerticalAnimFinished1(false);
       setVerticalAnimFinished2(false);
-      setPageExpandVertical(false);
-      setPageExpandHorizontal(false);
+      setPageExpand(false);
       setShownPage(null);
     }
     setMenuExpand(!menuExpand);
@@ -167,12 +165,10 @@ export default function Head() {
     if (page == shownPage) {
       setVerticalAnimFinished1(false);
       setVerticalAnimFinished2(false);
-      setPageExpandHorizontal(false);
-      setPageExpandVertical(false);
+      setPageExpand(false);
       setShownPage(null);
     } else {
-      setPageExpandHorizontal(true);
-      setPageExpandVertical(true);
+      setPageExpand(true);
       setShownPage(page);
     }
   };
@@ -316,10 +312,10 @@ export default function Head() {
                 </Button>
               </Box>
               <Collapse
-                in={pageExpandVertical}
+                in={pageExpand}
                 timeout="auto"
                 onEntered={() => {
-                  if (pageExpandVertical) {
+                  if (pageExpand) {
                     setVerticalAnimFinished1(true);
                   }
                 }}
@@ -354,10 +350,10 @@ export default function Head() {
                 </Box>
               </Collapse>
               <Collapse
-                in={pageExpandVertical}
+                in={pageExpand}
                 timeout="auto"
                 onEntered={() => {
-                  if (pageExpandVertical) {
+                  if (pageExpand) {
                     setVerticalAnimFinished2(true);
                   }
                 }}
@@ -372,7 +368,7 @@ export default function Head() {
             </Box>
             <Collapse
               orientation="horizontal"
-              in={pageExpandHorizontal}
+              in={pageExpand}
               timeout="auto"
             >
               <Box
