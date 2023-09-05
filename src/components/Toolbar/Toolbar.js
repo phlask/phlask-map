@@ -7,27 +7,32 @@ import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
   setMapCenter,
   setSelectedPlace,
+  setToolbarModal,
   setUserLocation,
-  toggleFilterModal,
   toggleInfoWindow,
-  togglePhlaskType,
-  toggleResourceMenu
+  togglePhlaskType
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
-import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+
+import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -109,6 +114,8 @@ function Toolbar(props) {
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
+  const blackToGrayFilter =
+    'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
@@ -179,6 +186,14 @@ function Toolbar(props) {
     setClosest();
   }
 
+  function toolbarClicked(modal) {
+    if (props.toolbarModal == modal) {
+      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+    } else {
+      props.setToolbarModal(modal);
+    }
+  }
+
   return (
     <>
       $
@@ -189,8 +204,14 @@ function Toolbar(props) {
             position: 'absolute',
             left: '32px',
             bottom: '32px',
+            px: '40px',
+            py: '12px',
+            gap: '40px',
             backgroundColor: 'white',
+            boxShadow:
+              '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
             minWidth: '400px',
+            borderRadius: '10px',
             justifyContent: 'space-between',
             zIndex: 1
           }}
@@ -201,60 +222,123 @@ function Toolbar(props) {
               display: 'flex',
               minWidth: '188px',
               flexDirection: 'column',
-              textTransform: 'none'
+              p: 0
             }}
+            onClick={closestButtonClicked}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <PhlaskButton />
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              textTransform: 'none'
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
-            <ResourceIcon />
-            <Typography fontSize="small">Resources</Typography>
+            <ResourceIcon style={{ color: '#f80' }} />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Resources
+            </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              textTransform: 'none'
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_FILTER
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
-            onClick={() => props.setOpenFilter()}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <FilterIcon />
-            <Typography fontSize="small">Filter</Typography>
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Filter
+            </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              textTransform: 'none'
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_SEARCH
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <SearchIcon />
-            <Typography fontSize="small">Search</Typography>
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Search
+            </Typography>
           </IconButton>
           <IconButton
-            variant="blue"
+            variant="text"
             sx={{
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              textTransform: 'none'
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
-            onClick={() => props.setOpenResourceModal()}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
             <ContributeIcon />
-            <Typography noWrap fontSize="small">
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
               Add Site
             </Typography>
           </IconButton>
@@ -318,20 +402,25 @@ const mapStateToProps = state => ({
   allBathroomTaps: state.allBathroomTaps,
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
-  isResourceMenuShown: state.isResourceMenuShown,
-  isFilterShown: state.isFilterShown
+  toolbarModal: state.toolbarModal
 });
 
 const mapDispatchToProps = {
   togglePhlaskType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FORAGING,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal,
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation,
-  toggleResourceMenu,
-  toggleFilterModal
+  setUserLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

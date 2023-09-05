@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
-import {
-  faCaretLeft
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { isMobile } from 'react-device-detect';
@@ -123,10 +121,10 @@ class SelectedTap extends React.Component {
       }
     }
   }
-  
-  setInfoCollapseMobile = (collapse) => {
-    this.setState({infoCollapseMobile: collapse});
-  }
+
+  setInfoCollapseMobile = collapse => {
+    this.setState({ infoCollapseMobile: collapse });
+  };
 
   toggleInfoWindow(shouldShow) {
     this.props.toggleInfoWindowClass(shouldShow);
@@ -169,7 +167,7 @@ class SelectedTap extends React.Component {
       label: `${this.props.selectedPlace?.organization}, ${this.props.selectedPlace?.address}`
     });
   }
-  
+
   // Handle Times
 
   setCurrentDate() {
@@ -251,10 +249,7 @@ class SelectedTap extends React.Component {
                 this.toggleInfoWindow(false);
               }}
             >
-              <div
-                id="close-arrow-desktop"
-                className={styles.closeIconWrapper}
-              >
+              <div id="close-arrow-desktop" className={styles.closeIconWrapper}>
                 <FontAwesomeIcon
                   className={styles.closeIcon}
                   color="#999"

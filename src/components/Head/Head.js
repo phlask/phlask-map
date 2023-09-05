@@ -2,33 +2,76 @@ import {
   AppBar,
   Box,
   Button,
+  Collapse,
   IconButton,
   ListItemIcon,
   Paper,
-  Popover,
-  Tabs,
   Toolbar,
   styled
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import Contact from '../DesktopPages/Contact';
-import Filter from '../Filter/Filter';
-import Contribute from '../Pages/Contribute';
-import Mission from '../Pages/Mission';
-import Share from '../Pages/Share';
+import { Link } from 'react-router-dom';
+import Filter from '../Filter/Filter.js';
+import About from '../Pages/About.js';
+import Contact from '../Pages/Contact.js';
+import Join from '../Pages/Join.js';
 import Sidebar from '../SideBar/SideBar';
-import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
 import { ReactComponent as IDIcon } from '../icons/ModalIDRequired.svg';
 import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as PhlaskNoTextIcon } from '../icons/PhlaskNoText.svg';
-import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
+
+const CloseIconBar = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  left: '4px',
+  width: '24px',
+  height: '2px',
+  backgroundColor: '#2D3748',
+  borderRadius: '1px',
+  transitionDuration: '0.5s',
+  transitionProperty: 'transform opacity'
+}));
+
+const CloseIcon = props => {
+  return (
+    <Box
+      sx={{
+        position: 'relative',
+        width: '32px',
+        height: '32px'
+      }}
+    >
+      <CloseIconBar
+        sx={{
+          top: '7px',
+          transform: `translateY(${props.close ? 8 : 0}px) rotate(${
+            props.close ? 45 : 0
+          }deg)`
+        }}
+      />
+      <CloseIconBar
+        sx={{
+          top: '15px',
+          transform: `rotate(${props.close ? 45 : 0}deg)`,
+          opacity: `${props.close ? 0 : 1}`
+        }}
+      />
+      <CloseIconBar
+        sx={{
+          top: '23px',
+          transform: `translateY(${props.close ? -8 : 0}px) rotate(${
+            props.close ? -45 : 0
+          }deg)`
+        }}
+      />
+    </Box>
+  );
+};
 
 const DropLink = styled(Button)(({ theme }) => ({
   color: '#2D3748',
@@ -38,8 +81,8 @@ const DropLink = styled(Button)(({ theme }) => ({
   margin: '10px 25px',
   borderRadius: '24px',
   padding: '0 20px',
+  fontSize: '16px',
   '& span': {
-    fontSize: '16px',
     borderRadius: '24px'
   },
   '& svg': {
@@ -48,7 +91,7 @@ const DropLink = styled(Button)(({ theme }) => ({
     margin: '4px 0'
   },
   '&:hover': {
-    backgroundColor: '#0a58ca',
+    backgroundColor: '#5286E9',
     color: '#fff'
   },
   '&:nth-child(1):hover svg path': {
@@ -82,17 +125,22 @@ export default function Head() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
   const [menuExpand, setMenuExpand] = useState(false);
+  const [pageExpand, setPageExpand] = useState(false);
+  const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
+  const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
+  const [shownPage, setShownPage] = useState(null);
   const isSearchShown = useSelector(state => state.isSearchShown);
   const isFilterShown = useSelector(state => state.isFilterShown);
   const open = Boolean(anchorEl);
 
-  const handlePopover = event => {
-    setAnchorEl(anchorEl ? null : event.currentTarget.parentNode);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setSidebarOpen(false);
+  const toggleMenuExpand = event => {
+    if (menuExpand) {
+      setVerticalAnimFinished1(false);
+      setVerticalAnimFinished2(false);
+      setPageExpand(false);
+      setShownPage(null);
+    }
+    setMenuExpand(!menuExpand);
   };
 
   const toggleSearchBar = () => {
@@ -113,6 +161,18 @@ export default function Head() {
     setSidebarOpen(true);
   };
 
+  const menuClicked = page => {
+    if (page == shownPage) {
+      setVerticalAnimFinished1(false);
+      setVerticalAnimFinished2(false);
+      setPageExpand(false);
+      setShownPage(null);
+    } else {
+      setPageExpand(true);
+      setShownPage(page);
+    }
+  };
+
   const pagePaths = /(\/mission)|(\/share)|(\/project)|(\/contribute)/;
   const isNotMapPage = () => {
     return window.location.pathname.match(pagePaths);
@@ -127,8 +187,29 @@ export default function Head() {
     }
   }, [isNotMapPage, setShowMapControls]);
 
+  let page = null;
+  switch (shownPage) {
+    case 'about':
+      page = <About />;
+      break;
+    case 'join':
+      page = <Join />;
+      break;
+    case 'contact':
+      page = <Contact />;
+      break;
+    default:
+      break;
+  }
+
   return (
-    <>
+    <div>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Inter:wght@500;600;700&display=swap"
+        rel="stylesheet"
+      />
       {isMobile ? (
         <>
           <Sidebar
@@ -198,58 +279,22 @@ export default function Head() {
           }}
         >
           <Paper
-            elevation={3}
             sx={{
-              backgroundColor: '#fff',
-              width: '310px',
-              height: '75px',
-              boxShadow:
-                '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)'
+              display: 'grid',
+              gridAutoRows: 'min-content',
+              gridTemplateColumns: '310px 1fr',
+              borderRadius: '10px'
             }}
           >
-            <IconButton
-              sx={{
-                margin: '15px'
-              }}
-              onClick={handlePopover}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Button
-              href="/"
-              sx={{
-                margin: '15px'
-              }}
-              onClick={() => setShowMapControls(true)}
-            >
-              <PhlaskIcon
-                sx={{
-                  position: 'relative',
-                  top: '-10px'
-                }}
-              />
-            </Button>
-          </Paper>
-          <Popover
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left'
-            }}
-            open={open}
-            onClose={handleClose}
-            transition
-            disablePortal
-          >
-            <Paper>
+            <Box sx={{ height: 'fit-content' }}>
               <Box width={310}>
                 <IconButton
                   sx={{
                     margin: '15px'
                   }}
-                  onClick={handlePopover}
+                  onClick={toggleMenuExpand}
                 >
-                  <CloseIcon />
+                  <CloseIcon close={menuExpand} />
                 </IconButton>
                 <Button
                   href="/"
@@ -266,68 +311,74 @@ export default function Head() {
                   />
                 </Button>
               </Box>
-              <Box
-                sx={{
-                  display: 'flex'
+              <Collapse
+                in={pageExpand}
+                timeout="auto"
+                onEntered={() => {
+                  if (pageExpand) {
+                    setVerticalAnimFinished1(true);
+                  }
                 }}
               >
-                <Router>
-                  <Tabs
-                    orientation="vertical"
-                    sx={{
-                      padding: '0 0 15px',
-                      width: '310px'
-                    }}
+                <Box sx={{ height: '50px' }}></Box>
+              </Collapse>
+              <Collapse in={menuExpand} timeout="auto">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
+                  <DropLink
+                    onClick={() => menuClicked('about')}
+                    startIcon={<PhlaskNoTextIcon />}
                   >
-                    <DropLink
-                      component={Link}
-                      to="/mission"
-                      startIcon={<PhlaskNoTextIcon />}
-                    >
-                      About
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/share"
-                      startIcon={<PlusCircleIcon />}
-                    >
-                      How it works
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/contribute"
-                      startIcon={<UsersIcon />}
-                    >
-                      Join the team
-                    </DropLink>
-                    <DropLink
-                      component={Link}
-                      to="/contact"
-                      startIcon={<IDIcon />}
-                    >
-                      Contact
-                    </DropLink>
-                  </Tabs>
-                  <Switch>
-                    <Route path={`/mission`}>
-                      <Mission />
-                    </Route>
-                    <Route path={`/share`}>
-                      <Share />
-                    </Route>
-                    <Route path={`/contribute`}>
-                      <Contribute />
-                    </Route>
-                    <Route path={`/contact`}>
-                      <Contact />
-                    </Route>
-                  </Switch>
-                </Router>
+                    About
+                  </DropLink>
+                  <DropLink
+                    onClick={() => menuClicked('join')}
+                    startIcon={<UsersIcon />}
+                  >
+                    Join the team
+                  </DropLink>
+                  <DropLink
+                    onClick={() => menuClicked('contact')}
+                    startIcon={<IDIcon />}
+                  >
+                    Contact
+                  </DropLink>
+                </Box>
+              </Collapse>
+              <Collapse
+                in={pageExpand}
+                timeout="auto"
+                onEntered={() => {
+                  if (pageExpand) {
+                    setVerticalAnimFinished2(true);
+                  }
+                }}
+              >
+                <Box
+                  sx={{
+                    height:
+                      'calc(100vh - 50px - 25px - 274px - 76px - 32px - 25px)'
+                  }}
+                ></Box>
+              </Collapse>
+            </Box>
+            <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
+              <Box
+                sx={{
+                  width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
+                  padding: '25px'
+                }}
+              >
+                {verticalAnimFinished1 && verticalAnimFinished2 && page}
               </Box>
-            </Paper>
-          </Popover>
+            </Collapse>
+          </Paper>
         </Box>
       )}
-    </>
+    </div>
   );
 }
