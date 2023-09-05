@@ -241,6 +241,19 @@ export class ReactGoogleMaps extends Component {
   constructor(props) {
     super(props);
 
+    let activeFilterTags_ = {};
+    for (const [key, value] of Object.entries(filters)) {
+      let data = [];
+      value.categories.map(category => {
+        if (category.type == 0) {
+          data.push(new Array(category.tags.length).fill(false));
+        } else {
+          data.push(null);
+        }
+      });
+      activeFilterTags_[key] = data;
+    }
+
     this.state = {
       isExpanded: false,
       showingInfoWindow: false,
@@ -259,22 +272,10 @@ export class ReactGoogleMaps extends Component {
       openResourceModal: false,
       openFilter: false,
       map: null,
-      activeFilterTags: {}
+      activeFilterTags: activeFilterTags_
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.onIdle = this.onIdle.bind(this);
-
-    for (const [key, value] of Object.entries(filters)) {
-      let data = [];
-      value.categories.map(category => {
-        if (category.type == 0) {
-          data.push(new Array(category.tags.length).fill(false));
-        } else {
-          data.push(null);
-        }
-      });
-      this.state.activeFilterTags[key] = data;
-    }
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -470,6 +471,7 @@ export class ReactGoogleMaps extends Component {
                   lat: this.state.currlat,
                   lng: this.state.currlon
                 }}
+                filterTags={this.state.activeFilterTags}
               />
 
               {this.state.searchedTap != null && (

@@ -16,13 +16,15 @@ export function MapMarkers({
   getTaps,
   map,
   google,
-  mapCenter
+  mapCenter,
+  filterTags
 }) {
   React.useEffect(() => {
     if (!allTaps.length && getTaps) getTaps();
   }, [allTaps, getTaps]);
 
   if (!visibleTaps.length) return null;
+  console.log(filterTags);
   return (
     <>
       <Marker
@@ -33,7 +35,6 @@ export function MapMarkers({
         position={mapCenter}
       />
       {visibleTaps.map((tap, index) => {
-        console.log(tap);
         return <IndieMarker key={index} tap={tap} google={google} map={map} />;
       })}
     </>
