@@ -122,17 +122,17 @@ export const setMapCenter = coords => ({
   coords
 });
 
-export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
-export const toggleSearchBar = isShown => ({
-  type: TOGGLE_SEARCH_BAR,
-  isShown
-});
+// export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
+// export const toggleSearchBar = isShown => ({
+//   type: TOGGLE_SEARCH_BAR,
+//   isShown
+// });
 
-export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL';
-export const toggleFilterModal = isShown => ({
-  type: TOGGLE_FILTER_MODAL,
-  isShown
-});
+// export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL';
+// export const toggleFilterModal = isShown => ({
+//   type: TOGGLE_FILTER_MODAL,
+//   isShown
+// });
 
 export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW';
 export const toggleInfoWindow = isShown => ({
@@ -168,17 +168,29 @@ export const setSelectedPlace = selectedPlace => ({
   selectedPlace
 });
 
+export const SET_TOOLBAR_MODAL = 'SET_TOOLBAR_MODAL';
+export const setToolbarModal = toolbarModal => ({
+  type: SET_TOOLBAR_MODAL,
+  mode: toolbarModal
+});
+
+export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
+export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
+export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
+export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
+export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
+
 export const TOGGLE_PHLASK_TYPE = 'TOGGLE_PHLASK_TYPE';
 export const togglePhlaskType = phlaskType => ({
   type: TOGGLE_PHLASK_TYPE,
   mode: phlaskType
 });
 
-export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
-export const toggleResourceMenu = isShown => ({
-  type: TOGGLE_RESOURCE_MENU,
-  isShown
-});
+// export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
+// export const toggleResourceMenu = isShown => ({
+//   type: TOGGLE_RESOURCE_MENU,
+//   isShown
+// });
 
 export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
 export const PHLASK_TYPE_FOOD = 'PHLASK_TYPE_FOOD';

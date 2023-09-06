@@ -269,6 +269,7 @@ class SelectedTap extends React.Component {
                 transform: 'translateY(-50%)'
               }}
             >
+
               {/* <DialogTitle>Dialog Title</DialogTitle> */}
 
               <div
@@ -284,26 +285,35 @@ class SelectedTap extends React.Component {
                     this.toggleInfoWindow(false);
                   }}
                 >
-                  <div
-                    id="close-arrow-desktop"
-                    className={styles.closeIconWrapper}
-                  >
-                    <FontAwesomeIcon
-                      className={styles.closeIcon}
-                      color="#999"
-                      icon={faCaretLeft}
-                    />
-                  </div>
-                </button>
-                {/* Location Name */}
-                <div
-                  ref={this.refContentArea}
-                  className={
-                    this.props.infoIsExpanded
-                      ? styles.tapContentExpanded
-                      : styles.tapContent
+
+              <div id="close-arrow-desktop" className={styles.closeIconWrapper}>
+                <FontAwesomeIcon
+                  className={styles.closeIcon}
+                  color="#999"
+                  icon={faCaretLeft}
+                />
+              </div>
+            </button>
+            </div>
+            {/* Location Name */}
+            <div
+              ref={this.refContentArea}
+              className={
+                this.props.infoIsExpanded
+                  ? styles.tapContentExpanded
+                  : styles.tapContent
+              }
+            >
+              {/* Main Image */}
+
+              <div id="tap-info-img-box-desktop">
+                <img
+                  id="tap-info-img"
+                  src={tempImages.tapImg}
+                  srcSet={
+                    tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
                   }
-                >
+                ></img>
                   {/* Main Image */}
 
                   <div id="tap-info-img-box-desktop">
