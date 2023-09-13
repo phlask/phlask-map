@@ -1,6 +1,15 @@
-import { Box, Collapse, Paper } from '@mui/material';
-import { React } from 'react';
+import { Box, Button, Collapse, Paper } from '@mui/material';
+import React, { useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { connect } from 'react-redux';
+import {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal
+} from '../../actions/actions';
 import styles from './Filter.module.scss';
 
 const FilterTags = props => (
@@ -16,6 +25,7 @@ const FilterTags = props => (
         }
         onClick={() => {
           props.handleTag(0, props.filterType, props.index, key);
+          props.forceUpdate();
         }}
       >
         <p>{tag}</p>
@@ -37,6 +47,7 @@ const FilterTagsExclusive = props => (
         }
         onClick={() => {
           props.handleTag(1, props.filterType, props.index, key);
+          props.forceUpdate();
         }}
       >
         <p>{tag}</p>
@@ -55,75 +66,138 @@ export { filterTypes };
 
 let filterType = filterTypes.WATER;
 
-export default function Filter(props) {
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  return () => setValue(value => value + 1);
+}
+
+function Filter(props) {
+  const forceUpdate = useForceUpdate();
+
   return (
     <>
-      {true && (
-        <>
-          {!isMobile && (
-            <>
-              <Paper
-                sx={{
-                  position: 'absolute',
-                  left: '32px',
-                  bottom: '133px',
-                  width: '526.25px',
-                  borderRadius: '10px'
-                }}
-              >
-                <Collapse in={props.open} orientation="vertical" timeout="auto">
-                  {
-                    <>
-                      <Box className={styles.header}>
-                        <h1>{props.filters[filterType].title}</h1>
-                      </Box>
+      {!isMobile && (
+        <Paper
+          sx={{
+            position: 'absolute',
+            left: '32px',
+            bottom: '133px',
+            width: '526.25px',
+            borderRadius: '10px'
+          }}
+        >
+          <Collapse
+            in={props.toolbarModal == TOOLBAR_MODAL_FILTER}
+            orientation="vertical"
+            timeout="auto"
+          >
+            {
+              <>
+                <Box className={styles.header}>
+                  <h1>{props.filters[filterType].title}</h1>
+                </Box>
 
-                      <Box sx={{ margin: '20px' }}>
-                        {props.filters[filterType].categories.map(
-                          (category, index) => {
-                            if (category.type == 0) {
-                              return (
-                                <>
-                                  <h2 className={styles.label}>
-                                    {category.header}
-                                  </h2>
-                                  <FilterTags
-                                    tags={category.tags}
-                                    filterType={filterType}
-                                    index={index}
-                                    handleTag={props.handleTag}
-                                    activeTags={props.activeTags}
-                                  />
-                                </>
-                              );
-                            } else if (category.type == 1) {
-                              return (
-                                <>
-                                  <h2 className={styles.label}>
-                                    {category.header}
-                                  </h2>
-                                  <FilterTagsExclusive
-                                    tags={category.tags}
-                                    filterType={filterType}
-                                    index={index}
-                                    handleTag={props.handleTag}
-                                    activeTags={props.activeTags}
-                                  />
-                                </>
-                              );
-                            }
-                          }
-                        )}
-                      </Box>
-                    </>
-                  }
-                </Collapse>
-              </Paper>
-            </>
-          )}
-          {isMobile && <Paper></Paper>}
-        </>
+                <Box sx={{ margin: '20px' }}>
+                  {props.filters[filterType].categories.map(
+                    (category, index) => {
+                      return (
+                        <>
+                          <h2 className={styles.label}>{category.header}</h2>
+                          {category.type == 0 ? (
+                            <FilterTags
+                              tags={category.tags}
+                              filterType={filterType}
+                              index={index}
+                              handleTag={props.handleTag}
+                              activeTags={props.activeTags}
+                              forceUpdate={forceUpdate}
+                            />
+                          ) : (
+                            <FilterTagsExclusive
+                              tags={category.tags}
+                              filterType={filterType}
+                              index={index}
+                              handleTag={props.handleTag}
+                              activeTags={props.activeTags}
+                              forceUpdate={forceUpdate}
+                            />
+                          )}
+                        </>
+                      );
+                    }
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    marginBottom: '10px',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+                    fontSize: '16.8px',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                >
+                  <Box
+                    sx={{
+                      margin: '10px 20px'
+                    }}
+                  >
+                    <p
+                      onClick={props.clearAll}
+                      style={{
+                        margin: 0,
+                        width: 'fit-content',
+                        position: 'relative',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        borderBottom: '2px solid #2D3748',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        userSelect: 'none'
+                      }}
+                    >
+                      Clear All
+                    </p>
+                  </Box>
+                  <Box>
+                    <Button
+                      onClick={props.applyTags}
+                      style={{
+                        marginRight: '20px',
+                        padding: '10px 20px',
+                        width: 'fit-content',
+                        position: 'relative',
+                        float: 'right',
+                        border: '1px solid #09A2E5',
+                        borderRadius: '8px',
+                        fontWeight: '600',
+                        color: '#09A2E5'
+                      }}
+                    >
+                      Apply
+                    </Button>
+                  </Box>
+                </Box>
+              </>
+            }
+          </Collapse>
+        </Paper>
       )}
+      {isMobile && <Paper></Paper>}
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  toolbarModal: state.toolbarModal
+});
+
+const mapDispatchToProps = {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

@@ -1,18 +1,18 @@
-import styles from './AddTapModal.module.scss';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import firebase from 'firebase/compat/app';
 import React, { Component } from 'react';
 import {
-  Modal,
+  Accordion,
   Button,
   Form,
+  Modal,
   OverlayTrigger,
-  Popover,
-  Accordion
+  Popover
 } from 'react-bootstrap';
-import ImageUploader from 'react-images-upload';
-import firebase from 'firebase/compat/app';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { isMobile } from 'react-device-detect';
+import ImageUploader from 'react-images-upload';
+import styles from './AddTapModal.module.scss';
 
 export class AddTapModal extends Component {
   constructor(props) {

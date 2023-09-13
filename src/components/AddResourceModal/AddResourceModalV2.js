@@ -3,6 +3,15 @@ import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { createRef, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal
+} from '../../actions/actions';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import ChooseResource from './ChooseResource';
 
@@ -10,7 +19,11 @@ const AddResourceModalV2 = props => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const onClose = () => props.setOpenResourceModal(false);
+  const onClose = () => {
+    if (props.toolbarModal == TOOLBAR_MODAL_RESOURCE) {
+      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+    }
+  };
 
   const refNode = createRef();
   //useOnClickOutside(refNode, () => onClose());
@@ -26,7 +39,9 @@ const AddResourceModalV2 = props => {
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          props.setOpenResourceModal(false);
+          if (props.toolbarModal == TOOLBAR_MODAL_RESOURCE) {
+            props.setToolbarModal(TOOLBAR_MODAL_NONE);
+          }
         }
       }
       // Bind the event listener
@@ -44,10 +59,15 @@ const AddResourceModalV2 = props => {
   return (
     <>
       {fullScreen
-        ? props.open && (
+        ? props.toolbarModal == TOOLBAR_MODAL_RESOURCE && (
             <Box
               ref={refNode}
-              style={{ display: props.open ? 'inline' : 'none' }}
+              style={{
+                display:
+                  props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                    ? 'inline'
+                    : 'none'
+              }}
               bgcolor={'white'}
               sx={{
                 borderRadius: '10px',
@@ -60,10 +80,9 @@ const AddResourceModalV2 = props => {
               <ChooseResource setFormStep={() => {}} />
             </Box>
           )
-        : props.open && (
+        : props.toolbarModal == TOOLBAR_MODAL_RESOURCE && (
             <Paper
               ref={wrapperRef}
-              open={props.open}
               onClose={onClose}
               sx={{
                 position: 'absolute',
@@ -96,4 +115,17 @@ const AddResourceModalV2 = props => {
   );
 };
 
-export default AddResourceModalV2;
+const mapStateToProps = state => ({
+  toolbarModal: state.toolbarModal
+});
+
+const mapDispatchToProps = {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddResourceModalV2);

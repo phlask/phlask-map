@@ -247,22 +247,22 @@ const filters = {
   }
 };
 
+let noActiveFilterTags = {};
+for (const [key, value] of Object.entries(filters)) {
+  let data = [];
+  value.categories.map(category => {
+    if (category.type == 0) {
+      data.push(new Array(category.tags.length).fill(false));
+    } else {
+      data.push(null);
+    }
+  });
+  noActiveFilterTags[key] = data;
+}
+
 export class ReactGoogleMaps extends Component {
   constructor(props) {
     super(props);
-
-    let activeFilterTags_ = {};
-    for (const [key, value] of Object.entries(filters)) {
-      let data = [];
-      value.categories.map(category => {
-        if (category.type == 0) {
-          data.push(new Array(category.tags.length).fill(false));
-        } else {
-          data.push(null);
-        }
-      });
-      activeFilterTags_[key] = data;
-    }
 
     this.state = {
       isExpanded: false,
@@ -279,13 +279,11 @@ export class ReactGoogleMaps extends Component {
       zoom: 16,
       searchedTap: null,
       anchor: false,
-      openResourceModal: false,
-      openFilter: false,
       map: null,
-      activeFilterTags: activeFilterTags_
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags)),
+      appliedFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    console.log(this.props);
     this.onIdle = this.onIdle.bind(this);
   }
 
@@ -427,8 +425,22 @@ export class ReactGoogleMaps extends Component {
       } else {
         activeFilterTags_[filterType][index] = key;
       }
-      this.setState({ activeFilterTags: activeFilterTags_ });
+      this.setState({
+        activeFilterTags: activeFilterTags_
+      });
     }
+  };
+
+  clearAllTags = () => {
+    this.setState({
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
+    });
+  };
+
+  applyTags = () => {
+    this.setState({
+      appliedFilterTags: JSON.parse(JSON.stringify(this.state.activeFilterTags))
+    });
   };
 
   render() {
@@ -463,6 +475,7 @@ export class ReactGoogleMaps extends Component {
                 lat: this.state.currlat,
                 lng: this.state.currlon
               }}
+              filterTags={this.state.appliedFilterTags}
             >
               {/* <TypeToggle/> */}
 
@@ -482,7 +495,7 @@ export class ReactGoogleMaps extends Component {
                   lat: this.state.currlat,
                   lng: this.state.currlon
                 }}
-                filterTags={this.state.activeFilterTags}
+                filterTags={this.state.appliedFilterTags}
               />
 
               {this.state.searchedTap != null && (
@@ -505,32 +518,14 @@ export class ReactGoogleMaps extends Component {
             />
           </Stack>
           <Filter
-            open={this.state.openFilter}
             filters={filters}
             handleTag={this.handleTag}
+            clearAll={this.clearAllTags}
+            applyTags={this.applyTags}
             activeTags={this.state.activeFilterTags}
           />
-          <AddResourceModalV2
-            open={this.state.openResourceModal}
-            setOpenResourceModal={() =>
-              this.setState(prev => {
-                return { openResourceModal: !prev.openResourceModal };
-              })
-            }
-          />
-          <Toolbar
-            setOpenFilter={() =>
-              this.setState(prev => {
-                return { openFilter: !prev.openFilter };
-              })
-            }
-            setOpenResourceModal={() =>
-              this.setState(prev => {
-                return { openResourceModal: !prev.openResourceModal };
-              })
-            }
-          />{' '}
-          {/* TODO: Remove position-related styling from this component */}
+          <AddResourceModalV2 />
+          <Toolbar />
         </Stack>
         <SelectedTap />
       </div>

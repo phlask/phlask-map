@@ -1,5 +1,5 @@
 import { Marker } from 'google-maps-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   getTaps,
@@ -10,21 +10,25 @@ import {
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
 import IndieMarker from '../IndieMarker/IndieMarker';
 
-export function MapMarkers({
+const filterHelper = (activeTag, conditionMet) => {
+  return (activeTag && conditionMet) || !activeTag;
+};
+
+const MapMarkers = ({
   allTaps = [],
   visibleTaps = [],
   getTaps,
   map,
   google,
   mapCenter,
-  filterTags
-}) {
-  React.useEffect(() => {
+  filterTags,
+  filterType
+}) => {
+  useEffect(() => {
     if (!allTaps.length && getTaps) getTaps();
   }, [allTaps, getTaps]);
+  // if (!visibleTaps.length) return null;
 
-  if (!visibleTaps.length) return null;
-  console.log(filterTags);
   return (
     <>
       <Marker
@@ -35,11 +39,48 @@ export function MapMarkers({
         position={mapCenter}
       />
       {visibleTaps.map((tap, index) => {
-        return <IndieMarker key={index} tap={tap} google={google} map={map} />;
+        if (
+          filterHelper(
+            filterTags[filterType][0][0],
+            tap['tap_type'] == 'Drinking Fountain' ||
+              tap['tap_type'] == 'Bottle filler and fountain'
+          ) &&
+          filterHelper(
+            filterTags[filterType][0][1],
+            tap['tap_type'] == 'Bottle filler and fountain'
+          ) &&
+          filterHelper(
+            filterTags[filterType][0][2],
+            tap['tap_type'] == 'Sink'
+          ) &&
+          filterHelper(
+            filterTags[filterType][1][0],
+            tap['handicap'] == 'Yes'
+          ) &&
+          filterHelper(
+            filterTags[filterType][1][1],
+            tap['filtration'] == 'Yes'
+          ) &&
+          filterHelper(filterTags[filterType][1][2], tap['vessel'] == 'Yes') &&
+          filterHelper(
+            filterTags[filterType][2] == 0,
+            tap['access'] == 'Public'
+          ) &&
+          filterHelper(
+            filterTags[filterType][2] == 1,
+            tap['access'] == 'Restricted' ||
+              tap['access'] == 'Private' ||
+              tap['access'] == 'Private-Shared'
+          )
+        ) {
+          return (
+            <IndieMarker key={index} tap={tap} google={google} map={map} />
+          );
+        }
       })}
     </>
   );
-}
+};
 
 const makeMapStateToProps = () => {
   const getVisibleTaps = makeGetVisibleTaps();
@@ -63,13 +104,4 @@ const mapDispatchToProps = {
   setMapCenter
 };
 
-export default connect(
-  makeMapStateToProps,
-  mapDispatchToProps
-)(
-  React.memo(
-    MapMarkers,
-    (prevState, nextState) =>
-      prevState.visibleTaps.length === nextState.visibleTaps.length
-  )
-);
+export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);
