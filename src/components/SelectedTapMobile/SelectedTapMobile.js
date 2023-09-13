@@ -12,7 +12,8 @@ function SelectedTapMobile(props) {
   const [tags, setTags] = useState([]);
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
-  const { image, estWalkTime, selectedPlace, infoCollapse, setInfoCollapse } = props;
+  const { image, estWalkTime, selectedPlace, infoCollapse, setInfoCollapse } =
+    props;
 
   const { organization, address, infoIcon } = selectedPlace;
 
@@ -26,7 +27,8 @@ function SelectedTapMobile(props) {
     fontSize: 16,
     borderRadius: '8px',
     textTransform: 'none',
-    backgroundColor: '#00A5EE'
+    backgroundColor: '#00A5EE',
+    width: '100%'
   };
 
   const TagButton = styled(Button)({
