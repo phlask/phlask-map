@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ImageUploader from 'react-images-upload';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng
-} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocode, setDefaults, RequestType } from 'react-geocode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './AddResourceModal.module.scss';
@@ -116,17 +114,21 @@ function AddForaging({
     }
   ];
 
-  // const addressLinkOnClick = () => {
-  //   const currAddress = getCurrentAddress();
+  const userLocation = useSelector(state => state.userLocation);
 
-  //   if (currAddress) {
-  //     address = currAddress;
-  //   }
-  // };
+  useEffect(() => {
+    setDefaults({
+      // Default values for 'react-geocode'. Used same API key as the one used for 'google-maps-react'
+      key: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I', // Your API key here.
+      language: 'en', // Default language for responses.
+      region: 'es' // Default region for responses.
+    });
+  }, []);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm();
 
@@ -230,7 +232,17 @@ function AddForaging({
                         error={errors.address ? true : false}
                         FormHelperTextProps={{
                           sx: { marginLeft: 'auto', marginRight: 0 },
-                          onClick: onAddressClick
+                          onClick: () => {
+                            // Will autofill the street address textbox with user's current address,
+                            // after clicking 'use my address instead'
+                            const { lat, lng } = userLocation;
+                            geocode(RequestType.LATLNG, `${lat},${lng}`)
+                              .then(({ results }) => {
+                                const addr = results[0].formatted_address;
+                                setValue('address', addr); //react-hook-form setValue
+                              })
+                              .catch(console.error);
+                          }
                         }}
                         style={{ backgroundColor: 'white' }}
                         InputLabelProps={{ shrink: true }}

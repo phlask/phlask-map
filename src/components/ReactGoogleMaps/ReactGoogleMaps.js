@@ -1,4 +1,4 @@
-import { Map, GoogleApiWrapper, Marker, geocoder } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import ReactTouchEvents from 'react-touch-events';
 import SearchBar from '../SearchBar/SearchBar';
@@ -288,26 +288,26 @@ export class ReactGoogleMaps extends Component {
     }));
   };
 
-  getCurrentAddress = () => {
-    let address = '';
-    const coord = {
-      lat: this.state.currlat,
-      lng: this.state.currlon
-    };
+  // getCurrentAddress = () => {
+  //   let address = '';
+  //   const coord = {
+  //     lat: this.state.currlat,
+  //     lng: this.state.currlon
+  //   };
 
-    geocoder
-      .geocode({ location: coord })
-      .then(response => {
-        if (response.results[0]) {
-          address = response.results[0].formatted_address;
-        } else {
-          window.alert('No results found. Try typing the address instead');
-        }
-      })
-      .catch(error => window.alert('Geocoder failed due to: ' + error));
+  //   geocoder
+  //     .geocode({ location: coord })
+  //     .then(response => {
+  //       if (response.results[0]) {
+  //         address = response.results[0].formatted_address;
+  //       } else {
+  //         window.alert('No results found. Try typing the address instead');
+  //       }
+  //     })
+  //     .catch(error => window.alert('Geocoder failed due to: ' + error));
 
-    return address;
-  };
+  //   return address;
+  // };
 
   render() {
     return (
