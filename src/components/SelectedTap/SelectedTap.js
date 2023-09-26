@@ -240,7 +240,6 @@ class SelectedTap extends React.Component {
             ref={this.refSelectedTap}
             id="tap-info-container"
             className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
-            style={{}}
           >
             <button
               className={styles.closeButton}
