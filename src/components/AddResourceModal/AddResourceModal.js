@@ -160,15 +160,6 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onClickAddress() {
-    const currAddressLocation = getCurrentAddress();
-    if (currAddressLocation) {
-      this.setState({
-        address: currAddressLocation
-      });
-    }
-  }
-
   onChangeWebsite(e) {
     this.setState({
       website: e.target.value
