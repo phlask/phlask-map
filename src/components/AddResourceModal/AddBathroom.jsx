@@ -167,10 +167,6 @@ function AddBathroom({
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
-            //e.preventDefault();
-            console.log('submit');
-            console.log(e);
-            console.log(data);
             onSubmit(e).then(() => {
               next();
             });
@@ -227,13 +223,10 @@ function AddBathroom({
                       onChange={e => {
                         onAddressChange(e);
                         onChange(e);
-                        console.log('autocomoplete onchange');
-                        console.log(address);
                       }}
                       onSelect={e => {
                         onAddressChange(e);
                         onChange(e);
-                        console.log('autocomoplete onselect');
                       }}
                     >
                       {({
@@ -251,7 +244,6 @@ function AddBathroom({
                             onChange={e => {
                               onAddressChange(e);
                               onChange(e);
-                              console.log('textfield onchange');
                             }}
                             helperText={
                               <Stack>
@@ -386,7 +378,6 @@ function AddBathroom({
                   onChange={e => {
                     onChange(e);
                     onAccessChange(e);
-                    // console.log(rest.value);
                   }}
                   error={errors.organization ? true : false}
                   InputLabelProps={{ shrink: true }}
@@ -456,7 +447,6 @@ function AddBathroom({
                                 onChange={e => {
                                   onChange(e);
                                   info.onChange(e);
-                                  // console.log(rest);
                                 }}
                               />
                             )}
@@ -493,9 +483,6 @@ function AddBathroom({
             <Button
               type="submit"
               variant="contained"
-              // onClick={handleSubmit(() => {
-              //   console.log(BATHROOM_HELPFUL_INFO);
-              // })}
               style={{
                 borderRadius: '8px',
                 width: '25%',
