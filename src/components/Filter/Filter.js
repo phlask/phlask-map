@@ -1,15 +1,8 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { connect } from 'react-redux';
-import {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  setToolbarModal
-} from '../../actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { TOOLBAR_MODAL_FILTER } from '../../actions/actions';
 import styles from './Filter.module.scss';
 
 const FilterTags = props => (
@@ -71,9 +64,10 @@ function useForceUpdate() {
   return () => setValue(value => value + 1);
 }
 
-function Filter(props) {
+export default function Filter(props) {
   const forceUpdate = useForceUpdate();
-
+  const dispatch = useDispatch();
+  const toolbarModal = useSelector(state => state.toolbarModal);
   return (
     <>
       {!isMobile && (
@@ -87,7 +81,7 @@ function Filter(props) {
           }}
         >
           <Collapse
-            in={props.toolbarModal == TOOLBAR_MODAL_FILTER}
+            in={toolbarModal == TOOLBAR_MODAL_FILTER}
             orientation="vertical"
             timeout="auto"
           >
@@ -186,18 +180,3 @@ function Filter(props) {
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  toolbarModal: state.toolbarModal
-});
-
-const mapDispatchToProps = {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
-  setToolbarModal
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
