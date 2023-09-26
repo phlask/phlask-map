@@ -60,6 +60,7 @@ export class AddResourceModal extends Component {
     this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this);
     this.onChangeFamilyBathroom = this.onChangeFamilyBathroom.bind(this);
     this.onChangeSingleOccupancy = this.onChangeSingleOccupancy.bind(this);
+    this.onChangeHasFountain = this.onChangeHasFountain.bind(this);
 
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
