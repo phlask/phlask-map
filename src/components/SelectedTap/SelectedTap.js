@@ -26,6 +26,9 @@ import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
 import { makeStyles, withStyles } from '@mui/styles';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import { positions } from '@mui/system';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -278,6 +281,37 @@ class SelectedTap extends React.Component {
                 size="large"
               >
                 <CloseIcon />
+              </IconButton>
+
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(true);
+                }}
+                sx={{
+                  float: 'right',
+                  right: 90,
+                  top: 20,
+                  color: theme => theme.palette.grey[500]
+                }}
+                size="large"
+              >
+                <IosShareIcon />
+              </IconButton>
+
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(true);
+                }}
+                sx={{
+                  float: 'right',
+                  top: 20,
+                  color: theme => theme.palette.grey[500]
+                }}
+                size="large"
+              >
+                <MoreHorizIcon />
               </IconButton>
 
               {/* Location Name */}
