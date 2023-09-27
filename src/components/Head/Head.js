@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FilterDrawer from '../FilterDrawer/FilterDrawer';
+import Filter from '../Filter/Filter.js';
 import About from '../Pages/About.js';
 import Contact from '../Pages/Contact.js';
 import Join from '../Pages/Join.js';
@@ -214,7 +214,7 @@ export default function Head() {
         <>
           <Sidebar
             open={sidebarOpen}
-            setOpen={setSidebarOpen}
+            setOpenResourceModal={setSidebarOpen}
             showControls={setShowMapControls}
           />
           <AppBar>
@@ -266,7 +266,7 @@ export default function Head() {
               ) : null}
             </Toolbar>
           </AppBar>
-          <FilterDrawer />
+          <Filter />
         </>
       ) : (
         <Box
@@ -366,11 +366,7 @@ export default function Head() {
                 ></Box>
               </Collapse>
             </Box>
-            <Collapse
-              orientation="horizontal"
-              in={pageExpand}
-              timeout="auto"
-            >
+            <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
               <Box
                 sx={{
                   width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
