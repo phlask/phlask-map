@@ -17,7 +17,7 @@ import sampleImg from '../images/phlask-tessellation.png';
 import sampleImg2x from '../images/phlask-tessellation@2x.png';
 import phlaskBlue from '../images/phlaskBlue.png';
 import phlaskGreen from '../images/phlaskGreen.png';
-import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
+// import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import './SelectedTap.css';
 import styles from './SelectedTap.module.scss';
 
@@ -28,7 +28,7 @@ import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
 import { makeStyles, withStyles } from '@mui/styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IosShareIcon from '@mui/icons-material/IosShare';
-import { positions } from '@mui/system';
+import CloseIcon from '@mui/icons-material/Close';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -274,13 +274,17 @@ class SelectedTap extends React.Component {
                 }}
                 sx={{
                   position: 'absolute',
-                  left: 20,
+                  left: '45px',
                   top: 20,
-                  color: theme => theme.palette.grey[500]
+                  color: '#000000'
                 }}
                 size="large"
               >
-                <CloseIcon />
+                <CloseIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
               </IconButton>
 
               <IconButton
@@ -290,13 +294,17 @@ class SelectedTap extends React.Component {
                 }}
                 sx={{
                   float: 'right',
-                  right: 90,
+                  right: '150px',
                   top: 20,
-                  color: theme => theme.palette.grey[500]
+                  color: '#000000'
                 }}
-                size="large"
+                // size="large"
               >
-                <IosShareIcon />
+                <IosShareIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
               </IconButton>
 
               <IconButton
@@ -307,11 +315,14 @@ class SelectedTap extends React.Component {
                 sx={{
                   float: 'right',
                   top: 20,
-                  color: theme => theme.palette.grey[500]
+                  color: '#000000'
                 }}
-                size="large"
               >
-                <MoreHorizIcon />
+                <MoreHorizIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
               </IconButton>
 
               {/* Location Name */}
