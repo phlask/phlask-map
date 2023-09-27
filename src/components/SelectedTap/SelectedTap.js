@@ -25,13 +25,6 @@ import { Paper, SwipeableDrawer } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button
-} from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
 
 const tempImages = {
@@ -45,9 +38,6 @@ const useStyles = makeStyles({
     right: '20px'
   }
 });
-
-// const MyDialog = () => {
-// const classes = useStyles();
 
 class SelectedTap extends React.Component {
   refSelectedTap = React.createRef();
