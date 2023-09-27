@@ -17,10 +17,12 @@ import sampleImg from '../images/phlask-tessellation.png';
 import sampleImg2x from '../images/phlask-tessellation@2x.png';
 import phlaskBlue from '../images/phlaskBlue.png';
 import phlaskGreen from '../images/phlaskGreen.png';
+import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import './SelectedTap.css';
 import styles from './SelectedTap.module.scss';
 
 import { Paper, SwipeableDrawer } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
 import {
@@ -265,36 +267,31 @@ class SelectedTap extends React.Component {
               sx={{
                 position: 'absolute',
                 right: '32px',
-                top: '50%',
-                transform: 'translateY(-50%)'
+                top: '20px',
+                width: '708px',
+                height: '700px'
               }}
             >
 
               {/* <DialogTitle>Dialog Title</DialogTitle> */}
-
-              <div
-                ref={this.refSelectedTap}
-                id="tap-info-container"
-                className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
-                style={{}}
+            
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(false);
+                }}
+                sx={{
+                  position: 'absolute',
+                  left: 20,
+                  top: 20,
+                  color: theme => theme.palette.grey[500]
+                }}
+                size="large"
               >
-                <button
-                  className={styles.closeButton}
-                  aria-label="Close"
-                  onClick={() => {
-                    this.toggleInfoWindow(false);
-                  }}
-                >
+                <CloseIcon />
+              </IconButton>
+            
 
-              <div id="close-arrow-desktop" className={styles.closeIconWrapper}>
-                <FontAwesomeIcon
-                  className={styles.closeIcon}
-                  color="#999"
-                  icon={faCaretLeft}
-                />
-              </div>
-            </button>
-            </div>
             {/* Location Name */}
             <div
               ref={this.refContentArea}
@@ -314,18 +311,8 @@ class SelectedTap extends React.Component {
                     tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
                   }
                 ></img>
+              </div>
                   {/* Main Image */}
-
-                  <div id="tap-info-img-box-desktop">
-                    <img
-                      id="tap-info-img"
-                      src={tempImages.tapImg}
-                      srcSet={
-                        tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                      }
-                      alt=""
-                    ></img>
-                  </div>
 
                   <div id="tap-head-info">
                     {/* Tap Type Icon */}
@@ -393,7 +380,6 @@ class SelectedTap extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
             </Paper>
           </div>
