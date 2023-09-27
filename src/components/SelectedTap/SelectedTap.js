@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 import ReactGA from 'react-ga4';
@@ -17,7 +15,6 @@ import sampleImg from '../images/phlask-tessellation.png';
 import sampleImg2x from '../images/phlask-tessellation@2x.png';
 import phlaskBlue from '../images/phlaskBlue.png';
 import phlaskGreen from '../images/phlaskGreen.png';
-// import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import './SelectedTap.css';
 import styles from './SelectedTap.module.scss';
 
