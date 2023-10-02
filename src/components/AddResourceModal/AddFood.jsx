@@ -12,7 +12,7 @@ import SharedFormFields from './SharedFormFields';
 import SharedAccordionFields from './SharedAccordionFields';
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import {
   Accordion,
   AccordionDetails,
@@ -40,16 +40,6 @@ import {
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const FOOD_TYPE = [
-  { accessType: 'Perishable', explanation: 'Fruit, vegetables, dairy, etc.' },
-  {
-    accessType: 'Non-perishable',
-    explanation: 'Canned, boxed, pantry items, etc.'
-  },
-  { accessType: 'Prepared food and meals', explanation: '' },
-  { accessType: 'Other' }
-];
-
 const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
 const DISTRIBUTION_TYPE = ['Eat on site', 'Delivery', 'Pickup', 'Other'];
 
@@ -76,11 +66,20 @@ function AddFood({
   childrenOnly,
   onChildrenOnlyChange,
   communityFridges,
-  onCommunityFridgeChanges,
+  onCommunityFridgesChange,
   consumptionType, // Distribution Type
   onConsumptionTypeChange,
   foodType,
   onFoodTypeChange,
+  perishable,
+  onPerishableChange,
+  nonPerishable,
+  onNonPerishableChange,
+  prepared,
+  onPreparedChange,
+  other,
+  onOtherChange,
+
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
@@ -121,7 +120,34 @@ function AddFood({
     {
       label: 'Community fridges, etc.',
       value: communityFridges,
-      onChange: onCommunityFridgeChanges
+      onChange: onCommunityFridgesChange
+    }
+  ];
+
+  const FOOD_TYPE = [
+    {
+      accessType: 'Perishable',
+      explanation: 'Fruit, vegetables, dairy, etc.',
+      value: perishable,
+      onChange: onPerishableChange
+    },
+    {
+      accessType: 'Non-perishable',
+      explanation: 'Canned, boxed, pantry items, etc.',
+      value: nonPerishable,
+      onChange: onNonPerishableChange
+    },
+    {
+      accessType: 'Prepared food and meals',
+      explanation: '',
+      value: prepared,
+      onChange: onPreparedChange
+    },
+    {
+      accessType: 'Other',
+      explanation: '',
+      value: other,
+      onChange: onOtherChange
     }
   ];
 
@@ -140,6 +166,7 @@ function AddFood({
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors }
   } = useForm();
 
@@ -171,8 +198,7 @@ function AddFood({
       </Typography>
       <CardContent>
         <form
-          onSubmit={handleSubmit(e => {
-            e.preventDefault();
+          onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
               next();
             });
@@ -191,159 +217,226 @@ function AddFood({
 
             <FormControl>
               <Stack spacing={4} justifyContent="center">
-                <TextField
-                  id="name"
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
                   name="name"
-                  label="Name"
+                  defaultValue={''}
                   value={name}
-                  helperText={
-                    <span>
-                      {errors.name && requiredFieldMsg}
-                      Enter a name for the resource. (Example: City Hall)
-                    </span>
-                  }
-                  {...register('name', {
-                    required: true,
-                    onChange: onNameChange
-                  })}
-                  error={errors.name ? true : false}
-                  InputLabelProps={{ shrink: true }}
-                />
-                <PlacesAutocomplete
-                  value={address}
-                  onChange={onAddressChange}
-                  onSelect={onAddressChange}
-                >
-                  {({
-                    getInputProps,
-                    suggestions,
-                    getSuggestionItemProps,
-                    loading
-                  }) => (
-                    <div>
-                      <TextField
-                        id="address"
-                        name="address"
-                        label="Street address *"
-                        value={address}
-                        helperText={
-                          <Stack>
-                            {errors.address && requiredFieldMsg}
-                            <Link>
-                              {'Use my location instead  '}
-                              <MyLocationIcon sx={{ fontSize: 10 }} />
-                            </Link>
-                          </Stack>
-                        }
-                        {...register('address', {
-                          required: true,
-                          onChange: onAddressChange
-                        })}
-                        error={errors.address ? true : false}
-                        FormHelperTextProps={{
-                          sx: { marginLeft: 'auto', marginRight: 0 },
-                          onClick: () => {
-                            // Will autofill the street address textbox with user's current address,
-                            // after clicking 'use my address instead'
-                            const { lat, lng } = userLocation;
-                            geocode(RequestType.LATLNG, `${lat},${lng}`)
-                              .then(({ results }) => {
-                                const addr = results[0].formatted_address;
-                                setValue('address', addr); //react-hook-form setValue
-                              })
-                              .catch(console.error);
-                          }
-                        }}
-                        style={{ backgroundColor: 'white' }}
-                        InputLabelProps={{ shrink: true }}
-                        {...getInputProps({
-                          className: 'modalAddressAutofill',
-                          id: 'address'
-                        })}
-                        className={styles.modalAddressAutofill}
-                      />
-                      <div className="autocomplete-dropdown-container">
-                        {loading && <div>Loading...</div>}
-                        {suggestions.map((suggestion, i) => {
-                          const className = suggestion.active
-                            ? 'suggestion-item--active'
-                            : 'suggestion-item';
-                          // inline style for demonstration purpose
-                          const style = suggestion.active
-                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                          return (
-                            <div
-                              {...getSuggestionItemProps(suggestion, {
-                                className,
-                                style
-                              })}
-                              key={i}
-                            >
-                              <span>{suggestion.description}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="name"
+                      label="Name"
+                      onChange={e => {
+                        onChange(e);
+                        onNameChange(e);
+                        console.log('name');
+                        console.log(rest.value);
+                      }}
+                      helperText={
+                        <span>
+                          {errors.name && requiredFieldMsg}
+                          Enter a name for the resource. (Example: City Hall)
+                        </span>
+                      }
+                      error={errors.name ? true : false}
+                      InputLabelProps={{ shrink: true }}
+                    />
                   )}
-                </PlacesAutocomplete>
-                <TextField
-                  id="website"
-                  name="website"
-                  label="Website"
-                  value={website}
-                  {...register('website', {
-                    // regex meaning 1 or more characters, followed by exactly 1 ".",
-                    // followed by a 2 or 3 letter top level domain (e.g.: .com, .io, .edu)
-                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/,
-                    onChange: onWebsiteChange
-                  })}
-                  error={errors.website ? true : false}
-                  helperText={
-                    errors.website && <span>Website is not valid</span>
-                  }
-                  InputLabelProps={{ shrink: true }}
                 />
-                <TextField
-                  id="description"
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
+                  name="address"
+                  defaultValue={''}
+                  value={address}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <PlacesAutocomplete
+                      {...rest}
+                      onChange={e => {
+                        onAddressChange(e);
+                        onChange(e);
+                        console.log('address');
+                        console.log(rest.value);
+                      }}
+                      onSelect={e => {
+                        onAddressChange(e);
+                        onChange(e);
+                      }}
+                    >
+                      {({
+                        getInputProps,
+                        suggestions,
+                        getSuggestionItemProps,
+                        loading
+                      }) => (
+                        <div>
+                          <TextField
+                            value={rest.value}
+                            id="address"
+                            name="address-textbox"
+                            label="Street address *"
+                            onChange={e => {
+                              onAddressChange(e);
+                              onChange(e);
+                            }}
+                            helperText={
+                              <Stack>
+                                {errors.address && requiredFieldMsg}
+                                <Link onClick={() => {}}>
+                                  {'Use my location instead  '}
+                                  <MyLocationIcon sx={{ fontSize: 10 }} />
+                                </Link>
+                              </Stack>
+                            }
+                            error={errors.address ? true : false}
+                            FormHelperTextProps={{
+                              sx: { marginLeft: 'auto', marginRight: 0 },
+                              onClick: () => {
+                                // Will autofill the street address textbox with user's current address,
+                                // after clicking 'use my address instead'
+                                const { lat, lng } = userLocation;
+                                geocode(RequestType.LATLNG, `${lat},${lng}`)
+                                  .then(({ results }) => {
+                                    const addr = results[0].formatted_address;
+                                    setValue('auto-complete', addr); //react-hook-form setValue
+                                    onChange(addr);
+                                  })
+                                  .catch(console.error);
+                              }
+                            }}
+                            style={{ backgroundColor: 'white' }}
+                            InputLabelProps={{ shrink: true }}
+                            {...getInputProps({
+                              className: 'modalAddressAutofill',
+                              id: 'address'
+                            })}
+                            className={styles.modalAddressAutofill}
+                          />
+                          <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion, i) => {
+                              const className = suggestion.active
+                                ? 'suggestion-item--active'
+                                : 'suggestion-item';
+                              // inline style for demonstration purpose
+                              const style = suggestion.active
+                                ? {
+                                    backgroundColor: '#fafafa',
+                                    cursor: 'pointer'
+                                  }
+                                : {
+                                    backgroundColor: '#ffffff',
+                                    cursor: 'pointer'
+                                  };
+                              return (
+                                <div
+                                  {...getSuggestionItemProps(suggestion, {
+                                    className,
+                                    style
+                                  })}
+                                  key={i}
+                                >
+                                  <span>{suggestion.description}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
+                  )}
+                />
+                <Controller
+                  rules={{
+                    required: true,
+                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+                  }}
+                  control={control}
+                  name="website"
+                  defaultValue={''}
+                  value={website}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="website"
+                      label="Website"
+                      onChange={e => {
+                        onChange(e);
+                        onWebsiteChange(e);
+                        console.log('website');
+                        console.log(rest.value);
+                      }}
+                      error={errors.website ? true : false}
+                      helperText={
+                        errors.website && <span>Website is not valid</span>
+                      }
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
                   name="description"
-                  label="Description"
+                  defaultValue={''}
                   value={description}
-                  helperText="Explain how to access the resource."
-                  {...register('description', {
-                    onChange: onDescriptionChange
-                  })}
-                  InputLabelProps={{ shrink: true }}
-                  multiline
-                  maxRows={2}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="description"
+                      label="description"
+                      onChange={e => {
+                        onChange(e);
+                        onDescriptionChange(e);
+                        console.log('description');
+                        console.log(rest.value);
+                      }}
+                      helperText="Explain how to access the resource."
+                      InputLabelProps={{ shrink: true }}
+                      multiline
+                      maxRows={2}
+                    />
+                  )}
                 />
               </Stack>
             </FormControl>
-            <TextField
-              variant="outlined"
-              id="organization"
+            <Controller
+              control={control}
+              rules={{ required: true }}
               name="organization"
-              label="Organization Type"
-              select
+              defaultValue={''}
               value={organization}
-              helperText={errors.organization && requiredFieldMsg}
-              {...register('organization', {
-                required: true,
-                onChange: onOrganizationChange
-              })}
-              error={errors.organization ? true : false}
-              InputLabelProps={{ shrink: true }}
-            >
-              {ORGANIZATION_TYPE.map(orgType => {
-                return (
-                  // <MenuItem key={orgType} value={accessType}>
-                  <MenuItem key={orgType} value={orgType}>
-                    {orgType}
-                  </MenuItem>
-                );
-              })}
-            </TextField>
+              render={({ field: { onChange, ...rest } }) => (
+                <TextField
+                  variant="outlined"
+                  id="organization"
+                  name="organization"
+                  label="Organization Type"
+                  select
+                  value={organization}
+                  helperText={errors.organization && requiredFieldMsg}
+                  onChange={e => {
+                    onChange(e);
+                    onOrganizationChange(e);
+                    console.log('organizationtype');
+                    console.log(rest.value);
+                  }}
+                  error={errors.organization ? true : false}
+                  InputLabelProps={{ shrink: true }}
+                >
+                  {ORGANIZATION_TYPE.map(orgType => {
+                    return (
+                      // <MenuItem key={orgType} value={accessType}>
+                      <MenuItem key={orgType} value={orgType}>
+                        {orgType}
+                      </MenuItem>
+                    );
+                  })}
+                </TextField>
+              )}
+            />
+
             <FormGroup>
               <Typography>Helpful info</Typography>
               {FOOD_HELPFUL_INFO.map(info => {
@@ -352,16 +445,26 @@ function AddFood({
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Checkbox
-                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                      id={info.label}
+                    <Controller
+                      control={control}
                       name={info.label}
-                      value={false} // change info.value
-                      inputRef={{
-                        ...register(info.label, {
-                          onChange: () => {} // change info.onChange
-                        })
-                      }}
+                      defaultValue={false}
+                      value={info.value}
+                      render={({ field: { onChange, ...rest } }) => (
+                        <Checkbox
+                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                          {...rest}
+                          id={info.label}
+                          // name={info.label}
+                          // value={false}
+                          onChange={e => {
+                            onChange(e);
+                            info.onChange(e);
+                            console.log(info.label);
+                            console.log(rest.value);
+                          }}
+                        />
+                      )}
                     />
                   </MenuItem>
                 );
@@ -377,30 +480,38 @@ function AddFood({
               </AccordionSummary>
               <AccordionDetails>
                 {FOOD_TYPE.map(type => {
-                  const { accessType, explanation } = type;
                   return (
                     <MenuItem
-                      key={accessType}
+                      key={type.accessType}
                       as="label"
-                      htmlFor={accessType}
+                      htmlFor={type.accessType}
                       second
                     >
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
-                        {accessType}
-                        {explanation && (
-                          <FormHelperText>{explanation}</FormHelperText>
+                        {type.accessType}
+                        {type.explanation && (
+                          <FormHelperText>{type.explanation}</FormHelperText>
                         )}
                       </Typography>
-                      <Checkbox
-                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                        id={accessType}
-                        name={accessType}
-                        value={false} // change info.value
-                        inputRef={{
-                          ...register(accessType, {
-                            onChange: () => {} // change info.onChange
-                          })
-                        }}
+                      <Controller
+                        control={control}
+                        name={type.accessType}
+                        defaultValue={type.value}
+                        value={type.value}
+                        render={({ field: { onChange, ...rest } }) => (
+                          <Checkbox
+                            // {...rest}
+                            checked={rest.value}
+                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                            id={type.accessType}
+                            onClick={e => {
+                              onChange(e);
+                              type.onChange(e);
+                              console.log(type.value);
+                            }}
+                            ref={rest.ref}
+                          />
+                        )}
                       />
                     </MenuItem>
                   );
@@ -427,11 +538,9 @@ function AddFood({
                         id={type}
                         name={type}
                         value={false} // change info.value
-                        inputRef={{
-                          ...register(type, {
-                            onChange: () => {} // change info.onChange
-                          })
-                        }}
+                        {...register(type, {
+                          onChange: () => {} // change info.onChange
+                        })}
                       />
                     </MenuItem>
                   );
@@ -478,9 +587,6 @@ function AddFood({
             <Button
               type="submit"
               variant="contained"
-              onClick={handleSubmit(() => {
-                console.log('submit');
-              })}
               style={{
                 borderRadius: '8px',
                 width: '25%',
