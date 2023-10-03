@@ -105,6 +105,15 @@ export default function SideBar({ open, setOpen, showControls }) {
             <ListItemText>Join Team</ListItemText>
           </ListItemButton>
         </SidebarLink>
+
+        <SidebarLink to="contribute" onClick={handleClose}>
+          <ListItemButton>
+            <ListItemIcon sx={{ marginLeft: '-3px' }}>
+              <UsersIcon />
+            </ListItemIcon>
+            <ListItemText>Acknowledgements</ListItemText>
+          </ListItemButton>
+        </SidebarLink>
       </List>
     </Drawer>
   );
