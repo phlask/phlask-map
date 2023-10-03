@@ -27,9 +27,10 @@ import styles from './ReactGoogleMaps.module.scss';
 // Temporary Food/Water Toggle
 import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+import Filter, { filterTypes } from '../Filter/Filter';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -148,6 +149,117 @@ const style = {
   position: 'relative'
 };
 
+const filters = {
+  [filterTypes.WATER]: {
+    title: 'Water Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Dispenser Type',
+        tags: [
+          'Drinking fountain',
+          'Bottle filler',
+          'Sink',
+          'Water jug',
+          'Soda machine',
+          'Pitcher',
+          'Water cooler'
+        ]
+      },
+      {
+        type: 0,
+        header: 'Features',
+        tags: [
+          'ADA accessible',
+          'Filtered water',
+          'Vessel needed',
+          'ID required'
+        ]
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.FOOD]: {
+    title: 'Food Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Food Type',
+        tags: ['Perishable', 'Non-perishable', 'Prepared foods and meals']
+      },
+      {
+        type: 0,
+        header: 'Distribution type',
+        tags: ['Eat on site', 'Delivery', 'Pick up']
+      },
+      {
+        type: 1,
+        header: 'Organization type',
+        tags: ['Government', 'Business', 'Non-profit', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.FORAGING]: {
+    title: 'Foraging Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Forage type',
+        tags: ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers']
+      },
+      {
+        type: 0,
+        header: 'Features',
+        tags: ['Medicinal', 'In season', 'Community garden']
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.BATHROOM]: {
+    title: 'Bathroom Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Features',
+        tags: [
+          'ADA accessible',
+          'Gender neutral',
+          'Changing table',
+          'Single occupancy',
+          'Family bathroom',
+          'Has water fountain'
+        ]
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  }
+};
+
+let noActiveFilterTags = {};
+for (const [key, value] of Object.entries(filters)) {
+  let data = [];
+  value.categories.map(category => {
+    if (category.type == 0) {
+      data.push(new Array(category.tags.length).fill(false));
+    } else {
+      data.push(null);
+    }
+  });
+  noActiveFilterTags[key] = data;
+}
+
 export class ReactGoogleMaps extends Component {
   constructor(props) {
     super(props);
@@ -167,11 +279,11 @@ export class ReactGoogleMaps extends Component {
       zoom: 16,
       searchedTap: null,
       anchor: false,
-      openResourceModal: false,
-      map: null
+      map: null,
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags)),
+      appliedFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    console.log(this.props);
     this.onIdle = this.onIdle.bind(this);
   }
 
@@ -261,7 +373,7 @@ export class ReactGoogleMaps extends Component {
       currlon: map.center.lng()
     });
   };
-  
+
   onReady = (_, map) => {
     this.setState({ map: map });
   };
@@ -300,9 +412,46 @@ export class ReactGoogleMaps extends Component {
     }));
   };
 
+  handleTag = (type, filterType, index, key) => {
+    if (type == 0) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      activeFilterTags_[filterType][index][key] =
+        !activeFilterTags_[filterType][index][key];
+      this.setState({ activeFilterTags: activeFilterTags_ });
+    } else if (type == 1) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      if (activeFilterTags_[filterType][index] == key) {
+        activeFilterTags_[filterType][index] = null;
+      } else {
+        activeFilterTags_[filterType][index] = key;
+      }
+      this.setState({
+        activeFilterTags: activeFilterTags_
+      });
+    }
+  };
+
+  clearAllTags = () => {
+    this.setState({
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
+    });
+  };
+
+  applyTags = () => {
+    this.setState({
+      appliedFilterTags: JSON.parse(JSON.stringify(this.state.activeFilterTags))
+    });
+  };
+
   render() {
     return (
       <div id="react-google-map" className={styles.mapContainer}>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Inter:wght@500;600;700&display=swap"
+          rel="stylesheet"
+        />
         {/* <ClosestTap/> */}
         <ReactTouchEvents onTap={this.handleTap.bind(this)}>
           <div>
@@ -326,6 +475,7 @@ export class ReactGoogleMaps extends Component {
                 lat: this.state.currlat,
                 lng: this.state.currlon
               }}
+              filterTags={this.state.appliedFilterTags}
             >
               {/* <TypeToggle/> */}
 
@@ -345,6 +495,7 @@ export class ReactGoogleMaps extends Component {
                   lat: this.state.currlat,
                   lng: this.state.currlon
                 }}
+                filterTags={this.state.appliedFilterTags}
               />
 
               {this.state.searchedTap != null && (
@@ -366,22 +517,15 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
-          <AddResourceModalV2
-            open={this.state.openResourceModal}
-            setOpen={() =>
-              this.setState(prev => {
-                return { openResourceModal: !prev.openResourceModal };
-              })
-            }
+          <Filter
+            filters={filters}
+            handleTag={this.handleTag}
+            clearAll={this.clearAllTags}
+            applyTags={this.applyTags}
+            activeTags={this.state.activeFilterTags}
           />
-          <Toolbar
-            setOpen={() =>
-              this.setState(prev => {
-                return { openResourceModal: !prev.openResourceModal };
-              })
-            }
-          />{' '}
-          {/* TODO: Remove position-related styling from this component */}
+          <AddResourceModalV2 />
+          <Toolbar />
         </Stack>
         <SelectedTap />
       </div>

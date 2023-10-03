@@ -25,13 +25,13 @@ const SidebarLink = styled(NavLink)(({ theme }) => ({
   }
 }));
 
-export default function SideBar({ open, setOpen, showControls }) {
+export default function SideBar({ open, setOpenResourceModal, showControls }) {
   const handleClose = () => {
-    setOpen(false);
+    setOpenResourceModal(false);
   };
 
   const handleLogoClick = () => {
-    setOpen(false);
+    setOpenResourceModal(false);
     showControls(true);
   };
 

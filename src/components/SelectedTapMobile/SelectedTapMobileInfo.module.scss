@@ -3,11 +3,10 @@ $light-grey: #60718c;
 $lighter-grey: #e9eef4;
 
 .halfInfo {
-  & * {
-    margin: 0;
-    font-size: 14px;
-    height: 100vh;
-  }
+  margin: 0;
+  font-size: 14px;
+  height: 100vh;
+  width: 100%;
 
   padding: 10px 20px 40px;
 
@@ -53,6 +52,10 @@ $lighter-grey: #e9eef4;
 
     .mainHalfInfoText {
       margin-left: 10px;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      flex-direction: column;
 
       .organization {
         margin-bottom: 6px;

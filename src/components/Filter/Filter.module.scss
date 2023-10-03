@@ -1,0 +1,84 @@
+.header {
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background-color: #60718c;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #ffffff;
+  line-height: 24.4px;
+  font-size: 20.16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.label {
+  margin-bottom: 6px;
+  color: #2d3748;
+  line-height: 20px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.filterTags {
+  margin-bottom: 15px;
+}
+
+.filterTagsExclusive {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+.filterTag,
+.filterTagExclusive {
+  padding: 10px;
+  display: inline-block;
+  border: 1px solid #2d3748;
+  cursor: pointer;
+  transition: background-color 100ms linear;
+}
+
+.filterTagSelected {
+  background-color: #2d3748;
+}
+
+.filterTag {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+}
+
+.filterTagExclusive {
+  text-align: center;
+}
+
+.filterTagExclusive:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.filterTagExclusive:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.filterTagExclusive:not(:first-child) {
+  border-left: none;
+}
+
+.filterTag p,
+.filterTagExclusive p {
+  margin: 0;
+  user-select: none;
+  color: #2d3748;
+  transition: color 100ms linear;
+}
+
+.filterTagSelected p {
+  color: #ffffff;
+}

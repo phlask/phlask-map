@@ -22,7 +22,6 @@ import {
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
@@ -361,9 +360,7 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
+              onClick={() => props.setOpenResourceModal()}
             />
             <ResourceMenu />
             <NavigationItem
@@ -389,7 +386,7 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => props.setOpen()}
+              onClick={() => props.setOpenResourceModal()}
             />
           </BottomNavigation>
         </Box>
