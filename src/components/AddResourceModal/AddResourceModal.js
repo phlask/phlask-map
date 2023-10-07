@@ -52,6 +52,16 @@ export class AddResourceModal extends Component {
     // ADD FOOD MODAL
     this.onChangeConsumptionType = this.onChangeConsumptionType.bind(this);
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
+    this.onChangeCommunityFridges = this.onChangeCommunityFridges.bind(this);
+    this.onChangePershable = this.onChangePershable.bind(this);
+    this.onChangeNonPerishable = this.onChangeNonPerishable.bind(this);
+    this.onChangePrepared = this.onChangePrepared.bind(this);
+    this.onChangeFoodTypeOther = this.onChangeFoodTypeOther.bind(this);
+    this.onChangeEatOnSite = this.onChangeEatOnSite.bind(this);
+    this.onChangeDelivery = this.onChangeDelivery.bind(this);
+    this.onChangePickUp = this.onChangePickUp.bind(this);
+    this.onChangeDistributionTypeOther =
+      this.onChangeDistributionTypeOther.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     this.onChangeMedicinal = this.onChangeMedicinal.bind(this);
@@ -94,6 +104,14 @@ export class AddResourceModal extends Component {
       consumptionType: '',
       foodType: '',
       communityFridges: false,
+      perishable: false,
+      nonPerishable: false,
+      prepared: false,
+      foodTypeOther: false,
+      eatOnSite: false,
+      delivery: false,
+      pickUp: false,
+      distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
       medicinal: false,
@@ -174,7 +192,6 @@ export class AddResourceModal extends Component {
   }
 
   onChangeOrganization(e) {
-    // console.log("ORGANIZATION CHANGE TO " + e.target.value)
     this.setState({
       organization: e.target.value
     });
@@ -237,9 +254,56 @@ export class AddResourceModal extends Component {
   // ADD FOOD MODAL FIELDS
 
   onChangeConsumptionType(e) {
-    // console.log("CONSUMPTION CHANGE TO " + e.target.value)
     this.setState({
       consumptionType: e.target.value
+    });
+  }
+
+  onChangePershable(e) {
+    this.setState({
+      perishable: e.target.checked
+    });
+  }
+
+  onChangeNonPerishable(e) {
+    this.setState({
+      nonPerishable: e.target.checked
+    });
+  }
+
+  onChangePrepared(e) {
+    this.setState({
+      prepared: e.target.checked
+    });
+  }
+
+  onChangeFoodTypeOther(e) {
+    this.setState({
+      foodTypeOther: e.target.checked
+    });
+  }
+
+  onChangeEatOnSite(e) {
+    this.setState({
+      eatOnSite: e.target.checked
+    });
+  }
+
+  onChangeDelivery(e) {
+    this.setState({
+      delivery: e.target.checked
+    });
+  }
+
+  onChangePickUp(e) {
+    this.setState({
+      pickUp: e.target.checked
+    });
+  }
+
+  onChangeDistributionTypeOther(e) {
+    this.setState({
+      distributionTypeOther: e.target.checked
     });
   }
 
@@ -389,6 +453,14 @@ export class AddResourceModal extends Component {
         id_required: this.state.idRequired,
         children_only: this.state.childrenOnly,
         community_fridges: this.state.communityFridges,
+        perishable: this.state.perishable,
+        non_perishable: this.state.nonPerishable,
+        prepared: this.state.prepared,
+        food_type_other: this.state.foodTypeOther,
+        eat_on_site: this.state.eatOnSite,
+        delivery: this.state.delivery,
+        pick_up: this.state.pickUp,
+        distribution_type_other: this.state.distributionTypeOther,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
         medicinal: this.state.medicinal,
@@ -405,6 +477,7 @@ export class AddResourceModal extends Component {
         norms_rules: this.state.normsAndRules
       };
 
+      console.log(newData);
       const database = getDatabase(this.state.dbConnection);
       set(ref(database, '/' + (this.state.count + 1).toString()), newData);
     });
@@ -443,6 +516,14 @@ export class AddResourceModal extends Component {
       consumptionType: '',
       foodType: '',
       communityFridges: false,
+      perishable: false,
+      nonPerishable: false,
+      prepared: false,
+      foodTypeOther: false,
+      eatOnSite: false,
+      delivery: false,
+      pickUp: false,
+      distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
       medicinal: false,
@@ -537,6 +618,22 @@ export class AddResourceModal extends Component {
               onConsumptionTypeChange={this.onChangeConsumptionType}
               foodType={this.state.foodType}
               onFoodTypeChange={this.onChangeFoodType}
+              perishable={this.state.perishable}
+              onPerishableChange={this.onChangePershable}
+              nonPerishable={this.state.nonPerishable}
+              onNonPerishableChange={this.onChangeNonPerishable}
+              prepared={this.state.prepared}
+              onPreparedChange={this.onChangePrepared}
+              foodTypeOther={this.state.foodTypeOther}
+              onFoodTypeOtherChange={this.onChangeFoodTypeOther}
+              eatOnSite={this.state.eatOnSite}
+              onEatOnSiteChange={this.onChangeEatOnSite}
+              delivery={this.state.delivery}
+              onDeliveryChange={this.onChangeDelivery}
+              pickUp={this.state.pickUp}
+              onPickUpChange={this.onChangePickUp}
+              distributionTypeOther={this.state.distributionTypeOther}
+              onDistributionTypeOtherChange={this.onChangeDistributionTypeOther}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}

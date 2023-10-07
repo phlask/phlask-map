@@ -41,7 +41,6 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
-const DISTRIBUTION_TYPE = ['Eat on site', 'Delivery', 'Pickup', 'Other'];
 
 function AddFood({
   prev,
@@ -77,9 +76,16 @@ function AddFood({
   onNonPerishableChange,
   prepared,
   onPreparedChange,
-  other,
-  onOtherChange,
-
+  foodTypeOther,
+  onFoodTypeOtherChange,
+  eatOnSite,
+  onEatOnSiteChange,
+  delivery,
+  onDeliveryChange,
+  pickUp,
+  onPickUpChange,
+  distributionTypeOther,
+  onDistributionTypeOtherChange,
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
@@ -146,8 +152,31 @@ function AddFood({
     {
       accessType: 'Other',
       explanation: '',
-      value: other,
-      onChange: onOtherChange
+      value: foodTypeOther,
+      onChange: onFoodTypeOtherChange
+    }
+  ];
+
+  const DISTRIBUTION_TYPE = [
+    {
+      label: 'Eat on site',
+      value: eatOnSite,
+      onChange: onEatOnSiteChange
+    },
+    {
+      label: 'Delivery',
+      value: delivery,
+      onChange: onDeliveryChange
+    },
+    {
+      label: 'Pickup',
+      value: pickUp,
+      onChange: onPickUpChange
+    },
+    {
+      label: 'Other',
+      value: distributionTypeOther,
+      onChange: onDistributionTypeOtherChange
     }
   ];
 
@@ -199,6 +228,7 @@ function AddFood({
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
+            console.log(e);
             onSubmit(e).then(() => {
               next();
             });
@@ -529,11 +559,35 @@ function AddFood({
               <AccordionDetails>
                 {DISTRIBUTION_TYPE.map(type => {
                   return (
-                    <MenuItem key={type} as="label" htmlFor={type} second>
+                    <MenuItem
+                      key={type.label}
+                      as="label"
+                      htmlFor={type.label}
+                      second
+                    >
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
-                        {type}
+                        {type.label}
                       </Typography>
-                      <Checkbox
+                      <Controller
+                        control={control}
+                        name={type.label}
+                        defaultValue={false}
+                        value={type.value}
+                        render={({ field: { onChange, ...rest } }) => (
+                          <Checkbox
+                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                            id={rest.name}
+                            name={rest.name}
+                            value={rest.value} // change info.value
+                            onClick={e => {
+                              onChange(e);
+                              type.onChange(e);
+                              console.log(type.value);
+                            }}
+                          />
+                        )}
+                      />
+                      {/* <Checkbox
                         style={{ marginLeft: 'auto', marginRight: '0rem' }}
                         id={type}
                         name={type}
@@ -541,48 +595,33 @@ function AddFood({
                         {...register(type, {
                           onChange: () => {} // change info.onChange
                         })}
-                      />
+                      /> */}
                     </MenuItem>
                   );
                 })}
               </AccordionDetails>
             </Accordion>
-            {/* <TextField
-              variant="outlined"
-              id="foodType"
-              name="foodType"
-              label="Food Type"
-              select
-              value={foodType}
-              helperText={errors.forageType && requiredFieldMsg}
-              {...register('foodType', {
-                required: true,
-                onChange: onFoodTypeChange
-              })}
-              error={errors.foodType ? true : false}
-              InputLabelProps={{ shrink: true }}
-            >
-              {FORAGE_TYPE.map(type => {
-                return (
-                  <MenuItem key={type} value={type}>
-                    {type}
-                  </MenuItem>
-                );
-              })}
-            </TextField> */}
-            <TextField
-              id="guidelines"
-              label="Community guideLines"
+            <Controller
+              control={control}
               name="guidelines"
+              defaultValue={''}
               value={normsAndRules}
-              InputLabelProps={{ shrink: true }}
-              multiline
-              maxRows={2}
-              FormHelperTextProps={{ fontSize: '11.67' }}
-              helperText="Share tips on respectful PHLASKing at this location."
-              {...register('guidelines', {
-                onChange: onNormsAndRulesChange
-              })}
+              render={({ field: { onChange, ...rest } }) => (
+                <TextField
+                  id="guidelines"
+                  {...rest}
+                  label="Community guideLines"
+                  InputLabelProps={{ shrink: true }}
+                  multiline
+                  maxRows={2}
+                  FormHelperTextProps={{ fontSize: '11.67' }}
+                  helperText="Share tips on respectful PHLASKing at this location."
+                  onChange={e => {
+                    onChange(e);
+                    onNormsAndRulesChange(e);
+                  }}
+                />
+              )}
             />
             <Button
               type="submit"
