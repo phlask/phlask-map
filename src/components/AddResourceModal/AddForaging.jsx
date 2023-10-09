@@ -12,7 +12,7 @@ import SharedFormFields from './SharedFormFields';
 import SharedAccordionFields from './SharedAccordionFields';
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import {
   Accordion,
   AccordionDetails,
@@ -46,8 +46,6 @@ const ORGANIZATION_TYPE = [
   { accessType: 'Unsure', explanation: '' }
 ];
 
-const FORAGE_TYPE = ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers', 'Root'];
-
 function AddForaging({
   prev,
   next,
@@ -58,7 +56,6 @@ function AddForaging({
   onNameChange,
   address,
   onAddressChange,
-  onAddressClick,
   website,
   onWebsiteChange,
   description,
@@ -69,16 +66,28 @@ function AddForaging({
   onAccessibleChange,
   foragingFoodType,
   onForagingFoodTypeChange,
-  medicinal,
-  onChangeMedicinal,
-  inSeason,
-  onChangeInSeason,
-  communityGarden,
-  onChangeCommunityGarden,
+  nut,
+  onNutChange,
+  fruit,
+  onFruitChange,
+  leaves,
+  onLeavesChange,
+  bark,
+  onBarkChange,
+  flowers,
+  onFlowersChange,
+  root,
+  onRootChange,
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
-  onNormsAndRulesChange
+  onNormsAndRulesChange,
+  medicinal,
+  onMedicinalChange,
+  inSeason,
+  onInSeasonChange,
+  communityGarden,
+  onCommunityGardenChange
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -100,17 +109,50 @@ function AddForaging({
     {
       label: 'Medicinal',
       value: medicinal,
-      onChange: onChangeMedicinal
+      onChange: onMedicinalChange
     },
     {
       label: 'In season',
       value: inSeason,
-      onChange: onChangeInSeason
+      onChange: onInSeasonChange
     },
     {
       label: 'Community garden',
       value: communityGarden,
-      onChange: onChangeCommunityGarden
+      onChange: onCommunityGardenChange
+    }
+  ];
+
+  const FORAGE_TYPE = [
+    {
+      forageType: 'Nut',
+      value: nut,
+      onChange: onNutChange
+    },
+    {
+      forageType: 'Fruit',
+      value: fruit,
+      onChange: onFruitChange
+    },
+    {
+      forageType: 'Leaves',
+      value: leaves,
+      onChange: onLeavesChange
+    },
+    {
+      forageType: 'Bark',
+      value: bark,
+      onChange: onBarkChange
+    },
+    {
+      forageType: 'Flowers',
+      value: flowers,
+      onChange: onFlowersChange
+    },
+    {
+      forageType: 'Root',
+      value: root,
+      onChange: onRootChange
     }
   ];
 
@@ -126,9 +168,9 @@ function AddForaging({
   }, []);
 
   const {
-    register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors }
   } = useForm();
 
@@ -156,13 +198,11 @@ function AddForaging({
         backgroundColor="#5DA694"
         color="common.white"
       >
-        {/* Add a Foraging Resource */}
         Add a Foraging Resource
       </Typography>
       <CardContent>
         <form
-          onSubmit={handleSubmit(e => {
-            e.preventDefault();
+          onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
               next();
             });
@@ -181,165 +221,222 @@ function AddForaging({
 
             <FormControl>
               <Stack spacing={4} justifyContent="center">
-                <TextField
-                  id="name"
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
                   name="name"
-                  label="Name"
+                  defaultValue={''}
                   value={name}
-                  helperText={
-                    <span>
-                      {errors.name && requiredFieldMsg}
-                      Enter a name for the resource. (Example: City Hall)
-                    </span>
-                  }
-                  {...register('name', {
-                    required: true,
-                    onChange: onNameChange
-                  })}
-                  error={errors.name ? true : false}
-                  InputLabelProps={{ shrink: true }}
-                />
-                <PlacesAutocomplete
-                  value={address}
-                  onChange={onAddressChange}
-                  onSelect={onAddressChange}
-                >
-                  {({
-                    getInputProps,
-                    suggestions,
-                    getSuggestionItemProps,
-                    loading
-                  }) => (
-                    <div>
-                      <TextField
-                        id="address"
-                        name="address"
-                        label="Street address *"
-                        value={address}
-                        helperText={
-                          <Stack>
-                            {errors.address && requiredFieldMsg}
-                            <Link>
-                              {'Use my location instead  '}
-                              <MyLocationIcon sx={{ fontSize: 10 }} />
-                            </Link>
-                          </Stack>
-                        }
-                        {...register('address', {
-                          required: true,
-                          onChange: onAddressChange
-                        })}
-                        error={errors.address ? true : false}
-                        FormHelperTextProps={{
-                          sx: { marginLeft: 'auto', marginRight: 0 },
-                          onClick: () => {
-                            // Will autofill the street address textbox with user's current address,
-                            // after clicking 'use my address instead'
-                            const { lat, lng } = userLocation;
-                            geocode(RequestType.LATLNG, `${lat},${lng}`)
-                              .then(({ results }) => {
-                                const addr = results[0].formatted_address;
-                                setValue('address', addr); //react-hook-form setValue
-                              })
-                              .catch(console.error);
-                          }
-                        }}
-                        style={{ backgroundColor: 'white' }}
-                        InputLabelProps={{ shrink: true }}
-                        {...getInputProps({
-                          className: 'modalAddressAutofill',
-                          id: 'address'
-                        })}
-                        className={styles.modalAddressAutofill}
-                      />
-                      <div className="autocomplete-dropdown-container">
-                        {loading && <div>Loading...</div>}
-                        {suggestions.map((suggestion, i) => {
-                          const className = suggestion.active
-                            ? 'suggestion-item--active'
-                            : 'suggestion-item';
-                          // inline style for demonstration purpose
-                          const style = suggestion.active
-                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                          return (
-                            <div
-                              {...getSuggestionItemProps(suggestion, {
-                                className,
-                                style
-                              })}
-                              key={i}
-                            >
-                              <span>{suggestion.description}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="name"
+                      label="Name"
+                      onChange={e => {
+                        onChange(e);
+                        onNameChange(e);
+                      }}
+                      helperText={
+                        <span>
+                          {errors.name && requiredFieldMsg}
+                          Enter a name for the resource. (Example: City Hall)
+                        </span>
+                      }
+                      error={errors.name ? true : false}
+                      InputLabelProps={{ shrink: true }}
+                    />
                   )}
-                </PlacesAutocomplete>
-                <TextField
-                  id="website"
-                  name="website"
-                  label="Website"
-                  value={website}
-                  {...register('website', {
-                    // regex meaning 1 or more characters, followed by exactly 1 ".",
-                    // followed by a 2 or 3 letter top level domain (e.g.: .com, .io, .edu)
-                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/,
-                    onChange: onWebsiteChange
-                  })}
-                  error={errors.website ? true : false}
-                  helperText={
-                    errors.website && <span>Website is not valid</span>
-                  }
-                  InputLabelProps={{ shrink: true }}
                 />
-                <TextField
-                  id="description"
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
+                  name="address"
+                  defaultValue={''}
+                  value={address}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <PlacesAutocomplete
+                      {...rest}
+                      onChange={e => {
+                        onAddressChange(e);
+                        onChange(e);
+                      }}
+                      onSelect={e => {
+                        onAddressChange(e);
+                        onChange(e);
+                      }}
+                    >
+                      {({
+                        getInputProps,
+                        suggestions,
+                        getSuggestionItemProps,
+                        loading
+                      }) => (
+                        <div>
+                          <TextField
+                            value={rest.value}
+                            id="address"
+                            name="address-textbox"
+                            label="Street address *"
+                            onChange={e => {
+                              onAddressChange(e);
+                              onChange(e);
+                            }}
+                            helperText={
+                              <Stack>
+                                {errors.address && requiredFieldMsg}
+                                <Link onClick={() => {}}>
+                                  {'Use my location instead  '}
+                                  <MyLocationIcon sx={{ fontSize: 10 }} />
+                                </Link>
+                              </Stack>
+                            }
+                            error={errors.address ? true : false}
+                            FormHelperTextProps={{
+                              sx: { marginLeft: 'auto', marginRight: 0 },
+                              onClick: e => {
+                                // Will autofill the street address textbox with user's current address,
+                                // after clicking 'use my address instead'
+                                const { lat, lng } = userLocation;
+                                geocode(RequestType.LATLNG, `${lat},${lng}`)
+                                  .then(({ results }) => {
+                                    const addr = results[0].formatted_address;
+                                    setValue('address-textbox', addr); //react-hook-form setValue
+                                    onAddressChange(addr);
+                                    onChange(addr);
+                                  })
+                                  .catch(console.error);
+                              }
+                            }}
+                            style={{ backgroundColor: 'white' }}
+                            InputLabelProps={{ shrink: true }}
+                            {...getInputProps({
+                              className: 'modalAddressAutofill',
+                              id: 'address'
+                            })}
+                            className={styles.modalAddressAutofill}
+                          />
+                          <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion, i) => {
+                              const className = suggestion.active
+                                ? 'suggestion-item--active'
+                                : 'suggestion-item';
+                              // inline style for demonstration purpose
+                              const style = suggestion.active
+                                ? {
+                                    backgroundColor: '#fafafa',
+                                    cursor: 'pointer'
+                                  }
+                                : {
+                                    backgroundColor: '#ffffff',
+                                    cursor: 'pointer'
+                                  };
+                              return (
+                                <div
+                                  {...getSuggestionItemProps(suggestion, {
+                                    className,
+                                    style
+                                  })}
+                                  key={i}
+                                >
+                                  <span>{suggestion.description}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
+                  )}
+                />
+                <Controller
+                  rules={{
+                    required: true,
+                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+                  }}
+                  control={control}
+                  name="website"
+                  defaultValue={''}
+                  value={website}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="website"
+                      label="Website"
+                      onChange={e => {
+                        onChange(e);
+                        onWebsiteChange(e);
+                      }}
+                      error={errors.website ? true : false}
+                      helperText={
+                        errors.website && <span>Website is not valid</span>
+                      }
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
                   name="description"
-                  label="Description"
+                  defaultValue={''}
                   value={description}
-                  helperText="Explain how to access the resource."
-                  {...register('description', {
-                    onChange: onDescriptionChange
-                  })}
-                  InputLabelProps={{ shrink: true }}
-                  multiline
-                  maxRows={2}
+                  render={({ field: { onChange, ...rest } }) => (
+                    <TextField
+                      {...rest}
+                      id="description"
+                      label="description"
+                      onChange={e => {
+                        onChange(e);
+                        onDescriptionChange(e);
+                      }}
+                      helperText="Explain how to access the resource."
+                      InputLabelProps={{ shrink: true }}
+                      multiline
+                      maxRows={2}
+                    />
+                  )}
                 />
               </Stack>
             </FormControl>
-            <TextField
-              variant="outlined"
-              id="organization"
+            <Controller
+              control={control}
+              rules={{ required: true }}
               name="organization"
-              label="Organization Type"
-              select
+              defaultValue={''}
               value={access}
-              helperText={errors.organization && requiredFieldMsg}
-              {...register('organization', {
-                required: true,
-                onChange: onAccessChange
-              })}
-              error={errors.organization ? true : false}
-              InputLabelProps={{ shrink: true }}
-            >
-              {ORGANIZATION_TYPE.map(orgType => {
-                const { accessType, explanation } = orgType;
+              render={({ field: { onChange, ...rest } }) => (
+                <TextField
+                  variant="outlined"
+                  id="organization"
+                  name="organization"
+                  label="Organization Type"
+                  select
+                  value={rest.value}
+                  helperText={errors.organization && requiredFieldMsg}
+                  onChange={e => {
+                    onChange(e);
+                    onAccessChange(e);
+                  }}
+                  error={errors.organization ? true : false}
+                  InputLabelProps={{ shrink: true }}
+                >
+                  {ORGANIZATION_TYPE.map(orgType => {
+                    const { accessType, explanation } = orgType;
 
-                return (
-                  <MenuItem key={accessType} value={accessType}>
-                    <Stack>
-                      {accessType}
-                      {explanation && (
-                        <FormHelperText>{explanation}</FormHelperText>
-                      )}
-                    </Stack>
-                  </MenuItem>
-                );
-              })}
-            </TextField>
+                    return (
+                      <MenuItem key={accessType} value={accessType}>
+                        <Stack>
+                          {accessType}
+                          {explanation && (
+                            <FormHelperText>{explanation}</FormHelperText>
+                          )}
+                        </Stack>
+                      </MenuItem>
+                    );
+                  })}
+                </TextField>
+              )}
+            />
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -351,20 +448,32 @@ function AddForaging({
               <AccordionDetails>
                 {FORAGE_TYPE.map(type => {
                   return (
-                    <MenuItem key={type} as="label" htmlFor={type}>
+                    <MenuItem
+                      key={type.forageType}
+                      as="label"
+                      htmlFor={type.forageType}
+                      second
+                    >
                       <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
-                        {type}
+                        {type.forageType}
                       </Typography>
-                      <Checkbox
-                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                        id={type}
-                        name={type}
-                        value={false} // change info.value
-                        inputRef={{
-                          ...register(type, {
-                            onChange: () => {} // change info.onChange
-                          })
-                        }}
+                      <Controller
+                        control={control}
+                        name={type.forageType}
+                        defaultValue={type.value}
+                        value={type.value}
+                        render={({ field: { onChange, ...rest } }) => (
+                          <Checkbox
+                            checked={rest.value}
+                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                            id={rest.name}
+                            onClick={e => {
+                              onChange(e);
+                              type.onChange(e);
+                            }}
+                            ref={rest.ref}
+                          />
+                        )}
                       />
                     </MenuItem>
                   );
@@ -379,41 +488,54 @@ function AddForaging({
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Checkbox
-                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                      id={info.label}
+                    <Controller
+                      control={control}
                       name={info.label}
-                      value={false} // change info.value
-                      inputRef={{
-                        ...register(info.label, {
-                          onChange: () => {} // change info.onChange
-                        })
-                      }}
+                      defaultValue={false}
+                      value={info.value}
+                      render={({ field: { onChange, ...rest } }) => (
+                        <Checkbox
+                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                          {...rest}
+                          id={rest.name}
+                          name={rest.name}
+                          value={rest.value}
+                          onChange={e => {
+                            onChange(e);
+                            info.onChange(e);
+                          }}
+                        />
+                      )}
                     />
                   </MenuItem>
                 );
               })}
             </FormGroup>
-            <TextField
-              id="guidelines"
-              label="Community guideLines"
+            <Controller
+              control={control}
               name="guidelines"
+              defaultValue={''}
               value={normsAndRules}
-              InputLabelProps={{ shrink: true }}
-              multiline
-              maxRows={2}
-              FormHelperTextProps={{ fontSize: '11.67' }}
-              helperText="Share tips on respectful PHLASKing at this location."
-              {...register('guidelines', {
-                onChange: onNormsAndRulesChange
-              })}
+              render={({ field: { onChange, ...rest } }) => (
+                <TextField
+                  id="guidelines"
+                  {...rest}
+                  label="Community guideLines"
+                  InputLabelProps={{ shrink: true }}
+                  multiline
+                  maxRows={2}
+                  FormHelperTextProps={{ fontSize: '11.67' }}
+                  helperText="Share tips on respectful PHLASKing at this location."
+                  onChange={e => {
+                    onChange(e);
+                    onNormsAndRulesChange(e);
+                  }}
+                />
+              )}
             />
             <Button
               type="submit"
               variant="contained"
-              onClick={handleSubmit(() => {
-                console.log(FORAGING_HELPFUL_INFO);
-              })}
               style={{
                 borderRadius: '8px',
                 width: '25%',
