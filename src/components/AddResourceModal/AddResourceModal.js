@@ -64,7 +64,15 @@ export class AddResourceModal extends Component {
       this.onChangeDistributionTypeOther.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
+    this.onChangeNut = this.onChangeNut.bind(this);
+    this.onChangeFruit = this.onChangeFruit.bind(this);
+    this.onChangeLeaves = this.onChangeLeaves.bind(this);
+    this.onChangeBark = this.onChangeBark.bind(this);
+    this.onChangeFlowers = this.onChangeFlowers.bind(this);
+    this.onChangeRoot = this.onChangeRoot.bind(this);
     this.onChangeMedicinal = this.onChangeMedicinal.bind(this);
+    this.onChangeInSeason = this.onChangeInSeason.bind(this);
+    this.onChangeCommuntiyGarden = this.onChangeCommuntiyGarden.bind(this);
     //  BATHROOM MODAL
     this.onChangeChangingTable = this.onChangeChangingTable.bind(this);
     this.onChangeGenderNeutral = this.onChangeGenderNeutral.bind(this);
@@ -114,6 +122,12 @@ export class AddResourceModal extends Component {
       distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
+      nut: false,
+      fruit: false,
+      leaves: false,
+      bark: false,
+      flowers: false,
+      root: false,
       medicinal: false,
       inSeason: false,
       communityGarden: false,
@@ -327,6 +341,42 @@ export class AddResourceModal extends Component {
     });
   }
 
+  onChangeNut(e) {
+    this.setState({
+      nut: e.target.checked
+    });
+  }
+
+  onChangeFruit(e) {
+    this.setState({
+      fruit: e.target.checked
+    });
+  }
+
+  onChangeLeaves(e) {
+    this.setState({
+      leaves: e.target.checked
+    });
+  }
+
+  onChangeBark(e) {
+    this.setState({
+      bark: e.target.checked
+    });
+  }
+
+  onChangeFlowers(e) {
+    this.setState({
+      flowers: e.target.checked
+    });
+  }
+
+  onChangeRoot(e) {
+    this.setState({
+      root: e.target.checked
+    });
+  }
+
   onChangeMedicinal(e) {
     this.setState({
       medicinal: e.target.checked
@@ -463,6 +513,12 @@ export class AddResourceModal extends Component {
         distribution_type_other: this.state.distributionTypeOther,
         // FORAGING FIELDS
         foraging_food_type: this.state.foragingFoodType,
+        nut: this.state.nut,
+        fruit: this.state.fruit,
+        leaves: this.state.leaves,
+        bark: this.state.bark,
+        flowers: this.state.flowers,
+        root: this.state.root,
         medicinal: this.state.medicinal,
         in_season: this.state.inSeason,
         community_garden: this.state.communityGarden,
@@ -526,6 +582,12 @@ export class AddResourceModal extends Component {
       distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
       foragingFoodType: '',
+      nut: false,
+      fruit: false,
+      leaves: false,
+      bark: false,
+      flowers: false,
+      root: false,
       medicinal: false,
       inSeason: false,
       communityGarden: false,
@@ -691,7 +753,6 @@ export class AddResourceModal extends Component {
               onNameChange={this.onNameChange}
               address={this.state.address}
               onAddressChange={this.onChangeAddress}
-              onAddressClick={this.onClickAddress}
               website={this.state.website}
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
@@ -702,16 +763,28 @@ export class AddResourceModal extends Component {
               onAccessibleChange={this.onChangeHandicapAccess}
               foragingFoodType={this.state.foragingFoodType}
               onForagingFoodTypeChange={this.onChangeForagingFoodType}
+              nut={this.state.nut}
+              onNutChange={this.onChangeNut}
+              fruit={this.state.fruit}
+              onFruitChange={this.onChangeFruit}
+              leaves={this.state.leaves}
+              onLeavesChange={this.onChangeLeaves}
+              bark={this.state.bark}
+              onBarkChange={this.onChangeBark}
+              flowers={this.state.flowers}
+              onFlowersChange={this.onChangeFlowers}
+              root={this.state.root}
+              onRootChange={this.onChangeRoot}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
               medicinal={this.state.medicinal}
-              onChangeMedicinal={this.onChangeMedicinal}
+              onMedicinalChange={this.onChangeMedicinal}
               inSeason={this.state.inSeason}
-              onChangeInSeason={this.onChangeInSeason}
+              onInSeasonChange={this.onChangeInSeason}
               communityGarden={this.state.communityGarden}
-              onChangeCommuntiyGarden={this.onChangeCommuntiyGarden}
+              onCommunityGardenChange={this.onChangeCommuntiyGarden}
             />
           )}
 
