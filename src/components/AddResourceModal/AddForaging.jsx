@@ -3,13 +3,9 @@ import { useSelector } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './AddResourceModal.module.scss';
 // eslint-disable-next-line import/no-unresolved
-import SharedFormFields from './SharedFormFields';
 // eslint-disable-next-line import/no-unresolved
-import SharedAccordionFields from './SharedAccordionFields';
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
 import { useForm, Controller } from 'react-hook-form';
@@ -21,19 +17,13 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
   FormGroup,
-  Grid,
-  IconButton,
   Link,
   MenuItem,
   Stack,
   Typography,
   FormControl,
-  Input,
-  InputLabel,
   FormHelperText,
-  FormControlLabel,
   Checkbox,
   TextField
 } from '@mui/material';
