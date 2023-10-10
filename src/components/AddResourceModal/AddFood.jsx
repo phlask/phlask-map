@@ -319,7 +319,8 @@ function AddFood({
                                 geocode(RequestType.LATLNG, `${lat},${lng}`)
                                   .then(({ results }) => {
                                     const addr = results[0].formatted_address;
-                                    setValue('auto-complete', addr); //react-hook-form setValue
+                                    setValue('address-textbox', addr); //react-hook-form setValue
+                                    onAddressChange(addr);
                                     onChange(addr);
                                   })
                                   .catch(console.error);
