@@ -40,15 +40,24 @@ export class AddResourceModal extends Component {
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
-    this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
-    this.onChangeTapType = this.onChangeTapType.bind(this);
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
     this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
     this.onChangeIdRequired = this.onChangeIdRequired.bind(this);
-    this.onChangeChildrenOnly = this.onChangeChildrenOnly.bind(this);
+    // ADD TAP MODAL
+    this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
+    this.onChangeTapType = this.onChangeTapType.bind(this);
     this.onChangeWaterVesselNeeded = this.onChangeWaterVesselNeeded.bind(this);
     this.onChangeFiltration = this.onChangeFiltration.bind(this);
+    this.onChangeDrinkingFountain = this.onChangeDrinkingFountain.bind(this);
+    this.onChangeBottleFillerAndFountain =
+      this.onChangeBottleFillerAndFountain.bind(this);
+    this.onChangeSink = this.onChangeSink.bind(this);
+    this.onChangeWaterJug = this.onChangeWaterJug.bind(this);
+    this.onChangeSodaMachine = this.onChangeSodaMachine.bind(this);
+    this.onChangePitcher = this.onChangePitcher.bind(this);
+    this.onChangeDispenserTypeOther =
+      this.onChangeDispenserTypeOther.bind(this);
     // ADD FOOD MODAL
     this.onChangeConsumptionType = this.onChangeConsumptionType.bind(this);
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
@@ -62,6 +71,7 @@ export class AddResourceModal extends Component {
     this.onChangePickUp = this.onChangePickUp.bind(this);
     this.onChangeDistributionTypeOther =
       this.onChangeDistributionTypeOther.bind(this);
+    this.onChangeChildrenOnly = this.onChangeChildrenOnly.bind(this);
     // ADD FORAGING MODAL FIELDS
     this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     this.onChangeNut = this.onChangeNut.bind(this);
@@ -95,20 +105,30 @@ export class AddResourceModal extends Component {
       website: '',
       description: '',
       organization: '',
-      tapServiceType: '',
-      tapType: '',
       phlaskStatement: '',
       normsAndRules: '',
-      filtration: false,
       handicapAccessable: false,
-      waterVesselNeeded: false,
       idRequired: false,
-      childrenOnly: false,
       dbConnection: '',
       count: 0,
       show: false,
       formStep: 'chooseResource',
+      // ADD TAP
+      tapServiceType: '',
+      tapType: '',
+      filtration: false,
+      waterVesselNeeded: false,
+      drinkingFountain: false,
+      bottleFillerAndFountain: false,
+      sink: false,
+      waterJug: false,
+      sodaMachine: false,
+      pitcher: false,
+      waterCooler: false,
+      dispenserTypeOther: false,
+
       // ADD FOOD MODAL FIELDS
+      childrenOnly: false,
       consumptionType: '',
       foodType: '',
       communityFridges: false,
@@ -211,6 +231,32 @@ export class AddResourceModal extends Component {
     });
   }
 
+  onChangeHandicapAccess(e) {
+    this.setState({
+      handicapAccessable: e.target.checked
+    });
+  }
+
+  onChangeIdRequired(e) {
+    this.setState({
+      idRequired: e.target.checked
+    });
+  }
+
+  onChangePhlaskStatement(e) {
+    this.setState({
+      phlaskStatement: e.target.value
+    });
+  }
+
+  onChangeNormsAndRules(e) {
+    this.setState({
+      normsAndRules: e.target.value
+    });
+  }
+
+  // ADD TAP MODAL FIELDS
+
   onChangeTapServiceType(e) {
     this.setState({
       tapServiceType: e.target.value
@@ -229,43 +275,67 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeHandicapAccess(e) {
-    this.setState({
-      handicapAccessable: e.target.checked
-    });
-  }
-
   onChangeWaterVesselNeeded(e) {
     this.setState({
       waterVesselNeeded: e.target.checked
     });
   }
 
-  onChangeIdRequired(e) {
+  onChangeDrinkingFountain(e) {
     this.setState({
-      idRequired: e.target.checked
+      drinkingFountain: e.target.checked
     });
   }
+
+  onChangeBottleFillerAndFountain(e) {
+    this.setState({
+      bottleFillerAndFountain: e.target.checked
+    });
+  }
+
+  onChangeSink(e) {
+    this.setState({
+      sink: e.target.checked
+    });
+  }
+
+  onChangeWaterJug(e) {
+    this.setState({
+      waterJug: e.target.checked
+    });
+  }
+
+  onChangeSodaMachine(e) {
+    this.setState({
+      sodaMachine: e.target.checked
+    });
+  }
+
+  onChangePitcher(e) {
+    this.setState({
+      pitcher: e.target.checked
+    });
+  }
+
+  onChangeWaterCooler(e) {
+    this.setState({
+      waterCooler: e.target.checked
+    });
+  }
+
+  onChangeDispenserTypeOther(e) {
+    this.setState({
+      dispenserTypeOther: e.target.checked
+    });
+  }
+
+  // ADD FOOD MODAL FIELDS
 
   onChangeChildrenOnly(e) {
     this.setState({
       childrenOnly: e.target.checked
     });
   }
-
-  onChangePhlaskStatement(e) {
-    this.setState({
-      phlaskStatement: e.target.value
-    });
-  }
-
-  onChangeNormsAndRules(e) {
-    this.setState({
-      normsAndRules: e.target.value
-    });
-  }
-
-  // ADD FOOD MODAL FIELDS
 
   onChangeConsumptionType(e) {
     this.setState({
@@ -497,6 +567,14 @@ export class AddResourceModal extends Component {
         service: this.state.tapServiceType,
         tap_type: this.state.tapType,
         vessel: this.state.waterVesselNeeded,
+        drinking_fountain: this.state.drinkingFountain,
+        bottle_filler_and_fountain: this.state.bottleFillerAndFountain,
+        sink: this.state.sink,
+        water_jug: this.state.waterJug,
+        soda_machine: this.state.sodaMachine,
+        pitcher: this.state.pitcher,
+        water_cooler: this.state.waterCooler,
+        dispenser_type_oher: this.state.dispenserTypeOther,
         // FOOD FIELDS
         food_type: this.state.foodType,
         consumption_type: this.state.consumptionType,
@@ -559,16 +637,25 @@ export class AddResourceModal extends Component {
       tapType: '',
       phlaskStatement: '',
       normsAndRules: '',
-      filtration: false,
-      handicapAccessable: false,
-      waterVesselNeeded: false,
-      idRequired: false,
-      childrenOnly: false,
       dbConnection: '',
       count: 0,
       show: false,
       formStep: 'chooseResource',
+      idRequired: false,
+      // ADD TAP MODAL
+      filtration: false,
+      handicapAccessable: false,
+      waterVesselNeeded: false,
+      drinkingFountain: false,
+      bottleFillerAndFountain: false,
+      sink: false,
+      waterJug: false,
+      sodaMachine: false,
+      pitcher: false,
+      waterCooler: false,
+      dispenserTypeOther: false,
       // ADD FOOD MODAL FIELDS
+      childrenOnly: false,
       consumptionType: '',
       foodType: '',
       communityFridges: false,
@@ -646,6 +733,24 @@ export class AddResourceModal extends Component {
               onTapTypeChange={this.onChangeTapType}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
+              drinkingFountain={this.state.drinkingFountain}
+              onDrinkingFountainChange={this.onChangeDrinkingFountain}
+              bottleFillerAndFountain={this.state.bottleFillerAndFountain}
+              onBottleFillerAndFountainChange={
+                this.onChangeBottleFillerAndFountain
+              }
+              sink={this.state.sink}
+              onSinkChange={this.onChangeSink}
+              waterJug={this.state.waterJug}
+              onWaterJugChange={this.onChangeWaterJug}
+              sodaMachine={this.state.sodaMachine}
+              onSodaMachineChange={this.onChangeSodaMachine}
+              pitcher={this.state.pitcher}
+              onPitcherChange={this.onChangePitcher}
+              waterCooler={this.state.waterCooler}
+              onWaterCoolerChange={this.onChangeWaterCooler}
+              dispenserTypeOther={this.state.dispenserTypeOther}
+              onDispenserTypeOtherChange={this.onChangeDispenserTypeOther}
               normsAndRules={this.state.normsAndRules}
               onNormsAndRulesChange={this.onChangeNormsAndRules}
             />
