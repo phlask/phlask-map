@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 import PlacesAutocomplete from 'react-places-autocomplete';

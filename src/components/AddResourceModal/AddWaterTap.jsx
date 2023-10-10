@@ -488,12 +488,6 @@ function AddWaterTap({
                           />
                         )}
                       />
-                      {/* <Checkbox
-                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                        id={type}
-                        name={type}
-                        value={false} // change info.value
-                      /> */}
                     </MenuItem>
                   );
                 })}

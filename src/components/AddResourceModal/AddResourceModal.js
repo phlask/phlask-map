@@ -1,15 +1,5 @@
 import styles from './AddResourceModal.module.scss';
 import React, { Component } from 'react';
-import {
-  Modal,
-  Button,
-  Form,
-  OverlayTrigger,
-  Popover,
-  Accordion
-} from 'react-bootstrap';
-
-import getCurrentAddress from '../ReactGoogleMaps/ReactGoogleMaps';
 import Dialog from '@mui/material/Dialog';
 import ImageUploader from 'react-images-upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
