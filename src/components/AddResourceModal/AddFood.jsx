@@ -217,7 +217,6 @@ function AddFood({
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
-            console.log(e);
             onSubmit(e).then(() => {
               next();
             });
@@ -250,8 +249,6 @@ function AddFood({
                       onChange={e => {
                         onChange(e);
                         onNameChange(e);
-                        console.log('name');
-                        console.log(rest.value);
                       }}
                       helperText={
                         <span>
@@ -276,8 +273,6 @@ function AddFood({
                       onChange={e => {
                         onAddressChange(e);
                         onChange(e);
-                        console.log('address');
-                        console.log(rest.value);
                       }}
                       onSelect={e => {
                         onAddressChange(e);
@@ -385,8 +380,6 @@ function AddFood({
                       onChange={e => {
                         onChange(e);
                         onWebsiteChange(e);
-                        console.log('website');
-                        console.log(rest.value);
                       }}
                       error={errors.website ? true : false}
                       helperText={
@@ -409,8 +402,6 @@ function AddFood({
                       onChange={e => {
                         onChange(e);
                         onDescriptionChange(e);
-                        console.log('description');
-                        console.log(rest.value);
                       }}
                       helperText="Explain how to access the resource."
                       InputLabelProps={{ shrink: true }}
@@ -439,8 +430,6 @@ function AddFood({
                   onChange={e => {
                     onChange(e);
                     onOrganizationChange(e);
-                    console.log('organizationtype');
-                    console.log(rest.value);
                   }}
                   error={errors.organization ? true : false}
                   InputLabelProps={{ shrink: true }}
@@ -480,8 +469,6 @@ function AddFood({
                           onChange={e => {
                             onChange(e);
                             info.onChange(e);
-                            console.log(info.label);
-                            console.log(rest.value);
                           }}
                         />
                       )}
@@ -527,7 +514,6 @@ function AddFood({
                             onClick={e => {
                               onChange(e);
                               type.onChange(e);
-                              console.log(type.value);
                             }}
                             ref={rest.ref}
                           />
@@ -572,20 +558,10 @@ function AddFood({
                             onClick={e => {
                               onChange(e);
                               type.onChange(e);
-                              console.log(type.value);
                             }}
                           />
                         )}
                       />
-                      {/* <Checkbox
-                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                        id={type}
-                        name={type}
-                        value={false} // change info.value
-                        {...register(type, {
-                          onChange: () => {} // change info.onChange
-                        })}
-                      /> */}
                     </MenuItem>
                   );
                 })}
