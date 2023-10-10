@@ -130,10 +130,8 @@ function AddBathroom({
   }, []);
 
   const {
-    register,
     handleSubmit,
     setValue,
-    watch,
     control,
     formState: { errors }
   } = useForm();
@@ -391,64 +389,34 @@ function AddBathroom({
                 </TextField>
               )}
             />
-
             <FormGroup>
               <Typography>Helpful info</Typography>
-              <Grid container>
-                {BATHROOM_HELPFUL_INFO.map(info => {
-                  return (
-                    <React.Fragment key={info.label}>
-                      <Grid item as="label" htmlFor={info.label} xs={8}>
-                        <Box
-                          height="100%"
-                          width="100%"
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Typography
-                            style={{ paddingLeft: '2.5rem' }}
-                            fontSize={13}
-                          >
-                            {info.label}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid
-                        as="label"
-                        htmlFor={info.label}
-                        item
-                        align="center"
-                        xs={4}
-                      >
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column"
-                        >
-                          <Controller
-                            control={control}
-                            name={info.label}
-                            defaultValue={false}
-                            value={info.value}
-                            render={({ field: { onChange, ...rest } }) => (
-                              <Checkbox
-                                {...rest}
-                                style={{ paddingLeft: '1.5rem' }}
-                                id={info.label}
-                                onChange={e => {
-                                  onChange(e);
-                                  info.onChange(e);
-                                }}
-                              />
-                            )}
-                          />
-                        </Box>
-                      </Grid>
-                    </React.Fragment>
-                  );
-                })}
-              </Grid>
+              {BATHROOM_HELPFUL_INFO.map(info => {
+                return (
+                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                    <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
+                      {info.label}
+                    </Typography>
+                    <Controller
+                      control={control}
+                      name={info.label}
+                      defaultValue={info.value}
+                      value={info.value}
+                      render={({ field: { onChange, ...rest } }) => (
+                        <Checkbox
+                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                          {...rest}
+                          id={info.label}
+                          onChange={e => {
+                            onChange(e);
+                            info.onChange(e);
+                          }}
+                        />
+                      )}
+                    />
+                  </MenuItem>
+                );
+              })}
             </FormGroup>
             <Controller
               control={control}
