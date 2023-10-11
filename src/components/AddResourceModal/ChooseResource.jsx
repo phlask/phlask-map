@@ -14,7 +14,7 @@ function ChooseResource({ setFormStep }) {
   return (
     <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
       <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
-        {isMobile ? 'Add a Resource' : 'Add a Site'}
+        {isMobile ? 'Add a Resource' : 'Resource Type'}
       </h2>
       <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
         Choose the type of resource you like
