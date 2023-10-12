@@ -181,7 +181,6 @@ function AddWaterTap({
   }, []);
 
   const {
-    register,
     handleSubmit,
     setValue,
     control,
@@ -462,12 +461,7 @@ function AddWaterTap({
               <AccordionDetails>
                 {DISPENSER_TYPE.map(type => {
                   return (
-                    <MenuItem
-                      key={type.label}
-                      as="label"
-                      htmlFor={type.label}
-                      second
-                    >
+                    <MenuItem key={type.label} as="label" htmlFor={type.label}>
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
@@ -549,6 +543,7 @@ function AddWaterTap({
               type="submit"
               variant="contained"
               style={{
+                textTransform: 'none',
                 borderRadius: '8px',
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
