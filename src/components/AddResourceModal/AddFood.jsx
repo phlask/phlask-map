@@ -181,7 +181,6 @@ function AddFood({
   }, []);
 
   const {
-    register,
     handleSubmit,
     setValue,
     control,
@@ -202,7 +201,6 @@ function AddFood({
         justifyContent: 'center'
       }}
     >
-      {/* <Typography className={sty.mobileHeader} color="common.white"> */}
       <Typography
         display="flex"
         flexDirection="row"
@@ -366,7 +364,7 @@ function AddFood({
                 <Controller
                   rules={{
                     required: true,
-                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/ // typical web url pattern
                   }}
                   control={control}
                   name="website"
@@ -420,12 +418,11 @@ function AddFood({
               value={organization}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
+                  {...rest}
                   variant="outlined"
                   id="organization"
-                  name="organization"
                   label="Organization Type"
                   select
-                  value={organization}
                   helperText={errors.organization && requiredFieldMsg}
                   onChange={e => {
                     onChange(e);
@@ -436,7 +433,6 @@ function AddFood({
                 >
                   {ORGANIZATION_TYPE.map(orgType => {
                     return (
-                      // <MenuItem key={orgType} value={accessType}>
                       <MenuItem key={orgType} value={orgType}>
                         {orgType}
                       </MenuItem>
@@ -457,15 +453,13 @@ function AddFood({
                     <Controller
                       control={control}
                       name={info.label}
-                      defaultValue={false}
+                      defaultValue={info.value}
                       value={info.value}
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox
                           style={{ marginLeft: 'auto', marginRight: '0rem' }}
                           {...rest}
                           id={info.label}
-                          // name={info.label}
-                          // value={false}
                           onChange={e => {
                             onChange(e);
                             info.onChange(e);
@@ -492,7 +486,6 @@ function AddFood({
                       key={type.accessType}
                       as="label"
                       htmlFor={type.accessType}
-                      second
                     >
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.accessType}
@@ -535,12 +528,7 @@ function AddFood({
               <AccordionDetails>
                 {DISTRIBUTION_TYPE.map(type => {
                   return (
-                    <MenuItem
-                      key={type.label}
-                      as="label"
-                      htmlFor={type.label}
-                      second
-                    >
+                    <MenuItem key={type.label} as="label" htmlFor={type.label}>
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
@@ -593,11 +581,12 @@ function AddFood({
               type="submit"
               variant="contained"
               style={{
+                textTransform: 'none',
                 borderRadius: '8px',
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
                 color: 'white',
-                backgroundColor: '#FF9A55' //Change later
+                backgroundColor: '#FF9A55'
               }}
             >
               Submit
