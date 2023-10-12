@@ -4,8 +4,6 @@ import ImageUploader from 'react-images-upload';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
 import styles from './AddResourceModal.module.scss';
-import sty from './Form.module.scss';
-import { Modal, Form, Button, Accordion } from 'react-bootstrap';
 // eslint-disable-next-line import/no-unresolved
 // eslint-disable-next-line import/no-unresolved
 import { deleteApp } from 'firebase/app';
@@ -13,6 +11,7 @@ import { connectToFirebase } from './utils';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
+  Button,
   Card,
   CardContent,
   FormGroup,
@@ -150,7 +149,15 @@ function AddBathroom({
         justifyContent: 'center'
       }}
     >
-      <Typography className={sty.mobileHeader} color="common.white">
+      <Typography
+        display="flex"
+        flexDirection="row"
+        alignItems="flex-end"
+        padding="0px 20px 10px"
+        height="88px"
+        backgroundColor="#7C7C7C"
+        color="common.white"
+      >
         Add Bathroom Resource
       </Typography>
       <CardContent>
@@ -444,6 +451,7 @@ function AddBathroom({
               type="submit"
               variant="contained"
               style={{
+                textTransform: 'none',
                 borderRadius: '8px',
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
