@@ -442,7 +442,6 @@ function AddForaging({
                       key={type.forageType}
                       as="label"
                       htmlFor={type.forageType}
-                      second
                     >
                       <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                         {type.forageType}
@@ -527,6 +526,7 @@ function AddForaging({
               type="submit"
               variant="contained"
               style={{
+                textTransform: 'none',
                 borderRadius: '8px',
                 width: '25%',
                 margin: '3.5rem auto 1.5rem auto',
