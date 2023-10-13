@@ -4,8 +4,6 @@ import ImageUploader from 'react-images-upload';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
 import styles from './AddResourceModal.module.scss';
-// eslint-disable-next-line import/no-unresolved
-// eslint-disable-next-line import/no-unresolved
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from './utils';
 import { useForm, Controller } from 'react-hook-form';
