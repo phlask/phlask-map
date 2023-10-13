@@ -29,10 +29,10 @@ import {
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ORGANIZATION_TYPE = [
-  { accessType: 'Open access', explanation: 'Public site, open to all' },
-  { accessType: 'Restricted', explanation: 'May not be open to all' },
-  { accessType: 'Unsure', explanation: '' }
+const ENTRY_TYPE = [
+  { entryType: 'Open access', explanation: 'Public site, open to all' },
+  { entryType: 'Restricted', explanation: 'May not be open to all' },
+  { entryType: 'Unsure', explanation: '' }
 ];
 
 function AddWaterTap({
@@ -49,8 +49,8 @@ function AddWaterTap({
   onWebsiteChange,
   description,
   onDescriptionChange,
-  access,
-  onAccessChange,
+  entryType,
+  onEntryTypeChange,
   accessible,
   onAccessibleChange,
   idRequired,
@@ -414,33 +414,31 @@ function AddWaterTap({
             <Controller
               control={control}
               rules={{ required: true }}
-              name="organization"
+              name="entry"
               defaultValue={''}
-              value={access}
+              value={entryType}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
                   {...rest}
                   variant="outlined"
-                  id="organization"
-                  label="Organization Type"
+                  id="entry"
+                  label="Entry Type"
                   select
-                  helperText={errors.organization && requiredFieldMsg}
+                  helperText={errors.entry && requiredFieldMsg}
                   onChange={e => {
                     onChange(e);
-                    onAccessChange(e);
+                    onEntryTypeChange(e);
                   }}
-                  error={errors.organization ? true : false}
+                  error={errors.entry ? true : false}
                   InputLabelProps={{ shrink: true }}
                 >
-                  {ORGANIZATION_TYPE.map(orgType => {
-                    const { accessType, explanation } = orgType;
-
+                  {ENTRY_TYPE.map(item => {
                     return (
-                      <MenuItem key={accessType} value={accessType}>
+                      <MenuItem key={item.entryType} value={item.entryType}>
                         <Stack>
-                          {accessType}
-                          {explanation && (
-                            <FormHelperText>{explanation}</FormHelperText>
+                          {item.entryType}
+                          {item.explanation && (
+                            <FormHelperText>{item.explanation}</FormHelperText>
                           )}
                         </Stack>
                       </MenuItem>

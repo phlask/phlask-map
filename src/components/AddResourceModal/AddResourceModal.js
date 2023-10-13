@@ -25,7 +25,7 @@ export class AddResourceModal extends Component {
     this.onChangeFormStep = this.onChangeFormStep.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onNameChange = this.onChangeName.bind(this);
-    this.onChangeAccess = this.onChangeAccess.bind(this);
+    this.onChangeEntryType = this.onChangeEntryType.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
@@ -90,11 +90,10 @@ export class AddResourceModal extends Component {
       pictures: [],
       images: [],
       name: '',
-      access: '',
+      entryType: '',
       address: '',
       website: '',
       description: '',
-      organization: '',
       phlaskStatement: '',
       normsAndRules: '',
       handicapAccessable: false,
@@ -122,6 +121,7 @@ export class AddResourceModal extends Component {
       consumptionType: '',
       foodType: '',
       communityFridges: false,
+      organization: '',
       perishable: false,
       nonPerishable: false,
       prepared: false,
@@ -191,9 +191,9 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeAccess(e) {
+  onChangeEntryType(e) {
     this.setState({
-      access: e.target.value
+      entryType: e.target.value
     });
   }
 
@@ -546,11 +546,10 @@ export class AddResourceModal extends Component {
       const newData = {
         images: images,
         name: this.state.name,
-        access: this.state.access,
+        entryType: this.state.entryType,
         address: this.state.address,
         website: this.state.website,
         description: this.state.description,
-        organization: this.state.organization,
         // TAP FIELDS
         filtration: this.state.filtration,
         handicap: this.state.handicapAccessable,
@@ -567,6 +566,7 @@ export class AddResourceModal extends Component {
         dispenser_type_oher: this.state.dispenserTypeOther,
         // FOOD FIELDS
         food_type: this.state.foodType,
+        organization: this.state.organization,
         consumption_type: this.state.consumptionType,
         id_required: this.state.idRequired,
         children_only: this.state.childrenOnly,
@@ -618,7 +618,7 @@ export class AddResourceModal extends Component {
       pictures: [],
       images: [],
       name: '',
-      access: '',
+      entryType: '',
       address: '',
       website: '',
       description: '',
@@ -705,8 +705,8 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              access={this.state.access}
-              onAccessChange={this.onChangeAccess}
+              entryType={this.state.entryType}
+              onEntryTypehange={this.onChangeEntryType}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
@@ -814,8 +814,8 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              access={this.state.access}
-              onAccessChange={this.onChangeAccess}
+              entryType={this.state.entryType}
+              onEntryTypeChange={this.onChangeEntryType}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               normsAndRules={this.state.normsAndRules}
@@ -852,7 +852,7 @@ export class AddResourceModal extends Component {
               onWebsiteChange={this.onChangeWebsite}
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
-              access={this.state.access}
+              entryType={this.state.entryType}
               onAccessChange={this.onChangeAccess}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
