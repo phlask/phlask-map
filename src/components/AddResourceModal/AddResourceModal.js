@@ -49,7 +49,6 @@ export class AddResourceModal extends Component {
     this.onChangeDispenserTypeOther =
       this.onChangeDispenserTypeOther.bind(this);
     // ADD FOOD MODAL
-    this.onChangeConsumptionType = this.onChangeConsumptionType.bind(this);
     this.onChangeFoodType = this.onChangeFoodType.bind(this);
     this.onChangeCommunityFridges = this.onChangeCommunityFridges.bind(this);
     this.onChangePershable = this.onChangePershable.bind(this);
@@ -118,7 +117,6 @@ export class AddResourceModal extends Component {
 
       // ADD FOOD MODAL FIELDS
       childrenOnly: false,
-      consumptionType: '',
       foodType: '',
       communityFridges: false,
       organization: '',
@@ -324,12 +322,6 @@ export class AddResourceModal extends Component {
   onChangeChildrenOnly(e) {
     this.setState({
       childrenOnly: e.target.checked
-    });
-  }
-
-  onChangeConsumptionType(e) {
-    this.setState({
-      consumptionType: e.target.value
     });
   }
 
@@ -567,7 +559,6 @@ export class AddResourceModal extends Component {
         // FOOD FIELDS
         food_type: this.state.foodType,
         organization: this.state.organization,
-        consumption_type: this.state.consumptionType,
         id_required: this.state.idRequired,
         children_only: this.state.childrenOnly,
         community_fridges: this.state.communityFridges,
@@ -646,7 +637,6 @@ export class AddResourceModal extends Component {
       dispenserTypeOther: false,
       // ADD FOOD MODAL FIELDS
       childrenOnly: false,
-      consumptionType: '',
       foodType: '',
       communityFridges: false,
       perishable: false,
@@ -771,8 +761,6 @@ export class AddResourceModal extends Component {
               onChildrenOnlyChange={this.onChangeChildrenOnly}
               communityFridges={this.state.communityFridges}
               onCommunityFridgesChange={this.onChangeCommunityFridges}
-              consumptionType={this.state.consumptionType}
-              onConsumptionTypeChange={this.onChangeConsumptionType}
               foodType={this.state.foodType}
               onFoodTypeChange={this.onChangeFoodType}
               perishable={this.state.perishable}

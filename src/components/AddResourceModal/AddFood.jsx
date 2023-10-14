@@ -53,10 +53,6 @@ function AddFood({
   onChildrenOnlyChange,
   communityFridges,
   onCommunityFridgesChange,
-  consumptionType, // Distribution Type
-  onConsumptionTypeChange,
-  foodType,
-  onFoodTypeChange,
   perishable,
   onPerishableChange,
   nonPerishable,
