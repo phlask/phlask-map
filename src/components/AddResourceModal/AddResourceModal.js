@@ -35,8 +35,6 @@ export class AddResourceModal extends Component {
     this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
     this.onChangeIdRequired = this.onChangeIdRequired.bind(this);
     // ADD TAP MODAL
-    this.onChangeTapServiceType = this.onChangeTapServiceType.bind(this);
-    this.onChangeTapType = this.onChangeTapType.bind(this);
     this.onChangeWaterVesselNeeded = this.onChangeWaterVesselNeeded.bind(this);
     this.onChangeFiltration = this.onChangeFiltration.bind(this);
     this.onChangeDrinkingFountain = this.onChangeDrinkingFountain.bind(this);
@@ -100,8 +98,6 @@ export class AddResourceModal extends Component {
       show: false,
       formStep: 'chooseResource',
       // ADD TAP
-      tapServiceType: '',
-      tapType: '',
       filtration: false,
       waterVesselNeeded: false,
       drinkingFountain: false,
@@ -240,18 +236,6 @@ export class AddResourceModal extends Component {
   }
 
   // ADD TAP MODAL FIELDS
-
-  onChangeTapServiceType(e) {
-    this.setState({
-      tapServiceType: e.target.value
-    });
-  }
-
-  onChangeTapType(e) {
-    this.setState({
-      tapType: e.target.value
-    });
-  }
 
   onChangeFiltration(e) {
     this.setState({
@@ -529,8 +513,6 @@ export class AddResourceModal extends Component {
         // TAP FIELDS
         filtration: this.state.filtration,
         handicap: this.state.handicapAccessable,
-        service: this.state.tapServiceType,
-        tap_type: this.state.tapType,
         vessel: this.state.waterVesselNeeded,
         drinking_fountain: this.state.drinkingFountain,
         bottle_filler_and_fountain: this.state.bottleFillerAndFountain,
@@ -596,8 +578,6 @@ export class AddResourceModal extends Component {
       website: '',
       description: '',
       organization: '',
-      tapServiceType: '',
-      tapType: '',
       phlaskStatement: '',
       normsAndRules: '',
       dbConnection: '',
@@ -681,16 +661,10 @@ export class AddResourceModal extends Component {
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
               onIdRequiredChange={this.onChangeIdRequired}
-              childrenOnly={this.state.childrenOnly}
-              onChildrenOnlyChange={this.onChangeChildrenOnly}
               waterVesselNeeded={this.state.waterVesselNeeded}
               onWaterVesselNeededChange={this.onChangeWaterVesselNeeded}
               filtration={this.state.filtration}
               onFiltrationChange={this.onChangeFiltration}
-              tapServiceType={this.state.tapServiceType}
-              onTapServiceTypeChange={this.onChangeTapServiceType}
-              tapType={this.state.tapType}
-              onTapTypeChange={this.onChangeTapType}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
               drinkingFountain={this.state.drinkingFountain}

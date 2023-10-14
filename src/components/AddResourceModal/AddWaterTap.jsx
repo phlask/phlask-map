@@ -57,10 +57,6 @@ function AddWaterTap({
   onWaterVesselNeededChange,
   filtration,
   onFiltrationChange,
-  tapServiceType,
-  onTapServiceTypeChange,
-  tapType, // Dispenser Type
-  onTapTypeChange,
   phlaskStatement,
   onPhlaskStatementChange,
   drinkingFountain,
