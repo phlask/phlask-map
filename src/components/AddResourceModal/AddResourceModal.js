@@ -49,7 +49,6 @@ export class AddResourceModal extends Component {
     this.onChangeDispenserTypeOther =
       this.onChangeDispenserTypeOther.bind(this);
     // ADD FOOD MODAL
-    this.onChangeFoodType = this.onChangeFoodType.bind(this);
     this.onChangeCommunityFridges = this.onChangeCommunityFridges.bind(this);
     this.onChangePershable = this.onChangePershable.bind(this);
     this.onChangeNonPerishable = this.onChangeNonPerishable.bind(this);
@@ -117,7 +116,6 @@ export class AddResourceModal extends Component {
 
       // ADD FOOD MODAL FIELDS
       childrenOnly: false,
-      foodType: '',
       communityFridges: false,
       organization: '',
       perishable: false,
@@ -373,12 +371,6 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeFoodType(e) {
-    this.setState({
-      foodType: e.target.value
-    });
-  }
-
   onChangeCommunityFridges(e) {
     this.setState({
       communityFridges: e.target.checked
@@ -557,7 +549,6 @@ export class AddResourceModal extends Component {
         water_cooler: this.state.waterCooler,
         dispenser_type_oher: this.state.dispenserTypeOther,
         // FOOD FIELDS
-        food_type: this.state.foodType,
         organization: this.state.organization,
         id_required: this.state.idRequired,
         children_only: this.state.childrenOnly,
@@ -637,7 +628,6 @@ export class AddResourceModal extends Component {
       dispenserTypeOther: false,
       // ADD FOOD MODAL FIELDS
       childrenOnly: false,
-      foodType: '',
       communityFridges: false,
       perishable: false,
       nonPerishable: false,
@@ -761,8 +751,6 @@ export class AddResourceModal extends Component {
               onChildrenOnlyChange={this.onChangeChildrenOnly}
               communityFridges={this.state.communityFridges}
               onCommunityFridgesChange={this.onChangeCommunityFridges}
-              foodType={this.state.foodType}
-              onFoodTypeChange={this.onChangeFoodType}
               perishable={this.state.perishable}
               onPerishableChange={this.onChangePershable}
               nonPerishable={this.state.nonPerishable}
