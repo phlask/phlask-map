@@ -52,8 +52,6 @@ function AddForaging({
   onEntryTypeChange,
   accessible,
   onAccessibleChange,
-  foragingFoodType,
-  onForagingFoodTypeChange,
   nut,
   onNutChange,
   fruit,

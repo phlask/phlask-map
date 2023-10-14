@@ -61,7 +61,6 @@ export class AddResourceModal extends Component {
       this.onChangeDistributionTypeOther.bind(this);
     this.onChangeChildrenOnly = this.onChangeChildrenOnly.bind(this);
     // ADD FORAGING MODAL FIELDS
-    this.onChangeForagingFoodType = this.onChangeForagingFoodType.bind(this);
     this.onChangeNut = this.onChangeNut.bind(this);
     this.onChangeFruit = this.onChangeFruit.bind(this);
     this.onChangeLeaves = this.onChangeLeaves.bind(this);
@@ -127,7 +126,6 @@ export class AddResourceModal extends Component {
       pickUp: false,
       distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: '',
       nut: false,
       fruit: false,
       leaves: false,
@@ -379,12 +377,6 @@ export class AddResourceModal extends Component {
 
   // ADD FORAGING MODAL FIELDS
 
-  onChangeForagingFoodType(e) {
-    this.setState({
-      foragingFoodType: e.target.value
-    });
-  }
-
   onChangeNut(e) {
     this.setState({
       nut: e.target.checked
@@ -562,7 +554,6 @@ export class AddResourceModal extends Component {
         pick_up: this.state.pickUp,
         distribution_type_other: this.state.distributionTypeOther,
         // FORAGING FIELDS
-        foraging_food_type: this.state.foragingFoodType,
         nut: this.state.nut,
         fruit: this.state.fruit,
         leaves: this.state.leaves,
@@ -638,7 +629,6 @@ export class AddResourceModal extends Component {
       pickUp: false,
       distributionTypeOther: false,
       // ADD FORAGING MODAL FIELDS
-      foragingFoodType: '',
       nut: false,
       fruit: false,
       leaves: false,
@@ -832,8 +822,6 @@ export class AddResourceModal extends Component {
               onAccessChange={this.onChangeAccess}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
-              foragingFoodType={this.state.foragingFoodType}
-              onForagingFoodTypeChange={this.onChangeForagingFoodType}
               nut={this.state.nut}
               onNutChange={this.onChangeNut}
               fruit={this.state.fruit}
