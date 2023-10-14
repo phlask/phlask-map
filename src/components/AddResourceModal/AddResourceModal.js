@@ -820,8 +820,6 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               entryType={this.state.entryType}
               onAccessChange={this.onChangeAccess}
-              accessible={this.state.handicapAccessable}
-              onAccessibleChange={this.onChangeHandicapAccess}
               nut={this.state.nut}
               onNutChange={this.onChangeNut}
               fruit={this.state.fruit}

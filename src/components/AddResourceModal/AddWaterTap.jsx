@@ -53,8 +53,6 @@ function AddWaterTap({
   onAccessibleChange,
   idRequired,
   onIdRequiredChange,
-  childrenOnly,
-  onChildrenOnlyChange,
   waterVesselNeeded,
   onWaterVesselNeededChange,
   filtration,
