@@ -556,7 +556,6 @@ export class AddResourceModal extends Component {
         guidelines: this.state.guidelines
       };
 
-      console.log(newData);
       const database = getDatabase(this.state.dbConnection);
       set(ref(database, '/' + (this.state.count + 1).toString()), newData);
     });
