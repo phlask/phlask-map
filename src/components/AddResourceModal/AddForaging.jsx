@@ -171,7 +171,6 @@ function AddForaging({
         justifyContent: 'center'
       }}
     >
-      {/* <Typography className={sty.mobileHeader} color="common.white"> */}
       <Typography
         display="flex"
         flexDirection="row"
@@ -444,6 +443,7 @@ function AddForaging({
                         render={({ field: { onChange, ...rest } }) => (
                           <Checkbox
                             checked={rest.value}
+                            name={rest.name}
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
                             id={rest.name}
                             onClick={e => {
@@ -475,10 +475,10 @@ function AddForaging({
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox
                           style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          {...rest}
                           id={rest.name}
                           name={rest.name}
-                          value={rest.value}
+                          checked={rest.value}
+                          ref={rest.ref}
                           onChange={e => {
                             onChange(e);
                             info.onChange(e);

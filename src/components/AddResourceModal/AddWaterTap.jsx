@@ -193,7 +193,6 @@ function AddWaterTap({
         justifyContent: 'center'
       }}
     >
-      {/* <Typography className={sty.mobileHeader} color="common.white"> */}
       <Typography
         display="flex"
         flexDirection="row"
@@ -462,9 +461,11 @@ function AddWaterTap({
                         value={type.value}
                         render={({ field: { onChange, ...rest } }) => (
                           <Checkbox
-                            {...rest}
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
                             id={rest.name}
+                            name={rest.name}
+                            checked={rest.value}
+                            ref={rest.ref}
                             onClick={e => {
                               onChange(e);
                               type.onChange(e);
@@ -494,8 +495,10 @@ function AddWaterTap({
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox
                           style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          {...rest}
-                          id={info.label}
+                          checked={rest.value}
+                          name={rest.name}
+                          ref={rest.ref}
+                          id={rest.name}
                           onChange={e => {
                             onChange(e);
                             info.onChange(e);

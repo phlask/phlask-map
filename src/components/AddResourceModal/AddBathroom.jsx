@@ -406,8 +406,10 @@ function AddBathroom({
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox
                           style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          {...rest}
-                          id={info.label}
+                          checked={rest.value}
+                          name={rest.name}
+                          ref={rest.ref}
+                          id={rest.name}
                           onChange={e => {
                             onChange(e);
                             info.onChange(e);

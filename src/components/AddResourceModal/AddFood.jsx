@@ -452,7 +452,9 @@ function AddFood({
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox
                           style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          {...rest}
+                          checked={rest.value}
+                          name={rest.name}
+                          ref={rest.ref}
                           id={info.label}
                           onChange={e => {
                             onChange(e);
@@ -494,8 +496,8 @@ function AddFood({
                         value={type.value}
                         render={({ field: { onChange, ...rest } }) => (
                           <Checkbox
-                            // {...rest}
                             checked={rest.value}
+                            name={rest.name}
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
                             id={type.accessType}
                             onClick={e => {
@@ -536,7 +538,7 @@ function AddFood({
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
                             id={rest.name}
                             name={rest.name}
-                            value={rest.value} // change info.value
+                            value={rest.value}
                             onClick={e => {
                               onChange(e);
                               type.onChange(e);
