@@ -60,7 +60,7 @@ function AddBathroom({
   accessible,
   onAccessibleChange,
   hasFoutain,
-  onChangeHasFountain,
+  onHasFountainChange,
   idRequired,
   onIdRequiredChange
 }) {
@@ -109,7 +109,7 @@ function AddBathroom({
     {
       label: 'Also has water fountain',
       value: hasFoutain,
-      onChange: onChangeHasFountain
+      onChange: onHasFountainChange
     }
   ];
 
@@ -401,7 +401,7 @@ function AddBathroom({
                     <Controller
                       control={control}
                       name={info.label}
-                      defaultValue={info.value}
+                      defaultValue={false}
                       value={info.value}
                       render={({ field: { onChange, ...rest } }) => (
                         <Checkbox

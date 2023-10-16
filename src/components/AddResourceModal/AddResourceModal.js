@@ -40,6 +40,7 @@ export class AddResourceModal extends Component {
     this.onChangeDrinkingFountain = this.onChangeDrinkingFountain.bind(this);
     this.onChangeBottleFillerAndFountain =
       this.onChangeBottleFillerAndFountain.bind(this);
+    this.onChangeWaterCooler = this.onChangeWaterCooler.bind(this);
     this.onChangeSink = this.onChangeSink.bind(this);
     this.onChangeWaterJug = this.onChangeWaterJug.bind(this);
     this.onChangeSodaMachine = this.onChangeSodaMachine.bind(this);
@@ -655,7 +656,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               entryType={this.state.entryType}
-              onEntryTypehange={this.onChangeEntryType}
+              onEntryTypeChange={this.onChangeEntryType}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
@@ -772,7 +773,7 @@ export class AddResourceModal extends Component {
               singleOccupancy={this.state.singleOccupancy}
               onChangeSingleOccupancy={this.onChangeSingleOccupancy}
               hasFountain={this.state.hasFountain}
-              onChangeHasFountain={this.onChangeHasFountain}
+              onHasFountainChange={this.onChangeHasFountain}
             />
           )}
 
@@ -792,7 +793,7 @@ export class AddResourceModal extends Component {
               description={this.state.description}
               onDescriptionChange={this.onChangeDescription}
               entryType={this.state.entryType}
-              onAccessChange={this.onChangeAccess}
+              onEntryTypeChange={this.onChangeEntryType}
               nut={this.state.nut}
               onNutChange={this.onChangeNut}
               fruit={this.state.fruit}
