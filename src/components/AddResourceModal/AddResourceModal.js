@@ -31,7 +31,7 @@ export class AddResourceModal extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
     this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
-    this.onChangeNormsAndRules = this.onChangeNormsAndRules.bind(this);
+    this.onChangeGuidelines = this.onChangeGuidelines.bind(this);
     this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
     this.onChangeIdRequired = this.onChangeIdRequired.bind(this);
     // ADD TAP MODAL
@@ -90,7 +90,7 @@ export class AddResourceModal extends Component {
       website: '',
       description: '',
       phlaskStatement: '',
-      normsAndRules: '',
+      guidelines: '',
       handicapAccessable: false,
       idRequired: false,
       dbConnection: '',
@@ -229,9 +229,9 @@ export class AddResourceModal extends Component {
     });
   }
 
-  onChangeNormsAndRules(e) {
+  onChangeGuidelines(e) {
     this.setState({
-      normsAndRules: e.target.value
+      guidelines: e.target.value
     });
   }
 
@@ -553,7 +553,7 @@ export class AddResourceModal extends Component {
         has_fountain: this.state.hasFountain,
         // SHARED FIELDS
         statement: this.state.phlaskStatement,
-        norms_rules: this.state.normsAndRules
+        guidelines: this.state.guidelines
       };
 
       console.log(newData);
@@ -579,7 +579,7 @@ export class AddResourceModal extends Component {
       description: '',
       organization: '',
       phlaskStatement: '',
-      normsAndRules: '',
+      guidelines: '',
       dbConnection: '',
       count: 0,
       show: false,
@@ -685,8 +685,8 @@ export class AddResourceModal extends Component {
               onWaterCoolerChange={this.onChangeWaterCooler}
               dispenserTypeOther={this.state.dispenserTypeOther}
               onDispenserTypeOtherChange={this.onChangeDispenserTypeOther}
-              normsAndRules={this.state.normsAndRules}
-              onNormsAndRulesChange={this.onChangeNormsAndRules}
+              guidelines={this.state.guidelines}
+              onGuidelinesChange={this.onChangeGuidelines}
             />
           )}
 
@@ -733,8 +733,8 @@ export class AddResourceModal extends Component {
               onDistributionTypeOtherChange={this.onChangeDistributionTypeOther}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
-              normsAndRules={this.state.normsAndRules}
-              onNormsAndRulesChange={this.onChangeNormsAndRules}
+              guidelines={this.state.guidelines}
+              onGuidelinesChange={this.onChangeGuidelines}
             />
           )}
 
@@ -758,8 +758,8 @@ export class AddResourceModal extends Component {
               onEntryTypeChange={this.onChangeEntryType}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
-              normsAndRules={this.state.normsAndRules}
-              onNormsAndRulesChange={this.onChangeNormsAndRules}
+              guidelines={this.state.guidelines}
+              onGuidelinesChange={this.onChangeGuidelines}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
               idRequired={this.state.idRequired}
@@ -808,8 +808,8 @@ export class AddResourceModal extends Component {
               onRootChange={this.onChangeRoot}
               phlaskStatement={this.state.phlaskStatement}
               onPhlaskStatementChange={this.onChangePhlaskStatement}
-              normsAndRules={this.state.normsAndRules}
-              onNormsAndRulesChange={this.onChangeNormsAndRules}
+              guidelines={this.state.guidelines}
+              onGuidelinesChange={this.onChangeGuidelines}
               medicinal={this.state.medicinal}
               onMedicinalChange={this.onChangeMedicinal}
               inSeason={this.state.inSeason}

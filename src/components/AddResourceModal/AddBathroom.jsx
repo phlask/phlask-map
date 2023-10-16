@@ -47,8 +47,8 @@ function AddBathroom({
   onEntryTypeChange,
   phlaskStatement,
   onPhlaskStatementChange,
-  normsAndRules, // May need to rename "NormsAndRules" to "Guidelines"
-  onNormsAndRulesChange,
+  guidelines,
+  onGuidelinesChange,
   changingTable,
   onChangeChangingTable,
   genderNeutral,
@@ -423,7 +423,7 @@ function AddBathroom({
               control={control}
               name="guidelines"
               defaultValue={''}
-              value={normsAndRules}
+              value={guidelines}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
                   id="guidelines"
@@ -436,7 +436,7 @@ function AddBathroom({
                   helperText="Share tips on respectful PHLASKing at this location."
                   onChange={e => {
                     onChange(e);
-                    onNormsAndRulesChange(e);
+                    onGuidelinesChange(e);
                   }}
                 />
               )}

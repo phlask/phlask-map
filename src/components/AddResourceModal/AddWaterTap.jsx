@@ -75,8 +75,8 @@ function AddWaterTap({
   onWaterCoolerChange,
   dispenserTypeOther,
   onDispenserTypeOtherChange,
-  normsAndRules,
-  onNormsAndRulesChange
+  guidelines,
+  onGuidelinesChange
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -511,7 +511,7 @@ function AddWaterTap({
               control={control}
               name="guidelines"
               defaultValue={''}
-              value={normsAndRules}
+              value={guidelines}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
                   id="guidelines"
@@ -524,7 +524,7 @@ function AddWaterTap({
                   helperText="Share tips on respectful PHLASKing at this location."
                   onChange={e => {
                     onChange(e);
-                    onNormsAndRulesChange(e);
+                    onGuidelinesChange(e);
                   }}
                 />
               )}

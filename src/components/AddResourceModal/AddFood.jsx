@@ -71,8 +71,8 @@ function AddFood({
   onDistributionTypeOtherChange,
   phlaskStatement,
   onPhlaskStatementChange,
-  normsAndRules,
-  onNormsAndRulesChange
+  guidelines,
+  onGuidelinesChange
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -553,7 +553,7 @@ function AddFood({
               control={control}
               name="guidelines"
               defaultValue={''}
-              value={normsAndRules}
+              value={guidelines}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
                   id="guidelines"
@@ -566,7 +566,7 @@ function AddFood({
                   helperText="Share tips on respectful PHLASKing at this location."
                   onChange={e => {
                     onChange(e);
-                    onNormsAndRulesChange(e);
+                    onGuidelinesChange(e);
                   }}
                 />
               )}

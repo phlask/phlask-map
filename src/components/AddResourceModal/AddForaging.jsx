@@ -63,8 +63,8 @@ function AddForaging({
   onRootChange,
   phlaskStatement,
   onPhlaskStatementChange,
-  normsAndRules,
-  onNormsAndRulesChange,
+  guidelines,
+  onGuidelinesChange,
   medicinal,
   onMedicinalChange,
   inSeason,
@@ -494,7 +494,7 @@ function AddForaging({
               control={control}
               name="guidelines"
               defaultValue={''}
-              value={normsAndRules}
+              value={guidelines}
               render={({ field: { onChange, ...rest } }) => (
                 <TextField
                   id="guidelines"
@@ -507,7 +507,7 @@ function AddForaging({
                   helperText="Share tips on respectful PHLASKing at this location."
                   onChange={e => {
                     onChange(e);
-                    onNormsAndRulesChange(e);
+                    onGuidelinesChange(e);
                   }}
                 />
               )}
