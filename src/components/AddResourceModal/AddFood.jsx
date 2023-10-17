@@ -288,9 +288,9 @@ function AddFood({
                               onChange(e);
                             }}
                             helperText={
-                              <Stack>
+                              <Stack component={'span'}>
                                 {errors.address && requiredFieldMsg}
-                                <Link onClick={() => {}}>
+                                <Link>
                                   {'Use my location instead  '}
                                   <MyLocationIcon sx={{ fontSize: 10 }} />
                                 </Link>
@@ -483,7 +483,11 @@ function AddFood({
                       as="label"
                       htmlFor={type.accessType}
                     >
-                      <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
+                      <Typography
+                        component={'span'}
+                        style={{ marginLeft: '0rem' }}
+                        fontSize={13}
+                      >
                         {type.accessType}
                         {type.explanation && (
                           <FormHelperText>{type.explanation}</FormHelperText>

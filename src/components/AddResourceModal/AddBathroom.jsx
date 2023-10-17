@@ -238,9 +238,9 @@ function AddBathroom({
                               onChange(e);
                             }}
                             helperText={
-                              <Stack>
+                              <Stack component={'span'}>
                                 {errors.address && requiredFieldMsg}
-                                <Link onClick={() => {}}>
+                                <Link>
                                   {'Use my location instead  '}
                                   <MyLocationIcon sx={{ fontSize: 10 }} />
                                 </Link>
