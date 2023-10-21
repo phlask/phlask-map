@@ -114,50 +114,66 @@ function AddFood({
 
   const FOOD_TYPE = [
     {
+      id: '0',
       accessType: 'Perishable',
       explanation: 'Fruit, vegetables, dairy, etc.',
       value: perishable,
+      name: 'perishable',
       onChange: onPerishableChange
     },
     {
+      id: '1',
       accessType: 'Non-perishable',
       explanation: 'Canned, boxed, pantry items, etc.',
       value: nonPerishable,
+      name: 'nonPerishable',
       onChange: onNonPerishableChange
     },
     {
+      id: '2',
       accessType: 'Prepared food and meals',
       explanation: '',
       value: prepared,
+      name: 'prepared',
       onChange: onPreparedChange
     },
     {
+      id: '3',
       accessType: 'Other',
       explanation: '',
       value: foodTypeOther,
+      name: 'foodTypeOther',
       onChange: onFoodTypeOtherChange
     }
   ];
 
   const DISTRIBUTION_TYPE = [
     {
+      id: '4',
       label: 'Eat on site',
       value: eatOnSite,
+      name: 'eatOnSite',
       onChange: onEatOnSiteChange
     },
     {
+      id: '5',
       label: 'Delivery',
       value: delivery,
+      name: 'delivery',
       onChange: onDeliveryChange
     },
     {
+      id: '6',
       label: 'Pickup',
       value: pickUp,
+      name: 'pickUp',
       onChange: onPickUpChange
     },
     {
+      id: '7',
       label: 'Other',
       value: distributionTypeOther,
+      name: 'distributionTypeOther',
       onChange: onDistributionTypeOtherChange
     }
   ];
@@ -477,11 +493,7 @@ function AddFood({
               <AccordionDetails>
                 {FOOD_TYPE.map(type => {
                   return (
-                    <ListItem
-                      key={type.accessType}
-                      as="label"
-                      htmlFor={type.accessType}
-                    >
+                    <ListItem key={type.name} as="label" htmlFor={type.id}>
                       <Typography
                         component={'span'}
                         style={{ marginLeft: '0rem' }}
@@ -494,7 +506,7 @@ function AddFood({
                       </Typography>
                       <Controller
                         control={control}
-                        name={type.accessType}
+                        name={type.name}
                         defaultValue={type.value}
                         value={type.value}
                         render={({ field: { onChange, ...rest } }) => (
@@ -502,7 +514,7 @@ function AddFood({
                             checked={rest.value}
                             name={rest.name}
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={type.accessType}
+                            id={type.id}
                             onClick={e => {
                               onChange(e);
                               type.onChange(e);
@@ -527,19 +539,19 @@ function AddFood({
               <AccordionDetails>
                 {DISTRIBUTION_TYPE.map(type => {
                   return (
-                    <ListItem key={type.label} as="label" htmlFor={type.label}>
+                    <ListItem key={type.name} as="label" htmlFor={type.id}>
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
                       <Controller
                         control={control}
-                        name={type.label}
+                        name={type.name}
                         defaultValue={false}
                         value={type.value}
                         render={({ field: { onChange, ...rest } }) => (
                           <Checkbox
                             style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={rest.name}
+                            id={type.id}
                             name={rest.name}
                             value={rest.value}
                             onClick={e => {
