@@ -22,7 +22,8 @@ import {
   FormControl,
   FormHelperText,
   Checkbox,
-  TextField
+  TextField,
+  ListItem
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -438,7 +439,7 @@ function AddFood({
               <Typography>Helpful info</Typography>
               {FOOD_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                  <ListItem key={info.label} as="label" htmlFor={info.label}>
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
@@ -461,7 +462,7 @@ function AddFood({
                         />
                       )}
                     />
-                  </MenuItem>
+                  </ListItem>
                 );
               })}
             </FormGroup>
@@ -476,7 +477,7 @@ function AddFood({
               <AccordionDetails>
                 {FOOD_TYPE.map(type => {
                   return (
-                    <MenuItem
+                    <ListItem
                       key={type.accessType}
                       as="label"
                       htmlFor={type.accessType}
@@ -510,7 +511,7 @@ function AddFood({
                           />
                         )}
                       />
-                    </MenuItem>
+                    </ListItem>
                   );
                 })}
               </AccordionDetails>
@@ -526,7 +527,7 @@ function AddFood({
               <AccordionDetails>
                 {DISTRIBUTION_TYPE.map(type => {
                   return (
-                    <MenuItem key={type.label} as="label" htmlFor={type.label}>
+                    <ListItem key={type.label} as="label" htmlFor={type.label}>
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
@@ -548,7 +549,7 @@ function AddFood({
                           />
                         )}
                       />
-                    </MenuItem>
+                    </ListItem>
                   );
                 })}
               </AccordionDetails>
