@@ -19,7 +19,8 @@ import {
   FormControl,
   FormHelperText,
   Checkbox,
-  TextField
+  TextField,
+  ListItem
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 
@@ -390,7 +391,7 @@ function AddBathroom({
               <Typography>Helpful info</Typography>
               {BATHROOM_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                  <ListItem key={info.label} as="label" htmlFor={info.label}>
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
@@ -413,7 +414,7 @@ function AddBathroom({
                         />
                       )}
                     />
-                  </MenuItem>
+                  </ListItem>
                 );
               })}
             </FormGroup>
