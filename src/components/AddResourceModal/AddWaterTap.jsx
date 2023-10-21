@@ -57,8 +57,6 @@ function AddWaterTap({
   onWaterVesselNeededChange,
   filtration,
   onFiltrationChange,
-  phlaskStatement,
-  onPhlaskStatementChange,
   drinkingFountain,
   onDrinkingFountainChange,
   bottleFillerAndFountain,

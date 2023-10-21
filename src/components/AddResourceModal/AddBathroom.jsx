@@ -45,8 +45,6 @@ function AddBathroom({
   onDescriptionChange,
   entryType,
   onEntryTypeChange,
-  phlaskStatement,
-  onPhlaskStatementChange,
   guidelines,
   onGuidelinesChange,
   changingTable,
@@ -60,9 +58,7 @@ function AddBathroom({
   accessible,
   onAccessibleChange,
   hasFoutain,
-  onHasFountainChange,
-  idRequired,
-  onIdRequiredChange
+  onHasFountainChange
 }) {
   useEffect(() => {
     // create connection to appropriate database

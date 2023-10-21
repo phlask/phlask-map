@@ -90,7 +90,6 @@ export class AddResourceModal extends Component {
       address: '',
       website: '',
       description: '',
-      phlaskStatement: '',
       guidelines: '',
       handicapAccessable: false,
       idRequired: false,
@@ -221,12 +220,6 @@ export class AddResourceModal extends Component {
   onChangeIdRequired(e) {
     this.setState({
       idRequired: e.target.checked
-    });
-  }
-
-  onChangePhlaskStatement(e) {
-    this.setState({
-      phlaskStatement: e.target.value
     });
   }
 
@@ -505,12 +498,14 @@ export class AddResourceModal extends Component {
        *  and selectively pass it on to the submit function
        */
       const newData = {
+        // SHARED FIELDS
         images: images,
         name: this.state.name,
         entryType: this.state.entryType,
         address: this.state.address,
         website: this.state.website,
         description: this.state.description,
+        guidelines: this.state.guidelines,
         // TAP FIELDS
         filtration: this.state.filtration,
         handicap: this.state.handicapAccessable,
@@ -551,10 +546,7 @@ export class AddResourceModal extends Component {
         gender_neutral: this.state.genderNeutral,
         family_bathroom: this.state.familyBathroom,
         single_occupancy: this.state.singleOccupancy,
-        has_fountain: this.state.hasFountain,
-        // SHARED FIELDS
-        statement: this.state.phlaskStatement,
-        guidelines: this.state.guidelines
+        has_fountain: this.state.hasFountain
       };
 
       const database = getDatabase(this.state.dbConnection);
@@ -578,7 +570,6 @@ export class AddResourceModal extends Component {
       website: '',
       description: '',
       organization: '',
-      phlaskStatement: '',
       guidelines: '',
       dbConnection: '',
       count: 0,
@@ -665,8 +656,6 @@ export class AddResourceModal extends Component {
               onWaterVesselNeededChange={this.onChangeWaterVesselNeeded}
               filtration={this.state.filtration}
               onFiltrationChange={this.onChangeFiltration}
-              phlaskStatement={this.state.phlaskStatement}
-              onPhlaskStatementChange={this.onChangePhlaskStatement}
               drinkingFountain={this.state.drinkingFountain}
               onDrinkingFountainChange={this.onChangeDrinkingFountain}
               bottleFillerAndFountain={this.state.bottleFillerAndFountain}
@@ -731,8 +720,6 @@ export class AddResourceModal extends Component {
               onPickUpChange={this.onChangePickUp}
               distributionTypeOther={this.state.distributionTypeOther}
               onDistributionTypeOtherChange={this.onChangeDistributionTypeOther}
-              phlaskStatement={this.state.phlaskStatement}
-              onPhlaskStatementChange={this.onChangePhlaskStatement}
               guidelines={this.state.guidelines}
               onGuidelinesChange={this.onChangeGuidelines}
             />
@@ -756,14 +743,10 @@ export class AddResourceModal extends Component {
               onDescriptionChange={this.onChangeDescription}
               entryType={this.state.entryType}
               onEntryTypeChange={this.onChangeEntryType}
-              phlaskStatement={this.state.phlaskStatement}
-              onPhlaskStatementChange={this.onChangePhlaskStatement}
               guidelines={this.state.guidelines}
               onGuidelinesChange={this.onChangeGuidelines}
               accessible={this.state.handicapAccessable}
               onAccessibleChange={this.onChangeHandicapAccess}
-              idRequired={this.state.idRequired}
-              onIdRequiredChange={this.onChangeIdRequired}
               changingTable={this.state.changingTable}
               onChangeChangingTable={this.onChangeChangingTable}
               genderNeutral={this.state.genderNeutral}
@@ -806,8 +789,6 @@ export class AddResourceModal extends Component {
               onFlowersChange={this.onChangeFlowers}
               root={this.state.root}
               onRootChange={this.onChangeRoot}
-              phlaskStatement={this.state.phlaskStatement}
-              onPhlaskStatementChange={this.onChangePhlaskStatement}
               guidelines={this.state.guidelines}
               onGuidelinesChange={this.onChangeGuidelines}
               medicinal={this.state.medicinal}

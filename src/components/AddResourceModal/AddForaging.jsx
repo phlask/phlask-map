@@ -61,8 +61,6 @@ function AddForaging({
   onFlowersChange,
   root,
   onRootChange,
-  phlaskStatement,
-  onPhlaskStatementChange,
   guidelines,
   onGuidelinesChange,
   medicinal,

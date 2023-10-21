@@ -69,8 +69,6 @@ function AddFood({
   onPickUpChange,
   distributionTypeOther,
   onDistributionTypeOtherChange,
-  phlaskStatement,
-  onPhlaskStatementChange,
   guidelines,
   onGuidelinesChange
 }) {
