@@ -395,24 +395,14 @@ function AddBathroom({
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Controller
-                      control={control}
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                      checked={info.value}
                       name={info.label}
-                      defaultValue={false}
-                      value={info.value}
-                      render={({ field: { onChange, ...rest } }) => (
-                        <Checkbox
-                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          checked={rest.value}
-                          name={rest.name}
-                          ref={rest.ref}
-                          id={rest.name}
-                          onChange={e => {
-                            onChange(e);
-                            info.onChange(e);
-                          }}
-                        />
-                      )}
+                      id={info.label}
+                      onChange={e => {
+                        info.onChange(e);
+                      }}
                     />
                   </ListItem>
                 );
