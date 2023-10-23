@@ -22,7 +22,8 @@ import {
   FormControl,
   FormHelperText,
   Checkbox,
-  TextField
+  TextField,
+  ListItem
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -448,7 +449,7 @@ function AddWaterTap({
               <AccordionDetails>
                 {DISPENSER_TYPE.map(type => {
                   return (
-                    <MenuItem key={type.label} as="label" htmlFor={type.label}>
+                    <ListItem key={type.label} as="label" htmlFor={type.label}>
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
@@ -461,7 +462,7 @@ function AddWaterTap({
                           type.onChange(e);
                         }}
                       />
-                    </MenuItem>
+                    </ListItem>
                   );
                 })}
               </AccordionDetails>
@@ -471,7 +472,7 @@ function AddWaterTap({
               <Typography>Helpful info</Typography>
               {WATER_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                  <ListItem key={info.label} as="label" htmlFor={info.label}>
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
@@ -484,7 +485,7 @@ function AddWaterTap({
                         info.onChange(e);
                       }}
                     />
-                  </MenuItem>
+                  </ListItem>
                 );
               })}
             </FormGroup>
