@@ -459,24 +459,14 @@ function AddFood({
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Controller
-                      control={control}
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                      checked={info.value}
                       name={info.label}
-                      defaultValue={info.value}
-                      value={info.value}
-                      render={({ field: { onChange, ...rest } }) => (
-                        <Checkbox
-                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          checked={rest.value}
-                          name={rest.name}
-                          ref={rest.ref}
-                          id={info.label}
-                          onChange={e => {
-                            onChange(e);
-                            info.onChange(e);
-                          }}
-                        />
-                      )}
+                      id={info.label}
+                      onChange={e => {
+                        info.onChange(e);
+                      }}
                     />
                   </ListItem>
                 );
@@ -504,24 +494,14 @@ function AddFood({
                           <FormHelperText>{type.explanation}</FormHelperText>
                         )}
                       </Typography>
-                      <Controller
-                        control={control}
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        checked={type.value}
                         name={type.name}
-                        defaultValue={type.value}
-                        value={type.value}
-                        render={({ field: { onChange, ...rest } }) => (
-                          <Checkbox
-                            checked={rest.value}
-                            name={rest.name}
-                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={type.id}
-                            onClick={e => {
-                              onChange(e);
-                              type.onChange(e);
-                            }}
-                            ref={rest.ref}
-                          />
-                        )}
+                        id={type.id}
+                        onChange={e => {
+                          type.onChange(e);
+                        }}
                       />
                     </ListItem>
                   );
@@ -543,23 +523,14 @@ function AddFood({
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
-                      <Controller
-                        control={control}
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        checked={type.value}
                         name={type.name}
-                        defaultValue={false}
-                        value={type.value}
-                        render={({ field: { onChange, ...rest } }) => (
-                          <Checkbox
-                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={type.id}
-                            name={rest.name}
-                            value={rest.value}
-                            onClick={e => {
-                              onChange(e);
-                              type.onChange(e);
-                            }}
-                          />
-                        )}
+                        id={type.id}
+                        onChange={e => {
+                          type.onChange(e);
+                        }}
                       />
                     </ListItem>
                   );
