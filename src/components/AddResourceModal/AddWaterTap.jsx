@@ -452,24 +452,14 @@ function AddWaterTap({
                       <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
                         {type.label}
                       </Typography>
-                      <Controller
-                        control={control}
+                      <Checkbox
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        id={type.label}
                         name={type.label}
-                        defaultValue={type.value}
-                        value={type.value}
-                        render={({ field: { onChange, ...rest } }) => (
-                          <Checkbox
-                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={rest.name}
-                            name={rest.name}
-                            checked={rest.value}
-                            ref={rest.ref}
-                            onClick={e => {
-                              onChange(e);
-                              type.onChange(e);
-                            }}
-                          />
-                        )}
+                        checked={type.value}
+                        onClick={e => {
+                          type.onChange(e);
+                        }}
                       />
                     </MenuItem>
                   );
@@ -485,24 +475,14 @@ function AddWaterTap({
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Controller
-                      control={control}
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                      checked={info.value}
                       name={info.label}
-                      defaultValue={info.value}
-                      value={info.value}
-                      render={({ field: { onChange, ...rest } }) => (
-                        <Checkbox
-                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          checked={rest.value}
-                          name={rest.name}
-                          ref={rest.ref}
-                          id={rest.name}
-                          onChange={e => {
-                            onChange(e);
-                            info.onChange(e);
-                          }}
-                        />
-                      )}
+                      id={info.label}
+                      onChange={e => {
+                        info.onChange(e);
+                      }}
                     />
                   </MenuItem>
                 );
