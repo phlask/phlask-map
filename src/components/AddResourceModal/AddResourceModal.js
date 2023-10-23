@@ -30,7 +30,6 @@ export class AddResourceModal extends Component {
     this.onChangeWebsite = this.onChangeWebsite.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeOrganization = this.onChangeOrganization.bind(this);
-    this.onChangePhlaskStatement = this.onChangePhlaskStatement.bind(this);
     this.onChangeGuidelines = this.onChangeGuidelines.bind(this);
     this.onChangeHandicapAccess = this.onChangeHandicapAccess.bind(this);
     this.onChangeIdRequired = this.onChangeIdRequired.bind(this);
