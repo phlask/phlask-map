@@ -22,7 +22,8 @@ import {
   FormControl,
   FormHelperText,
   Checkbox,
-  TextField
+  TextField,
+  ListItem
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -425,7 +426,7 @@ function AddForaging({
               <AccordionDetails>
                 {FORAGE_TYPE.map(type => {
                   return (
-                    <MenuItem
+                    <ListItem
                       key={type.forageType}
                       as="label"
                       htmlFor={type.forageType}
@@ -433,26 +434,16 @@ function AddForaging({
                       <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                         {type.forageType}
                       </Typography>
-                      <Controller
-                        control={control}
+                      <Checkbox
+                        checked={type.value}
                         name={type.forageType}
-                        defaultValue={type.value}
-                        value={type.value}
-                        render={({ field: { onChange, ...rest } }) => (
-                          <Checkbox
-                            checked={rest.value}
-                            name={rest.name}
-                            style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                            id={rest.name}
-                            onClick={e => {
-                              onChange(e);
-                              type.onChange(e);
-                            }}
-                            ref={rest.ref}
-                          />
-                        )}
+                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                        id={type.forageType}
+                        onClick={e => {
+                          type.onChange(e);
+                        }}
                       />
-                    </MenuItem>
+                    </ListItem>
                   );
                 })}
               </AccordionDetails>
@@ -461,30 +452,20 @@ function AddForaging({
               <Typography>Helpful info</Typography>
               {FORAGING_HELPFUL_INFO.map(info => {
                 return (
-                  <MenuItem key={info.label} as="label" htmlFor={info.label}>
+                  <ListItem key={info.label} as="label" htmlFor={info.label}>
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
-                    <Controller
-                      control={control}
+                    <Checkbox
+                      style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                      id={info.label}
                       name={info.label}
-                      defaultValue={false}
-                      value={info.value}
-                      render={({ field: { onChange, ...rest } }) => (
-                        <Checkbox
-                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                          id={rest.name}
-                          name={rest.name}
-                          checked={rest.value}
-                          ref={rest.ref}
-                          onChange={e => {
-                            onChange(e);
-                            info.onChange(e);
-                          }}
-                        />
-                      )}
+                      checked={info.value}
+                      onChange={e => {
+                        info.onChange(e);
+                      }}
                     />
-                  </MenuItem>
+                  </ListItem>
                 );
               })}
             </FormGroup>
