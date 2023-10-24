@@ -34,7 +34,7 @@ export const bathroomConfig = {
   messagingSenderId: '428394983826'
 };
 
-export const contributorsConf = {
+export const contributorsConfig = {
   apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
   authDomain: 'phlask-web-map.firebaseapp.com',
   databaseURL: 'https://phlask-contributors.firebaseio.com/',
