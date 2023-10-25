@@ -22,7 +22,7 @@ import {
 import styles from './Toolbar.module.scss';
 
 import { isMobile } from 'react-device-detect';
-// import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import AddResourceModal from '../AddResourceModal/AddResourceModal';
 
 import DesktopWaterIcon from '../icons/DesktopWaterIcon';
@@ -114,7 +114,7 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const [value, setValue] = React.useState(0);
-
+  const [openResourceModal, setOpenResourceModal] = React.useState(false);
   const phlaskType = useSelector(phlaskTypeSelector);
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
@@ -391,7 +391,7 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => props.setOpenResourceModal()}
+              onClick={() => setOpenResourceModal(true)}
             />
           </BottomNavigation>
         </Box>
@@ -400,10 +400,10 @@ function Toolbar(props) {
         open={openResourceModal}
         setOpen={setOpenResourceModal}
       /> */}
-      {/* <AddResourceModal
+      <AddResourceModal
         open={openResourceModal}
         setOpen={setOpenResourceModal}
-      /> */}
+      />
     </>
   );
 }
