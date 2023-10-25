@@ -36,7 +36,30 @@ Code behind the PHLASK Web Map
 
 ## Running Locally
 
-### Docker (Recommended path for consistency across computers)
+### GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/phlask/phlask-map/tree/develop?quickstart=1)
+
+GitHub Codespaces provides you with a remote development environment without needing to install anything locally. You can also connect to your Codespace from VSCode, if desired. A default codespace configuration in the `.devcontainer/devcontainer.json` file has been prepared that will ensure your codespace has everything needed to run PHLASK. Once the codespace has started, you should be able to use the Terminal window in the bottom to run `yarn start`. That will load a local development copy of the PHLASK site for you to test with.
+
+To learn more about Codespaces, review this page: https://github.com/features/codespaces
+
+As of this writing, PHLASK does not fund these codespaces. However, GitHub offers up to 60 hours/month of free use for codespaces. For more details on Codespace pricing, review this page: https://docs.github.com/en/billing/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts
+
+Note that `core hours per month` means each core on your codespace consumes independent hours from your code hour limit. If you choose a 2-core space (sufficient for PHLASK), you use 2 core-hours every hour from the free `core hours per month` allowance.
+
+### Yarn
+
+1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine.
+   - You can also use use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
+   - once you have install nvm
+   - run `nvm install` <- this will download the required verison (only required on the first installation)
+   - run `nvm use` sets that to the active version of node in your terminal
+1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
+1. Run `yarn install`
+1. Run `yarn start`
+
+### Docker
 
 1.  Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
@@ -71,23 +94,13 @@ Code behind the PHLASK Web Map
     Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
 
     ```
+    Beta site https://beta.phlask.me/
     Project is running at http://172.21.112.1/
     ...
     Starting the development server...
     ```
 
 1.  Navigate to localhost:3000 on your browser.
-
-### Yarn
-
-1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine.
-   - You can also use use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
-   - once you have install nvm
-   - run `nvm install` <- this will download the required verison (only required on the first installation)
-   - run `nvm use` sets that to the active version of node in your terminal
-1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
-1. Run `yarn install`
-1. Run `yarn start`
 
 ## Recommended Development Tools
 

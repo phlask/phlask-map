@@ -1,39 +1,43 @@
 /* eslint-disable no-console */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import ReactGA from 'react-ga4';
 import { connect } from 'react-redux';
 import {
+  PHLASK_TYPE_WATER,
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass,
-  PHLASK_TYPE_WATER
+  toggleInfoWindowClass
 } from '../../actions/actions';
-import { isMobile } from 'react-device-detect';
-// import { connect } from 'react-redux'
-import './SelectedTap.css';
-import styles from './SelectedTap.module.scss';
+import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
+import SelectedTapIcons from '../SelectedTapIcons/SelectedTapIcons';
 import sampleImg from '../images/phlask-tessellation.png';
 import sampleImg2x from '../images/phlask-tessellation@2x.png';
-import phlaskGreen from '../images/phlaskGreen.png';
 import phlaskBlue from '../images/phlaskBlue.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCaretLeft,
-  faCaretDown,
-  faCaretUp,
-  faTimes
-} from '@fortawesome/free-solid-svg-icons';
-import SelectedTapIcons from '../SelectedTapIcons/SelectedTapIcons';
-import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
+import phlaskGreen from '../images/phlaskGreen.png';
+import './SelectedTap.css';
+import styles from './SelectedTap.module.scss';
 
-import { SwipeableDrawer } from '@mui/material';
+import { Paper, SwipeableDrawer } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
+import { makeStyles, withStyles } from '@mui/styles';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import CloseIcon from '@mui/icons-material/Close';
 
 const tempImages = {
   tapImg: sampleImg,
   tapImg2x: sampleImg2x
 };
+
+const useStyles = makeStyles({
+  topRightDialog: {
+    top: '20px',
+    right: '20px'
+  }
+});
 
 class SelectedTap extends React.Component {
   refSelectedTap = React.createRef();
@@ -55,7 +59,8 @@ class SelectedTap extends React.Component {
       accessibility: phlaskGreen
     },
     walkingDuration: 0,
-    walkingDistance: 0
+    walkingDistance: 0,
+    infoCollapseMobile: false
   };
 
   getWalkingDurationAndTimes = () => {
@@ -74,7 +79,10 @@ class SelectedTap extends React.Component {
         let distance = (
           data.features[0].properties.summary.distance * 0.00062
         ).toFixed(1);
-        this.setState({ walkingDuration: duration, walkingDistance: distance });
+        this.setState({
+          walkingDuration: duration,
+          walkingDistance: distance
+        });
       });
   };
 
@@ -127,6 +135,10 @@ class SelectedTap extends React.Component {
     }
   }
 
+  setInfoCollapseMobile = collapse => {
+    this.setState({ infoCollapseMobile: collapse });
+  };
+
   toggleInfoWindow(shouldShow) {
     this.props.toggleInfoWindowClass(shouldShow);
     // Animate in
@@ -135,9 +147,8 @@ class SelectedTap extends React.Component {
     }
     // Animate Out
     else {
-      setTimeout(() => {
-        this.props.toggleInfoWindow(false);
-      }, this.state.animationSpeed);
+      this.props.toggleInfoWindow(false);
+      this.setInfoCollapseMobile(false);
     }
   }
 
@@ -194,6 +205,7 @@ class SelectedTap extends React.Component {
         this.handleGA();
       }
       if (
+        isMobile &&
         this.state.previewHeight !== this.refSelectedTap.current.clientHeight &&
         !this.state.isDescriptionShown
       ) {
@@ -209,58 +221,107 @@ class SelectedTap extends React.Component {
   }
 
   render() {
-    if (this.props.showingInfoWindow) {
-      return (
-        <div>
-          {isMobile && (
-            <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-              {this.props.selectedPlace && (
-                <SwipeableDrawer
-                  anchor="bottom"
-                  open={this.props.showingInfoWindow}
-                  onOpen={() => this.toggleInfoWindow(true)}
-                  onClose={() => this.toggleInfoWindow(false)}
-                  PaperProps={{ square: false }}
+    const { classes } = this.props;
+    return (
+      <div>
+        {isMobile && (
+          <div ref={this.refSelectedTap} id="tap-info-container-mobile">
+            {this.props.selectedPlace && (
+              <SwipeableDrawer
+                anchor="bottom"
+                open={this.props.showingInfoWindow}
+                onOpen={() => this.toggleInfoWindow(true)}
+                onClose={() => this.toggleInfoWindow(false)}
+                PaperProps={{ square: false }}
+              >
+                <SelectedTapMobile
+                  image={tempImages.tapImg}
+                  estWalkTime={this.state.walkingDuration}
+                  selectedPlace={this.props.selectedPlace}
+                  infoCollapse={this.state.infoCollapseMobile}
+                  setInfoCollapse={this.setInfoCollapseMobile}
                 >
-                  <SelectedTapMobile
-                    image={tempImages.tapImg}
-                    estWalkTime={this.state.walkingDuration}
+                  <SelectedTapHours
+                    infoIsExpanded={this.props.infoIsExpanded}
                     selectedPlace={this.props.selectedPlace}
-                  >
-                    <SelectedTapHours
-                      infoIsExpanded={this.props.infoIsExpanded}
-                      selectedPlace={this.props.selectedPlace}
-                    />
-                  </SelectedTapMobile>
-                </SwipeableDrawer>
-              )}
-            </div>
-          )}
-          {!isMobile && (
-            <div
-              ref={this.refSelectedTap}
-              id="tap-info-container"
-              className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
-              style={{}}
+                  />
+                </SelectedTapMobile>
+              </SwipeableDrawer>
+            )}
+          </div>
+        )}
+        {!isMobile && this.props.showingInfoWindow && (
+          <div>
+            {/* Desktop dialog panel */}
+            <Paper
+              sx={{
+                position: 'absolute',
+                right: '32px',
+                top: '20px',
+                width: '708px',
+                height: '700px'
+              }}
             >
-              <button
-                className={styles.closeButton}
-                aria-label="Close"
+              {/* <DialogTitle>Dialog Title</DialogTitle> */}
+
+              <IconButton
+                aria-label="close"
                 onClick={() => {
                   this.toggleInfoWindow(false);
                 }}
+                sx={{
+                  position: 'absolute',
+                  left: '45px',
+                  top: 20,
+                  color: '#000000'
+                }}
+                size="large"
               >
-                <div
-                  id="close-arrow-desktop"
-                  className={styles.closeIconWrapper}
-                >
-                  <FontAwesomeIcon
-                    className={styles.closeIcon}
-                    color="#999"
-                    icon={faCaretLeft}
-                  />
-                </div>
-              </button>
+                <CloseIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
+              </IconButton>
+
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(true);
+                }}
+                sx={{
+                  float: 'right',
+                  right: '150px',
+                  top: 20,
+                  color: '#000000'
+                }}
+                // size="large"
+              >
+                <IosShareIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
+              </IconButton>
+
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(true);
+                }}
+                sx={{
+                  float: 'right',
+                  top: 20,
+                  color: '#000000'
+                }}
+              >
+                <MoreHorizIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
+              </IconButton>
+
               {/* Location Name */}
               <div
                 ref={this.refContentArea}
@@ -273,15 +334,15 @@ class SelectedTap extends React.Component {
                 {/* Main Image */}
 
                 <div id="tap-info-img-box-desktop">
-                  <img
+                  <img-alt
                     id="tap-info-img"
                     src={tempImages.tapImg}
                     srcSet={
                       tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
                     }
-                    alt=""
-                  ></img>
+                  ></img-alt>
                 </div>
+                {/* Main Image */}
 
                 <div id="tap-head-info">
                   {/* Tap Type Icon */}
@@ -350,16 +411,13 @@ class SelectedTap extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return null;
-    }
+            </Paper>
+          </div>
+        )}
+      </div>
+    );
   }
 }
-
 const mapStateToProps = state => ({
   showingInfoWindow: state.showingInfoWindow,
   infoIsExpanded: state.infoIsExpanded,
@@ -374,4 +432,7 @@ const mapDispatchToProps = {
   toggleInfoWindowClass
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedTap);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SelectedTap));

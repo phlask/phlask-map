@@ -25,13 +25,13 @@ const SidebarLink = styled(NavLink)(({ theme }) => ({
   }
 }));
 
-export default function SideBar({ open, setOpen, showControls }) {
+export default function SideBar({ open, setOpenResourceModal, showControls }) {
   const handleClose = () => {
-    setOpen(false);
+    setOpenResourceModal(false);
   };
 
   const handleLogoClick = () => {
-    setOpen(false);
+    setOpenResourceModal(false);
     showControls(true);
   };
 
@@ -103,6 +103,15 @@ export default function SideBar({ open, setOpen, showControls }) {
               <UsersIcon />
             </ListItemIcon>
             <ListItemText>Join Team</ListItemText>
+          </ListItemButton>
+        </SidebarLink>
+
+        <SidebarLink to="contribute" onClick={handleClose}>
+          <ListItemButton>
+            <ListItemIcon sx={{ marginLeft: '-3px' }}>
+              <UsersIcon />
+            </ListItemIcon>
+            <ListItemText>Acknowledgements</ListItemText>
           </ListItemButton>
         </SidebarLink>
       </List>

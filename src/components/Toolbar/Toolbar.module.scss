@@ -1,5 +1,6 @@
 $waterColor: #27aae1;
 $foodColor: #8dc63f;
+$searchColor: #8dc63f;
 
 .toolbar {
   position: absolute;
@@ -13,23 +14,23 @@ $foodColor: #8dc63f;
   }
 }
 
-.title {
-  // title is desktop only
-  flex: 1 0 auto;
-  margin: 0;
-  text-transform: uppercase;
-  font-weight: 400;
-  line-height: 1;
-  font-size: 1.25rem;
-}
+// .title {
+//   // title is desktop only
+//   flex: 1 0 auto;
+//   margin: 0;
+//   text-transform: uppercase;
+//   font-weight: 400;
+//   line-height: 1;
+//   font-size: 1.25rem;
+// }
 
-.waterTitle {
-  color: $waterColor;
-}
+// .waterTitle {
+//   color: $waterColor;
+// }
 
-.foodTitle {
-  color: $foodColor;
-}
+// .foodTitle {
+//   color: $foodColor;
+// }
 
 .closestTapButton {
   // closest tap is mobile only
@@ -46,31 +47,31 @@ $foodColor: #8dc63f;
   }
 }
 
-.toolbarButton {
-  // water and food buttons
-  height: 40px;
-  width: 40px;
-  background-color: white;
-  border-radius: 50%;
-  transition: box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
+// .toolbarButton {
+//   // water and food buttons
+//   height: 40px;
+//   width: 40px;
+//   background-color: white;
+//   border-radius: 50%;
+//   transition: box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
 
-  &.disabled {
-    color: #ccc;
+//   &.disabled {
+//     color: #ccc;
 
-    &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
-    }
-  }
+//     &:focus {
+//       box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
+//     }
+//   }
 
-  svg {
-    height: 100%;
-    width: 100%;
-  }
+//   svg {
+//     height: 100%;
+//     width: 100%;
+//   }
 
-  &:focus {
-    outline: none;
-  }
-}
+//   &:focus {
+//     outline: none;
+//   }
+// }
 
 .waterButton {
   color: $waterColor;
@@ -80,11 +81,11 @@ $foodColor: #8dc63f;
   }
 }
 
-.foodButton {
-  color: $foodColor;
+.searchButton {
+  color: $searchColor;
 
   :focus {
-    box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
+    box-shadow: 0 0 0 0.2rem rgba($searchColor, 0.3);
   }
 }
 
@@ -127,8 +128,9 @@ $foodColor: #8dc63f;
 }
 
 .desktopToolbar {
-  height: 50px;
-  width: 30vw;
+  height: 84px;
+  width: 708px;
+  display: flex;
   min-width: 400px;
   padding: 0 7.8rem 0 1rem;
   border-radius: 5px;
@@ -137,65 +139,22 @@ $foodColor: #8dc63f;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
 
-  .waterButton:hover {
-    box-shadow: 0 0 0 0.2rem rgba($waterColor, 0.3);
-  }
-
-  .foodButton {
-    margin-left: 0.5rem;
-
-    &:hover {
-      box-shadow: 0 0 0 0.2rem rgba($foodColor, 0.3);
-    }
-  }
-
-  .toolbarButton.disabled:hover {
-    box-shadow: 0 0 0 0.2rem rgba(#ccc, 0.3);
-  }
-
-  .addButton {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: 0.35rem;
-    color: #999;
-
-    &:hover {
-      color: #666;
-    }
-
-    svg {
-      padding: 0.15rem;
-    }
+  .phlaskWaterButton {
+    width: 300px;
   }
 
   .filterButton {
-    box-sizing: content-box;
-    right: 1rem;
-    padding-left: 1rem;
-    padding-right: 2rem;
-    border-left: 1px solid #ccc;
+    width: 100px;
+    height: 100px;
   }
 
-  /*.infoButton {
-    top: 17%;
-  }*/
-}
+  .resourceButton {
+    width: 100px;
+    height: 100px;
+  }
 
-.PHLASKButton {
-  /*
-  The scaling applied here is to try to get the svg as close to the 69px size requirement as possible
-  Attempting to work with height/width properties directly does not seem to work while testing
-  */
-  transform: scale(2.314659) translateY(-8px);
-}
-
-.resourceButton {
-  // margin-top: 10px;
-  // margin-bottom: 5px;
-  transform: scale(1);
-}
-
-.contributeButton {
-  transform: scale(1);
+  .contributeButton {
+    width: 100px;
+    height: 100px;
+  }
 }

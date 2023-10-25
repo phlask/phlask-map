@@ -56,14 +56,13 @@
 #tap-info-img-box-desktop {
   position: relative;
   width: 100%;
-  height: 25vw;
+  max-height: 200px;
   max-width: 100%;
-  max-height: var(--info-main-image-height-max);
   min-width: 100%;
-  min-height: var(--info-main-image-height-min);
   padding: 10px 10px 0 10px;
 }
 #tap-info-img {
+  position: relative;
   width: 100%;
   height: 100%;
   max-width: 100%;

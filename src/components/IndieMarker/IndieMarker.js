@@ -1,17 +1,17 @@
-import React from 'react';
 import { Marker } from 'google-maps-react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   getTaps,
-  toggleInfoWindow,
-  setSelectedPlace,
   setMapCenter,
+  setSelectedPlace,
+  toggleInfoWindow,
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
-import './IndieMarker.css';
-import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
-import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
 import { cleanUpForRedux } from '../MapMarkers/utils';
+import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
+import './IndieMarker.css';
 
 class IndieMarker extends React.Component {
   state = {
@@ -85,6 +85,7 @@ class IndieMarker extends React.Component {
   onMarkerClick(tap) {
     this.props.toggleInfoWindow(true);
     this.props.setSelectedPlace(cleanUpForRedux(tap));
+    this.props.map.panTo({ lat: this.props.tap.lat, lng: this.props.tap.lon });
   }
 
   render() {
