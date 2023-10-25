@@ -400,10 +400,10 @@ function Toolbar(props) {
         open={openResourceModal}
         setOpen={setOpenResourceModal}
       /> */}
-      <AddResourceModal
+      {/* <AddResourceModal
         open={openResourceModal}
         setOpen={setOpenResourceModal}
-      />
+      /> */}
     </>
   );
 }
