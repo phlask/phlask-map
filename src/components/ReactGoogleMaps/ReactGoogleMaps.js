@@ -1,30 +1,36 @@
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
-import ReactTouchEvents from 'react-touch-events';
-import SearchBar from '../SearchBar/SearchBar';
-import TutorialModal from '../TutorialModal/TutorialModal';
-import styles from './ReactGoogleMaps.module.scss';
 import { connect } from 'react-redux';
-import SelectedTap from '../SelectedTap/SelectedTap';
+import ReactTouchEvents from 'react-touch-events';
 import {
-  getTaps,
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  getTaps,
   setFilterFunction,
   setMapCenter,
+  setToolbarModal,
   setUserLocation,
   toggleInfoWindow
 } from '../../actions/actions';
+import SearchBar from '../SearchBar/SearchBar';
+import SelectedTap from '../SelectedTap/SelectedTap';
+import TutorialModal from '../TutorialModal/TutorialModal';
+import styles from './ReactGoogleMaps.module.scss';
 // import Legend from "./Legend";
-import MapMarkers from '../MapMarkers/MapMarkers';
-import MapMarkersFood from '../MapMarkers/MapMarkersFood';
 // Temporary Food/Water Toggle
-import { isMobile } from 'react-device-detect';
-import Toolbar from '../Toolbar/Toolbar';
-import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Stack from '@mui/material/Stack';
+import { isMobile } from 'react-device-detect';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+import Filter, { filterTypes } from '../Filter/Filter';
+import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import Toolbar from '../Toolbar/Toolbar';
 
 // // Actual Magic: https://stackoverflow.com/a/41337005
 // // Distance calculates the distance between two lat/lon pairs
@@ -143,6 +149,117 @@ const style = {
   position: 'relative'
 };
 
+const filters = {
+  [filterTypes.WATER]: {
+    title: 'Water Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Dispenser Type',
+        tags: [
+          'Drinking fountain',
+          'Bottle filler',
+          'Sink',
+          'Water jug',
+          'Soda machine',
+          'Pitcher',
+          'Water cooler'
+        ]
+      },
+      {
+        type: 0,
+        header: 'Features',
+        tags: [
+          'ADA accessible',
+          'Filtered water',
+          'Vessel needed',
+          'ID required'
+        ]
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.FOOD]: {
+    title: 'Food Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Food Type',
+        tags: ['Perishable', 'Non-perishable', 'Prepared foods and meals']
+      },
+      {
+        type: 0,
+        header: 'Distribution type',
+        tags: ['Eat on site', 'Delivery', 'Pick up']
+      },
+      {
+        type: 1,
+        header: 'Organization type',
+        tags: ['Government', 'Business', 'Non-profit', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.FORAGING]: {
+    title: 'Foraging Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Forage type',
+        tags: ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers']
+      },
+      {
+        type: 0,
+        header: 'Features',
+        tags: ['Medicinal', 'In season', 'Community garden']
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  },
+  [filterTypes.BATHROOM]: {
+    title: 'Bathroom Filter',
+    categories: [
+      {
+        type: 0,
+        header: 'Features',
+        tags: [
+          'ADA accessible',
+          'Gender neutral',
+          'Changing table',
+          'Single occupancy',
+          'Family bathroom',
+          'Has water fountain'
+        ]
+      },
+      {
+        type: 1,
+        header: 'Entry Type',
+        tags: ['Open Access', 'Restricted', 'Unsure']
+      }
+    ]
+  }
+};
+
+let noActiveFilterTags = {};
+for (const [key, value] of Object.entries(filters)) {
+  let data = [];
+  value.categories.map(category => {
+    if (category.type == 0) {
+      data.push(new Array(category.tags.length).fill(false));
+    } else {
+      data.push(null);
+    }
+  });
+  noActiveFilterTags[key] = data;
+}
+
 export class ReactGoogleMaps extends Component {
   constructor(props) {
     super(props);
@@ -161,10 +278,13 @@ export class ReactGoogleMaps extends Component {
       filteredTaps: [],
       zoom: 16,
       searchedTap: null,
-      anchor: false
+      anchor: false,
+      map: null,
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags)),
+      appliedFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.onDragEnd = this.onDragEnd.bind(this);
+    this.onIdle = this.onIdle.bind(this);
   }
 
   // UNSAFE_componentWillReceiveProps(nextProps) {
@@ -247,11 +367,15 @@ export class ReactGoogleMaps extends Component {
     }
   };
 
-  onDragEnd = (_, map) => {
+  onIdle = (_, map) => {
     this.setState({
       currlat: map.center.lat(),
       currlon: map.center.lng()
     });
+  };
+
+  onReady = (_, map) => {
+    this.setState({ map: map });
   };
 
   toggleTapInfo = isExpanded => {
@@ -288,30 +412,46 @@ export class ReactGoogleMaps extends Component {
     }));
   };
 
-  // getCurrentAddress = () => {
-  //   let address = '';
-  //   const coord = {
-  //     lat: this.state.currlat,
-  //     lng: this.state.currlon
-  //   };
+  handleTag = (type, filterType, index, key) => {
+    if (type == 0) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      activeFilterTags_[filterType][index][key] =
+        !activeFilterTags_[filterType][index][key];
+      this.setState({ activeFilterTags: activeFilterTags_ });
+    } else if (type == 1) {
+      let activeFilterTags_ = this.state.activeFilterTags;
+      if (activeFilterTags_[filterType][index] == key) {
+        activeFilterTags_[filterType][index] = null;
+      } else {
+        activeFilterTags_[filterType][index] = key;
+      }
+      this.setState({
+        activeFilterTags: activeFilterTags_
+      });
+    }
+  };
 
-  //   geocoder
-  //     .geocode({ location: coord })
-  //     .then(response => {
-  //       if (response.results[0]) {
-  //         address = response.results[0].formatted_address;
-  //       } else {
-  //         window.alert('No results found. Try typing the address instead');
-  //       }
-  //     })
-  //     .catch(error => window.alert('Geocoder failed due to: ' + error));
+  clearAllTags = () => {
+    this.setState({
+      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
+    });
+  };
 
-  //   return address;
-  // };
+  applyTags = () => {
+    this.setState({
+      appliedFilterTags: JSON.parse(JSON.stringify(this.state.activeFilterTags))
+    });
+  };
 
   render() {
     return (
       <div id="react-google-map" className={styles.mapContainer}>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Inter:wght@500;600;700&display=swap"
+          rel="stylesheet"
+        />
         {/* <ClosestTap/> */}
         <ReactTouchEvents onTap={this.handleTap.bind(this)}>
           <div>
@@ -325,7 +465,8 @@ export class ReactGoogleMaps extends Component {
               mapTypeControl={false}
               rotateControl={false}
               fullscreenControl={false}
-              onDragend={this.onDragEnd}
+              onIdle={this.onIdle}
+              onReady={this.onReady}
               initialCenter={{
                 lat: this.state.currlat,
                 lng: this.state.currlon
@@ -334,6 +475,7 @@ export class ReactGoogleMaps extends Component {
                 lat: this.state.currlat,
                 lng: this.state.currlon
               }}
+              filterTags={this.state.appliedFilterTags}
             >
               {/* <TypeToggle/> */}
 
@@ -353,6 +495,7 @@ export class ReactGoogleMaps extends Component {
                   lat: this.state.currlat,
                   lng: this.state.currlon
                 }}
+                filterTags={this.state.appliedFilterTags}
               />
 
               {this.state.searchedTap != null && (
@@ -374,9 +517,17 @@ export class ReactGoogleMaps extends Component {
               showButton={isMobile ? !this.state.isSearchBarShown : true}
             />
           </Stack>
+          <Filter
+            filters={filters}
+            handleTag={this.handleTag}
+            clearAll={this.clearAllTags}
+            applyTags={this.applyTags}
+            activeTags={this.state.activeFilterTags}
+          />
+          <AddResourceModalV2 />
           <Toolbar />
         </Stack>
-        <SelectedTap></SelectedTap>
+        <SelectedTap />
       </div>
     );
   }
@@ -399,7 +550,17 @@ const mapDispatchToProps = {
   setFilterFunction,
   toggleInfoWindow,
   setUserLocation,
-  setMapCenter
+  setMapCenter,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  setToolbarModal,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER
 };
 
 export default connect(

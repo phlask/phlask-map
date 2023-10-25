@@ -5,7 +5,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
-import ReactGA from 'react-ga4';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../actions/actions';
 import { isResourceMenuShownSelector } from '../../hooks/selectors';
@@ -15,18 +14,18 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
   const toggleResourceMenu = () => {
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_MENU,
-      isShown: isResourceMenuShown
-    });
+    // dispatch({
+    //   type: Action.TOGGLE_RESOURCE_MENU,
+    //   isShown: isResourceMenuShown
+    // });
   };
 
   function handleGA(type) {
-    ReactGA.event({
-      category: `ResourceMenu`,
-      action: 'MapChangedTo',
-      label: `${type}`
-    });
+    // ReactGA.event({
+    //   category: `ResourceMenu`,
+    //   action: 'MapChangedTo',
+    //   label: `${type}`
+    // });
   }
 
   const switchType = type => {

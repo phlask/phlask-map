@@ -5,30 +5,40 @@ import {
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER
 } from '../../actions/actions';
+import { filterTypes } from '../Filter/Filter';
 import MapMarkers from './MapMarkers';
 import MapMarkersFood from './MapMarkersFood';
 
-const MapMarkersMapper = ({ phlaskType, map, google, mapCenter }) => {
-  const marker = {
-    [PHLASK_TYPE_WATER]: (
-      // Water
-      <MapMarkers map={map} google={google} mapCenter={mapCenter} />
-    ),
-    [PHLASK_TYPE_FOOD]: (
-      // Food
-
-      <MapMarkersFood map={map} google={google} mapCenter={mapCenter} />
-    ),
-    [PHLASK_TYPE_FORAGING]: (
-      // TODO: Add Foraging Map Markers
-      <></>
-    ),
-    [PHLASK_TYPE_BATHROOM]: (
-      // TODO: Add Bathroom Map Markers
-      <></>
-    )
-  }[phlaskType];
-
+const MapMarkersMapper = ({
+  phlaskType,
+  map,
+  google,
+  mapCenter,
+  filterTags
+}) => {
+  let marker;
+  switch (phlaskType) {
+    case PHLASK_TYPE_WATER:
+      marker = (
+        <MapMarkers
+          map={map}
+          google={google}
+          mapCenter={mapCenter}
+          filterTags={filterTags}
+          filterType={filterTypes.WATER}
+        />
+      );
+      break;
+    case PHLASK_TYPE_FOOD:
+      marker = (
+        <MapMarkersFood map={map} google={google} mapCenter={mapCenter} />
+      );
+      break;
+    case PHLASK_TYPE_FORAGING:
+      break;
+    case PHLASK_TYPE_BATHROOM:
+      break;
+  }
   return marker;
 };
 

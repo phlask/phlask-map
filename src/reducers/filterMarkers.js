@@ -1,5 +1,5 @@
-import * as actions from '../actions/actions';
 import { isMobile } from 'react-device-detect';
+import * as actions from '../actions/actions';
 
 const initialState = {
   mapCenter: {
@@ -14,9 +14,6 @@ const initialState = {
   showingInfoWindow: false,
   infoIsExpanded: false,
   infoWindowClass: isMobile ? 'info-window-out' : 'info-window-out-desktop',
-  isSearchShown: false,
-  isFilterShown: false,
-  isResourceMenuShown: false,
   tapFilters: {
     filtered: false,
     handicap: false,
@@ -35,6 +32,7 @@ const initialState = {
   allBathroomTaps: [],
   allForagingTaps: [],
   selectedPlace: {},
+  toolbarModal: actions.TOOLBAR_MODAL_NONE,
   phlaskType: actions.PHLASK_TYPE_WATER
 };
 
@@ -99,24 +97,13 @@ export default (state = initialState, act) => {
         allFoodOrgs: act.allFoodOrgs,
         filteredOrgs: act.allFoodOrgs
       };
-      
+
     case actions.GET_BATHROOM_SUCCESS:
-        return { ...state, allBathroomTaps: act.allBathroomTaps };
-    
+      return { ...state, allBathroomTaps: act.allBathroomTaps };
 
     case actions.SET_FILTER_FUNCTION:
       // console.log('set filter func');
       return { filterFunction: !state.filterFunction, ...state };
-
-    case actions.TOGGLE_SEARCH_BAR:
-      // console.log('Seach Bar Shown: ' + act.isShown);
-      return { ...state, isSearchShown: act.isShown };
-
-    case actions.TOGGLE_FILTER_MODAL:
-      return { ...state, isFilterShown: act.isShown };
-
-    case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: !act.isShown };
 
     case actions.SET_SELECTED_PLACE:
       // console.log('Selected Place: ' + act.selectedPlace.organization);
@@ -222,6 +209,9 @@ export default (state = initialState, act) => {
         }
       };
     }
+
+    case actions.SET_TOOLBAR_MODAL:
+      return { ...state, toolbarModal: act.mode };
 
     // Toggle Phlask type & close the info window
     case actions.TOGGLE_PHLASK_TYPE:

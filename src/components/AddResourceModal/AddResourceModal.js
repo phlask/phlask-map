@@ -78,7 +78,6 @@ export class AddResourceModal extends Component {
     // BACKEND
     this.onChangeDbConnection = this.onChangeDbConnection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
@@ -94,7 +93,6 @@ export class AddResourceModal extends Component {
       idRequired: false,
       dbConnection: '',
       count: 0,
-      show: false,
       formStep: 'chooseResource',
       // ADD TAP
       filtration: false,
@@ -553,10 +551,6 @@ export class AddResourceModal extends Component {
     });
   }
 
-  handleShow() {
-    this.setState({ show: true });
-  }
-
   handleClose() {
     // on close we should reset form step and
     // form state so user can submit another resource
@@ -572,7 +566,6 @@ export class AddResourceModal extends Component {
       guidelines: '',
       dbConnection: '',
       count: 0,
-      show: false,
       formStep: 'chooseResource',
       idRequired: false,
       // ADD TAP MODAL
@@ -616,13 +609,14 @@ export class AddResourceModal extends Component {
       hasFountain: false
     };
     this.setState(resetState);
+    this.props.setOpen(false);
   }
 
   render() {
     return (
       <>
         <Dialog
-          open={this.state.show}
+          open={this.props.open} // managed by parent component
           onClose={this.handleClose}
           className={styles.modal}
         >
@@ -801,16 +795,6 @@ export class AddResourceModal extends Component {
 
           {this.state.formStep === 'shareSocials' && <ShareSocials />}
         </Dialog>
-
-        <button
-          onClick={this.handleShow}
-          className={`${isMobile ? styles.mobileAddButton : ''} ${
-            styles.addButton
-          }`}
-          data-cy="AddResourceButton"
-        >
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
       </>
     );
   }

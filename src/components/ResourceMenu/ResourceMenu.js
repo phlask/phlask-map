@@ -5,12 +5,12 @@ import Slide from '@mui/material/Slide';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../actions/actions';
+import { isResourceMenuShownSelector } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 import ListItemEntry from './ListItemEntry';
-import { isResourceMenuShownSelector } from '../../hooks/selectors';
 
 const listItems = [
   {
@@ -40,10 +40,10 @@ const ResourceMenu = () => {
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
   const toggleResourceMenu = () => {
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_MENU,
-      isShown: isResourceMenuShown
-    });
+    // dispatch({
+    //   type: Action.TOGGLE_RESOURCE_MENU,
+    //   isShown: isResourceMenuShown
+    // });
   };
 
   return (

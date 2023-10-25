@@ -1,47 +1,49 @@
+import IconButton from '@mui/material/Button';
 import React from 'react';
 import ReactGA from 'react-ga4';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
   setMapCenter,
-  setUserLocation,
   setSelectedPlace,
+  setToolbarModal,
+  setUserLocation,
   toggleInfoWindow,
-  togglePhlaskType,
-  toggleResourceMenu
+  togglePhlaskType
 } from '../../actions/actions';
-import FoodFilter from '../FoodFilter/FoodFilter';
-import phlaskImg from '../images/PHLASK Button.png';
-import Filter from '../ResourceMenu/Filter';
 import styles from './Toolbar.module.scss';
-import ClosestTap from '../ClosestTap/ClosestTap';
 
 import { isMobile } from 'react-device-detect';
-// import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import AddResourceModal from '../AddResourceModal/AddResourceModal';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 
 import DesktopWaterIcon from '../icons/DesktopWaterIcon';
 
+import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
-import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
+import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
+import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
+import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
+import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import NavigationItem from './NavigationItem';
 import Box from '@mui/material/Box';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
-import { styled, css } from '@mui/material';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -117,6 +119,9 @@ function Toolbar(props) {
   const dispatch = useDispatch();
   const property_name = useSelector(state => state);
 
+  const blackToGrayFilter =
+    'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
+
   const selectedResourceIcon = {
     [PHLASK_TYPE_WATER]: WaterIcon,
     [PHLASK_TYPE_FOOD]: FoodIcon,
@@ -174,7 +179,7 @@ function Toolbar(props) {
 
     place
       .then(
-        props.setMapCenter({
+        props.map.panTo({
           lat: closest.lat,
           lng: closest.lon
         })
@@ -186,80 +191,163 @@ function Toolbar(props) {
     setClosest();
   }
 
+  function toolbarClicked(modal) {
+    if (props.toolbarModal == modal) {
+      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+    } else {
+      props.setToolbarModal(modal);
+    }
+  }
+
   return (
     <>
       $
       {!isMobile ? (
-        <div
-          className={`${styles.toolbar} ${
-            isMobile ? styles.mobileToolbar : styles.desktopToolbar
-          }`}
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'absolute',
+            left: '32px',
+            bottom: '32px',
+            px: '40px',
+            py: '12px',
+            gap: '40px',
+            backgroundColor: 'white',
+            boxShadow:
+              '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
+            minWidth: '400px',
+            borderRadius: '10px',
+            justifyContent: 'space-between',
+            zIndex: 1
+          }}
         >
-          {!isMobile && (
-            <h3
-              onClick={closestButtonClicked}
-              className={`
-                ${styles.title}
-                ${
-                  props.phlaskType === PHLASK_TYPE_WATER
-                    ? styles.waterTitle
-                    : styles.foodTitle
-                }
-              `}
+          {/* DESKTOP VERSION OF THE TOOLBAR (V2) */}
+          <IconButton
+            sx={{
+              display: 'flex',
+              minWidth: '188px',
+              flexDirection: 'column',
+              p: 0
+            }}
+            onClick={closestButtonClicked}
+            disableFocusRipple={true}
+            disableRipple={true}
+          >
+            <PhlaskButton />
+          </IconButton>
+          <IconButton
+            variant="text"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
+            }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
+            disableFocusRipple={true}
+            disableRipple={true}
+          >
+            <ResourceIcon style={{ color: '#f80' }} />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
             >
-              {props.phlaskType === PHLASK_TYPE_WATER
-                ? 'Water Map'
-                : 'Food Map'}
-            </h3>
-          )}
-          <div className={styles.filterButton}>
-            <button aria-label="show filters">
-              {props.phlaskType === PHLASK_TYPE_WATER ? (
-                <Filter />
-              ) : (
-                <FoodFilter />
-              )}
-            </button>
-          </div>
-          <button
-            className={`${styles.toolbarButton} ${styles.waterButton} ${
-              props.phlaskType !== PHLASK_TYPE_WATER && styles.disabled
-            }`}
-            onClick={() => {
-              switchType(PHLASK_TYPE_WATER);
+              Resources
+            </Typography>
+          </IconButton>
+          <IconButton
+            variant="text"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_FILTER
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
-            <DesktopWaterIcon />
-          </button>
-          {isMobile && (
-            <button className={styles.closestTapButton} onClick={setClosest}>
-              <img className="img" src={phlaskImg} alt=""></img>
-            </button>
-          )}
-          <button
-            className={`${styles.toolbarButton} ${styles.foodButton} ${
-              props.phlaskType === PHLASK_TYPE_WATER && styles.disabled
-            }`}
-            onClick={() => {
-              switchType(PHLASK_TYPE_FOOD);
+            <FilterIcon />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Filter
+            </Typography>
+          </IconButton>
+          <IconButton
+            variant="text"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_SEARCH
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
-            <FoodIcon />
-          </button>
-
-          <button
-            className={styles.addButton}
-            onClick={() => {
-              setOpenResourceModal(true);
+            <SearchIcon />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Search
+            </Typography>
+          </IconButton>
+          <IconButton
+            variant="text"
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              p: 0,
+              filter:
+                props.toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                  ? blackToGrayFilter
+                  : 'none',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                filter: blackToGrayFilter
+              }
             }}
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
+            disableFocusRipple={true}
+            disableRipple={true}
           >
-            <FontAwesomeIcon icon={faPlus} size="2x" />
-          </button>
-          <AddResourceModal
-            open={openResourceModal}
-            setOpen={setOpenResourceModal}
-          />
-        </div>
+            <ContributeIcon />
+            <Typography
+              style={{ textTransform: 'none', color: 'black' }}
+              fontSize={'small'}
+            >
+              Add Site
+            </Typography>
+          </IconButton>
+        </Box>
       ) : (
         // MOBILE VERSION OF THE TOOLBAR (V2)
         <Box
@@ -275,17 +363,15 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
-              label={<Typography fontSize={'small'}>Resources</Typography>}
+              label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
+              onClick={() => props.setOpenResourceModal()}
             />
             <ResourceMenu />
             <NavigationItem
               central
               label={
-                <Typography fontSize={'small'} color={'black'} marginTop={-1}>
+                <Typography fontSize="small" color="black" marginTop="-1">
                   PHL<b>ASK</b>
                 </Typography>
               }
@@ -299,7 +385,11 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
-              label={<Typography fontSize={'small'}>Contribute</Typography>}
+              label={
+                <Typography noWrap fontSize="small">
+                  Add Site
+                </Typography>
+              }
               icon={<ContributeIcon className={styles.contributeButton} />}
               onClick={() => setOpenResourceModal(true)}
             />
@@ -325,18 +415,25 @@ const mapStateToProps = state => ({
   allBathroomTaps: state.allBathroomTaps,
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
-  isResourceMenuShown: state.isResourceMenuShown
+  toolbarModal: state.toolbarModal
 });
 
 const mapDispatchToProps = {
   togglePhlaskType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FORAGING,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal,
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation,
-  toggleResourceMenu
+  setUserLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
