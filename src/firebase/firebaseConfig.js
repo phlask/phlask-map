@@ -42,4 +42,3 @@ export const contributorsConfig = {
   storageBucket: 'phlask-web-map.appspot.com',
   messagingSenderId: '428394983826'
 };
-
