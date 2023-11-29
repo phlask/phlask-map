@@ -13,4 +13,4 @@ const Acknowledgements = () => (
   </div>
 );
 
-export default Acknowledgements;
+export default Acknowledgements; 
