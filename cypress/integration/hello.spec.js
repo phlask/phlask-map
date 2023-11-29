@@ -2,6 +2,8 @@
 
 describe('opening screen', () => {
   beforeEach(() => {
-    cy.visit('https://phlask.me/');
+    cy.visit('
+    https://phlask.me/');
+    // Cypress Hello world //
   });
 });
