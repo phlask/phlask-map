@@ -1,61 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import React from 'react';
+import Button from '@mui/material/Button';
+import { Modal, Box, Typography, Stack, Container } from '@mui/material';
+import ShareIcon from '@mui/icons-material/Share';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
-const Confirmation = ({}) => {
-  //initial state should be null/not displayed
-  const [showConfirmation, setShowConfirmation] = useState(null);
+const ConfirmationModal = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  //the confirmation should only show if there is a successful submission by the user; error handling?
+  return (
+    <>
+      <Button variant="outlined" onClick={handleOpen}>
+        Soy un Button
+      </Button>
 
-  function handleShowConfirmation() {
-    showConfirmation(true);
-    setShowConfirmation(false);
-  }
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="Confirmation"
+        aria-describedby="Confirmation"
+        className="modal"
+      >
+        <Box
+          sx={{
+            margin: 'auto'
+          }}
+        >
+          <Stack
+            sx={{
+              display: 'flex',
+              text: 'center',
+              width: 400,
+              height: 600,
+              pb: '25px',
+              pt: '10px',
+              bgcolor: 'white',
+              alignItems: 'center'
+            }}
+          >
+            <Box
+              sx={{
+                flexDirection: 'column',
+                display: 'flex',
+                textAlign: 'center',
+                mt: 6
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 600, fontSize: 'h4.fontSize' }}
+                aria-label="Thanks for sharing!"
+              >
+                Thanks for sharing!
+              </Typography>
+              <Typography
+                sx={{ fontSize: 'h6.fontSize' }}
+                aria-label="Your submission is under review."
+              >
+                Your submission is under review.
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                border: 2,
+                width: '100%',
+                height: '50%',
+                mt: 3,
+                mb: 3
+              }}
+            ></Box>
+            <Typography
+              sx={{ fontSize: 16 }}
+              aria-label="Follow us and spread the news"
+            >
+              Follow us and spread the news
+            </Typography>
+            <Container
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                width: '60%',
+                mt: 2,
+                mb: 2
+              }}
+            >
+              <ShareIcon aria-label="Share"></ShareIcon>
 
-  //onSubmit: should show confirmation: needs the AddResourceModal added first before hooking up
+              <FacebookIcon aria-label="Facebook"></FacebookIcon>
+
+              <InstagramIcon aria-label="Instagram"></InstagramIcon>
+
+              <TwitterIcon aria-label="Twitter"></TwitterIcon>
+
+              <GitHubIcon aria-label="Github"></GitHubIcon>
+            </Container>
+            <Box sx={{ mt: 1, mb: 1 }}>
+              <Typography aria-label="Phlask">#PHLASK</Typography>
+            </Box>
+          </Stack>
+        </Box>
+      </Modal>
+    </>
+  );
 };
-
-return (
-  <>
-    <Modal centered>
-      <Modal.Header closeButton></Modal.Header>
-
-      <Modal.Title id="ConfirmationSuccess">Thanks for Sharing!</Modal.Title>
-
-      <Modal.Body>
-        <h3
-        className={}>Your submission is under review.</h3>
-
-        <h4>Follow us & Spread the News!</h4>
-
-        {/* row of social media icons; phlask icon as placeholder */}
-        <div>
-          <span>
-            <img src={phlaskFilterIcon('Share', 25, 25)} alt="Share"></img>
-          </span>
-
-          <span>
-            <img src={phlaskFilterIcon('Facebook', 25, 25)} alt="Facebook"></img>
-          </span>
-
-          <span>
-            <img src={phlaskFilterIcon('Instagram', 25, 25)} alt="Instagram"></img>
-          </span>
-
-          <span>
-            <img src={phlaskFilterIcon('Twitter', 25, 25)} alt="Twitter"></img>
-          </span>
-
-          <span>
-            <img src={phlaskFilterIcon('Github', 25, 25)} alt="Github"></img>
-          </span>
-        </div>
-
-        {/*Will make this span a link if needed*/}
-        <span>#phlask</span>
-      </Modal.Body>
-    </Modal>
-  </>
-);
 
 export default ConfirmationModal;
