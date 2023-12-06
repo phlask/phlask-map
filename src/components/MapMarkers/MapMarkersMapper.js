@@ -16,7 +16,7 @@ const MapMarkersMapper = ({
   mapCenter,
   filterTags
 }) => {
-  let marker;
+  let marker = null;
   switch (phlaskType) {
     case PHLASK_TYPE_WATER:
       marker = (

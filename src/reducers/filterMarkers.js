@@ -226,6 +226,9 @@ export default (state = initialState, act) => {
             : state.infoWindowClass
       };
 
+    case actions.CHANGE_PHLASK_TYPE:
+      return { ...state, phlaskType: act.phlaskType };
+
     default:
       return state;
   }
