@@ -5,8 +5,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { createRef, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_NONE
 } from '../../actions/actions';
 import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 import ChooseResource from './ChooseResource';
@@ -23,7 +23,7 @@ export default function AddResourceModalV2(props) {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const onClose = () => {
-    if (toolbarModal == TOOLBAR_MODAL_RESOURCE) {
+    if (toolbarModal == TOOLBAR_MODAL_CONTRIBUTE) {
       setToolbarModal(TOOLBAR_MODAL_NONE);
     }
   };
@@ -42,7 +42,7 @@ export default function AddResourceModalV2(props) {
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          if (toolbarModal == TOOLBAR_MODAL_RESOURCE) {
+          if (toolbarModal == TOOLBAR_MODAL_CONTRIBUTE) {
             setToolbarModal(TOOLBAR_MODAL_NONE);
           }
         }
@@ -62,12 +62,12 @@ export default function AddResourceModalV2(props) {
   return (
     <>
       {fullScreen
-        ? toolbarModal == TOOLBAR_MODAL_RESOURCE && (
+        ? toolbarModal == TOOLBAR_MODAL_CONTRIBUTE && (
             <Box
               ref={refNode}
               style={{
                 display:
-                  toolbarModal == TOOLBAR_MODAL_RESOURCE ? 'inline' : 'none'
+                  toolbarModal == TOOLBAR_MODAL_CONTRIBUTE ? 'inline' : 'none'
               }}
               bgcolor={'white'}
               sx={{
@@ -81,7 +81,7 @@ export default function AddResourceModalV2(props) {
               <ChooseResource setFormStep={() => {}} />
             </Box>
           )
-        : toolbarModal == TOOLBAR_MODAL_RESOURCE && (
+        : toolbarModal == TOOLBAR_MODAL_CONTRIBUTE && (
             <Paper
               ref={wrapperRef}
               onClose={onClose}
