@@ -22,7 +22,7 @@ const MapMarkers = ({
   google,
   mapCenter,
   filterTags,
-  filterType
+  phlaskType
 }) => {
   useEffect(() => {
     if (!allTaps.length && getTaps) getTaps();
@@ -41,33 +41,33 @@ const MapMarkers = ({
       {visibleTaps.map((tap, index) => {
         if (
           filterHelper(
-            filterTags[filterType][0][0],
+            filterTags[phlaskType][0][0],
             tap['tap_type'] == 'Drinking Fountain' ||
               tap['tap_type'] == 'Bottle filler and fountain'
           ) &&
           filterHelper(
-            filterTags[filterType][0][1],
+            filterTags[phlaskType][0][1],
             tap['tap_type'] == 'Bottle filler and fountain'
           ) &&
           filterHelper(
-            filterTags[filterType][0][2],
+            filterTags[phlaskType][0][2],
             tap['tap_type'] == 'Sink'
           ) &&
           filterHelper(
-            filterTags[filterType][1][0],
+            filterTags[phlaskType][1][0],
             tap['handicap'] == 'Yes'
           ) &&
           filterHelper(
-            filterTags[filterType][1][1],
+            filterTags[phlaskType][1][1],
             tap['filtration'] == 'Yes'
           ) &&
-          filterHelper(filterTags[filterType][1][2], tap['vessel'] == 'Yes') &&
+          filterHelper(filterTags[phlaskType][1][2], tap['vessel'] == 'Yes') &&
           filterHelper(
-            filterTags[filterType][2] == 0,
+            filterTags[phlaskType][2] == 0,
             tap['access'] == 'Public'
           ) &&
           filterHelper(
-            filterTags[filterType][2] == 1,
+            filterTags[phlaskType][2] == 1,
             tap['access'] == 'Restricted' ||
               tap['access'] == 'Private' ||
               tap['access'] == 'Private-Shared'
