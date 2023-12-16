@@ -31,13 +31,6 @@ const MapMarkers = ({
 
   return (
     <>
-      <Marker
-        map={map}
-        google={google}
-        key="current_pos"
-        name="Current Pos"
-        position={mapCenter}
-      />
       {visibleTaps.map((tap, index) => {
         if (
           filterHelper(
