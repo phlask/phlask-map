@@ -36,7 +36,10 @@ import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 
-import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
+import { ReactComponent as BathroomPhlaskButton } from '../icons/PhlaskButtons/BathroomPhlaskButton.svg';
+import { ReactComponent as FoodPhlaskButton } from '../icons/PhlaskButtons/FoodPhlaskButton.svg';
+import { ReactComponent as ForagingPhlaskButton } from '../icons/PhlaskButtons/ForagingPhlaskButton.svg';
+import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/WaterPhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -199,6 +202,24 @@ function Toolbar(props) {
     }
   }
 
+  let phlaskButton = null;
+  switch (props.phlaskType) {
+    case PHLASK_TYPE_WATER:
+      phlaskButton = <WaterPhlaskButton />;
+      break;
+    case PHLASK_TYPE_FOOD:
+      phlaskButton = <FoodPhlaskButton />;
+      break;
+    case PHLASK_TYPE_FORAGING:
+      phlaskButton = <ForagingPhlaskButton />;
+      break;
+    case PHLASK_TYPE_BATHROOM:
+      phlaskButton = <BathroomPhlaskButton />;
+      break;
+    default:
+      break;
+  }
+
   return (
     <>
       $
@@ -233,7 +254,7 @@ function Toolbar(props) {
             disableFocusRipple={true}
             disableRipple={true}
           >
-            <PhlaskButton />
+            {phlaskButton}
           </IconButton>
           <IconButton
             variant="text"
