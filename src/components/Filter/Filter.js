@@ -12,12 +12,12 @@ const FilterTags = props => (
         key={key}
         className={
           styles.filterTag +
-          (props.activeTags[props.filterType][props.index][key]
+          (props.activeTags[props.phlaskType][props.index][key]
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(0, props.filterType, props.index, key);
+          props.handleTag(0, props.phlaskType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -34,12 +34,12 @@ const FilterTagsExclusive = props => (
         key={key}
         className={
           styles.filterTagExclusive +
-          (props.activeTags[props.filterType][props.index] == key
+          (props.activeTags[props.phlaskType][props.index] == key
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(1, props.filterType, props.index, key);
+          props.handleTag(1, props.phlaskType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -48,16 +48,6 @@ const FilterTagsExclusive = props => (
     ))}
   </Box>
 );
-
-const filterTypes = {
-  WATER: 'Water Filter',
-  FOOD: 'Food Filter',
-  FORAGING: 'Foraging Filter',
-  BATHROOM: 'Bathroom Filter'
-};
-export { filterTypes };
-
-let filterType = filterTypes.WATER;
 
 function useForceUpdate() {
   const [value, setValue] = useState(0);
@@ -86,36 +76,38 @@ export default function Filter(props) {
             timeout="auto"
           >
             <Box className={styles.header}>
-              <h1>{props.filters[filterType].title}</h1>
+              <h1>{props.filters[props.phlaskType].title}</h1>
             </Box>
 
             <Box sx={{ margin: '20px' }}>
-              {props.filters[filterType].categories.map((category, index) => {
-                return (
-                  <>
-                    <h2 className={styles.label}>{category.header}</h2>
-                    {category.type == 0 ? (
-                      <FilterTags
-                        tags={category.tags}
-                        filterType={filterType}
-                        index={index}
-                        handleTag={props.handleTag}
-                        activeTags={props.activeTags}
-                        forceUpdate={forceUpdate}
-                      />
-                    ) : (
-                      <FilterTagsExclusive
-                        tags={category.tags}
-                        filterType={filterType}
-                        index={index}
-                        handleTag={props.handleTag}
-                        activeTags={props.activeTags}
-                        forceUpdate={forceUpdate}
-                      />
-                    )}
-                  </>
-                );
-              })}
+              {props.filters[props.phlaskType].categories.map(
+                (category, index) => {
+                  return (
+                    <>
+                      <h2 className={styles.label}>{category.header}</h2>
+                      {category.type == 0 ? (
+                        <FilterTags
+                          tags={category.tags}
+                          phlaskType={props.phlaskType}
+                          index={index}
+                          handleTag={props.handleTag}
+                          activeTags={props.activeTags}
+                          forceUpdate={forceUpdate}
+                        />
+                      ) : (
+                        <FilterTagsExclusive
+                          tags={category.tags}
+                          phlaskType={props.phlaskType}
+                          index={index}
+                          handleTag={props.handleTag}
+                          activeTags={props.activeTags}
+                          forceUpdate={forceUpdate}
+                        />
+                      )}
+                    </>
+                  );
+                }
+              )}
             </Box>
             <Box
               sx={{

@@ -5,7 +5,6 @@ import {
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER
 } from '../../actions/actions';
-import { filterTypes } from '../Filter/Filter';
 import MapMarkers from './MapMarkers';
 import MapMarkersFood from './MapMarkersFood';
 
@@ -25,7 +24,7 @@ const MapMarkersMapper = ({
           google={google}
           mapCenter={mapCenter}
           filterTags={filterTags}
-          filterType={filterTypes.WATER}
+          phlaskType={phlaskType}
         />
       );
       break;
