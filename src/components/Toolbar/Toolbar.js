@@ -217,7 +217,6 @@ function Toolbar(props) {
 
   return (
     <>
-      $
       {!isMobile ? (
         <Box
           sx={{
