@@ -131,6 +131,7 @@ class IndieMarker extends React.Component {
             // for getWalkingDurationAndTimes() in the SelectedTap component to work properly.
             lat={this.props.tap.lat}
             lon={this.props.tap.lon}
+	    optimized={false}
           />
         </div>
       )

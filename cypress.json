@@ -1,4 +1,5 @@
 {
   "watchForFileChanges": false,
-  "ignoreTestFiles": "**/examples/*.js"
+  "baseUrl": "http://localhost:3000"
+
 }

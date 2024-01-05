@@ -75,7 +75,8 @@
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
     "format": "prettier \"src/**/*.{js,css,html}\" --write",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public"
+    "build-storybook": "storybook build -s public",
+    "update-browserslist": "npx browserslist@latest --update-db"
   },
   "eslintConfig": {
     "extends": "plugin:react/recommended",
