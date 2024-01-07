@@ -30,6 +30,7 @@ import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import Filter, { filterTypes } from '../Filter/Filter';
+import AddResourceModalV3 from '../AddResourceModal/AddResourceModalV3';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
 
@@ -519,6 +520,7 @@ export class ReactGoogleMaps extends Component {
             />
           </Stack>
           <ChooseResource />
+          {/* <AddResourceModalV2 /> */}
           <Filter
             filters={filters}
             handleTag={this.handleTag}
@@ -526,7 +528,7 @@ export class ReactGoogleMaps extends Component {
             applyTags={this.applyTags}
             activeTags={this.state.activeFilterTags}
           />
-          <AddResourceModalV2 />
+          <AddResourceModalV3 />
           <Toolbar />
         </Stack>
         <SelectedTap />

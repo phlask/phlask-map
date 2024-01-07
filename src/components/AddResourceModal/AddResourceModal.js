@@ -1,6 +1,8 @@
 import styles from './AddResourceModal.module.scss';
 import React, { Component } from 'react';
 import Dialog from '@mui/material/Dialog';
+import Paper from '@mui/material/Paper';
+import Collapse from '@mui/material/Collapse';
 import ImageUploader from 'react-images-upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,13 +18,16 @@ import AddBathroom from './AddBathroom';
 // eslint-disable-next-line import/no-unresolved
 import AddForaging from './AddForaging';
 // eslint-disable-next-line import/no-unresolved
-import AddWaterTap from './AddWaterTap';
+import AddWaterTap from './AddWaterTap/AddWaterTap';
+import Wrapper from './Wrapper';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
 
 export class AddResourceModal extends Component {
   constructor(props) {
     super(props);
     this.onChangeFormStep = this.onChangeFormStep.bind(this);
+    this.onChangePrevPage = this.onChangePrevPage.bind(this);
+    this.onChangeNextPage = this.onChangeNextPage.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onNameChange = this.onChangeName.bind(this);
     this.onChangeEntryType = this.onChangeEntryType.bind(this);
@@ -81,6 +86,7 @@ export class AddResourceModal extends Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
+      page: 0,
       pictures: [],
       images: [],
       name: '',
@@ -450,6 +456,27 @@ export class AddResourceModal extends Component {
     );
   }
 
+  onChangeNextPage() {
+    const { page } = this.state;
+
+    if (page < 1) {
+      this.setState({
+        page: page + 1
+      });
+    }
+  }
+
+  onChangePrevPage() {
+    const { page } = this.state;
+    if (page > 0) {
+      this.setState({
+        page: page - 1
+      });
+    }
+  }
+
+  onChangePage(e) {}
+
   getCount() {
     // need to reset count as switching between
     // resources have different counts
@@ -557,6 +584,7 @@ export class AddResourceModal extends Component {
     const resetState = {
       pictures: [],
       images: [],
+      page: 0,
       name: '',
       entryType: '',
       address: '',
@@ -628,6 +656,9 @@ export class AddResourceModal extends Component {
             <AddWaterTap
               prev={() => this.onChangeFormStep('chooseResource')}
               next={() => this.onChangeFormStep('shareSocials')}
+              page={this.state.page}
+              onNextPageChange={this.onChangeNextPage}
+              onPrevPageChange={this.onChangePrevPage}
               onSubmit={this.onSubmit}
               onDbConnectionChange={this.onChangeDbConnection}
               onDrop={this.onDrop}

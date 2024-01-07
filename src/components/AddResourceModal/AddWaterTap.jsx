@@ -11,10 +11,11 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
-  Card,
   CardContent,
   FormGroup,
+  Grid,
   Link,
   MenuItem,
   Stack,
@@ -23,10 +24,15 @@ import {
   FormHelperText,
   Checkbox,
   TextField,
-  ListItem
+  ListItem,
+  IconButton
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+import { isMobile } from 'react-device-detect';
 
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
@@ -185,7 +191,7 @@ function AddWaterTap({
   );
 
   return (
-    <Card
+    <Box
       style={{
         overflow: 'scroll',
         scrollbarWidth: 'none',
@@ -203,7 +209,7 @@ function AddWaterTap({
       >
         Add Water Resource
       </Typography>
-      <CardContent>
+      <CardContent width="770px">
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
@@ -211,268 +217,318 @@ function AddWaterTap({
             });
           })}
         >
-          <Stack spacing={4} alignContent="center">
-            <ImageUploader
-              withIcon={true}
-              buttonText="Choose images"
-              buttonStyles={{ backgroundColor: '#5286E9' }}
-              onChange={onDrop}
-              imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
-              maxFileSize={5242880}
-              withPreview={true}
-            />
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            {/* <Stack spacing={4} alignContent="center"> */}
+            {isMobile && (
+              <ImageUploader
+                withIcon={true}
+                buttonText="Choose images"
+                buttonStyles={{ backgroundColor: '#5286E9' }}
+                onChange={onDrop}
+                imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
+                maxFileSize={5242880}
+                withPreview={true}
+              />
+            )}
 
-            <FormControl>
-              <Stack spacing={4} justifyContent="center">
-                <Controller
-                  rules={{ required: true }}
-                  control={control}
-                  name="name"
-                  defaultValue={''}
-                  value={name}
-                  render={({ field: { onChange, ...rest } }) => (
-                    <TextField
-                      {...rest}
-                      id="name"
-                      label="Name"
-                      onChange={e => {
-                        onChange(e);
-                        onNameChange(e);
-                      }}
-                      helperText={
-                        <span>
-                          {errors.name && requiredFieldMsg}
-                          Enter a name for the resource. (Example: City Hall)
-                        </span>
-                      }
-                      error={errors.name ? true : false}
-                      InputLabelProps={{ shrink: true }}
-                    />
-                  )}
-                />
-                <Controller
-                  rules={{ required: true }}
-                  control={control}
-                  name="address"
-                  defaultValue={''}
-                  value={address}
-                  render={({ field: { onChange, ...rest } }) => (
-                    <PlacesAutocomplete
-                      {...rest}
-                      onChange={e => {
-                        onAddressChange(e);
-                        onChange(e);
-                      }}
-                      onSelect={e => {
-                        onAddressChange(e);
-                        onChange(e);
-                      }}
-                    >
-                      {({
-                        getInputProps,
-                        suggestions,
-                        getSuggestionItemProps,
-                        loading
-                      }) => (
-                        <div>
-                          <TextField
-                            value={rest.value}
-                            id="address"
-                            name="address-textbox"
-                            label="Street address *"
-                            onChange={e => {
-                              onAddressChange(e);
-                              onChange(e);
-                            }}
-                            helperText={
-                              <Stack component={'span'}>
-                                {errors.address && requiredFieldMsg}
-                                <Link>
-                                  {'Use my location instead  '}
-                                  <MyLocationIcon sx={{ fontSize: 10 }} />
-                                </Link>
-                              </Stack>
+            {/* <FormControl> */}
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              {/* <Stack spacing={3} justifyContent="center" height={250}> */}
+              <Controller
+                rules={{ required: true }}
+                control={control}
+                name="name"
+                defaultValue={''}
+                value={name}
+                render={({ field: { onChange, ...rest } }) => (
+                  <TextField
+                    {...rest}
+                    fullWidth
+                    id="name"
+                    label="Name"
+                    onChange={e => {
+                      onChange(e);
+                      onNameChange(e);
+                    }}
+                    helperText={
+                      <span>
+                        {errors.name && requiredFieldMsg}
+                        Enter a name for the resource. (Example: City Hall)
+                      </span>
+                    }
+                    error={errors.name ? true : false}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              <Controller
+                rules={{ required: true }}
+                control={control}
+                name="address"
+                defaultValue={''}
+                value={address}
+                render={({ field: { onChange, ...rest } }) => (
+                  <PlacesAutocomplete
+                    {...rest}
+                    onChange={e => {
+                      onAddressChange(e);
+                      onChange(e);
+                    }}
+                    onSelect={e => {
+                      onAddressChange(e);
+                      onChange(e);
+                    }}
+                  >
+                    {({
+                      getInputProps,
+                      suggestions,
+                      getSuggestionItemProps,
+                      loading
+                    }) => (
+                      <div>
+                        <TextField
+                          value={rest.value}
+                          id="address"
+                          name="address-textbox"
+                          label="Street address *"
+                          fullWidth
+                          onChange={e => {
+                            onAddressChange(e);
+                            onChange(e);
+                          }}
+                          helperText={
+                            <Stack component={'span'}>
+                              {errors.address && requiredFieldMsg}
+                              <Link>
+                                {'Use my location instead  '}
+                                <MyLocationIcon sx={{ fontSize: 10 }} />
+                              </Link>
+                            </Stack>
+                          }
+                          error={errors.address ? true : false}
+                          FormHelperTextProps={{
+                            sx: { marginLeft: 'auto', marginRight: 0 },
+                            onClick: e => {
+                              // Will autofill the street address textbox with user's current address,
+                              // after clicking 'use my address instead'
+                              const { lat, lng } = userLocation;
+                              geocode(RequestType.LATLNG, `${lat},${lng}`)
+                                .then(({ results }) => {
+                                  const addr = results[0].formatted_address;
+                                  setValue('address-textbox', addr); //react-hook-form setValue
+                                  onAddressChange(addr);
+                                  onChange(addr);
+                                })
+                                .catch(console.error);
                             }
-                            error={errors.address ? true : false}
-                            FormHelperTextProps={{
-                              sx: { marginLeft: 'auto', marginRight: 0 },
-                              onClick: e => {
-                                // Will autofill the street address textbox with user's current address,
-                                // after clicking 'use my address instead'
-                                const { lat, lng } = userLocation;
-                                geocode(RequestType.LATLNG, `${lat},${lng}`)
-                                  .then(({ results }) => {
-                                    const addr = results[0].formatted_address;
-                                    setValue('address-textbox', addr); //react-hook-form setValue
-                                    onAddressChange(addr);
-                                    onChange(addr);
-                                  })
-                                  .catch(console.error);
-                              }
-                            }}
-                            style={{ backgroundColor: 'white' }}
-                            InputLabelProps={{ shrink: true }}
-                            {...getInputProps({
-                              className: 'modalAddressAutofill',
-                              id: 'address'
-                            })}
-                            className={styles.modalAddressAutofill}
-                          />
-                          <div className="autocomplete-dropdown-container">
-                            {loading && <div>Loading...</div>}
-                            {suggestions.map((suggestion, i) => {
-                              const className = suggestion.active
-                                ? 'suggestion-item--active'
-                                : 'suggestion-item';
-                              // inline style for demonstration purpose
-                              const style = suggestion.active
-                                ? {
-                                    backgroundColor: '#fafafa',
-                                    cursor: 'pointer'
-                                  }
-                                : {
-                                    backgroundColor: '#ffffff',
-                                    cursor: 'pointer'
-                                  };
-                              return (
-                                <div
-                                  {...getSuggestionItemProps(suggestion, {
-                                    className,
-                                    style
-                                  })}
-                                  key={i}
-                                >
-                                  <span>{suggestion.description}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
+                          }}
+                          style={{ backgroundColor: 'white' }}
+                          InputLabelProps={{ shrink: true }}
+                          {...getInputProps({
+                            className: 'modalAddressAutofill',
+                            id: 'address'
+                          })}
+                          className={styles.modalAddressAutofill}
+                        />
+                        <div className="autocomplete-dropdown-container">
+                          {loading && <div>Loading...</div>}
+                          {suggestions.map((suggestion, i) => {
+                            const className = suggestion.active
+                              ? 'suggestion-item--active'
+                              : 'suggestion-item';
+                            // inline style for demonstration purpose
+                            const style = suggestion.active
+                              ? {
+                                  backgroundColor: '#fafafa',
+                                  cursor: 'pointer'
+                                }
+                              : {
+                                  backgroundColor: '#ffffff',
+                                  cursor: 'pointer'
+                                };
+                            return (
+                              <div
+                                {...getSuggestionItemProps(suggestion, {
+                                  className,
+                                  style
+                                })}
+                                key={i}
+                              >
+                                <span>{suggestion.description}</span>
+                              </div>
+                            );
+                          })}
                         </div>
-                      )}
-                    </PlacesAutocomplete>
-                  )}
-                />
-                <Controller
-                  rules={{
-                    required: true,
-                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
-                  }}
-                  control={control}
-                  name="website"
-                  defaultValue={''}
-                  value={website}
-                  render={({ field: { onChange, ...rest } }) => (
-                    <TextField
-                      {...rest}
-                      id="website"
-                      label="Website"
-                      onChange={e => {
-                        onChange(e);
-                        onWebsiteChange(e);
-                      }}
-                      error={errors.website ? true : false}
-                      helperText={
-                        errors.website && <span>Website is not valid</span>
-                      }
-                      InputLabelProps={{ shrink: true }}
-                    />
-                  )}
-                />
-                <Controller
-                  control={control}
-                  name="description"
-                  defaultValue={''}
-                  value={description}
-                  render={({ field: { onChange, ...rest } }) => (
-                    <TextField
-                      {...rest}
-                      id="description"
-                      label="description"
-                      onChange={e => {
-                        onChange(e);
-                        onDescriptionChange(e);
-                      }}
-                      helperText="Explain how to access the resource."
-                      InputLabelProps={{ shrink: true }}
-                      multiline
-                      maxRows={2}
-                    />
-                  )}
-                />
-              </Stack>
-            </FormControl>
-            <Controller
-              control={control}
-              rules={{ required: true }}
-              name="entry"
-              defaultValue={''}
-              value={entryType}
-              render={({ field: { onChange, ...rest } }) => (
-                <TextField
-                  {...rest}
-                  variant="outlined"
-                  id="entry"
-                  label="Entry Type"
-                  select
-                  helperText={errors.entry && requiredFieldMsg}
-                  onChange={e => {
-                    onChange(e);
-                    onEntryTypeChange(e);
-                  }}
-                  error={errors.entry ? true : false}
-                  InputLabelProps={{ shrink: true }}
+                      </div>
+                    )}
+                  </PlacesAutocomplete>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              <Controller
+                rules={{
+                  required: true,
+                  pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+                }}
+                control={control}
+                name="website"
+                defaultValue={''}
+                value={website}
+                render={({ field: { onChange, ...rest } }) => (
+                  <TextField
+                    {...rest}
+                    id="website"
+                    label="Website"
+                    fullWidth
+                    onChange={e => {
+                      onChange(e);
+                      onWebsiteChange(e);
+                    }}
+                    error={errors.website ? true : false}
+                    helperText={
+                      errors.website && <span>Website is not valid</span>
+                    }
+                    InputLabelProps={{ shrink: true }}
+                  />
+                )}
+              />
+            </Grid>
+            {/* </Stack> */}
+            {/* </FormControl> */}
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              {/* <Stack spacing={4} justifyContent="center" height={250}> */}
+              <Controller
+                control={control}
+                name="description"
+                defaultValue={''}
+                value={description}
+                render={({ field: { onChange, ...rest } }) => (
+                  <TextField
+                    {...rest}
+                    id="description"
+                    label="description"
+                    fullWidth
+                    onChange={e => {
+                      onChange(e);
+                      onDescriptionChange(e);
+                    }}
+                    helperText="Explain how to access the resource."
+                    InputLabelProps={{ shrink: true }}
+                    multiline
+                    maxRows={2}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                name="entry"
+                defaultValue={''}
+                value={entryType}
+                render={({ field: { onChange, ...rest } }) => (
+                  <TextField
+                    {...rest}
+                    variant="outlined"
+                    id="entry"
+                    label="Entry Type"
+                    select
+                    fullWidth
+                    width="500px"
+                    helperText={errors.entry && requiredFieldMsg}
+                    onChange={e => {
+                      onChange(e);
+                      onEntryTypeChange(e);
+                    }}
+                    error={errors.entry ? true : false}
+                    InputLabelProps={{ shrink: true }}
+                  >
+                    {ENTRY_TYPE.map(item => {
+                      return (
+                        <MenuItem key={item.entryType} value={item.entryType}>
+                          <Stack>
+                            {item.entryType}
+                            {item.explanation && (
+                              <FormHelperText>
+                                {item.explanation}
+                              </FormHelperText>
+                            )}
+                          </Stack>
+                        </MenuItem>
+                      );
+                    })}
+                  </TextField>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
                 >
-                  {ENTRY_TYPE.map(item => {
+                  <Typography>Dispenser Type</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {DISPENSER_TYPE.map(type => {
                     return (
-                      <MenuItem key={item.entryType} value={item.entryType}>
-                        <Stack>
-                          {item.entryType}
-                          {item.explanation && (
-                            <FormHelperText>{item.explanation}</FormHelperText>
-                          )}
-                        </Stack>
-                      </MenuItem>
+                      <ListItem
+                        key={type.label}
+                        as="label"
+                        htmlFor={type.label}
+                      >
+                        <Typography
+                          style={{ marginLeft: '0rem' }}
+                          fontSize={13}
+                        >
+                          {type.label}
+                        </Typography>
+                        <Checkbox
+                          style={{ marginLeft: 'auto', marginRight: '0rem' }}
+                          id={type.label}
+                          name={type.label}
+                          checked={type.value}
+                          onClick={e => {
+                            type.onChange(e);
+                          }}
+                        />
+                      </ListItem>
                     );
                   })}
-                </TextField>
-              )}
-            />
-
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>Dispenser Type</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {DISPENSER_TYPE.map(type => {
-                  return (
-                    <ListItem key={type.label} as="label" htmlFor={type.label}>
-                      <Typography style={{ marginLeft: '0rem' }} fontSize={13}>
-                        {type.label}
-                      </Typography>
-                      <Checkbox
-                        style={{ marginLeft: 'auto', marginRight: '0rem' }}
-                        id={type.label}
-                        name={type.label}
-                        checked={type.value}
-                        onClick={e => {
-                          type.onChange(e);
-                        }}
-                      />
-                    </ListItem>
-                  );
-                })}
-              </AccordionDetails>
-            </Accordion>
-
-            <FormGroup>
+                </AccordionDetails>
+              </Accordion>
+              {/* </Stack> */}
+              {/* </Grid> */}
+            </Grid>
+            {!isMobile && (
+              <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+                <ImageUploader
+                  withIcon={true}
+                  buttonText="Choose images"
+                  buttonStyles={{ backgroundColor: '#5286E9' }}
+                  onChange={onDrop}
+                  imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
+                  maxFileSize={5242880}
+                  withPreview={true}
+                />
+              </Grid>
+            )}
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              {/* <FormGroup> */}
               <Typography>Helpful info</Typography>
               {WATER_HELPFUL_INFO.map(info => {
                 return (
-                  <ListItem key={info.label} as="label" htmlFor={info.label}>
+                  <ListItem
+                    key={info.label}
+                    as="label"
+                    htmlFor={info.label}
+                    style={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
+                  >
                     <Typography style={{ paddingLeft: '0rem' }} fontSize={13}>
                       {info.label}
                     </Typography>
@@ -488,47 +544,74 @@ function AddWaterTap({
                   </ListItem>
                 );
               })}
-            </FormGroup>
-            <Controller
-              control={control}
-              name="guidelines"
-              defaultValue={''}
-              value={guidelines}
-              render={({ field: { onChange, ...rest } }) => (
-                <TextField
-                  id="guidelines"
-                  {...rest}
-                  label="Community guideLines"
-                  InputLabelProps={{ shrink: true }}
-                  multiline
-                  maxRows={2}
-                  FormHelperTextProps={{ fontSize: '11.67' }}
-                  helperText="Share tips on respectful PHLASKing at this location."
-                  onChange={e => {
-                    onChange(e);
-                    onGuidelinesChange(e);
-                  }}
-                />
-              )}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              style={{
-                textTransform: 'none',
-                borderRadius: '8px',
-                width: '25%',
-                margin: '3.5rem auto 1.5rem auto',
-                color: 'white',
-                backgroundColor: '#5286E9'
-              }}
+              {/* </FormGroup> */}
+            </Grid>
+            <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+              <Controller
+                control={control}
+                name="guidelines"
+                defaultValue={''}
+                value={guidelines}
+                render={({ field: { onChange, ...rest } }) => (
+                  <TextField
+                    id="guidelines"
+                    fullWidth
+                    {...rest}
+                    label="Community guideLines"
+                    InputLabelProps={{ shrink: true }}
+                    multiline
+                    maxRows={2}
+                    FormHelperTextProps={{ fontSize: '11.67' }}
+                    helperText="Share tips on respectful PHLASKing at this location."
+                    onChange={e => {
+                      onChange(e);
+                      onGuidelinesChange(e);
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid
+              item
+              fullWidth={true}
+              xs={12}
+              xm={12}
+              lg={6}
+              xl={6}
+              textAlign={'center'}
             >
-              Submit
-            </Button>
-          </Stack>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth={isMobile ? false : true}
+                width={isMobile ? '30%' : '100%'}
+                style={{
+                  textTransform: 'none',
+                  borderRadius: '8px',
+                  // width: '25%',
+                  margin: '3.5rem auto 1.5rem auto',
+                  color: 'white',
+                  backgroundColor: '#5286E9'
+                }}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+          {!isMobile && (
+            <div style={{ margin: '0 auto', textAlign: 'center' }}>
+              <IconButton color="primary" aria-label="add to shopping cart">
+                <ArrowBackIosIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="add to shopping cart">
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </div>
+          )}
+          {/* </Stack> */}
         </form>
       </CardContent>
-    </Card>
+    </Box>
   );
 }
 
