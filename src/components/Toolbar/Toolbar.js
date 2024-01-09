@@ -259,6 +259,7 @@ function Toolbar(props) {
               Resources
             </Typography>
           </IconButton>
+          <ConfirmationModal />
           <IconButton
             variant="text"
             sx={{
@@ -342,7 +343,6 @@ function Toolbar(props) {
             >
               Add Site
             </Typography>
-            <ConfirmationModal></ConfirmationModal>
           </IconButton>
         </Box>
       ) : (

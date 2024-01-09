@@ -27,7 +27,6 @@ const ConfirmationModal = () => {
         onClose={handleClose}
         aria-labelledby="Confirmation"
         aria-describedby="Confirmation"
-        className="modal"
       >
         <Box
           sx={{
