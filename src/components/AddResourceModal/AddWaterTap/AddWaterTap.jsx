@@ -45,8 +45,7 @@ function AddWaterTap({
   // Other
   guidelines,
   checkboxChangeHandler,
-  textFieldChangeHandler,
-  handleClose
+  textFieldChangeHandler
 }) {
   useEffect(() => {
     // create connection to appropriate database
@@ -61,9 +60,7 @@ function AddWaterTap({
 
     // call back to delete app connection whenever component unmounts
     return () => {
-      handleClose();
       deleteApp(firebaseConnection);
-      console.log('unmoujnt');
     };
   }, []);
 

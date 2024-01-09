@@ -1,16 +1,11 @@
 import styles from './AddResourceModal.module.scss';
-import Dialog from '@mui/material/Dialog';
-import Collapse from '@mui/material/Collapse';
 import ImageUploader from 'react-images-upload';
-import { isMobile } from 'react-device-detect';
-import { deleteApp } from 'firebase/app';
 import React, { useState, createRef, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_CONTRIBUTE
 } from '../../actions/actions';
-import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
 
 // eslint-disable-next-line import/no-unresolved
 import ChooseResource from './ChooseResource';
@@ -40,7 +35,6 @@ export default function AddResourceModalV3(props) {
     guidelines: '',
     handicapAccessible: false,
     idRequired: false,
-    dbConnection: '',
     count: 0,
     formStep: 'chooseResource',
     closeModal: false,
@@ -168,14 +162,10 @@ export default function AddResourceModalV3(props) {
 
   // Database
   const onChangeDbConnection = connection => {
-    console.log('dbConnection init');
-    // setValues(prevValues => {
-    //   return { ...prevValues, dbConnection: connection, count: 0 };
-    // });
     setDbConnection(connection);
   };
 
-  // Simulate's the this.setState() callback from original AddResourceModal component
+  // This useEffect Simulate's the this.setState() callback from original AddResourceModal component
   // for onChangeDbConnection.
   const isFirstRender = useRef(true);
 
@@ -185,26 +175,23 @@ export default function AddResourceModalV3(props) {
       return;
     }
 
+    // When a form component unmounts (e.g. AddBathroom), it will delete the dbConnection by calling deleteApp(firebaseConnection), which will
+    // trigger this useEffect. This will prevent dbConnection from getting passed to the getDatabase() in getCount()
+    // when it's undefined after getting deleted
+    if (dbConnection === undefined) {
+      return;
+    }
+
     getCount();
-
-    // When the component unmounts, it will delete the dbConnection by calling deleteApp(firebaseConnection), which will trigger this useEffect.
-    // This callback will prevent dbConnection from getting passed to getDatabase() when it's undefined after getting deleted
-    // if (values.dbConnection !== undefined) {
-    //   getCount();
-    // }
-
-    return () => {
-      handleClose();
-    };
   }, [dbConnection]);
 
   const getCount = () => {
     // need to reset count as switching between
     // resources have different counts
     // this.setState({ count: 0 });
-    // setValues(prevValues => {
-    //   return { ...prevValues, count: 0 };
-    // });
+    setValues(prevValues => {
+      return { ...prevValues, count: 0 };
+    });
 
     const database = getDatabase(dbConnection);
     // this.state.dbConnection
@@ -326,7 +313,7 @@ export default function AddResourceModalV3(props) {
         has_fountain: values.hasFountain
       };
 
-      const database = getDatabase(values.dbConnection);
+      const database = getDatabase(dbConnection);
       set(ref(database, '/' + (values.count + 1).toString()), newData);
       console.log(newData);
     });
@@ -400,7 +387,6 @@ export default function AddResourceModalV3(props) {
             guidelines={values.guidelines}
             checkboxChangeHandler={checkboxChangeHandler}
             textFieldChangeHandler={textFieldChangeHandler}
-            handleClose={handleClose}
           />
         )}
 
