@@ -21,7 +21,8 @@ const Circle = props => {
         style={{
           width: '150px',
           padding: '15px',
-          border: '1px solid #000000',
+          color: '#55C8FB6B',
+          opacity: '.42',
           borderRadius: '50%',
           aspectRatio: '1 / 1'
         }}
@@ -60,11 +61,11 @@ const Join = () => (
     <div>
       <h2 className={styles.pageSubheader}>Join the team</h2>
       <p className={styles.pageText}>
-        PHLASK vliunteers come from a wide array of socioeconomic, educational
-        and technical backgrounds. The team is committed to non-hierarchical,
-        clilective self-management and shares a philosophy centered on
-        transparency, sharing, and mentorship. PHLASK vliunteers are grouped
-        into &quot;circles&quot; by job function:
+      PHLASK volunteers come from a wide array of socioeconomic, educational 
+      and technical backgrounds. The team is committed to non-hierarchical, 
+      collective self-management and shares a philosophy centered on transparency, 
+      sharing, and mentorship. PHLASK volunteers are grouped into &quot;circles&quot; 
+      by job function:
       </p>
     </div>
     <div
@@ -74,6 +75,21 @@ const Join = () => (
         gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))'
       }}
     >
+       <Circle
+        icon={DevelopementIcon}
+        title="Development"
+        desc="Coding and Programming"
+      />
+       <Circle
+        icon={DataIcon}
+        title="Data"
+        desc="Collecting and organizing app data"
+      />
+       <Circle
+        icon={ManagementIcon}
+        title="Project Management"
+        desc="Task management"
+      />
       <Circle
         icon={DesignIcon}
         title="Design"
@@ -84,22 +100,8 @@ const Join = () => (
         title="Civic"
         desc="Publicity and Community Engagement"
       />
-      <Circle
-        icon={DevelopementIcon}
-        title="Development"
-        desc="Coding and Programming"
-      />
-      <Circle
-        icon={DataIcon}
-        title="Data"
-        desc="Collecting and organizing app data"
-      />
-      <Circle
-        icon={ManagementIcon}
-        title="Project Management"
-        desc="Task management"
-      />
     </div>
+    
     <div>
       <div
         style={{ margin: '20px 0', display: 'flex', justifyContent: 'center' }}
@@ -108,7 +110,7 @@ const Join = () => (
           style={{
             width: '55%',
             padding: '20px',
-            border: '1px solid #5286E9',
+            border: '2px solid #F4D85B',
             borderRadius: '10px',
             boxShadow: '0px 3px 8px 0px #0000001C, 0px 2px 4px 0px #00000036'
           }}
@@ -128,7 +130,7 @@ const Join = () => (
           <a href="https://codeforphilly.org/" className={styles.pageLink}>
             https://codeforphilly.org/
           </a>{' '}
-          and flilow these steps:
+          and follow these steps:
         </p>
         <ol className={styles.pageText}>
           <li>Click SIGN UP to create an account.</li>
