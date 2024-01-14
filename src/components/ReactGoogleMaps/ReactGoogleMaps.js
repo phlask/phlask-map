@@ -29,7 +29,7 @@ import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
-import Filter, { filterTypes } from '../Filter/Filter';
+import Filter from '../Filter/Filter';
 import AddResourceModalV3 from '../AddResourceModal/AddResourceModalV3';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
@@ -152,7 +152,7 @@ const style = {
 };
 
 const filters = {
-  [filterTypes.WATER]: {
+  PHLASK_TYPE_WATER: {
     title: 'Water Filter',
     categories: [
       {
@@ -185,7 +185,7 @@ const filters = {
       }
     ]
   },
-  [filterTypes.FOOD]: {
+  PHLASK_TYPE_FOOD: {
     title: 'Food Filter',
     categories: [
       {
@@ -205,7 +205,7 @@ const filters = {
       }
     ]
   },
-  [filterTypes.FORAGING]: {
+  PHLASK_TYPE_FORAGING: {
     title: 'Foraging Filter',
     categories: [
       {
@@ -225,7 +225,7 @@ const filters = {
       }
     ]
   },
-  [filterTypes.BATHROOM]: {
+  PHLASK_TYPE_BATHROOM: {
     title: 'Bathroom Filter',
     categories: [
       {
@@ -522,6 +522,7 @@ export class ReactGoogleMaps extends Component {
           <ChooseResource />
           {/* <AddResourceModalV2 /> */}
           <Filter
+            phlaskType={this.props.phlaskType}
             filters={filters}
             handleTag={this.handleTag}
             clearAll={this.clearAllTags}

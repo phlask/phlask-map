@@ -86,17 +86,6 @@ export default function SideBar({ open, setOpenResourceModal, showControls }) {
           </ListItemButton>
         </SidebarLink>
 
-        <SidebarLink to="share" onClick={handleClose}>
-          <ListItemButton>
-            <ListItemIcon sx={{ marginLeft: '-4px' }}>
-              <PlusCircleIcon />
-            </ListItemIcon>
-            <ListItemText sx={{ marginTop: '-4px' }}>
-              Add Resources
-            </ListItemText>
-          </ListItemButton>
-        </SidebarLink>
-
         <SidebarLink to="contribute" onClick={handleClose}>
           <ListItemButton>
             <ListItemIcon sx={{ marginLeft: '-3px' }}>
