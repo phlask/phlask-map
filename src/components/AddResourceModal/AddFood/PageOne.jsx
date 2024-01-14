@@ -329,6 +329,9 @@ const PageOne = ({
                 onChange(e);
                 textFieldChangeHandler(e);
               }}
+              SelectProps={{
+                MenuProps: { disablePortal: true }
+              }}
               error={errors.organization ? true : false}
               InputLabelProps={{ shrink: true }}
             >

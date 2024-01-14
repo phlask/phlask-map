@@ -319,6 +319,9 @@ const PageOne = ({
                 onChange(e);
                 textFieldChangeHandler(e);
               }}
+              SelectProps={{
+                MenuProps: { disablePortal: true }
+              }}
               helperText={errors.entryType && requiredFieldMsg}
               error={errors.entryType ? true : false}
               InputLabelProps={{ shrink: true }}
