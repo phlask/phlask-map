@@ -1,6 +1,5 @@
-import styles from './AddResourceModal.module.scss';
 import ImageUploader from 'react-images-upload';
-import React, { useState, createRef, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_NONE,
@@ -87,8 +86,6 @@ export default function AddResourceModalV3(props) {
   const [dbConnection, setDbConnection] = useState('');
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.toolbarModal);
-  const phlaskType = useSelector(state => state.phlaskType);
-  const refNode = createRef();
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
@@ -188,7 +185,6 @@ export default function AddResourceModalV3(props) {
   const getCount = () => {
     // need to reset count as switching between
     // resources have different counts
-    // this.setState({ count: 0 });
     setValues(prevValues => {
       return { ...prevValues, count: 0 };
     });
@@ -214,10 +210,6 @@ export default function AddResourceModalV3(props) {
         setValues(prevValues => {
           return { ...prevValues, count: prevValues.count + 1 };
         });
-
-        // this.setState((prevState, props) => ({
-        //   count: prevState.count + 1
-        // }));
       }
     });
   };
@@ -320,8 +312,7 @@ export default function AddResourceModalV3(props) {
   };
 
   const handleClose = () => {
-    // on close we should reset form step and
-    // form state so user can submit another resource
+    // on close we should reset form state so user can submit another resource
 
     setValues(initialState);
     setToolbarModal(TOOLBAR_MODAL_NONE);
@@ -332,27 +323,8 @@ export default function AddResourceModalV3(props) {
       <Wrapper
         open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE} // managed by parent component
         onClose={handleClose}
-        className={styles.modal}
-        toolbarModal={toolbarModal}
       >
         {values.formStep === 'chooseResource' && (
-          // <Box
-          //   ref={refNode}
-          //   style={{
-          //     display:
-          //       toolbarModal == TOOLBAR_MODAL_CONTRIBUTE ? 'inline' : 'none'
-          //   }}
-          //   bgcolor={'white'}
-          //   sx={{
-          //     borderRadius: '10px',
-          //     position: 'absolute',
-          //     top: '840px',
-          //     left: '20px',
-          //     boxShadow: 3
-          //   }}
-          // >
-          //   <ChooseResource setFormStep={onChangeFormStep} />
-          // </Box>
           <ChooseResource setFormStep={onChangeFormStep} />
         )}
 

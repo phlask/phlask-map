@@ -2,11 +2,9 @@ import React from 'react';
 import { isMobile } from 'react-device-detect';
 import Paper from '@mui/material/Paper';
 import Collapse from '@mui/material/Collapse';
-import Box from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import styles from './AddResourceModal.module.scss';
-
-import { TOOLBAR_MODAL_CONTRIBUTE } from '../../actions/actions';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const Wrapper = props => {
   return (
@@ -20,19 +18,27 @@ const Wrapper = props => {
           {props.children}
         </Dialog>
       ) : (
-        <Paper
-          sx={{
-            position: 'absolute',
-            left: '32px',
-            bottom: '133px',
-            width: '686px',
-            borderRadius: '10px'
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            if (props.open) {
+              props.onClose();
+            }
           }}
         >
-          <Collapse in={props.open} orientation="vertical" timeout="auto">
-            {props.children}
-          </Collapse>
-        </Paper>
+          <Paper
+            sx={{
+              position: 'absolute',
+              left: '32px',
+              bottom: '133px',
+              width: '686px',
+              borderRadius: '10px'
+            }}
+          >
+            <Collapse in={props.open} orientation="vertical" timeout="auto">
+              {props.children}
+            </Collapse>
+          </Paper>
+        </OutsideClickHandler>
       )}
     </>
   );
