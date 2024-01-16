@@ -1,6 +1,6 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './SelectedTapMobileInfo.module.scss';
 
 import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
@@ -8,7 +8,24 @@ import { ReactComponent as CaretDownSvg } from '../images/CaretDown.svg';
 import { ReactComponent as ThreeDotSvg } from '../images/DotsThree.svg';
 import { ReactComponent as ExportSvg } from '../images/Export.svg';
 
+import FountainIcon from '../icons/CircleWaterIcon.svg';
+
+function getIconForTapType(tapType) {
+  switch (tapType) {
+    case 'Drinking Fountain':
+      return FountainIcon;
+    case 'Bottle filler and fountain':
+      return '/static/images/BottleFiller.png';
+    case 'Sink':
+      return '/static/images/Sink.png';
+    default:
+      return FountainIcon;
+  }
+}
+
+
 function SelectedTapMobile(props) {
+  console.log(props)
   const [tags, setTags] = useState([]);
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
@@ -28,7 +45,7 @@ function SelectedTapMobile(props) {
     borderRadius: '8px',
     textTransform: 'none',
     backgroundColor: '#00A5EE',
-    width: '100%'
+    width: '150px'
   };
 
   const TagButton = styled(Button)({
@@ -40,11 +57,12 @@ function SelectedTapMobile(props) {
     color: '#2D3748',
     padding: '5px 7px',
     marginRight: '5px',
-    marginBottom: '15px',
+    marginBottom: '5px',
     border: '1px solid #2D3748',
     lineHeight: 1.5
   });
 
+  // Setup tags to display, such as the type of water, filtration, etc.
   useEffect(() => {
     const showTags = () => {
       const shownTags = [];
@@ -68,6 +86,24 @@ function SelectedTapMobile(props) {
     };
     setTags(showTags());
   }, []);
+
+  // Set up the Google map view for default imagery if the image was not provided
+  const streetViewRef = useRef();
+  useEffect(() => {
+    if (!streetViewRef.current || !selectedPlace) return;
+    const location = { lat: selectedPlace.lat, lng: selectedPlace.lon };
+    // eslint-disable-next-line no-undef
+    new google.maps.StreetViewPanorama(
+      document.getElementById("pano"),
+      {
+        position: location,
+        pov: {
+          heading: 34,
+          pitch: 10,
+        },
+      },
+    );
+  }, [streetViewRef, selectedPlace]);
 
   // Expanding and Minimizing the Modal
   const detectSwipe = e => {
@@ -118,50 +154,58 @@ function SelectedTapMobile(props) {
           {/* Currently the three dot button does nothing */}
         </div>
       )}
-      <img src={image} className={styles.locationImage} alt="" />
+      {image.startsWith('/static') &&
+        <div ref={streetViewRef} id="pano" style={{ width: '100%', height: '125px', borderRadius: 10 }} />
+      }
+      {!image.startsWith('/static') &&
+        <img src={image} className={styles.locationImage} alt="" />
+      }
       <div className={styles.mainHalfInfo}>
-        {infoIcon && <img src={infoIcon} alt="" />}
+        <img src={getIconForTapType(selectedPlace.tap_type)} alt="" style={{width: '52px'}}/>
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization}>{organization}</h2>
           <p>{address}</p>
           {props.children}
           <Button
+            onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=' + selectedPlace.lat + ',' + selectedPlace.lon, '_blank')}
             variant="contained"
             disableElevation
             sx={directionBtnStyle}
+            fullWidth={false}
             startIcon={<DirectionIcon />}
           >
             Directions
           </Button>
           <p className={styles.estWalkTime}>
             Est. walking time:{' '}
-            <span className={styles.walkTime}>{estWalkTime}min</span>
+            <span className={styles.walkTime}>{estWalkTime} min</span>
           </p>
         </div>
       </div>
 
+      <div className={styles.tagGroup}>
+        <hr className={styles.topDivider} />
+        {tags.map((tag, index) => (
+          <TagButton size="small" variant="outlined" key={index}>
+            {tag}
+          </TagButton>
+        ))}
+        <hr className={styles.botDivider}/>
+      </div>
+
       <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
-          <div className={styles.tagGroup}>
-            <hr className={styles.topDivider} />
-            {tags.map((tag, index) => (
-              <TagButton size="small" variant="outlined" key={index}>
-                {tag}
-              </TagButton>
-            ))}
-            <hr />
-          </div>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>{description ? description : 'N/A'}</p>
+            <p>{description ? description : 'No description provided'}</p>
           </div>
           <div className={styles.details}>
             <h3>PHLASK Statement</h3>
-            <p>{statement ? statement : 'N/A'}</p>
+            <p>{statement ? statement : 'No statement provided'}</p>
           </div>
           <div className={styles.details}>
             <h3>Norms &#38; Rules </h3>
-            <p>{norms_rules ? norms_rules : 'N/A'}</p>
+            <p>{norms_rules ? norms_rules : 'No rules provided'}</p>
           </div>
         </div>
       </Collapse>

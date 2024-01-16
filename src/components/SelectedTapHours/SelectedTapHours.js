@@ -14,6 +14,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
 
   useEffect(() => {
     // update hoursList, currentOrgHours, and isOpen when selectedPlace changes
+    console.log(selectedPlace.hours)
     if (selectedPlace.hours && selectedPlace.hours.length === 7) {
       const hoursList = [];
 
@@ -74,7 +75,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
     }
   }, [selectedPlace]);
 
-  // console.log(currentOrgHours)
+  console.log(hoursList)
   // console.log(typeof(currentOrgHours))
   return (
     <>
