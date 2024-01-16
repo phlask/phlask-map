@@ -25,7 +25,6 @@ function getIconForTapType(tapType) {
 
 
 function SelectedTapMobile(props) {
-  console.log(props)
   const [tags, setTags] = useState([]);
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
@@ -87,24 +86,6 @@ function SelectedTapMobile(props) {
     setTags(showTags());
   }, []);
 
-  // Set up the Google map view for default imagery if the image was not provided
-  const streetViewRef = useRef();
-  useEffect(() => {
-    if (!streetViewRef.current || !selectedPlace) return;
-    const location = { lat: selectedPlace.lat, lng: selectedPlace.lon };
-    // eslint-disable-next-line no-undef
-    new google.maps.StreetViewPanorama(
-      document.getElementById("pano"),
-      {
-        position: location,
-        pov: {
-          heading: 34,
-          pitch: 10,
-        },
-      },
-    );
-  }, [streetViewRef, selectedPlace]);
-
   // Expanding and Minimizing the Modal
   const detectSwipe = e => {
     setPointerPositionY(e.nativeEvent.offsetY);
@@ -154,12 +135,7 @@ function SelectedTapMobile(props) {
           {/* Currently the three dot button does nothing */}
         </div>
       )}
-      {image.startsWith('/static') &&
-        <div ref={streetViewRef} id="pano" style={{ width: '100%', height: '125px', borderRadius: 10 }} />
-      }
-      {!image.startsWith('/static') &&
-        <img src={image} className={styles.locationImage} alt="" />
-      }
+      <img src={image} className={styles.locationImage} alt="" />
       <div className={styles.mainHalfInfo}>
         <img src={getIconForTapType(selectedPlace.tap_type)} alt="" style={{width: '52px'}}/>
         <div className={styles.mainHalfInfoText}>
