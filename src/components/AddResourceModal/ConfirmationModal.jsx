@@ -1,11 +1,13 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { ReactComponent as ConfirmationSuccess } from '../icons/ConfirmationSuccess.svg';
 import { Modal, Box, Typography, Stack, Container } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import CloseIcon from '@mui/icons-material/Close';
 
 const ConfirmationModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -27,6 +29,9 @@ const ConfirmationModal = () => {
         onClose={handleClose}
         aria-labelledby="Confirmation"
         aria-describedby="Confirmation"
+        sx={{
+          display: 'flex'
+        }}
       >
         <Box
           sx={{
@@ -68,13 +73,17 @@ const ConfirmationModal = () => {
             </Box>
             <Box
               sx={{
-                border: 2,
+                component: 'img',
                 width: '100%',
                 height: '50%',
                 mt: 3,
                 mb: 3
               }}
             ></Box>
+            <Box sx={{ margin: 'auto' }}>
+              <ConfirmationSuccess />
+            </Box>
+
             <Typography
               sx={{ fontSize: 16 }}
               aria-label="Follow us and spread the news"
