@@ -21,8 +21,7 @@ const Circle = props => {
         style={{
           width: '150px',
           padding: '15px',
-          color: '#55C8FB6B',
-          opacity: '.42',
+          backgroundColor: '#55C8FB6B',
           borderRadius: '50%',
           aspectRatio: '1 / 1'
         }}
