@@ -128,9 +128,10 @@ function SelectedTapMobile(props) {
             >
               <ExportSvg />
             </IconButton>
-            <IconButton color="primary" aria-label="more" component="label">
-              <ThreeDotSvg />
-            </IconButton>
+            {/*Add this back in once we have real options!*/}
+            {/*<IconButton color="primary" aria-label="more" component="label">*/}
+            {/*  <ThreeDotSvg />*/}
+            {/*</IconButton>*/}
           </div>
           {/* Currently the three dot button does nothing */}
         </div>

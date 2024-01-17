@@ -14,6 +14,9 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
 
   useEffect(() => {
     // update hoursList, currentOrgHours, and isOpen when selectedPlace changes
+
+    // There are multiple formats that the hours can be in, so we need to check for each one
+    // In the 7 entries case...
     if (selectedPlace.hours && selectedPlace.hours.length === 7) {
       const hoursList = [];
 
@@ -30,7 +33,6 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
               ? hours.getSimpleHours(orgHours.close)
               : null
         };
-        // console.log(formattedHours);
         hoursList.push(formattedHours);
       });
 
@@ -67,7 +69,8 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
           setCurrentOrgHours(false);
         }
       }
-    } else {
+    }
+    else {
       setHoursList([]);
       setCurrentOrgHours(false);
       setIsOpen(null);
@@ -89,7 +92,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
                   : { color: 'orange' }
               }
             >
-              {isOpen ? 'Open' : isOpen !== null ? 'Closed' : 'unavailable'}
+              {isOpen ? 'Open' : isOpen !== null ? 'Closed' : 'Open times unavailable'}
             </p>
           </div>
 
