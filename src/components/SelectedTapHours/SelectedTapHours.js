@@ -69,8 +69,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
           setCurrentOrgHours(false);
         }
       }
-    }
-    else {
+    } else {
       setHoursList([]);
       setCurrentOrgHours(false);
       setIsOpen(null);
