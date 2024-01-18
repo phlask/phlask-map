@@ -4,8 +4,11 @@ import Paper from '@mui/material/Paper';
 import Collapse from '@mui/material/Collapse';
 import Dialog from '@mui/material/Dialog';
 import styles from './AddResourceModal.module.scss';
+/* 
+  Higher Order Component that returns a Dialog for mobile and a non modal Dialog for Desktop 
+ */
 
-const Wrapper = props => {
+const ModalWrapper = props => {
   return (
     <>
       {isMobile ? (
@@ -35,4 +38,4 @@ const Wrapper = props => {
   );
 };
 
-export default Wrapper;
+export default ModalWrapper;

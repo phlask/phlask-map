@@ -20,10 +20,10 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 // eslint-disable-next-line import/no-unresolved
 import AddWaterTap from './AddWaterTap/AddWaterTap';
-import Wrapper from './Wrapper';
+import ModalWrapper from './ModalWrapper';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
 
-export default function AddResourceModalV3(props) {
+export default function AddResourceModalV2(props) {
   const initialState = {
     page: 0,
     pictures: [],
@@ -318,15 +318,14 @@ export default function AddResourceModalV3(props) {
 
   return (
     <>
-      <Wrapper
-        open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE} // managed by parent component
+      <ModalWrapper
+        open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
         onClose={handleClose}
       >
         {values.formStep === 'chooseResource' && (
           <ChooseResource setFormStep={onChangeFormStep} />
         )}
 
-        {/* {PHLASK_TYPE_WATER === phlaskType && ( */}
         {values.formStep == 'addWaterTap' && (
           <AddWaterTap
             prev={() => onChangeFormStep('chooseResource')}
@@ -451,7 +450,7 @@ export default function AddResourceModalV3(props) {
         )}
 
         {values.formStep === 'shareSocials' && <ShareSocials />}
-      </Wrapper>
+      </ModalWrapper>
     </>
   );
 }

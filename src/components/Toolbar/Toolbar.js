@@ -112,11 +112,7 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const [value, setValue] = React.useState(0);
-
   const phlaskType = useSelector(phlaskTypeSelector);
-  const dispatch = useDispatch();
-  const property_name = useSelector(state => state);
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 

@@ -27,10 +27,9 @@ import styles from './ReactGoogleMaps.module.scss';
 // Temporary Food/Water Toggle
 import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import Filter from '../Filter/Filter';
-import AddResourceModalV3 from '../AddResourceModal/AddResourceModalV3';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
 
@@ -520,7 +519,6 @@ export class ReactGoogleMaps extends Component {
             />
           </Stack>
           <ChooseResource />
-          {/* <AddResourceModalV2 /> */}
           <Filter
             phlaskType={this.props.phlaskType}
             filters={filters}
@@ -529,7 +527,7 @@ export class ReactGoogleMaps extends Component {
             applyTags={this.applyTags}
             activeTags={this.state.activeFilterTags}
           />
-          <AddResourceModalV3 />
+          <AddResourceModalV2 />
           <Toolbar />
         </Stack>
         <SelectedTap />
