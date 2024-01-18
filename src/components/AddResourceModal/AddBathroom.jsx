@@ -30,6 +30,9 @@ const ENTRY_TYPE = [
   { entryType: 'Unsure', explanation: '' }
 ];
 
+/*******************************************************************************************
+ * This component is @deprecated. Use the equialent in ./AddBathroom/AddBathroom instead.  *
+ *******************************************************************************************/
 function AddBathroom({
   prev,
   next,

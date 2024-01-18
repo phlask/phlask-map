@@ -30,6 +30,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
 
+/***********************************************************************************
+ * This component is @deprecated. Use the equialent in ./AddFood/AddFood instead.  *
+ ***********************************************************************************/
+
 function AddFood({
   prev,
   next,

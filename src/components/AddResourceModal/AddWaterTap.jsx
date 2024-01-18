@@ -40,6 +40,9 @@ const ENTRY_TYPE = [
   { entryType: 'Unsure', explanation: '' }
 ];
 
+/*******************************************************************************************
+ * This component is @deprecated. Use the equialent in ./AddWaterTap/AddWaterTap instead.  *
+ *******************************************************************************************/
 function AddWaterTap({
   prev,
   next,

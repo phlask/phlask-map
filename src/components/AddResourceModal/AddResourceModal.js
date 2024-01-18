@@ -22,6 +22,9 @@ import AddWaterTap from './AddWaterTap/AddWaterTap';
 import Wrapper from './Wrapper';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
 
+/*******************************************************************
+ * This component is @deprecated. Use AddResourceModalV2 instead.  *
+ *******************************************************************/
 export class AddResourceModal extends Component {
   constructor(props) {
     super(props);
