@@ -154,9 +154,6 @@ export default function AddResourceModalV3(props) {
     setValues(prevValues => {
       return { ...prevValues, pictures: picture };
     });
-    // this.setState({
-    //   pictures: picture
-    // });
   };
 
   // Database
@@ -309,7 +306,6 @@ export default function AddResourceModalV3(props) {
 
       const database = getDatabase(dbConnection);
       set(ref(database, '/' + (values.count + 1).toString()), newData);
-      console.log(newData);
     });
   };
 
@@ -327,21 +323,6 @@ export default function AddResourceModalV3(props) {
         onClose={handleClose}
       >
         {values.formStep === 'chooseResource' && (
-          // <Box
-          //   // style={{
-          //   //   display: 'inline'
-          //   // }}
-          //   bgcolor={'white'}
-          //   sx={{
-          //     borderRadius: '10px',
-          //     position: 'absolute',
-          //     top: '840px',
-          //     left: '20px',
-          //     boxShadow: 3
-          //   }}
-          // >
-          //   <ChooseResource setFormStep={onChangeFormStep} />
-          // </Box>
           <ChooseResource setFormStep={onChangeFormStep} />
         )}
 
