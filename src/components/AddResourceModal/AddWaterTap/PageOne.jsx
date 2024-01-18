@@ -127,6 +127,7 @@ const PageOne = ({
               fullWidth={true}
               id="name"
               label="Name"
+              autoComplete="on"
               onChange={e => {
                 onChange(e);
                 textFieldChangeHandler(e);

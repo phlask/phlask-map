@@ -91,7 +91,6 @@ function AddFood({
     <Card
       style={{
         overflow: 'scroll',
-        scrollbarWidth: 'none',
         justifyContent: 'center'
       }}
     >

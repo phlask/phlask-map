@@ -82,7 +82,7 @@ function AddBathroom({
   const getVariableName = variable => Object.keys(variable)[0];
 
   return (
-    <Box overflow={'scroll'} scrollbarWidth={'none'} justifyContent={'center'}>
+    <Box overflow={'scroll'} justifyContent={'center'}>
       <Typography
         display="flex"
         flexDirection="row"

@@ -91,7 +91,6 @@ function AddForaging({
     <Card
       style={{
         overflow: 'scroll',
-        scrollbarWidth: 'none',
         justifyContent: 'center'
       }}
     >

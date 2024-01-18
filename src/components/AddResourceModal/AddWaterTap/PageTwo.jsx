@@ -60,7 +60,7 @@ const PageTwo = ({
   return (
     <>
       {!isMobile && (
-        <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+        <Grid item xs={12} xm={12} lg={6} xl={6}>
           <ImageUploader
             withIcon={true}
             buttonText="Choose images"
@@ -72,7 +72,7 @@ const PageTwo = ({
           />
         </Grid>
       )}
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Typography>Helpful info</Typography>
         {WATER_HELPFUL_INFO.map(info => {
           return (
@@ -98,7 +98,7 @@ const PageTwo = ({
           );
         })}
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           control={control}
           name="guidelines"
@@ -107,7 +107,7 @@ const PageTwo = ({
           render={({ field: { onChange, ...rest } }) => (
             <TextField
               id="guidelines"
-              fullWidth
+              fullWidth={true}
               {...rest}
               label="Community guideLines"
               InputLabelProps={{ shrink: true }}

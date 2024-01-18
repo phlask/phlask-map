@@ -94,7 +94,6 @@ function AddWaterTap({
   return (
     <Box
       overflow={'scroll'}
-      scrollbarWidth={'none'}
       justifyContent={'center'}
       // width={isMobile ? '100%' : ''}
     >

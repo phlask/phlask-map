@@ -100,7 +100,7 @@ const PageOne = ({
         />
       )}
 
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{ required: true }}
           control={control}
@@ -113,6 +113,7 @@ const PageOne = ({
               fullWidth
               id="name"
               label="Name"
+              autoComplete="on"
               onChange={e => {
                 onChange(e);
                 textFieldChangeHandler(e);
@@ -131,7 +132,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{ required: true }}
           control={control}
@@ -236,7 +237,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{
             required: true,
@@ -263,7 +264,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           control={control}
           name="description"
@@ -287,7 +288,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           control={control}
           rules={{ required: true }}
@@ -330,7 +331,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
