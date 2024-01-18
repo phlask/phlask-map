@@ -6,19 +6,11 @@ import {
   TOOLBAR_MODAL_CONTRIBUTE
 } from '../../actions/actions';
 
-import { Box, DialogContent, Paper } from '@mui/material';
-
-// eslint-disable-next-line import/no-unresolved
 import ChooseResource from './ChooseResource';
-// eslint-disable-next-line import/no-unresolved
 import ShareSocials from './ShareSocials';
-// eslint-disable-next-line import/no-unresolved
 import AddFood from './AddFood/AddFood';
-// eslint-disable-next-line import/no-unresolved
 import AddBathroom from './AddBathroom/AddBathroom';
-// eslint-disable-next-line import/no-unresolved
 import AddForaging from './AddForaging/AddForaging';
-// eslint-disable-next-line import/no-unresolved
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
