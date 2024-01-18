@@ -114,7 +114,7 @@ const PageOne = ({
         />
       )}
 
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{ required: true }}
           control={control}
@@ -124,7 +124,7 @@ const PageOne = ({
           render={({ field: { onChange, ...rest } }) => (
             <TextField
               {...rest}
-              fullWidth
+              fullWidth={true}
               id="name"
               label="Name"
               onChange={e => {
@@ -143,7 +143,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{ required: true }}
           control={control}
@@ -174,7 +174,7 @@ const PageOne = ({
                     id="address"
                     name="address-textbox"
                     label="Street address *"
-                    fullWidth
+                    fullWidth={true}
                     onChange={e => {
                       onChange(e);
                       textFieldChangeHandler(e);
@@ -248,7 +248,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{
             required: true,
@@ -263,7 +263,7 @@ const PageOne = ({
               {...rest}
               id="website"
               label="Website"
-              fullWidth
+              fullWidth={true}
               onChange={e => {
                 onChange(e);
                 textFieldChangeHandler(e);
@@ -275,7 +275,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           control={control}
           name="description"
@@ -286,7 +286,7 @@ const PageOne = ({
               {...rest}
               id="description"
               label="description"
-              fullWidth
+              fullWidth={true}
               onChange={e => {
                 onChange(e);
                 textFieldChangeHandler(e);
@@ -299,7 +299,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           control={control}
           rules={{ required: true }}
@@ -313,7 +313,7 @@ const PageOne = ({
               id="entry"
               label="Entry Type"
               select
-              fullWidth
+              fullWidth={true}
               width="500px"
               onChange={e => {
                 onChange(e);
@@ -324,7 +324,7 @@ const PageOne = ({
               }}
               helperText={errors.entryType && requiredFieldMsg}
               error={errors.entryType ? true : false}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ component: 'span', shrink: true }}
             >
               {ENTRY_TYPE.map(item => {
                 return (
@@ -342,7 +342,7 @@ const PageOne = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} xm={12} lg={6} xl={6} spacing={4}>
+      <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

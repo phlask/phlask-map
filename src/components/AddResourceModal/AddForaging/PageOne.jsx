@@ -312,7 +312,7 @@ const PageOne = ({
               }}
               helperText={errors.entryType && requiredFieldMsg}
               error={errors.entryType ? true : false}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ component: 'span', shrink: true }}
             >
               {ENTRY_TYPE.map(item => {
                 return (

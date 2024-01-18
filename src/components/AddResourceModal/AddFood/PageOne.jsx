@@ -333,7 +333,7 @@ const PageOne = ({
                 MenuProps: { disablePortal: true }
               }}
               error={errors.organization ? true : false}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ component: 'span', shrink: true }}
             >
               {ORGANIZATION_TYPE.map(orgType => {
                 return (
