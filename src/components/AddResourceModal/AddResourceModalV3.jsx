@@ -6,6 +6,8 @@ import {
   TOOLBAR_MODAL_CONTRIBUTE
 } from '../../actions/actions';
 
+import { Box, DialogContent, Paper } from '@mui/material';
+
 // eslint-disable-next-line import/no-unresolved
 import ChooseResource from './ChooseResource';
 // eslint-disable-next-line import/no-unresolved
@@ -325,6 +327,21 @@ export default function AddResourceModalV3(props) {
         onClose={handleClose}
       >
         {values.formStep === 'chooseResource' && (
+          // <Box
+          //   // style={{
+          //   //   display: 'inline'
+          //   // }}
+          //   bgcolor={'white'}
+          //   sx={{
+          //     borderRadius: '10px',
+          //     position: 'absolute',
+          //     top: '840px',
+          //     left: '20px',
+          //     boxShadow: 3
+          //   }}
+          // >
+          //   <ChooseResource setFormStep={onChangeFormStep} />
+          // </Box>
           <ChooseResource setFormStep={onChangeFormStep} />
         )}
 

@@ -381,7 +381,6 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              // onClick={() => props.setOpenResourceModal()}
             />
             <ResourceMenu />
             <NavigationItem
@@ -407,7 +406,6 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              // onClick={() => props.setOpenResourceModal()}
               onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             />
           </BottomNavigation>

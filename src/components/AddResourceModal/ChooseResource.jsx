@@ -45,7 +45,6 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'water' : 'waterDesktop'}
           onClick={() => setFormStep('addWaterTap')}
-          // onClick={() => changePhlaskType(PHLASK_TYPE_WATER)}
           sx={{
             textTransform: 'capitalize',
             fontSize: '20px',
@@ -59,7 +58,6 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'food' : 'foodDesktop'}
           onClick={() => setFormStep('addFood')}
-          // onClick={() => changePhlaskType(PHLASK_TYPE_FOOD)}
           sx={{
             textTransform: 'capitalize',
             fontSize: '20px',
@@ -73,7 +71,6 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'bathrooms' : 'bathroomsDesktop'}
           onClick={() => setFormStep('addBathroom')}
-          // onClick={() => changePhlaskType(PHLASK_TYPE_BATHROOM)}
           sx={{
             textTransform: 'capitalize',
             fontSize: '20px',
@@ -91,7 +88,6 @@ function ChooseResource({ setFormStep }) {
           className={styles.modalButton}
           variant={isMobile ? 'foraging' : 'foragingDesktop'}
           onClick={() => setFormStep('addForaging')}
-          // onClick={() => changePhlaskType(PHLASK_TYPE_FORAGING)}
           sx={{
             textTransform: 'capitalize',
             fontSize: '20px',
