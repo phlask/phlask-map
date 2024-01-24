@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 
-let basepath = ''; 
+let basepath = '';
 // Test-specific routing logic
 let host = window.location.host;
 if (host === 'test.phlask.me') {
@@ -34,6 +34,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-//!_Test...
-
