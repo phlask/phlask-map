@@ -198,6 +198,7 @@ export const changePhlaskType = phlaskType => ({
   phlaskType
 });
 
+export const PHLASK_TYPE_NONE = 'PHLASK_TYPE_NONE';
 export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
 export const PHLASK_TYPE_FOOD = 'PHLASK_TYPE_FOOD';
 export const PHLASK_TYPE_FORAGING = 'PHLASK_TYPE_FORAGING';
