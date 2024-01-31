@@ -1,0 +1,52 @@
+.mobileHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0px 20px 10px;
+  gap: 10px;
+
+  //width: 355px;
+  height: 88px;
+
+  background: #7c7c7c;
+  box-shadow: 0px 0px 4px rgba(84, 87, 92, 0.2);
+}
+
+.mobileTitle {
+  width: 245px;
+  height: 24px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20.16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+
+  color: #fafafa;
+}
+
+.mobileBody {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px 59px;
+  gap: 29px;
+
+  position: absolute;
+  width: 355px;
+  height: 1468px;
+  left: calc(50% - 375px / 2 + 690px);
+  top: calc(50% - 1468px / 2 - 542.5px);
+
+  /* Gradient BG */
+
+  background: linear-gradient(11.6deg, #fffeff -6.22%, #fffeff 101.28%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.addressHelperText {
+  margin-left: 0px;
+}
