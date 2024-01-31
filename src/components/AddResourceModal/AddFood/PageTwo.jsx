@@ -127,7 +127,7 @@ const PageTwo = ({
                   id="guidelines"
                   fullWidth
                   {...rest}
-                  label="Community guideLines"
+                  label="Community Guidelines"
                   InputLabelProps={{ shrink: true }}
                   multiline
                   maxRows={2}

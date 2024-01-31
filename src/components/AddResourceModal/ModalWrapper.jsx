@@ -1,7 +1,6 @@
 import React from 'react';
 import { isMobile, isOpera } from 'react-device-detect';
 import Paper from '@mui/material/Paper';
-import Collapse from '@mui/material/Collapse';
 import Dialog from '@mui/material/Dialog';
 import styles from './AddResourceModal.module.scss';
 /* 
@@ -29,9 +28,7 @@ const ModalWrapper = props => {
             borderRadius: '10px'
           }}
         >
-          <Collapse in={props.open} orientation="vertical" timeout="auto">
-            {props.children}
-          </Collapse>
+          {props.children}
         </Paper>
       )}
     </>

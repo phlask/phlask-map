@@ -225,7 +225,7 @@ const PageOne = ({
             <TextField
               {...rest}
               id="description"
-              label="description"
+              label="Description"
               fullWidth
               onChange={e => {
                 onChange(e);
