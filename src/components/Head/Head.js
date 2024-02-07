@@ -6,18 +6,22 @@ import {
   IconButton,
   ListItemIcon,
   Paper,
-  Toolbar,
-  styled
+  styled,
+  Toolbar
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  setToolbarModal,
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+} from '../../actions/actions';
 import Filter from '../Filter/Filter.js';
-import About from '../Pages/About.js';
-import Contact from '../Pages/Contact.js';
-import Join from '../Pages/Join.js';
-import Sidebar from '../SideBar/SideBar';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as MenuIcon } from '../icons/HamburgerMenu.svg';
 import { ReactComponent as IDIcon } from '../icons/ModalIDRequired.svg';
@@ -25,6 +29,10 @@ import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
 import { ReactComponent as PhlaskNoTextIcon } from '../icons/PhlaskNoText.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
+import About from '../Pages/About.js';
+import Contact from '../Pages/Contact.js';
+import Join from '../Pages/Join.js';
+import Sidebar from '../SideBar/SideBar';
 
 const CloseIconBar = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -118,7 +126,7 @@ const NavIcon = styled(ListItemIcon)(({ theme }) => ({
   }
 }));
 
-export default function Head() {
+function Head(props) {
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -141,20 +149,6 @@ export default function Head() {
       setShownPage(null);
     }
     setMenuExpand(!menuExpand);
-  };
-
-  const toggleSearchBar = () => {
-    dispatch({
-      type: 'TOGGLE_SEARCH_BAR'
-      // isShown: !isSearchShown
-    });
-  };
-
-  const toggleFilterModal = () => {
-    dispatch({
-      type: 'TOGGLE_FILTER_MODAL',
-      isShown: !isFilterShown
-    });
   };
 
   const showSidebar = () => {
@@ -218,6 +212,7 @@ export default function Head() {
             showControls={setShowMapControls}
           />
           <AppBar>
+            {/* this Toolbar is an MUI template, NOT the Toolbar in the bottom left for desktop */}
             <Toolbar
               sx={{
                 backgroundColor: '#fff',
@@ -253,12 +248,24 @@ export default function Head() {
                     marginLeft: 'auto'
                   }}
                 >
-                  <IconButton onClick={toggleSearchBar}>
+                  <IconButton onClick={() => {
+                      if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
+                        props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
+                      } else {
+                        props.setToolbarModal(TOOLBAR_MODAL_NONE);
+                      }
+                    }}>
                     <SearchIcon />
                   </IconButton>
                   <IconButton
                     sx={{ marginRight: '-8px' }}
-                    onClick={toggleFilterModal}
+                    onClick={() => {
+                      if (props.toolbarModal != TOOLBAR_MODAL_FILTER) {
+                        props.setToolbarModal(TOOLBAR_MODAL_FILTER);
+                      } else {
+                        props.setToolbarModal(TOOLBAR_MODAL_NONE);
+                      }
+                    }}
                   >
                     <FilterIcon />
                   </IconButton>
@@ -382,3 +389,18 @@ export default function Head() {
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  toolbarModal: state.toolbarModal
+});
+
+const mapDispatchToProps = {
+  TOOLBAR_MODAL_CONTRIBUTE,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Head);
