@@ -1,8 +1,3 @@
-import {
-  faChevronLeft,
-  faSearchLocation
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchIcon from '@mui/icons-material/Search';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -57,95 +52,131 @@ class SearchBar extends React.Component {
   render() {
     return (
       <>
-        {this.props.toolbarModal == TOOLBAR_MODAL_SEARCH ? (
-          <div
-            className={isMobile ? styles.mobileSearch : styles.desktopSearch}
-          >
-            <PlacesAutocomplete
-              value={this.state.address}
-              onChange={this.handleChange}
-              onSelect={this.handleSelect}
+        {this.props.toolbarModal == TOOLBAR_MODAL_SEARCH && (<>
+          {!isMobile ? (
+            <div
+              className={styles.desktopSearch}
             >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading
-              }) => (
-                <div
-                  className={`${styles.searchBarContainer} ${
-                    loading || suggestions.length > 0 ? styles.hasDropdown : ''
-                  }`}
-                >
-                  {/* type="search" is only HTML5 compliant */}
-                  <Input
-                    {...getInputProps({
-                      placeholder: 'Search For Resources Near...'
-                    })}
-                    className={`${styles.searchInput} form-control`}
-                    type="search"
-                    ref={this.state.refSearchBar}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    }
-                  />
-                  {loading && (
-                    <div className={styles.autocompleteDropdown}>
-                      Loading...
-                    </div>
-                  )}
-                  {suggestions.length > 0 && (
-                    <div className={styles.autocompleteDropdown}>
-                      {suggestions.map(suggestion => {
-                        const className = suggestion.active
-                          ? styles.suggestionItemActive
-                          : styles.suggestionItem;
-                        return (
-                          <div
-                            key={suggestion.id}
-                            {...getSuggestionItemProps(suggestion, {
-                              className
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
-            </PlacesAutocomplete>
-            {isMobile ? (
-              <button
-                className={styles.mobileCloseButton}
-                onClick={() => {
-                  // this.setSearchDisplayType(false);
-                }}
-                aria-label="Close the search bar"
+              <PlacesAutocomplete
+                value={this.state.address}
+                onChange={this.handleChange}
+                onSelect={this.handleSelect}
               >
-                <FontAwesomeIcon
-                  className={styles.mobileIcon}
-                  icon={faChevronLeft}
-                />
-              </button>
-            ) : (
-              []
-            )}
-          </div>
-        ) : (
-          <button
-            className={styles.mobileSearchButton}
-            // onClick={this.openSearch.bind(this)}
-            aria-label="Search for a location"
-          >
-            <FontAwesomeIcon
-              className={styles.mobileIcon}
-              icon={faSearchLocation}
-            />
-          </button>
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading
+                }) => (
+                  <div
+                    className={`${styles.searchBarContainer} ${
+                      loading || suggestions.length > 0 ? styles.hasDropdown : ''
+                    }`}
+                  >
+                    {/* type="search" is only HTML5 compliant */}
+                    <Input
+                      {...getInputProps({
+                        placeholder: 'Search for Resources near...'
+                      })}
+                      className={`${styles.searchInput} form-control`}
+                      type="search"
+                      ref={this.state.refSearchBar}
+                      startAdornment={
+                        <InputAdornment position="end">
+                          <SearchIcon />
+                        </InputAdornment>
+                      }
+                    />
+                    {loading && (
+                      <div className={styles.autocompleteDropdown}>
+                        Loading...
+                      </div>
+                    )}
+                    {suggestions.length > 0 && (
+                      <div className={styles.autocompleteDropdown}>
+                        {suggestions.map(suggestion => {
+                          const className = suggestion.active
+                            ? styles.suggestionItemActive
+                            : styles.suggestionItem;
+                          return (
+                            <div
+                              key={suggestion.id}
+                              {...getSuggestionItemProps(suggestion, {
+                                className
+                              })}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+          ) : (
+            <div className={styles.mobileSearch}>
+              <PlacesAutocomplete
+                value={this.state.address}
+                onChange={this.handleChange}
+                onSelect={this.handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading
+                }) => (
+                  <div
+                    className={`${styles.searchBarContainer} ${
+                      loading || suggestions.length > 0 ? styles.hasDropdown : ''
+                    }`}
+                  >
+                    {/* type="search" is only HTML5 compliant */}
+                    <Input
+                      {...getInputProps({
+                        placeholder: 'Search for Resources near...'
+                      })}
+                      className={styles.mobileSearchInput}
+                      type="search"
+                      ref={this.state.refSearchBar}
+                      endAdornment={
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      }
+                      disableUnderline={true}
+                    />
+                    {loading && (
+                      <div className={styles.autocompleteDropdown}>
+                        Loading...
+                      </div>
+                    )}
+                    {suggestions.length > 0 && (
+                      <div className={styles.autocompleteDropdown}>
+                        {suggestions.map(suggestion => {
+                          const className = suggestion.active
+                            ? styles.suggestionItemActive
+                            : styles.suggestionItem;
+                          return (
+                            <div
+                              key={suggestion.id}
+                              {...getSuggestionItemProps(suggestion, {
+                                className
+                              })}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+          )}</>
         )}
       </>
     );
