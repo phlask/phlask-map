@@ -309,140 +309,138 @@ export default function AddResourceModalV2(props) {
   };
 
   return (
-    <>
-      <ModalWrapper
-        open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
-        onClose={handleClose}
-      >
-        {values.formStep === 'chooseResource' && (
-          <ChooseResource setFormStep={onChangeFormStep} />
-        )}
+    <ModalWrapper
+      open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
+      onClose={handleClose}
+    >
+      {values.formStep === 'chooseResource' && (
+        <ChooseResource setFormStep={onChangeFormStep} />
+      )}
 
-        {values.formStep == 'addWaterTap' && (
-          <AddWaterTap
-            prev={() => onChangeFormStep('chooseResource')}
-            next={() => onChangeFormStep('shareSocials')}
-            page={values.page}
-            onNextPageChange={onChangeNextPage}
-            onPrevPageChange={onChangePrevPage}
-            onSubmit={onSubmit}
-            onDbConnectionChange={onChangeDbConnection}
-            onDrop={onDrop}
-            name={values.name}
-            address={values.address}
-            website={values.website}
-            description={values.description}
-            entryType={values.entryType}
-            handicapAccessible={values.handicapAccessible}
-            idRequired={values.idRequired}
-            waterVesselNeeded={values.waterVesselNeeded}
-            filtration={values.filtration}
-            drinkingFountain={values.drinkingFountain}
-            bottleFillerAndFountain={values.bottleFillerAndFountain}
-            sink={values.sink}
-            waterJug={values.waterJug}
-            sodaMachine={values.sodaMachine}
-            pitcher={values.pitcher}
-            waterCooler={values.waterCooler}
-            dispenserTypeOther={values.dispenserTypeOther}
-            guidelines={values.guidelines}
-            checkboxChangeHandler={checkboxChangeHandler}
-            textFieldChangeHandler={textFieldChangeHandler}
-          />
-        )}
+      {values.formStep == 'addWaterTap' && (
+        <AddWaterTap
+          prev={() => onChangeFormStep('chooseResource')}
+          next={() => onChangeFormStep('shareSocials')}
+          page={values.page}
+          onNextPageChange={onChangeNextPage}
+          onPrevPageChange={onChangePrevPage}
+          onSubmit={onSubmit}
+          onDbConnectionChange={onChangeDbConnection}
+          onDrop={onDrop}
+          name={values.name}
+          address={values.address}
+          website={values.website}
+          description={values.description}
+          entryType={values.entryType}
+          handicapAccessible={values.handicapAccessible}
+          idRequired={values.idRequired}
+          waterVesselNeeded={values.waterVesselNeeded}
+          filtration={values.filtration}
+          drinkingFountain={values.drinkingFountain}
+          bottleFillerAndFountain={values.bottleFillerAndFountain}
+          sink={values.sink}
+          waterJug={values.waterJug}
+          sodaMachine={values.sodaMachine}
+          pitcher={values.pitcher}
+          waterCooler={values.waterCooler}
+          dispenserTypeOther={values.dispenserTypeOther}
+          guidelines={values.guidelines}
+          checkboxChangeHandler={checkboxChangeHandler}
+          textFieldChangeHandler={textFieldChangeHandler}
+        />
+      )}
 
-        {values.formStep === 'addFood' && (
-          <AddFood
-            prev={() => onChangeFormStep('chooseResource')}
-            next={() => onChangeFormStep('shareSocials')}
-            page={values.page}
-            onNextPageChange={onChangeNextPage}
-            onPrevPageChange={onChangePrevPage}
-            onSubmit={onSubmit}
-            onDbConnectionChange={onChangeDbConnection}
-            onDrop={onDrop}
-            name={values.name}
-            address={values.address}
-            website={values.website}
-            description={values.description}
-            organization={values.organization}
-            handicapAccessible={values.handicapAccessible}
-            idRequired={values.idRequired}
-            childrenOnly={values.childrenOnly}
-            communityFridges={values.communityFridges}
-            perishable={values.perishable}
-            nonPerishable={values.nonPerishable}
-            prepared={values.prepared}
-            foodTypeOther={values.foodTypeOther}
-            eatOnSite={values.eatOnSite}
-            delivery={values.delivery}
-            pickUp={values.pickUp}
-            distributionTypeOther={values.distributionTypeOther}
-            guidelines={values.guidelines}
-            checkboxChangeHandler={checkboxChangeHandler}
-            textFieldChangeHandler={textFieldChangeHandler}
-          />
-        )}
+      {values.formStep === 'addFood' && (
+        <AddFood
+          prev={() => onChangeFormStep('chooseResource')}
+          next={() => onChangeFormStep('shareSocials')}
+          page={values.page}
+          onNextPageChange={onChangeNextPage}
+          onPrevPageChange={onChangePrevPage}
+          onSubmit={onSubmit}
+          onDbConnectionChange={onChangeDbConnection}
+          onDrop={onDrop}
+          name={values.name}
+          address={values.address}
+          website={values.website}
+          description={values.description}
+          organization={values.organization}
+          handicapAccessible={values.handicapAccessible}
+          idRequired={values.idRequired}
+          childrenOnly={values.childrenOnly}
+          communityFridges={values.communityFridges}
+          perishable={values.perishable}
+          nonPerishable={values.nonPerishable}
+          prepared={values.prepared}
+          foodTypeOther={values.foodTypeOther}
+          eatOnSite={values.eatOnSite}
+          delivery={values.delivery}
+          pickUp={values.pickUp}
+          distributionTypeOther={values.distributionTypeOther}
+          guidelines={values.guidelines}
+          checkboxChangeHandler={checkboxChangeHandler}
+          textFieldChangeHandler={textFieldChangeHandler}
+        />
+      )}
 
-        {values.formStep === 'addBathroom' && (
-          <AddBathroom
-            prev={() => onChangeFormStep('chooseResource')}
-            next={() => onChangeFormStep('shareSocials')}
-            page={values.page}
-            onNextPageChange={onChangeNextPage}
-            onPrevPageChange={onChangePrevPage}
-            onSubmit={onSubmit}
-            onDbConnectionChange={onChangeDbConnection}
-            onDrop={onDrop}
-            name={values.name}
-            address={values.address}
-            website={values.website}
-            description={values.description}
-            entryType={values.entryType}
-            guidelines={values.guidelines}
-            handicapAccessible={values.handicapAccessible}
-            changingTable={values.changingTable}
-            genderNeutral={values.genderNeutral}
-            familyBathroom={values.familyBathroom}
-            singleOccupancy={values.singleOccupancy}
-            hasFountain={values.hasFountain}
-            checkboxChangeHandler={checkboxChangeHandler}
-            textFieldChangeHandler={textFieldChangeHandler}
-          />
-        )}
+      {values.formStep === 'addBathroom' && (
+        <AddBathroom
+          prev={() => onChangeFormStep('chooseResource')}
+          next={() => onChangeFormStep('shareSocials')}
+          page={values.page}
+          onNextPageChange={onChangeNextPage}
+          onPrevPageChange={onChangePrevPage}
+          onSubmit={onSubmit}
+          onDbConnectionChange={onChangeDbConnection}
+          onDrop={onDrop}
+          name={values.name}
+          address={values.address}
+          website={values.website}
+          description={values.description}
+          entryType={values.entryType}
+          guidelines={values.guidelines}
+          handicapAccessible={values.handicapAccessible}
+          changingTable={values.changingTable}
+          genderNeutral={values.genderNeutral}
+          familyBathroom={values.familyBathroom}
+          singleOccupancy={values.singleOccupancy}
+          hasFountain={values.hasFountain}
+          checkboxChangeHandler={checkboxChangeHandler}
+          textFieldChangeHandler={textFieldChangeHandler}
+        />
+      )}
 
-        {values.formStep === 'addForaging' && (
-          <AddForaging
-            prev={() => onChangeFormStep('chooseResource')}
-            next={() => onChangeFormStep('shareSocials')}
-            page={values.page}
-            onNextPageChange={onChangeNextPage}
-            onPrevPageChange={onChangePrevPage}
-            onSubmit={onSubmit}
-            onDbConnectionChange={onChangeDbConnection}
-            onDrop={onDrop}
-            name={values.name}
-            address={values.address}
-            website={values.website}
-            description={values.description}
-            entryType={values.entryType}
-            nut={values.nut}
-            fruit={values.fruit}
-            leaves={values.leaves}
-            bark={values.bark}
-            flowers={values.flowers}
-            root={values.root}
-            guidelines={values.guidelines}
-            medicinal={values.medicinal}
-            inSeason={values.inSeason}
-            communityGarden={values.communityGarden}
-            checkboxChangeHandler={checkboxChangeHandler}
-            textFieldChangeHandler={textFieldChangeHandler}
-          />
-        )}
+      {values.formStep === 'addForaging' && (
+        <AddForaging
+          prev={() => onChangeFormStep('chooseResource')}
+          next={() => onChangeFormStep('shareSocials')}
+          page={values.page}
+          onNextPageChange={onChangeNextPage}
+          onPrevPageChange={onChangePrevPage}
+          onSubmit={onSubmit}
+          onDbConnectionChange={onChangeDbConnection}
+          onDrop={onDrop}
+          name={values.name}
+          address={values.address}
+          website={values.website}
+          description={values.description}
+          entryType={values.entryType}
+          nut={values.nut}
+          fruit={values.fruit}
+          leaves={values.leaves}
+          bark={values.bark}
+          flowers={values.flowers}
+          root={values.root}
+          guidelines={values.guidelines}
+          medicinal={values.medicinal}
+          inSeason={values.inSeason}
+          communityGarden={values.communityGarden}
+          checkboxChangeHandler={checkboxChangeHandler}
+          textFieldChangeHandler={textFieldChangeHandler}
+        />
+      )}
 
-        {values.formStep === 'shareSocials' && <ShareSocials />}
-      </ModalWrapper>
-    </>
+      {values.formStep === 'shareSocials' && <ShareSocials />}
+    </ModalWrapper>
   );
 }

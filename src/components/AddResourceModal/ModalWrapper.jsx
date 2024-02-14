@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMobile, isOpera } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import Paper from '@mui/material/Paper';
 import Dialog from '@mui/material/Dialog';
 import styles from './AddResourceModal.module.scss';
@@ -19,17 +19,19 @@ const ModalWrapper = props => {
           {props.children}
         </Dialog>
       ) : (
-        <Paper
-          sx={{
-            position: 'absolute',
-            left: '32px',
-            bottom: '133px',
-            width: '686px',
-            borderRadius: '10px'
-          }}
-        >
-          {props.children}
-        </Paper>
+        props.open && (
+          <Paper
+            sx={{
+              position: 'absolute',
+              left: '32px',
+              bottom: '133px',
+              width: '686px',
+              borderRadius: '10px'
+            }}
+          >
+            {props.children}
+          </Paper>
+        )
       )}
     </>
   );
