@@ -5,7 +5,14 @@ import styles from '../AddResourceModal.module.scss';
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from '../utils';
 import { useForm } from 'react-hook-form';
-import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton
+} from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PageOne from './PageOne';
@@ -92,10 +99,12 @@ function AddWaterTap({
   const getVariableName = variable => Object.keys(variable)[0];
 
   return (
-    <Box
-      overflow={'scroll'}
-      justifyContent={'center'}
-      // width={isMobile ? '100%' : ''}
+    <Card
+      style={{
+        overflow: 'auto',
+        justifyContent: 'center',
+        borderRadius: '10px'
+      }}
     >
       <Typography
         display="flex"
@@ -195,7 +204,7 @@ function AddWaterTap({
           )}
         </form>
       </CardContent>
-    </Box>
+    </Card>
   );
 }
 

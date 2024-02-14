@@ -90,8 +90,9 @@ function AddFood({
   return (
     <Card
       style={{
-        overflow: 'scroll',
-        justifyContent: 'center'
+        overflow: 'auto',
+        justifyContent: 'center',
+        borderRadius: '10px'
       }}
     >
       <Typography

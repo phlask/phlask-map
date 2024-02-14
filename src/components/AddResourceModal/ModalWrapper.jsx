@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Dialog from '@mui/material/Dialog';
 import styles from './AddResourceModal.module.scss';
 /* 
-  Higher Order Component that returns a Dialog for mobile and a non modal Dialog for Desktop 
+  Higher Order Component that returns a modal Dialog for mobile and a non modal Dialog for Desktop 
  */
 
 const ModalWrapper = props => {

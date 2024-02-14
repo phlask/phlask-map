@@ -5,7 +5,14 @@ import styles from '../AddResourceModal.module.scss';
 import { deleteApp } from 'firebase/app';
 import { connectToFirebase } from '../utils';
 import { useForm } from 'react-hook-form';
-import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton
+} from '@mui/material';
 
 import { isMobile } from 'react-device-detect';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -82,7 +89,13 @@ function AddBathroom({
   const getVariableName = variable => Object.keys(variable)[0];
 
   return (
-    <Box overflow={'scroll'} justifyContent={'center'}>
+    <Card
+      style={{
+        overflow: 'auto',
+        justifyContent: 'center',
+        borderRadius: '10px'
+      }}
+    >
       <Typography
         display="flex"
         flexDirection="row"
@@ -173,7 +186,7 @@ function AddBathroom({
           )}
         </form>
       </CardContent>
-    </Box>
+    </Card>
   );
 }
 
