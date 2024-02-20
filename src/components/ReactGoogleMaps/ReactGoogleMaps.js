@@ -528,7 +528,7 @@ export class ReactGoogleMaps extends Component {
             activeTags={this.state.activeFilterTags}
           />
           <AddResourceModalV2 />
-          <Toolbar />
+          <Toolbar map={this.state.map} />
         </Stack>
         <SelectedTap />
       </div>
