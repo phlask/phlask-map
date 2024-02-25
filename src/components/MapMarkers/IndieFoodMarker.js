@@ -20,6 +20,8 @@ import FoodCongregationFilterIcon from '../icons/FoodCongregationFilterIcon';
 import '../IndieMarker/IndieMarker.css';
 import { cleanUpForRedux } from './utils';
 
+import foodMarkerIconV2 from '../icons/FoodMarkerIconV2';
+
 class IndieMarker extends React.Component {
   state = {
     icon: '',
@@ -73,31 +75,31 @@ class IndieMarker extends React.Component {
       switch (access) {
         case 'Food Site':
           return !isForSelection ? (
-            { url: foodOtherMarkerIcon(48, 48) }
+            { url: foodMarkerIconV2(48, 48) }
           ) : (
             <FoodOtherFilterIcon />
           );
         case 'School':
           return !isForSelection ? (
-            { url: foodSchoolMarkerIcon(48, 48) }
+            { url: foodMarkerIconV2(48, 48) }
           ) : (
             <FoodSchoolFilterIcon />
           );
         case 'Charter School':
           return !isForSelection ? (
-            { url: foodRecreationMarkerIcon(48, 48) }
+            { url: foodMarkerIconV2(48, 48) }
           ) : (
             <FoodRecreationFilterIcon />
           );
         case 'PHA Community Center':
           return !isForSelection ? (
-            { url: foodCongregationMarkerIcon(48, 48) }
+            { url: foodMarkerIconV2(48, 48) }
           ) : (
             <FoodCongregationFilterIcon />
           );
         default:
           return !isForSelection ? (
-            { url: foodOtherMarkerIcon(48, 48) }
+            { url: foodMarkerIconV2(48, 48) }
           ) : (
             <FoodOtherFilterIcon />
           );
