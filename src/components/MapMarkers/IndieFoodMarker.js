@@ -109,9 +109,9 @@ class IndieMarker extends React.Component {
     }
   }
 
-  onMarkerClick(org) {
+  onMarkerClick() {
     this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(cleanUpForRedux(org));
+    this.props.setSelectedPlace(cleanUpForRedux({...this.props.org, idRequired : this.props.org.id_required === "yes", kidOnly : this.props.org.kid_only === "yes", img : this.props.org.images}));
   }
 
   render() {
@@ -128,27 +128,12 @@ class IndieMarker extends React.Component {
         // style={this.state.markerVisibility}
         >
           <Marker
-            access={this.props.org.access}
             map={this.props.map}
             google={this.props.google}
             mapCenter={this.props.mapCenter}
-            key={this.props.key}
-            organization={this.props.org.organization}
-            address={this.props.org.address}
-            hours={this.props.org.hours}
-            idRequired={this.props.org.id_required === 'yes' ? true : false}
-            kidOnly={this.props.org.kid_only === 'yes' ? true : false}
-            description={this.props.org.description}
-            img={this.props.org.images}
             onClick={this.onMarkerClick.bind(this)}
             position={{ lat: this.props.org.lat, lng: this.props.org.lon }}
-            icon={this.getIcon(this.props.org.access)}
-            infoIcon={this.getIcon(this.props.org.access, true)}
-            // The lat and lon properties were added to support the object-based
-            // setting for SET_SELECTED_PLACE redux action. Object structure consistency is needed in order
-            // for getWalkingDurationAndTimes() in the SelectedTap component to work properly.
-            lat={this.props.org.lat}
-            lon={this.props.org.lon}
+            icon={{ url: foodMarkerIconV2(48, 48) }}
           />
         </div>
       )
