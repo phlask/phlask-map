@@ -14,10 +14,7 @@ function getIconForTapType(tapType) {
   switch (tapType) {
     case 'Drinking Fountain':
       return FountainIcon;
-    case 'Bottle filler and fountain':
-      return '/static/images/BottleFiller.png';
-    case 'Sink':
-      return '/static/images/Sink.png';
+    // TODO: Add other icon resources here once available
     default:
       return FountainIcon;
   }
@@ -128,7 +125,7 @@ function SelectedTapMobile(props) {
             >
               <ExportSvg />
             </IconButton>
-            {/*Add this back in once we have real options!*/}
+            {/* TODO: Add this back in once we have real options! */}
             {/*<IconButton color="primary" aria-label="more" component="label">*/}
             {/*  <ThreeDotSvg />*/}
             {/*</IconButton>*/}
@@ -138,7 +135,7 @@ function SelectedTapMobile(props) {
       )}
       <img src={image} className={styles.locationImage} alt="" />
       <div className={styles.mainHalfInfo}>
-        <img src={getIconForTapType(selectedPlace.tap_type)} alt="" style={{width: '52px'}}/>
+        <img src={getIconForTapType(selectedPlace.tap_type)} alt={selectedPlace.tap_type} style={{width: '52px'}}/>
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization}>{organization}</h2>
           <p>{address}</p>
