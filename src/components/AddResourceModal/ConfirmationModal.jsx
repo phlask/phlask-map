@@ -9,6 +9,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CloseIcon from '@mui/icons-material/Close';
 
+import Grid from '@mui/material/Grid'; // Grid version 1
+
 const ConfirmationModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -33,10 +35,12 @@ const ConfirmationModal = () => {
           display: 'flex'
         }}
       >
-        <Box
-          sx={{
-            margin: 'auto'
-          }}
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
         >
           <Stack
             sx={{
@@ -58,19 +62,22 @@ const ConfirmationModal = () => {
                 mt: 6
               }}
             >
-              <Typography
-                sx={{ fontWeight: 600, fontSize: 'h4.fontSize' }}
-                aria-label="Thanks for sharing!"
-              >
-                Thanks for sharing!
-              </Typography>
-              <Typography
-                sx={{ fontSize: 'h6.fontSize' }}
-                aria-label="Your submission is under review."
-              >
-                Your submission is under review.
-              </Typography>
+              <CloseIcon onClick={handleClose} />
             </Box>
+            <Typography
+              sx={{ fontWeight: 600, fontSize: 'h4.fontSize' }}
+              aria-label="Thanks for sharing!"
+              justifyContent="center"
+              alignItems="center"
+            >
+              Thanks for sharing!
+            </Typography>
+            <Typography
+              sx={{ fontSize: 'h6.fontSize' }}
+              aria-label="Your submission is under review."
+            >
+              Your submission is under review.
+            </Typography>
             <Box
               sx={{
                 component: 'img',
@@ -114,7 +121,8 @@ const ConfirmationModal = () => {
               <Typography aria-label="Phlask">#PHLASK</Typography>
             </Box>
           </Stack>
-        </Box>
+          {/* </Box> */}
+        </Grid>
       </Modal>
     </>
   );
