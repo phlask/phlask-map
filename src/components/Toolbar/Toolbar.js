@@ -28,6 +28,7 @@ import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
 import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
 import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
 import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
+import ConfirmationModal from '../AddResourceModal/ConfirmationModal.jsx';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
@@ -274,6 +275,7 @@ function Toolbar(props) {
               Resources
             </Typography>
           </IconButton>
+          <ConfirmationModal />
           <IconButton
             variant="text"
             sx={{
