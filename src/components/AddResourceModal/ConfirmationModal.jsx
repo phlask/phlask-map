@@ -31,35 +31,31 @@ const ConfirmationModal = () => {
         onClose={handleClose}
         aria-labelledby="Confirmation"
         aria-describedby="Confirmation"
-        sx={{
-          display: 'flex'
-        }}
       >
         <Grid
           container
-          direction="row"
+          flex-wrap="wrap"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
+          spacing={6}
         >
-          <Stack
+          <Grid
+            justifyContent="center"
+            alignItems="center"
             sx={{
-              display: 'flex',
-              text: 'center',
-              width: 400,
-              height: 600,
               pb: '25px',
               pt: '10px',
               bgcolor: 'white',
-              alignItems: 'center'
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-evenly'
             }}
           >
             <Box
               sx={{
-                flexDirection: 'column',
+                mt: 6,
                 display: 'flex',
-                textAlign: 'center',
-                mt: 6
+                flexDirection: 'row-reverse'
               }}
             >
               <CloseIcon onClick={handleClose} />
@@ -67,8 +63,6 @@ const ConfirmationModal = () => {
             <Typography
               sx={{ fontWeight: 600, fontSize: 'h4.fontSize' }}
               aria-label="Thanks for sharing!"
-              justifyContent="center"
-              alignItems="center"
             >
               Thanks for sharing!
             </Typography>
@@ -97,6 +91,7 @@ const ConfirmationModal = () => {
             >
               Follow us and spread the news
             </Typography>
+
             <Container
               sx={{
                 display: 'flex',
@@ -120,8 +115,7 @@ const ConfirmationModal = () => {
             <Box sx={{ mt: 1, mb: 1 }}>
               <Typography aria-label="Phlask">#PHLASK</Typography>
             </Box>
-          </Stack>
-          {/* </Box> */}
+          </Grid>
         </Grid>
       </Modal>
     </>
