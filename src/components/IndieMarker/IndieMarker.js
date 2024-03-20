@@ -5,13 +5,11 @@ import {
   getTaps,
   setMapCenter,
   setSelectedPlace,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
 import { cleanUpForRedux } from '../MapMarkers/utils';
-// import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
 import phlaskFilterIconV2 from '../icons/PhlaskFilterIconV2';
-// import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import './IndieMarker.css';
 

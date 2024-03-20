@@ -9,10 +9,6 @@ import {
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/foodOrgSelectors';
 import foodIcon from '../images/food-marker-icons/food-site.png';
-import foodOtherMarkerIcon from '../icons/FoodOtherMarkerIcon';
-import foodSchoolMarkerIcon from '../icons/FoodSchoolMarkerIcon';
-import foodRecreationMarkerIcon from '../icons/FoodRecreationMarkerIcon';
-import foodCongregationMarkerIcon from '../icons/FoodCongregationMarkerIcon';
 import FoodOtherFilterIcon from '../icons/FoodOtherFilterIcon';
 import FoodSchoolFilterIcon from '../icons/FoodSchoolFilterIcon';
 import FoodRecreationFilterIcon from '../icons/FoodRecreationFilterIcon';
@@ -111,7 +107,14 @@ class IndieMarker extends React.Component {
 
   onMarkerClick() {
     this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(cleanUpForRedux({...this.props.org, idRequired : this.props.org.id_required === "yes", kidOnly : this.props.org.kid_only === "yes", img : this.props.org.images}));
+    this.props.setSelectedPlace(
+      cleanUpForRedux({
+        ...this.props.org,
+        idRequired: this.props.org.id_required === 'yes',
+        kidOnly: this.props.org.kid_only === 'yes',
+        img: this.props.org.images
+      })
+    );
   }
 
   render() {
@@ -123,10 +126,7 @@ class IndieMarker extends React.Component {
       !this.props.visibleTaps.includes(this.props.org) ? (
         []
       ) : (
-        <div
-        // className="testMarker"
-        // style={this.state.markerVisibility}
-        >
+        <div>
           <Marker
             map={this.props.map}
             google={this.props.google}
