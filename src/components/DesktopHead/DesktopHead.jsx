@@ -1,0 +1,135 @@
+import React from 'react';
+import { Box, IconButton, Paper, Collapse, Button } from '@mui/material';
+import CloseIcon from '../../components/icons/CloseIcon';
+import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
+import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
+import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
+import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import { HeaderContext } from '../../contexts/HeaderContext';
+import DropLink from '../../components/Buttons/DropLink';
+
+export const DesktopHead = (props) => {
+    const headerContext = React.useContext(HeaderContext);
+    const {
+        menuClicked,
+        toggleMenuExpand,
+        menuExpand,
+        setShowMapControls,
+        pageExpand,
+        verticalAnimFinished1,
+        verticalAnimFinished2,
+        setVerticalAnimFinished1,
+        setVerticalAnimFinished2,
+    } = headerContext;
+    return (
+        <Box
+            sx={{
+                backgroundColor: 'transparent',
+                position: 'absolute',
+                maxWidth: '100%',
+                zIndex: '9',
+                margin: '25px auto 0 25px'
+            }}
+        >
+            <Paper
+                sx={{
+                    display: 'grid',
+                    gridAutoRows: 'min-content',
+                    gridTemplateColumns: '310px 1fr',
+                    borderRadius: '10px'
+                }}
+            >
+                <Box sx={{ height: 'fit-content' }}>
+                    <Box width={310}>
+                        <IconButton
+                            sx={{
+                                margin: '15px'
+                            }}
+                            onClick={toggleMenuExpand}
+                        >
+                            <CloseIcon close={menuExpand} />
+                        </IconButton>
+                        <Button
+                            href="/"
+                            sx={{
+                                margin: '15px'
+                            }}
+                            onClick={() => setShowMapControls(true)}
+                        >
+                            <PhlaskIcon
+                                sx={{
+                                    position: 'relative',
+                                    top: '-10px'
+                                }}
+                            />
+                        </Button>
+                    </Box>
+                    <Collapse
+                        in={pageExpand}
+                        timeout="auto"
+                        onEntered={() => {
+                            if (pageExpand) {
+                                setVerticalAnimFinished1(true);
+                            }
+                        }}
+                    >
+                        <Box sx={{ height: '50px' }}></Box>
+                    </Collapse>
+                    <Collapse in={menuExpand} timeout="auto">
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}
+                        >
+                            <DropLink
+                                onClick={() => menuClicked('about')}
+                                startIcon={<PhlaskNoTextIcon />}
+                            >
+                                About
+                            </DropLink>
+                            <DropLink
+                                onClick={() => menuClicked('join')}
+                                startIcon={<UsersIcon />}
+                            >
+                                Join the team
+                            </DropLink>
+                            <DropLink
+                                onClick={() => menuClicked('contact')}
+                                startIcon={<IDIcon />}
+                            >
+                                Contact
+                            </DropLink>
+                        </Box>
+                    </Collapse>
+                    <Collapse
+                        in={pageExpand}
+                        timeout="auto"
+                        onEntered={() => {
+                            if (pageExpand) {
+                                setVerticalAnimFinished2(true);
+                            }
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                height:
+                                    'calc(100vh - 50px - 25px - 274px - 76px - 32px - 25px)'
+                            }}
+                        ></Box>
+                    </Collapse>
+                </Box>
+                <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
+                    <Box
+                        sx={{
+                            width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
+                            padding: '25px'
+                        }}
+                    >
+                        {verticalAnimFinished1 && verticalAnimFinished2 && props.page}
+                    </Box>
+                </Collapse>
+            </Paper>
+        </Box>
+    );
+}
