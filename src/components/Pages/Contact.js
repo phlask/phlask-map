@@ -95,19 +95,23 @@ const Contact = () => {
             >
               <input
                 type="checkbox"
-                checked={interestedResearch}
-                onChange={e => setInterestedResearch(e.target.checked)}
+                value={interestedResearch}
+                onChange={e => setInterestedResearch(e.target.value)}
                 style={{ width: '18px', height: '18px' }}
               />
               <label
                 className={styles.pageText}
-                style={{ marginBottom: 0, fontSize: '16px' }}
+                style={{
+                  marginBottom: 0,
+                  fontSize: '16px'
+                }}
               >
                 I’m interested in helping PHLASK with future research
               </label>
             </div>
             <button
               type="submit"
+              onSubmit={handleSubmit}
               style={{
                 width: 'min(80%, 400px)',
                 marginBottom: '20px',
@@ -157,7 +161,6 @@ const Contact = () => {
               }}
             ></div>
           </div>
-
           {/* Follow PHLASK, Connect, Social Media Icons, and Contact Email */}
           <div
             style={{
@@ -165,7 +168,7 @@ const Contact = () => {
               display: 'grid',
               placeItems: 'center start',
               gridTemplateColumns: '304px 1fr',
-              rowGap: '20px',
+              rowGap: '20px'
             }}
           >
             <h2
