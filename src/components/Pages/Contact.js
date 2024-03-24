@@ -144,71 +144,72 @@ const Contact = () => {
       )}
       {submitted && (
         <div>
-          <div
-            style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
-            }}
-          ></div>
-          <div style={{ display: 'grid', placeItems: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-              <ContactSubmitImage />
-              <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
-            </div>
+          {/* Thank You Message Container */}
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                height:
+                  'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
+              }}
+            ></div>
+            <ContactSubmitImage />
+            <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
+            <div
+              style={{
+                height:
+                  'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
+              }}
+            ></div>
           </div>
+
+          {/* Follow PHLASK, Connect, Social Media Icons, and Contact Email */}
           <div
             style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
+              width: 'fit-content',
+              display: 'grid',
+              placeItems: 'center start',
+              gridTemplateColumns: '304px 1fr',
+              rowGap: '20px'
             }}
-          ></div>
+          >
+            <h2
+              className={styles.pageSubheader}
+              style={{ width: 'fit-content', margin: 0 }}
+            >
+              Follow PHLASK
+            </h2>
+            <h2 className={styles.pageSubheader} style={{ margin: 0 }}>
+              Connect
+            </h2>
+            <div style={{ width: 'fit-content' }}>
+              <a
+                href="https://www.facebook.com/PHLASKecosystem/"
+                style={{ marginRight: '40px' }}
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href="https://www.instagram.com/phlaskecosystem/"
+                style={{ marginRight: '40px' }}
+              >
+                <InstagramIcon />
+              </a>
+              <a href="https://twitter.com/PHLASKecosystem/">
+                <TwitterIcon />
+              </a>
+            </div>
+            <p className={styles.pageText} style={{ margin: 0 }}>
+              For all other inquiries, email{' '}
+              <a
+                href="mailto:phlaskecosystem@gmail.com"
+                className={styles.pageLink}
+              >
+                phlaskecosystem@gmail.com
+              </a>
+            </p>
+          </div>
         </div>
       )}
-      <div
-        style={{
-          width: 'fit-content',
-          display: 'grid',
-          placeItems: 'center start',
-          gridTemplateColumns: '304px 1fr',
-          rowGap: '20px'
-        }}
-      >
-        <h2
-          className={styles.pageSubheader}
-          style={{ width: 'fit-content', margin: 0 }}
-        >
-          Follow PHLASK
-        </h2>
-        <h2 className={styles.pageSubheader} style={{ margin: 0 }}>
-          Connect
-        </h2>
-        <div style={{ width: 'fit-content' }}>
-          <a
-            href="https://www.facebook.com/PHLASKecosystem/"
-            style={{ marginRight: '40px' }}
-          >
-            <FacebookIcon />
-          </a>
-          <a
-            href="https://www.instagram.com/phlaskecosystem/"
-            style={{ marginRight: '40px' }}
-          >
-            <InstagramIcon />
-          </a>
-          <a href="https://twitter.com/PHLASKecosystem/">
-            <TwitterIcon />
-          </a>
-        </div>
-        <p className={styles.pageText} style={{ margin: 0 }}>
-          For all other inquiries, email{' '}
-          <a
-            href="mailto:phlaskecosystem@gmail.com"
-            className={styles.pageLink}
-          >
-            phlaskecosystem@gmail.com
-          </a>
-        </p>
-      </div>
     </div>
   );
 };
