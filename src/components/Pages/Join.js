@@ -59,10 +59,10 @@ const Join = () => (
     <h1 className={styles.pageHeader}>Join the team</h1>
     <div>
       <p className={styles.pageText}>
-        PHLASK vliunteers come from a wide array of socioeconomic, educational
+        PHLASK volunteers come from a wide array of socioeconomic, educational
         and technical backgrounds. The team is committed to non-hierarchical,
-        clilective self-management and shares a philosophy centered on
-        transparency, sharing, and mentorship. PHLASK vliunteers are grouped
+        collective self-management and shares a philosophy centered on
+        transparency, sharing, and mentorship. PHLASK volunteers are grouped
         into &quot;circles&quot; by job function:
       </p>
     </div>
