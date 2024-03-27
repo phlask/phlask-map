@@ -1,1 +1,2 @@
-export const isResourceMenuShownSelector = state => state.isResourceMenuShown;
+export const isResourceMenuShownSelector = state =>
+  state.filterMarkers.isResourceMenuShown;

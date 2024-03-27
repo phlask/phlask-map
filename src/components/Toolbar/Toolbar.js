@@ -411,13 +411,13 @@ function Toolbar(props) {
 }
 
 const mapStateToProps = state => ({
-  phlaskType: state.phlaskType,
-  allTaps: state.allTaps,
-  allFoodOrgs: state.allFoodOrgs,
-  allBathroomTaps: state.allBathroomTaps,
-  allForagingTaps: state.allForagingTaps,
-  userLocation: state.userLocation,
-  toolbarModal: state.toolbarModal
+  phlaskType: state.filterMarkers.phlaskType,
+  allTaps: state.filterMarkers.allTaps,
+  allFoodOrgs: state.filterMarkers.allFoodOrgs,
+  allBathroomTaps: state.filterMarkers.allBathroomTaps,
+  allForagingTaps: state.filterMarkers.allForagingTaps,
+  userLocation: state.filterMarkers.userLocation,
+  toolbarModal: state.filterMarkers.toolbarModal
 });
 
 const mapDispatchToProps = {

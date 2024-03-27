@@ -79,7 +79,7 @@ export default function AddResourceModalV2(props) {
   const [values, setValues] = useState(initialState);
   const [dbConnection, setDbConnection] = useState('');
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });

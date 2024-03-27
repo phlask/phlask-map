@@ -5,7 +5,7 @@ import {
   getTaps,
   setMapCenter,
   setSelectedPlace,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
 import { cleanUpForRedux } from '../MapMarkers/utils';
@@ -145,9 +145,9 @@ const makeMapStateToProps = () => {
       visibleTaps: getVisibleTaps(state, props),
       // filtered: state.tapFilters.filtered,
       // handicap: state.tapFilters.handicap,
-      accessTypesHidden: state.tapFilters.accessTypesHidden,
-      allTaps: state.allTaps,
-      mapCenter: state.mapCenter
+      accessTypesHidden: state.filterMarkers.tapFilters.accessTypesHidden,
+      allTaps: state.filterMarkers.allTaps,
+      mapCenter: state.filterMarkers.mapCenter
     };
   };
   return mapStateToProps;

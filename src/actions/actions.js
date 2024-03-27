@@ -4,7 +4,8 @@ import {
   bathroomConfig,
   foodConfig,
   foragingConfig,
-  waterConfig
+  waterConfig,
+  contributorsConfig
 } from '../firebase/firebaseConfig';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
@@ -107,6 +108,22 @@ export const getBathroomTaps = () => dispatch => {
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
     dispatch(getBathroomSuccess(snapshotVal));
+  });
+};
+
+export const GET_CONTRIBUTORS_SUCCESS = 'GET_BATHROOM_SUCCESS';
+export const getContributorsSuccess = allContributors => ({
+  type: GET_CONTRIBUTORS_SUCCESS,
+  allContributors
+});
+
+export const getContributors = () => dispatch => {
+  const app = initializeApp(contributorsConfig, 'bathroom');
+  const database = getDatabase(app);
+
+  return onValue(ref(database, '/'), snapshot => {
+    const snapshotVal = snapshot.val();
+    dispatch(getContributorsSuccess(snapshotVal));
   });
 };
 

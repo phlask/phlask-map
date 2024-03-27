@@ -446,16 +446,8 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.props.toolbarModal)
     return (
       <div id="react-google-map" className={styles.mapContainer}>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Inter:wght@500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        {/* <ClosestTap/> */}
         <ReactTouchEvents onTap={this.handleTap.bind(this)}>
           <div>
             <Map
@@ -511,10 +503,20 @@ export class ReactGoogleMaps extends Component {
           </div>
         </ReactTouchEvents>
         {isMobile && (
-          <Fade in={this.props.toolbarModal == TOOLBAR_MODAL_SEARCH} timeout={300} style={{position: 'fixed', pointerEvents: 'none'}}>
-            <div style={{width: '100vw', height: '100dvh', backgroundColor: 'rgba(0, 0, 0, 0.15)'}}></div>
-          </Fade>)
-        }
+          <Fade
+            in={this.props.toolbarModal == TOOLBAR_MODAL_SEARCH}
+            timeout={300}
+            style={{ position: 'fixed', pointerEvents: 'none' }}
+          >
+            <div
+              style={{
+                width: '100vw',
+                height: '100dvh',
+                backgroundColor: 'rgba(0, 0, 0, 0.15)'
+              }}
+            ></div>
+          </Fade>
+        )}
         <Stack position="absolute" bottom="0px" height="143px" width="34%">
           <Stack direction="row" spacing={2}>
             <SearchBar
@@ -544,15 +546,15 @@ export class ReactGoogleMaps extends Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.filtered,
-  handicap: state.handicap,
-  allTaps: state.allTaps,
-  filteredTaps: state.filteredTaps,
-  filterFunction: state.filterFunction,
-  mapCenter: state.mapCenter,
-  phlaskType: state.phlaskType,
-  showingInfoWindow: state.showingInfoWindow,
-  toolbarModal: state.toolbarModal
+  filtered: state.filterMarkers.filtered,
+  handicap: state.filterMarkers.handicap,
+  allTaps: state.filterMarkers.allTaps,
+  filteredTaps: state.filterMarkers.filteredTaps,
+  filterFunction: state.filterMarkers.filterFunction,
+  mapCenter: state.filterMarkers.mapCenter,
+  phlaskType: state.filterMarkers.phlaskType,
+  showingInfoWindow: state.filterMarkers.showingInfoWindow,
+  toolbarModal: state.filterMarkers.toolbarModal
   // infoIsExpanded: state.infoIsExpanded
 });
 
