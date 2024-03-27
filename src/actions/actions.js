@@ -4,8 +4,7 @@ import {
   bathroomConfig,
   foodConfig,
   foragingConfig,
-  waterConfig,
-  contributorsConfig
+  waterConfig
 } from '../firebase/firebaseConfig';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
