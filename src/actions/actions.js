@@ -111,22 +111,6 @@ export const getBathroomTaps = () => dispatch => {
   });
 };
 
-export const GET_CONTRIBUTORS_SUCCESS = 'GET_BATHROOM_SUCCESS';
-export const getContributorsSuccess = allContributors => ({
-  type: GET_CONTRIBUTORS_SUCCESS,
-  allContributors
-});
-
-export const getContributors = () => dispatch => {
-  const app = initializeApp(contributorsConfig, 'bathroom');
-  const database = getDatabase(app);
-
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getContributorsSuccess(snapshotVal));
-  });
-};
-
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({
   type: SET_USER_LOCATION,
