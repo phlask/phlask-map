@@ -32,6 +32,20 @@ export const hours = {
       return hours === 2400 ? '12:00am' : 'Exceeded 2400 hours';
     }
 
+    // In some cases, time is just 4 numbers
+    if (hours.time && /\d{4}/.test(hours.time)) {
+      let hour = parseInt(hours.time.slice(0, 2));
+      const minute = hours.time.slice(2, 4);
+      const mer = hour >= 12 ? 'pm' : 'am';
+      if (hour > 12) {
+        hour = hour - 12;
+      }
+      if (hour === 0) {
+        hour = 12;
+      }
+      return `${hour}:${minute}${mer}`;
+    }
+
     // TODO: Address difference between Water and Food taps when it comes to the hours key in the Firebase DB
     // Water taps have an `hours` key with day and time values while Food taps do not
     const time = hours.time ? hours.time.split() : hours.split();
