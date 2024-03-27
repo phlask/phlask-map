@@ -4,6 +4,11 @@ import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOOLBAR_MODAL_FILTER } from '../../actions/actions';
 import styles from './Filter.module.scss';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+
+
+
 
 const FilterTags = props => (
   <Box className={styles.filterTags}>
@@ -77,6 +82,28 @@ export default function Filter(props) {
           >
             <Box className={styles.header}>
               <h1>{props.filters[props.phlaskType].title}</h1>
+              <IconButton
+                aria-label="close"
+                onClick={() => {
+                  this.toggleInfoWindow(false);
+                }}
+                sx={{
+                  position: 'absolute',
+                  right: '20px',
+                  top: 5,
+                  color: '#fff',
+                  '&:hover': {
+                    color: '#fff'
+                  }
+                }}
+                size="large"
+              >
+                <CloseIcon
+                  sx={{
+                    fontSize: 34
+                  }}
+                />
+              </IconButton>
             </Box>
 
             <Box sx={{ margin: '20px' }}>
