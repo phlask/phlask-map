@@ -2,7 +2,6 @@ import React from 'react';
 import { Marker } from 'google-maps-react';
 import { connect } from 'react-redux';
 import {
-  getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
@@ -10,20 +9,7 @@ import {
 import makeGetVisibleTaps from '../../selectors/foodOrgSelectors';
 import IndieFoodMarker from './IndieFoodMarker';
 
-export function MapMarkersFood({
-  allFoodOrgs = [],
-  getFoodOrgs,
-  visibleTaps = [],
-  mapCenter,
-  google,
-  map
-}) {
-  React.useEffect(() => {
-    if (!allFoodOrgs.length && getFoodOrgs) {
-      getFoodOrgs();
-    }
-  }, [allFoodOrgs, getFoodOrgs]);
-
+export function MapMarkersFood({ visibleTaps = [], mapCenter, google, map }) {
   if (!visibleTaps?.length) return null;
   return (
     <>
@@ -46,8 +32,6 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, props) => {
     return {
       visibleTaps: getVisibleTaps(state, props),
-      //   filtered: state.tapFilters.filtered,
-      //   handicap: state.tapFilters.handicap,
       accessTypesHidden: state.foodFilters.accessTypesHidden,
       allFoodOrgs: state.allFoodOrgs,
       mapCenter: state.mapCenter
@@ -57,7 +41,6 @@ const makeMapStateToProps = () => {
 };
 
 const mapDispatchToProps = {
-  getFoodOrgs,
   toggleInfoWindow,
   setSelectedPlace,
   setMapCenter
