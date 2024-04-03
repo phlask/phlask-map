@@ -6,17 +6,23 @@ import Typography from '@mui/material/Typography';
 
 const ContributorsListItem = ({ contributor }) => {
   return (
-    <ListItem>
+    <ListItem sx={{ paddingInline: 0 }}>
       <Stack>
         <Box>
           <Typography fontWeight={700}>
-            {contributor.First} {contributor.Last} ({contributor.key})
+            {contributor.First} {contributor.Last}
           </Typography>
         </Box>
-        {contributor.isConvener && (
-          <Typography variant="subtitle2">Convener</Typography>
-        )}
-        <Typography variant="subtitle2">{contributor.circle} Circle</Typography>
+        <Stack direction="row">
+          <Typography component="span" variant="subtitle2">
+            {contributor.circle}
+          </Typography>
+          {contributor.isConvener && (
+            <Typography component="span" variant="subtitle2">
+              , Convener
+            </Typography>
+          )}
+        </Stack>
       </Stack>
     </ListItem>
   );

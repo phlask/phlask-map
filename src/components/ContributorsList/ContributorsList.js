@@ -7,7 +7,9 @@ import ContributorsListItem from './ContributorsListItem';
 const ContributorsList = ({ items = [], title = 'Contributors' }) => {
   return (
     <Grid item>
-      <Typography variant="h6">{title}</Typography>
+      <Typography variant="h6" color="#73839E">
+        {title}
+      </Typography>
       <List>
         {items.map(contributor => (
           <ContributorsListItem

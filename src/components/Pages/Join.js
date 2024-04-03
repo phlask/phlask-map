@@ -183,7 +183,7 @@ const Join = () => {
             This project was made possible by the time, mentorship, and
             expertise of our dedicated team of volunteers.
           </p>
-          <Grid container className="contributors" spacing={4}>
+          <Grid container className="contributors" spacing={6}>
             <ContributorsList
               title="Current Contributors"
               items={currentContributors}
