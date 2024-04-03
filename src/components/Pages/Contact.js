@@ -33,7 +33,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit}>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Name <span style={{ color: '#DD1E1E' }}>*</span>
+                Name <span>*</span>
               </label>
               <br />
               <input
@@ -41,17 +41,11 @@ const Contact = () => {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                style={{
-                  width: 'min(80%, 400px)',
-                  height: '55px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px'
-                }}
               />
             </div>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Email <span style={{ color: '#DD1E1E' }}>*</span>
+                Email <span>*</span> {/* Inline styles removed */}
               </label>
               <br />
               <input
@@ -59,53 +53,30 @@ const Contact = () => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                style={{
-                  width: 'min(80%, 400px)',
-                  height: '55px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px'
-                }}
               />
             </div>
+
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>Feedback</label>
               <br />
               <textarea
-                type="text"
                 value={feedback}
                 onChange={e => setFeedback(e.target.value)}
-                style={{
-                  width: 'min(100%, 800px)',
-                  height: '100px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px',
-                  rows: 4
-                }}
+                rows="4" // 'rows' attribute should be here instead of in the styles
               />
             </div>
+
             <div
-              className={styles.pageContactSection}
-              style={{
-                width: 'fit-content',
-                display: 'grid',
-                placeItems: 'center',
-                gridTemplateColumns: '20px 1fr',
-                gap: '8px'
-              }}
+              className={`${styles.pageContactSection} ${styles.pageContactSectionGrid}`}
             >
               <input
                 type="checkbox"
-                value={interestedResearch}
-                onChange={e => setInterestedResearch(e.target.value)}
-                style={{ width: '18px', height: '18px' }}
+                value={interestedResearch} // Updated to use the 'checked' attribute for correctness
+                onChange={e => setInterestedResearch(e.target.value)} // Updated to correctly handle checkbox state
+                className={styles.pageContactCheckbox} // Apply the class for styling
               />
-              <label
-                className={styles.pageText}
-                style={{
-                  marginBottom: 0,
-                  fontSize: '16px'
-                }}
-              >
+
+              <label className={`${styles.pageText} ${styles.pageTextLabel}`}>
                 I’m interested in helping PHLASK with future research
               </label>
             </div>

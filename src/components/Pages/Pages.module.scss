@@ -1,3 +1,9 @@
+$color-input-border: #73839e;
+$color-asterisk: #dd1e1e;
+$color-label: #2d3748;
+$font-family-inter: 'Inter', sans-serif;
+$border-radius: 3px;
+
 .page {
   max-height: calc(100vh - 76px - 32px - 50px - 25px - 25px);
   overflow-y: auto;
@@ -32,6 +38,11 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
+
+  &Label {
+    margin-bottom: 0;
+    font-size: 16px;
+  }
 }
 
 .pageLink {
@@ -39,17 +50,48 @@
   text-decoration: none;
 }
 
-// Contact page specific
 .pageContactSection {
-  margin-bottom: 20px;
+  // Existing styles for input
+  input[type='text'],
+  input[type='email'] {
+    width: min(80%, 400px);
+    height: 55px;
+    border: 1px solid $color-input-border;
+    border-radius: $border-radius;
+  }
+
+  // Additional styles for textarea
+  textarea {
+    width: min(100%, 800px); // Adjusted width compared to input
+    height: 100px; // Custom height for textarea
+    border: 1px solid $color-input-border;
+    border-radius: $border-radius;
+    resize: vertical; // Allowing vertical resize only
+  }
 }
 
 .pageContactLabel {
   margin: 0;
   margin-bottom: 5px;
-  color: #2d3748;
-  font-family: 'Inter', sans-serif;
+  color: $color-label;
+  font-family: $font-family-inter;
   font-weight: 600;
   font-size: 17px;
   line-height: 20px;
+
+  // Targeting the asterisk within the label
+  span {
+    color: $color-asterisk;
+  }
+}
+.pageContactSection-grid {
+  width: fit-content;
+  display: grid;
+  place-items: center;
+  grid-template-columns: 20px 1fr;
+  gap: 8px;
+}
+.pageContactCheckbox {
+  width: 18px;
+  height: 18px;
 }
