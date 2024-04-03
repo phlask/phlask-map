@@ -45,7 +45,7 @@ const Contact = () => {
             </div>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Email <span>*</span> {/* Inline styles removed */}
+                Email <span>*</span>
               </label>
               <br />
               <input
@@ -62,7 +62,7 @@ const Contact = () => {
               <textarea
                 value={feedback}
                 onChange={e => setFeedback(e.target.value)}
-                rows="4" // 'rows' attribute should be here instead of in the styles
+                rows="4"
               />
             </div>
 
@@ -71,9 +71,9 @@ const Contact = () => {
             >
               <input
                 type="checkbox"
-                value={interestedResearch} // Updated to use the 'checked' attribute for correctness
-                onChange={e => setInterestedResearch(e.target.value)} // Updated to correctly handle checkbox state
-                className={styles.pageContactCheckbox} // Apply the class for styling
+                value={interestedResearch}
+                onChange={e => setInterestedResearch(e.target.value)}
+                className={styles.pageContactCheckbox}
               />
 
               <label className={`${styles.pageText} ${styles.pageTextLabel}`}>
@@ -83,98 +83,46 @@ const Contact = () => {
             <button
               type="submit"
               onSubmit={handleSubmit}
-              style={{
-                width: 'min(80%, 400px)',
-                marginBottom: '20px',
-                padding: '7px 0',
-                borderRadius: '8px',
-                backgroundColor: '#5286E9'
-              }}
+              className={styles.submitButton}
             >
-              <p
-                style={{
-                  marginBottom: 0,
-                  color: '#ffffff',
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 500,
-                  fontSize: '17px',
-                  lineHeight: '23px'
-                }}
-              >
-                Submit Feedback
-              </p>
+              <p>Submit Feedback</p>
             </button>
           </form>
-          <div
-            style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 502px - 50px))'
-            }}
-          ></div>
+          <div className={styles.divContainer}></div>
         </div>
       )}
       {submitted && (
         <div>
           {/* Thank You Message Container */}
-          <div style={{ textAlign: 'center' }}>
-            <div
-              style={{
-                height:
-                  'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
-              }}
-            ></div>
+          <div className={styles.thankYouMessageContainer}>
+            <div className={styles.thankYouMessageSpacer}></div>
             <ContactSubmitImage />
             <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
-            <div
-              style={{
-                height:
-                  'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
-              }}
-            ></div>
+            <div className={styles.thankYouMessageSpacer}></div>
           </div>
 
           {/* Follow PHLASK, Connect, Social Media Icons, and Contact Email */}
-          <div
-            style={{
-              width: 'fit-content',
-              display: 'grid',
-              placeItems: 'center start',
-              gridTemplateColumns: '304px 1fr',
-              rowGap: '20px'
-            }}
-          >
-            <h2
-              className={styles.pageSubheader}
-              style={{ width: 'fit-content', margin: 0 }}
-            >
+          <div className={styles.gridContainer}>
+            <h2 className={`${styles.pageSubheader} ${styles.followHeader}`}>
               Follow PHLASK
             </h2>
-            <h2 className={styles.pageSubheader} style={{ margin: 0 }}>
+            <h2 className={`${styles.pageSubheader} ${styles.connectHeader}`}>
               Connect
             </h2>
-            <div style={{ width: 'fit-content' }}>
-              <a
-                href="https://www.facebook.com/PHLASKecosystem/"
-                style={{ marginRight: '40px' }}
-              >
+            <div className={styles.socialLinksContainer}>
+              <a href="https://www.facebook.com/PHLASKecosystem/">
                 <FacebookIcon />
               </a>
-              <a
-                href="https://www.instagram.com/phlaskecosystem/"
-                style={{ marginRight: '40px' }}
-              >
+              <a href="https://www.instagram.com/phlaskecosystem/">
                 <InstagramIcon />
               </a>
               <a href="https://twitter.com/PHLASKecosystem/">
                 <TwitterIcon />
               </a>
             </div>
-            <p className={styles.pageText} style={{ margin: 0 }}>
+            <p className={styles.otherInquiries}>
               For all other inquiries, email{' '}
-              <a
-                href="mailto:phlaskecosystem@gmail.com"
-                className={styles.pageLink}
-              >
+              <a href="mailto:phlaskecosystem@gmail.com">
                 phlaskecosystem@gmail.com
               </a>
             </p>

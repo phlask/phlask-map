@@ -3,6 +3,7 @@ $color-asterisk: #dd1e1e;
 $color-label: #2d3748;
 $font-family-inter: 'Inter', sans-serif;
 $border-radius: 3px;
+$button-bg-color: #5286e9;
 
 .page {
   max-height: calc(100vh - 76px - 32px - 50px - 25px - 25px);
@@ -62,11 +63,11 @@ $border-radius: 3px;
 
   // Additional styles for textarea
   textarea {
-    width: min(100%, 800px); // Adjusted width compared to input
-    height: 100px; // Custom height for textarea
+    width: min(100%, 800px);
+    height: 100px;
     border: 1px solid $color-input-border;
     border-radius: $border-radius;
-    resize: vertical; // Allowing vertical resize only
+    resize: vertical;
   }
 }
 
@@ -79,7 +80,6 @@ $border-radius: 3px;
   font-size: 17px;
   line-height: 20px;
 
-  // Targeting the asterisk within the label
   span {
     color: $color-asterisk;
   }
@@ -94,4 +94,72 @@ $border-radius: 3px;
 .pageContactCheckbox {
   width: 18px;
   height: 18px;
+}
+
+.submitButton {
+  width: min(80%, 400px);
+  margin-bottom: 20px;
+  padding: 7px 0;
+  border-radius: 8px;
+  background-color: $button-bg-color;
+
+  p {
+    margin-bottom: 0;
+    color: #ffffff;
+    font-family: $font-family-inter;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 23px;
+  }
+}
+.divContainer {
+  height: calc(
+    (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 502px - 50px)
+  );
+}
+.thankYouMessageContainer {
+  text-align: center;
+
+  > div {
+    height: calc(
+      (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2
+    );
+  }
+}
+.thankYouMessageSpacer {
+  height: calc(
+    (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2
+  );
+}
+.gridContainer {
+  width: fit-content;
+  display: grid;
+  place-items: center start;
+  grid-template-columns: 304px 1fr;
+  row-gap: 20px;
+}
+.followHeader {
+  width: fit-content;
+  margin: 0;
+}
+.connectHeader {
+  margin: 0;
+}
+.socialLinksContainer {
+  width: fit-content;
+
+  a {
+    margin-right: 40px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.otherInquiries {
+  margin: 0;
+
+  a {
+    @extend .pageLink;
+  }
 }
