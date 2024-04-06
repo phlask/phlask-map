@@ -1,3 +1,4 @@
+import { Fade } from '@mui/material';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -27,9 +28,9 @@ import styles from './ReactGoogleMaps.module.scss';
 // Temporary Food/Water Toggle
 import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import Filter from '../Filter/Filter';
+import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
 
@@ -445,6 +446,7 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
+    console.log(this.props.toolbarModal)
     return (
       <div id="react-google-map" className={styles.mapContainer}>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -508,6 +510,11 @@ export class ReactGoogleMaps extends Component {
             </Map>
           </div>
         </ReactTouchEvents>
+        {isMobile && (
+          <Fade in={this.props.toolbarModal == TOOLBAR_MODAL_SEARCH} timeout={300} style={{position: 'fixed', pointerEvents: 'none'}}>
+            <div style={{width: '100vw', height: '100dvh', backgroundColor: 'rgba(0, 0, 0, 0.15)'}}></div>
+          </Fade>)
+        }
         <Stack position="absolute" bottom="0px" height="143px" width="34%">
           <Stack direction="row" spacing={2}>
             <SearchBar
@@ -544,7 +551,8 @@ const mapStateToProps = state => ({
   filterFunction: state.filterFunction,
   mapCenter: state.mapCenter,
   phlaskType: state.phlaskType,
-  showingInfoWindow: state.showingInfoWindow
+  showingInfoWindow: state.showingInfoWindow,
+  toolbarModal: state.toolbarModal
   // infoIsExpanded: state.infoIsExpanded
 });
 

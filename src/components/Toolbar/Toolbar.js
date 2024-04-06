@@ -112,11 +112,7 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const [value, setValue] = React.useState(0);
-
   const phlaskType = useSelector(phlaskTypeSelector);
-  const dispatch = useDispatch();
-  const property_name = useSelector(state => state);
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -217,7 +213,6 @@ function Toolbar(props) {
 
   return (
     <>
-      $
       {!isMobile ? (
         <Box
           sx={{
@@ -381,7 +376,6 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() => props.setOpenResourceModal()}
             />
             <ResourceMenu />
             <NavigationItem
@@ -407,7 +401,7 @@ function Toolbar(props) {
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => props.setOpenResourceModal()}
+              onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             />
           </BottomNavigation>
         </Box>

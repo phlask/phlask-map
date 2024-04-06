@@ -31,6 +31,7 @@
   height: 314px;
   left: 25px;
   top: 372px;
+  margin-bottom: 60px;
 }
 
 .boxDesktop {
@@ -72,14 +73,13 @@
   flex-direction: column;
   width: 209px;
   gap: 8px;
-  height: 93px;
+  height: 94px;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 .buttonWrapper {
   display: flex;
   flex-direction: column;
-  gap: 26px;
 }
 
 .modalFormLabel {
