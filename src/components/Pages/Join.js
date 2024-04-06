@@ -58,6 +58,7 @@ const Join = () => (
   <div className={styles.page}>
     <h1 className={styles.pageHeader}>Join the team</h1>
     <div>
+      <h2 className={styles.pageSubheader}>Join the team</h2>
       <p className={styles.pageText}>
         PHLASK volunteers come from a wide array of socioeconomic, educational
         and technical backgrounds. The team is committed to non-hierarchical,
