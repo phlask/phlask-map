@@ -76,7 +76,6 @@ const Contact = () => {
                 onChange={e => setInterestedResearch(e.target.value)}
                 className={styles.pageContactCheckbox}
               />
-
               <label className={`${styles.pageText} ${styles.pageTextLabel}`}>
                 I’m interested in helping PHLASK with future research
               </label>
