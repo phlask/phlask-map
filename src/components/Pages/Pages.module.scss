@@ -85,7 +85,7 @@ $button-bg-color: #5286e9;
   color: $color-asterisk;
 }
 
-.pageContactSection-grid {
+.pageContactSectionGrid {
   width: fit-content;
   display: grid;
   place-items: center;
@@ -96,7 +96,6 @@ $button-bg-color: #5286e9;
 .pageContactCheckbox {
   width: 18px;
   height: 18px;
-  margin-right: 10px;
 }
 
 .submitButton {
