@@ -33,7 +33,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit}>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Name <span>*</span>
+                Name <span className={styles.asteriskcolor}>*</span>
               </label>
               <br />
               <input
@@ -45,7 +45,7 @@ const Contact = () => {
             </div>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Email <span>*</span>
+                Email <span className={styles.asteriskcolor}>*</span>
               </label>
               <br />
               <input
@@ -62,6 +62,7 @@ const Contact = () => {
               <textarea
                 value={feedback}
                 onChange={e => setFeedback(e.target.value)}
+                className={styles.FeedbackInput}
                 rows="4"
               />
             </div>
@@ -85,7 +86,7 @@ const Contact = () => {
               onSubmit={handleSubmit}
               className={styles.submitButton}
             >
-              <p>Submit Feedback</p>
+              <span className={styles.buttonText}>Submit Feedback</span>
             </button>
           </form>
           <div className={styles.divContainer}></div>
@@ -110,19 +111,32 @@ const Contact = () => {
               Connect
             </h2>
             <div className={styles.socialLinksContainer}>
-              <a href="https://www.facebook.com/PHLASKecosystem/">
+              <a
+                href="https://www.facebook.com/PHLASKecosystem/"
+                className={styles.socialLink}
+              >
                 <FacebookIcon />
               </a>
-              <a href="https://www.instagram.com/phlaskecosystem/">
+              <a
+                href="https://www.instagram.com/phlaskecosystem/"
+                className={styles.socialLink}
+              >
                 <InstagramIcon />
               </a>
-              <a href="https://twitter.com/PHLASKecosystem/">
+              <a
+                href="https://twitter.com/PHLASKecosystem/"
+                className={styles.socialLink}
+              >
                 <TwitterIcon />
               </a>
             </div>
             <p className={styles.otherInquiries}>
               For all other inquiries, email{' '}
-              <a href="mailto:phlaskecosystem@gmail.com">
+              <a
+                href="mailto:phlaskecosystem@gmail.com"
+                className={styles.inquiryLink}
+              >
+                {' '}
                 phlaskecosystem@gmail.com
               </a>
             </p>

@@ -52,17 +52,16 @@ $button-bg-color: #5286e9;
 }
 
 .pageContactSection {
-  // Existing styles for input
   input[type='text'],
-  input[type='email'] {
+  input[type='email'],
+  .textInput {
     width: min(80%, 400px);
     height: 55px;
     border: 1px solid $color-input-border;
     border-radius: $border-radius;
   }
 
-  // Additional styles for textarea
-  textarea {
+  .FeedbackInput {
     width: min(100%, 800px);
     height: 100px;
     border: 1px solid $color-input-border;
@@ -79,11 +78,12 @@ $button-bg-color: #5286e9;
   font-weight: 600;
   font-size: 17px;
   line-height: 20px;
-
-  span {
-    color: $color-asterisk;
-  }
 }
+
+.asteriskcolor {
+  color: $color-asterisk;
+}
+
 .pageContactSection-grid {
   width: fit-content;
   display: grid;
@@ -102,16 +102,17 @@ $button-bg-color: #5286e9;
   padding: 7px 0;
   border-radius: 8px;
   background-color: $button-bg-color;
-
-  p {
-    margin-bottom: 0;
-    color: #ffffff;
-    font-family: $font-family-inter;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 23px;
-  }
 }
+
+.buttonText {
+  margin-bottom: 0;
+  color: #ffffff;
+  font-family: $font-family-inter;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 23px;
+}
+
 .divContainer {
   height: calc(
     (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 502px - 50px)
@@ -119,12 +120,6 @@ $button-bg-color: #5286e9;
 }
 .thankYouMessageContainer {
   text-align: center;
-
-  > div {
-    height: calc(
-      (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2
-    );
-  }
 }
 .thankYouMessageSpacer {
   height: calc(
@@ -148,18 +143,19 @@ $button-bg-color: #5286e9;
 .socialLinksContainer {
   width: fit-content;
 
-  a {
+  .socialLink {
     margin-right: 40px;
-
+    /* Remove right margin for the last social link */
     &:last-child {
       margin-right: 0;
     }
   }
 }
+
 .otherInquiries {
   margin: 0;
 
-  a {
+  .inquiryLink {
     @extend .pageLink;
   }
 }
