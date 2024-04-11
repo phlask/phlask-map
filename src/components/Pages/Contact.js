@@ -128,13 +128,12 @@ const Contact = () => {
                 <TwitterIcon />
               </a>
             </div>
-            <p className={styles.otherInquiries}>
+            <p className={`${styles.pageText} ${styles.otherInquiries}`}>
               For all other inquiries, email{' '}
               <a
                 href="mailto:phlaskecosystem@gmail.com"
                 className={styles.inquiryLink}
               >
-                {' '}
                 phlaskecosystem@gmail.com
               </a>
             </p>
