@@ -88,7 +88,6 @@ const Contact = () => {
               <span className={styles.buttonText}>Submit Feedback</span>
             </button>
           </form>
-          <div className={styles.divContainer}></div>
         </div>
       )}
       {submitted && (

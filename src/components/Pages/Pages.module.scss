@@ -4,9 +4,21 @@ $color-label: #2d3748;
 $font-family-inter: 'Inter', sans-serif;
 $border-radius: 3px;
 $button-bg-color: #5286e9;
+$header-height: 76px; // Height of the header of the page
+$verticalspacing: 32px; // vertical space buffer
+$footer-height: 50px; // Height of the footer
+$vertical-spacing-buffer: 25px; // Provides spacing between the thank you contact form and the nav bar
+$extra-space: 25px; // Extra vertical space for the contact form
+$thankYouMessage-height: 92px; // Height of the thank you message itself
+$contactForm-height: 70px; // Height of the contact form section in Thank You
+$contentSection-height: 296px; // Height of a main content section in Thank
+$fullViewportHeight: 100vh; // Represents the full height of the viewport
 
 .page {
-  max-height: calc(100vh - 76px - 32px - 50px - 25px - 25px);
+  max-height: calc(
+    #{$fullViewportHeight} - #{$header-height} - #{$verticalspacing} - #{$footer-height} -
+      #{$vertical-spacing-buffer} - #{$extra-space}
+  );
   overflow-y: auto;
   padding-right: 10px;
 }
@@ -91,7 +103,6 @@ $button-bg-color: #5286e9;
   place-items: center;
   grid-template-columns: 20px 1fr;
   gap: 8px;
-  
 }
 .pageContactCheckbox {
   width: 18px;
@@ -114,18 +125,16 @@ $button-bg-color: #5286e9;
   font-size: 17px;
   line-height: 23px;
 }
-
-.divContainer {
-  height: calc(
-    (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 502px - 50px)
-  );
-}
 .thankYouMessageContainer {
   text-align: center;
 }
 .thankYouMessageSpacer {
   height: calc(
-    (100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2
+    (
+        #{$fullViewportHeight} - #{$header-height} - #{$verticalspacing} - #{$vertical-spacing-buffer} -
+          #{$extra-space} - #{$thankYouMessage-height} - #{$contactForm-height} -
+          #{$contentSection-height} - #{$footer-height}
+      ) / 2
   );
 }
 .gridContainer {
