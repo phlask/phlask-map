@@ -10,8 +10,8 @@ $footer-height: 50px; // Height of the footer
 $vertical-spacing-buffer: 25px; // Provides spacing between the thank you contact form and the nav bar
 $extra-space: 25px; // Extra vertical space for the contact form
 $thankYouMessage-height: 92px; // Height of the thank you message itself
-$contactForm-height: 70px; // Height of the contact form section in Thank You
-$contentSection-height: 296px; // Height of a main content section in Thank
+$Thankyoucontactform-height: 70px; // Height of the contact form section in Thank You
+$thankyoucontentsection-height: 296px; // Height of a main content section in Thank
 $fullViewportHeight: 100vh; // Represents the full height of the viewport
 
 .page {
@@ -132,8 +132,8 @@ $fullViewportHeight: 100vh; // Represents the full height of the viewport
   height: calc(
     (
         #{$fullViewportHeight} - #{$header-height} - #{$verticalspacing} - #{$vertical-spacing-buffer} -
-          #{$extra-space} - #{$thankYouMessage-height} - #{$contactForm-height} -
-          #{$contentSection-height} - #{$footer-height}
+          #{$extra-space} - #{$thankYouMessage-height} - #{$Thankyoucontactform-height} -
+          #{$thankyoucontentsection-height} - #{$footer-height}
       ) / 2
   );
 }
