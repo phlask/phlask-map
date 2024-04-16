@@ -530,9 +530,9 @@ export class ReactGoogleMaps extends Component {
               className="searchBar"
               search={location => this.searchForLocation(location)}
             />
-            {/* <TutorialModal
-              showButton={isMobile ? !this.state.isSearchBarShown : true}
-            /> */}
+            <TutorialModal
+              showButton={isMobile ? !this.state.isSearchBarShown : false}
+            />
           </Stack>
           <ChooseResource />
           <Filter

@@ -5,12 +5,12 @@ import {
   getTaps,
   setMapCenter,
   setSelectedPlace,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import makeGetVisibleTaps from '../../selectors/tapSelectors';
 import { cleanUpForRedux } from '../MapMarkers/utils';
-import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
-import phlaskMarkerIcon from '../icons/PhlaskMarkerIcon';
+import phlaskFilterIconV2 from '../icons/PhlaskFilterIconV2';
+import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import './IndieMarker.css';
 
 class IndieMarker extends React.Component {
@@ -70,8 +70,8 @@ class IndieMarker extends React.Component {
         case 'Restricted':
         case 'Semi-public':
           return !isForSelection
-            ? { url: phlaskMarkerIcon(access, 48, 48) }
-            : phlaskFilterIcon(access, 35, 35);
+            ? { url: phlaskMarkerIconV2(access, 48, 48) }
+            : phlaskFilterIconV2(access, 35, 35);
         case 'TrashAcademy':
           return 'https://i.imgur.com/fXTeEKL.png';
         default:
