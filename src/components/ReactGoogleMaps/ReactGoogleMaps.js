@@ -29,6 +29,7 @@ import Stack from '@mui/material/Stack';
 import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
+import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
 import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
 import Toolbar from '../Toolbar/Toolbar';
