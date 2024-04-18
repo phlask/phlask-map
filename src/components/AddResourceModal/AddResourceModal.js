@@ -1,12 +1,6 @@
 import styles from './AddResourceModal.module.scss';
 import React, { Component } from 'react';
 import Dialog from '@mui/material/Dialog';
-import Paper from '@mui/material/Paper';
-import Collapse from '@mui/material/Collapse';
-import ImageUploader from 'react-images-upload';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { isMobile } from 'react-device-detect';
 // eslint-disable-next-line import/no-unresolved
 import ChooseResource from './ChooseResource';
 // eslint-disable-next-line import/no-unresolved

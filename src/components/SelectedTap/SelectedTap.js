@@ -362,7 +362,7 @@ class SelectedTap extends React.Component {
 
                   {/* Name & Address */}
                   <div id="org-name-and-address-desktop">
-                    <div id="tap-organization-name">
+                    <div id="tap-organization-name" data-cy="tap-organization-name">
                       {this.state.organization}
                     </div>
                     {this.state.address && (

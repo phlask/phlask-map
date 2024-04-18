@@ -21,6 +21,7 @@ services:
     entrypoint: bash -c "mkdir -p testResults && yarn test --reporter json > testResults/jestResults.json && yarn build"
     environment: 
       CI: "false"
+      CYPRESS_BASE_URL: ${CYPRESS_BASE_URL:-http://localhost:3000}
     volumes:
     - "./docker/build:/usr/src/app/build"
     - "./docker/testResults:/usr/src/app/testResults"

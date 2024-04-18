@@ -37,7 +37,7 @@ import { ReactComponent as FoodPhlaskButton } from '../icons/PhlaskButtons/FoodP
 import { ReactComponent as ForagingPhlaskButton } from '../icons/PhlaskButtons/ForagingPhlaskButton.svg';
 import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/WaterPhlaskButton.svg';
 
-import { SvgIcon, Typography } from '@mui/material';
+import { BottomNavigationAction, SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
@@ -265,6 +265,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-resource-type-menu"
           >
             <ResourceIcon style={{ color: '#f80' }} />
             <Typography
@@ -374,6 +375,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
+              data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
             />

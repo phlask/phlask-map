@@ -44,7 +44,7 @@ export const getTapsSuccess = allTaps => ({
 export const getTaps = () => dispatch => {
   const app = initializeApp(waterConfig, 'water');
   const database = getDatabase(app);
-  return onValue(
+  return process.env.REACT_APP_CYPRESS_TEST (
     ref(database, '/'),
     snapshot => {
       const snapshotVal = snapshot.val();

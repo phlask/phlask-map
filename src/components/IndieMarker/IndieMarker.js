@@ -107,7 +107,9 @@ class IndieMarker extends React.Component {
             google={this.props.google}
             mapCenter={this.props.mapCenter}
             key={this.props.key}
-            name={this.props.tap.tapnum}
+            // This is used for marker targetting as we are unable to add custom properties with this library.
+            // We should eventually replace this so that we can still enable the use of screen readers in the future.
+            title={'data-cy-' + this.props.tap.tapnum.toString()}
             organization={this.props.tap.organization}
             address={this.props.tap.address}
             hours={this.props.tap.hours}

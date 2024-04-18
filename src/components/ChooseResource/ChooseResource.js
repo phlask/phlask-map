@@ -32,6 +32,7 @@ const ResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={props.onClick}
+      data-cy={props["data-cy"]}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.text}</p>
@@ -81,6 +82,7 @@ export default function ChooseResource(props) {
                       phlaskType: PHLASK_TYPE_WATER
                     });
                   }}
+                  data-cy="button-water-data-selector"
                 />
                 <ResourceButton
                   icon={ForagingIcon}
@@ -92,6 +94,7 @@ export default function ChooseResource(props) {
                       phlaskType: PHLASK_TYPE_FORAGING
                     });
                   }}
+                  data-cy="button-foraging-data-selector"
                 />
                 <ResourceButton
                   icon={FoodIcon}
@@ -103,6 +106,7 @@ export default function ChooseResource(props) {
                       phlaskType: PHLASK_TYPE_FOOD
                     });
                   }}
+                  data-cy="button-food-data-selector"
                 />
                 <ResourceButton
                   icon={BathroomIcon}
@@ -114,6 +118,7 @@ export default function ChooseResource(props) {
                       phlaskType: PHLASK_TYPE_BATHROOM
                     });
                   }}
+                  data-cy="button-bathroom-data-selector"
                 />
               </Box>
             </Box>

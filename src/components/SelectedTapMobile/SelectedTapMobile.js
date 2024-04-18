@@ -122,7 +122,7 @@ function SelectedTapMobile(props) {
       <div className={styles.mainHalfInfo}>
         {infoIcon && <img src={infoIcon} alt="" />}
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.organization}>{organization}</h2>
+          <h2 className={styles.organization} data-cy="tap-organization-name">{organization}</h2>
           <p>{address}</p>
           {props.children}
           <Button
