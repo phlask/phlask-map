@@ -332,7 +332,7 @@ export class ReactGoogleMaps extends Component {
           });
         }
       },
-      () => {}
+      () => { }
     );
   }
 
@@ -370,10 +370,13 @@ export class ReactGoogleMaps extends Component {
   };
 
   onIdle = (_, map) => {
-    this.setState({
+    const currentLocation = {
       currlat: map.center.lat(),
       currlon: map.center.lng()
-    });
+    }
+    if (this.state.currlat !== currentLocation.currlat || this.state.currlon !== currentLocation.currlon) {
+      this.setState(currentLocation);
+    }
   };
 
   onReady = (_, map) => {
