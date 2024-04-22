@@ -5,16 +5,25 @@ import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.s
 import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
 import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
 import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
+import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
 import { HeaderContext } from '../../contexts/HeaderContext';
 import DropLink from '../../components/Buttons/DropLink';
+import {
+    TOOLBAR_MODAL_FILTER,
+    TOOLBAR_MODAL_NONE,
+    TOOLBAR_MODAL_SEARCH,
+} from '../../actions/actions';
 
 export const DesktopHead = (props) => {
     const headerContext = React.useContext(HeaderContext);
     const {
+        shownPage,
         menuClicked,
         toggleMenuExpand,
         menuExpand,
         setShowMapControls,
+        showMapControls,
         pageExpand,
         verticalAnimFinished1,
         verticalAnimFinished2,
@@ -64,6 +73,36 @@ export const DesktopHead = (props) => {
                             />
                         </Button>
                     </Box>
+                    {showMapControls ? (
+                        <Box
+                            sx={{
+                                position: 'relative',
+                                marginLeft: 'auto'
+                            }}
+                        >
+                            <IconButton onClick={() => {
+                                if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
+                                    props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
+                                } else {
+                                    props.setToolbarModal(TOOLBAR_MODAL_NONE);
+                                }
+                            }}>
+                                <SearchIcon />
+                            </IconButton>
+                            <IconButton
+                                sx={{ marginRight: '-8px' }}
+                                onClick={() => {
+                                    if (props.toolbarModal != TOOLBAR_MODAL_FILTER) {
+                                        props.setToolbarModal(TOOLBAR_MODAL_FILTER);
+                                    } else {
+                                        props.setToolbarModal(TOOLBAR_MODAL_NONE);
+                                    }
+                                }}
+                            >
+                                <FilterIcon />
+                            </IconButton>
+                        </Box>
+                    ) : null}
                     <Collapse
                         in={pageExpand}
                         timeout="auto"
@@ -126,7 +165,7 @@ export const DesktopHead = (props) => {
                             padding: '25px'
                         }}
                     >
-                        {verticalAnimFinished1 && verticalAnimFinished2 && props.page}
+                        {verticalAnimFinished1 && verticalAnimFinished2 && shownPage}
                     </Box>
                 </Collapse>
             </Paper>

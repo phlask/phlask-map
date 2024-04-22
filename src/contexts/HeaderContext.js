@@ -1,3 +1,6 @@
+import About from 'components/Pages/About';
+import Contact from 'components/Pages/Contact';
+import Join from 'components/Pages/Join';
 import React, { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -41,6 +44,19 @@ const HeaderProvider = ({ children }) => {
             setShownPage(null);
         } else {
             setPageExpand(true);
+            switch (page) {
+                case 'about':
+                    page = <About />;
+                    break;
+                case 'join':
+                    page = <Join />;
+                    break;
+                case 'contact':
+                    page = <Contact />;
+                    break;
+                default:
+                    break;
+            }
             setShownPage(page);
         }
     };

@@ -1,28 +1,9 @@
+import React from 'react';
 import {
-  Box,
-  Button,
-  Collapse,
-  IconButton,
   ListItemIcon,
-  Paper,
   styled,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import {
-  setToolbarModal,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-} from '../../actions/actions';
-import { ReactComponent as IDIcon } from '../icons/ModalIDRequired.svg';
-import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../icons/PhlaskNoText.svg';
-import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
-import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
 import About from '../Pages/About.js';
 import Contact from '../Pages/Contact.js';
 import Join from '../Pages/Join.js';
@@ -41,8 +22,7 @@ const NavIcon = styled(ListItemIcon)(({ theme }) => ({
   }
 }));
 
-function Head(props) {
-  const dispatch = useDispatch();
+export default function Head(props) {
 
   const pagePaths = /(\/mission)|(\/share)|(\/project)|(\/contribute)/;
   const isNotMapPage = () => {
@@ -64,8 +44,9 @@ function Head(props) {
       break;
   }
 
+
   return (
-    <div>
+    <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       <link
@@ -73,23 +54,8 @@ function Head(props) {
         rel="stylesheet"
       />
       <HeaderProvider>
-        {isMobile ? (<MobileHead page={page} />) : (<DesktopHead page={page} />)}
+        {isMobile ? (<MobileHead />) : (<DesktopHead />)}
       </HeaderProvider>
-    </div>
+    </>
   );
 }
-
-const mapStateToProps = state => ({
-  toolbarModal: state.toolbarModal
-});
-
-const mapDispatchToProps = {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
-  setToolbarModal
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Head);

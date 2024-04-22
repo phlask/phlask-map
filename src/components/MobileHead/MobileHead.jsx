@@ -1,71 +1,85 @@
 import React from 'react';
 import {
-    AppBar,
+    Button,
+    Collapse,
     IconButton,
-    Toolbar,
-    Box
+    Box,
+    Paper
 } from '@mui/material';
-import { Link } from 'react-router-dom';
-import Filter from '../Filter/Filter.js';
-import {
-    TOOLBAR_MODAL_FILTER,
-    TOOLBAR_MODAL_NONE,
-    TOOLBAR_MODAL_SEARCH,
-} from '../../actions/actions';
+import CloseIcon from '../../components/icons/CloseIcon';
+import DropLink from '../../components/Buttons/DropLink';
 import { HeaderContext } from '../../contexts/HeaderContext';
-import Sidebar from '../../components/SideBar/SideBar';
 import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
-import { ReactComponent as MenuIcon } from '../../components/icons/HamburgerMenu.svg';
 import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
 import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
+import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
+import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
+import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import {
+    setToolbarModal,
+    TOOLBAR_MODAL_CONTRIBUTE,
+    TOOLBAR_MODAL_FILTER,
+    TOOLBAR_MODAL_NONE,
+    TOOLBAR_MODAL_RESOURCE,
+    TOOLBAR_MODAL_SEARCH,
+} from '../../actions/actions';
+import { connect } from 'react-redux';
 
-export default function MobileHead(props) {
+function MobileHead(props) {
     const headerContext = React.useContext(HeaderContext);
-    const { sidebarOpen, setSidebarOpen, showMapControls, setShowMapControls } = headerContext;
+    const {
+        setShowMapControls,
+        shownPage,
+        menuClicked,
+        toggleMenuExpand,
+        menuExpand,
+        pageExpand,
+        verticalAnimFinished1,
+        verticalAnimFinished2,
+        setVerticalAnimFinished1,
+        setVerticalAnimFinished2,
+    } = headerContext;
     return (
-        <>
-            <Sidebar
-                open={sidebarOpen}
-                setOpenResourceModal={setSidebarOpen}
-                showControls={setShowMapControls}
-            />
-            <AppBar>
-                {/* this Toolbar is an MUI template, NOT the Toolbar in the bottom left for desktop */}
-                <Toolbar
-                    sx={{
-                        backgroundColor: '#fff',
-                        color: '#fff',
-                        boxShadow:
-                            '0 1px 0 rgba(0, 0, 0.12, 0.12), 0 1px 0 rgba(0, 0, 0.24, 0.24)',
-                        display: 'flex'
-                    }}
-                >
-                    <IconButton
-                        onClick={setSidebarOpen}
-                        sx={{
-                            position: 'relative',
-                            left: '-10px',
-                            right: '6px'
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Link to="/" onClick={() => setShowMapControls(true)}>
-                        <PhlaskIcon
+        <Box
+            sx={{
+                backgroundColor: 'transparent',
+                position: 'absolute',
+                maxWidth: '100%',
+                zIndex: '9',
+                width: '100%',
+            }}
+        >
+            <Paper
+                sx={{
+                    display: 'flex',
+                    padding: '0 0 0 0',
+                }}
+            >
+                <Box sx={{ height: 'fit-content', width: '100%' }}>
+                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                        <IconButton
                             sx={{
-                                position: 'relative',
-                                top: '-10px'
+                                margin: '15px'
                             }}
-                        />
-                    </Link>
-
-                    {showMapControls ? (
-                        <Box
-                            sx={{
-                                position: 'relative',
-                                marginLeft: 'auto'
-                            }}
+                            onClick={toggleMenuExpand}
                         >
+                            <CloseIcon close={menuExpand} />
+                        </IconButton>
+                        <Button
+                            href="/"
+                            sx={{
+                                margin: '15px'
+                            }}
+                            onClick={() => setShowMapControls(true)}
+                        >
+                            <PhlaskIcon
+                                sx={{
+                                    position: 'relative',
+                                    top: '-10px'
+                                }}
+                            />
+                        </Button>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <IconButton onClick={() => {
                                 if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
                                     props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
@@ -76,7 +90,6 @@ export default function MobileHead(props) {
                                 <SearchIcon />
                             </IconButton>
                             <IconButton
-                                sx={{ marginRight: '-8px' }}
                                 onClick={() => {
                                     if (props.toolbarModal != TOOLBAR_MODAL_FILTER) {
                                         props.setToolbarModal(TOOLBAR_MODAL_FILTER);
@@ -88,10 +101,89 @@ export default function MobileHead(props) {
                                 <FilterIcon />
                             </IconButton>
                         </Box>
-                    ) : null}
-                </Toolbar>
-            </AppBar>
-            <Filter />
-        </>
+                    </Box>
+                    <Collapse
+                        collapseSize='50px'
+                        in={pageExpand}
+                        timeout="auto"
+                        onEntered={() => {
+                            if (pageExpand) {
+                                setVerticalAnimFinished1(true);
+                            }
+                        }}
+                    >
+                        <Box sx={{ height: '50px' }}></Box>
+                    </Collapse>
+                    <Collapse in={menuExpand} timeout="auto">
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}
+                        >
+                            <DropLink
+                                onClick={() => menuClicked('about')}
+                                startIcon={<PhlaskNoTextIcon />}
+                            >
+                                About Phlask
+                            </DropLink>
+                            <DropLink
+                                onClick={() => menuClicked('join')}
+                                startIcon={<UsersIcon />}
+                            >
+                                Join the team
+                            </DropLink>
+                            <DropLink
+                                onClick={() => menuClicked('contact')}
+                                startIcon={<IDIcon />}
+                            >
+                                Contact
+                            </DropLink>
+                        </Box>
+                    </Collapse>
+                    <Collapse
+                        in={pageExpand}
+                        timeout="auto"
+                        onEntered={() => {
+                            if (pageExpand) {
+                                setVerticalAnimFinished2(true);
+                            }
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                height:
+                                    'calc(100vh - 50px - 25px - 274px - 76px - 32px - 25px)'
+                            }}
+                        ></Box>
+                    </Collapse>
+                </Box>
+                <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
+                    <Box
+                        sx={{
+                            width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
+                            padding: '25px'
+                        }}
+                    >
+                        {verticalAnimFinished1 && verticalAnimFinished2 && shownPage}
+                    </Box>
+                </Collapse>
+            </Paper>
+        </Box>
     );
 }
+
+const mapStateToProps = state => ({
+    toolbarModal: state.toolbarModal
+});
+
+const mapDispatchToProps = {
+    TOOLBAR_MODAL_CONTRIBUTE,
+    TOOLBAR_MODAL_FILTER,
+    TOOLBAR_MODAL_RESOURCE,
+    TOOLBAR_MODAL_SEARCH,
+    TOOLBAR_MODAL_NONE,
+    setToolbarModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MobileHead);

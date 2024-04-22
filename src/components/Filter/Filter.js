@@ -108,32 +108,30 @@ export default function Filter(props) {
 
             <Box sx={{ margin: '20px' }}>
               {props.filters[props.phlaskType].categories.map(
-                (category, index) => {
-                  return (
-                    <>
-                      <h2 className={styles.label}>{category.header}</h2>
-                      {category.type == 0 ? (
-                        <FilterTags
-                          tags={category.tags}
-                          phlaskType={props.phlaskType}
-                          index={index}
-                          handleTag={props.handleTag}
-                          activeTags={props.activeTags}
-                          forceUpdate={forceUpdate}
-                        />
-                      ) : (
-                        <FilterTagsExclusive
-                          tags={category.tags}
-                          phlaskType={props.phlaskType}
-                          index={index}
-                          handleTag={props.handleTag}
-                          activeTags={props.activeTags}
-                          forceUpdate={forceUpdate}
-                        />
-                      )}
-                    </>
-                  );
-                }
+                (category, index) => (
+                  <React.Fragment key={index}>
+                    <h2 className={styles.label}>{category.header}</h2>
+                    {category.type == 0 ? (
+                      <FilterTags
+                        tags={category.tags}
+                        phlaskType={props.phlaskType}
+                        index={index}
+                        handleTag={props.handleTag}
+                        activeTags={props.activeTags}
+                        forceUpdate={forceUpdate}
+                      />
+                    ) : (
+                      <FilterTagsExclusive
+                        tags={category.tags}
+                        phlaskType={props.phlaskType}
+                        index={index}
+                        handleTag={props.handleTag}
+                        activeTags={props.activeTags}
+                        forceUpdate={forceUpdate}
+                      />
+                    )}
+                  </React.Fragment>
+                )
               )}
             </Box>
             <Box
