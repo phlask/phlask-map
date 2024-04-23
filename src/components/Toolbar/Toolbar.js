@@ -17,7 +17,8 @@ import {
   setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  togglePhlaskType
+  togglePhlaskType,
+  toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -54,7 +55,7 @@ function distance(lat1, lon1, lat2, lon2) {
     (Math.cos(lat1 * p) *
       Math.cos(lat2 * p) *
       (1 - Math.cos((lon2 - lon1) * p))) /
-      2;
+    2;
   return 12742 * Math.asin(Math.sqrt(a));
 }
 
@@ -376,6 +377,9 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
             />
             <ResourceMenu />
             <NavigationItem
@@ -417,7 +421,8 @@ const mapStateToProps = state => ({
   allBathroomTaps: state.allBathroomTaps,
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
-  toolbarModal: state.toolbarModal
+  toolbarModal: state.toolbarModal,
+  isResourceMenuShown: state.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
@@ -435,7 +440,8 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation
+  setUserLocation,
+  toggleResourceMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

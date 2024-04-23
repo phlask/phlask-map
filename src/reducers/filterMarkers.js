@@ -33,7 +33,8 @@ const initialState = {
   allForagingTaps: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  phlaskType: actions.PHLASK_TYPE_WATER
+  phlaskType: actions.PHLASK_TYPE_WATER,
+  isResourceMenuShown: false
 };
 
 export default (state = initialState, act) => {
@@ -114,25 +115,25 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-            ...state,
-            selectedPlace:
-              state.phlaskType === actions.PHLASK_TYPE_WATER
-                ? state.allTaps[act.selectedPlace]
-                : state.allFoodOrgs[act.selectedPlace],
-            showingInfoWindow: true
-          };
+          ...state,
+          selectedPlace:
+            state.phlaskType === actions.PHLASK_TYPE_WATER
+              ? state.allTaps[act.selectedPlace]
+              : state.allFoodOrgs[act.selectedPlace],
+          showingInfoWindow: true
+        };
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowClass);
 
       return act.isShown
         ? {
-            ...state,
-            showingInfoWindow: act.isShown,
-            infoWindowClass: isMobile
-              ? 'info-window-in'
-              : 'info-window-in-desktop'
-          }
+          ...state,
+          showingInfoWindow: act.isShown,
+          infoWindowClass: isMobile
+            ? 'info-window-in'
+            : 'info-window-in-desktop'
+        }
         : { ...state, showingInfoWindow: act.isShown };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
@@ -146,8 +147,8 @@ export default (state = initialState, act) => {
             ? 'info-window-in'
             : 'info-window-out'
           : act.isShown
-          ? 'info-window-in-desktop'
-          : 'info-window-out-desktop'
+            ? 'info-window-in-desktop'
+            : 'info-window-out-desktop'
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
@@ -228,6 +229,9 @@ export default (state = initialState, act) => {
 
     case actions.CHANGE_PHLASK_TYPE:
       return { ...state, phlaskType: act.phlaskType };
+
+    case actions.TOGGLE_RESOURCE_MENU:
+      return { ...state, isResourceMenuShown: !act.isShown };
 
     default:
       return state;
