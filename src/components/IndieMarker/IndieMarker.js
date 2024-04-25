@@ -61,7 +61,7 @@ class IndieMarker extends React.Component {
     );
   }
 
-  getIcon(access, isForSelection = false) {
+  getIcon(access, isForSelection) {
     if (!this.props.accessTypesHidden.includes(access)) {
       switch (access) {
         case 'Public':
@@ -70,15 +70,9 @@ class IndieMarker extends React.Component {
         case 'Restricted':
         case 'Semi-public':
           return !isForSelection
-            ? { url: phlaskMarkerIconV2(access, 48, 48) }
+            ? { url: phlaskMarkerIconV2(48, 48, isForSelection) }
             : phlaskFilterIconV2(access, 35, 35);
-        case 'TrashAcademy':
-          return 'https://i.imgur.com/fXTeEKL.png';
-        default:
-          return 'https://i.imgur.com/kKXG3TO.png';
       }
-    } else {
-      return 'https://i.imgur.com/kKXG3TO.png';
     }
   }
 
@@ -90,7 +84,6 @@ class IndieMarker extends React.Component {
 
   render() {
     // console.log("rendered marker");
-
     return (
       // Doesn't Render Marker as child of div,
       // so can't use this method to style individual Markers
@@ -124,7 +117,11 @@ class IndieMarker extends React.Component {
             img={this.props.tap.images}
             onClick={this.onMarkerClick.bind(this)}
             position={{ lat: this.props.tap.lat, lng: this.props.tap.lon }}
-            icon={this.getIcon(this.props.tap.access)}
+            icon={this.getIcon(
+              this.props.tap.access,
+              this.props.tap.lat == this.props.selectedPlace.lat &&
+                this.props.tap.lon == this.props.selectedPlace.lon
+            )}
             infoIcon={this.getIcon(this.props.tap.access, true)}
             // The lat and lon properties were added to support the object-based
             // setting for SET_SELECTED_PLACE redux action. Object structure consistency is needed in order
@@ -142,6 +139,7 @@ const makeMapStateToProps = () => {
   const getVisibleTaps = makeGetVisibleTaps();
   const mapStateToProps = (state, props) => {
     return {
+      selectedPlace: state.selectedPlace,
       visibleTaps: getVisibleTaps(state, props),
       // filtered: state.tapFilters.filtered,
       // handicap: state.tapFilters.handicap,
