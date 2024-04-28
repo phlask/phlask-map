@@ -65,23 +65,6 @@ export const getTaps = () => dispatch => {
   );
 };
 
-export const getResources = () => dispatch => {
-  const app = initializeApp(resourcesConfig);
-  const database = getDatabase(app);
-  return onValue(
-    ref(database),
-    snapshot => {
-      const snapshotVal = snapshot.val();
-      // TODO: Clean up Firebase DB for this one-off edge case
-      // NOTE: The code block below is filtering out tap with access-types that are no longer used
-      //dispatch(getTapsSuccess(allTaps));
-    },
-    {
-      onlyOnce: false
-    }
-  );
-};
-
 export const GET_FOOD_SUCCESS = 'GET_FOOD_SUCCESS';
 export const getFoodSuccess = allFoodOrgs => ({
   type: GET_FOOD_SUCCESS,
@@ -126,6 +109,26 @@ export const getBathroomTaps = () => dispatch => {
     const snapshotVal = snapshot.val();
     dispatch(getBathroomSuccess(snapshotVal));
   });
+};
+
+export const GET_RESOURCES_SUCCESS = 'GET_RESOURCES_SUCCESS';
+export const getResourcesSuccess = allResources => ({
+  type: GET_RESOURCES_SUCCESS,
+  allResources
+});
+
+export const getResources = () => dispatch => {
+  const app = initializeApp(resourcesConfig);
+  const database = getDatabase(app);
+  return onValue(
+    ref(database),
+    snapshot => {
+      dispatch(getResourcesSuccess(snapshot.val()));
+    },
+    {
+      onlyOnce: false
+    }
+  );
 };
 
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';

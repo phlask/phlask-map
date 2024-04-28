@@ -27,6 +27,8 @@ const initialState = {
     openNow: false,
     accessTypesHidden: []
   },
+  /** @type {ResourceEntry[]} */
+  allResources: [],
   allTaps: [],
   allFoodOrgs: [],
   allBathroomTaps: [],
@@ -88,6 +90,9 @@ export default (state = initialState, act) => {
 
     case actions.SET_MAP_CENTER:
       return { ...state, mapCenter: act.coords };
+
+    case actions.GET_RESOURCES_SUCCESS:
+      return { ...state, allResources: act.allResources };
 
     case actions.GET_TAPS_SUCCESS:
       return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
