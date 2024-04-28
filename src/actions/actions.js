@@ -4,7 +4,8 @@ import {
   bathroomConfig,
   foodConfig,
   foragingConfig,
-  waterConfig
+  waterConfig,
+  resourcesConfig
 } from '../firebase/firebaseConfig';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
@@ -60,6 +61,23 @@ export const getTaps = () => dispatch => {
     },
     {
       onlyOnce: true
+    }
+  );
+};
+
+export const getResources = () => dispatch => {
+  const app = initializeApp(resourcesConfig);
+  const database = getDatabase(app);
+  return onValue(
+    ref(database),
+    snapshot => {
+      const snapshotVal = snapshot.val();
+      // TODO: Clean up Firebase DB for this one-off edge case
+      // NOTE: The code block below is filtering out tap with access-types that are no longer used
+      //dispatch(getTapsSuccess(allTaps));
+    },
+    {
+      onlyOnce: false
     }
   );
 };
