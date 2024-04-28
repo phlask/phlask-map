@@ -204,11 +204,11 @@ export const togglePhlaskType = phlaskType => ({
   mode: phlaskType
 });
 
-// export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
-// export const toggleResourceMenu = isShown => ({
-//   type: TOGGLE_RESOURCE_MENU,
-//   isShown
-// });
+export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
+export const toggleResourceMenu = isShown => ({
+  type: TOGGLE_RESOURCE_MENU,
+  isShown
+});
 
 export const CHANGE_PHLASK_TYPE = 'CHANGE_PHLASK_TYPE';
 export const changePhlaskType = phlaskType => ({
