@@ -1,5 +1,5 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
-import React from 'react';
+import { React, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,7 +8,8 @@ import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
-  TOOLBAR_MODAL_RESOURCE
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_NONE
 } from '../../actions/actions';
 import styles from './ChooseResource.module.scss';
 
@@ -16,6 +17,7 @@ import { ReactComponent as BathroomIcon } from '../icons/BathroomIconChooseResou
 import { ReactComponent as FoodIcon } from '../icons/FoodIconChooseResource.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
+import useOnClickOutside from '../../components/AddResourceModal/useOnClickOutside.js';
 
 const ResourceButton = props => {
   const Icon = props.icon;
@@ -42,7 +44,20 @@ const ResourceButton = props => {
 export default function ChooseResource(props) {
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.toolbarModal);
+  const setToolbarModal = modal => {
+    dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
+  };
   const phlaskType = useSelector(state => state.phlaskType);
+
+  const ref = useRef(null)
+
+  const handleClickOutside = () => {
+    // Your custom logic here
+    console.log('clicked outside')
+    setToolbarModal(TOOLBAR_MODAL_NONE);
+  }
+
+  useOnClickOutside(ref, handleClickOutside)
 
   return (
     <>
@@ -55,6 +70,7 @@ export default function ChooseResource(props) {
             width: '686px',
             borderRadius: '10px'
           }}
+          ref={ref}
         >
           <Collapse
             in={toolbarModal == TOOLBAR_MODAL_RESOURCE}
