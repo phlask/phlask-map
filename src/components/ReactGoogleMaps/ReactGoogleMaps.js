@@ -446,7 +446,7 @@ export class ReactGoogleMaps extends Component {
   };
 
   render() {
-    console.log(this.props.toolbarModal)
+    
     return (
       <div id="react-google-map" className={styles.mapContainer}>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
