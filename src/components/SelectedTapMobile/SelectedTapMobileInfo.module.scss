@@ -4,11 +4,10 @@ $lighter-grey: #e9eef4;
 
 .halfInfo {
   margin: 0;
-  font-size: 14px;
-  height: 100vh;
+  font-size: 16px;
   width: 100%;
 
-  padding: 10px 20px 40px;
+  padding: 10px 20px 10px;
 
   h2 {
     font-size: 1.44em; // font-size: 20.16px;
@@ -53,8 +52,7 @@ $lighter-grey: #e9eef4;
     .mainHalfInfoText {
       margin-left: 10px;
       display: flex;
-      width: 100%;
-      align-items: center;
+
       flex-direction: column;
 
       .organization {
@@ -62,7 +60,7 @@ $lighter-grey: #e9eef4;
       }
 
       .estWalkTime {
-        font-weight: 600;
+        font-weight: 400;
       }
 
       .walkTime {
@@ -75,7 +73,6 @@ $lighter-grey: #e9eef4;
 
   .halfInfoExpand {
     .tagGroup {
-      margin-top: 15px;
       width: auto;
       display: inline-block;
       min-width: min-content;
@@ -83,11 +80,15 @@ $lighter-grey: #e9eef4;
     }
 
     .details {
-      margin: 15px 0;
+      margin: 10px 0;
     }
 
     .topDivider {
       margin-bottom: 15px;
+    }
+
+    .botDivider {
+      margin-bottom: 10px;
     }
   }
 
