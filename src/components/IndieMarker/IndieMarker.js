@@ -90,10 +90,7 @@ class IndieMarker extends React.Component {
       !this.props.visibleTaps.includes(this.props.tap) ? (
         []
       ) : (
-        <div
-        // className="testMarker"
-        // style={this.state.markerVisibility}
-        >
+        <div>
           <Marker
             access={this.props.tap.access}
             map={this.props.map}

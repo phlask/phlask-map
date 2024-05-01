@@ -1,6 +1,6 @@
 import { Marker } from 'google-maps-react';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
   getTaps,
   setMapCenter,
@@ -24,6 +24,9 @@ const MapMarkers = ({
   filterTags,
   phlaskType
 }) => {
+  const selectedPlace = useSelector(state => state.selectedPlace.name);
+  console.log(selectedPlace);
+
   useEffect(() => {
     if (!allTaps.length && getTaps) getTaps();
   }, [allTaps, getTaps]);
@@ -67,7 +70,13 @@ const MapMarkers = ({
           )
         ) {
           return (
-            <IndieMarker key={index} tap={tap} google={google} map={map} />
+            <IndieMarker
+              key={index}
+              tap={tap}
+              google={google}
+              map={map}
+              selectedTap={selectedPlace}
+            />
           );
         }
       })}
