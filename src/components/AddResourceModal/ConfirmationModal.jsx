@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as ConfirmationSuccess } from '../icons/ConfirmationSuccess.svg';
 import { Modal, Box, Typography, Stack, Container } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
@@ -8,6 +9,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
 
 import Grid from '@mui/material/Grid'; // Grid version 1
 
@@ -20,50 +22,60 @@ const ConfirmationModal = () => {
     setOpen(false);
   };
 
+  const theme = createTheme();
+  theme.typography.h3 = {
+    fontSize: '1.5rem',
+    '@media (min-width;300px)': {
+      fontSize: '1.5rem'
+    },
+    display: 'inline',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '1.75rem'
+    }
+  };
+  theme.typography.p = {
+    fontSize: '1rem',
+    '@media (min-width;360px)': {
+      fontSize: '1rem'
+    },
+    display: 'inline',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '1rem'
+    }
+  };
+  // theme.grid.img = {};
+
   return (
     <>
-      <Button variant="outlined" onClick={handleOpen}>
-        Soy un Button
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button variant="outlined" onClick={handleOpen}>
+          Soy un Button
+        </Button>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="Confirmation"
-        aria-describedby="Confirmation"
-      >
-        <Grid
-          container
-          flex-wrap="wrap"
-          justifyContent="center"
-          alignItems="center"
-          spacing={6}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="Confirmation"
+          aria-describedby="Confirmation"
         >
           <Grid
-            justifyContent="center"
+            container
+            margin="auto"
+            backgroundColor="white"
+            width="30%"
             alignItems="center"
-            sx={{
-              pb: '25px',
-              pt: '10px',
-              bgcolor: 'white',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-evenly'
-            }}
+            justifyContent="center"
+            textAlign={'center'}
           >
-            <Box
-              sx={{
-                mt: 6,
-                display: 'flex',
-                flexDirection: 'row-reverse'
-              }}
-            >
+            <Box>
               <CloseIcon onClick={handleClose} />
             </Box>
-            <Typography
-              sx={{ fontWeight: 600, fontSize: 'h4.fontSize' }}
-              aria-label="Thanks for sharing!"
-            >
+            {/* <Typography variant="p">
+              Occaecat Lorem Lorem ipsum fugiat aliqua ut ad dolor ea
+              exercitation esse mollit consequat.Occaecat Lorem Lorem ipsum
+              fugiat aliqua ut ad dolor ea exercitation esse mollit consequat.
+            </Typography> */}
+            <Typography aria-label="Thanks for sharing!" variant="h3">
               Thanks for sharing!
             </Typography>
             <Typography
@@ -72,32 +84,22 @@ const ConfirmationModal = () => {
             >
               Your submission is under review.
             </Typography>
-            <Box
-              sx={{
-                component: 'img',
-                width: '100%',
-                height: '50%',
-                mt: 3,
-                mb: 3
-              }}
-            ></Box>
-            <Box sx={{ margin: 'auto' }}>
-              <ConfirmationSuccess />
-            </Box>
+            <ConfirmationSuccess />
 
-            <Typography
-              sx={{ fontSize: 16 }}
-              aria-label="Follow us and spread the news"
-            >
-              Follow us and spread the news
-            </Typography>
+            <Box>
+              <Typography
+                sx={{ fontSize: 16 }}
+                aria-label="Follow us and spread the news"
+              >
+                Follow us and spread the news
+              </Typography>
+            </Box>
 
             <Container
               sx={{
-                display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
-                width: '60%',
+                width: '100%',
                 mt: 2,
                 mb: 2
               }}
@@ -112,12 +114,11 @@ const ConfirmationModal = () => {
 
               <GitHubIcon aria-label="Github"></GitHubIcon>
             </Container>
-            <Box sx={{ mt: 1, mb: 1 }}>
-              <Typography aria-label="Phlask">#PHLASK</Typography>
-            </Box>
+
+            <Typography aria-label="Phlask">#PHLASK</Typography>
           </Grid>
-        </Grid>
-      </Modal>
+        </Modal>
+      </ThemeProvider>
     </>
   );
 };
