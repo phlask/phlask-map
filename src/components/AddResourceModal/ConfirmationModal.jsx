@@ -67,9 +67,18 @@ const ConfirmationModal = () => {
             justifyContent="center"
             textAlign={'center'}
           >
-            <Box>
-              <CloseIcon onClick={handleClose} />
-            </Box>
+            <Grid container direction="row-reverse">
+              <Grid
+                item
+                sx={{
+                  width: '20%',
+                  mt: 1,
+                  mb: 1
+                }}
+              >
+                <CloseIcon onClick={handleClose} />
+              </Grid>
+            </Grid>
             {/* <Typography variant="p">
               Occaecat Lorem Lorem ipsum fugiat aliqua ut ad dolor ea
               exercitation esse mollit consequat.Occaecat Lorem Lorem ipsum
@@ -95,13 +104,16 @@ const ConfirmationModal = () => {
               </Typography>
             </Box>
 
-            <Container
+            <Grid
+              container
               sx={{
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
                 width: '100%',
                 mt: 2,
-                mb: 2
+                mb: 2,
+                ml: 3,
+                mr: 3
               }}
             >
               <ShareIcon aria-label="Share"></ShareIcon>
@@ -113,9 +125,11 @@ const ConfirmationModal = () => {
               <TwitterIcon aria-label="Twitter"></TwitterIcon>
 
               <GitHubIcon aria-label="Github"></GitHubIcon>
-            </Container>
+            </Grid>
 
-            <Typography aria-label="Phlask">#PHLASK</Typography>
+            <Typography aria-label="Phlask" sx={{ mt: 2, mb: 2 }}>
+              #PHLASK
+            </Typography>
           </Grid>
         </Modal>
       </ThemeProvider>
