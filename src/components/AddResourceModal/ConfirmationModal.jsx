@@ -2,15 +2,14 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as ConfirmationSuccess } from '../icons/ConfirmationSuccess.svg';
-import { Modal, Box, Typography, Stack, Container } from '@mui/material';
+import { Modal, Box, Typography, Link, Stack, Container } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material/styles';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid'; // Grid version 1
 
 const ConfirmationModal = () => {
@@ -43,7 +42,6 @@ const ConfirmationModal = () => {
       fontSize: '1rem'
     }
   };
-  // theme.grid.img = {};
 
   return (
     <>
@@ -79,11 +77,6 @@ const ConfirmationModal = () => {
                 <CloseIcon onClick={handleClose} />
               </Grid>
             </Grid>
-            {/* <Typography variant="p">
-              Occaecat Lorem Lorem ipsum fugiat aliqua ut ad dolor ea
-              exercitation esse mollit consequat.Occaecat Lorem Lorem ipsum
-              fugiat aliqua ut ad dolor ea exercitation esse mollit consequat.
-            </Typography> */}
             <Typography aria-label="Thanks for sharing!" variant="h3">
               Thanks for sharing!
             </Typography>
@@ -118,13 +111,22 @@ const ConfirmationModal = () => {
             >
               <ShareIcon aria-label="Share"></ShareIcon>
 
-              <FacebookIcon aria-label="Facebook"></FacebookIcon>
+              <Link href="https://www.facebook.com/PHLASKecosystem/">
+                <FacebookIcon aria-label="Facebook"></FacebookIcon>
+              </Link>
 
-              <InstagramIcon aria-label="Instagram"></InstagramIcon>
+              <Link href="https://www.instagram.com/_phlask_/?hl=en">
+                <InstagramIcon aria-label="Instagram"></InstagramIcon>
+              </Link>
 
-              <TwitterIcon aria-label="Twitter"></TwitterIcon>
+              <Link href="https://twitter.com/PHLASKecosystem">
+                <TwitterIcon aria-label="Twitter"></TwitterIcon>
+              </Link>
 
-              <GitHubIcon aria-label="Github"></GitHubIcon>
+              <Link href="https://github.com/phlask">
+                {' '}
+                <GitHubIcon aria-label="Github"></GitHubIcon>
+              </Link>
             </Grid>
 
             <Typography aria-label="Phlask" sx={{ mt: 2, mb: 2 }}>
