@@ -80,6 +80,7 @@ export default function AddResourceModalV2(props) {
   const [dbConnection, setDbConnection] = useState('');
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.toolbarModal);
+  const userLocation = useSelector(state => state.userLocation);
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
@@ -244,6 +245,7 @@ export default function AddResourceModalV2(props) {
        *  and create new data objects specific for each resource type
        *  and selectively pass it on to the submit function
        */
+     
       const newData = {
         // SHARED FIELDS
         images: images,
@@ -253,6 +255,9 @@ export default function AddResourceModalV2(props) {
         website: values.website,
         description: values.description,
         guidelines: values.guidelines,
+        // TODO: Issue 426 - We only implement one flow for lat/lng setting, we also need to enable address-based lat/lng
+        latitude: userLocation.lat,
+        longitude: userLocation.lng,
         // TAP FIELDS
         filtration: values.filtration,
         handicap: values.handicapAccessible,
