@@ -11,7 +11,6 @@ import {
 import ResourceItemMobile from './ResourceItemMobile';
 import { resourceTypeInfo } from './chooseResourceHelper';
 
-
 const ChooseResourceMobile = () => {
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.toolbarModal);
@@ -21,7 +20,9 @@ const ChooseResourceMobile = () => {
       <Dialog
         BackdropProps={{ transitionDuration: 400 }}
         open={toolbarModal == TOOLBAR_MODAL_RESOURCE}
-        onClose={() => dispatch({ type: SET_TOOLBAR_MODAL, mode: TOOLBAR_MODAL_NONE })}
+        onClose={() =>
+          dispatch({ type: SET_TOOLBAR_MODAL, mode: TOOLBAR_MODAL_NONE })
+        }
         PaperProps={{
           style: {
             background: 'transparent',
@@ -42,7 +43,10 @@ const ChooseResourceMobile = () => {
         >
           <List sx={{ maxWidth: 210 }}>
             {resourceTypeInfo.map(resourceEntry => (
-              <ResourceItemMobile key={resourceEntry.resourceType} {...resourceEntry} />
+              <ResourceItemMobile
+                key={resourceEntry.resourceType}
+                {...resourceEntry}
+              />
             ))}
           </List>
         </Slide>

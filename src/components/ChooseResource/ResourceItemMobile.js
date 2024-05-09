@@ -1,6 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Grid, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from '@mui/material';
 
 import {
   SET_PHLASK_TYPE,
@@ -9,7 +16,7 @@ import {
 } from '../../actions/actions';
 import { handleGA } from './chooseResourceHelper';
 
-const ListItemEntry = (props) => {
+const ListItemEntry = props => {
   const dispatch = useDispatch();
 
   const switchResourceType = type => {
@@ -21,7 +28,7 @@ const ListItemEntry = (props) => {
     dispatch({
       type: SET_TOOLBAR_MODAL,
       mode: TOOLBAR_MODAL_NONE
-    })
+    });
   };
 
   const ResourceIcon = props.smallIcon;
@@ -32,7 +39,9 @@ const ListItemEntry = (props) => {
         switchResourceType(props.actionLabel);
       }}
     >
-      <ListItemIcon><ResourceIcon /></ListItemIcon>
+      <ListItemIcon>
+        <ResourceIcon />
+      </ListItemIcon>
       <ListItemText>
         <Grid container justifyContent={'flex-start'}>
           <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
