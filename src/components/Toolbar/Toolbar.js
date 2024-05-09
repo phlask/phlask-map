@@ -1,7 +1,7 @@
-import IconButton from '@mui/material/Button';
 import React from 'react';
-import ReactGA from 'react-ga4';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import IconButton from '@mui/material/Button';
+
 import {
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
@@ -16,9 +16,7 @@ import {
   setSelectedPlace,
   setToolbarModal,
   setUserLocation,
-  toggleInfoWindow,
-  togglePhlaskType,
-  toggleResourceMenu
+  toggleInfoWindow
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -42,7 +40,6 @@ import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -124,21 +121,6 @@ function Toolbar(props) {
     [PHLASK_TYPE_BATHROOM]: ToiletIcon,
     default: WaterIcon
   }[phlaskType ?? 'default'];
-
-  function switchType(type) {
-    if (props.phlaskType !== type) {
-      props.togglePhlaskType(type);
-      handleGA(type);
-    }
-  }
-
-  function handleGA(type) {
-    ReactGA.event({
-      category: `Toolbar`,
-      action: 'MapChangedTo',
-      label: `${type}`
-    });
-  }
 
   async function setClosest() {
     // If the user clicks very fast, it crashes.
@@ -377,11 +359,8 @@ function Toolbar(props) {
             <NavigationItem
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
+              onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             />
-            <ResourceMenu />
             <NavigationItem
               central
               label={
@@ -422,11 +401,9 @@ const mapStateToProps = state => ({
   allForagingTaps: state.allForagingTaps,
   userLocation: state.userLocation,
   toolbarModal: state.toolbarModal,
-  isResourceMenuShown: state.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
-  togglePhlaskType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER,
   PHLASK_TYPE_BATHROOM,
@@ -440,8 +417,7 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation,
-  toggleResourceMenu
+  setUserLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

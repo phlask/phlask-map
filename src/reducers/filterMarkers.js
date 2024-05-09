@@ -34,7 +34,6 @@ const initialState = {
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
   phlaskType: actions.PHLASK_TYPE_WATER,
-  isResourceMenuShown: false
 };
 
 export default (state = initialState, act) => {
@@ -215,7 +214,7 @@ export default (state = initialState, act) => {
       return { ...state, toolbarModal: act.mode };
 
     // Toggle Phlask type & close the info window
-    case actions.TOGGLE_PHLASK_TYPE:
+    case actions.SET_PHLASK_TYPE:
       return {
         ...state,
         phlaskType: act.mode,
@@ -226,12 +225,6 @@ export default (state = initialState, act) => {
               : 'info-window-out-desktop'
             : state.infoWindowClass
       };
-
-    case actions.CHANGE_PHLASK_TYPE:
-      return { ...state, phlaskType: act.phlaskType };
-
-    case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: !act.isShown };
 
     default:
       return state;

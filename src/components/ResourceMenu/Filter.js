@@ -1,3 +1,4 @@
+// Note: This code appears to be unused currently. 
 import React from 'react';
 import ReactGA from 'react-ga4';
 import { isMobile } from 'react-device-detect';

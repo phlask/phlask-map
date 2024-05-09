@@ -180,22 +180,10 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const TOGGLE_PHLASK_TYPE = 'TOGGLE_PHLASK_TYPE';
-export const togglePhlaskType = phlaskType => ({
-  type: TOGGLE_PHLASK_TYPE,
+export const SET_PHLASK_TYPE = 'SET_PHLASK_TYPE';
+export const setPhlaskType = phlaskType => ({
+  type: SET_PHLASK_TYPE,
   mode: phlaskType
-});
-
-export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
-export const toggleResourceMenu = isShown => ({
-  type: TOGGLE_RESOURCE_MENU,
-  isShown
-});
-
-export const CHANGE_PHLASK_TYPE = 'CHANGE_PHLASK_TYPE';
-export const changePhlaskType = phlaskType => ({
-  type: CHANGE_PHLASK_TYPE,
-  phlaskType
 });
 
 export const PHLASK_TYPE_NONE = 'PHLASK_TYPE_NONE';
