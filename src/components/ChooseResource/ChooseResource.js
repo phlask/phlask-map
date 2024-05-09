@@ -4,8 +4,10 @@ import { isMobile } from 'react-device-detect';
 import ChooseResourceDesktop from './ChooseResourceDesktop';
 import ChooseResourceMobile from './ChooseResourceMobile';
 
-export default function ChooseResource(props) {
+const ChooseResource = () => {
   return (
     <>{!isMobile ? <ChooseResourceDesktop /> : <ChooseResourceMobile />}</>
   );
-}
+};
+
+export default ChooseResource;
