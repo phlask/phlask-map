@@ -1,0 +1,26 @@
+.
+├── Dockerfile                         <-- Dockerfile defining container for local dev and deploy
+├── README.md
+├── _phlask.code-workspace
+├── assets
+├── contributing.md
+├── cypress                            <-- Unit tests
+│   ├── fixtures                       <-- Fixtures for mocked out data
+│   └── integration                    <-- Source files for unit tests
+├── cypress.json
+├── docker-compose.yml
+├── package-lock.json
+├── package.json
+├── public
+├── src                                <-- Source files for project
+│   ├── App.js
+│   ├── actions                        <-- Source for all Redux actions
+│   ├── components                     <-- Source for all React components
+│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
+│   ├── helpers                        <-- Helper functions shared across components/pages
+│   ├── hooks                          <-- Custom hooks
+│   ├── reducers                       <-- Redux reducers
+│   ├── selectors                      <-- Source for all Redux selectors
+│   └── theme.js                       <-- Theme file for Material UI
+├── yarn-error.log
+└── yarn.lock

@@ -1,5 +1,10 @@
-# Dev Onboarding
+# PHLASK Utilities Content and Dev Onboarding Directory Purposes/Progress:
 
-This is the main introductory meta-file, containing an overview of the sub-dir's raison d'etre.
+*_1) As of March 3, I have added:* 
 
-To be updated incrementally.
+___*i) The first main sub-directory--i.e., the **official** React documentation links, from Meta / FaceBook Open AI.*
+
+___*iii) More official and credible/authoritative documentation files or 2nd-level sub-folders will be added incremenally. 
+
+
+*_2) Ad
