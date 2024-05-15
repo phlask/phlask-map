@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ReactComponent as ConfirmationSuccess } from '../icons/ConfirmationSuccess.svg';
+import { ReactComponent as ConfirmationSuccess } from '../../icons/ConfirmationSuccess.svg';
 import { Modal, Box, Typography, Link, Stack, Container } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -22,6 +22,7 @@ const ConfirmationModal = () => {
   };
 
   const theme = createTheme();
+
   theme.typography.h3 = {
     fontSize: '1.5rem',
     '@media (min-width;300px)': {
@@ -61,7 +62,6 @@ const ConfirmationModal = () => {
             margin="auto"
             backgroundColor="white"
             width="30%"
-            alignItems="center"
             justifyContent="center"
             textAlign={'center'}
           >
