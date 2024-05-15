@@ -79,8 +79,8 @@ export default function AddResourceModalV2(props) {
   const [values, setValues] = useState(initialState);
   const [dbConnection, setDbConnection] = useState('');
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
-  const userLocation = useSelector(state => state.userLocation);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
@@ -245,7 +245,7 @@ export default function AddResourceModalV2(props) {
        *  and create new data objects specific for each resource type
        *  and selectively pass it on to the submit function
        */
-     
+
       const newData = {
         // SHARED FIELDS
         images: images,

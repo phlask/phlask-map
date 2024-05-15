@@ -113,7 +113,7 @@ function AddBathroom({
     }
   ];
 
-  const userLocation = useSelector(state => state.userLocation);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   useEffect(() => {
     setDefaults({

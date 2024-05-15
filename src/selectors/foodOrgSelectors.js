@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 import { hours } from '../helpers/hours';
 
-const getTapFilters = state => state.foodFilters;
+const getTapFilters = state => state.filterMarkers.foodFilters;
 
-const getTaps = state => state.allFoodOrgs;
+const getTaps = state => state.filterMarkers.allFoodOrgs;
 
 const makeGetVisibleTaps = () => {
   return createSelector([getTapFilters, getTaps], (tapFilters, allTaps) => {

@@ -48,9 +48,9 @@ const makeMapStateToProps = () => {
       visibleTaps: getVisibleTaps(state, props),
       //   filtered: state.tapFilters.filtered,
       //   handicap: state.tapFilters.handicap,
-      accessTypesHidden: state.foodFilters.accessTypesHidden,
-      allFoodOrgs: state.allFoodOrgs,
-      mapCenter: state.mapCenter
+      accessTypesHidden: state.filterMarkers.foodFilters.accessTypesHidden,
+      allFoodOrgs: state.filterMarkers.allFoodOrgs,
+      mapCenter: state.filterMarkers.mapCenter
     };
   };
   return mapStateToProps;
