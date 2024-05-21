@@ -41,8 +41,8 @@ const ResourceButton = props => {
 
 export default function ChooseResource(props) {
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
-  const phlaskType = useSelector(state => state.phlaskType);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const phlaskType = useSelector(state => state.filterMarkers.phlaskType);
 
   return (
     <>

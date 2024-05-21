@@ -21,12 +21,7 @@ import foodMarkerIconV2 from '../icons/FoodMarkerIconV2';
 class IndieMarker extends React.Component {
   state = {
     icon: '',
-    shouldUpdate: true,
-    markerVisibility: {
-      visibility: this.props.visibleTaps.includes(this.props.org)
-        ? 'visible'
-        : 'hidden'
-    }
+    shouldUpdate: true
   };
 
   componentWillUnmount() {

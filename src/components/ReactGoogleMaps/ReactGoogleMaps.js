@@ -448,13 +448,6 @@ export class ReactGoogleMaps extends Component {
   render() {
     return (
       <div id="react-google-map" className={styles.mapContainer}>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Inter:wght@500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        {/* <ClosestTap/> */}
         <ReactTouchEvents onTap={this.handleTap.bind(this)}>
           <div>
             <Map
@@ -553,15 +546,15 @@ export class ReactGoogleMaps extends Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.filtered,
-  handicap: state.handicap,
-  allTaps: state.allTaps,
-  filteredTaps: state.filteredTaps,
-  filterFunction: state.filterFunction,
-  mapCenter: state.mapCenter,
-  phlaskType: state.phlaskType,
-  showingInfoWindow: state.showingInfoWindow,
-  toolbarModal: state.toolbarModal
+  filtered: state.filterMarkers.filtered,
+  handicap: state.filterMarkers.handicap,
+  allTaps: state.filterMarkers.allTaps,
+  filteredTaps: state.filterMarkers.filteredTaps,
+  filterFunction: state.filterMarkers.filterFunction,
+  mapCenter: state.filterMarkers.mapCenter,
+  phlaskType: state.filterMarkers.phlaskType,
+  showingInfoWindow: state.filterMarkers.showingInfoWindow,
+  toolbarModal: state.filterMarkers.toolbarModal
   // infoIsExpanded: state.infoIsExpanded
 });
 

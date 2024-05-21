@@ -48,7 +48,6 @@ function getClosest(data, v) {
     }
   }
   return closestTap;
- 
 }
 
 function getCoordinates() {
@@ -169,8 +168,8 @@ export class ClosestTap extends Component {
 }
 
 const mapStateToProps = state => ({
-  userLocation: state.userLocation,
-  allTaps: state.allTaps
+  userLocation: state.filterMarkers.userLocation,
+  allTaps: state.filterMarkers.allTaps
 });
 
 export default connect(mapStateToProps)(ClosestTap);
