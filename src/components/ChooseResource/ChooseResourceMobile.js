@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { Box, Dialog, List, Slide } from '@mui/material';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import List from '@mui/material/List';
+import Slide from '@mui/material/Slide';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {

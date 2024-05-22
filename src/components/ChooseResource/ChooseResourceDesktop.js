@@ -1,6 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Box, Collapse, Paper } from '@mui/material';
+import useSelector from 'react-redux';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import Paper from '@mui/material/Paper';
 
 import { TOOLBAR_MODAL_RESOURCE } from '../../actions/actions';
 import ResourceItemDesktop from './ResourceItemDesktop';

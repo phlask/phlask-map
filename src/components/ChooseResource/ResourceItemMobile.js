@@ -1,13 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Box,
-  Grid,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 import {
   SET_PHLASK_TYPE,

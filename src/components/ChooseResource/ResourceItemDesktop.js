@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 
 import {
   SET_PHLASK_TYPE,
