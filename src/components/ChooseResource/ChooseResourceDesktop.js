@@ -1,5 +1,5 @@
 import React from 'react';
-import useSelector from 'react-redux';
+import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import Paper from '@mui/material/Paper';
