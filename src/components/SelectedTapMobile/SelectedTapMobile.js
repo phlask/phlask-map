@@ -10,29 +10,35 @@ import { ReactComponent as ExportSvg } from '../images/Export.svg';
 
 import FountainIcon from '../icons/CircleWaterIcon.svg';
 
-function getIconForTapType(tapType) {
-  switch (tapType) {
-    case 'Drinking Fountain':
-      return FountainIcon;
-    // TODO: Add other icon resources here once available
-    default:
-      return FountainIcon;
-  }
-}
-
 
 function SelectedTapMobile(props) {
-  const [tags, setTags] = useState([]);
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
-  const { image, estWalkTime, selectedPlace, infoCollapse, setInfoCollapse } =
+  const { image, estWalkTime, infoCollapse, setInfoCollapse } =
     props;
 
-  const { organization, address, infoIcon } = selectedPlace;
+  /**
+   * @type {ResourceEntry}
+   */
+  const resource = props.selectedPlace;
 
-  const { filtration, handicap, service, sparkling, tap_type, vessel } =
-    selectedPlace;
-  const { description, statement, norms_rules } = selectedPlace;
+  const icon = FountainIcon; // TODO: Add other icons
+
+  // From resource info, collect all the tags.
+  const tags = [];
+  if (resource.water) {
+    tags.push(...resource.water.tags || []);
+  }
+  if (resource.food) {
+    tags.push(...resource.food.tags || []);
+  }
+  if (resource.forage) {
+    tags.push(...resource.forage.tags || []);
+  }
+  if (resource.bathroom) {
+    tags.push(...resource.bathroom.tags || []);
+  }
+  tags.sort()
 
   const directionBtnStyle = {
     padding: '6px 20px 6px 25px',
@@ -58,31 +64,6 @@ function SelectedTapMobile(props) {
     lineHeight: 1.5
   });
 
-  // Setup tags to display, such as the type of water, filtration, etc.
-  useEffect(() => {
-    const showTags = () => {
-      const shownTags = [];
-      if (filtration === 'yes') {
-        shownTags.push('Filtered');
-      }
-      if (handicap === 'yes') {
-        shownTags.push('ADA Accessible');
-      }
-      if (service) {
-        shownTags.push(service);
-      }
-      if (vessel != 'yes') {
-        shownTags.push('Vessel Needed');
-      }
-
-      if (tap_type) {
-        shownTags.push(tap_type);
-      }
-      return shownTags;
-    };
-    setTags(showTags());
-  }, []);
-
   // Expanding and Minimizing the Modal
   const detectSwipe = e => {
     setPointerPositionY(e.nativeEvent.offsetY);
@@ -102,8 +83,6 @@ function SelectedTapMobile(props) {
         title: document.title,
         url: window.location.href
       });
-      //.then(() => console.log('Successful share'))
-      // .catch(error => console.log('Error sharing:', error));
     }
   };
 
@@ -135,13 +114,13 @@ function SelectedTapMobile(props) {
       )}
       <img src={image} className={styles.locationImage} alt="" />
       <div className={styles.mainHalfInfo}>
-        <img src={getIconForTapType(selectedPlace.tap_type)} alt={selectedPlace.tap_type} style={{width: '52px'}}/>
+        <img src={icon} alt={resource.resource_type} style={{width: '52px'}}/>
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.organization}>{organization}</h2>
-          <p>{address}</p>
+          <h2 className={styles.organization}>{resource.name}</h2>
+          <p>{resource.address}</p>
           {props.children}
           <Button
-            onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=' + selectedPlace.lat + ',' + selectedPlace.lon, '_blank')}
+            onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=' + resource.latitude + ',' + resource.longitude, '_blank')}
             variant="contained"
             disableElevation
             sx={directionBtnStyle}
@@ -164,22 +143,18 @@ function SelectedTapMobile(props) {
             {tag}
           </TagButton>
         ))}
-        <hr className={styles.botDivider}/>
+        {tags.length > 0 && <hr className={styles.botDivider}/>}
       </div>
 
       <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>{description ? description : 'No description provided'}</p>
+            <p>{resource.description ? resource.description : 'No description provided'}</p>
           </div>
           <div className={styles.details}>
-            <h3>PHLASK Statement</h3>
-            <p>{statement ? statement : 'No statement provided'}</p>
-          </div>
-          <div className={styles.details}>
-            <h3>Norms &#38; Rules </h3>
-            <p>{norms_rules ? norms_rules : 'No rules provided'}</p>
+            <h3>Guidelines</h3>
+            <p>{resource.guidelines ? resource.guidelines : 'No statement provided'}</p>
           </div>
         </div>
       </Collapse>

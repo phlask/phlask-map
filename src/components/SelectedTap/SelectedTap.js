@@ -4,7 +4,6 @@ import { isMobile } from 'react-device-detect';
 import ReactGA from 'react-ga4';
 import { connect } from 'react-redux';
 import {
-  PHLASK_TYPE_WATER,
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass
@@ -22,22 +21,19 @@ import { Paper, SwipeableDrawer } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
-import { makeStyles, withStyles } from '@mui/styles';
+import { withStyles } from '@mui/styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import CloseIcon from '@mui/icons-material/Close';
+
+import {
+  WATER_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 
 const tempImages = {
   tapImg: sampleImg,
   tapImg2x: sampleImg2x
 };
-
-const useStyles = makeStyles({
-  topRightDialog: {
-    top: '20px',
-    right: '20px'
-  }
-});
 
 class SelectedTap extends React.Component {
   refSelectedTap = React.createRef();
@@ -47,13 +43,8 @@ class SelectedTap extends React.Component {
     previewHeight: 0,
     infoExpansionStyle: {},
     isDescriptionShown: false,
-    tapDescription: null,
-    tapStatement: null,
     tapNormsAndRules: null,
     animationSpeed: 600,
-    organization: this.props.selectedPlace.organization,
-    address: this.props.selectedPlace.address,
-    accessible: this.props.selectedPlace.accessible,
     testIcons: {
       access: phlaskBlue,
       accessibility: phlaskGreen
@@ -68,9 +59,10 @@ class SelectedTap extends React.Component {
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
-    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.lon},${this.props.selectedPlace?.lat}`)
+    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.longitude},${this.props.selectedPlace?.latitude}`)
       .then(response => response.json())
       .then(data => {
+        if (!data.features) return;
         // duration is returned in seconds
         let duration = Math.round(
           data.features[0].properties.summary.duration / 60
@@ -175,7 +167,7 @@ class SelectedTap extends React.Component {
 
   handleGA() {
     ReactGA.event({
-      category: `Tap - ${this.props.phlaskType}`,
+      category: `Tap - ${this.props.resourceType}`,
       action: 'InfoShown',
       label: `${this.props.selectedPlace?.organization}, ${this.props.selectedPlace?.address}`
     });
@@ -222,6 +214,7 @@ class SelectedTap extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log(this.props)
     return (
       <div>
         {isMobile && (
@@ -348,7 +341,7 @@ class SelectedTap extends React.Component {
                   {/* Tap Type Icon */}
                   <div id="tap-type-icon-container">
                     <div id="tap-type-icon">
-                      {this.props.phlaskType === PHLASK_TYPE_WATER ? (
+                      {this.props.resourceType === WATER_RESOURCE_TYPE ? (
                         <img
                           className="tap-info-icon-img"
                           src={this.props.selectedPlace?.infoIcon}
@@ -423,7 +416,7 @@ const mapStateToProps = state => ({
   infoIsExpanded: state.filterMarkers.infoIsExpanded,
   infoWindowClass: state.filterMarkers.infoWindowClass,
   selectedPlace: state.filterMarkers.selectedPlace,
-  phlaskType: state.filterMarkers.phlaskType,
+  resourceType: state.filterMarkers.resourceType,
   userLocation: state.filterMarkers.userLocation
 });
 const mapDispatchToProps = {

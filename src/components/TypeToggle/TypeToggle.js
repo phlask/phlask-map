@@ -6,20 +6,22 @@ import foodButton from './images/foodButton.png';
 import waterButton from './images/phlaskBlue.png';
 import './TypeToggle.css';
 import {
-  togglePhlaskType,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_FOOD
+  toggleResourceType
 } from '../../actions/actions';
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 
 function TypeToggle(props) {
-  const [phlaskTypeIcon, setTypeIcon] = useState(foodButton);
+  const [resourceTypeIcon, setTypeIcon] = useState(foodButton);
   function switchType(type) {
     setTypeIcon(type);
-    phlaskTypeIcon === foodButton
+    resourceTypeIcon === foodButton
       ? // Set to food mode
-        props.togglePhlaskType(PHLASK_TYPE_FOOD)
+        props.toggleResourceType(FOOD_RESOURCE_TYPE)
       : // Set to water mode
-        props.togglePhlaskType(PHLASK_TYPE_WATER);
+        props.toggleResourceType(WATER_RESOURCE_TYPE);
   }
 
   return (
@@ -28,10 +30,10 @@ function TypeToggle(props) {
         <img
           id="phlask-icon"
           alt=""
-          src={phlaskTypeIcon}
+          src={resourceTypeIcon}
           onClick={() => {
             switchType(
-              phlaskTypeIcon === waterButton ? foodButton : waterButton
+              resourceTypeIcon === waterButton ? foodButton : waterButton
             );
           }}
         ></img>
@@ -41,7 +43,7 @@ function TypeToggle(props) {
 }
 
 const mapDispatchToProps = {
-  togglePhlaskType,
+  toggleResourceType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER
 };

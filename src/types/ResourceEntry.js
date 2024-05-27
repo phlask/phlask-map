@@ -93,3 +93,8 @@
  * @typedef {Object} BathroomInfo
  * @property {("WHEELCHAIR_ACCESSIBLE" | "GENDER_NEUTRAL" | "CHANGING_TABLE" | "SINGLE_OCCUPANCY" | "FAMILY")[]} tags A list of additional tags regarding this bathroom resource. Can be empty.
  */
+
+export const WATER_RESOURCE_TYPE = "WATER";
+export const FOOD_RESOURCE_TYPE = "FOOD";
+export const FORAGE_RESOURCE_TYPE = "FORAGE";
+export const BATHROOM_RESOURCE_TYPE = "BATHROOM";

@@ -15,6 +15,8 @@ import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
 
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 export default function AddResourceModalV2(props) {
   const initialState = {
     page: 0,
@@ -97,6 +99,12 @@ export default function AddResourceModalV2(props) {
       // the address textbox is set with react-hook-form setValue() when user clicks "use my location instead",
       //  which doesn't fire an event. When that happens, a string is passed instead of an event object, so this
       // conditional expression handles that
+      console.log(e);
+      geocodeByAddress(e)
+        .then(results => getLatLng(results[0]))
+        .then(({ lat, lng }) =>
+          console.log('Successfully got latitude and longitude', { lat, lng })
+        );
 
       if (e.target) {
         return {
