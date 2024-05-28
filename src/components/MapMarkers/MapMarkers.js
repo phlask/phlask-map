@@ -25,7 +25,6 @@ const MapMarkers = ({
   phlaskType
 }) => {
   const selectedPlace = useSelector(state => state.selectedPlace.name);
-  console.log(selectedPlace);
 
   useEffect(() => {
     if (!allTaps.length && getTaps) getTaps();
