@@ -162,10 +162,9 @@ const filters = {
           'Drinking fountain',
           'Bottle filler',
           'Sink',
-          'Water jug',
+          'Water cooler',
           'Soda machine',
-          'Pitcher',
-          'Water cooler'
+          'Vessel'
         ]
       },
       {
