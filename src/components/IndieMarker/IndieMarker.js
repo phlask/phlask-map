@@ -83,7 +83,6 @@ class IndieMarker extends React.Component {
   }
 
   render() {
-    // console.log("rendered marker");
     return (
       // Doesn't Render Marker as child of div,
       // so can't use this method to style individual Markers
