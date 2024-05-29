@@ -13,7 +13,8 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, set, onValue } from 'firebase/database';102
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 export default function AddResourceModalV2(props) {
   const initialState = {
@@ -31,6 +32,8 @@ export default function AddResourceModalV2(props) {
     count: 0,
     formStep: 'chooseResource',
     closeModal: false,
+    latitude: null, 
+    longitude: null,
 
     // ADD TAP
     filtration: false,
@@ -92,25 +95,70 @@ export default function AddResourceModalV2(props) {
     });
   };
 
-  const textFieldChangeHandler = e => {
-    setValues(prevValues => {
-      // the address textbox is set with react-hook-form setValue() when user clicks "use my location instead",
-      //  which doesn't fire an event. When that happens, a string is passed instead of an event object, so this
-      // conditional expression handles that
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
 
-      if (e.target) {
-        return {
-          ...prevValues,
-          [e.target.name]: e.target.value
-        };
+const debouncedGeocode = debounce(address => {
+  geocodeByAddress(address)
+    .then(results => {
+      if (results.length === 0) {
+        throw new Error('ZERO_RESULTS');
+      }
+      return getLatLng(results[0]);
+    })
+    .then(({ lat, lng }) => {
+      console.log('Successfully got latitude and longitude', { lat, lng });
+      // Update the state with the latitude and longitude
+      setValues(prevValues => ({
+        ...prevValues,
+        latitude: lat,
+        longitude: lng
+      }));
+    })
+    .catch(error => {
+      if (error.message !== 'ZERO_RESULTS') {
+        console.error('Error occurred during geocoding:', error);
       } else {
-        return {
-          ...prevValues,
-          address: e
-        };
+        console.log(`No results found for the provided address: ${address}`);
       }
     });
-  };
+}, 500); // 500ms debounce delay
+
+const textFieldChangeHandler = eventOrString => {
+  let newValue;
+  let fieldName;
+
+  if (eventOrString && eventOrString.target) {
+    // This is an event object
+    if (eventOrString.target.name !== 'address') {
+      return; // Exit if the field is not 'address'
+    }
+    newValue = eventOrString.target.value;
+    fieldName = eventOrString.target.name;
+  } else {
+    // This is a direct string input - "Use My Location" button was clicked
+    newValue = eventOrString;
+    fieldName = 'address';
+  }
+
+  // Update the state with the new value
+  setValues(prevValues => ({
+    ...prevValues,
+    [fieldName]: newValue
+  }));
+
+  // Trigger the debounced geocoding function
+  debouncedGeocode(newValue);
+};
 
   // controls which modal state to show
   // (e.g. choose resource, add water tap, social links)
@@ -255,9 +303,8 @@ export default function AddResourceModalV2(props) {
         website: values.website,
         description: values.description,
         guidelines: values.guidelines,
-        // TODO: Issue 426 - We only implement one flow for lat/lng setting, we also need to enable address-based lat/lng
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
+        latitude: values.latitude,
+        longitude: values.longitude,
         // TAP FIELDS
         filtration: values.filtration,
         handicap: values.handicapAccessible,
