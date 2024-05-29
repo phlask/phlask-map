@@ -13,7 +13,6 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  getTaps,
   setFilterFunction,
   setMapCenter,
   setToolbarModal,
@@ -31,59 +30,8 @@ import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
-import MapMarkersMapper from '../MapMarkers/MapMarkersMapper';
+import MapMarkers from '../MapMarkers/MapMarkers';
 import Toolbar from '../Toolbar/Toolbar';
-
-// // Actual Magic: https://stackoverflow.com/a/41337005
-// // Distance calculates the distance between two lat/lon pairs
-// function distance(lat1,
-//    lon1, lat2, lon2) {
-//   var p = 0.017453292519943295;
-//   var a =
-//     0.5 -
-//     Math.cos((lat2 - lat1) * p) / 2 +
-//     (Math.cos(lat1 * p) *
-//       Math.cos(lat2 * p) *
-//       (1 - Math.cos((lon2 - lon1) * p))) /
-//       2;
-//   return 12742 * Math.asin(Math.sqrt(a));
-// }
-
-// // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
-// // properties and finds the closest point (by shortest distance).
-// function closest(data, v) {
-//   // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-//   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
-//   var distances = data.map(function(p) {
-//     return {
-//       lat: p["lat"],
-//       lon: p["lon"],
-//       // organization: p["organization"],
-//       // address: p["address"],
-//       distance: distance(v["lat"], v["lon"], p["lat"], p["lon"])
-//     };
-//   });
-//   var minDistance = Math.min(...distances.map(d => d.distance));
-
-//   var closestTap = {
-//     // organization: "",
-//     // address: "",
-//     lat: "",
-//     lon: ""
-//   };
-
-//   for (var i = 0; i < distances.length; i++) {
-//     if (distances[i].distance === minDistance) {
-//       closestTap.lat = distances[i].lat;
-//       closestTap.lon = distances[i].lon;
-//       // closestTap.organization = distances[i].organization;
-//       // closestTap.address = distances[i].address;
-
-//     }
-//   }
-
-//   return closestTap;
-// }
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -143,7 +91,7 @@ function getLon() {
   }
 }
 
-const LoadingContainer = props => <div>Looking for water!</div>;
+const LoadingContainer = () => <div>Looking for water!</div>;
 
 const style = {
   width: '100%',
@@ -460,7 +408,6 @@ export class ReactGoogleMaps extends Component {
               mapTypeControl={false}
               rotateControl={false}
               fullscreenControl={false}
-              onIdle={this.onIdle}
               onReady={this.onReady}
               initialCenter={{
                 lat: this.state.currlat,
@@ -472,24 +419,9 @@ export class ReactGoogleMaps extends Component {
               }}
               filterTags={this.state.appliedFilterTags}
             >
-              {/* <TypeToggle/> */}
-
-              {/* FilteredTaps */}
-
-              {/* {this.props.phlaskType === PHLASK_TYPE_WATER
-                ? <WaterFilter/>
-                : <FoodFilter/>
-              } */}
-
-              {/* Issue: MapMarkers won't render when placed inside container? */}
-              <MapMarkersMapper
-                phlaskType={this.props.phlaskType}
+              <MapMarkers
                 map={this.props.map}
                 google={this.props.google}
-                mapCenter={{
-                  lat: this.state.currlat,
-                  lng: this.state.currlon
-                }}
                 filterTags={this.state.appliedFilterTags}
               />
 
@@ -559,7 +491,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getTaps,
   setFilterFunction,
   toggleInfoWindow,
   setUserLocation,

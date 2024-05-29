@@ -50,7 +50,7 @@ export const getTaps = () => dispatch => {
       const snapshotVal = snapshot.val();
       // TODO: Clean up Firebase DB for this one-off edge case
       // NOTE: The code block below is filtering out tap with access-types that are no longer used
-      var allTaps = snapshotVal.filter(
+      const allTaps = snapshotVal.filter(
         key =>
           key.access != 'WM' &&
           key.access != 'N' &&
@@ -58,9 +58,7 @@ export const getTaps = () => dispatch => {
       );
       dispatch(getTapsSuccess(allTaps));
     },
-    {
-      onlyOnce: true
-    }
+    { onlyOnce: true }
   );
 };
 
@@ -75,7 +73,7 @@ export const getFoodOrgs = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    dispatch(getFoodSuccess(snapshotVal));
+    dispatch(getFoodSuccess(snapshotVal.filter(Boolean)));
   });
 };
 
@@ -90,7 +88,15 @@ export const getForagingTaps = () => dispatch => {
   const database = getDatabase(app);
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    dispatch(getForagingSuccess(snapshotVal));
+    dispatch(
+      getForagingSuccess(
+        snapshotVal.filter(Boolean).map(item => ({
+          ...item,
+          lat: item.lat || item['Point Y'],
+          lon: item.lon || item['Point X']
+        }))
+      )
+    );
   });
 };
 
@@ -106,7 +112,7 @@ export const getBathroomTaps = () => dispatch => {
 
   return onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
-    dispatch(getBathroomSuccess(snapshotVal));
+    dispatch(getBathroomSuccess(snapshotVal || []));
   });
 };
 

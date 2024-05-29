@@ -2,51 +2,29 @@ import { createSelector } from 'reselect';
 
 import { hours } from '../helpers/hours';
 
-const getTapFilters = state => state.filterMarkers.tapFilters;
+const getTapFilters = state => state.filterMarkers.foodFilters;
 
-const getTaps = state => state.filterMarkers.allTaps;
+const getTaps = state => state.filterMarkers.allFoodOrgs;
 
-const makeGetVisibleTaps = () => {
-  return createSelector([getTapFilters, getTaps], (tapFilters, allTaps) => {
+const selectVisibleFoodTaps = createSelector(
+  [getTapFilters, getTaps],
+  (tapFilters, allTaps) => {
     let filteredTaps = allTaps;
 
-    // Default filters
-    filteredTaps = Object.keys(filteredTaps)
-      .filter(key => {
-        return (
-          allTaps[key].permanently_closed !== undefined &&
-          allTaps[key].permanently_closed !== true
-        );
-      })
-      .reduce((obj, key) => {
-        obj[key] = allTaps[key];
-        return obj;
-      }, []);
-
-    // If we want to filter for filtered taps (water filter)
-    if (tapFilters.filtered) {
+    // If we want to filter for Orgs that are Kids Only
+    if (tapFilters.kidOnly) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => allTaps[key].filtration === 'Yes')
-        .reduce((obj, key) => {
-          obj[key] = allTaps[key];
-          return obj;
-        }, []);
-    }
-
-    // If we want to filter for handicap-accessible taps
-    if (tapFilters.handicap) {
-      filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].handicap === 'Yes')
+        .filter(key => filteredTaps[key].kid_only === 'yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;
         }, []);
     }
 
-    // If we want to filter for taps that offer sparkling water
-    if (tapFilters.sparkling) {
+    // If we want to filter for Orgs that require ID
+    if (tapFilters.idRequired) {
       filteredTaps = Object.keys(filteredTaps)
-        .filter(key => filteredTaps[key].sparkling === 'yes')
+        .filter(key => filteredTaps[key].id_required === 'yes')
         .reduce((obj, key) => {
           obj[key] = filteredTaps[key];
           return obj;
@@ -88,7 +66,7 @@ const makeGetVisibleTaps = () => {
         return obj;
       }, []);
     return filteredTaps;
-  });
-};
+  }
+);
 
-export default makeGetVisibleTaps;
+export default selectVisibleFoodTaps;
