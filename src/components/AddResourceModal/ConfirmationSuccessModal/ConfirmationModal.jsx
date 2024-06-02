@@ -2,14 +2,13 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as ConfirmationSuccess } from '../../icons/ConfirmationSuccess.svg';
-import { Modal, Box, Typography, Link, Stack, Container } from '@mui/material';
-import ShareIcon from '@mui/icons-material/Share';
+import { Modal, Box, Typography, Link } from '@mui/material';
+// import ShareIcon from '@mui/icons-material/Share';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CloseIcon from '@mui/icons-material/Close';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid'; // Grid version 1
 
 const ConfirmationModal = () => {
@@ -23,24 +22,22 @@ const ConfirmationModal = () => {
 
   const theme = createTheme();
 
-  theme.typography.h3 = {
-    fontSize: '1.5rem',
+  theme.typography.h1 = {
+    '@media (min-width;300px)': {
+      fontSize: '2rem'
+    },
+    display: 'inline',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '2rem'
+    }
+  };
+  theme.typography.p = {
     '@media (min-width;300px)': {
       fontSize: '1.5rem'
     },
     display: 'inline',
     [theme.breakpoints.up('md')]: {
-      fontSize: '1.75rem'
-    }
-  };
-  theme.typography.p = {
-    fontSize: '1rem',
-    '@media (min-width;360px)': {
-      fontSize: '1rem'
-    },
-    display: 'inline',
-    [theme.breakpoints.up('md')]: {
-      fontSize: '1rem'
+      fontSize: '1.5rem'
     }
   };
 
@@ -77,11 +74,15 @@ const ConfirmationModal = () => {
                 <CloseIcon onClick={handleClose} />
               </Grid>
             </Grid>
-            <Typography aria-label="Thanks for sharing!" variant="h3">
+            <Typography
+              aria-label="Thanks for sharing!"
+              variant="h1"
+              sx={{ ml: 2, mr: 2 }}
+            >
               Thanks for sharing!
             </Typography>
             <Typography
-              sx={{ fontSize: 'h6.fontSize' }}
+              sx={{ fontSize: 'p.fontSize' }}
               aria-label="Your submission is under review."
             >
               Your submission is under review.
@@ -93,7 +94,7 @@ const ConfirmationModal = () => {
                 sx={{ fontSize: 16 }}
                 aria-label="Follow us and spread the news"
               >
-                Follow us and spread the news
+                Follow us and spread the news!
               </Typography>
             </Box>
 
@@ -109,23 +110,35 @@ const ConfirmationModal = () => {
                 mr: 3
               }}
             >
-              <ShareIcon aria-label="Share"></ShareIcon>
+              {/* <ShareIcon aria-label="Share"></ShareIcon> */}
 
               <Link href="https://www.facebook.com/PHLASKecosystem/">
-                <FacebookIcon aria-label="Facebook"></FacebookIcon>
+                <FacebookIcon
+                  aria-label="Facebook"
+                  sx={{ color: '#1877f2' }}
+                ></FacebookIcon>
               </Link>
 
               <Link href="https://www.instagram.com/_phlask_/?hl=en">
-                <InstagramIcon aria-label="Instagram"></InstagramIcon>
+                <InstagramIcon
+                  aria-label="Instagram"
+                  sx={{ color: '#c32aa3' }}
+                ></InstagramIcon>
               </Link>
 
               <Link href="https://twitter.com/PHLASKecosystem">
-                <TwitterIcon aria-label="Twitter"></TwitterIcon>
+                <TwitterIcon
+                  aria-label="Twitter"
+                  sx={{ color: '#1da1f2' }}
+                ></TwitterIcon>
               </Link>
 
               <Link href="https://github.com/phlask">
                 {' '}
-                <GitHubIcon aria-label="Github"></GitHubIcon>
+                <GitHubIcon
+                  aria-label="Github"
+                  sx={{ color: '#000000' }}
+                ></GitHubIcon>
               </Link>
             </Grid>
 
