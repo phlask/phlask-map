@@ -13,7 +13,7 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
 
 export default function AddResourceModalV2(props) {
   const initialState = {
@@ -302,7 +302,9 @@ export default function AddResourceModalV2(props) {
       };
 
       const database = getDatabase(dbConnection);
-      set(ref(database, '/' + (values.count + 1).toString()), newData);
+      console.log("Submitting a resource!")
+      push(ref(database, '/'), newData);
+      // set(ref(database, '/' + (values.count + 1).toString()), newData);
     });
   };
 
