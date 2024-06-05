@@ -27,13 +27,18 @@ const initialState = {
     openNow: false,
     accessTypesHidden: []
   },
+  bathroomFilters: {
+    // TODO
+  },
+  foragingFilters: {},
   allTaps: [],
   allFoodOrgs: [],
   allBathroomTaps: [],
   allForagingTaps: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  phlaskType: actions.PHLASK_TYPE_WATER
+  phlaskType: actions.PHLASK_TYPE_WATER,
+  isResourceMenuShown: false
 };
 
 export default (state = initialState, act) => {
@@ -100,6 +105,9 @@ export default (state = initialState, act) => {
 
     case actions.GET_BATHROOM_SUCCESS:
       return { ...state, allBathroomTaps: act.allBathroomTaps };
+
+    case actions.GET_FORAGING_SUCCESS:
+      return { ...state, allForagingTaps: act.allForagingTaps };
 
     case actions.SET_FILTER_FUNCTION:
       // console.log('set filter func');
@@ -228,6 +236,9 @@ export default (state = initialState, act) => {
 
     case actions.CHANGE_PHLASK_TYPE:
       return { ...state, phlaskType: act.phlaskType };
+
+    case actions.TOGGLE_RESOURCE_MENU:
+      return { ...state, isResourceMenuShown: !act.isShown };
 
     default:
       return state;

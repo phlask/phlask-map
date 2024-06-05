@@ -33,7 +33,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit}>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Name <span style={{ color: '#DD1E1E' }}>*</span>
+                Name <span className={styles.asteriskcolor}>*</span>
               </label>
               <br />
               <input
@@ -41,17 +41,11 @@ const Contact = () => {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                style={{
-                  width: 'min(80%, 400px)',
-                  height: '55px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px'
-                }}
               />
             </div>
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>
-                Email <span style={{ color: '#DD1E1E' }}>*</span>
+                Email <span className={styles.asteriskcolor}>*</span>
               </label>
               <br />
               <input
@@ -59,156 +53,93 @@ const Contact = () => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                style={{
-                  width: 'min(80%, 400px)',
-                  height: '55px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px'
-                }}
               />
             </div>
+
             <div className={styles.pageContactSection}>
               <label className={styles.pageContactLabel}>Feedback</label>
               <br />
               <textarea
-                type="text"
                 value={feedback}
                 onChange={e => setFeedback(e.target.value)}
-                style={{
-                  width: 'min(100%, 800px)',
-                  height: '100px',
-                  border: '1px solid #73839E',
-                  borderRadius: '3px',
-                  rows: 4
-                }}
+                className={styles.FeedbackInput}
+                rows="4"
               />
             </div>
+
             <div
-              className={styles.pageContactSection}
-              style={{
-                width: 'fit-content',
-                display: 'grid',
-                placeItems: 'center',
-                gridTemplateColumns: '20px 1fr',
-                gap: '8px'
-              }}
+              className={`${styles.pageContactSection} ${styles.pageContactSectionGrid}`}
             >
               <input
                 type="checkbox"
                 value={interestedResearch}
                 onChange={e => setInterestedResearch(e.target.value)}
-                style={{ width: '18px', height: '18px' }}
+                className={styles.pageContactCheckbox}
               />
-              <label
-                className={styles.pageText}
-                style={{
-                  marginBottom: 0,
-                  fontSize: '16px'
-                }}
-              >
+              <label className={`${styles.pageText} ${styles.pageTextLabel}`}>
                 I’m interested in helping PHLASK with future research
               </label>
             </div>
             <button
               type="submit"
               onSubmit={handleSubmit}
-              style={{
-                width: 'min(80%, 400px)',
-                marginBottom: '20px',
-                padding: '7px 0',
-                borderRadius: '8px',
-                backgroundColor: '#5286E9'
-              }}
+              className={styles.submitButton}
             >
-              <p
-                style={{
-                  marginBottom: 0,
-                  color: '#ffffff',
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 500,
-                  fontSize: '17px',
-                  lineHeight: '23px'
-                }}
-              >
-                Submit Feedback
-              </p>
+              <span className={styles.buttonText}>Submit Feedback</span>
             </button>
           </form>
-          <div
-            style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 502px - 50px))'
-            }}
-          ></div>
         </div>
       )}
       {submitted && (
         <div>
-          <div
-            style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
-            }}
-          ></div>
-          <div style={{ display: 'grid', placeItems: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-              <ContactSubmitImage />
-              <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
-            </div>
+          {/* Thank You Message Container */}
+          <div className={styles.thankYouMessageContainer}>
+            <div className={styles.thankYouMessageSpacer}></div>
+            <ContactSubmitImage />
+            <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
+            <div className={styles.thankYouMessageSpacer}></div>
           </div>
-          <div
-            style={{
-              height:
-                'calc((100vh - 76px - 32px - 25px - 25px - 92px - 70px - 296px - 50px) / 2)'
-            }}
-          ></div>
+
+          {/* Follow PHLASK, Connect, Social Media Icons, and Contact Email */}
+          <div className={styles.gridContainer}>
+            <h2 className={`${styles.pageSubheader} ${styles.followHeader}`}>
+              Follow PHLASK
+            </h2>
+            <h2 className={`${styles.pageSubheader} ${styles.connectHeader}`}>
+              Connect
+            </h2>
+            <div className={styles.socialLinksContainer}>
+              <a
+                href="https://www.facebook.com/PHLASKecosystem/"
+                className={styles.socialLink}
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href="https://www.instagram.com/phlaskecosystem/"
+                className={styles.socialLink}
+              >
+                <InstagramIcon />
+              </a>
+              <a
+                href="https://twitter.com/PHLASKecosystem/"
+                className={styles.socialLink}
+              >
+                <TwitterIcon />
+              </a>
+            </div>
+            <p className={`${styles.pageText} ${styles.otherInquiries}`}>
+              For all other inquiries, email{' '}
+              <a
+                href="mailto:phlaskecosystem@gmail.com"
+                className={styles.inquiryLink}
+              >
+                phlaskecosystem@gmail.com
+              </a>
+            </p>
+          </div>
         </div>
       )}
-      <div
-        style={{
-          width: 'fit-content',
-          display: 'grid',
-          placeItems: 'center start',
-          gridTemplateColumns: '304px 1fr',
-          rowGap: '20px'
-        }}
-      >
-        <h2
-          className={styles.pageSubheader}
-          style={{ width: 'fit-content', margin: 0 }}
-        >
-          Follow PHLASK
-        </h2>
-        <h2 className={styles.pageSubheader} style={{ margin: 0 }}>
-          Connect
-        </h2>
-        <div style={{ width: 'fit-content' }}>
-          <a
-            href="https://www.facebook.com/PHLASKecosystem/"
-            style={{ marginRight: '40px' }}
-          >
-            <FacebookIcon />
-          </a>
-          <a
-            href="https://www.instagram.com/phlaskecosystem/"
-            style={{ marginRight: '40px' }}
-          >
-            <InstagramIcon />
-          </a>
-          <a href="https://twitter.com/PHLASKecosystem/">
-            <TwitterIcon />
-          </a>
-        </div>
-        <p className={styles.pageText} style={{ margin: 0 }}>
-          For all other inquiries, email{' '}
-          <a
-            href="mailto:phlaskecosystem@gmail.com"
-            className={styles.pageLink}
-          >
-            phlaskecosystem@gmail.com
-          </a>
-        </p>
-      </div>
     </div>
   );
 };

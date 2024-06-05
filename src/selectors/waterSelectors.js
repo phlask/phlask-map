@@ -2,12 +2,13 @@ import { createSelector } from 'reselect';
 
 import { hours } from '../helpers/hours';
 
-const getTapFilters = state => state.tapFilters;
+const getTapFilters = state => state.filterMarkers.tapFilters;
 
-const getTaps = state => state.allTaps;
+const getTaps = state => state.filterMarkers.allTaps;
 
-const makeGetVisibleTaps = () => {
-  return createSelector([getTapFilters, getTaps], (tapFilters, allTaps) => {
+const selectVisibleWaterTaps = createSelector(
+  [getTapFilters, getTaps],
+  (tapFilters, allTaps) => {
     let filteredTaps = allTaps;
 
     // Default filters
@@ -88,7 +89,7 @@ const makeGetVisibleTaps = () => {
         return obj;
       }, []);
     return filteredTaps;
-  });
-};
+  }
+);
 
-export default makeGetVisibleTaps;
+export default selectVisibleWaterTaps;
