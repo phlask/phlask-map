@@ -13,8 +13,8 @@ describe("modals", () => {
     it("should successfully display a water site", () => {
       // Load a sample water site. 
       // This is currently using live data, but should be updated to make use of test data.
-      cy.get('[title=data-cy-272]').click({force: true})
-      cy.get('[data-cy=tap-organization-name]').should('have.text', 'La Colombe')
+      cy.get('[title=data-cy-1]').click({force: true})
+      cy.get('[data-cy=tap-organization-name]').should('have.text', 'Test Organization')
     });
   
     it("should successfully display a food site", () => {

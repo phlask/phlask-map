@@ -10,7 +10,7 @@ export const waterConfig = {
 export const foodConfig = {
   apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
   authDomain: 'phlask-web-map.firebaseapp.com',
-  databaseURL: 'https://phlask-web-map-prod-food-live.firebaseio.com',
+  databaseURL: process.env.REACT_APP_CYPRESS_TEST ? 'https://phlask-functional-test.firebaseio.com' : 'https://phlask-web-map-prod-food-live.firebaseio.com',
   projectId: 'phlask-web-map',
   storageBucket: 'phlask-web-map.appspot.com',
   messagingSenderId: '428394983826'
@@ -19,7 +19,7 @@ export const foodConfig = {
 export const foragingConfig = {
   apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
   authDomain: 'phlask-web-map.firebaseapp.com',
-  databaseURL: 'https://phlask-web-map-prod-foraging-live.firebaseio.com',
+  databaseURL: process.env.REACT_APP_CYPRESS_TEST ? 'https://phlask-functional-test.firebaseio.com' : 'https://phlask-web-map-prod-foraging-live.firebaseio.com',
   projectId: 'phlask-web-map',
   storageBucket: 'phlask-web-map.appspot.com',
   messagingSenderId: '428394983826'
@@ -28,7 +28,7 @@ export const foragingConfig = {
 export const bathroomConfig = {
   apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
   authDomain: 'phlask-web-map.firebaseapp.com',
-  databaseURL: 'https://phlask-web-map-prod-bathroom-live.firebaseio.com',
+  databaseURL: process.env.REACT_APP_CYPRESS_TEST ? 'https://phlask-functional-test.firebaseio.com' : 'https://phlask-web-map-prod-bathroom-live.firebaseio.com',
   projectId: 'phlask-web-map',
   storageBucket: 'phlask-web-map.appspot.com',
   messagingSenderId: '428394983826'

@@ -6,6 +6,7 @@ import {
   foragingConfig,
   waterConfig
 } from '../firebase/firebaseConfig';
+import { testData } from '../firebase/functionalTest';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -44,8 +45,7 @@ export const getTapsSuccess = allTaps => ({
 export const getTaps = () => dispatch => {
   const app = initializeApp(waterConfig, 'water');
   const database = getDatabase(app);
-  return process.env.REACT_APP_CYPRESS_TEST (
-    ref(database, '/'),
+  return process.env.REACT_APP_CYPRESS_TEST ? dispatch(getTapsSuccess(testData)) : onValue(ref(database, '/'),
     snapshot => {
       const snapshotVal = snapshot.val();
       // TODO: Clean up Firebase DB for this one-off edge case

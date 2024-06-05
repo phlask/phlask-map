@@ -350,6 +350,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-contribute-menu"
           >
             <ContributeIcon />
             <Typography
@@ -397,6 +398,7 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
+              data-cy="button-contribute-menu"
               label={
                 <Typography noWrap fontSize="small">
                   Add Site

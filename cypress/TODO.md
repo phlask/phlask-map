@@ -3,7 +3,8 @@
     - Force map location (this is kind of addressed via our default location mechanism)
     - Force loading of test data
         - this needs to be done, testing with live data is going to be a pain since changing map location is unintuitive
-        - UPDATE: Currently looking into using env vars + firebase loaders in actions.js to force this
+        - this is currently done by overriding the DB URL with an environment variable at build time
+        - this should be done by using an environment variable to reference a local dynamically-generated DB at build time (this dynamic generation would also need to be configured as input to the test)
     - Enable local upload of files instead of using firebase
 - Use baseURL to enable local vs targetted testing
 - Set up Junit test report handling

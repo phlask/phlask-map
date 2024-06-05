@@ -6,10 +6,16 @@ describe("filters", () => {
     beforeEach(() => {
       cy.visit("/");
       // Load the form
+      
+      // NOTE: This line currently uses components that are due to be updated.
+      // Close the tutorial modal
+      cy.get('[aria-label=Close]').click()
     });
   
     it("should successfully show a result for each water site filter permutation", () => {
-      // TODO
+      // TODO Add an approach to test all possible filter permutations
+      // Currently limiting this test to a single filtering approach as a starting point
+
     });
 
     it("should successfully show a result for each food site filter permutation", () => {

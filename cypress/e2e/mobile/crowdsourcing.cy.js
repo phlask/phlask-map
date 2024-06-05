@@ -4,6 +4,7 @@
 // For each resource type, test submitting a site with the following scenarios
 // All tap information
 // A submission with only one of each optional field for each resource type
+
 describe("crowdsourcing form", () => {
     beforeEach(() => {
       cy.visit("/");
