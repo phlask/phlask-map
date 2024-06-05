@@ -62,7 +62,7 @@ const MapMarkers = ({ map, google }) => {
           key={index}
           google={google}
           map={map}
-          onClick={onMarkerClick}
+          onClick={() => onMarkerClick(org)}
           position={{ lat: org.lat, lng: org.lon }}
           icon={{ url: PhlaskMarkerIconV2(48, 48) }}
         />
@@ -74,7 +74,7 @@ const MapMarkers = ({ map, google }) => {
           key={index}
           google={google}
           map={map}
-          onClick={onMarkerClick}
+          onClick={() => onMarkerClick(org)}
           position={{ lat: org.lat, lng: org.lon }}
           icon={{ url: FoodMarkerIconV2(48, 48) }}
         />
@@ -85,7 +85,7 @@ const MapMarkers = ({ map, google }) => {
           key={index}
           google={google}
           map={map}
-          onClick={onMarkerClick}
+          onClick={() => onMarkerClick(org)}
           position={{ lat: org.lat, lng: org.lon }}
           icon={{ url: ForagingMarkerIconV2(48, 48) }}
         />
@@ -96,7 +96,7 @@ const MapMarkers = ({ map, google }) => {
           key={index}
           google={google}
           map={map}
-          onClick={onMarkerClick}
+          onClick={() => onMarkerClick(org)}
           position={{ lat: org.lat, lng: org.lon }}
           icon={{ url: BathroomMarkerIconV2(48, 48) }}
         />
