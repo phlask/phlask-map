@@ -1,5 +1,5 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
-import { React, useRef } from 'react';
+import React, { useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -46,7 +46,6 @@ export default function ChooseResource(props) {
   const dispatch = useDispatch();
 
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-  const phlaskType = useSelector(state => state.filterMarkers.phlaskType);
 
   const ref = useRef(null);
 
