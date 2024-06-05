@@ -302,9 +302,7 @@ export default function AddResourceModalV2(props) {
       };
 
       const database = getDatabase(dbConnection);
-      console.log("Submitting a resource!")
       push(ref(database, '/'), newData);
-      // set(ref(database, '/' + (values.count + 1).toString()), newData);
     });
   };
 
