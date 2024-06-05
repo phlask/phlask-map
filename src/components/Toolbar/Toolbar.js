@@ -55,7 +55,7 @@ function distance(lat1, lon1, lat2, lon2) {
     (Math.cos(lat1 * p) *
       Math.cos(lat2 * p) *
       (1 - Math.cos((lon2 - lon1) * p))) /
-    2;
+      2;
   return 12742 * Math.asin(Math.sqrt(a));
 }
 
@@ -415,14 +415,14 @@ function Toolbar(props) {
 }
 
 const mapStateToProps = state => ({
-  phlaskType: state.phlaskType,
-  allTaps: state.allTaps,
-  allFoodOrgs: state.allFoodOrgs,
-  allBathroomTaps: state.allBathroomTaps,
-  allForagingTaps: state.allForagingTaps,
-  userLocation: state.userLocation,
-  toolbarModal: state.toolbarModal,
-  isResourceMenuShown: state.isResourceMenuShown
+  phlaskType: state.filterMarkers.phlaskType,
+  allTaps: state.filterMarkers.allTaps,
+  allFoodOrgs: state.filterMarkers.allFoodOrgs,
+  allBathroomTaps: state.filterMarkers.allBathroomTaps,
+  allForagingTaps: state.filterMarkers.allForagingTaps,
+  userLocation: state.filterMarkers.userLocation,
+  toolbarModal: state.filterMarkers.toolbarModal,
+  isResourceMenuShown: state.filterMarkers.isResourceMenuShown
 });
 
 const mapDispatchToProps = {

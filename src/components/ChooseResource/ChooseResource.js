@@ -9,7 +9,8 @@ import {
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
   TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_NONE
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
 } from '../../actions/actions';
 import styles from './ChooseResource.module.scss';
 
@@ -43,21 +44,17 @@ const ResourceButton = props => {
 
 export default function ChooseResource(props) {
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
-  const setToolbarModal = modal => {
-    dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
-  };
-  const phlaskType = useSelector(state => state.phlaskType);
 
-  const ref = useRef(null)
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const phlaskType = useSelector(state => state.filterMarkers.phlaskType);
+
+  const ref = useRef(null);
 
   const handleClickOutside = () => {
-    // Your custom logic here
-    console.log('clicked outside')
-    setToolbarModal(TOOLBAR_MODAL_NONE);
-  }
+    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+  };
 
-  useOnClickOutside(ref, handleClickOutside)
+  useOnClickOutside(ref, handleClickOutside);
 
   return (
     <>

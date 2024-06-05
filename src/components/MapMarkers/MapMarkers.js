@@ -1,100 +1,109 @@
-import { Marker } from 'google-maps-react';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import {
+  getBathroomTaps,
+  getFoodOrgs,
+  getForagingTaps,
   getTaps,
-  setMapCenter,
+  PHLASK_TYPE_BATHROOM,
+  PHLASK_TYPE_FOOD,
+  PHLASK_TYPE_FORAGING,
+  PHLASK_TYPE_WATER,
   setSelectedPlace,
   toggleInfoWindow
 } from '../../actions/actions';
-import makeGetVisibleTaps from '../../selectors/tapSelectors';
-import IndieMarker from '../IndieMarker/IndieMarker';
+import { useDispatch, useSelector } from 'react-redux';
+import { Marker } from 'google-maps-react';
+import FoodMarkerIconV2 from '../icons/FoodMarkerIconV2';
+import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import selectVisibleWaterTaps from '../../selectors/waterSelectors';
+import selectVisibleFoodTaps from '../../selectors/foodSelectors';
+import PhlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
+import selectVisibleBathroomTaps from '../../selectors/bathroomSelectors';
+import selectVisibleForagingTaps from '../../selectors/foragingSelectors';
+import BathroomMarkerIconV2 from '../icons/BathroomMarkerIconV2';
+import ForagingMarkerIconV2 from '../icons/ForagingMarkerIconV2';
 
-const filterHelper = (activeTag, conditionMet) => {
-  return (activeTag && conditionMet) || !activeTag;
-};
+const MapMarkers = ({ map, google }) => {
+  const dispatch = useDispatch();
+  const phlaskType = useSelector(phlaskTypeSelector);
+  const visibleFoodTaps = useSelector(selectVisibleFoodTaps);
+  const visibleWaterTaps = useSelector(selectVisibleWaterTaps);
+  const visibleBathroomTaps = useSelector(selectVisibleBathroomTaps);
+  const visibleForagingTaps = useSelector(selectVisibleForagingTaps);
 
-const MapMarkers = ({
-  allTaps = [],
-  visibleTaps = [],
-  getTaps,
-  map,
-  google,
-  mapCenter,
-  filterTags,
-  phlaskType
-}) => {
-  useEffect(() => {
-    if (!allTaps.length && getTaps) getTaps();
-  }, [allTaps, getTaps]);
-  // if (!visibleTaps.length) return null;
-
-  return (
-    <>
-      {visibleTaps.map((tap, index) => {
-        if (
-          filterHelper(
-            filterTags[phlaskType][0][0],
-            tap['tap_type'] == 'Drinking Fountain' ||
-              tap['tap_type'] == 'Bottle filler and fountain'
-          ) &&
-          filterHelper(
-            filterTags[phlaskType][0][1],
-            tap['tap_type'] == 'Bottle filler and fountain'
-          ) &&
-          filterHelper(
-            filterTags[phlaskType][0][2],
-            tap['tap_type'] == 'Sink'
-          ) &&
-          filterHelper(
-            filterTags[phlaskType][1][0],
-            tap['handicap'] == 'Yes'
-          ) &&
-          filterHelper(
-            filterTags[phlaskType][1][1],
-            tap['filtration'] == 'Yes'
-          ) &&
-          filterHelper(filterTags[phlaskType][1][2], tap['vessel'] == 'Yes') &&
-          filterHelper(
-            filterTags[phlaskType][2] == 0,
-            tap['access'] == 'Public'
-          ) &&
-          filterHelper(
-            filterTags[phlaskType][2] == 1,
-            tap['access'] == 'Restricted' ||
-              tap['access'] == 'Private' ||
-              tap['access'] == 'Private-Shared'
-          )
-        ) {
-          return (
-            <IndieMarker key={index} tap={tap} google={google} map={map} />
-          );
-        }
-      })}
-    </>
-  );
-};
-
-const makeMapStateToProps = () => {
-  const getVisibleTaps = makeGetVisibleTaps();
-  const mapStateToProps = (state, props) => {
-    return {
-      visibleTaps: getVisibleTaps(state, props),
-      // filtered: state.tapFilters.filtered,
-      // handicap: state.tapFilters.handicap,
-      accessTypesHidden: state.tapFilters.accessTypesHidden,
-      allTaps: state.allTaps,
-      mapCenter: state.mapCenter
-    };
+  const onMarkerClick = tap => {
+    dispatch(toggleInfoWindow(true));
+    dispatch(
+      setSelectedPlace({
+        ...tap,
+        idRequired: tap.id_required === 'yes',
+        kidOnly: tap.kid_only === 'yes',
+        img: tap.images
+      })
+    );
+    map.panTo({ lat: tap.lat, lng: tap.lon });
   };
-  return mapStateToProps;
+
+  React.useEffect(() => {
+    const fetchAction = {
+      [PHLASK_TYPE_WATER]: getTaps,
+      [PHLASK_TYPE_FOOD]: getFoodOrgs,
+      [PHLASK_TYPE_FORAGING]: getForagingTaps,
+      [PHLASK_TYPE_BATHROOM]: getBathroomTaps
+    }[phlaskType];
+
+    dispatch(fetchAction());
+  }, [dispatch, phlaskType]);
+
+  switch (phlaskType) {
+    case PHLASK_TYPE_WATER:
+      return visibleWaterTaps.map((org, index) => (
+        <Marker
+          key={index}
+          google={google}
+          map={map}
+          onClick={onMarkerClick}
+          position={{ lat: org.lat, lng: org.lon }}
+          icon={{ url: PhlaskMarkerIconV2(48, 48) }}
+        />
+      ));
+
+    case PHLASK_TYPE_FOOD:
+      return visibleFoodTaps.map((org, index) => (
+        <Marker
+          key={index}
+          google={google}
+          map={map}
+          onClick={onMarkerClick}
+          position={{ lat: org.lat, lng: org.lon }}
+          icon={{ url: FoodMarkerIconV2(48, 48) }}
+        />
+      ));
+    case PHLASK_TYPE_FORAGING:
+      return visibleForagingTaps.map((org, index) => (
+        <Marker
+          key={index}
+          google={google}
+          map={map}
+          onClick={onMarkerClick}
+          position={{ lat: org.lat, lng: org.lon }}
+          icon={{ url: ForagingMarkerIconV2(48, 48) }}
+        />
+      ));
+    case PHLASK_TYPE_BATHROOM:
+      return visibleBathroomTaps.map((org, index) => (
+        <Marker
+          key={index}
+          google={google}
+          map={map}
+          onClick={onMarkerClick}
+          position={{ lat: org.lat, lng: org.lon }}
+          icon={{ url: BathroomMarkerIconV2(48, 48) }}
+        />
+      ));
+    default:
+      return null;
+  }
 };
 
-const mapDispatchToProps = {
-  getTaps,
-  toggleInfoWindow,
-  setSelectedPlace,
-  setMapCenter
-};
-
-export default connect(makeMapStateToProps, mapDispatchToProps)(MapMarkers);
+export default MapMarkers;
