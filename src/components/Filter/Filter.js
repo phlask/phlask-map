@@ -62,7 +62,7 @@ function useForceUpdate() {
 export default function Filter(props) {
   const forceUpdate = useForceUpdate();
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   return (
     <>
       {!isMobile && (

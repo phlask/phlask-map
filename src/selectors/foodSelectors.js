@@ -2,12 +2,13 @@ import { createSelector } from 'reselect';
 
 import { hours } from '../helpers/hours';
 
-const getTapFilters = state => state.foodFilters;
+const getTapFilters = state => state.filterMarkers.foodFilters;
 
-const getTaps = state => state.allFoodOrgs;
+const getTaps = state => state.filterMarkers.allFoodOrgs;
 
-const makeGetVisibleTaps = () => {
-  return createSelector([getTapFilters, getTaps], (tapFilters, allTaps) => {
+const selectVisibleFoodTaps = createSelector(
+  [getTapFilters, getTaps],
+  (tapFilters, allTaps) => {
     let filteredTaps = allTaps;
 
     // If we want to filter for Orgs that are Kids Only
@@ -65,7 +66,7 @@ const makeGetVisibleTaps = () => {
         return obj;
       }, []);
     return filteredTaps;
-  });
-};
+  }
+);
 
-export default makeGetVisibleTaps;
+export default selectVisibleFoodTaps;

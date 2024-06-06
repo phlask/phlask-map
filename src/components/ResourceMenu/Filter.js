@@ -238,12 +238,12 @@ export class Filter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.tapFilters.filtered,
-  handicap: state.tapFilters.handicap,
-  sparkling: state.tapFilters.sparkling,
-  openNow: state.tapFilters.openNow,
-  accessTypesHidden: state.tapFilters.accessTypesHidden,
-  showingInfoWindow: state.showingInfoWindow
+  filtered: state.filterMarkers.tapFilters.filtered,
+  handicap: state.filterMarkers.tapFilters.handicap,
+  sparkling: state.filterMarkers.tapFilters.sparkling,
+  openNow: state.filterMarkers.tapFilters.openNow,
+  accessTypesHidden: state.filterMarkers.tapFilters.accessTypesHidden,
+  showingInfoWindow: state.filterMarkers.showingInfoWindow
 });
 
 const mapDispatchToProps = {

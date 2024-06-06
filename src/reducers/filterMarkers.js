@@ -27,6 +27,10 @@ const initialState = {
     openNow: false,
     accessTypesHidden: []
   },
+  bathroomFilters: {
+    // TODO
+  },
+  foragingFilters: {},
   allTaps: [],
   allFoodOrgs: [],
   allBathroomTaps: [],
@@ -101,6 +105,9 @@ export default (state = initialState, act) => {
     case actions.GET_BATHROOM_SUCCESS:
       return { ...state, allBathroomTaps: act.allBathroomTaps };
 
+    case actions.GET_FORAGING_SUCCESS:
+      return { ...state, allForagingTaps: act.allForagingTaps };
+
     case actions.SET_FILTER_FUNCTION:
       // console.log('set filter func');
       return { filterFunction: !state.filterFunction, ...state };
@@ -114,25 +121,25 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-          ...state,
-          selectedPlace:
-            state.phlaskType === actions.PHLASK_TYPE_WATER
-              ? state.allTaps[act.selectedPlace]
-              : state.allFoodOrgs[act.selectedPlace],
-          showingInfoWindow: true
-        };
+            ...state,
+            selectedPlace:
+              state.phlaskType === actions.PHLASK_TYPE_WATER
+                ? state.allTaps[act.selectedPlace]
+                : state.allFoodOrgs[act.selectedPlace],
+            showingInfoWindow: true
+          };
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowClass);
 
       return act.isShown
         ? {
-          ...state,
-          showingInfoWindow: act.isShown,
-          infoWindowClass: isMobile
-            ? 'info-window-in'
-            : 'info-window-in-desktop'
-        }
+            ...state,
+            showingInfoWindow: act.isShown,
+            infoWindowClass: isMobile
+              ? 'info-window-in'
+              : 'info-window-in-desktop'
+          }
         : { ...state, showingInfoWindow: act.isShown };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
@@ -146,8 +153,8 @@ export default (state = initialState, act) => {
             ? 'info-window-in'
             : 'info-window-out'
           : act.isShown
-            ? 'info-window-in-desktop'
-            : 'info-window-out-desktop'
+          ? 'info-window-in-desktop'
+          : 'info-window-out-desktop'
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
