@@ -16,7 +16,7 @@ import { resourceTypeInfo } from './chooseResourceHelper';
 
 const ChooseResourceMobile = () => {
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   return (
     <Box>

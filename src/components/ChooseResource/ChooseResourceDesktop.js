@@ -10,7 +10,7 @@ import { resourceTypeInfo } from './chooseResourceHelper';
 import styles from './ChooseResource.module.scss';
 
 const ChooseResourceDesktop = () => {
-  const toolbarModal = useSelector(state => state.toolbarModal);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   return (
     <Paper
       sx={{
