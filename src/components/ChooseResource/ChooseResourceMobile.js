@@ -27,7 +27,7 @@ const ChooseResourceMobile = () => {
           dispatch({ type: SET_TOOLBAR_MODAL, mode: TOOLBAR_MODAL_NONE })
         }
         PaperProps={{
-          style: {
+          sx: {
             background: 'transparent',
             overflow: 'visible',
             boxShadow: 'none',
