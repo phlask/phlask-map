@@ -6,7 +6,7 @@ import ChooseResourceMobile from './ChooseResourceMobile';
 
 const ChooseResource = () => {
   return (
-    <>{!isMobile ? <ChooseResourceDesktop /> : <ChooseResourceMobile />}</>
+    <>{isMobile ? <ChooseResourceMobile /> : <ChooseResourceDesktop />}</>
   );
 };
 
