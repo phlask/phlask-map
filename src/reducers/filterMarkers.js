@@ -37,6 +37,8 @@ const initialState = {
   allForagingTaps: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
+  searchBarMapTint: actions.SEARCH_BAR_MAP_TINT_OFF,
+  tapInfoOpenedWhileSearchOpen: false,
   phlaskType: actions.PHLASK_TYPE_WATER,
   isResourceMenuShown: false
 };
@@ -122,26 +124,36 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-            ...state,
-            selectedPlace:
-              state.phlaskType === actions.PHLASK_TYPE_WATER
-                ? state.allTaps[act.selectedPlace]
-                : state.allFoodOrgs[act.selectedPlace],
-            showingInfoWindow: true
-          };
+          ...state,
+          selectedPlace:
+            state.phlaskType === actions.PHLASK_TYPE_WATER
+              ? state.allTaps[act.selectedPlace]
+              : state.allFoodOrgs[act.selectedPlace],
+          showingInfoWindow: true
+        };
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowClass);
 
+      var trueOrFalse = false;
+      if (act.isShown && state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH) {
+        trueOrFalse = true;
+      }
+
       return act.isShown
         ? {
-            ...state,
-            showingInfoWindow: act.isShown,
-            infoWindowClass: isMobile
-              ? 'info-window-in'
-              : 'info-window-in-desktop'
-          }
-        : { ...state, showingInfoWindow: act.isShown };
+          ...state,
+          showingInfoWindow: act.isShown,
+          infoWindowClass: isMobile
+            ? 'info-window-in'
+            : 'info-window-in-desktop',
+          tapInfoOpenedWhileSearchOpen: trueOrFalse,
+          searchBarMapTint: actions.SEARCH_BAR_MAP_TINT_OFF,
+        }
+        : {
+          ...state,
+          showingInfoWindow: act.isShown,
+        };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
       // console.log("Info Window Class: " + state.infoWindowClass);
@@ -154,8 +166,8 @@ export default (state = initialState, act) => {
             ? 'info-window-in'
             : 'info-window-out'
           : act.isShown
-          ? 'info-window-in-desktop'
-          : 'info-window-out-desktop'
+            ? 'info-window-in-desktop'
+            : 'info-window-out-desktop'
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
@@ -217,6 +229,12 @@ export default (state = initialState, act) => {
         }
       };
     }
+
+    case actions.SET_SEARCH_BAR_MAP_TINT:
+      return { ...state, searchBarMapTint: act.mode }
+
+    case actions.SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN:
+      return { ...state, tapInfoOpenedWhileSearchOpen: act.trueOrFalse }
 
     case actions.SET_TOOLBAR_MODAL:
       return { ...state, toolbarModal: act.mode };

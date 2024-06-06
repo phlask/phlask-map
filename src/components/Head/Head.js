@@ -14,6 +14,9 @@ import { isMobile } from 'react-device-detect';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
+  setSearchBarMapTint,
+  SEARCH_BAR_MAP_TINT_OFF,
+  SEARCH_BAR_MAP_TINT_ON,
   setToolbarModal,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
@@ -57,9 +60,8 @@ const CloseIcon = props => {
       <CloseIconBar
         sx={{
           top: '7px',
-          transform: `translateY(${props.close ? 8 : 0}px) rotate(${
-            props.close ? 45 : 0
-          }deg)`
+          transform: `translateY(${props.close ? 8 : 0}px) rotate(${props.close ? 45 : 0
+            }deg)`
         }}
       />
       <CloseIconBar
@@ -72,9 +74,8 @@ const CloseIcon = props => {
       <CloseIconBar
         sx={{
           top: '23px',
-          transform: `translateY(${props.close ? -8 : 0}px) rotate(${
-            props.close ? -45 : 0
-          }deg)`
+          transform: `translateY(${props.close ? -8 : 0}px) rotate(${props.close ? -45 : 0
+            }deg)`
         }}
       />
     </Box>
@@ -137,7 +138,6 @@ function Head(props) {
   const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
   const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
   const [shownPage, setShownPage] = useState(null);
-  const isSearchShown = useSelector(state => state.filterMarkers.isSearchShown);
   const isFilterShown = useSelector(state => state.filterMarkers.isFilterShown);
   const open = Boolean(anchorEl);
 
@@ -252,8 +252,10 @@ function Head(props) {
                     onClick={() => {
                       if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
                         props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
+                        props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON);
                       } else {
                         props.setToolbarModal(TOOLBAR_MODAL_NONE);
+                        props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF);
                       }
                     }}
                   >
@@ -402,7 +404,8 @@ const mapDispatchToProps = {
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
   TOOLBAR_MODAL_NONE,
-  setToolbarModal
+  setToolbarModal,
+  setSearchBarMapTint
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Head);

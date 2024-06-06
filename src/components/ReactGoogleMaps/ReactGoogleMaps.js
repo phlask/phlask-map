@@ -8,6 +8,7 @@ import {
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,
   PHLASK_TYPE_WATER,
+  SEARCH_BAR_MAP_TINT_ON,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
@@ -15,7 +16,6 @@ import {
   TOOLBAR_MODAL_SEARCH,
   setFilterFunction,
   setMapCenter,
-  setToolbarModal,
   setUserLocation,
   toggleInfoWindow
 } from '../../actions/actions';
@@ -279,7 +279,7 @@ export class ReactGoogleMaps extends Component {
           });
         }
       },
-      () => {}
+      () => { }
     );
   }
 
@@ -435,7 +435,7 @@ export class ReactGoogleMaps extends Component {
         </ReactTouchEvents>
         {isMobile && (
           <Fade
-            in={this.props.toolbarModal == TOOLBAR_MODAL_SEARCH}
+            in={this.props.searchBarMapTint === SEARCH_BAR_MAP_TINT_ON}
             timeout={300}
             style={{ position: 'fixed', pointerEvents: 'none' }}
           >
@@ -484,6 +484,7 @@ const mapStateToProps = state => ({
   filterFunction: state.filterMarkers.filterFunction,
   mapCenter: state.filterMarkers.mapCenter,
   phlaskType: state.filterMarkers.phlaskType,
+  searchBarMapTint: state.filterMarkers.searchBarMapTint,
   showingInfoWindow: state.filterMarkers.showingInfoWindow,
   toolbarModal: state.filterMarkers.toolbarModal
   // infoIsExpanded: state.infoIsExpanded
@@ -499,7 +500,6 @@ const mapDispatchToProps = {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  setToolbarModal,
   PHLASK_TYPE_BATHROOM,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_FORAGING,

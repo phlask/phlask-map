@@ -174,6 +174,20 @@ export const setSelectedPlace = selectedPlace => ({
   selectedPlace
 });
 
+export const SET_SEARCH_BAR_MAP_TINT = 'SET_SEARCH_BAR_MAP_TINT';
+export const setSearchBarMapTint = searchBarMapTintOnOrOff => ({
+  type: SET_SEARCH_BAR_MAP_TINT,
+  mode: searchBarMapTintOnOrOff
+})
+export const SEARCH_BAR_MAP_TINT_ON = 'SEARCH_BAR_MAP_TINT_ON';
+export const SEARCH_BAR_MAP_TINT_OFF = 'SEARCH_BAR_MAP_TINT_OFF';
+
+export const SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN = 'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
+export const setTapInfoOpenedWhileSearchOpen = trueOrFalse => ({
+  type: SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN,
+  trueOrFalse
+})
+
 export const SET_TOOLBAR_MODAL = 'SET_TOOLBAR_MODAL';
 export const setToolbarModal = toolbarModal => ({
   type: SET_TOOLBAR_MODAL,

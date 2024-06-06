@@ -7,7 +7,7 @@ import {
   PHLASK_TYPE_WATER,
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass
+  toggleInfoWindowClass,
 } from '../../actions/actions';
 import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
 import SelectedTapIcons from '../SelectedTapIcons/SelectedTapIcons';
@@ -229,9 +229,17 @@ class SelectedTap extends React.Component {
             {this.props.selectedPlace && (
               <SwipeableDrawer
                 anchor="bottom"
-                open={this.props.showingInfoWindow}
-                onOpen={() => this.toggleInfoWindow(true)}
-                onClose={() => this.toggleInfoWindow(false)}
+                open={
+                  this.props.showingInfoWindow
+                }
+                onOpen={
+                  () => {
+                    this.toggleInfoWindow(true);
+                  }
+                }
+                onClose={() => {
+                  this.toggleInfoWindow(false);
+                }}
                 PaperProps={{ square: false }}
               >
                 <SelectedTapMobile
@@ -249,176 +257,181 @@ class SelectedTap extends React.Component {
               </SwipeableDrawer>
             )}
           </div>
-        )}
-        {!isMobile && this.props.showingInfoWindow && (
-          <div>
-            {/* Desktop dialog panel */}
-            <Paper
-              sx={{
-                position: 'absolute',
-                right: '32px',
-                top: '20px',
-                width: '708px',
-                height: '700px'
-              }}
-            >
-              {/* <DialogTitle>Dialog Title</DialogTitle> */}
-
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(false);
-                }}
+        )
+        }
+        {
+          !isMobile && this.props.showingInfoWindow && (
+            <div>
+              {/* Desktop dialog panel */}
+              <Paper
                 sx={{
                   position: 'absolute',
-                  left: '45px',
-                  top: 20,
-                  color: '#000000'
+                  right: '32px',
+                  top: '20px',
+                  width: '708px',
+                  height: '700px'
                 }}
-                size="large"
               >
-                <CloseIcon
-                  sx={{
-                    fontSize: 34
-                  }}
-                />
-              </IconButton>
+                {/* <DialogTitle>Dialog Title</DialogTitle> */}
 
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(true);
-                }}
-                sx={{
-                  float: 'right',
-                  right: '150px',
-                  top: 20,
-                  color: '#000000'
-                }}
+                <IconButton
+                  aria-label="close"
+                  onClick={() => {
+                    this.toggleInfoWindow(false);
+                  }}
+                  sx={{
+                    position: 'absolute',
+                    left: '45px',
+                    top: 20,
+                    color: '#000000'
+                  }}
+                  size="large"
+                >
+                  <CloseIcon
+                    sx={{
+                      fontSize: 34
+                    }}
+                  />
+                </IconButton>
+
+                <IconButton
+                  aria-label="close"
+                  onClick={() => {
+                    this.toggleInfoWindow(true);
+                  }}
+                  sx={{
+                    float: 'right',
+                    right: '150px',
+                    top: 20,
+                    color: '#000000'
+                  }}
                 // size="large"
-              >
-                <IosShareIcon
-                  sx={{
-                    fontSize: 34
+                >
+                  <IosShareIcon
+                    sx={{
+                      fontSize: 34
+                    }}
+                  />
+                </IconButton>
+
+                <IconButton
+                  aria-label="close"
+                  onClick={() => {
+                    this.toggleInfoWindow(true);
                   }}
-                />
-              </IconButton>
-
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(true);
-                }}
-                sx={{
-                  float: 'right',
-                  top: 20,
-                  color: '#000000'
-                }}
-              >
-                <MoreHorizIcon
                   sx={{
-                    fontSize: 34
+                    float: 'right',
+                    top: 20,
+                    color: '#000000'
                   }}
-                />
-              </IconButton>
+                >
+                  <MoreHorizIcon
+                    sx={{
+                      fontSize: 34
+                    }}
+                  />
+                </IconButton>
 
-              {/* Location Name */}
-              <div
-                ref={this.refContentArea}
-                className={
-                  this.props.infoIsExpanded
-                    ? styles.tapContentExpanded
-                    : styles.tapContent
-                }
-              >
-                {/* Main Image */}
+                {/* Location Name */}
+                <div
+                  ref={this.refContentArea}
+                  className={
+                    this.props.infoIsExpanded
+                      ? styles.tapContentExpanded
+                      : styles.tapContent
+                  }
+                >
+                  {/* Main Image */}
 
-                <div id="tap-info-img-box-desktop">
-                  <img-alt
-                    id="tap-info-img"
-                    src={tempImages.tapImg}
-                    srcSet={
-                      tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                    }
-                  ></img-alt>
-                </div>
-                {/* Main Image */}
+                  <div id="tap-info-img-box-desktop">
+                    <img-alt
+                      id="tap-info-img"
+                      src={tempImages.tapImg}
+                      srcSet={
+                        tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
+                      }
+                    ></img-alt>
+                  </div>
+                  {/* Main Image */}
 
-                <div id="tap-head-info">
-                  {/* Tap Type Icon */}
-                  <div id="tap-type-icon-container">
-                    <div id="tap-type-icon">
-                      {this.props.phlaskType === PHLASK_TYPE_WATER ? (
-                        <img
-                          className="tap-info-icon-img"
-                          src={this.props.selectedPlace?.infoIcon}
-                          alt=""
-                        ></img>
-                      ) : (
-                        this.props.selectedPlace?.infoIcon
+                  <div id="tap-head-info">
+                    {/* Tap Type Icon */}
+                    <div id="tap-type-icon-container">
+                      <div id="tap-type-icon">
+                        {this.props.phlaskType === PHLASK_TYPE_WATER ? (
+                          <img
+                            className="tap-info-icon-img"
+                            src={this.props.selectedPlace?.infoIcon}
+                            alt=""
+                          ></img>
+                        ) : (
+                          this.props.selectedPlace?.infoIcon
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Name & Address */}
+                    <div id="org-name-and-address-desktop">
+                      <div id="tap-organization-name">
+                        {this.state.organization}
+                      </div>
+                      {this.state.address && (
+                        <h5 id="tap-info-address">{this.state.address}</h5>
                       )}
                     </div>
+
+                    <SelectedTapHours
+                      infoIsExpanded={this.props.infoIsExpanded}
+                      selectedPlace={this.props.selectedPlace}
+                    />
+                  </div>
+                  {/* Walk Time & Info Icons  */}
+                  <div className={styles.walkTime}>
+                    Estimated Walk Time: {this.state.walkingDuration} mins (
+                    {this.state.walkingDistance} mi)
                   </div>
 
-                  {/* Name & Address */}
-                  <div id="org-name-and-address-desktop">
-                    <div id="tap-organization-name">
-                      {this.state.organization}
-                    </div>
-                    {this.state.address && (
-                      <h5 id="tap-info-address">{this.state.address}</h5>
-                    )}
-                  </div>
+                  <SelectedTapIcons place={this.props.selectedPlace} />
 
-                  <SelectedTapHours
-                    infoIsExpanded={this.props.infoIsExpanded}
-                    selectedPlace={this.props.selectedPlace}
-                  />
-                </div>
-                {/* Walk Time & Info Icons  */}
-                <div className={styles.walkTime}>
-                  Estimated Walk Time: {this.state.walkingDuration} mins (
-                  {this.state.walkingDistance} mi)
-                </div>
-
-                <SelectedTapIcons place={this.props.selectedPlace} />
-
-                {/* Description */}
-                <div>
+                  {/* Description */}
                   <div>
-                    <div className={styles.description}>
-                      <div id="tap-info-description">
-                        {this.state.tapDescription && (
-                          <div className={styles.section}>
-                            <h3>Description</h3>
-                            <div>{this.state.tapDescription}</div>
-                          </div>
-                        )}
-                        {this.state.tapStatement && (
-                          <div className={styles.section}>
-                            <h3>Statement</h3>
-                            <div>{this.state.tapStatement}</div>
-                          </div>
-                        )}
-                        {this.state.tapNormsAndRules && (
-                          <div className={styles.section}>
-                            <h3>Norms &amp; Rules</h3>
-                            <div>{this.state.tapNormsAndRules}</div>
-                          </div>
-                        )}
+                    <div>
+                      <div className={styles.description}>
+                        <div id="tap-info-description">
+                          {this.state.tapDescription && (
+                            <div className={styles.section}>
+                              <h3>Description</h3>
+                              <div>{this.state.tapDescription}</div>
+                            </div>
+                          )}
+                          {this.state.tapStatement && (
+                            <div className={styles.section}>
+                              <h3>Statement</h3>
+                              <div>{this.state.tapStatement}</div>
+                            </div>
+                          )}
+                          {this.state.tapNormsAndRules && (
+                            <div className={styles.section}>
+                              <h3>Norms &amp; Rules</h3>
+                              <div>{this.state.tapNormsAndRules}</div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Paper>
-          </div>
-        )}
-      </div>
+              </Paper>
+            </div>
+          )
+        }
+      </div >
     );
   }
 }
+
 const mapStateToProps = state => ({
+  toolbarModal: state.filterMarkers.toolbarModal,
   showingInfoWindow: state.filterMarkers.showingInfoWindow,
   infoIsExpanded: state.filterMarkers.infoIsExpanded,
   infoWindowClass: state.filterMarkers.infoWindowClass,
@@ -426,6 +439,7 @@ const mapStateToProps = state => ({
   phlaskType: state.filterMarkers.phlaskType,
   userLocation: state.filterMarkers.userLocation
 });
+
 const mapDispatchToProps = {
   toggleInfoExpanded,
   toggleInfoWindow,
