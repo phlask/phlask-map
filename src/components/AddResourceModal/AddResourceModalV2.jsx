@@ -6,6 +6,7 @@ import {
   TOOLBAR_MODAL_CONTRIBUTE
 } from '../../actions/actions';
 
+import { debounce } from '../../utils/debounce';
 import ChooseResource from './ChooseResource';
 import ShareSocials from './ShareSocials';
 import AddFood from './AddFood/AddFood';
@@ -95,43 +96,29 @@ export default function AddResourceModalV2(props) {
     });
   };
 
-  const debounce = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
-
-const debouncedGeocode = debounce(address => {
-  geocodeByAddress(address)
-    .then(results => {
-      if (results.length === 0) {
-        throw new Error('ZERO_RESULTS');
-      }
-      return getLatLng(results[0]);
-    })
-    .then(({ lat, lng }) => {
-      console.log('Successfully got latitude and longitude', { lat, lng });
-      // Update the state with the latitude and longitude
-      setValues(prevValues => ({
-        ...prevValues,
-        latitude: lat,
-        longitude: lng
-      }));
-    })
-    .catch(error => {
-      if (error.message !== 'ZERO_RESULTS') {
-        console.error('Error occurred during geocoding:', error);
-      } else {
-        console.log(`No results found for the provided address: ${address}`);
-      }
-    });
-}, 500); // 500ms debounce delay
+  // Use imported debounce to prevent the geocoding API from being called too frequently
+  const debouncedGeocode = debounce(address => {
+    geocodeByAddress(address)
+      .then(results => {
+        if (results.length === 0) {
+          throw new Error('ZERO_RESULTS');
+        }
+        return getLatLng(results[0]);
+      })
+      .then(({ lat, lng }) => {
+        // Update the state with the latitude and longitude
+        setValues(prevValues => ({
+          ...prevValues,
+          latitude: lat,
+          longitude: lng
+        }));
+      })
+      .catch(error => {
+        if (error.message !== 'ZERO_RESULTS') {
+          console.error('Error occurred during geocoding:', error);
+        }
+      });
+  }, 500); // 500ms debounce delay
 
 const textFieldChangeHandler = eventOrString => {
   let newValue;
