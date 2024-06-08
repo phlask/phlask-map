@@ -14,7 +14,7 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, set, onValue } from 'firebase/database';102
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 export default function AddResourceModalV2(props) {
