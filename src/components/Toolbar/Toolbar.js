@@ -17,7 +17,8 @@ import {
   setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  togglePhlaskType
+  togglePhlaskType,
+  toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -379,6 +380,9 @@ function Toolbar(props) {
               data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
             />
             <ResourceMenu />
             <NavigationItem
@@ -415,13 +419,14 @@ function Toolbar(props) {
 }
 
 const mapStateToProps = state => ({
-  phlaskType: state.phlaskType,
-  allTaps: state.allTaps,
-  allFoodOrgs: state.allFoodOrgs,
-  allBathroomTaps: state.allBathroomTaps,
-  allForagingTaps: state.allForagingTaps,
-  userLocation: state.userLocation,
-  toolbarModal: state.toolbarModal
+  phlaskType: state.filterMarkers.phlaskType,
+  allTaps: state.filterMarkers.allTaps,
+  allFoodOrgs: state.filterMarkers.allFoodOrgs,
+  allBathroomTaps: state.filterMarkers.allBathroomTaps,
+  allForagingTaps: state.filterMarkers.allForagingTaps,
+  userLocation: state.filterMarkers.userLocation,
+  toolbarModal: state.filterMarkers.toolbarModal,
+  isResourceMenuShown: state.filterMarkers.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
@@ -439,7 +444,8 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation
+  setUserLocation,
+  toggleResourceMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

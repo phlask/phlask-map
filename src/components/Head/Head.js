@@ -19,7 +19,7 @@ import {
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
+  TOOLBAR_MODAL_SEARCH
 } from '../../actions/actions';
 import Filter from '../Filter/Filter.js';
 import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
@@ -137,8 +137,8 @@ function Head(props) {
   const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
   const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
   const [shownPage, setShownPage] = useState(null);
-  const isSearchShown = useSelector(state => state.isSearchShown);
-  const isFilterShown = useSelector(state => state.isFilterShown);
+  const isSearchShown = useSelector(state => state.filterMarkers.isSearchShown);
+  const isFilterShown = useSelector(state => state.filterMarkers.isFilterShown);
   const open = Boolean(anchorEl);
 
   const toggleMenuExpand = event => {
@@ -248,13 +248,15 @@ function Head(props) {
                     marginLeft: 'auto'
                   }}
                 >
-                  <IconButton onClick={() => {
+                  <IconButton
+                    onClick={() => {
                       if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
                         props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
                       } else {
                         props.setToolbarModal(TOOLBAR_MODAL_NONE);
                       }
-                    }}>
+                    }}
+                  >
                     <SearchIcon />
                   </IconButton>
                   <IconButton
@@ -391,7 +393,7 @@ function Head(props) {
 }
 
 const mapStateToProps = state => ({
-  toolbarModal: state.toolbarModal
+  toolbarModal: state.filterMarkers.toolbarModal
 });
 
 const mapDispatchToProps = {

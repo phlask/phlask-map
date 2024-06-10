@@ -184,7 +184,7 @@ class SearchBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  toolbarModal: state.toolbarModal
+  toolbarModal: state.filterMarkers.toolbarModal
 });
 
 const mapDispatchToProps = {

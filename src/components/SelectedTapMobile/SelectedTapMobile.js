@@ -1,12 +1,25 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './SelectedTapMobileInfo.module.scss';
 
 import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
 import { ReactComponent as CaretDownSvg } from '../images/CaretDown.svg';
 import { ReactComponent as ThreeDotSvg } from '../images/DotsThree.svg';
 import { ReactComponent as ExportSvg } from '../images/Export.svg';
+
+import FountainIcon from '../icons/CircleWaterIcon.svg';
+
+function getIconForTapType(tapType) {
+  switch (tapType) {
+    case 'Drinking Fountain':
+      return FountainIcon;
+    // TODO: Add other icon resources here once available
+    default:
+      return FountainIcon;
+  }
+}
+
 
 function SelectedTapMobile(props) {
   const [tags, setTags] = useState([]);
@@ -28,7 +41,7 @@ function SelectedTapMobile(props) {
     borderRadius: '8px',
     textTransform: 'none',
     backgroundColor: '#00A5EE',
-    width: '100%'
+    width: '150px'
   };
 
   const TagButton = styled(Button)({
@@ -40,11 +53,12 @@ function SelectedTapMobile(props) {
     color: '#2D3748',
     padding: '5px 7px',
     marginRight: '5px',
-    marginBottom: '15px',
+    marginBottom: '5px',
     border: '1px solid #2D3748',
     lineHeight: 1.5
   });
 
+  // Setup tags to display, such as the type of water, filtration, etc.
   useEffect(() => {
     const showTags = () => {
       const shownTags = [];
@@ -111,57 +125,61 @@ function SelectedTapMobile(props) {
             >
               <ExportSvg />
             </IconButton>
-            <IconButton color="primary" aria-label="more" component="label">
-              <ThreeDotSvg />
-            </IconButton>
+            {/* TODO: Add this back in once we have real options! */}
+            {/*<IconButton color="primary" aria-label="more" component="label">*/}
+            {/*  <ThreeDotSvg />*/}
+            {/*</IconButton>*/}
           </div>
           {/* Currently the three dot button does nothing */}
         </div>
       )}
       <img src={image} className={styles.locationImage} alt="" />
       <div className={styles.mainHalfInfo}>
-        {infoIcon && <img src={infoIcon} alt="" />}
+        <img src={getIconForTapType(selectedPlace.tap_type)} alt={selectedPlace.tap_type} style={{width: '52px'}}/>
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization} data-cy="tap-organization-name">{organization}</h2>
           <p>{address}</p>
           {props.children}
           <Button
+            onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=' + selectedPlace.lat + ',' + selectedPlace.lon, '_blank')}
             variant="contained"
             disableElevation
             sx={directionBtnStyle}
+            fullWidth={false}
             startIcon={<DirectionIcon />}
           >
             Directions
           </Button>
           <p className={styles.estWalkTime}>
             Est. walking time:{' '}
-            <span className={styles.walkTime}>{estWalkTime}min</span>
+            <span className={styles.walkTime}>{estWalkTime} min</span>
           </p>
         </div>
       </div>
 
+      <div className={styles.tagGroup}>
+        <hr className={styles.topDivider} />
+        {tags.map((tag, index) => (
+          <TagButton size="small" variant="outlined" key={index}>
+            {tag}
+          </TagButton>
+        ))}
+        <hr className={styles.botDivider}/>
+      </div>
+
       <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
-          <div className={styles.tagGroup}>
-            <hr className={styles.topDivider} />
-            {tags.map((tag, index) => (
-              <TagButton size="small" variant="outlined" key={index}>
-                {tag}
-              </TagButton>
-            ))}
-            <hr />
-          </div>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>{description ? description : 'N/A'}</p>
+            <p>{description ? description : 'No description provided'}</p>
           </div>
           <div className={styles.details}>
             <h3>PHLASK Statement</h3>
-            <p>{statement ? statement : 'N/A'}</p>
+            <p>{statement ? statement : 'No statement provided'}</p>
           </div>
           <div className={styles.details}>
             <h3>Norms &#38; Rules </h3>
-            <p>{norms_rules ? norms_rules : 'N/A'}</p>
+            <p>{norms_rules ? norms_rules : 'No rules provided'}</p>
           </div>
         </div>
       </Collapse>

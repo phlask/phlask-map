@@ -419,12 +419,12 @@ class SelectedTap extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  showingInfoWindow: state.showingInfoWindow,
-  infoIsExpanded: state.infoIsExpanded,
-  infoWindowClass: state.infoWindowClass,
-  selectedPlace: state.selectedPlace,
-  phlaskType: state.phlaskType,
-  userLocation: state.userLocation
+  showingInfoWindow: state.filterMarkers.showingInfoWindow,
+  infoIsExpanded: state.filterMarkers.infoIsExpanded,
+  infoWindowClass: state.filterMarkers.infoWindowClass,
+  selectedPlace: state.filterMarkers.selectedPlace,
+  phlaskType: state.filterMarkers.phlaskType,
+  userLocation: state.filterMarkers.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
