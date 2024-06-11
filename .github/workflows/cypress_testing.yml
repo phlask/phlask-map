@@ -4,8 +4,11 @@ on: [workflow_call]
 
 jobs:
   desktop:
-    uses: cypress-io/github-action@v6
-    with:
-      build: yarn build
-      start: REACT_APP_CYPRESS_TEST=true yarn start
-      browser: chrome
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: yarn build
+          start: REACT_APP_CYPRESS_TEST=true yarn start
+          browser: chrome
