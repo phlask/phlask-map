@@ -70,7 +70,7 @@ const Join = () => {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.pageHeader}>Join the team</h1>
+      <h1 className={styles.pageHeader} data-cy="jointeam-header">Join the team</h1>
       <div>
         <p className={styles.pageText}>
           PHLASK volunteers come from a wide array of socioeconomic, educational

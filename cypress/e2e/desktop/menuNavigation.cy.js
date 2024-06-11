@@ -6,10 +6,19 @@ describe("menu navigation", () => {
     beforeEach(() => {
       cy.visit("/");
       // Load the sidebar
+      
+      // Close the tutorial modal
+      cy.get('[aria-label=Close]').click()
+      
+      // Open the sidebar menu
+      cy.get('[data-cy=head-sidebar-button]').click()
     });
   
     it("should successfully show about us content", () => {
-      // TODO
+      // Click the about us sidebar button
+      cy.get('[data-cy=sidebar-about-button]').click()
+      
+      cy.get('[data-cy=about-header]').should('have.text', 'About PHLASK')
     });
 
     it("should successfully show the join team content", () => {

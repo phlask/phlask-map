@@ -51,7 +51,9 @@ export default function ChooseResource(props) {
   const ref = useRef(null);
 
   const handleClickOutside = () => {
-    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    if(toolbarModal === TOOLBAR_MODAL_RESOURCE) {
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    }
   };
 
   useOnClickOutside(ref, handleClickOutside);

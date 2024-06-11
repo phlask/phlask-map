@@ -187,7 +187,7 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (props.toolbarModal == modal) {
+    if (props.toolbarModal === modal) {
       props.setToolbarModal(TOOLBAR_MODAL_NONE);
     } else {
       props.setToolbarModal(modal);
@@ -295,6 +295,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-filter-menu"
           >
             <FilterIcon />
             <Typography
@@ -323,6 +324,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-search"
           >
             <SearchIcon />
             <Typography

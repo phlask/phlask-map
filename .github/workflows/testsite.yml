@@ -13,3 +13,6 @@ jobs:
     needs: build
     uses: ./.github/workflows/lighthouse_testing.yml
     secrets: inherit
+  cypress-testing:
+    needs: build
+    uses: ./.github/workflows/cypress_testing.yml
