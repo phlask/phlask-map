@@ -13,7 +13,9 @@ import {
   setMapCenter,
   setToolbarModal,
   setUserLocation,
-  toggleInfoWindow, getResources, setSelectedPlace
+  toggleInfoWindow,
+  getResources,
+  setSelectedPlace
 } from '../../actions/actions';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -27,59 +29,8 @@ import ChooseResource from '../ChooseResource/ChooseResource';
 import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
-import phlaskMarkerIconV2 from "../icons/PhlaskMarkerIconV2";
-import selectFilteredResource from "../../selectors/tapSelectors";
-
-// // Actual Magic: https://stackoverflow.com/a/41337005
-// // Distance calculates the distance between two lat/lon pairs
-// function distance(lat1,
-//    lon1, lat2, lon2) {
-//   var p = 0.017453292519943295;
-//   var a =
-//     0.5 -
-//     Math.cos((lat2 - lat1) * p) / 2 +
-//     (Math.cos(lat1 * p) *
-//       Math.cos(lat2 * p) *
-//       (1 - Math.cos((lon2 - lon1) * p))) /
-//       2;
-//   return 12742 * Math.asin(Math.sqrt(a));
-// }
-
-// // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
-// // properties and finds the closest point (by shortest distance).
-// function closest(data, v) {
-//   // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-//   // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
-//   var distances = data.map(function(p) {
-//     return {
-//       lat: p["lat"],
-//       lon: p["lon"],
-//       // organization: p["organization"],
-//       // address: p["address"],
-//       distance: distance(v["lat"], v["lon"], p["lat"], p["lon"])
-//     };
-//   });
-//   var minDistance = Math.min(...distances.map(d => d.distance));
-
-//   var closestTap = {
-//     // organization: "",
-//     // address: "",
-//     lat: "",
-//     lon: ""
-//   };
-
-//   for (var i = 0; i < distances.length; i++) {
-//     if (distances[i].distance === minDistance) {
-//       closestTap.lat = distances[i].lat;
-//       closestTap.lon = distances[i].lon;
-//       // closestTap.organization = distances[i].organization;
-//       // closestTap.address = distances[i].address;
-
-//     }
-//   }
-
-//   return closestTap;
-// }
+import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
+import selectFilteredResource from '../../selectors/waterSelectors';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -106,10 +57,9 @@ const filters = {
           'Drinking fountain',
           'Bottle filler',
           'Sink',
-          'Water jug',
+          'Water cooler',
           'Soda machine',
-          'Pitcher',
-          'Water cooler'
+          'Vessel'
         ]
       },
       {
@@ -229,7 +179,6 @@ export class ReactGoogleMaps extends Component {
   }
 
   componentDidMount() {
-
     // Fetch and load the resources
     if (!this.props.allResources.length && this.props.getResources) {
       this.props.getResources();
@@ -269,7 +218,7 @@ export class ReactGoogleMaps extends Component {
     this.props.toggleInfoWindow(true);
     this.props.setSelectedPlace(resource);
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
-  }
+  };
 
   onReady = (_, map) => {
     this.setState({ map: map });
@@ -285,7 +234,11 @@ export class ReactGoogleMaps extends Component {
   };
 
   handleTap = e => {
-    if (e.target instanceof HTMLDivElement && this.props.showingInfoWindow && !isMobile) {
+    if (
+      e.target instanceof HTMLDivElement &&
+      this.props.showingInfoWindow &&
+      !isMobile
+    ) {
       this.props.toggleInfoWindow(false);
     }
   };
@@ -360,17 +313,22 @@ export class ReactGoogleMaps extends Component {
               }}
               filterTags={this.state.appliedFilterTags}
             >
-
               {this.props.filteredResources.map((resource, index) => {
                 return (
                   <Marker
                     key={index}
-                    onClick={(markerProps) => {
-                      this.onMarkerClick(resource, markerProps)
+                    onClick={markerProps => {
+                      this.onMarkerClick(resource, markerProps);
                     }}
-                    position={{ lat: resource.latitude, lng: resource.longitude }}
-                    icon={{ url: phlaskMarkerIconV2(resource.resource_type,56, 56) }} />
-                )
+                    position={{
+                      lat: resource.latitude,
+                      lng: resource.longitude
+                    }}
+                    icon={{
+                      url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
+                    }}
+                  />
+                );
               })}
 
               {this.state.searchedTap != null && (
@@ -417,9 +375,7 @@ export class ReactGoogleMaps extends Component {
             activeTags={this.state.activeFilterTags}
           />
           <AddResourceModalV2 />
-          <Toolbar
-            map={this.state.map}
-          />
+          <Toolbar map={this.state.map} />
         </Stack>
         <SelectedTap />
       </div>

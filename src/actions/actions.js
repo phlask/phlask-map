@@ -1,8 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
-import {
-  resourcesConfig
-} from '../firebase/firebaseConfig';
+import { resourcesConfig } from '../firebase/firebaseConfig';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -42,9 +40,7 @@ export const getResources = () => dispatch => {
     snapshot => {
       dispatch(getResourcesSuccess(snapshot.val()));
     },
-    {
-      onlyOnce: true
-    }
+    { onlyOnce: true }
   );
 };
 

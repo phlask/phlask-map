@@ -8,6 +8,7 @@ import {
 } from '../../actions/actions';
 import { resourcesConfig } from '../../firebase/firebaseConfig';
 
+import { debounce } from '../../utils/debounce';
 import ChooseResource from './ChooseResource';
 import ShareSocials from './ShareSocials';
 import AddFood from './AddFood/AddFood';
@@ -15,8 +16,7 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
-
+import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 import {
@@ -42,6 +42,8 @@ export default function AddResourceModalV2(props) {
     count: 0,
     formStep: 'chooseResource',
     closeModal: false,
+    latitude: null,
+    longitude: null,
 
     // ADD WATER
     filtration: false,
@@ -102,32 +104,55 @@ export default function AddResourceModalV2(props) {
     });
   };
 
-  const textFieldChangeHandler = e => {
-    setValues(prevValues => {
-      // the address textbox is set with react-hook-form setValue() when user clicks "use my location instead",
-      //  which doesn't fire an event. When that happens, a string is passed instead of an event object, so this
-      // conditional expression handles that
-      geocodeByAddress(e)
-        .then(results => {
-          console.log(results[0]);
-          return getLatLng(results[0]);
-        })
-        .then(({ lat, lng }) =>
-          console.log('Successfully got latitude and longitude', { lat, lng })
-        );
+  // Use imported debounce to prevent the geocoding API from being called too frequently
+  const debouncedGeocode = debounce(address => {
+    geocodeByAddress(address)
+      .then(results => {
+        if (results.length === 0) {
+          throw new Error('ZERO_RESULTS');
+        }
+        return getLatLng(results[0]);
+      })
+      .then(({ lat, lng }) => {
+        // Update the state with the latitude and longitude
+        setValues(prevValues => ({
+          ...prevValues,
+          latitude: lat,
+          longitude: lng
+        }));
+      })
+      .catch(error => {
+        if (error.message !== 'ZERO_RESULTS') {
+          console.error('Error occurred during geocoding:', error);
+        }
+      });
+  }, 500); // 500ms debounce delay
 
-      if (e.target) {
-        return {
-          ...prevValues,
-          [e.target.name]: e.target.value
-        };
-      } else {
-        return {
-          ...prevValues,
-          address: e
-        };
+  const textFieldChangeHandler = eventOrString => {
+    let newValue;
+    let fieldName;
+
+    if (eventOrString && eventOrString.target) {
+      // This is an event object
+      if (eventOrString.target.name !== 'address') {
+        return; // Exit if the field is not 'address'
       }
-    });
+      newValue = eventOrString.target.value;
+      fieldName = eventOrString.target.name;
+    } else {
+      // This is a direct string input - "Use My Location" button was clicked
+      newValue = eventOrString;
+      fieldName = 'address';
+    }
+
+    // Update the state with the new value
+    setValues(prevValues => ({
+      ...prevValues,
+      [fieldName]: newValue
+    }));
+
+    // Trigger the debounced geocoding function
+    debouncedGeocode(newValue);
   };
 
   // controls which modal state to show
@@ -330,7 +355,7 @@ export default function AddResourceModalV2(props) {
       // TODO(vontell): Do this the right way, don't just init here every time
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
-      set(ref(database, '/' + (values.count + 1).toString()), newResource);
+      push(ref(database, '/'), newResource);
     });
   };
 

@@ -1,8 +1,6 @@
 import { isMobile } from 'react-device-detect';
 import * as actions from '../actions/actions';
-import {
-  WATER_RESOURCE_TYPE
-} from '../types/ResourceEntry';
+import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
   mapCenter: {
@@ -106,22 +104,22 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-          ...state,
-          selectedPlace: state.allResources[act.selectedPlace],
-          showingInfoWindow: true
-        };
+            ...state,
+            selectedPlace: state.allResources[act.selectedPlace],
+            showingInfoWindow: true
+          };
 
     case actions.TOGGLE_INFO_WINDOW:
       // console.log('Info Window Class: ' + state.infoWindowClass);
 
       return act.isShown
         ? {
-          ...state,
-          showingInfoWindow: act.isShown,
-          infoWindowClass: isMobile
-            ? 'info-window-in'
-            : 'info-window-in-desktop'
-        }
+            ...state,
+            showingInfoWindow: act.isShown,
+            infoWindowClass: isMobile
+              ? 'info-window-in'
+              : 'info-window-in-desktop'
+          }
         : { ...state, showingInfoWindow: act.isShown };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
@@ -135,8 +133,8 @@ export default (state = initialState, act) => {
             ? 'info-window-in'
             : 'info-window-out'
           : act.isShown
-            ? 'info-window-in-desktop'
-            : 'info-window-out-desktop'
+          ? 'info-window-in-desktop'
+          : 'info-window-out-desktop'
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
