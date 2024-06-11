@@ -14,8 +14,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          build: CI=false yarn build
-          start: REACT_APP_CYPRESS_TEST=true yarn start
+          build: yarn build
+          start: yarn start
           browser: chrome
-          # env: CI=false
           spec: cypress/e2e/desktop/*.cy.js
+        env:
+          CYPRESS_CI: false
+          CYPRESS_REACT_APP_CYPRESS_TEST: true
