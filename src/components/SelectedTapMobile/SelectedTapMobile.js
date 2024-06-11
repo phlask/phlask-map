@@ -10,12 +10,10 @@ import { ReactComponent as ExportSvg } from '../images/Export.svg';
 
 import FountainIcon from '../icons/CircleWaterIcon.svg';
 
-
 function SelectedTapMobile(props) {
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
-  const { image, estWalkTime, infoCollapse, setInfoCollapse } =
-    props;
+  const { image, estWalkTime, infoCollapse, setInfoCollapse } = props;
 
   /**
    * @type {ResourceEntry}
@@ -27,18 +25,18 @@ function SelectedTapMobile(props) {
   // From resource info, collect all the tags.
   const tags = [];
   if (resource.water) {
-    tags.push(...resource.water.tags || []);
+    tags.push(...(resource.water.tags || []));
   }
   if (resource.food) {
-    tags.push(...resource.food.tags || []);
+    tags.push(...(resource.food.tags || []));
   }
   if (resource.forage) {
-    tags.push(...resource.forage.tags || []);
+    tags.push(...(resource.forage.tags || []));
   }
   if (resource.bathroom) {
-    tags.push(...resource.bathroom.tags || []);
+    tags.push(...(resource.bathroom.tags || []));
   }
-  tags.sort()
+  tags.sort();
 
   const directionBtnStyle = {
     padding: '6px 20px 6px 25px',
@@ -114,13 +112,25 @@ function SelectedTapMobile(props) {
       )}
       <img src={image} className={styles.locationImage} alt="" />
       <div className={styles.mainHalfInfo}>
-        <img src={icon} alt={resource.resource_type} style={{width: '52px'}}/>
+        <img
+          src={icon}
+          alt={resource.resource_type}
+          style={{ width: '52px' }}
+        />
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization}>{resource.name}</h2>
           <p>{resource.address}</p>
           {props.children}
           <Button
-            onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=' + resource.latitude + ',' + resource.longitude, '_blank')}
+            onClick={() =>
+              window.open(
+                'https://www.google.com/maps/dir/?api=1&destination=' +
+                  resource.latitude +
+                  ',' +
+                  resource.longitude,
+                '_blank'
+              )
+            }
             variant="contained"
             disableElevation
             sx={directionBtnStyle}
@@ -140,21 +150,29 @@ function SelectedTapMobile(props) {
         <hr className={styles.topDivider} />
         {tags.map((tag, index) => (
           <TagButton size="small" variant="outlined" key={index}>
-            {tag}
+            {tag.replace('_', ' ')}
           </TagButton>
         ))}
-        {tags.length > 0 && <hr className={styles.botDivider}/>}
+        {tags.length > 0 && <hr className={styles.botDivider} />}
       </div>
 
       <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>{resource.description ? resource.description : 'No description provided'}</p>
+            <p>
+              {resource.description
+                ? resource.description
+                : 'No description provided'}
+            </p>
           </div>
           <div className={styles.details}>
             <h3>Guidelines</h3>
-            <p>{resource.guidelines ? resource.guidelines : 'No statement provided'}</p>
+            <p>
+              {resource.guidelines
+                ? resource.guidelines
+                : 'No statement provided'}
+            </p>
           </div>
         </div>
       </Collapse>
