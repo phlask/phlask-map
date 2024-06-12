@@ -1,5 +1,6 @@
 import { isMobile } from 'react-device-detect';
 import * as actions from '../actions/actions';
+import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
   mapCenter: {
@@ -27,17 +28,11 @@ const initialState = {
     openNow: false,
     accessTypesHidden: []
   },
-  bathroomFilters: {
-    // TODO
-  },
-  foragingFilters: {},
-  allTaps: [],
-  allFoodOrgs: [],
-  allBathroomTaps: [],
-  allForagingTaps: [],
+  /** @type {ResourceEntry[]} */
+  allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  phlaskType: actions.PHLASK_TYPE_WATER,
+  resourceType: WATER_RESOURCE_TYPE,
   isResourceMenuShown: false
 };
 
@@ -93,21 +88,8 @@ export default (state = initialState, act) => {
     case actions.SET_MAP_CENTER:
       return { ...state, mapCenter: act.coords };
 
-    case actions.GET_TAPS_SUCCESS:
-      return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
-
-    case actions.GET_FOOD_SUCCESS:
-      return {
-        ...state,
-        allFoodOrgs: act.allFoodOrgs,
-        filteredOrgs: act.allFoodOrgs
-      };
-
-    case actions.GET_BATHROOM_SUCCESS:
-      return { ...state, allBathroomTaps: act.allBathroomTaps };
-
-    case actions.GET_FORAGING_SUCCESS:
-      return { ...state, allForagingTaps: act.allForagingTaps };
+    case actions.GET_RESOURCES_SUCCESS:
+      return { ...state, allResources: act.allResources };
 
     case actions.SET_FILTER_FUNCTION:
       // console.log('set filter func');
@@ -123,10 +105,7 @@ export default (state = initialState, act) => {
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
             ...state,
-            selectedPlace:
-              state.phlaskType === actions.PHLASK_TYPE_WATER
-                ? state.allTaps[act.selectedPlace]
-                : state.allFoodOrgs[act.selectedPlace],
+            selectedPlace: state.allResources[act.selectedPlace],
             showingInfoWindow: true
           };
 
@@ -222,10 +201,10 @@ export default (state = initialState, act) => {
       return { ...state, toolbarModal: act.mode };
 
     // Toggle Phlask type & close the info window
-    case actions.TOGGLE_PHLASK_TYPE:
+    case actions.TOGGLE_RESOURCE_TYPE:
       return {
         ...state,
-        phlaskType: act.mode,
+        resourceType: act.mode,
         infoWindowClass:
           act.mode !== state.showingInfoWindow
             ? isMobile
@@ -234,8 +213,8 @@ export default (state = initialState, act) => {
             : state.infoWindowClass
       };
 
-    case actions.CHANGE_PHLASK_TYPE:
-      return { ...state, phlaskType: act.phlaskType };
+    case actions.CHANGE_RESOURCE_TYPE:
+      return { ...state, resourceType: act.resourceType };
 
     case actions.TOGGLE_RESOURCE_MENU:
       return { ...state, isResourceMenuShown: !act.isShown };

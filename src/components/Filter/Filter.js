@@ -17,12 +17,12 @@ const FilterTags = props => (
         key={key}
         className={
           styles.filterTag +
-          (props.activeTags[props.phlaskType][props.index][key]
+          (props.activeTags[props.resourceType][props.index][key]
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(0, props.phlaskType, props.index, key);
+          props.handleTag(0, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -39,12 +39,12 @@ const FilterTagsExclusive = props => (
         key={key}
         className={
           styles.filterTagExclusive +
-          (props.activeTags[props.phlaskType][props.index] == key
+          (props.activeTags[props.resourceType][props.index] == key
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(1, props.phlaskType, props.index, key);
+          props.handleTag(1, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -81,7 +81,7 @@ export default function Filter(props) {
             timeout="auto"
           >
             <Box className={styles.header}>
-              <h1>{props.filters[props.phlaskType].title}</h1>
+              <h1>{props.filters[props.resourceType].title}</h1>
               <IconButton
                 aria-label="close"
                 onClick={() => {
@@ -107,7 +107,7 @@ export default function Filter(props) {
             </Box>
 
             <Box sx={{ margin: '20px' }}>
-              {props.filters[props.phlaskType].categories.map(
+              {props.filters[props.resourceType].categories.map(
                 (category, index) => {
                   return (
                     <>
@@ -115,7 +115,7 @@ export default function Filter(props) {
                       {category.type == 0 ? (
                         <FilterTags
                           tags={category.tags}
-                          phlaskType={props.phlaskType}
+                          resourceType={props.resourceType}
                           index={index}
                           handleTag={props.handleTag}
                           activeTags={props.activeTags}
@@ -124,7 +124,7 @@ export default function Filter(props) {
                       ) : (
                         <FilterTagsExclusive
                           tags={category.tags}
-                          phlaskType={props.phlaskType}
+                          resourceType={props.resourceType}
                           index={index}
                           handleTag={props.handleTag}
                           activeTags={props.activeTags}
