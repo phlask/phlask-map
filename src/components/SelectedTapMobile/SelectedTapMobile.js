@@ -23,20 +23,16 @@ function SelectedTapMobile(props) {
   const icon = FountainIcon; // TODO: Add other icons
 
   // From resource info, collect all the tags.
-  const tags = [];
-  if (resource.water) {
-    tags.push(...(resource.water.tags || []));
-  }
-  if (resource.food) {
-    tags.push(...(resource.food.tags || []));
-  }
-  if (resource.forage) {
-    tags.push(...(resource.forage.tags || []));
-  }
-  if (resource.bathroom) {
-    tags.push(...(resource.bathroom.tags || []));
-  }
-  tags.sort();
+  const tags = [
+    resource.water,
+    resource.food,
+    resource.forage,
+    resource.bathroom
+  ]
+    .filter(Boolean) // Filter out any missing resources if it is not that type
+    .flatMap(item => item.tags) // if tags doesn't guarantee to be an array, we can fallback
+    .filter(Boolean) // Tags are optional, so filter out missing tags too
+    .sort();
 
   const directionBtnStyle = {
     padding: '6px 20px 6px 25px',

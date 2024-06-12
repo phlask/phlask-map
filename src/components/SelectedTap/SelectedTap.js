@@ -26,9 +26,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import CloseIcon from '@mui/icons-material/Close';
 
-import {
-  WATER_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
+import { WATER_RESOURCE_TYPE } from '../../types/ResourceEntry';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -214,7 +212,6 @@ class SelectedTap extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props)
     return (
       <div>
         {isMobile && (

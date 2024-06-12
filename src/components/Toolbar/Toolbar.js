@@ -69,22 +69,24 @@ function distance(lat1, lon1, lat2, lon2) {
 // @param {ResourceEntry[]} data
 // @return {ResourceEntry}
 function getClosest(data, userLocation) {
-  let distances = data
-    .map((resource, index) => {
-      return {
-        resource,
-        distance: distance(
-          userLocation['lat'],
-          userLocation['lon'],
-          resource.latitude,
-          resource.longitude
-        ),
-      }
-    });
+  let distances = data.map((resource, index) => {
+    return {
+      resource,
+      distance: distance(
+        userLocation['lat'],
+        userLocation['lon'],
+        resource.latitude,
+        resource.longitude
+      )
+    };
+  });
 
   // Return the resource with the minimum distance value
   if (!distances) return null;
-  return distances.reduce((min, p) => (p.distance < min.distance ? p : min), distances[0]).resource;
+  return distances.reduce(
+    (min, p) => (p.distance < min.distance ? p : min),
+    distances[0]
+  ).resource;
 }
 
 function getCoordinates() {
@@ -127,7 +129,6 @@ function Toolbar(props) {
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
     let data;
-    console.log(props)
 
     switch (props.resourceType) {
       case WATER_RESOURCE_TYPE:
@@ -142,7 +143,6 @@ function Toolbar(props) {
       lat: props.userLocation.lat,
       lon: props.userLocation.lng
     });
-    console.log(props)
 
     props.setSelectedPlace(closest);
 
