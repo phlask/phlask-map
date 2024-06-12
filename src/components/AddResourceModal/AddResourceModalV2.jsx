@@ -350,9 +350,7 @@ export default function AddResourceModalV2(props) {
         };
       }
 
-      console.log(newResource);
-
-      // TODO(vontell): Do this the right way, don't just init here every time
+      // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource);
