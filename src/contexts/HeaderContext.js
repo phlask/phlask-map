@@ -17,8 +17,8 @@ const HeaderProvider = ({ children }) => {
     const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
     const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
     const [shownPage, setShownPage] = useState(null);
-    const isSearchShown = useSelector(state => state.isSearchShown);
-    const isFilterShown = useSelector(state => state.isFilterShown);
+    const isSearchShown = useSelector(state => state.filterMarkers.isSearchShown);
+    const isFilterShown = useSelector(state => state.filterMarkers.isFilterShown);
 
     // Define any functions or values you want to expose to consumers of the context
     const open = Boolean(anchorEl);
