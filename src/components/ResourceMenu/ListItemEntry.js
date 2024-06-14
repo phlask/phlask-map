@@ -31,7 +31,7 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const switchType = type => {
     handleGA(type);
     dispatch({
-      type: Action.TOGGLE_PHLASK_TYPE,
+      type: Action.TOGGLE_RESOURCE_TYPE,
       mode: type
     });
     toggleResourceMenu();

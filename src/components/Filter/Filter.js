@@ -7,9 +7,6 @@ import styles from './Filter.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
-
-
-
 const FilterTags = props => (
   <Box className={styles.filterTags}>
     {props.tags.map((tag, key) => (
@@ -17,12 +14,12 @@ const FilterTags = props => (
         key={key}
         className={
           styles.filterTag +
-          (props.activeTags[props.phlaskType][props.index][key]
+          (props.activeTags[props.resourceType][props.index][key]
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(0, props.phlaskType, props.index, key);
+          props.handleTag(0, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -39,12 +36,12 @@ const FilterTagsExclusive = props => (
         key={key}
         className={
           styles.filterTagExclusive +
-          (props.activeTags[props.phlaskType][props.index] == key
+          (props.activeTags[props.resourceType][props.index] == key
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(1, props.phlaskType, props.index, key);
+          props.handleTag(1, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
       >
@@ -81,7 +78,7 @@ export default function Filter(props) {
             timeout="auto"
           >
             <Box className={styles.header}>
-              <h1>{props.filters[props.phlaskType].title}</h1>
+              <h1>{props.filters[props.resourceType].title}</h1>
               <IconButton
                 aria-label="close"
                 onClick={() => {
@@ -108,30 +105,32 @@ export default function Filter(props) {
 
             <Box sx={{ margin: '20px' }}>
               {props.filters[props.phlaskType].categories.map(
-                (category, index) => (
-                  <React.Fragment key={index}>
-                    <h2 className={styles.label}>{category.header}</h2>
-                    {category.type == 0 ? (
-                      <FilterTags
-                        tags={category.tags}
-                        phlaskType={props.phlaskType}
-                        index={index}
-                        handleTag={props.handleTag}
-                        activeTags={props.activeTags}
-                        forceUpdate={forceUpdate}
-                      />
-                    ) : (
-                      <FilterTagsExclusive
-                        tags={category.tags}
-                        phlaskType={props.phlaskType}
-                        index={index}
-                        handleTag={props.handleTag}
-                        activeTags={props.activeTags}
-                        forceUpdate={forceUpdate}
-                      />
-                    )}
-                  </React.Fragment>
-                )
+                (category, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <h2 className={styles.label}>{category.header}</h2>
+                      {category.type == 0 ? (
+                        <FilterTags
+                          tags={category.tags}
+                          resourceType={props.resourceType}
+                          index={index}
+                          handleTag={props.handleTag}
+                          activeTags={props.activeTags}
+                          forceUpdate={forceUpdate}
+                        />
+                      ) : (
+                        <FilterTagsExclusive
+                          tags={category.tags}
+                          resourceType={props.resourceType}
+                          index={index}
+                          handleTag={props.handleTag}
+                          activeTags={props.activeTags}
+                          forceUpdate={forceUpdate}
+                        />
+                      )}
+                    </React.Fragment>
+                  );
+                }
               )}
             </Box>
             <Box
