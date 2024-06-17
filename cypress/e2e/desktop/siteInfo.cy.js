@@ -26,6 +26,7 @@ describe("site info", () => {
     // Load a sample food site
     // This is currently using live data, but should be updated to make use of test data.
     cy.get('[title=data-cy-1]').click()
+    cy.get('[title=data-cy-2]').click()
 
     cy.get('[data-cy=tap-organization-name]').should('have.text', 'Test Organization')
   });

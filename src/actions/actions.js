@@ -71,7 +71,7 @@ export const getFoodSuccess = allFoodOrgs => ({
 export const getFoodOrgs = () => dispatch => {
   const app = initializeApp(foodConfig, 'food');
   const database = getDatabase(app);
-  return onValue(ref(database, '/'), snapshot => {
+  return process.env.REACT_APP_CYPRESS_TEST ? dispatch(getFoodSuccess(testData)) : onValue(ref(database, '/'), snapshot => {
     const snapshotVal = snapshot.val();
     dispatch(getFoodSuccess(snapshotVal.filter(Boolean)));
   });
