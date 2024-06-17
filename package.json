@@ -71,6 +71,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:cypress": "REACT_APP_CYPRESS_TEST=true react-scripts start",
     "build": "react-scripts build",
     "testDataGen": "node cypress/testDataGenerator.js",
     "test": "yarn testDataGen && cypress run",

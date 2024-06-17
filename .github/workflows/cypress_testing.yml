@@ -16,8 +16,7 @@ jobs:
         # env:
         #   CYPRESS_REACT_APP_CYPRESS_TEST: true
         with:
-          # build: yarn build
-          start: export REACT_APP_CYPRESS_TEST=true,yarn start
+          start: yarn start:cypress
           browser: chrome
           spec: cypress/e2e/desktop/*.cy.js
           # env: REACT_APP_CYPRESS_TEST=true
