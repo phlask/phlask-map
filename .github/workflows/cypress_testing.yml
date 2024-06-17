@@ -18,6 +18,4 @@ jobs:
           start: yarn start
           browser: chrome
           spec: cypress/e2e/desktop/*.cy.js
-        env:
-          CYPRESS_CI: false
-          CYPRESS_REACT_APP_CYPRESS_TEST: true
+          env: REACT_APP_CYPRESS_TEST=true
