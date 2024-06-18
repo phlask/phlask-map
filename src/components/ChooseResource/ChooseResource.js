@@ -3,15 +3,17 @@ import React, { useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CHANGE_PHLASK_TYPE,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
+  CHANGE_RESOURCE_TYPE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_NONE,
   setToolbarModal
 } from '../../actions/actions';
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 import styles from './ChooseResource.module.scss';
 
 import { ReactComponent as BathroomIcon } from '../icons/BathroomIconChooseResource.svg';
@@ -92,8 +94,8 @@ export default function ChooseResource(props) {
                   text="Water"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_WATER
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: WATER_RESOURCE_TYPE
                     });
                   }}
                   data-cy="button-water-data-selector"
@@ -104,8 +106,8 @@ export default function ChooseResource(props) {
                   text="Foraging"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_FORAGING
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: FORAGE_RESOURCE_TYPE
                     });
                   }}
                   data-cy="button-foraging-data-selector"
@@ -116,8 +118,8 @@ export default function ChooseResource(props) {
                   text="Food"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_FOOD
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: FOOD_RESOURCE_TYPE
                     });
                   }}
                   data-cy="button-food-data-selector"
@@ -128,8 +130,8 @@ export default function ChooseResource(props) {
                   text="Bathroom"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_BATHROOM
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: BATHROOM_RESOURCE_TYPE
                     });
                   }}
                   data-cy="button-bathroom-data-selector"

@@ -103,7 +103,6 @@
     "not op_mini all"
   ],
   "homepage": ".",
-  "proxy": "https://test.phlask.me",
   "description": "Code behind the PHLASK Web Map",
   "main": "index.js",
   "repository": {

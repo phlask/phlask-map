@@ -25,7 +25,6 @@ const PageTwo = ({
   hasFountain,
   errors,
   control,
-  getVariableName,
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
@@ -33,32 +32,32 @@ const PageTwo = ({
     {
       label: 'Wheelchair accessible',
       value: handicapAccessible,
-      name: getVariableName({ handicapAccessible })
+      name: 'handicapAccessible'
     },
     {
       label: 'Gender neutral',
       value: genderNeutral,
-      name: getVariableName({ genderNeutral })
+      name: 'genderNeutral'
     },
     {
       label: 'Changing table',
       value: changingTable,
-      name: getVariableName({ changingTable })
+      name: 'changingTable'
     },
     {
       label: 'Single occupancy',
       value: singleOccupancy,
-      name: getVariableName({ singleOccupancy })
+      name: 'singleOccupancy'
     },
     {
       label: 'Family bathroom',
       value: familyBathroom,
-      name: getVariableName({ familyBathroom })
+      name: 'familyBathroom'
     },
     {
       label: 'Also has water fountain',
       value: hasFountain,
-      name: getVariableName({ hasFountain })
+      name: 'hasFountain'
     }
   ];
   return (
