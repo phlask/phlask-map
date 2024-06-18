@@ -329,7 +329,7 @@ export class ReactGoogleMaps extends Component {
                     }}
                     // This is used for marker targetting as we are unable to add custom properties with this library.
                     // We should eventually replace this so that we can still enable the use of screen readers in the future.
-                    title={'data-cy-' + index}
+                    title={`data-cy-${index}`}
                   />
                 );
               })}

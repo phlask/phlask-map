@@ -13,10 +13,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        # env:
-        #   CYPRESS_REACT_APP_CYPRESS_TEST: true
         with:
           start: yarn start:cypress
           browser: chrome
           spec: cypress/e2e/desktop/*.cy.js
-          # env: REACT_APP_CYPRESS_TEST=true

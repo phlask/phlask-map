@@ -36,6 +36,8 @@ describe("crowdsourcing form", () => {
       cy.get('input[name="handicapAccessible"]').click()
       cy.get('input[name="waterVesselNeeded"]').click()
       cy.get('textarea[name="guidelines"]').type("Cypress Test")
+      // TODO Uncomment this and validate the post-submission screen content once 
+      //      we have implemented a mechanism to ensure tests do not actually send data to our live DB.
       // cy.get('input[type="submit').click()
     });
 

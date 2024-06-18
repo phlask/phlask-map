@@ -33,10 +33,6 @@ describe("filters", () => {
       // Check that a location that does not match filter is not present
       // NOTE: This is commented as this test will not current pass as filtering is not working properly.
       // cy.get('[title=data-cy-1]').should('not.exist');
-
-      //TODO FOCUS ON THE OBJECTIVE FOR THIS BRANCH - MAKE A WORKING TEST, even if the functionality is broken in this branch
-      // We can open tickets to fix, but the goal is to have tests, not to have 100% test success rate yet.
-      // Otherwise we'll never finish this
     });
 
     it("should successfully show a result for each food site filter permutation", () => {

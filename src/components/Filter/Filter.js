@@ -25,7 +25,7 @@ const FilterTags = props => (
           props.handleTag(0, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
-        data-cy={"filter-option-"+tag}
+        data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
       </Box>
@@ -48,7 +48,7 @@ const FilterTagsExclusive = props => (
           props.handleTag(1, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
-        data-cy={"filter-option-"+tag}
+        data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
       </Box>
