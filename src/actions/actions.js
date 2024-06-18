@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { resourcesConfig } from '../firebase/firebaseConfig';
+import { testData } from '../firebase/functionalTest';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -35,7 +36,7 @@ export const getResourcesSuccess = allResources => ({
 export const getResources = () => dispatch => {
   const app = initializeApp(resourcesConfig);
   const database = getDatabase(app);
-  return process.env.REACT_APP_CYPRESS_TEST ? dispatch(getTapsSuccess(testData)) : onValue(ref(database, '/'),
+  return process.env.REACT_APP_CYPRESS_TEST ? dispatch(getResourcesSuccess(testData)) : onValue(ref(database, '/'),
     snapshot => {
       dispatch(getResourcesSuccess(snapshot.val()));
     },
