@@ -25,6 +25,7 @@ const FilterTags = props => (
           props.handleTag(0, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
+        data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
       </Box>
@@ -47,6 +48,7 @@ const FilterTagsExclusive = props => (
           props.handleTag(1, props.resourceType, props.index, key);
           props.forceUpdate();
         }}
+        data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
       </Box>
@@ -181,6 +183,7 @@ export default function Filter(props) {
                     fontWeight: '600',
                     color: '#09A2E5'
                   }}
+                  data-cy="filter-apply-button"
                 >
                   Apply
                 </Button>

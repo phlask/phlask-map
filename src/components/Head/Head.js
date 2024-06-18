@@ -229,6 +229,7 @@ function Head(props) {
                   left: '-10px',
                   right: '6px'
                 }}
+                data-cy="head-sidebar-button"
               >
                 <MenuIcon />
               </IconButton>
@@ -302,6 +303,7 @@ function Head(props) {
                     margin: '15px'
                   }}
                   onClick={toggleMenuExpand}
+                  data-cy="head-sidebar-button"
                 >
                   <CloseIcon close={menuExpand} />
                 </IconButton>
@@ -341,18 +343,21 @@ function Head(props) {
                   <DropLink
                     onClick={() => menuClicked('about')}
                     startIcon={<PhlaskNoTextIcon />}
+                    data-cy="sidebar-about-button"
                   >
                     About
                   </DropLink>
                   <DropLink
                     onClick={() => menuClicked('join')}
                     startIcon={<UsersIcon />}
+                    data-cy="sidebar-jointeam-button"
                   >
                     Join the team
                   </DropLink>
                   <DropLink
                     onClick={() => menuClicked('contact')}
                     startIcon={<IDIcon />}
+                    data-cy="sidebar-contact-button"
                   >
                     Contact
                   </DropLink>

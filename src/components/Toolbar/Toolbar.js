@@ -158,7 +158,7 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (props.toolbarModal == modal) {
+    if (props.toolbarModal === modal) {
       props.setToolbarModal(TOOLBAR_MODAL_NONE);
     } else {
       props.setToolbarModal(modal);
@@ -237,6 +237,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-resource-type-menu"
           >
             <ResourceIcon style={{ color: '#f80' }} />
             <Typography
@@ -265,6 +266,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-filter-menu"
           >
             <FilterIcon />
             <Typography
@@ -293,6 +295,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-search"
           >
             <SearchIcon />
             <Typography
@@ -321,6 +324,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-contribute-menu"
           >
             <ContributeIcon />
             <Typography
@@ -346,6 +350,7 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
+              data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
@@ -370,6 +375,7 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
+              data-cy="button-contribute-menu"
               label={
                 <Typography noWrap fontSize="small">
                   Add Site

@@ -114,7 +114,7 @@ function SelectedTapMobile(props) {
           style={{ width: '52px' }}
         />
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.organization}>{resource.name}</h2>
+          <h2 className={styles.organization} data-cy="tap-organization-name">{resource.name}</h2>
           <p>{resource.address}</p>
           {props.children}
           <Button

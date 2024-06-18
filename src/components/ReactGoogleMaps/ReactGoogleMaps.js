@@ -327,6 +327,9 @@ export class ReactGoogleMaps extends Component {
                     icon={{
                       url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
                     }}
+                    // This is used for marker targetting as we are unable to add custom properties with this library.
+                    // We should eventually replace this so that we can still enable the use of screen readers in the future.
+                    title={`data-cy-${index}`}
                   />
                 );
               })}
@@ -335,6 +338,7 @@ export class ReactGoogleMaps extends Component {
                 <Marker
                   name={'Your Search Result'}
                   position={this.state.searchedTap}
+                  title={'data-cy-search-result'}
                 />
               )}
             </Map>
