@@ -1,866 +1,426 @@
 [
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.1646224595513,
-        "PointY": 39.95322480084546,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100000,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
         "description": "Test,Description Value.",
-        "filtration": "No",
-        "foodnum": 1,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95322480084546,
-        "lon": -75.1646224595513,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95322480084546,
+        "longitude": -75.1646224595513,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 1,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.16292738387706,
-        "PointY": 39.95307591197137,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100002,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 2,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95307591197137,
-        "lon": -75.16292738387706,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95307591197137,
+        "longitude": -75.16292738387706,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Sink",
-        "tapnum": 2,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.16495794327851,
-        "PointY": 39.95208782304877,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100003,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 3,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95208782304877,
-        "lon": -75.16495794327851,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95208782304877,
+        "longitude": -75.16495794327851,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 3,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.1631039542598,
-        "PointY": 39.951938931699644,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100004,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 4,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.951938931699644,
-        "lon": -75.1631039542598,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.951938931699644,
+        "longitude": -75.1631039542598,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 4,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.16642347745518,
-        "PointY": 39.953549648173045,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100005,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 5,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.953549648173045,
-        "lon": -75.16642347745518,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.953549648173045,
+        "longitude": -75.16642347745518,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 5,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.16169139119792,
-        "PointY": 39.95310298269983,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100006,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 6,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95310298269983,
-        "lon": -75.16169139119792,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95310298269983,
+        "longitude": -75.16169139119792,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 6,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.1668825604503,
-        "PointY": 39.95211489416834,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100007,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 7,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95211489416834,
-        "lon": -75.1668825604503,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95211489416834,
+        "longitude": -75.1668825604503,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 7,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
     },
     {
-        "CommonName": "Red mulberry",
-        "Genus": "Morus",
-        "PlantingSiteId": 459948,
-        "PointX": -75.16195624677202,
-        "PointY": 39.95078839670956,
-        "PostalCode": 19144,
-        "Species": "rubra",
-        "StreetAddress": "1020 Lombard St.",
-        "TreeId": 100008,
-        "access": "Public",
-        "address": "1020 Lombard St.",
-        "children_only": true,
+        "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
-        "description": "Test,DescriptionValue.",
-        "filtration": "No",
-        "foodnum": 8,
-        "gp_id": "ChIJocPgsybGxokR3QyYHHmQ118",
-        "handicap": "Unsure",
-        "hours": [
-            {
-                "close": {
-                    "day": 0,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 0,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 1,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 1,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 2,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 2,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 3,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 3,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 4,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 4,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 5,
-                    "time": "2200"
-                },
-                "open": {
-                    "day": 5,
-                    "time": "0700"
-                }
-            },
-            {
-                "close": {
-                    "day": 6,
-                    "time": "2100"
-                },
-                "open": {
-                    "day": 6,
-                    "time": "0700"
-                }
-            }
-        ],
-        "id_required": "no",
-        "kid_only": "no",
-        "lat": 39.95078839670956,
-        "lon": -75.16195624677202,
-        "norms_rules": "",
-        "organization": "Test Organization",
-        "permanently_closed": false,
-        "phone": "(215)867-5309",
-        "quality": "1-4Missing-Good",
-        "service": "Self-serve",
-        "statement": "",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95078839670956,
+        "longitude": -75.16195624677202,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
         "status": "OPERATIONAL",
-        "tap_type": "Drinking Fountain",
-        "tapnum": 8,
-        "vessel": "No",
-        "zip_code": ""
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95322480084546,
+        "longitude": -75.1646224595513,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95307591197137,
+        "longitude": -75.16292738387706,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95208782304877,
+        "longitude": -75.16495794327851,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.951938931699644,
+        "longitude": -75.1631039542598,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.953549648173045,
+        "longitude": -75.16642347745518,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95310298269983,
+        "longitude": -75.16169139119792,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95211489416834,
+        "longitude": -75.1668825604503,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95078839670956,
+        "longitude": -75.16195624677202,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
     }
 ]

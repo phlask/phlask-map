@@ -167,7 +167,7 @@ class SelectedTap extends React.Component {
     ReactGA.event({
       category: `Tap - ${this.props.resourceType}`,
       action: 'InfoShown',
-      label: `${this.props.selectedPlace?.organization}, ${this.props.selectedPlace?.address}`
+      label: `${this.props.selectedPlace?.name}, ${this.props.selectedPlace?.address}`
     });
   }
 
@@ -177,7 +177,7 @@ class SelectedTap extends React.Component {
     const selectedPlace = this.props.selectedPlace;
 
     this.setState({
-      organization: selectedPlace?.organization,
+      name: selectedPlace?.name,
       address: selectedPlace?.address,
       tapDescription: selectedPlace?.description
         ? selectedPlace?.description
@@ -353,7 +353,7 @@ class SelectedTap extends React.Component {
                   {/* Name & Address */}
                   <div id="org-name-and-address-desktop">
                     <div id="tap-organization-name" data-cy="tap-organization-name">
-                      {this.state.organization}
+                      {this.state.name}
                     </div>
                     {this.state.address && (
                       <h5 id="tap-info-address">{this.state.address}</h5>

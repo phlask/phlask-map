@@ -41,7 +41,7 @@ import { ReactComponent as FoodPhlaskButton } from '../icons/PhlaskButtons/FoodP
 import { ReactComponent as ForagingPhlaskButton } from '../icons/PhlaskButtons/ForagingPhlaskButton.svg';
 import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/WaterPhlaskButton.svg';
 
-import { BottomNavigationAction, SvgIcon, Typography } from '@mui/material';
+import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
