@@ -20,7 +20,7 @@ const Contact = () => {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.pageHeader}>Contact</h1>
+      <h1 className={styles.pageHeader} data-cy="contact-header">Contact</h1>
       {!submitted && (
         <div>
           <h2

@@ -1,0 +1,426 @@
+[
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95322480084546,
+        "longitude": -75.1646224595513,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95307591197137,
+        "longitude": -75.16292738387706,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95208782304877,
+        "longitude": -75.16495794327851,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.951938931699644,
+        "longitude": -75.1631039542598,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.953549648173045,
+        "longitude": -75.16642347745518,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95310298269983,
+        "longitude": -75.16169139119792,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95211489416834,
+        "longitude": -75.1668825604503,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "description": "Test,Description Value.",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95078839670956,
+        "longitude": -75.16195624677202,
+        "name": "Test Organization",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN"
+            ]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95322480084546,
+        "longitude": -75.1646224595513,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95307591197137,
+        "longitude": -75.16292738387706,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95208782304877,
+        "longitude": -75.16495794327851,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.951938931699644,
+        "longitude": -75.1631039542598,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.953549648173045,
+        "longitude": -75.16642347745518,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95310298269983,
+        "longitude": -75.16169139119792,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95211489416834,
+        "longitude": -75.1668825604503,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    },
+    {
+        "address": "3101 Tyson Ave",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "entry_type": "UNSURE",
+        "food": {
+            "organization_name": "Test Organization",
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+        },
+        "last_modified": "2024-03-31T00:37:46.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95078839670956,
+        "longitude": -75.16195624677202,
+        "name": "Test Organization",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verified": false,
+        "version": 1,
+        "zip_code": "19149"
+    }
+]

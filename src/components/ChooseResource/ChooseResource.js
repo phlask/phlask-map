@@ -37,6 +37,7 @@ const ResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={props.onClick}
+      data-cy={props["data-cy"]}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.text}</p>
@@ -52,7 +53,9 @@ export default function ChooseResource(props) {
   const ref = useRef(null);
 
   const handleClickOutside = () => {
-    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    if(toolbarModal === TOOLBAR_MODAL_RESOURCE) {
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    }
   };
 
   useOnClickOutside(ref, handleClickOutside);
@@ -95,6 +98,7 @@ export default function ChooseResource(props) {
                       resourceType: WATER_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-water-data-selector"
                 />
                 <ResourceButton
                   icon={ForagingIcon}
@@ -106,6 +110,7 @@ export default function ChooseResource(props) {
                       resourceType: FORAGE_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-foraging-data-selector"
                 />
                 <ResourceButton
                   icon={FoodIcon}
@@ -117,6 +122,7 @@ export default function ChooseResource(props) {
                       resourceType: FOOD_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-food-data-selector"
                 />
                 <ResourceButton
                   icon={BathroomIcon}
@@ -128,6 +134,7 @@ export default function ChooseResource(props) {
                       resourceType: BATHROOM_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-bathroom-data-selector"
                 />
               </Box>
             </Box>
