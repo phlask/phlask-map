@@ -7,9 +7,6 @@ import styles from './Filter.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
-
-
-
 const FilterTags = props => (
   <Box className={styles.filterTags}>
     {props.tags.map((tag, key) => (
@@ -112,7 +109,7 @@ export default function Filter(props) {
               {props.filters[props.resourceType].categories.map(
                 (category, index) => {
                   return (
-                    <>
+                    <React.Fragment key={index}>
                       <h2 className={styles.label}>{category.header}</h2>
                       {category.type == 0 ? (
                         <FilterTags
@@ -133,7 +130,7 @@ export default function Filter(props) {
                           forceUpdate={forceUpdate}
                         />
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 }
               )}
