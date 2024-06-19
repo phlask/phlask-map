@@ -55,6 +55,7 @@ export const DesktopHead = (props) => {
                                 margin: '15px'
                             }}
                             onClick={toggleMenuExpand}
+                            data-cy="head-sidebar-button"
                         >
                             <CloseIcon close={menuExpand} />
                         </IconButton>
@@ -73,36 +74,6 @@ export const DesktopHead = (props) => {
                             />
                         </Button>
                     </Box>
-                    {showMapControls ? (
-                        <Box
-                            sx={{
-                                position: 'relative',
-                                marginLeft: 'auto'
-                            }}
-                        >
-                            <IconButton onClick={() => {
-                                if (props.toolbarModal != TOOLBAR_MODAL_SEARCH) {
-                                    props.setToolbarModal(TOOLBAR_MODAL_SEARCH);
-                                } else {
-                                    props.setToolbarModal(TOOLBAR_MODAL_NONE);
-                                }
-                            }}>
-                                <SearchIcon />
-                            </IconButton>
-                            <IconButton
-                                sx={{ marginRight: '-8px' }}
-                                onClick={() => {
-                                    if (props.toolbarModal != TOOLBAR_MODAL_FILTER) {
-                                        props.setToolbarModal(TOOLBAR_MODAL_FILTER);
-                                    } else {
-                                        props.setToolbarModal(TOOLBAR_MODAL_NONE);
-                                    }
-                                }}
-                            >
-                                <FilterIcon />
-                            </IconButton>
-                        </Box>
-                    ) : null}
                     <Collapse
                         in={pageExpand}
                         timeout="auto"
@@ -124,18 +95,21 @@ export const DesktopHead = (props) => {
                             <DropLink
                                 onClick={() => menuClicked('about')}
                                 startIcon={<PhlaskNoTextIcon />}
+                                data-cy="sidebar-about-button"
                             >
                                 About
                             </DropLink>
                             <DropLink
                                 onClick={() => menuClicked('join')}
                                 startIcon={<UsersIcon />}
+                                data-cy="sidebar-jointeam-button"
                             >
                                 Join the team
                             </DropLink>
                             <DropLink
                                 onClick={() => menuClicked('contact')}
                                 startIcon={<IDIcon />}
+                                data-cy="sidebar-contact-button"
                             >
                                 Contact
                             </DropLink>

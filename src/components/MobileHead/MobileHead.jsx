@@ -62,6 +62,7 @@ function MobileHead(props) {
                                 margin: '15px'
                             }}
                             onClick={toggleMenuExpand}
+                            data-cy="head-sidebar-button"
                         >
                             <CloseIcon close={menuExpand} />
                         </IconButton>

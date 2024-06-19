@@ -106,7 +106,7 @@ export default function Filter(props) {
             </Box>
 
             <Box sx={{ margin: '20px' }}>
-              {props.filters[props.phlaskType].categories.map(
+              {props.filters[props.resourceType].categories.map(
                 (category, index) => {
                   return (
                     <React.Fragment key={index}>
