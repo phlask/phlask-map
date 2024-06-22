@@ -23,16 +23,7 @@ function SelectedTapMobile(props) {
   const icon = FountainIcon; // TODO: Add other icons
 
   // From resource info, collect all the tags.
-  const tags = [
-    resource.water,
-    resource.food,
-    resource.forage,
-    resource.bathroom
-  ]
-    .filter(Boolean) // Filter out any missing resources if it is not that type
-    .flatMap(item => item.tags) // if tags doesn't guarantee to be an array, we can fallback
-    .filter(Boolean) // Tags are optional, so filter out missing tags too
-    .sort();
+  const tags = getTagsFromResource(resource);
 
   const directionBtnStyle = {
     padding: '6px 20px 6px 25px',
@@ -114,7 +105,9 @@ function SelectedTapMobile(props) {
           style={{ width: '52px' }}
         />
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.organization} data-cy="tap-organization-name">{resource.name}</h2>
+          <h2 className={styles.organization} data-cy="tap-organization-name">
+            {resource.name}
+          </h2>
           <p>{resource.address}</p>
           {props.children}
           <Button
@@ -174,6 +167,38 @@ function SelectedTapMobile(props) {
       </Collapse>
     </div>
   );
+}
+
+/**
+ * Get a list of tags to display for a resources
+ * @param {ResourceEntry} resource
+ * @returns {Array<string>} A list of tags to display in the UI
+ */
+function getTagsFromResource(resource) {
+  // First, get the tags
+  const tags = [
+    resource.water,
+    resource.food,
+    resource.forage,
+    resource.bathroom
+  ]
+    .filter(Boolean) // Filter out any missing resources if it is not that type
+    .flatMap(item => item.tags);
+
+  // Then , get resource-specific information
+  if (resource.water) {
+    tags.push(...(resource.water.dispenser_type || []));
+  }
+  if (resource.food) {
+    tags.push(...(resource.food.food_type || []));
+    tags.push(...(resource.food.distribution_type || []));
+    tags.push(...(resource.food.organization_type || []));
+  }
+  if (resource.forage) {
+    tags.push(resource.forage.forage_type);
+  }
+
+  return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
 }
 
 export default SelectedTapMobile;

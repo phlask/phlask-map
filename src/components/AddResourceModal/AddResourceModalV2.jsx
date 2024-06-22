@@ -134,9 +134,6 @@ export default function AddResourceModalV2(props) {
 
     if (eventOrString && eventOrString.target) {
       // This is an event object
-      if (eventOrString.target.name !== 'address') {
-        return; // Exit if the field is not 'address'
-      }
       newValue = eventOrString.target.value;
       fieldName = eventOrString.target.name;
     } else {
@@ -151,8 +148,10 @@ export default function AddResourceModalV2(props) {
       [fieldName]: newValue
     }));
 
-    // Trigger the debounced geocoding function
-    debouncedGeocode(newValue);
+    // Trigger the debounced geocoding function if this was an address
+    if (fieldName === 'address') {
+      debouncedGeocode(newValue);
+    }
   };
 
   // controls which modal state to show
@@ -241,6 +240,8 @@ export default function AddResourceModalV2(props) {
         component.types.includes('postal_code')
       ).long_name;
 
+      console.log(values);
+
       /**
        *
        * @type {ResourceEntry}
@@ -260,8 +261,8 @@ export default function AddResourceModalV2(props) {
         city: city,
         state: state,
         zip_code: postalCode,
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
+        latitude: values.latitude || userLocation.lat,
+        longitude: values.longitude || userLocation.lng,
         gp_id: placeId,
         images: images,
         guidelines: values.guidelines,
@@ -349,6 +350,8 @@ export default function AddResourceModalV2(props) {
           ].filter(Boolean)
         };
       }
+
+      console.log(newResource);
 
       // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
       const app = initializeApp(resourcesConfig);
