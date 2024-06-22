@@ -115,7 +115,6 @@ function MobileHead() {
             </Box>
           </Box>
           <Collapse
-            collapseSize="50px"
             in={pageExpand}
             timeout="auto"
             onEntered={() => {

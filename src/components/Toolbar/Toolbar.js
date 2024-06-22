@@ -142,7 +142,9 @@ function Toolbar({ map }) {
   }
 
   function toolbarClicked(modal) {
-    setToolbarModal(toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal);
+    dispatch(
+      setToolbarModal(toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal)
+    );
   }
 
   let phlaskButton = null;
