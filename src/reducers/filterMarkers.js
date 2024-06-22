@@ -90,6 +90,12 @@ export default (state = initialState, act) => {
     case actions.getResources.fulfilled.type:
       return { ...state, allResources: act.payload };
 
+    case actions.PUSH_NEW_RESOURCE:
+      return {
+        ...state,
+        allResources: [...state.allResources, act.newResource]
+      };
+
     case actions.SET_FILTER_FUNCTION:
       return { filterFunction: !state.filterFunction, ...state };
 

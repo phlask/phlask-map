@@ -7,23 +7,15 @@ import {
   toggleInfoWindowClass
 } from '../../actions/actions';
 import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
-import SelectedTapIcons from '../SelectedTapIcons/SelectedTapIcons';
+
 import sampleImg from '../images/phlask-tessellation.png';
 import sampleImg2x from '../images/phlask-tessellation@2x.png';
-import phlaskBlue from '../images/phlaskBlue.png';
-import phlaskGreen from '../images/phlaskGreen.png';
 import './SelectedTap.css';
-import styles from './SelectedTap.module.scss';
 
 import { Paper, SwipeableDrawer } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 
-import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import IosShareIcon from '@mui/icons-material/IosShare';
-import CloseIcon from '@mui/icons-material/Close';
+import SelectedTapDetails from '../SelectedTapMobile/SelectedTapDetails';
 
-import { WATER_RESOURCE_TYPE } from '../../types/ResourceEntry';
 import useIsMobile from 'hooks/useIsMobile';
 
 const tempImages = {
@@ -33,21 +25,14 @@ const tempImages = {
 
 const SelectedTap = () => {
   const dispatch = useDispatch();
-  const refContentArea = useRef();
   const refSelectedTap = useRef();
   const isMobile = useIsMobile();
 
   const [previewHeight, setPreviewHeight] = useState(0);
   const [infoExpansionStyle, setInfoExpansionStyle] = useState({});
   const [isDescriptionShown, setIsDescriptionShown] = useState(false);
-  const [tapNormsAndRules, setTapNormsAndRules] = useState(null);
-  const [animationSpeed, setAnimationSpeed] = useState(600);
-  const [testIcons, setTestIcons] = useState({
-    access: phlaskBlue,
-    accessibility: phlaskGreen
-  });
+
   const [walkingDuration, setWalkingDuration] = useState(0);
-  const [walkingDistance, setWalkingDistance] = useState(0);
   const [infoCollapseMobile, setInfoCollapseMobile] = useState(false);
 
   const showingInfoWindow = useSelector(
@@ -56,9 +41,7 @@ const SelectedTap = () => {
   const infoIsExpanded = useSelector(
     state => state.filterMarkers.infoIsExpanded
   );
-  const infoWindowClass = useSelector(
-    state => state.filterMarkers.infoWindowClass
-  );
+
   const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -82,7 +65,6 @@ const SelectedTap = () => {
         ).toFixed(1);
 
         setWalkingDuration(duration);
-        setWalkingDistance(distance);
       });
   }, [selectedPlace, userLocation?.lat, userLocation.lng]);
 
@@ -91,7 +73,7 @@ const SelectedTap = () => {
       // Start animation before unmounting description
       setTimeout(() => {
         setIsDescriptionShown(shouldExpand);
-      }, animationSpeed);
+      }, 600);
       // Expand or Collapse
       animateInfoExpansion(shouldExpand);
       // Close if in preview mode
@@ -162,14 +144,6 @@ const SelectedTap = () => {
     dispatch(toggleInfoExpanded(shouldExpand));
   };
 
-  const handleSwipe = direction => {
-    if (direction === 'top') {
-      handleToggleInfoExpanded(true);
-    } else if (direction === 'bottom') {
-      handleToggleInfoExpanded(false);
-    }
-  };
-
   const handleGA = useCallback(() => {
     ReactGA.event({
       category: `Tap - ${resourceType}`,
@@ -184,6 +158,18 @@ const SelectedTap = () => {
     setPreviewHeight(refSelectedTap.current?.clientHeight ?? 0);
   }, [handleGA, getWalkingDurationAndTimes]);
 
+  useEffect(() => {
+    if (showingInfoWindow) {
+      if (
+        isMobile &&
+        previewHeight !== refSelectedTap.current.clientHeight &&
+        !isDescriptionShown
+      ) {
+        setPreviewHeight(refSelectedTap.current.clientHeight);
+      }
+    }
+  }, [isDescriptionShown, isMobile, previewHeight, showingInfoWindow]);
+
   return (
     <div>
       {isMobile && (
@@ -196,18 +182,19 @@ const SelectedTap = () => {
               onClose={() => handleToggleInfoWindow(false)}
               PaperProps={{ square: false }}
             >
-              <SelectedTapMobile
+              <SelectedTapDetails
                 image={tempImages.tapImg}
                 estWalkTime={walkingDuration}
                 selectedPlace={selectedPlace}
                 infoCollapse={infoCollapseMobile}
                 setInfoCollapse={setInfoCollapseMobile}
+                isMobile={true}
               >
                 <SelectedTapHours
                   infoIsExpanded={infoIsExpanded}
                   selectedPlace={selectedPlace}
                 />
-              </SelectedTapMobile>
+              </SelectedTapDetails>
             </SwipeableDrawer>
           )}
         </div>
@@ -221,162 +208,24 @@ const SelectedTap = () => {
               right: '32px',
               top: '20px',
               width: '708px',
-              height: '700px'
+              height: '700px',
+              borderRadius: '10px'
             }}
           >
-            {/* <DialogTitle>Dialog Title</DialogTitle> */}
-
-            <IconButton
-              aria-label="close"
-              onClick={() => {
-                handleToggleInfoWindow(false);
-              }}
-              sx={{
-                position: 'absolute',
-                left: '45px',
-                top: 20,
-                color: '#000000'
-              }}
-              size="large"
+            <SelectedTapDetails
+              image={tempImages.tapImg}
+              estWalkTime={walkingDuration}
+              selectedPlace={selectedPlace}
+              infoCollapse={infoCollapseMobile}
+              setInfoCollapse={setInfoCollapseMobile}
+              isMobile={false}
+              closeModal={() => toggleInfoWindow(false)}
             >
-              <CloseIcon
-                sx={{
-                  fontSize: 34
-                }}
+              <SelectedTapHours
+                infoIsExpanded={true}
+                selectedPlace={selectedPlace}
               />
-            </IconButton>
-
-            <IconButton
-              aria-label="close"
-              onClick={() => {
-                handleToggleInfoWindow(true);
-              }}
-              sx={{
-                float: 'right',
-                right: '150px',
-                top: 20,
-                color: '#000000'
-              }}
-              // size="large"
-            >
-              <IosShareIcon
-                sx={{
-                  fontSize: 34
-                }}
-              />
-            </IconButton>
-
-            <IconButton
-              aria-label="close"
-              onClick={() => {
-                handleToggleInfoWindow(true);
-              }}
-              sx={{
-                float: 'right',
-                top: 20,
-                color: '#000000'
-              }}
-            >
-              <MoreHorizIcon
-                sx={{
-                  fontSize: 34
-                }}
-              />
-            </IconButton>
-
-            {/* Location Name */}
-            <div
-              ref={refContentArea}
-              className={
-                infoIsExpanded ? styles.tapContentExpanded : styles.tapContent
-              }
-            >
-              {/* Main Image */}
-
-              <div id="tap-info-img-box-desktop">
-                <img-alt
-                  id="tap-info-img"
-                  src={tempImages.tapImg}
-                  srcSet={
-                    tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                  }
-                ></img-alt>
-              </div>
-              {/* Main Image */}
-
-              <div id="tap-head-info">
-                {/* Tap Type Icon */}
-                <div id="tap-type-icon-container">
-                  <div id="tap-type-icon">
-                    {resourceType === WATER_RESOURCE_TYPE ? (
-                      <img
-                        className="tap-info-icon-img"
-                        src={selectedPlace?.infoIcon}
-                        alt=""
-                      ></img>
-                    ) : (
-                      selectedPlace?.infoIcon
-                    )}
-                  </div>
-                </div>
-
-                {/* Name & Address */}
-                <div id="org-name-and-address-desktop">
-                  <div
-                    id="tap-organization-name"
-                    data-cy="tap-organization-name"
-                  >
-                    {selectedPlace?.name}
-                  </div>
-                  {selectedPlace?.address && (
-                    <h5 id="tap-info-address">{selectedPlace.address}</h5>
-                  )}
-                </div>
-
-                <SelectedTapHours
-                  infoIsExpanded={infoIsExpanded}
-                  selectedPlace={selectedPlace}
-                />
-              </div>
-              {/* Walk Time & Info Icons  */}
-              <div className={styles.walkTime}>
-                Estimated Walk Time: {walkingDuration} mins ({walkingDistance}{' '}
-                mi)
-              </div>
-
-              <SelectedTapIcons place={selectedPlace} />
-
-              {/* Description */}
-              <div>
-                <div>
-                  <div className={styles.description}>
-                    <div id="tap-info-description">
-                      <div className={styles.section}>
-                        <h3>Description</h3>
-                        <div>
-                          {selectedPlace?.description
-                            ? selectedPlace?.description
-                            : 'Happy PHLasking'}
-                        </div>
-                      </div>
-
-                      {selectedPlace?.tapStatement && (
-                        <div className={styles.section}>
-                          <h3>Statement</h3>
-                          <div>{selectedPlace.tapStatement}</div>
-                        </div>
-                      )}
-                      {selectedPlace?.norms_rules && (
-                        <div className={styles.section}>
-                          <h3>Norms &amp; Rules</h3>
-                          <div>{selectedPlace?.norms_rules}</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </SelectedTapDetails>
           </Paper>
         </div>
       )}
