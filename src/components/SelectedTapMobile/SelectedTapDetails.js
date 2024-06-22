@@ -16,8 +16,7 @@ import BathroomIcon from '../icons/CircleBathroomIcon.svg';
 import {
   WATER_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
+  FORAGE_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
 
 function SelectedTapDetails(props) {

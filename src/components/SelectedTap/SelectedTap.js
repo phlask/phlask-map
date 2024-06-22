@@ -188,7 +188,7 @@ const SelectedTap = () => {
                 selectedPlace={selectedPlace}
                 infoCollapse={infoCollapseMobile}
                 setInfoCollapse={setInfoCollapseMobile}
-                isMobile={true}
+                isMobile
               >
                 <SelectedTapHours
                   infoIsExpanded={infoIsExpanded}
@@ -219,7 +219,7 @@ const SelectedTap = () => {
               infoCollapse={infoCollapseMobile}
               setInfoCollapse={setInfoCollapseMobile}
               isMobile={false}
-              closeModal={() => toggleInfoWindow(false)}
+              closeModal={() => handleToggleInfoWindow(false)}
             >
               <SelectedTapHours
                 infoIsExpanded={true}
