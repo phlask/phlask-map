@@ -37,14 +37,20 @@ function SelectedTapDetails(props) {
    */
   const resource = props.selectedPlace;
 
-  const icon =
-    resource.resource_type === WATER_RESOURCE_TYPE
-      ? FountainIcon
-      : resource.resource_type === FORAGE_RESOURCE_TYPE
-      ? ForagingIcon
-      : resource.resource_type === FOOD_RESOURCE_TYPE
-      ? FoodIcon
-      : BathroomIcon;
+  let icon;
+  switch (resource.resource_type) {
+    case WATER_RESOURCE_TYPE:
+      icon = FountainIcon;
+      break;
+    case FORAGE_RESOURCE_TYPE:
+      icon = ForagingIcon;
+      break;
+    case FOOD_RESOURCE_TYPE:
+      icon = FoodIcon;
+      break;
+    default:
+      icon = BathroomIcon;
+  }
 
   // From resource info, collect all the tags.
   const tags = [
