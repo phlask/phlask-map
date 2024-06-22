@@ -92,13 +92,9 @@ export default (state = initialState, act) => {
       return { ...state, allResources: act.allResources };
 
     case actions.SET_FILTER_FUNCTION:
-      // console.log('set filter func');
       return { filterFunction: !state.filterFunction, ...state };
 
     case actions.SET_SELECTED_PLACE:
-      // console.log('Selected Place: ' + act.selectedPlace.organization);
-      // console.log(state.alltaps[act.id]);
-
       // if passed Selected Place as an object, set selected place as the object
       // if passed an ID, locate the item using ID, then set selected place
       return typeof act.selectedPlace === 'object'
@@ -110,8 +106,6 @@ export default (state = initialState, act) => {
           };
 
     case actions.TOGGLE_INFO_WINDOW:
-      // console.log('Info Window Class: ' + state.infoWindowClass);
-
       return act.isShown
         ? {
             ...state,
@@ -123,9 +117,6 @@ export default (state = initialState, act) => {
         : { ...state, showingInfoWindow: act.isShown };
 
     case actions.TOGGLE_INFO_WINDOW_CLASS:
-      // console.log("Info Window Class: " + state.infoWindowClass);
-      // console.log("Is Mobile: " + isMobile);
-
       return {
         ...state,
         infoWindowClass: isMobile
