@@ -36,12 +36,15 @@ export const getResourcesSuccess = allResources => ({
 export const getResources = () => dispatch => {
   const app = initializeApp(resourcesConfig);
   const database = getDatabase(app);
-  return process.env.REACT_APP_CYPRESS_TEST ? dispatch(getResourcesSuccess(testData)) : onValue(ref(database, '/'),
-    snapshot => {
-      dispatch(getResourcesSuccess(snapshot.val()));
-    },
-    { onlyOnce: true }
-  );
+  return process.env.REACT_APP_CYPRESS_TEST
+    ? dispatch(getResourcesSuccess(testData))
+    : onValue(
+        ref(database, '/'),
+        snapshot => {
+          dispatch(getResourcesSuccess(Object.values(snapshot.val())));
+        },
+        { onlyOnce: true }
+      );
 };
 
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
