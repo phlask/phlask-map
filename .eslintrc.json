@@ -2,7 +2,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/jsx-runtime"
   ],
   "rules": {
     "react/prop-types": 0,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -19,8 +19,6 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 function getClosest(data, v) {
-  // console.log(data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon'])))
-  // console.log(Math.min(...data.map(p => distance(v['lat'],v['lon'],p['lat'],p['lon']))))
   var distances = data.map(function (p) {
     return {
       lat: p['lat'],
@@ -48,63 +46,6 @@ function getClosest(data, v) {
     }
   }
   return closestTap;
- 
-}
-
-function getCoordinates() {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-}
-
-//gets the users latitude
-function getLat() {
-  if ('geolocation' in navigator) {
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylat = parseFloat(position.coords.latitude.toFixed(5));
-        return mylat;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          'An error has occured while retrieving location',
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log('geolocation is not enabled on this browser');
-  }
-}
-
-//gets the users longitutude
-function getLon() {
-  if ('geolocation' in navigator) {
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylon = parseFloat(position.coords.longitude.toFixed(5));
-        return mylon;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          'An error has occured while retrieving location',
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log('geolocation is not enabled on this browser');
-  }
 }
 
 export class ClosestTap extends Component {
@@ -123,7 +64,6 @@ export class ClosestTap extends Component {
       lat: this.props.userLocation.lat,
       lon: this.props.userLocation.lng
     });
-    console.log(closest);
   }
 
   // change(){
@@ -169,8 +109,8 @@ export class ClosestTap extends Component {
 }
 
 const mapStateToProps = state => ({
-  userLocation: state.userLocation,
-  allTaps: state.allTaps
+  userLocation: state.filterMarkers.userLocation,
+  allTaps: state.filterMarkers.allTaps
 });
 
 export default connect(mapStateToProps)(ClosestTap);

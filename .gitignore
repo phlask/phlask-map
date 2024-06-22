@@ -31,5 +31,4 @@ resources/
 .env
 
 # testing
-cypress/videos/
 newrelic_agent.log

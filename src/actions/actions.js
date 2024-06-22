@@ -1,11 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
-import {
-  bathroomConfig,
-  foodConfig,
-  foragingConfig,
-  waterConfig
-} from '../firebase/firebaseConfig';
+import { resourcesConfig } from '../firebase/firebaseConfig';
+import { testData } from '../firebase/functionalTest';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -31,83 +27,24 @@ export const resetFilterFunction = () => ({
   type: RESET_FILTER_FUNCTION
 });
 
-/* User should select which type ( food or water) to display before retrieving data.
-  First choice would be set as default
-*/
-
-export const GET_TAPS_SUCCESS = 'GET_TAPS_SUCCESS';
-export const getTapsSuccess = allTaps => ({
-  type: GET_TAPS_SUCCESS,
-  allTaps
+export const GET_RESOURCES_SUCCESS = 'GET_RESOURCES_SUCCESS';
+export const getResourcesSuccess = allResources => ({
+  type: GET_RESOURCES_SUCCESS,
+  allResources
 });
 
-export const getTaps = () => dispatch => {
-  const app = initializeApp(waterConfig, 'water');
+export const getResources = () => dispatch => {
+  const app = initializeApp(resourcesConfig);
   const database = getDatabase(app);
-  return onValue(
-    ref(database, '/'),
-    snapshot => {
-      const snapshotVal = snapshot.val();
-      // TODO: Clean up Firebase DB for this one-off edge case
-      // NOTE: The code block below is filtering out tap with access-types that are no longer used
-      var allTaps = snapshotVal.filter(
-        key =>
-          key.access != 'WM' &&
-          key.access != 'N' &&
-          key.access != 'TrashAcademy'
+  return process.env.REACT_APP_CYPRESS_TEST
+    ? dispatch(getResourcesSuccess(testData))
+    : onValue(
+        ref(database, '/'),
+        snapshot => {
+          dispatch(getResourcesSuccess(Object.values(snapshot.val())));
+        },
+        { onlyOnce: true }
       );
-      dispatch(getTapsSuccess(allTaps));
-    },
-    {
-      onlyOnce: true
-    }
-  );
-};
-
-export const GET_FOOD_SUCCESS = 'GET_FOOD_SUCCESS';
-export const getFoodSuccess = allFoodOrgs => ({
-  type: GET_FOOD_SUCCESS,
-  allFoodOrgs
-});
-
-export const getFoodOrgs = () => dispatch => {
-  const app = initializeApp(foodConfig, 'food');
-  const database = getDatabase(app);
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getFoodSuccess(snapshotVal));
-  });
-};
-
-export const GET_FORAGING_SUCCESS = 'GET_FORAGING_SUCCESS';
-export const getForagingSuccess = allForagingTaps => ({
-  type: GET_FORAGING_SUCCESS,
-  allForagingTaps
-});
-
-export const getForagingTaps = () => dispatch => {
-  const app = initializeApp(foragingConfig, 'foraging');
-  const database = getDatabase(app);
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getForagingSuccess(snapshotVal));
-  });
-};
-
-export const GET_BATHROOM_SUCCESS = 'GET_BATHROOM_SUCCESS';
-export const getBathroomSuccess = allBathroomTaps => ({
-  type: GET_BATHROOM_SUCCESS,
-  allBathroomTaps
-});
-
-export const getBathroomTaps = () => dispatch => {
-  const app = initializeApp(bathroomConfig, 'bathroom');
-  const database = getDatabase(app);
-
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getBathroomSuccess(snapshotVal));
-  });
 };
 
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
@@ -180,19 +117,20 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const TOGGLE_PHLASK_TYPE = 'TOGGLE_PHLASK_TYPE';
-export const togglePhlaskType = phlaskType => ({
-  type: TOGGLE_PHLASK_TYPE,
-  mode: phlaskType
+export const TOGGLE_RESOURCE_TYPE = 'TOGGLE_RESOURCE_TYPE';
+export const toggleResourceType = resourceType => ({
+  type: TOGGLE_RESOURCE_TYPE,
+  mode: resourceType
 });
 
-// export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
-// export const toggleResourceMenu = isShown => ({
-//   type: TOGGLE_RESOURCE_MENU,
-//   isShown
-// });
+export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
+export const toggleResourceMenu = isShown => ({
+  type: TOGGLE_RESOURCE_MENU,
+  isShown
+});
 
-export const PHLASK_TYPE_WATER = 'PHLASK_TYPE_WATER';
-export const PHLASK_TYPE_FOOD = 'PHLASK_TYPE_FOOD';
-export const PHLASK_TYPE_FORAGING = 'PHLASK_TYPE_FORAGING';
-export const PHLASK_TYPE_BATHROOM = 'PHLASK_TYPE_BATHROOM';
+export const CHANGE_RESOURCE_TYPE = 'CHANGE_RESOURCE_TYPE';
+export const changeResourceType = resourceType => ({
+  type: CHANGE_RESOURCE_TYPE,
+  resourceType
+});

@@ -1,12 +1,8 @@
 import IconButton from '@mui/material/Button';
 import React from 'react';
 import ReactGA from 'react-ga4';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
@@ -17,9 +13,17 @@ import {
   setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  togglePhlaskType
+  toggleResourceType,
+  toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
+
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 
 import { isMobile } from 'react-device-detect';
 
@@ -33,12 +37,15 @@ import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
 import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
 import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
 
-import { ReactComponent as PhlaskButton } from '../icons/PhlaskButton.svg';
+import { ReactComponent as BathroomPhlaskButton } from '../icons/PhlaskButtons/BathroomPhlaskButton.svg';
+import { ReactComponent as FoodPhlaskButton } from '../icons/PhlaskButtons/FoodPhlaskButton.svg';
+import { ReactComponent as ForagingPhlaskButton } from '../icons/PhlaskButtons/ForagingPhlaskButton.svg';
+import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/WaterPhlaskButton.svg';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
-import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import NavigationItem from './NavigationItem';
 
@@ -59,48 +66,28 @@ function distance(lat1, lon1, lat2, lon2) {
 // Takes an array of objects with lat and lon properties as well as a single object with lat and lon
 // properties and finds the closest point (by shortest distance).
 
-//looping through data to get list of locations
+// Find the closest resource to the user's location
+// @param {ResourceEntry[]} data
+// @return {ResourceEntry}
 function getClosest(data, userLocation) {
-  var distances = data
-    .map((org, index) => {
-      //i added this terniary
-      if (org?.lat && org?.lon) {
-        return {
-          lat: org['lat'],
-          lon: org['lon'],
-          organization: org['organization'],
-          address: org['address'],
-          distance: distance(
-            userLocation['lat'],
-            userLocation['lon'],
-            org['lat'],
-            org['lon']
-          ),
-          id: index
-        };
-      }
-    })
-    .filter(Boolean);
+  let distances = data.map((resource, index) => {
+    return {
+      resource,
+      distance: distance(
+        userLocation['lat'],
+        userLocation['lon'],
+        resource.latitude,
+        resource.longitude
+      )
+    };
+  });
 
-  var minDistance = Math.min(...distances.map(d => d.distance));
-  var closestTap = {
-    organization: '',
-    address: '',
-    lat: '',
-    lon: '',
-    id: ''
-  };
-
-  for (var i = 0; i < distances.length; i++) {
-    if (distances[i].distance === minDistance) {
-      closestTap.lat = distances[i].lat;
-      closestTap.lon = distances[i].lon;
-      closestTap.organization = distances[i].organization;
-      closestTap.address = distances[i].address;
-      closestTap.id = distances[i].id;
-    }
-  }
-  return closestTap;
+  // Return the resource with the minimum distance value
+  if (!distances) return null;
+  return distances.reduce(
+    (min, p) => (p.distance < min.distance ? p : min),
+    distances[0]
+  ).resource;
 }
 
 function getCoordinates() {
@@ -110,25 +97,21 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const [value, setValue] = React.useState(0);
-
-  const phlaskType = useSelector(phlaskTypeSelector);
-  const dispatch = useDispatch();
-  const property_name = useSelector(state => state);
+  const resourceType = useSelector(resourceTypeSelector);
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
   const selectedResourceIcon = {
-    [PHLASK_TYPE_WATER]: WaterIcon,
-    [PHLASK_TYPE_FOOD]: FoodIcon,
-    [PHLASK_TYPE_FORAGING]: ForagingIcon,
-    [PHLASK_TYPE_BATHROOM]: ToiletIcon,
+    [WATER_RESOURCE_TYPE]: WaterIcon,
+    [FOOD_RESOURCE_TYPE]: FoodIcon,
+    [FORAGE_RESOURCE_TYPE]: ForagingIcon,
+    [BATHROOM_RESOURCE_TYPE]: ToiletIcon,
     default: WaterIcon
-  }[phlaskType ?? 'default'];
+  }[resourceType ?? 'default'];
 
   function switchType(type) {
-    if (props.phlaskType !== type) {
-      props.togglePhlaskType(type);
+    if (props.resourceType !== type) {
+      props.toggleResourceType(type);
       handleGA(type);
     }
   }
@@ -147,21 +130,14 @@ function Toolbar(props) {
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
     let data;
-    switch (props.phlaskType) {
-      case PHLASK_TYPE_WATER:
-        data = props?.allTaps;
+
+    switch (props.resourceType) {
+      case WATER_RESOURCE_TYPE:
+        data = props?.allResources;
         break;
-      case PHLASK_TYPE_FOOD:
-        data = props?.allFoodOrgs;
-        break;
-      case PHLASK_TYPE_FORAGING:
-        data = props?.allForagingTaps;
-        break;
-      case PHLASK_TYPE_BATHROOM:
-        data = props?.allBathroomTaps;
-        break;
+      // TODO(vontell): Filter based on requested type
       default:
-        data = props?.allTaps;
+        data = props?.allResources;
     }
 
     const closest = getClosest(data, {
@@ -169,18 +145,13 @@ function Toolbar(props) {
       lon: props.userLocation.lng
     });
 
-    const place = new Promise(() => {
-      props.setSelectedPlace(closest.id);
-    });
+    props.setSelectedPlace(closest);
 
-    place
-      .then(
-        props.map.panTo({
-          lat: closest.lat,
-          lng: closest.lon
-        })
-      )
-      .then(props.toggleInfoWindow(true));
+    props.map.panTo({
+      lat: closest.latitude,
+      lng: closest.longitude
+    });
+    props.toggleInfoWindow(true);
   }
 
   function closestButtonClicked() {
@@ -188,16 +159,33 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (props.toolbarModal == modal) {
+    if (props.toolbarModal === modal) {
       props.setToolbarModal(TOOLBAR_MODAL_NONE);
     } else {
       props.setToolbarModal(modal);
     }
   }
 
+  let phlaskButton = null;
+  switch (props.resourceType) {
+    case WATER_RESOURCE_TYPE:
+      phlaskButton = <WaterPhlaskButton />;
+      break;
+    case FOOD_RESOURCE_TYPE:
+      phlaskButton = <FoodPhlaskButton />;
+      break;
+    case FORAGE_RESOURCE_TYPE:
+      phlaskButton = <ForagingPhlaskButton />;
+      break;
+    case BATHROOM_RESOURCE_TYPE:
+      phlaskButton = <BathroomPhlaskButton />;
+      break;
+    default:
+      break;
+  }
+
   return (
     <>
-      $
       {!isMobile ? (
         <Box
           sx={{
@@ -229,7 +217,7 @@ function Toolbar(props) {
             disableFocusRipple={true}
             disableRipple={true}
           >
-            <PhlaskButton />
+            {phlaskButton}
           </IconButton>
           <IconButton
             variant="text"
@@ -250,6 +238,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-resource-type-menu"
           >
             <ResourceIcon style={{ color: '#f80' }} />
             <Typography
@@ -279,6 +268,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-filter-menu"
           >
             <FilterIcon />
             <Typography
@@ -307,6 +297,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-search"
           >
             <SearchIcon />
             <Typography
@@ -335,6 +326,7 @@ function Toolbar(props) {
             onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             disableFocusRipple={true}
             disableRipple={true}
+            data-cy="button-contribute-menu"
           >
             <ContributeIcon />
             <Typography
@@ -360,9 +352,12 @@ function Toolbar(props) {
         >
           <BottomNavigation showLabels>
             <NavigationItem
+              data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() => props.setOpenResourceModal()}
+              onClick={() =>
+                props.toggleResourceMenu(props.isResourceMenuShown)
+              }
             />
             <ResourceMenu />
             <NavigationItem
@@ -382,13 +377,14 @@ function Toolbar(props) {
               }
             />
             <NavigationItem
+              data-cy="button-contribute-menu"
               label={
                 <Typography noWrap fontSize="small">
                   Add Site
                 </Typography>
               }
               icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => props.setOpenResourceModal()}
+              onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
             />
           </BottomNavigation>
         </Box>
@@ -398,21 +394,15 @@ function Toolbar(props) {
 }
 
 const mapStateToProps = state => ({
-  phlaskType: state.phlaskType,
-  allTaps: state.allTaps,
-  allFoodOrgs: state.allFoodOrgs,
-  allBathroomTaps: state.allBathroomTaps,
-  allForagingTaps: state.allForagingTaps,
-  userLocation: state.userLocation,
-  toolbarModal: state.toolbarModal
+  resourceType: state.filterMarkers.resourceType,
+  allResources: state.filterMarkers.allResources,
+  userLocation: state.filterMarkers.userLocation,
+  toolbarModal: state.filterMarkers.toolbarModal,
+  isResourceMenuShown: state.filterMarkers.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
-  togglePhlaskType,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FORAGING,
+  toggleResourceType,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_RESOURCE,
@@ -422,7 +412,8 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation
+  setUserLocation,
+  toggleResourceMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

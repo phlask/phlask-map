@@ -30,7 +30,7 @@ export class FoodFilter extends React.Component {
       this.props.setToggleStateFood('kidOnly', !this.props.kidOnly);
     } else if (event.target.id === 'openNow') {
       this.props.setToggleStateFood('openNow', !this.props.openNow);
-    } else console.log('error with toggle');
+    }
   }
 
   render() {
@@ -194,11 +194,11 @@ export class FoodFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  idRequired: state.foodFilters.idRequired,
-  kidOnly: state.foodFilters.kidOnly,
-  openNow: state.foodFilters.openNow,
-  accessTypesHidden: state.foodFilters.accessTypesHidden,
-  showingInfoWindow: state.showingInfoWindow
+  idRequired: state.filterMarkers.foodFilters.idRequired,
+  kidOnly: state.filterMarkers.foodFilters.kidOnly,
+  openNow: state.filterMarkers.foodFilters.openNow,
+  accessTypesHidden: state.filterMarkers.foodFilters.accessTypesHidden,
+  showingInfoWindow: state.filterMarkers.showingInfoWindow
 });
 
 const mapDispatchToProps = {

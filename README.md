@@ -94,6 +94,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
 
     ```
+    Beta site https://beta.phlask.me/
     Project is running at http://172.21.112.1/
     ...
     Starting the development server...

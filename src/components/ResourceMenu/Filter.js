@@ -30,7 +30,7 @@ export class Filter extends React.Component {
       this.props.setToggleState('sparkling', !this.props.sparkling);
     } else if (event.target.id === 'openNow') {
       this.props.setToggleState('openNow', !this.props.openNow);
-    } else console.log('error with toggle');
+    }
     this.handleGA(event.target.id, !this.props[event.target.id]);
   }
 
@@ -237,12 +237,12 @@ export class Filter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filtered: state.tapFilters.filtered,
-  handicap: state.tapFilters.handicap,
-  sparkling: state.tapFilters.sparkling,
-  openNow: state.tapFilters.openNow,
-  accessTypesHidden: state.tapFilters.accessTypesHidden,
-  showingInfoWindow: state.showingInfoWindow
+  filtered: state.filterMarkers.tapFilters.filtered,
+  handicap: state.filterMarkers.tapFilters.handicap,
+  sparkling: state.filterMarkers.tapFilters.sparkling,
+  openNow: state.filterMarkers.tapFilters.openNow,
+  accessTypesHidden: state.filterMarkers.tapFilters.accessTypesHidden,
+  showingInfoWindow: state.filterMarkers.showingInfoWindow
 });
 
 const mapDispatchToProps = {

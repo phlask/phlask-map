@@ -1,1 +1,1 @@
-export const phlaskTypeSelector = state => state.phlaskType;
+export const resourceTypeSelector = state => state.filterMarkers.resourceType;

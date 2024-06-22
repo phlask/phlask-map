@@ -1,12 +1,9 @@
 /* eslint-disable no-console */
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 import ReactGA from 'react-ga4';
 import { connect } from 'react-redux';
 import {
-  PHLASK_TYPE_WATER,
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass
@@ -20,9 +17,16 @@ import phlaskGreen from '../images/phlaskGreen.png';
 import './SelectedTap.css';
 import styles from './SelectedTap.module.scss';
 
-import { SwipeableDrawer } from '@mui/material';
+import { Paper, SwipeableDrawer } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
-import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
+import SelectedTapDetails from '../SelectedTapMobile/SelectedTapDetails';
+import { withStyles } from '@mui/styles';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import CloseIcon from '@mui/icons-material/Close';
+
+import { WATER_RESOURCE_TYPE } from '../../types/ResourceEntry';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -37,13 +41,8 @@ class SelectedTap extends React.Component {
     previewHeight: 0,
     infoExpansionStyle: {},
     isDescriptionShown: false,
-    tapDescription: null,
-    tapStatement: null,
     tapNormsAndRules: null,
     animationSpeed: 600,
-    organization: this.props.selectedPlace.organization,
-    address: this.props.selectedPlace.address,
-    accessible: this.props.selectedPlace.accessible,
     testIcons: {
       access: phlaskBlue,
       accessibility: phlaskGreen
@@ -58,9 +57,10 @@ class SelectedTap extends React.Component {
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
-    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.lon},${this.props.selectedPlace?.lat}`)
+    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.longitude},${this.props.selectedPlace?.latitude}`)
       .then(response => response.json())
       .then(data => {
+        if (!data.features) return;
         // duration is returned in seconds
         let duration = Math.round(
           data.features[0].properties.summary.duration / 60
@@ -69,7 +69,10 @@ class SelectedTap extends React.Component {
         let distance = (
           data.features[0].properties.summary.distance * 0.00062
         ).toFixed(1);
-        this.setState({ walkingDuration: duration, walkingDistance: distance });
+        this.setState({
+          walkingDuration: duration,
+          walkingDistance: distance
+        });
       });
   };
 
@@ -162,9 +165,9 @@ class SelectedTap extends React.Component {
 
   handleGA() {
     ReactGA.event({
-      category: `Tap - ${this.props.phlaskType}`,
+      category: `Tap - ${this.props.resourceType}`,
       action: 'InfoShown',
-      label: `${this.props.selectedPlace?.organization}, ${this.props.selectedPlace?.address}`
+      label: `${this.props.selectedPlace?.name}, ${this.props.selectedPlace?.address}`
     });
   }
 
@@ -174,7 +177,7 @@ class SelectedTap extends React.Component {
     const selectedPlace = this.props.selectedPlace;
 
     this.setState({
-      organization: selectedPlace?.organization,
+      name: selectedPlace?.name,
       address: selectedPlace?.address,
       tapDescription: selectedPlace?.description
         ? selectedPlace?.description
@@ -192,6 +195,7 @@ class SelectedTap extends React.Component {
         this.handleGA();
       }
       if (
+        isMobile &&
         this.state.previewHeight !== this.refSelectedTap.current.clientHeight &&
         !this.state.isDescriptionShown
       ) {
@@ -207,6 +211,7 @@ class SelectedTap extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         {isMobile && (
@@ -219,146 +224,64 @@ class SelectedTap extends React.Component {
                 onClose={() => this.toggleInfoWindow(false)}
                 PaperProps={{ square: false }}
               >
-                <SelectedTapMobile
+                <SelectedTapDetails
                   image={tempImages.tapImg}
                   estWalkTime={this.state.walkingDuration}
                   selectedPlace={this.props.selectedPlace}
                   infoCollapse={this.state.infoCollapseMobile}
                   setInfoCollapse={this.setInfoCollapseMobile}
+                  isMobile={true}
                 >
                   <SelectedTapHours
                     infoIsExpanded={this.props.infoIsExpanded}
                     selectedPlace={this.props.selectedPlace}
                   />
-                </SelectedTapMobile>
+                </SelectedTapDetails>
               </SwipeableDrawer>
             )}
           </div>
         )}
         {!isMobile && this.props.showingInfoWindow && (
-          <div
-            ref={this.refSelectedTap}
-            id="tap-info-container"
-            className={`${this.props.infoWindowClass} ${styles.desktopContainer}`}
-          >
-            <button
-              className={styles.closeButton}
-              aria-label="Close"
-              onClick={() => {
-                this.toggleInfoWindow(false);
+          <div>
+            {/* Desktop dialog panel */}
+            <Paper
+              sx={{
+                position: 'absolute',
+                right: '32px',
+                top: '20px',
+                width: '708px',
+                height: '700px',
+                borderRadius: '10px'
               }}
             >
-              <div id="close-arrow-desktop" className={styles.closeIconWrapper}>
-                <FontAwesomeIcon
-                  className={styles.closeIcon}
-                  color="#999"
-                  icon={faCaretLeft}
-                />
-              </div>
-            </button>
-            {/* Location Name */}
-            <div
-              ref={this.refContentArea}
-              className={
-                this.props.infoIsExpanded
-                  ? styles.tapContentExpanded
-                  : styles.tapContent
-              }
-            >
-              {/* Main Image */}
-
-              <div id="tap-info-img-box-desktop">
-                <img
-                  id="tap-info-img"
-                  src={tempImages.tapImg}
-                  srcSet={
-                    tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                  }
-                  alt=""
-                ></img>
-              </div>
-
-              <div id="tap-head-info">
-                {/* Tap Type Icon */}
-                <div id="tap-type-icon-container">
-                  <div id="tap-type-icon">
-                    {this.props.phlaskType === PHLASK_TYPE_WATER ? (
-                      <img
-                        className="tap-info-icon-img"
-                        src={this.props.selectedPlace?.infoIcon}
-                        alt=""
-                      ></img>
-                    ) : (
-                      this.props.selectedPlace?.infoIcon
-                    )}
-                  </div>
-                </div>
-
-                {/* Name & Address */}
-                <div id="org-name-and-address-desktop">
-                  <div id="tap-organization-name">
-                    {this.state.organization}
-                  </div>
-                  {this.state.address && (
-                    <h5 id="tap-info-address">{this.state.address}</h5>
-                  )}
-                </div>
-
+              <SelectedTapDetails
+                image={tempImages.tapImg}
+                estWalkTime={this.state.walkingDuration}
+                selectedPlace={this.props.selectedPlace}
+                infoCollapse={this.state.infoCollapseMobile}
+                setInfoCollapse={this.setInfoCollapseMobile}
+                isMobile={false}
+                closeModal={() => this.toggleInfoWindow(false)}
+              >
                 <SelectedTapHours
-                  infoIsExpanded={this.props.infoIsExpanded}
+                  infoIsExpanded={true}
                   selectedPlace={this.props.selectedPlace}
                 />
-              </div>
-              {/* Walk Time & Info Icons  */}
-              <div className={styles.walkTime}>
-                Estimated Walk Time: {this.state.walkingDuration} mins (
-                {this.state.walkingDistance} mi)
-              </div>
-
-              <SelectedTapIcons place={this.props.selectedPlace} />
-
-              {/* Description */}
-              <div>
-                <div>
-                  <div className={styles.description}>
-                    <div id="tap-info-description">
-                      {this.state.tapDescription && (
-                        <div className={styles.section}>
-                          <h3>Description</h3>
-                          <div>{this.state.tapDescription}</div>
-                        </div>
-                      )}
-                      {this.state.tapStatement && (
-                        <div className={styles.section}>
-                          <h3>Statement</h3>
-                          <div>{this.state.tapStatement}</div>
-                        </div>
-                      )}
-                      {this.state.tapNormsAndRules && (
-                        <div className={styles.section}>
-                          <h3>Norms &amp; Rules</h3>
-                          <div>{this.state.tapNormsAndRules}</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </SelectedTapDetails>
+            </Paper>
           </div>
         )}
       </div>
     );
   }
 }
-
 const mapStateToProps = state => ({
-  showingInfoWindow: state.showingInfoWindow,
-  infoIsExpanded: state.infoIsExpanded,
-  infoWindowClass: state.infoWindowClass,
-  selectedPlace: state.selectedPlace,
-  phlaskType: state.phlaskType,
-  userLocation: state.userLocation
+  showingInfoWindow: state.filterMarkers.showingInfoWindow,
+  infoIsExpanded: state.filterMarkers.infoIsExpanded,
+  infoWindowClass: state.filterMarkers.infoWindowClass,
+  selectedPlace: state.filterMarkers.selectedPlace,
+  resourceType: state.filterMarkers.resourceType,
+  userLocation: state.filterMarkers.userLocation
 });
 const mapDispatchToProps = {
   toggleInfoExpanded,
@@ -366,4 +289,7 @@ const mapDispatchToProps = {
   toggleInfoWindowClass
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedTap);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SelectedTap));

@@ -14,10 +14,10 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
   const toggleResourceMenu = () => {
-    // dispatch({
-    //   type: Action.TOGGLE_RESOURCE_MENU,
-    //   isShown: isResourceMenuShown
-    // });
+    dispatch({
+      type: Action.TOGGLE_RESOURCE_MENU,
+      isShown: isResourceMenuShown
+    });
   };
 
   function handleGA(type) {
@@ -31,7 +31,7 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const switchType = type => {
     handleGA(type);
     dispatch({
-      type: Action.TOGGLE_PHLASK_TYPE,
+      type: Action.TOGGLE_RESOURCE_TYPE,
       mode: type
     });
     toggleResourceMenu();

@@ -34,16 +34,26 @@
 }
 
 .mobileSearch {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: flex-start;
-  padding: 1rem 0 0 1rem;
-  pointer-events: none;
+  position: fixed;
+  left: 20px;
+  top: calc(56px + 25px);
 
-  .searchBarContainer {
-    width: 100%;
-  }
+  width: calc(100vw - 40px);
+  height: 56px;
+  padding: 2px 16px;
+
+  border-radius: 28px;
+
+  background-color: #f7f8fa;
+}
+
+.mobileSearchInput {
+  width: calc(100vw - 40px - 32px);
+  height: calc(56px - 4px);
+}
+
+.mobileSearchInput::after {
+  border: none;
 }
 
 .mobileSearchButton {
@@ -71,6 +81,7 @@
   animation-timing-function: ease-in-out;
   pointer-events: visibleStroke;
 }
+
 @keyframes search-input-animation {
   0% {
     width: 0;
