@@ -54,6 +54,13 @@ export const getResources = () => dispatch => {
       );
 };
 
+// Handles the case where a new resource is added from the submission form
+export const PUSH_NEW_RESOURCE = 'PUSH_NEW_RESOURCE';
+export const pushNewResource = newResource => ({
+  type: PUSH_NEW_RESOURCE,
+  newResource
+});
+
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({
   type: SET_USER_LOCATION,
