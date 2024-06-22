@@ -252,7 +252,7 @@ const PageOne = ({
       <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{
-            required: true,
+            required: false,
             pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
           }}
           control={control}
