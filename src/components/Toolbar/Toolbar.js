@@ -42,7 +42,7 @@ import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/Wate
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
-import { phlaskTypeSelector } from '../../selectors/filterMarkersSelectors';
+import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -381,10 +381,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_WATER,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FORAGING,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_RESOURCE,
