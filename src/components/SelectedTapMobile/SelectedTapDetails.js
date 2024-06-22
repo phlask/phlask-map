@@ -1,26 +1,56 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './SelectedTapMobileInfo.module.scss';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
 import { ReactComponent as CaretDownSvg } from '../images/CaretDown.svg';
-import { ReactComponent as ThreeDotSvg } from '../images/DotsThree.svg';
 import { ReactComponent as ExportSvg } from '../images/Export.svg';
 
 import FountainIcon from '../icons/CircleWaterIcon.svg';
+import ForagingIcon from '../icons/CircleForagingIcon.svg';
+import FoodIcon from '../icons/CircleFoodIcon.svg';
+import BathroomIcon from '../icons/CircleBathroomIcon.svg';
 
-function SelectedTapMobile(props) {
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
+
+function SelectedTapDetails(props) {
   const [pointerPositionY, setPointerPositionY] = useState(0);
 
-  const { image, estWalkTime, infoCollapse, setInfoCollapse } = props;
+  const {
+    image,
+    estWalkTime,
+    infoCollapse,
+    setInfoCollapse,
+    isMobile,
+    closeModal
+  } = props;
 
   /**
    * @type {ResourceEntry}
    */
   const resource = props.selectedPlace;
 
-  const icon = FountainIcon; // TODO: Add other icons
+  let icon;
+  switch (resource.resource_type) {
+    case WATER_RESOURCE_TYPE:
+      icon = FountainIcon;
+      break;
+    case FORAGE_RESOURCE_TYPE:
+      icon = ForagingIcon;
+      break;
+    case FOOD_RESOURCE_TYPE:
+      icon = FoodIcon;
+      break;
+    default:
+      icon = BathroomIcon;
+  }
 
   // From resource info, collect all the tags.
   const tags = [
@@ -60,6 +90,9 @@ function SelectedTapMobile(props) {
 
   // Expanding and Minimizing the Modal
   const detectSwipe = e => {
+    if (!isMobile) {
+      return;
+    }
     setPointerPositionY(e.nativeEvent.offsetY);
 
     if (!infoCollapse && e.nativeEvent.offsetY < 0) {
@@ -68,6 +101,9 @@ function SelectedTapMobile(props) {
   };
 
   const minimizeModal = () => {
+    if (!isMobile) {
+      return;
+    }
     setInfoCollapse(false);
   };
 
@@ -82,17 +118,14 @@ function SelectedTapMobile(props) {
 
   return (
     <div className={styles.halfInfo} onPointerMove={detectSwipe}>
-      {!infoCollapse ? (
+      {isMobile && !infoCollapse ? (
         <button className={styles.swipeIcon}></button>
       ) : (
         <div className={styles.expandedToolBar}>
-          <IconButton color="primary" aria-label="" onClick={minimizeModal}>
-            <CaretDownSvg />
-          </IconButton>
           <div>
             <IconButton
               color="primary"
-              aria-label="export"
+              aria-label="share"
               component="label"
               onClick={toggleNativeShare}
             >
@@ -103,6 +136,30 @@ function SelectedTapMobile(props) {
             {/*  <ThreeDotSvg />*/}
             {/*</IconButton>*/}
           </div>
+          {/* On mobile, show the minimize button. On desktop, show the close button */}
+          {isMobile && (
+            <IconButton color="primary" aria-label="" onClick={minimizeModal}>
+              <CaretDownSvg />
+            </IconButton>
+          )}
+          {!isMobile && (
+            <IconButton
+              color="primary"
+              aria-label="close"
+              onClick={() => {
+                closeModal();
+              }}
+              sx={{
+                position: 'absolute',
+                right: '20px',
+                top: 5,
+                color: 'black'
+              }}
+              size="large"
+            >
+              <CloseIcon fontSize="18px" />
+            </IconButton>
+          )}
           {/* Currently the three dot button does nothing */}
         </div>
       )}
@@ -114,7 +171,9 @@ function SelectedTapMobile(props) {
           style={{ width: '52px' }}
         />
         <div className={styles.mainHalfInfoText}>
-          <h2 className={styles.organization} data-cy="tap-organization-name">{resource.name}</h2>
+          <h2 className={styles.organization} data-cy="tap-organization-name">
+            {resource.name}
+          </h2>
           <p>{resource.address}</p>
           {props.children}
           <Button
@@ -152,7 +211,7 @@ function SelectedTapMobile(props) {
         {tags.length > 0 && <hr className={styles.botDivider} />}
       </div>
 
-      <Collapse in={infoCollapse} timeout="auto" unmountOnExit>
+      <Collapse in={infoCollapse || !isMobile} timeout="auto" unmountOnExit>
         <div className={styles.halfInfoExpand}>
           <div className={styles.details}>
             <h3>Description</h3>
@@ -176,4 +235,4 @@ function SelectedTapMobile(props) {
   );
 }
 
-export default SelectedTapMobile;
+export default SelectedTapDetails;
