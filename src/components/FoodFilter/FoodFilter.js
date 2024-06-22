@@ -30,7 +30,7 @@ export class FoodFilter extends React.Component {
       this.props.setToggleStateFood('kidOnly', !this.props.kidOnly);
     } else if (event.target.id === 'openNow') {
       this.props.setToggleStateFood('openNow', !this.props.openNow);
-    } else console.log('error with toggle');
+    }
   }
 
   render() {

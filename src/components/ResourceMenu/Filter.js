@@ -30,7 +30,7 @@ export class Filter extends React.Component {
       this.props.setToggleState('sparkling', !this.props.sparkling);
     } else if (event.target.id === 'openNow') {
       this.props.setToggleState('openNow', !this.props.openNow);
-    } else console.log('error with toggle');
+    }
     this.handleGA(event.target.id, !this.props[event.target.id]);
   }
 

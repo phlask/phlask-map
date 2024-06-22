@@ -62,10 +62,6 @@ export const hours = {
 
     const mer = hour >= 12 ? 'pm' : 'am';
 
-    // console.log(parseInt(minute) === 0
-    //     ? `${newHour}${mer}`
-    //     : `${newHour}:${minute}${mer}` );
-
     if (isNaN(hour) || isNaN(minute)) {
       return null;
     } else {
@@ -112,9 +108,6 @@ export const hours = {
     const timeSplit = times.split('-');
     const open = getTime(timeSplit[0]);
     const close = getTime(timeSplit[1]);
-
-    console.log('Open: ' + convertToMilitary(open));
-    console.log('Close: ' + convertToMilitary(close));
   }
 };
 

@@ -21,7 +21,6 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       const hoursList = [];
 
       selectedPlace.hours.map((orgHours, index) => {
-        // console.log(orgHours.open);
         const formattedHours = {
           day: hours.getDays(index),
           open:
@@ -76,7 +75,6 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
     }
   }, [selectedPlace]);
 
-  // console.log(typeof(currentOrgHours))
   return (
     <>
       {isMobile && (
@@ -91,7 +89,11 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
                   : { color: 'orange' }
               }
             >
-              {isOpen ? 'Open' : isOpen !== null ? 'Closed' : 'Open times unavailable'}
+              {isOpen
+                ? 'Open'
+                : isOpen !== null
+                ? 'Closed'
+                : 'Open times unavailable'}
             </p>
           </div>
 
