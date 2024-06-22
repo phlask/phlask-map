@@ -10,8 +10,8 @@ const getResourceType = state => state.filterMarkers.resourceType;
  * This creates a selector for all resources filtered by the requested filters.
  */
 const selectFilteredResource = createSelector(
-  [getTapFilters, getAllResources, getResourceType],
-  (tapFilters, allResources, resourceType) => {
+  [getAllResources, getResourceType],
+  (allResources, resourceType) => {
     // First, filter based on resource
     return allResources.filter(resource => {
       return resource.resource_type === resourceType;

@@ -23,6 +23,7 @@ import {
   ListItem
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import noop from 'utils/noop';
 
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
@@ -260,7 +261,7 @@ function AddBathroom({
                                     onAddressChange(addr);
                                     onChange(addr);
                                   })
-                                  .catch(console.error);
+                                  .catch(noop);
                               }
                             }}
                             style={{ backgroundColor: 'white' }}

@@ -27,6 +27,7 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import noop from 'utils/noop';
 
 const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
 
@@ -329,7 +330,7 @@ function AddFood({
                                     onAddressChange(addr);
                                     onChange(addr);
                                   })
-                                  .catch(console.error);
+                                  .catch(noop);
                               }
                             }}
                             style={{ backgroundColor: 'white' }}

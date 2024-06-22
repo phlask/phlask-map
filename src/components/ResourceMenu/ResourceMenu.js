@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isResourceMenuShownSelector } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
@@ -17,7 +16,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
-import { TOGGLE_RESOURCE_MENU } from "../../actions/actions";
+import { toggleResourceMenu } from '../../actions/actions';
 
 const listItems = [
   {
@@ -46,11 +45,8 @@ const ResourceMenu = () => {
   const dispatch = useDispatch();
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
-  const toggleResourceMenu = () => {
-    dispatch({
-      type: TOGGLE_RESOURCE_MENU,
-      isShown: isResourceMenuShown
-    });
+  const handleToggleResourceMenu = () => {
+    dispatch(toggleResourceMenu({ isShown: isResourceMenuShown }));
   };
 
   return (
@@ -58,7 +54,7 @@ const ResourceMenu = () => {
       <Dialog
         BackdropProps={{ transitionDuration: 400 }}
         open={isResourceMenuShown}
-        onClose={() => toggleResourceMenu()}
+        onClose={() => handleToggleResourceMenu()}
         PaperProps={{
           style: {
             background: 'transparent',

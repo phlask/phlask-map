@@ -1,25 +1,16 @@
-import React from 'react';
 import ImageUploader from 'react-images-upload';
-import styles from '../AddResourceModal.module.scss';
-import { deleteApp } from 'firebase/app';
-import { connectToFirebase } from '../utils';
+
 import { Controller } from 'react-hook-form';
 import {
-  Box,
   Button,
-  CardContent,
-  FormGroup,
   Grid,
-  Link,
-  MenuItem,
-  Stack,
   Typography,
   Checkbox,
   TextField,
   ListItem
 } from '@mui/material';
 
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 const PageTwo = ({
   onDrop,
@@ -35,6 +26,7 @@ const PageTwo = ({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
   const WATER_HELPFUL_INFO = [
     {
       label: 'Wheelchair accessible',

@@ -27,6 +27,7 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import noop from 'utils/noop';
 
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
@@ -288,7 +289,7 @@ function AddForaging({
                                     onAddressChange(addr);
                                     onChange(addr);
                                   })
-                                  .catch(console.error);
+                                  .catch(noop);
                               }
                             }}
                             style={{ backgroundColor: 'white' }}

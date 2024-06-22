@@ -1,8 +1,6 @@
-/* eslint-disable no-console */
-import React from 'react';
-import { isMobile } from 'react-device-detect';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   toggleInfoExpanded,
   toggleInfoWindow,
@@ -21,43 +19,56 @@ import { Paper, SwipeableDrawer } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import SelectedTapMobile from '../SelectedTapMobile/SelectedTapMobile';
-import { withStyles } from '@mui/styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { WATER_RESOURCE_TYPE } from '../../types/ResourceEntry';
+import useIsMobile from 'hooks/useIsMobile';
 
 const tempImages = {
   tapImg: sampleImg,
   tapImg2x: sampleImg2x
 };
 
-class SelectedTap extends React.Component {
-  refSelectedTap = React.createRef();
-  refContentArea = React.createRef();
+const SelectedTap = () => {
+  const dispatch = useDispatch();
+  const refContentArea = useRef();
+  const refSelectedTap = useRef();
+  const isMobile = useIsMobile();
 
-  state = {
-    previewHeight: 0,
-    infoExpansionStyle: {},
-    isDescriptionShown: false,
-    tapNormsAndRules: null,
-    animationSpeed: 600,
-    testIcons: {
-      access: phlaskBlue,
-      accessibility: phlaskGreen
-    },
-    walkingDuration: 0,
-    walkingDistance: 0,
-    infoCollapseMobile: false
-  };
+  const [previewHeight, setPreviewHeight] = useState(0);
+  const [infoExpansionStyle, setInfoExpansionStyle] = useState({});
+  const [isDescriptionShown, setIsDescriptionShown] = useState(false);
+  const [tapNormsAndRules, setTapNormsAndRules] = useState(null);
+  const [animationSpeed, setAnimationSpeed] = useState(600);
+  const [testIcons, setTestIcons] = useState({
+    access: phlaskBlue,
+    accessibility: phlaskGreen
+  });
+  const [walkingDuration, setWalkingDuration] = useState(0);
+  const [walkingDistance, setWalkingDistance] = useState(0);
+  const [infoCollapseMobile, setInfoCollapseMobile] = useState(false);
 
-  getWalkingDurationAndTimes = () => {
-    if (!this.props.selectedPlace) return;
+  const showingInfoWindow = useSelector(
+    state => state.filterMarkers.showingInfoWindow
+  );
+  const infoIsExpanded = useSelector(
+    state => state.filterMarkers.infoIsExpanded
+  );
+  const infoWindowClass = useSelector(
+    state => state.filterMarkers.infoWindowClass
+  );
+  const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
+  const resourceType = useSelector(state => state.filterMarkers.resourceType);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+
+  const getWalkingDurationAndTimes = useCallback(() => {
+    if (!selectedPlace) return;
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
-    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${this.props.userLocation.lng},
-    ${this.props.userLocation?.lat}&end=${this.props.selectedPlace?.longitude},${this.props.selectedPlace?.latitude}`)
+    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation.lng},
+    ${userLocation?.lat}&end=${selectedPlace?.longitude},${selectedPlace?.latitude}`)
       .then(response => response.json())
       .then(data => {
         if (!data.features) return;
@@ -69,360 +80,308 @@ class SelectedTap extends React.Component {
         let distance = (
           data.features[0].properties.summary.distance * 0.00062
         ).toFixed(1);
-        this.setState({
-          walkingDuration: duration,
-          walkingDistance: distance
-        });
-      });
-  };
 
-  toggleInfoExpanded(shouldExpand) {
+        setWalkingDuration(duration);
+        setWalkingDistance(distance);
+      });
+  }, [selectedPlace, userLocation?.lat, userLocation.lng]);
+
+  const handleToggleInfoExpanded = shouldExpand => {
     if (!shouldExpand) {
       // Start animation before unmounting description
       setTimeout(() => {
-        this.setState({
-          isDescriptionShown: shouldExpand
-        });
-      }, this.state.animationSpeed);
+        setIsDescriptionShown(shouldExpand);
+      }, animationSpeed);
       // Expand or Collapse
-      this.animateInfoExpansion(shouldExpand);
+      animateInfoExpansion(shouldExpand);
       // Close if in preview mode
-      if (!this.props.infoIsExpanded) {
-        this.toggleInfoWindow(false);
+      if (infoIsExpanded) {
+        handleToggleInfoWindow({
+          isShown: false,
+          infoWindowClass: isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+        });
       }
     } else {
       // Set height on first render to animate expansion
-      if (Object.keys(this.state.infoExpansionStyle).length < 1) {
-        this.setState(
-          {
-            infoExpansionStyle: {
-              height: this.state.previewHeight
-            }
-          },
-          () => {
-            this.setState(
-              {
-                isDescriptionShown: shouldExpand
-              },
-              () => {
-                // Collapse
-                this.animateInfoExpansion(shouldExpand);
-              }
-            );
-          }
-        );
+      if (Object.keys(infoExpansionStyle).length < 1) {
+        setInfoExpansionStyle({
+          height: previewHeight
+        });
+
+        setIsDescriptionShown(shouldExpand);
+
+        animateInfoExpansion(shouldExpand);
       } else {
-        this.setState(
-          {
-            isDescriptionShown: shouldExpand
-          },
-          () => {
-            // Expand
-            this.animateInfoExpansion(shouldExpand);
-          }
-        );
+        setIsDescriptionShown(shouldExpand);
+
+        animateInfoExpansion(shouldExpand);
       }
     }
-  }
-
-  setInfoCollapseMobile = collapse => {
-    this.setState({ infoCollapseMobile: collapse });
   };
 
-  toggleInfoWindow(shouldShow) {
-    this.props.toggleInfoWindowClass(shouldShow);
+  const handleToggleInfoWindow = isShown => {
+    let infoWindowClass = 'info-window-';
+    infoWindowClass += isShown ? 'in' : 'out';
+    if (!isMobile) infoWindowClass += '-desktop';
+
+    dispatch(
+      toggleInfoWindowClass({
+        isShown,
+        infoWindowClass
+      })
+    );
     // Animate in
-    if (shouldShow) {
-      this.props.toggleInfoWindow(shouldShow);
+    if (isShown) {
+      dispatch(
+        toggleInfoWindow({
+          isShown,
+          infoWindowClass: isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+        })
+      );
     }
     // Animate Out
     else {
-      this.props.toggleInfoWindow(false);
-      this.setInfoCollapseMobile(false);
+      dispatch(
+        toggleInfoWindow({
+          isShown: false,
+          infoWindowClass: isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+        })
+      );
+      setInfoCollapseMobile(false);
     }
-  }
+  };
 
-  animateInfoExpansion(shouldExpand) {
-    this.setState(
-      {
-        infoExpansionStyle: {
-          height: shouldExpand ? '80%' : this.state.previewHeight
-        }
-      },
-      () => {
-        this.props.toggleInfoExpanded(shouldExpand);
-      }
-    );
-  }
+  const animateInfoExpansion = shouldExpand => {
+    setInfoExpansionStyle({ height: shouldExpand ? '80%' : previewHeight });
+    dispatch(toggleInfoExpanded(shouldExpand));
+  };
 
-  handleSwipe(direction) {
+  const handleSwipe = direction => {
     if (direction === 'top') {
-      this.toggleInfoExpanded(true);
+      handleToggleInfoExpanded(true);
     } else if (direction === 'bottom') {
-      this.toggleInfoExpanded(false);
+      handleToggleInfoExpanded(false);
     }
-  }
+  };
 
-  handleGA() {
+  const handleGA = useCallback(() => {
     ReactGA.event({
-      category: `Tap - ${this.props.resourceType}`,
+      category: `Tap - ${resourceType}`,
       action: 'InfoShown',
-      label: `${this.props.selectedPlace?.name}, ${this.props.selectedPlace?.address}`
+      label: `${selectedPlace?.name}, ${selectedPlace?.address}`
     });
-  }
+  }, [resourceType, selectedPlace?.address, selectedPlace?.name]);
 
-  // Handle Times
+  useEffect(() => {
+    handleGA();
+    getWalkingDurationAndTimes();
+    setPreviewHeight(refSelectedTap.current?.clientHeight ?? 0);
+  }, [handleGA, getWalkingDurationAndTimes]);
 
-  setCurrentDate() {
-    const selectedPlace = this.props.selectedPlace;
-
-    this.setState({
-      name: selectedPlace?.name,
-      address: selectedPlace?.address,
-      tapDescription: selectedPlace?.description
-        ? selectedPlace?.description
-        : 'Happy PHLasking',
-      tapStatement: selectedPlace?.statement,
-      tapNormsAndRules: selectedPlace?.norms_rules
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.showingInfoWindow) {
-      if (this.props.selectedPlace !== prevProps.selectedPlace) {
-        this.setCurrentDate();
-        this.getWalkingDurationAndTimes();
-        this.handleGA();
-      }
-      if (
-        isMobile &&
-        this.state.previewHeight !== this.refSelectedTap.current.clientHeight &&
-        !this.state.isDescriptionShown
-      ) {
-        this.setState({
-          previewHeight: this.refSelectedTap.current.clientHeight
-        });
-      }
-    }
-  }
-
-  componentDidMount() {
-    this.setCurrentDate();
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        {isMobile && (
-          <div ref={this.refSelectedTap} id="tap-info-container-mobile">
-            {this.props.selectedPlace && (
-              <SwipeableDrawer
-                anchor="bottom"
-                open={this.props.showingInfoWindow}
-                onOpen={() => this.toggleInfoWindow(true)}
-                onClose={() => this.toggleInfoWindow(false)}
-                PaperProps={{ square: false }}
+  return (
+    <div>
+      {isMobile && (
+        <div ref={refSelectedTap} id="tap-info-container-mobile">
+          {selectedPlace && (
+            <SwipeableDrawer
+              anchor="bottom"
+              open={showingInfoWindow}
+              onOpen={() => handleToggleInfoWindow(true)}
+              onClose={() => handleToggleInfoWindow(false)}
+              PaperProps={{ square: false }}
+            >
+              <SelectedTapMobile
+                image={tempImages.tapImg}
+                estWalkTime={walkingDuration}
+                selectedPlace={selectedPlace}
+                infoCollapse={infoCollapseMobile}
+                setInfoCollapse={setInfoCollapseMobile}
               >
-                <SelectedTapMobile
-                  image={tempImages.tapImg}
-                  estWalkTime={this.state.walkingDuration}
-                  selectedPlace={this.props.selectedPlace}
-                  infoCollapse={this.state.infoCollapseMobile}
-                  setInfoCollapse={this.setInfoCollapseMobile}
-                >
-                  <SelectedTapHours
-                    infoIsExpanded={this.props.infoIsExpanded}
-                    selectedPlace={this.props.selectedPlace}
-                  />
-                </SelectedTapMobile>
-              </SwipeableDrawer>
-            )}
-          </div>
-        )}
-        {!isMobile && this.props.showingInfoWindow && (
-          <div>
-            {/* Desktop dialog panel */}
-            <Paper
+                <SelectedTapHours
+                  infoIsExpanded={infoIsExpanded}
+                  selectedPlace={selectedPlace}
+                />
+              </SelectedTapMobile>
+            </SwipeableDrawer>
+          )}
+        </div>
+      )}
+      {!isMobile && showingInfoWindow && (
+        <div>
+          {/* Desktop dialog panel */}
+          <Paper
+            sx={{
+              position: 'absolute',
+              right: '32px',
+              top: '20px',
+              width: '708px',
+              height: '700px'
+            }}
+          >
+            {/* <DialogTitle>Dialog Title</DialogTitle> */}
+
+            <IconButton
+              aria-label="close"
+              onClick={() => {
+                handleToggleInfoWindow(false);
+              }}
               sx={{
                 position: 'absolute',
-                right: '32px',
-                top: '20px',
-                width: '708px',
-                height: '700px'
+                left: '45px',
+                top: 20,
+                color: '#000000'
+              }}
+              size="large"
+            >
+              <CloseIcon
+                sx={{
+                  fontSize: 34
+                }}
+              />
+            </IconButton>
+
+            <IconButton
+              aria-label="close"
+              onClick={() => {
+                handleToggleInfoWindow(true);
+              }}
+              sx={{
+                float: 'right',
+                right: '150px',
+                top: 20,
+                color: '#000000'
+              }}
+              // size="large"
+            >
+              <IosShareIcon
+                sx={{
+                  fontSize: 34
+                }}
+              />
+            </IconButton>
+
+            <IconButton
+              aria-label="close"
+              onClick={() => {
+                handleToggleInfoWindow(true);
+              }}
+              sx={{
+                float: 'right',
+                top: 20,
+                color: '#000000'
               }}
             >
-              {/* <DialogTitle>Dialog Title</DialogTitle> */}
-
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(false);
-                }}
+              <MoreHorizIcon
                 sx={{
-                  position: 'absolute',
-                  left: '45px',
-                  top: 20,
-                  color: '#000000'
+                  fontSize: 34
                 }}
-                size="large"
-              >
-                <CloseIcon
-                  sx={{
-                    fontSize: 34
-                  }}
-                />
-              </IconButton>
+              />
+            </IconButton>
 
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(true);
-                }}
-                sx={{
-                  float: 'right',
-                  right: '150px',
-                  top: 20,
-                  color: '#000000'
-                }}
-                // size="large"
-              >
-                <IosShareIcon
-                  sx={{
-                    fontSize: 34
-                  }}
-                />
-              </IconButton>
+            {/* Location Name */}
+            <div
+              ref={refContentArea}
+              className={
+                infoIsExpanded ? styles.tapContentExpanded : styles.tapContent
+              }
+            >
+              {/* Main Image */}
 
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  this.toggleInfoWindow(true);
-                }}
-                sx={{
-                  float: 'right',
-                  top: 20,
-                  color: '#000000'
-                }}
-              >
-                <MoreHorizIcon
-                  sx={{
-                    fontSize: 34
-                  }}
-                />
-              </IconButton>
+              <div id="tap-info-img-box-desktop">
+                <img-alt
+                  id="tap-info-img"
+                  src={tempImages.tapImg}
+                  srcSet={
+                    tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
+                  }
+                ></img-alt>
+              </div>
+              {/* Main Image */}
 
-              {/* Location Name */}
-              <div
-                ref={this.refContentArea}
-                className={
-                  this.props.infoIsExpanded
-                    ? styles.tapContentExpanded
-                    : styles.tapContent
-                }
-              >
-                {/* Main Image */}
-
-                <div id="tap-info-img-box-desktop">
-                  <img-alt
-                    id="tap-info-img"
-                    src={tempImages.tapImg}
-                    srcSet={
-                      tempImages.tapImg + ', ' + tempImages.tapImg2x + ' 2x'
-                    }
-                  ></img-alt>
-                </div>
-                {/* Main Image */}
-
-                <div id="tap-head-info">
-                  {/* Tap Type Icon */}
-                  <div id="tap-type-icon-container">
-                    <div id="tap-type-icon">
-                      {this.props.resourceType === WATER_RESOURCE_TYPE ? (
-                        <img
-                          className="tap-info-icon-img"
-                          src={this.props.selectedPlace?.infoIcon}
-                          alt=""
-                        ></img>
-                      ) : (
-                        this.props.selectedPlace?.infoIcon
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Name & Address */}
-                  <div id="org-name-and-address-desktop">
-                    <div id="tap-organization-name" data-cy="tap-organization-name">
-                      {this.state.name}
-                    </div>
-                    {this.state.address && (
-                      <h5 id="tap-info-address">{this.state.address}</h5>
+              <div id="tap-head-info">
+                {/* Tap Type Icon */}
+                <div id="tap-type-icon-container">
+                  <div id="tap-type-icon">
+                    {resourceType === WATER_RESOURCE_TYPE ? (
+                      <img
+                        className="tap-info-icon-img"
+                        src={selectedPlace?.infoIcon}
+                        alt=""
+                      ></img>
+                    ) : (
+                      selectedPlace?.infoIcon
                     )}
                   </div>
-
-                  <SelectedTapHours
-                    infoIsExpanded={this.props.infoIsExpanded}
-                    selectedPlace={this.props.selectedPlace}
-                  />
-                </div>
-                {/* Walk Time & Info Icons  */}
-                <div className={styles.walkTime}>
-                  Estimated Walk Time: {this.state.walkingDuration} mins (
-                  {this.state.walkingDistance} mi)
                 </div>
 
-                <SelectedTapIcons place={this.props.selectedPlace} />
+                {/* Name & Address */}
+                <div id="org-name-and-address-desktop">
+                  <div
+                    id="tap-organization-name"
+                    data-cy="tap-organization-name"
+                  >
+                    {selectedPlace?.name}
+                  </div>
+                  {selectedPlace?.address && (
+                    <h5 id="tap-info-address">{selectedPlace.address}</h5>
+                  )}
+                </div>
 
-                {/* Description */}
+                <SelectedTapHours
+                  infoIsExpanded={infoIsExpanded}
+                  selectedPlace={selectedPlace}
+                />
+              </div>
+              {/* Walk Time & Info Icons  */}
+              <div className={styles.walkTime}>
+                Estimated Walk Time: {walkingDuration} mins ({walkingDistance}{' '}
+                mi)
+              </div>
+
+              <SelectedTapIcons place={selectedPlace} />
+
+              {/* Description */}
+              <div>
                 <div>
-                  <div>
-                    <div className={styles.description}>
-                      <div id="tap-info-description">
-                        {this.state.tapDescription && (
-                          <div className={styles.section}>
-                            <h3>Description</h3>
-                            <div>{this.state.tapDescription}</div>
-                          </div>
-                        )}
-                        {this.state.tapStatement && (
-                          <div className={styles.section}>
-                            <h3>Statement</h3>
-                            <div>{this.state.tapStatement}</div>
-                          </div>
-                        )}
-                        {this.state.tapNormsAndRules && (
-                          <div className={styles.section}>
-                            <h3>Norms &amp; Rules</h3>
-                            <div>{this.state.tapNormsAndRules}</div>
-                          </div>
-                        )}
+                  <div className={styles.description}>
+                    <div id="tap-info-description">
+                      <div className={styles.section}>
+                        <h3>Description</h3>
+                        <div>
+                          {selectedPlace?.description
+                            ? selectedPlace?.description
+                            : 'Happy PHLasking'}
+                        </div>
                       </div>
+
+                      {selectedPlace?.tapStatement && (
+                        <div className={styles.section}>
+                          <h3>Statement</h3>
+                          <div>{selectedPlace.tapStatement}</div>
+                        </div>
+                      )}
+                      {selectedPlace?.norms_rules && (
+                        <div className={styles.section}>
+                          <h3>Norms &amp; Rules</h3>
+                          <div>{selectedPlace?.norms_rules}</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-            </Paper>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
-const mapStateToProps = state => ({
-  showingInfoWindow: state.filterMarkers.showingInfoWindow,
-  infoIsExpanded: state.filterMarkers.infoIsExpanded,
-  infoWindowClass: state.filterMarkers.infoWindowClass,
-  selectedPlace: state.filterMarkers.selectedPlace,
-  resourceType: state.filterMarkers.resourceType,
-  userLocation: state.filterMarkers.userLocation
-});
-const mapDispatchToProps = {
-  toggleInfoExpanded,
-  toggleInfoWindow,
-  toggleInfoWindowClass
+            </div>
+          </Paper>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(SelectedTap));
+export default SelectedTap;

@@ -20,8 +20,8 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
 
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
@@ -54,6 +54,8 @@ const PageOne = ({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   const FORAGE_TYPE = [
     {
       forageType: 'Nut',
@@ -191,7 +193,7 @@ const PageOne = ({
                             textFieldChangeHandler(addr);
                             onChange(addr);
                           })
-                          .catch(console.error);
+                          .catch(noop);
                       }
                     }}
                     style={{ backgroundColor: 'white' }}

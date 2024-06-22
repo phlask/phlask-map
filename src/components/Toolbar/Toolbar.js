@@ -1,6 +1,4 @@
 import IconButton from '@mui/material/Button';
-import React from 'react';
-import ReactGA from 'react-ga4';
 import { connect, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
@@ -13,7 +11,6 @@ import {
   setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  toggleResourceType,
   toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
@@ -24,8 +21,6 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
-
-import { isMobile } from 'react-device-detect';
 
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
@@ -47,6 +42,7 @@ import Box from '@mui/material/Box';
 import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import NavigationItem from './NavigationItem';
+import useIsMobile from 'hooks/useIsMobile';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -69,7 +65,7 @@ function distance(lat1, lon1, lat2, lon2) {
 // @param {ResourceEntry[]} data
 // @return {ResourceEntry}
 function getClosest(data, userLocation) {
-  let distances = data.map((resource, index) => {
+  const distances = data.map((resource, index) => {
     return {
       resource,
       distance: distance(
@@ -82,20 +78,15 @@ function getClosest(data, userLocation) {
   });
 
   // Return the resource with the minimum distance value
-  if (!distances) return null;
+  if (!distances.length) return null;
   return distances.reduce(
     (min, p) => (p.distance < min.distance ? p : min),
     distances[0]
   ).resource;
 }
 
-function getCoordinates() {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-}
-
 function Toolbar(props) {
+  const isMobile = useIsMobile();
   const resourceType = useSelector(resourceTypeSelector);
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
@@ -107,21 +98,6 @@ function Toolbar(props) {
     [BATHROOM_RESOURCE_TYPE]: ToiletIcon,
     default: WaterIcon
   }[resourceType ?? 'default'];
-
-  function switchType(type) {
-    if (props.resourceType !== type) {
-      props.toggleResourceType(type);
-      handleGA(type);
-    }
-  }
-
-  function handleGA(type) {
-    ReactGA.event({
-      category: `Toolbar`,
-      action: 'MapChangedTo',
-      label: `${type}`
-    });
-  }
 
   async function setClosest() {
     // If the user clicks very fast, it crashes.
@@ -143,14 +119,17 @@ function Toolbar(props) {
       lat: props.userLocation.lat,
       lon: props.userLocation.lng
     });
-
+    if (!closest) return;
     props.setSelectedPlace(closest);
 
     props.map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
-    props.toggleInfoWindow(true);
+    props.toggleInfoWindow({
+      isShown: true,
+      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+    });
   }
 
   function closestButtonClicked() {
@@ -158,11 +137,9 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (props.toolbarModal === modal) {
-      props.setToolbarModal(TOOLBAR_MODAL_NONE);
-    } else {
-      props.setToolbarModal(modal);
-    }
+    props.setToolbarModal(
+      props.toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal
+    );
   }
 
   let phlaskButton = null;
@@ -354,7 +331,7 @@ function Toolbar(props) {
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
+                props.toggleResourceMenu({ isShown: props.isResourceMenuShown })
               }
             />
             <ResourceMenu />
@@ -400,7 +377,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  toggleResourceType,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_RESOURCE,

@@ -11,7 +11,7 @@ import foodImg from '../images/foodButton.png';
 import waterImg from '../images/waterButton.png';
 import styles from './TutorialModal.module.scss';
 
-const TutorialModal = ({ showButton }) => {
+const TutorialModal = () => {
   const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
   const [showModalPreference, setShowModalPreference] = useLocalStorage(

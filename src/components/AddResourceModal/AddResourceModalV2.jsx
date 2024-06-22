@@ -25,6 +25,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
+import noop from 'utils/noop';
 
 export default function AddResourceModalV2(props) {
   const initialState = {
@@ -121,11 +122,7 @@ export default function AddResourceModalV2(props) {
           longitude: lng
         }));
       })
-      .catch(error => {
-        if (error.message !== 'ZERO_RESULTS') {
-          console.error('Error occurred during geocoding:', error);
-        }
-      });
+      .catch(noop);
   }, 500); // 500ms debounce delay
 
   const textFieldChangeHandler = eventOrString => {
@@ -212,7 +209,7 @@ export default function AddResourceModalV2(props) {
           return data.getURL;
         });
       })
-      .catch(console.error);
+      .catch(noop);
   };
 
   const onSubmit = (resourceType, e) => {
