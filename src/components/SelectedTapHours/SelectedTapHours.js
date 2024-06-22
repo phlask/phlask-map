@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { hours } from '../../helpers/hours';
 import styles from './SelectedTapHours.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import useIsMobile from 'hooks/useIsMobile';
 
 const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
-  const isMobile = useIsMobile();
   const [isHoursExpanded, setIsHoursExpanded] = useState(false);
   const [currentDay, setCurrentDay] = useState(new Date().getDay());
   const [currentOrgHours, setCurrentOrgHours] = useState(false);
@@ -74,7 +71,7 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
       setCurrentOrgHours(false);
       setIsOpen(null);
     }
-  }, [selectedPlace]);
+  }, [currentDay, selectedPlace]);
 
   return (
     <>

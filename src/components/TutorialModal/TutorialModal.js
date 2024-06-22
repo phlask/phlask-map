@@ -1,6 +1,6 @@
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
@@ -20,11 +20,6 @@ const TutorialModal = () => {
   );
   const [showModalCheckbox, setShowModalCheckbox] = useState(true);
   const [modalCheckbox, setModalCheckbox] = useState(false);
-
-  function handleShow() {
-    setShowModal(true);
-    setShowModalCheckbox(false);
-  }
 
   function handleClose() {
     setShowModal(false);
@@ -50,7 +45,7 @@ const TutorialModal = () => {
 
   useEffect(() => {
     setShowModal(showModalPreference);
-  }, []);
+  }, [showModalPreference]);
 
   const modalContent = {
     1: {
