@@ -13,7 +13,6 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import {
   setToggleStateFood,
   setFilteredFoodTypes,
@@ -32,9 +31,6 @@ export const FoodFilter = () => {
   const openNow = useSelector(state => state.filterMarkers.foodFilters.openNow);
   const accessTypesHidden = useSelector(
     state => state.filterMarkers.foodFilters.accessTypesHidden
-  );
-  const showingInfoWindow = useSelector(
-    state => state.filterMarkers.showingInfoWindow
   );
 
   const handleChange = event => {

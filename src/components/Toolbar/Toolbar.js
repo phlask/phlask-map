@@ -1,15 +1,13 @@
 import IconButton from '@mui/material/Button';
-import { connect, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  setMapCenter,
   setSelectedPlace,
   setToolbarModal,
-  setUserLocation,
   toggleInfoWindow,
   toggleResourceMenu
 } from '../../actions/actions';
@@ -85,9 +83,16 @@ function getClosest(data, userLocation) {
   ).resource;
 }
 
-function Toolbar(props) {
+function Toolbar({ map }) {
+  const dispatch = useDispatch();
   const isMobile = useIsMobile();
   const resourceType = useSelector(resourceTypeSelector);
+  const allResources = useSelector(state => state.filterMarkers.allResources);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const isResourceMenuShown = useSelector(
+    state => state.filterMarkers.isResourceMenuShown
+  );
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -106,27 +111,27 @@ function Toolbar(props) {
     // This may be reproducible on Desktop.
     let data;
 
-    switch (props.resourceType) {
+    switch (resourceType) {
       case WATER_RESOURCE_TYPE:
-        data = props?.allResources;
+        data = allResources;
         break;
       // TODO(vontell): Filter based on requested type
       default:
-        data = props?.allResources;
+        data = allResources;
     }
 
     const closest = getClosest(data, {
-      lat: props.userLocation.lat,
-      lon: props.userLocation.lng
+      lat: userLocation.lat,
+      lon: userLocation.lng
     });
     if (!closest) return;
-    props.setSelectedPlace(closest);
+    dispatch(setSelectedPlace(closest));
 
-    props.map.panTo({
+    map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
-    props.toggleInfoWindow({
+    toggleInfoWindow({
       isShown: true,
       infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
     });
@@ -137,13 +142,11 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    props.setToolbarModal(
-      props.toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal
-    );
+    setToolbarModal(toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal);
   }
 
   let phlaskButton = null;
-  switch (props.resourceType) {
+  switch (resourceType) {
     case WATER_RESOURCE_TYPE:
       phlaskButton = <WaterPhlaskButton />;
       break;
@@ -203,7 +206,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                toolbarModal == TOOLBAR_MODAL_RESOURCE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -232,7 +235,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_FILTER
+                toolbarModal == TOOLBAR_MODAL_FILTER
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -261,7 +264,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_SEARCH
+                toolbarModal == TOOLBAR_MODAL_SEARCH
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -290,7 +293,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -331,7 +334,7 @@ function Toolbar(props) {
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() =>
-                props.toggleResourceMenu({ isShown: props.isResourceMenuShown })
+                toggleResourceMenu({ isShown: isResourceMenuShown })
               }
             />
             <ResourceMenu />
@@ -368,26 +371,4 @@ function Toolbar(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  resourceType: state.filterMarkers.resourceType,
-  allResources: state.filterMarkers.allResources,
-  userLocation: state.filterMarkers.userLocation,
-  toolbarModal: state.filterMarkers.toolbarModal,
-  isResourceMenuShown: state.filterMarkers.isResourceMenuShown
-});
-
-const mapDispatchToProps = {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
-  setToolbarModal,
-  setSelectedPlace,
-  toggleInfoWindow,
-  setMapCenter,
-  setUserLocation,
-  toggleResourceMenu
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default Toolbar;

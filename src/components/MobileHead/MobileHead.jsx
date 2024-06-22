@@ -11,15 +11,14 @@ import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.sv
 import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
 import {
   setToolbarModal,
-  TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH
 } from '../../actions/actions';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-function MobileHead(props) {
+function MobileHead() {
+  const dispatch = useDispatch();
   const headerContext = React.useContext(HeaderContext);
   const {
     setShowMapControls,
@@ -33,6 +32,8 @@ function MobileHead(props) {
     setVerticalAnimFinished1,
     setVerticalAnimFinished2
   } = headerContext;
+
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   return (
     <Box
       sx={{
@@ -83,10 +84,12 @@ function MobileHead(props) {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
                 onClick={() => {
-                  props.setToolbarModal(
-                    props.toolbarModal !== TOOLBAR_MODAL_SEARCH
-                      ? TOOLBAR_MODAL_SEARCH
-                      : TOOLBAR_MODAL_NONE
+                  dispatch(
+                    setToolbarModal(
+                      toolbarModal !== TOOLBAR_MODAL_SEARCH
+                        ? TOOLBAR_MODAL_SEARCH
+                        : TOOLBAR_MODAL_NONE
+                    )
                   );
                 }}
               >
@@ -94,12 +97,16 @@ function MobileHead(props) {
               </IconButton>
               <IconButton
                 onClick={() => {
-                  if (props.toolbarModal != TOOLBAR_MODAL_FILTER) {
-                    props.setToolbarModal({
-                      toolbarModal: TOOLBAR_MODAL_FILTER
-                    });
+                  if (toolbarModal != TOOLBAR_MODAL_FILTER) {
+                    dispatch(
+                      setToolbarModal({
+                        toolbarModal: TOOLBAR_MODAL_FILTER
+                      })
+                    );
                   } else {
-                    props.setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE });
+                    dispatch(
+                      setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
+                    );
                   }
                 }}
               >
@@ -177,17 +184,4 @@ function MobileHead(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  toolbarModal: state.filterMarkers.toolbarModal
-});
-
-const mapDispatchToProps = {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
-  setToolbarModal
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MobileHead);
+export default MobileHead;

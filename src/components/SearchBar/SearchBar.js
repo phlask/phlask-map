@@ -6,7 +6,6 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
-import { connect } from 'react-redux';
 import { TOOLBAR_MODAL_SEARCH, setToolbarModal } from '../../actions/actions';
 import styles from './SearchBar.module.scss';
 import useIsMobile from 'hooks/useIsMobile';
