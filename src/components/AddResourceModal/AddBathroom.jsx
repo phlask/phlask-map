@@ -308,7 +308,8 @@ function AddBathroom({
                 <Controller
                   rules={{
                     required: true,
-                    pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+                    pattern:
+                      /(?:http[s]?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/gm
                   }}
                   control={control}
                   name="website"

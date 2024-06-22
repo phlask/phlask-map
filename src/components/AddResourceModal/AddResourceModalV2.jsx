@@ -254,7 +254,11 @@ export default function AddResourceModalV2(props) {
         source: {
           type: 'MANUAL'
         },
-        verified: false,
+        verification: {
+          last_modified: new Date().toISOString(),
+          last_modifier: 'phlask_app',
+          verified: false
+        },
         resource_type: resourceType,
         address: values.address,
         city: city,

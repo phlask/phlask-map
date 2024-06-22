@@ -41,7 +41,14 @@ export const getResources = () => dispatch => {
     : onValue(
         ref(database, '/'),
         snapshot => {
-          dispatch(getResourcesSuccess(Object.values(snapshot.val())));
+          // We also attach the ID to the resource for later reference
+          const resourcesWithIds = Object.entries(snapshot.val()).map(
+            ([id, resource]) => ({
+              ...resource,
+              id
+            })
+          );
+          dispatch(getResourcesSuccess(resourcesWithIds));
         },
         { onlyOnce: true }
       );

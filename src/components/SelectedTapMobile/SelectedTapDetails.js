@@ -19,6 +19,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
+import VerificationButton from 'components/Verification/VerificationButton';
 
 function SelectedTapDetails(props) {
   const [pointerPositionY, setPointerPositionY] = useState(0);
@@ -36,6 +37,10 @@ function SelectedTapDetails(props) {
    * @type {ResourceEntry}
    */
   const resource = props.selectedPlace;
+
+  if (resource == null || Object.keys(resource).length === 0) {
+    return <div></div>;
+  }
 
   let icon;
   switch (resource.resource_type) {
@@ -163,7 +168,17 @@ function SelectedTapDetails(props) {
           {/* Currently the three dot button does nothing */}
         </div>
       )}
-      <img src={image} className={styles.locationImage} alt="" />
+      <div
+        style={{
+          width: '100%',
+          height: '100px',
+          borderRadius: '8px',
+          position: 'relative'
+        }}
+      >
+        <img src={image} className={styles.locationImage} alt="" />
+        <VerificationButton resource={resource} />
+      </div>
       <div className={styles.mainHalfInfo}>
         <img
           src={icon}
