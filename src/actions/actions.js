@@ -35,7 +35,8 @@ export const getResources = createAsyncThunk(
     const database = getDatabase(app);
 
     if (process.env.REACT_APP_CYPRESS_TEST) return testData;
-    const results = (await get(ref(database, '/'))).exportVal();
+    const snapshot = await get(ref(database, '/'));
+    const results = snapshot.val();
     return Object.values(results) || [];
   }
 );
