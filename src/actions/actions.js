@@ -1,11 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
-import {
-  bathroomConfig,
-  foodConfig,
-  foragingConfig,
-  waterConfig
-} from '../firebase/firebaseConfig';
+import { resourcesConfig } from '../firebase/firebaseConfig';
+import { testData } from '../firebase/functionalTest';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -31,90 +27,32 @@ export const resetFilterFunction = () => ({
   type: RESET_FILTER_FUNCTION
 });
 
-/* User should select which type ( food or water) to display before retrieving data.
-  First choice would be set as default
-*/
-
-export const GET_TAPS_SUCCESS = 'GET_TAPS_SUCCESS';
-export const getTapsSuccess = allTaps => ({
-  type: GET_TAPS_SUCCESS,
-  allTaps
+export const GET_RESOURCES_SUCCESS = 'GET_RESOURCES_SUCCESS';
+export const getResourcesSuccess = allResources => ({
+  type: GET_RESOURCES_SUCCESS,
+  allResources
 });
 
-export const getTaps = () => dispatch => {
-  const app = initializeApp(waterConfig, 'water');
+export const getResources = () => dispatch => {
+  const app = initializeApp(resourcesConfig);
   const database = getDatabase(app);
-  return onValue(
-    ref(database, '/'),
-    snapshot => {
-      const snapshotVal = snapshot.val();
-      // TODO: Clean up Firebase DB for this one-off edge case
-      // NOTE: The code block below is filtering out tap with access-types that are no longer used
-      const allTaps = snapshotVal.filter(
-        key =>
-          key.access != 'WM' &&
-          key.access != 'N' &&
-          key.access != 'TrashAcademy'
+  return process.env.REACT_APP_CYPRESS_TEST
+    ? dispatch(getResourcesSuccess(testData))
+    : onValue(
+        ref(database, '/'),
+        snapshot => {
+          dispatch(getResourcesSuccess(Object.values(snapshot.val())));
+        },
+        { onlyOnce: true }
       );
-      dispatch(getTapsSuccess(allTaps));
-    },
-    { onlyOnce: true }
-  );
 };
 
-export const GET_FOOD_SUCCESS = 'GET_FOOD_SUCCESS';
-export const getFoodSuccess = allFoodOrgs => ({
-  type: GET_FOOD_SUCCESS,
-  allFoodOrgs
+// Handles the case where a new resource is added from the submission form
+export const PUSH_NEW_RESOURCE = 'PUSH_NEW_RESOURCE';
+export const pushNewResource = newResource => ({
+  type: PUSH_NEW_RESOURCE,
+  newResource
 });
-
-export const getFoodOrgs = () => dispatch => {
-  const app = initializeApp(foodConfig, 'food');
-  const database = getDatabase(app);
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getFoodSuccess(snapshotVal.filter(Boolean)));
-  });
-};
-
-export const GET_FORAGING_SUCCESS = 'GET_FORAGING_SUCCESS';
-export const getForagingSuccess = allForagingTaps => ({
-  type: GET_FORAGING_SUCCESS,
-  allForagingTaps
-});
-
-export const getForagingTaps = () => dispatch => {
-  const app = initializeApp(foragingConfig, 'foraging');
-  const database = getDatabase(app);
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(
-      getForagingSuccess(
-        snapshotVal.filter(Boolean).map(item => ({
-          ...item,
-          lat: item.lat || item['Point Y'],
-          lon: item.lon || item['Point X']
-        }))
-      )
-    );
-  });
-};
-
-export const GET_BATHROOM_SUCCESS = 'GET_BATHROOM_SUCCESS';
-export const getBathroomSuccess = allBathroomTaps => ({
-  type: GET_BATHROOM_SUCCESS,
-  allBathroomTaps
-});
-
-export const getBathroomTaps = () => dispatch => {
-  const app = initializeApp(bathroomConfig, 'bathroom');
-  const database = getDatabase(app);
-
-  return onValue(ref(database, '/'), snapshot => {
-    const snapshotVal = snapshot.val();
-    dispatch(getBathroomSuccess(snapshotVal || []));
-  });
-};
 
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({

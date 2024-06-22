@@ -1,11 +1,14 @@
 import ImageUploader from 'react-images-upload';
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { initializeApp } from 'firebase/app';
 import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_CONTRIBUTE
 } from '../../actions/actions';
+import { resourcesConfig } from '../../firebase/firebaseConfig';
 
+import { debounce } from '../../utils/debounce';
 import ChooseResource from './ChooseResource';
 import ShareSocials from './ShareSocials';
 import AddFood from './AddFood/AddFood';
@@ -13,7 +16,16 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { pushNewResource, setSelectedPlace } from '../../actions/actions';
+
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 
 export default function AddResourceModalV2(props) {
   const initialState = {
@@ -31,8 +43,10 @@ export default function AddResourceModalV2(props) {
     count: 0,
     formStep: 'chooseResource',
     closeModal: false,
+    latitude: null,
+    longitude: null,
 
-    // ADD TAP
+    // ADD WATER
     filtration: false,
     waterVesselNeeded: false,
     drinkingFountain: false,
@@ -77,7 +91,6 @@ export default function AddResourceModalV2(props) {
   };
 
   const [values, setValues] = useState(initialState);
-  const [dbConnection, setDbConnection] = useState('');
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -92,24 +105,54 @@ export default function AddResourceModalV2(props) {
     });
   };
 
-  const textFieldChangeHandler = e => {
-    setValues(prevValues => {
-      // the address textbox is set with react-hook-form setValue() when user clicks "use my location instead",
-      //  which doesn't fire an event. When that happens, a string is passed instead of an event object, so this
-      // conditional expression handles that
+  // Use imported debounce to prevent the geocoding API from being called too frequently
+  const debouncedGeocode = debounce(address => {
+    geocodeByAddress(address)
+      .then(results => {
+        if (results.length === 0) {
+          throw new Error('ZERO_RESULTS');
+        }
+        return getLatLng(results[0]);
+      })
+      .then(({ lat, lng }) => {
+        // Update the state with the latitude and longitude
+        setValues(prevValues => ({
+          ...prevValues,
+          latitude: lat,
+          longitude: lng
+        }));
+      })
+      .catch(error => {
+        if (error.message !== 'ZERO_RESULTS') {
+          console.error('Error occurred during geocoding:', error);
+        }
+      });
+  }, 500); // 500ms debounce delay
 
-      if (e.target) {
-        return {
-          ...prevValues,
-          [e.target.name]: e.target.value
-        };
-      } else {
-        return {
-          ...prevValues,
-          address: e
-        };
-      }
-    });
+  const textFieldChangeHandler = eventOrString => {
+    let newValue;
+    let fieldName;
+
+    if (eventOrString && eventOrString.target) {
+      // This is an event object
+      newValue = eventOrString.target.value;
+      fieldName = eventOrString.target.name;
+    } else {
+      // This is a direct string input - "Use My Location" button was clicked
+      newValue = eventOrString;
+      fieldName = 'address';
+    }
+
+    // Update the state with the new value
+    setValues(prevValues => ({
+      ...prevValues,
+      [fieldName]: newValue
+    }));
+
+    // Trigger the debounced geocoding function if this was an address
+    if (fieldName === 'address') {
+      debouncedGeocode(newValue);
+    }
   };
 
   // controls which modal state to show
@@ -149,63 +192,6 @@ export default function AddResourceModalV2(props) {
     });
   };
 
-  // Database
-  const onChangeDbConnection = connection => {
-    setDbConnection(connection);
-  };
-
-  // This useEffect Simulate's the this.setState() callback from original AddResourceModal component
-  // for onChangeDbConnection.
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // toggle flag after first render/mounting
-      return;
-    }
-
-    // When a form component unmounts (e.g. AddBathroom), it will delete the dbConnection by calling deleteApp(firebaseConnection), which will
-    // trigger this useEffect. This will prevent dbConnection from getting passed to the getDatabase() in getCount()
-    // when it's undefined after getting deleted
-    if (dbConnection === undefined) {
-      return;
-    }
-
-    getCount();
-  }, [dbConnection]);
-
-  const getCount = () => {
-    // need to reset count as switching between
-    // resources have different counts
-    setValues(prevValues => {
-      return { ...prevValues, count: 0 };
-    });
-
-    const database = getDatabase(dbConnection);
-    // this.state.dbConnection
-    // .database()
-    // .ref("/")g
-    // .once("value")
-    // .then(snapshot => {
-    onValue(ref(database, '/'), snapshot => {
-      for (let item in snapshot.val()) {
-        if (snapshot.val()[item].access === 'WM') {
-          continue;
-        }
-        if (snapshot.val()[item].active === 'N') {
-          continue;
-        }
-        if (snapshot.val()[item].access === 'TrashAcademy') {
-          continue;
-        }
-
-        setValues(prevValues => {
-          return { ...prevValues, count: prevValues.count + 1 };
-        });
-      }
-    });
-  };
-
   const submitImage = imageFile => {
     // Open a request for a new signed URL for S3 upload
     // Upload the image with a PUT request
@@ -229,7 +215,7 @@ export default function AddResourceModalV2(props) {
       .catch(console.error);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (resourceType, e) => {
     e.preventDefault();
     var upload_promises = [];
     // Upload images
@@ -237,72 +223,138 @@ export default function AddResourceModalV2(props) {
       upload_promises.push(submitImage(picture));
     });
 
-    return Promise.all(upload_promises).then(images => {
+    return Promise.all(upload_promises).then(async images => {
       // All image uploads completed, loading tap record
 
-      /* Easier to construct one new data object than to
-       *  figure out which fields we need to submit for each resource type
-       *  and create new data objects specific for each resource type
-       *  and selectively pass it on to the submit function
-       */
+      // First, we geocode the address to fill out city, state, zip code, and gp_id from
+      // the address_components
+      const geocodedAddresses = await geocodeByAddress(values.address);
+      const geocodedAddress = geocodedAddresses[0];
+      const placeId = geocodedAddress.place_id;
+      const city = geocodedAddress.address_components.find(component =>
+        component.types.includes('locality')
+      ).long_name;
+      const state = geocodedAddress.address_components.find(component =>
+        component.types.includes('administrative_area_level_1')
+      ).long_name;
+      const postalCode = geocodedAddress.address_components.find(component =>
+        component.types.includes('postal_code')
+      ).long_name;
 
-      const newData = {
-        // SHARED FIELDS
-        images: images,
-        name: values.name,
-        entry_type: values.entryType,
+      /**
+       *
+       * @type {ResourceEntry}
+       */
+      const newResource = {
+        version: 1,
+        date_created: new Date().toISOString(),
+        creator: 'phlask_app',
+        last_modified: new Date().toISOString(),
+        last_modifier: 'phlask_app',
+        source: {
+          type: 'MANUAL'
+        },
+        verified: false,
+        resource_type: resourceType,
         address: values.address,
-        website: values.website,
-        description: values.description,
+        city: city,
+        state: state,
+        zip_code: postalCode,
+        latitude: values.latitude || userLocation.lat,
+        longitude: values.longitude || userLocation.lng,
+        gp_id: placeId,
+        images: images,
         guidelines: values.guidelines,
-        // TODO: Issue 426 - We only implement one flow for lat/lng setting, we also need to enable address-based lat/lng
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-        // TAP FIELDS
-        filtration: values.filtration,
-        handicap: values.handicapAccessible,
-        vessel: values.waterVesselNeeded,
-        drinking_fountain: values.drinkingFountain,
-        bottle_filler_and_fountain: values.bottleFillerAndFountain,
-        sink: values.sink,
-        water_jug: values.waterJug,
-        soda_machine: values.sodaMachine,
-        pitcher: values.pitcher,
-        water_cooler: values.waterCooler,
-        dispenser_type_other: values.dispenserTypeOther,
-        // FOOD FIELDS
-        organization: values.organization,
-        id_required: values.idRequired,
-        children_only: values.childrenOnly,
-        community_fridges: values.communityFridges,
-        perishable: values.perishable,
-        non_perishable: values.nonPerishable,
-        prepared: values.prepared,
-        food_type_other: values.foodTypeOther,
-        eat_on_site: values.eatOnSite,
-        delivery: values.delivery,
-        pick_up: values.pickUp,
-        distribution_type_other: values.distributionTypeOther,
-        // FORAGING FIELDS
-        nut: values.nut,
-        fruit: values.fruit,
-        leaves: values.leaves,
-        bark: values.bark,
-        flowers: values.flowers,
-        root: values.root,
-        medicinal: values.medicinal,
-        in_season: values.inSeason,
-        community_garden: values.communityGarden,
-        // BATHROOM FIELDS
-        changing_table: values.changingTable,
-        gender_neutral: values.genderNeutral,
-        family_bathroom: values.familyBathroom,
-        single_occupancy: values.singleOccupancy,
-        has_fountain: values.hasFountain
+        description: values.description,
+        name: values.name,
+        status: 'OPERATIONAL', // By default, if they are creating a resource, we assume it is operational
+        entry_type: values.entryType
+        //hours: undefined
       };
 
-      const database = getDatabase(dbConnection);
-      set(ref(database, '/' + (values.count + 1).toString()), newData);
+      // TODO(vontell): For now, we take the existing form data coming into values and transform these into the v1 schema
+      // format. Ideally, the forms should be storing the correct format directly, but for a first pass, I felt like this
+      // was the simplest to save on time.
+
+      // Set the details for the specific resource type
+      if (resourceType === WATER_RESOURCE_TYPE) {
+        newResource.water = {
+          dispenser_type: [
+            values.drinkingFountain ? 'DRINKING_FOUNTAIN' : null,
+            values.bottleFillerAndFountain ? 'BOTTLE_FILLER' : null,
+            values.sink ? 'SINK' : null,
+            values.waterJug ? 'JUG' : null,
+            values.sodaMachine ? 'SODA_MACHINE' : null,
+            values.pitcher ? 'PITCHER' : null,
+            values.waterCooler ? 'WATER_COOLER' : null
+          ].filter(Boolean),
+          tags: [
+            values.handicapAccessible ? 'WHEELCHAIR_ACCESSIBLE' : null,
+            values.filtration ? 'FILTERED' : null,
+            values.waterVesselNeeded ? 'BYOB' : null,
+            values.idRequired ? 'ID_REQUIRED' : null
+          ].filter(Boolean)
+        };
+      }
+
+      if (resourceType === FOOD_RESOURCE_TYPE) {
+        newResource.food = {
+          food_type: [
+            values.perishable ? 'PERISHABLE' : null,
+            values.nonPerishable ? 'NON_PERISHABLE' : null,
+            values.prepared ? 'PREPARED' : null
+          ].filter(Boolean),
+          distribution_type: [
+            values.eatOnSite ? 'EAT_ON_SITE' : null,
+            values.delivery ? 'DELIVERY' : null,
+            values.pickUp ? 'PICKUP' : null
+          ].filter(Boolean),
+          organization_type: [
+            values.organization
+              ? values.organization.toUpperCase().replace(/\s+/g, '_')
+              : null
+          ].filter(Boolean),
+          organization_name: values.organization,
+          organization_url: values.website
+        };
+      }
+
+      if (resourceType === FORAGE_RESOURCE_TYPE) {
+        newResource.forage = {
+          forage_type: [
+            values.nut ? 'NUT' : null,
+            values.fruit ? 'FRUIT' : null,
+            values.leaves ? 'LEAVES' : null,
+            values.bark ? 'BARK' : null,
+            values.flowers ? 'FLOWERS' : null,
+            values.root ? 'ROOT' : null
+          ].filter(Boolean),
+          tags: [
+            values.medicinal ? 'MEDICINAL' : null,
+            values.inSeason ? 'IN_SEASON' : null,
+            values.communityGarden ? 'COMMUNITY_GARDEN' : null
+          ].filter(Boolean)
+        };
+      }
+
+      if (resourceType === BATHROOM_RESOURCE_TYPE) {
+        newResource.bathroom = {
+          tags: [
+            values.handicapAccessible ? 'WHEELCHAIR_ACCESSIBLE' : null,
+            values.genderNeutral ? 'GENDER_NEUTRAL' : null,
+            values.changingTable ? 'CHANGING_TABLE' : null,
+            values.singleOccupancy ? 'SINGLE_OCCUPANCY' : null,
+            values.familyBathroom ? 'FAMILY' : null,
+            values.hasFountain ? 'HAS_FOUNTAIN' : null
+          ].filter(Boolean)
+        };
+      }
+
+      // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
+      const app = initializeApp(resourcesConfig);
+      const database = getDatabase(app);
+      push(ref(database, '/'), newResource);
+      dispatch(pushNewResource(newResource));
     });
   };
 
@@ -329,8 +381,7 @@ export default function AddResourceModalV2(props) {
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
-          onSubmit={onSubmit}
-          onDbConnectionChange={onChangeDbConnection}
+          onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -362,8 +413,7 @@ export default function AddResourceModalV2(props) {
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
-          onSubmit={onSubmit}
-          onDbConnectionChange={onChangeDbConnection}
+          onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -395,8 +445,7 @@ export default function AddResourceModalV2(props) {
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
-          onSubmit={onSubmit}
-          onDbConnectionChange={onChangeDbConnection}
+          onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -422,8 +471,7 @@ export default function AddResourceModalV2(props) {
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
-          onSubmit={onSubmit}
-          onDbConnectionChange={onChangeDbConnection}
+          onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}

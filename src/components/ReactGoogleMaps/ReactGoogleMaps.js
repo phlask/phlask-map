@@ -4,10 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
@@ -17,7 +13,9 @@ import {
   setMapCenter,
   setToolbarModal,
   setUserLocation,
-  toggleInfoWindow
+  toggleInfoWindow,
+  getResources,
+  setSelectedPlace
 } from '../../actions/actions';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -30,8 +28,9 @@ import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
-import MapMarkers from '../MapMarkers/MapMarkers';
 import Toolbar from '../Toolbar/Toolbar';
+import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
+import selectFilteredResource from '../../selectors/waterSelectors';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -39,59 +38,7 @@ function getCoordinates() {
   });
 }
 
-//gets the users latitude
-function getLat() {
-  if ('geolocation' in navigator) {
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylat = parseFloat(position.coords.latitude.toFixed(5));
-        console.log('lat ' + mylat);
-
-        return mylat;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          'An error has occured while retrieving location',
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log('geolocation is not enabled on this browser');
-  }
-}
-
-//gets the users longitutude
-function getLon() {
-  if ('geolocation' in navigator) {
-    // check if geolocation is supported/enabled on current browser
-    navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        // for when getting location is a success
-        var mylon = parseFloat(position.coords.longitude.toFixed(5));
-        return mylon;
-      },
-      function error(error_message) {
-        // for when getting location results in an error
-        console.error(
-          'An error has occured while retrieving location',
-          error_message
-        );
-      }
-    );
-  } else {
-    // geolocation is not supported
-    // get your location some other way
-    console.log('geolocation is not enabled on this browser');
-  }
-}
-
-const LoadingContainer = () => <div>Looking for water!</div>;
+const LoadingContainer = props => <div>Looking for water!</div>;
 
 const style = {
   width: '100%',
@@ -100,7 +47,7 @@ const style = {
 };
 
 const filters = {
-  PHLASK_TYPE_WATER: {
+  WATER: {
     title: 'Water Filter',
     categories: [
       {
@@ -132,7 +79,7 @@ const filters = {
       }
     ]
   },
-  PHLASK_TYPE_FOOD: {
+  FOOD: {
     title: 'Food Filter',
     categories: [
       {
@@ -152,7 +99,7 @@ const filters = {
       }
     ]
   },
-  PHLASK_TYPE_FORAGING: {
+  FORAGE: {
     title: 'Foraging Filter',
     categories: [
       {
@@ -172,7 +119,7 @@ const filters = {
       }
     ]
   },
-  PHLASK_TYPE_BATHROOM: {
+  BATHROOM: {
     title: 'Bathroom Filter',
     categories: [
       {
@@ -215,16 +162,12 @@ export class ReactGoogleMaps extends Component {
 
     this.state = {
       isExpanded: false,
-      showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {},
       currlat: this.props.mapCenter.lat, // 39.9528,
       currlon: this.props.mapCenter.lng, //-75.1635,
       closestTap: {},
       taps: [],
       tapsLoaded: false,
-      unfilteredTaps: this.props.tapsDisplayed,
-      filteredTaps: [],
       zoom: 16,
       searchedTap: null,
       anchor: false,
@@ -233,26 +176,13 @@ export class ReactGoogleMaps extends Component {
       appliedFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.onIdle = this.onIdle.bind(this);
-  }
-
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //     this.setState({
-  //       unfilteredTaps: nextProps.tapsDisplayed
-  //     });
-  // }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.setState({
-        unfilteredTaps: prevProps.tapsDisplayed
-      });
-    }
   }
 
   componentDidMount() {
-    // console.log('Lat: ' + getLat());
-    // console.log('Lon: ' + getLon());
+    // Fetch and load the resources
+    if (!this.props.allResources.length && this.props.getResources) {
+      this.props.getResources();
+    }
 
     getCoordinates().then(
       position => {
@@ -283,54 +213,15 @@ export class ReactGoogleMaps extends Component {
     );
   }
 
-  showInfoWindow() {
-    this.props.toggleInfoWindow(true);
-  }
-
   //toggle window goes here
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true,
-      currlat: props.position.lat,
-      currlon: props.position.lng
-    });
-
-  //close window goes here
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
-
-  onMapClicked = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
-
-  onIdle = (_, map) => {
-    this.setState({
-      currlat: map.center.lat(),
-      currlon: map.center.lng()
-    });
+  onMarkerClick = (resource, markerProps) => {
+    this.props.toggleInfoWindow(true);
+    this.props.setSelectedPlace(resource);
+    markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
   };
 
   onReady = (_, map) => {
     this.setState({ map: map });
-  };
-
-  toggleTapInfo = isExpanded => {
-    this.setState({
-      isExpanded: isExpanded
-    });
   };
 
   searchForLocation = location => {
@@ -343,7 +234,11 @@ export class ReactGoogleMaps extends Component {
   };
 
   handleTap = e => {
-    if (e.target instanceof HTMLDivElement && this.props.showingInfoWindow) {
+    if (
+      e.target instanceof HTMLDivElement &&
+      this.props.showingInfoWindow &&
+      !isMobile
+    ) {
       this.props.toggleInfoWindow(false);
     }
   };
@@ -418,16 +313,32 @@ export class ReactGoogleMaps extends Component {
               }}
               filterTags={this.state.appliedFilterTags}
             >
-              <MapMarkers
-                map={this.props.map}
-                google={this.props.google}
-                filterTags={this.state.appliedFilterTags}
-              />
+              {this.props.filteredResources.map((resource, index) => {
+                return (
+                  <Marker
+                    key={index}
+                    onClick={markerProps => {
+                      this.onMarkerClick(resource, markerProps);
+                    }}
+                    position={{
+                      lat: resource.latitude,
+                      lng: resource.longitude
+                    }}
+                    icon={{
+                      url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
+                    }}
+                    // This is used for marker targetting as we are unable to add custom properties with this library.
+                    // We should eventually replace this so that we can still enable the use of screen readers in the future.
+                    title={`data-cy-${index}`}
+                  />
+                );
+              })}
 
               {this.state.searchedTap != null && (
                 <Marker
                   name={'Your Search Result'}
                   position={this.state.searchedTap}
+                  title={'data-cy-search-result'}
                 />
               )}
             </Map>
@@ -460,7 +371,7 @@ export class ReactGoogleMaps extends Component {
           </Stack>
           <ChooseResource />
           <Filter
-            phlaskType={this.props.phlaskType}
+            resourceType={this.props.resourceType}
             filters={filters}
             handleTag={this.handleTag}
             clearAll={this.clearAllTags}
@@ -468,7 +379,7 @@ export class ReactGoogleMaps extends Component {
             activeTags={this.state.activeFilterTags}
           />
           <AddResourceModalV2 />
-          <Toolbar />
+          <Toolbar map={this.state.map} />
         </Stack>
         <SelectedTap />
       </div>
@@ -479,11 +390,11 @@ export class ReactGoogleMaps extends Component {
 const mapStateToProps = state => ({
   filtered: state.filterMarkers.filtered,
   handicap: state.filterMarkers.handicap,
-  allTaps: state.filterMarkers.allTaps,
-  filteredTaps: state.filterMarkers.filteredTaps,
+  allResources: state.filterMarkers.allResources,
+  filteredResources: selectFilteredResource(state),
   filterFunction: state.filterMarkers.filterFunction,
   mapCenter: state.filterMarkers.mapCenter,
-  phlaskType: state.filterMarkers.phlaskType,
+  resourceType: state.filterMarkers.resourceType,
   showingInfoWindow: state.filterMarkers.showingInfoWindow,
   toolbarModal: state.filterMarkers.toolbarModal
   // infoIsExpanded: state.infoIsExpanded
@@ -500,10 +411,8 @@ const mapDispatchToProps = {
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
   setToolbarModal,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER
+  setSelectedPlace,
+  getResources
 };
 
 export default connect(

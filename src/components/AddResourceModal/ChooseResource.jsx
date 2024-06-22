@@ -24,6 +24,7 @@ function ChooseResource({ setFormStep }) {
       </h3>
       <div className={styles.buttonWrapper}>
         <Button
+          data-cy="button-contribute-water"
           className={styles.modalButton}
           variant={isMobile ? 'water' : 'waterDesktop'}
           onClick={() => setFormStep('addWaterTap')}
@@ -34,7 +35,7 @@ function ChooseResource({ setFormStep }) {
           }}
         >
           <WaterIconCR />
-          <span>Water</span>
+          Water
         </Button>
         <Button
           className={styles.modalButton}
