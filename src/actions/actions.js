@@ -61,6 +61,13 @@ export const pushNewResource = newResource => ({
   newResource
 });
 
+// Handles the case where an existing resource is updated from the submission form
+export const UPDATE_EXISTING_RESOURCE = 'UPDATE_EXISTING_RESOURCE';
+export const updateExistingResource = updatedResource => ({
+  type: UPDATE_EXISTING_RESOURCE,
+  updatedResource
+});
+
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({
   type: SET_USER_LOCATION,

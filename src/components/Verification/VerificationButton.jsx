@@ -4,6 +4,13 @@ import Button from '@mui/material/Button';
 import { getDatabase, set, ref } from 'firebase/database';
 import { resourcesConfig } from '../../firebase/firebaseConfig';
 import { initializeApp } from 'firebase/app';
+import Input from '@mui/material/Input';
+import { useDispatch } from 'react-redux';
+import {
+  updateExistingResource,
+  setSelectedPlace
+} from '../../actions/actions';
+import Dialog from '@mui/material/Dialog';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -15,6 +22,7 @@ const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
  */
 const VerificationButton = props => {
   const { resource } = props;
+  const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState('');
@@ -39,8 +47,12 @@ const VerificationButton = props => {
     // TODO(vontell): We probably should not init this here every time, although it is likely fine.
     const app = initializeApp(resourcesConfig);
     const database = getDatabase(app);
-    set(ref(database, '/-O00INfTfFigeVoZsfZ8'), resource);
+    // Removed ID since we don't want that as part of the saved data structure
+    const { id, ...filteredResource } = resource;
+    set(ref(database, `/${resource.id}`), filteredResource);
     setHasBeenUpdated(true);
+    dispatch(updateExistingResource(resource));
+    dispatch(setSelectedPlace(resource));
   };
 
   const markAsVerified = useCallback(() => {
@@ -89,9 +101,7 @@ const VerificationButton = props => {
         position: 'absolute',
         right: '10px',
         bottom: '10px',
-        backgroundColor: resource.verification.verified
-          ? 'LightGreen'
-          : 'Tomato',
+        backgroundColor: resource.verification.verified ? 'Green' : 'Tomato',
         padding: '5px',
         borderRadius: '5px',
         color: 'white',
@@ -103,7 +113,7 @@ const VerificationButton = props => {
       <div onClick={() => setIsModalOpen(true)} style={{ cursor: 'pointer' }}>
         {resource.verification.verified ? 'VERIFIED' : 'UNVERIFIED'}
       </div>
-      <ModalWrapper open={isModalOpen} onClose={closeModal}>
+      <Dialog open={isModalOpen} onClose={closeModal}>
         <div
           style={{
             width: '300px',
@@ -116,7 +126,8 @@ const VerificationButton = props => {
                 Enter the admin password to update the verified status of this
                 resource. Also enter your name.
               </p>
-              <input
+              <Input
+                placeholder="Your name"
                 style={{ width: '100%', marginBottom: '10px' }}
                 type="text"
                 value={name}
@@ -124,9 +135,10 @@ const VerificationButton = props => {
                   setName(e.target.value);
                 }}
               />
-              <input
+              <Input
+                placeholder="The admin password"
                 style={{ width: '100%', marginBottom: '10px' }}
-                type="password"
+                type="text"
                 value={password}
                 onChange={e => {
                   setPassword(e.target.value);
@@ -261,7 +273,7 @@ const VerificationButton = props => {
             </div>
           )}
         </div>
-      </ModalWrapper>
+      </Dialog>
     </div>
   );
 };

@@ -38,6 +38,8 @@ function SelectedTapDetails(props) {
    */
   const resource = props.selectedPlace;
 
+  console.log(resource);
+
   if (resource == null || Object.keys(resource).length === 0) {
     return <div></div>;
   }
