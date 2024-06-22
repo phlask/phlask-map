@@ -18,6 +18,7 @@ import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { pushNewResource, setSelectedPlace } from '../../actions/actions';
 
 import {
   WATER_RESOURCE_TYPE,
@@ -240,8 +241,6 @@ export default function AddResourceModalV2(props) {
         component.types.includes('postal_code')
       ).long_name;
 
-      console.log(values);
-
       /**
        *
        * @type {ResourceEntry}
@@ -351,12 +350,11 @@ export default function AddResourceModalV2(props) {
         };
       }
 
-      console.log(newResource);
-
       // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource);
+      dispatch(pushNewResource(newResource));
     });
   };
 
