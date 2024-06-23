@@ -16,6 +16,7 @@ import {
   toggleResourceType,
   toggleResourceMenu
 } from '../../actions/actions';
+import selectFilteredResource from '../../selectors/waterSelectors';
 import styles from './Toolbar.module.scss';
 
 import {
@@ -128,16 +129,7 @@ function Toolbar(props) {
     // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
-    let data;
-
-    switch (props.resourceType) {
-      case WATER_RESOURCE_TYPE:
-        data = props?.allResources;
-        break;
-      // TODO(vontell): Filter based on requested type
-      default:
-        data = props?.allResources;
-    }
+    let data = props.filteredResources;
 
     const closest = getClosest(data, {
       lat: props.userLocation.lat,
@@ -394,6 +386,7 @@ function Toolbar(props) {
 const mapStateToProps = state => ({
   resourceType: state.filterMarkers.resourceType,
   allResources: state.filterMarkers.allResources,
+  filteredResources: selectFilteredResource(state),
   userLocation: state.filterMarkers.userLocation,
   toolbarModal: state.filterMarkers.toolbarModal,
   isResourceMenuShown: state.filterMarkers.isResourceMenuShown

@@ -23,6 +23,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { isMobile } from 'react-device-detect';
 
+import { WEBSITE_REGEX } from '../utils';
+
 const PageOne = ({
   // state values and handlers for the textfields
   onDrop,
@@ -263,7 +265,7 @@ const PageOne = ({
         <Controller
           rules={{
             required: false,
-            pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+            pattern: WEBSITE_REGEX
           }}
           control={control}
           name="website"

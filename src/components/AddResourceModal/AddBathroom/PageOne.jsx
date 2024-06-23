@@ -16,6 +16,8 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 import { isMobile } from 'react-device-detect';
 
+import { WEBSITE_REGEX } from '../utils';
+
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
   { entryType: 'Restricted', explanation: 'May not be open to all' },
@@ -192,7 +194,7 @@ const PageOne = ({
         <Controller
           rules={{
             required: false,
-            pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
+            pattern: WEBSITE_REGEX
           }}
           control={control}
           name="website"
