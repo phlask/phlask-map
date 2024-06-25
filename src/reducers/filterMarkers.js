@@ -33,7 +33,6 @@ const initialState = {
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
   resourceType: WATER_RESOURCE_TYPE,
-  isResourceMenuShown: false
 };
 
 export default (state = initialState, act) => {
@@ -212,9 +211,6 @@ export default (state = initialState, act) => {
 
     case actions.CHANGE_RESOURCE_TYPE:
       return { ...state, resourceType: act.resourceType };
-
-    case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: !act.isShown };
 
     default:
       return state;

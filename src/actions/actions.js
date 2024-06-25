@@ -130,12 +130,6 @@ export const toggleResourceType = resourceType => ({
   mode: resourceType
 });
 
-export const TOGGLE_RESOURCE_MENU = 'TOGGLE_RESOURCE_MENU';
-export const toggleResourceMenu = isShown => ({
-  type: TOGGLE_RESOURCE_MENU,
-  isShown
-});
-
 export const CHANGE_RESOURCE_TYPE = 'CHANGE_RESOURCE_TYPE';
 export const changeResourceType = resourceType => ({
   type: CHANGE_RESOURCE_TYPE,

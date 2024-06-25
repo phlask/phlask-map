@@ -5,20 +5,11 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as Action from '../../actions/actions';
-import { isResourceMenuShownSelector } from '../../hooks/selectors';
 
-const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
+const ListItemEntry = (props) => {
   const dispatch = useDispatch();
-  const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
-
-  const toggleResourceMenu = () => {
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_MENU,
-      isShown: isResourceMenuShown
-    });
-  };
 
   function handleGA(type) {
     // ReactGA.event({
@@ -34,22 +25,21 @@ const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
       type: Action.TOGGLE_RESOURCE_TYPE,
       mode: type
     });
-    toggleResourceMenu();
   };
 
   return (
     <ListItemButton
       sx={{ alignItems: 'end' }}
       onClick={() => {
-        switchType(actionLabel);
+        switchType(props.actionLabel);
       }}
     >
-      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemIcon>{props.icon}</ListItemIcon>
       <ListItemText>
         <Grid container justifyContent={'flex-start'}>
           <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
             <Typography variant="body1" fontSize={15}>
-              {resourceType}
+              {props.resourceType}
             </Typography>
           </Box>
         </Grid>

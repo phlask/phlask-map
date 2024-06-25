@@ -14,7 +14,6 @@ import {
   setUserLocation,
   toggleInfoWindow,
   toggleResourceType,
-  toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -97,6 +96,9 @@ function getCoordinates() {
 
 function Toolbar(props) {
   const resourceType = useSelector(resourceTypeSelector);
+
+
+
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -353,9 +355,7 @@ function Toolbar(props) {
               data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                props.toggleResourceMenu(props.isResourceMenuShown)
-              }
+              onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             />
             <ResourceMenu />
             <NavigationItem
@@ -396,7 +396,6 @@ const mapStateToProps = state => ({
   allResources: state.filterMarkers.allResources,
   userLocation: state.filterMarkers.userLocation,
   toolbarModal: state.filterMarkers.toolbarModal,
-  isResourceMenuShown: state.filterMarkers.isResourceMenuShown
 });
 
 const mapDispatchToProps = {
@@ -410,8 +409,7 @@ const mapDispatchToProps = {
   setSelectedPlace,
   toggleInfoWindow,
   setMapCenter,
-  setUserLocation,
-  toggleResourceMenu
+  setUserLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
