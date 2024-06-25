@@ -1,0 +1,119 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica-BoldOblique;\f2\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww24840\viewh15920\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf0 \ul \ulc0 Python Script Prep\
+
+\f1\i \ulnone By Seif S., Dev-Circle\
+
+\f2\i0\b0 \
+
+\f0\b \ul Part A: Query to ChatGPT\
+\
+My (Seif S.\'92) Query:\
+
+\f2\b0 \ulnone \
+\pard\pardeftab720\partightenfactor0
+\cf0 Another important (somewhat related) question; sorry if I asked it before: \
+\
+Please help me generate a brief Python script--which is triggered to be displayed when a developer opens a code-base / forked repo / directory, either via VS Code, or via the local (PC) file explorer (regardless of OS--i.e./e.g., Windows, iOS, linux, etc.)--that welcomes developers, and gives some basic introductory guidance. Specifically, the script should print this message: \
+
+\f1\i\b Hello, and welcome aboard, new developer(s)! We're glad to have you as part of the PHLASK team. \
+As you get started with your GH tickets--and PHLASK dev work in general, pease note that you can find a number of resources in the "Utilities" folder/sub-dir. \
+Again, welcome aboard
+\f0\i0 ! :-)
+\f2\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+
+\f0\b ChatGPT Response:\
+
+\f2\b0 \
+To create a Python script that displays a welcome message when a developer opens a code base or directory, you can leverage the use of a simple script file. However, triggering this script automatically when a directory is opened is not straightforward across all operating systems and development environments. Instead, we can create a script that developers can run manually when they start working in the directory.\
+\
+Here's a Python script that prints the welcome message:\
+\
+```python\
+# welcome.py\
+\
+def print_welcome_message():\
+    message = """\
+    Hello, and welcome aboard, new developer(s)! We're glad to have you as part of the PHLASK team.\
+    As you get started with your GH tickets--and PHLASK dev work in general, please note that you can find a number of resources in the "Utilities" folder/sub-dir.\
+    Again, welcome aboard! :-)\
+    """\
+    print(message)\
+\
+if __name__ == "__main__":\
+    print_welcome_message()\
+```\
+\
+### How to Use This Script\
+\
+1. **Place the Script in the Root Directory**: Save the script as `welcome.py` in the root directory of your project.\
+\
+2. **Run the Script**: Instruct developers to run the script manually when they start working in the directory. They can do this by executing the following command in their terminal:\
+\
+   ```bash\
+   python welcome.py\
+   ```\
+\
+### Alternative: Automating the Script Execution (Optional)\
+\
+If you want to automate the execution of this script whenever the directory is opened in a specific IDE like VS Code, you can add a custom task or configure the IDE to run the script on startup. Here\'92s how you can do it for VS Code:\
+\
+#### Setting Up in VS Code\
+\
+1. **Create a Task in VS Code**:\
+   - Create or open the `.vscode` folder in the root directory of your project.\
+   - Create a file named `tasks.json` inside the `.vscode` folder.\
+   - Add the following configuration to `tasks.json`:\
+\
+     ```json\
+     \{\
+       "version": "2.0.0",\
+       "tasks": [\
+         \{\
+           "label": "Welcome Message",\
+           "type": "shell",\
+           "command": "python welcome.py",\
+           "group": \{\
+             "kind": "build",\
+             "isDefault": true\
+           \},\
+           "problemMatcher": []\
+         \}\
+       ]\
+     \}\
+     ```\
+\
+2. **Run the Task**:\
+   - Open the Command Palette in VS Code (Ctrl+Shift+P on Windows/Linux, Cmd+Shift+P on macOS).\
+   - Type `Run Task` and select `Tasks: Run Task`.\
+   - Choose `Welcome Message` from the list.\
+\
+By setting up this task, developers can easily run the welcome message script from within VS Code.\
+\
+### Summary\
+\
+- **Script**: Create a simple Python script (`welcome.py`) to print the welcome message.\
+- **Manual Execution**: Developers can manually run the script when they start working in the directory.\
+- **VS Code Automation**: Optionally, set up a custom task in VS Code to automate running the script. \
+\
+This approach provides a welcoming message to new developers and guides them to important resources, enhancing their onboarding experience.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
+\cf0 //==========//\\\\//==========//\\\\//==========//\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \ul \ulc0 Part B: [Add Details Here]\
+
+\f2\b0 \ulnone \
+[And other details here\'85]}
