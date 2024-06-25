@@ -23,6 +23,7 @@ import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import selectFilteredResource from '../../selectors/waterSelectors';
 import useIsMobile from 'hooks/useIsMobile';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -180,30 +181,37 @@ export const ReactGoogleMaps = ({ google }) => {
   }, [allResources.length, dispatch]);
 
   useEffect(() => {
-    getCoordinates().then(position => {
-      if (
-        Number.isNaN(position.coords.latitude) ||
-        Number.isNaN(position.coords.longitude)
-      ) {
-        setCurrentLat(parseFloat('39.952744'));
-        setCurrentLon(parseFloat('-75.163500'));
-      } else {
-        dispatch(
-          setMapCenter({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          })
-        );
-        dispatch(
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          })
-        );
-        setCurrentLat(position.coords.latitude);
-        setCurrentLon(position.coords.longitude);
-      }
-    });
+    const setDefaultLocation = () => {
+      setCurrentLat(parseFloat(CITY_HALL_COORDINATES.latitude));
+      setCurrentLon(parseFloat(CITY_HALL_COORDINATES.longitude));
+    };
+    getCoordinates()
+      .then(position => {
+        if (
+          Number.isNaN(position.coords.latitude) ||
+          Number.isNaN(position.coords.longitude)
+        ) {
+          setDefaultLocation();
+        } else {
+          dispatch(
+            setMapCenter({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            })
+          );
+          dispatch(
+            setUserLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            })
+          );
+          setCurrentLat(position.coords.latitude);
+          setCurrentLon(position.coords.longitude);
+        }
+      })
+      .catch(() => {
+        setDefaultLocation();
+      });
   }, [dispatch]);
 
   //toggle window goes here

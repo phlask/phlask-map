@@ -1,15 +1,16 @@
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
   mapCenter: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   // Change to reflect user's current location
   userLocation: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   showingInfoWindow: false,
   infoIsExpanded: false,
