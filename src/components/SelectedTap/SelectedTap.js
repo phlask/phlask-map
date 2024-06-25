@@ -47,10 +47,10 @@ const SelectedTap = () => {
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const getWalkingDurationAndTimes = useCallback(() => {
-    if (!selectedPlace) return;
+    if (!selectedPlace || !userLocation?.lat || !userLocation?.lng) return;
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
-    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation.lng},
+    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation?.lng},
     ${userLocation?.lat}&end=${selectedPlace?.longitude},${selectedPlace?.latitude}`)
       .then(response => response.json())
       .then(data => {
@@ -66,7 +66,7 @@ const SelectedTap = () => {
 
         setWalkingDuration(duration);
       });
-  }, [selectedPlace, userLocation?.lat, userLocation.lng]);
+  }, [selectedPlace, userLocation?.lat, userLocation?.lng]);
 
   const handleToggleInfoExpanded = shouldExpand => {
     if (!shouldExpand) {

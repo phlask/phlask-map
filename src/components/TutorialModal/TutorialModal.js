@@ -190,22 +190,12 @@ const TutorialModal = () => {
               Next
             </Button>
           ) : (
-            <Button variant="red" onClick={handleClose}>
+            <Button aria-label="Close" variant="red" onClick={handleClose}>
               Close
             </Button>
           )}
         </Modal.Footer>
       </Modal>
-      {/* {showButton && (
-        <button onClick={handleShow} className={styles.infoButton}>
-          <FontAwesomeIcon
-            icon={faInfoCircle}
-            size="2x"
-            color="#999"
-            className={styles.infoIcon}
-          />
-        </button>
-      )} */}
     </>
   );
 };
