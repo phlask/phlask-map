@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-
 import { setResourceType } from '../../actions/actions';
+
 
 const ListItemEntry = (props) => {
 

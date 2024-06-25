@@ -43,7 +43,8 @@ import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import ChooseResource from '../ChooseResource/ChooseResource';
+
 import NavigationItem from './NavigationItem';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
@@ -341,7 +342,7 @@ function Toolbar(props) {
               icon={<ResourceIcon className={styles.resourceButton} />}
               onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             />
-            <ResourceMenu />
+            <ChooseResource />
             <NavigationItem
               central
               label={

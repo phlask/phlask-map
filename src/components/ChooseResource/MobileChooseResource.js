@@ -8,7 +8,7 @@ import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
-import ListItemEntry from './ListItemEntry';
+import MobileResourceEntry from './MobileResourceEntry';
 import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
@@ -21,7 +21,8 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
 
-const listItems = [
+
+const resourceTypeInfo = [
   {
     resourceType: WATER_RESOURCE_TYPE,
     resourceTextLabel: 'Water',
@@ -44,7 +45,7 @@ const listItems = [
   }
 ];
 
-const ResourceMenu = (props) => {
+const MobileChooseResource = (props) => {
 
   return (
     <Box>
@@ -71,8 +72,8 @@ const ResourceMenu = (props) => {
           unmountOnExit
         >
           <List sx={{ maxWidth: 210 }}>
-            {listItems?.map(entry => (
-              <ListItemEntry key={entry.resourceType} {...entry} />
+            {resourceTypeInfo?.map(entry => (
+              <MobileResourceEntry key={entry.resourceType} {...entry} />
             ))}
           </List>
         </Slide>
@@ -90,4 +91,4 @@ const mapDispatchToProps = {
   setToolbarModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResourceMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileChooseResource);
