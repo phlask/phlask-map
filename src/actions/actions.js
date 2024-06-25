@@ -39,12 +39,12 @@ export const getResources = () => dispatch => {
   return process.env.REACT_APP_CYPRESS_TEST
     ? dispatch(getResourcesSuccess(testData))
     : onValue(
-        ref(database, '/'),
-        snapshot => {
-          dispatch(getResourcesSuccess(Object.values(snapshot.val())));
-        },
-        { onlyOnce: true }
-      );
+      ref(database, '/'),
+      snapshot => {
+        dispatch(getResourcesSuccess(Object.values(snapshot.val())));
+      },
+      { onlyOnce: true }
+    );
 };
 
 // Handles the case where a new resource is added from the submission form
