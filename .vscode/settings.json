@@ -3,5 +3,6 @@
   "editor.formatOnSave": true,
   "githubPullRequests.ignoredPullRequestBranches": [
     "develop"
-  ]
+  ],
+  "DockerRun.DisableDockerrc": true
 }
