@@ -196,20 +196,7 @@ export default (state = initialState, act) => {
     case actions.SET_TOOLBAR_MODAL:
       return { ...state, toolbarModal: act.mode };
 
-    // Toggle Phlask type & close the info window
-    case actions.TOGGLE_RESOURCE_TYPE:
-      return {
-        ...state,
-        resourceType: act.mode,
-        infoWindowClass:
-          act.mode !== state.showingInfoWindow
-            ? isMobile
-              ? 'info-window-out'
-              : 'info-window-out-desktop'
-            : state.infoWindowClass
-      };
-
-    case actions.CHANGE_RESOURCE_TYPE:
+    case actions.SET_RESOURCE_TYPE:
       return { ...state, resourceType: act.resourceType };
 
     default:

@@ -13,7 +13,6 @@ import {
   setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
-  toggleResourceType,
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -109,21 +108,6 @@ function Toolbar(props) {
     [BATHROOM_RESOURCE_TYPE]: ToiletIcon,
     default: WaterIcon
   }[resourceType ?? 'default'];
-
-  function switchType(type) {
-    if (props.resourceType !== type) {
-      props.toggleResourceType(type);
-      handleGA(type);
-    }
-  }
-
-  function handleGA(type) {
-    ReactGA.event({
-      category: `Toolbar`,
-      action: 'MapChangedTo',
-      label: `${type}`
-    });
-  }
 
   async function setClosest() {
     // If the user clicks very fast, it crashes.
@@ -399,7 +383,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  toggleResourceType,
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_RESOURCE,

@@ -23,24 +23,24 @@ import {
 
 const listItems = [
   {
-    resourceType: 'Water',
+    resourceType: WATER_RESOURCE_TYPE,
+    resourceTextLabel: 'Water',
     icon: <WaterIcon />,
-    actionLabel: WATER_RESOURCE_TYPE
   },
   {
-    resourceType: 'Food',
+    resourceType: FOOD_RESOURCE_TYPE,
+    resourceTextLabel: 'Food',
     icon: <FoodIcon />,
-    actionLabel: FOOD_RESOURCE_TYPE
   },
   {
-    resourceType: 'Foraging',
+    resourceType: FORAGE_RESOURCE_TYPE,
+    resourceTextLabel: 'Foraging',
     icon: <ForagingIcon />,
-    actionLabel: FORAGE_RESOURCE_TYPE
   },
   {
-    resourceType: 'Bathroom',
+    resourceType: BATHROOM_RESOURCE_TYPE,
+    resourceTextLabel: 'Bathroom',
     icon: <ToiletIcon />,
-    actionLabel: BATHROOM_RESOURCE_TYPE
   }
 ];
 

@@ -6,7 +6,7 @@ import foodButton from './images/foodButton.png';
 import waterButton from './images/phlaskBlue.png';
 import './TypeToggle.css';
 import {
-  toggleResourceType
+  setResourceType
 } from '../../actions/actions';
 import {
   WATER_RESOURCE_TYPE,
@@ -19,9 +19,9 @@ function TypeToggle(props) {
     setTypeIcon(type);
     resourceTypeIcon === foodButton
       ? // Set to food mode
-        props.toggleResourceType(FOOD_RESOURCE_TYPE)
+      props.setResourceType(FOOD_RESOURCE_TYPE)
       : // Set to water mode
-        props.toggleResourceType(WATER_RESOURCE_TYPE);
+      props.setResourceType(WATER_RESOURCE_TYPE);
   }
 
   return (
@@ -43,7 +43,7 @@ function TypeToggle(props) {
 }
 
 const mapDispatchToProps = {
-  toggleResourceType,
+  setResourceType,
   PHLASK_TYPE_FOOD,
   PHLASK_TYPE_WATER
 };

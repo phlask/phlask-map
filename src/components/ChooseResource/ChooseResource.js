@@ -1,12 +1,12 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
 import React, { useRef } from 'react';
 import { isMobile } from 'react-device-detect';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
-  CHANGE_RESOURCE_TYPE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_NONE,
-  setToolbarModal
+  setToolbarModal,
+  setResourceType
 } from '../../actions/actions';
 import {
   WATER_RESOURCE_TYPE,
@@ -45,8 +45,7 @@ const ResourceButton = props => {
   );
 };
 
-export default function ChooseResource(props) {
-  const dispatch = useDispatch();
+function ChooseResource(props) {
 
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
@@ -54,7 +53,7 @@ export default function ChooseResource(props) {
 
   const handleClickOutside = () => {
     if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+      props.setToolbarModal(TOOLBAR_MODAL_NONE);
     }
   };
 
@@ -92,48 +91,28 @@ export default function ChooseResource(props) {
                   icon={WaterIcon}
                   color="#5286E9"
                   text="Water"
-                  onClick={() => {
-                    dispatch({
-                      type: CHANGE_RESOURCE_TYPE,
-                      resourceType: WATER_RESOURCE_TYPE
-                    });
-                  }}
+                  onClick={() => props.setResourceType(WATER_RESOURCE_TYPE)}
                   data-cy="button-water-data-selector"
                 />
                 <ResourceButton
                   icon={ForagingIcon}
                   color="#5DA694"
                   text="Foraging"
-                  onClick={() => {
-                    dispatch({
-                      type: CHANGE_RESOURCE_TYPE,
-                      resourceType: FORAGE_RESOURCE_TYPE
-                    });
-                  }}
+                  onClick={() => props.setResourceType(FORAGE_RESOURCE_TYPE)}
                   data-cy="button-foraging-data-selector"
                 />
                 <ResourceButton
                   icon={FoodIcon}
                   color="#FF9A55"
                   text="Food"
-                  onClick={() => {
-                    dispatch({
-                      type: CHANGE_RESOURCE_TYPE,
-                      resourceType: FOOD_RESOURCE_TYPE
-                    });
-                  }}
+                  onClick={() => props.setResourceType(FOOD_RESOURCE_TYPE)}
                   data-cy="button-food-data-selector"
                 />
                 <ResourceButton
                   icon={BathroomIcon}
                   color="#9E9E9E"
                   text="Bathroom"
-                  onClick={() => {
-                    dispatch({
-                      type: CHANGE_RESOURCE_TYPE,
-                      resourceType: BATHROOM_RESOURCE_TYPE
-                    });
-                  }}
+                  onClick={() => props.setResourceType(BATHROOM_RESOURCE_TYPE)}
                   data-cy="button-bathroom-data-selector"
                 />
               </Box>
@@ -145,3 +124,10 @@ export default function ChooseResource(props) {
     </>
   );
 }
+
+const mapDispatchToProps = {
+  setResourceType,
+  setToolbarModal,
+};
+
+export default connect(null, mapDispatchToProps)(ChooseResource);

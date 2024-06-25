@@ -5,11 +5,11 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import * as Action from '../../actions/actions';
+import { connect, useDispatch } from 'react-redux';
+
+import { setResourceType } from '../../actions/actions';
 
 const ListItemEntry = (props) => {
-  const dispatch = useDispatch();
 
   function handleGA(type) {
     // ReactGA.event({
@@ -21,25 +21,20 @@ const ListItemEntry = (props) => {
 
   const switchType = type => {
     handleGA(type);
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_TYPE,
-      mode: type
-    });
+    props.setResourceType(type);
   };
 
   return (
     <ListItemButton
       sx={{ alignItems: 'end' }}
-      onClick={() => {
-        switchType(props.actionLabel);
-      }}
+      onClick={() => switchType(props.resourceType)}
     >
       <ListItemIcon>{props.icon}</ListItemIcon>
       <ListItemText>
         <Grid container justifyContent={'flex-start'}>
           <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
             <Typography variant="body1" fontSize={15}>
-              {props.resourceType}
+              {props.resourceTextLabel}
             </Typography>
           </Box>
         </Grid>
@@ -48,4 +43,8 @@ const ListItemEntry = (props) => {
   );
 };
 
-export default ListItemEntry;
+const mapDispatchToProps = {
+  setResourceType,
+};
+
+export default connect(null, mapDispatchToProps)(ListItemEntry);

@@ -124,14 +124,8 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const TOGGLE_RESOURCE_TYPE = 'TOGGLE_RESOURCE_TYPE';
-export const toggleResourceType = resourceType => ({
-  type: TOGGLE_RESOURCE_TYPE,
-  mode: resourceType
-});
-
-export const CHANGE_RESOURCE_TYPE = 'CHANGE_RESOURCE_TYPE';
-export const changeResourceType = resourceType => ({
-  type: CHANGE_RESOURCE_TYPE,
+export const SET_RESOURCE_TYPE = 'SET_RESOURCE_TYPE';
+export const setResourceType = resourceType => ({
+  type: SET_RESOURCE_TYPE,
   resourceType
 });
