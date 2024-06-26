@@ -1,6 +1,5 @@
 import IconButton from '@mui/material/Button';
 import React from 'react';
-import ReactGA from 'react-ga4';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
