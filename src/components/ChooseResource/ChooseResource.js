@@ -1,6 +1,5 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
 import React, { useRef } from 'react';
-import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CHANGE_RESOURCE_TYPE,
@@ -21,6 +20,7 @@ import { ReactComponent as FoodIcon } from '../icons/FoodIconChooseResource.svg'
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
 import useOnClickOutside from '../../components/AddResourceModal/useOnClickOutside.js';
+import useIsMobile from 'hooks/useIsMobile';
 
 const ResourceButton = props => {
   const Icon = props.icon;
@@ -37,7 +37,7 @@ const ResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={props.onClick}
-      data-cy={props["data-cy"]}
+      data-cy={props['data-cy']}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.text}</p>
@@ -46,6 +46,8 @@ const ResourceButton = props => {
 };
 
 export default function ChooseResource(props) {
+  const isMobile = useIsMobile();
+
   const dispatch = useDispatch();
 
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
@@ -53,8 +55,8 @@ export default function ChooseResource(props) {
   const ref = useRef(null);
 
   const handleClickOutside = () => {
-    if(toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
+      dispatch(setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE }));
     }
   };
 

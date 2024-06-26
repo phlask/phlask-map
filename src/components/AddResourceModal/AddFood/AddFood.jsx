@@ -4,13 +4,13 @@ import { geocode, setDefaults, RequestType } from 'react-geocode';
 import styles from '../AddResourceModal.module.scss';
 import { useForm, Controller } from 'react-hook-form';
 import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
-import { isMobile } from 'react-device-detect';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import useIsMobile from 'hooks/useIsMobile';
 
 function AddFood({
   prev,
@@ -41,6 +41,7 @@ function AddFood({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) {
+  const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 
   const userLocation = useSelector(state => state.filterMarkers.userLocation);

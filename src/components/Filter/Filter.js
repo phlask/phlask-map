@@ -1,26 +1,30 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
 import React, { useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import { useDispatch, useSelector } from 'react-redux';
-import { TOOLBAR_MODAL_FILTER } from '../../actions/actions';
+import {
+  setToolbarModal,
+  toggleInfoWindow,
+  TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE
+} from '../../actions/actions';
 import styles from './Filter.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import useIsMobile from 'hooks/useIsMobile';
 
-const FilterTags = props => (
+const FilterTags = ({ tags, activeTags, resourceType, index, handleTag }) => (
   <Box className={styles.filterTags}>
-    {props.tags.map((tag, key) => (
+    {tags.map((tag, key) => (
       <Box
         key={key}
         className={
           styles.filterTag +
-          (props.activeTags[props.resourceType][props.index][key]
+          (activeTags[resourceType][index][key]
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(0, props.resourceType, props.index, key);
-          props.forceUpdate();
+          handleTag(0, resourceType, index, key);
         }}
         data-cy={`filter-option-${tag}`}
       >
@@ -30,20 +34,25 @@ const FilterTags = props => (
   </Box>
 );
 
-const FilterTagsExclusive = props => (
+const FilterTagsExclusive = ({
+  tags,
+  activeTags,
+  resourceType,
+  index,
+  handleTag
+}) => (
   <Box className={styles.filterTagsExclusive}>
-    {props.tags.map((tag, key) => (
+    {tags.map((tag, key) => (
       <Box
         key={key}
         className={
           styles.filterTagExclusive +
-          (props.activeTags[props.resourceType][props.index] == key
+          (activeTags[resourceType][index] == key
             ? ' ' + styles.filterTagSelected
             : '')
         }
         onClick={() => {
-          props.handleTag(1, props.resourceType, props.index, key);
-          props.forceUpdate();
+          handleTag(1, resourceType, index, key);
         }}
         data-cy={`filter-option-${tag}`}
       >
@@ -53,13 +62,15 @@ const FilterTagsExclusive = props => (
   </Box>
 );
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => setValue(value => value + 1);
-}
-
-export default function Filter(props) {
-  const forceUpdate = useForceUpdate();
+export default function Filter({
+  filters,
+  resourceType,
+  handleTag,
+  activeTags,
+  clearAll,
+  applyTags
+}) {
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   return (
@@ -80,11 +91,21 @@ export default function Filter(props) {
             timeout="auto"
           >
             <Box className={styles.header}>
-              <h1>{props.filters[props.resourceType].title}</h1>
+              <h1>{filters[resourceType].title}</h1>
               <IconButton
                 aria-label="close"
                 onClick={() => {
-                  this.toggleInfoWindow(false);
+                  dispatch(
+                    toggleInfoWindow({
+                      isShown: false,
+                      infoWindowClass: isMobile
+                        ? 'info-window-out'
+                        : 'info-window-out-desktop'
+                    })
+                  );
+                  dispatch(
+                    setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
+                  );
                 }}
                 sx={{
                   position: 'absolute',
@@ -106,34 +127,30 @@ export default function Filter(props) {
             </Box>
 
             <Box sx={{ margin: '20px' }}>
-              {props.filters[props.resourceType].categories.map(
-                (category, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <h2 className={styles.label}>{category.header}</h2>
-                      {category.type == 0 ? (
-                        <FilterTags
-                          tags={category.tags}
-                          resourceType={props.resourceType}
-                          index={index}
-                          handleTag={props.handleTag}
-                          activeTags={props.activeTags}
-                          forceUpdate={forceUpdate}
-                        />
-                      ) : (
-                        <FilterTagsExclusive
-                          tags={category.tags}
-                          resourceType={props.resourceType}
-                          index={index}
-                          handleTag={props.handleTag}
-                          activeTags={props.activeTags}
-                          forceUpdate={forceUpdate}
-                        />
-                      )}
-                    </React.Fragment>
-                  );
-                }
-              )}
+              {filters[resourceType].categories.map((category, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <h2 className={styles.label}>{category.header}</h2>
+                    {category.type == 0 ? (
+                      <FilterTags
+                        tags={category.tags}
+                        resourceType={resourceType}
+                        index={index}
+                        handleTag={handleTag}
+                        activeTags={activeTags}
+                      />
+                    ) : (
+                      <FilterTagsExclusive
+                        tags={category.tags}
+                        resourceType={resourceType}
+                        index={index}
+                        handleTag={handleTag}
+                        activeTags={activeTags}
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </Box>
             <Box
               sx={{
@@ -150,7 +167,7 @@ export default function Filter(props) {
                 }}
               >
                 <p
-                  onClick={props.clearAll}
+                  onClick={clearAll}
                   style={{
                     margin: 0,
                     width: 'fit-content',
@@ -168,7 +185,7 @@ export default function Filter(props) {
               </Box>
               <Box>
                 <Button
-                  onClick={props.applyTags}
+                  onClick={applyTags}
                   style={{
                     marginRight: '20px',
                     padding: '10px 20px',

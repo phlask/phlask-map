@@ -9,8 +9,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 function AddForaging({
   prev,
@@ -41,6 +40,7 @@ function AddForaging({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) {
+  const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   useEffect(() => {
