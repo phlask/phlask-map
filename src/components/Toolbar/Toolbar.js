@@ -213,7 +213,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_RESOURCE
+                toolbarModal === TOOLBAR_MODAL_RESOURCE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -242,7 +242,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_FILTER
+                toolbarModal === TOOLBAR_MODAL_FILTER
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -271,7 +271,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_SEARCH
+                toolbarModal === TOOLBAR_MODAL_SEARCH
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -300,7 +300,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                toolbarModal === TOOLBAR_MODAL_CONTRIBUTE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
