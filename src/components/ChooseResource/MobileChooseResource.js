@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';

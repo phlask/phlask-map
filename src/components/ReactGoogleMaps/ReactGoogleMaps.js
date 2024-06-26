@@ -1,17 +1,11 @@
 import { Fade } from '@mui/material';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  setFilterFunction,
   setMapCenter,
-  setToolbarModal,
   setUserLocation,
   toggleInfoWindow,
   getResources,
@@ -20,10 +14,7 @@ import {
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
 import styles from './ReactGoogleMaps.module.scss';
-// import Legend from "./Legend";
-// Temporary Food/Water Toggle
 import Stack from '@mui/material/Stack';
-import { isMobile } from 'react-device-detect';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
 import TutorialModal from '../TutorialModal/TutorialModal';
@@ -31,6 +22,8 @@ import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import selectFilteredResource from '../../selectors/waterSelectors';
+import useIsMobile from 'hooks/useIsMobile';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -38,7 +31,7 @@ function getCoordinates() {
   });
 }
 
-const LoadingContainer = props => <div>Looking for water!</div>;
+const LoadingContainer = () => <div>Looking for water!</div>;
 
 const style = {
   width: '100%',
@@ -156,272 +149,230 @@ for (const [key, value] of Object.entries(filters)) {
   noActiveFilterTags[key] = data;
 }
 
-export class ReactGoogleMaps extends Component {
-  constructor(props) {
-    super(props);
+export const ReactGoogleMaps = ({ google }) => {
+  const dispatch = useDispatch();
+  const isMobile = useIsMobile();
+  const allResources = useSelector(state => state.filterMarkers.allResources);
+  const filteredResources = useSelector(state => selectFilteredResource(state));
 
-    this.state = {
-      isExpanded: false,
-      activeMarker: {},
-      currlat: this.props.mapCenter.lat, // 39.9528,
-      currlon: this.props.mapCenter.lng, //-75.1635,
-      closestTap: {},
-      taps: [],
-      tapsLoaded: false,
-      zoom: 16,
-      searchedTap: null,
-      anchor: false,
-      map: null,
-      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags)),
-      appliedFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
-    };
-    this.toggleDrawer = this.toggleDrawer.bind(this);
-  }
+  const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
+  const resourceType = useSelector(state => state.filterMarkers.resourceType);
+  const showingInfoWindow = useSelector(
+    state => state.filterMarkers.showingInfoWindow
+  );
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
-  componentDidMount() {
-    // Fetch and load the resources
-    if (!this.props.allResources.length && this.props.getResources) {
-      this.props.getResources();
+  const [currentLat, setCurrentLat] = useState(mapCenter.lat);
+  const [currentLon, setCurrentLon] = useState(mapCenter.lng);
+  const [zoom, setZoom] = useState(16);
+  const [searchedTap, setSearchedTap] = useState(null);
+  const [map, setMap] = useState(null);
+  const [activeFilterTags, setActiveFilterTags] = useState(
+    JSON.parse(JSON.stringify(noActiveFilterTags))
+  );
+  const [appliedFilterTags, setAppliedFilterTags] = useState(
+    JSON.parse(JSON.stringify(noActiveFilterTags))
+  );
+
+  useEffect(() => {
+    if (!allResources.length) {
+      dispatch(getResources());
     }
+  }, [allResources.length, dispatch]);
 
-    getCoordinates().then(
-      position => {
+  useEffect(() => {
+    const setDefaultLocation = () => {
+      setCurrentLat(parseFloat(CITY_HALL_COORDINATES.latitude));
+      setCurrentLon(parseFloat(CITY_HALL_COORDINATES.longitude));
+    };
+    getCoordinates()
+      .then(position => {
         if (
-          isNaN(position.coords.latitude) ||
-          isNaN(position.coords.longitude)
+          Number.isNaN(position.coords.latitude) ||
+          Number.isNaN(position.coords.longitude)
         ) {
-          this.setState({
-            currlat: parseFloat('39.952744'),
-            currlon: parseFloat('-75.163500')
-          });
+          setDefaultLocation();
         } else {
-          this.props.setMapCenter({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-          this.props.setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-          this.setState({
-            currlat: position.coords.latitude,
-            currlon: position.coords.longitude
-          });
+          dispatch(
+            setMapCenter({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            })
+          );
+          dispatch(
+            setUserLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            })
+          );
+          setCurrentLat(position.coords.latitude);
+          setCurrentLon(position.coords.longitude);
         }
-      },
-      () => {}
-    );
-  }
+      })
+      .catch(() => {
+        setDefaultLocation();
+      });
+  }, [dispatch]);
 
   //toggle window goes here
-  onMarkerClick = (resource, markerProps) => {
-    this.props.toggleInfoWindow(true);
-    this.props.setSelectedPlace(resource);
+  const onMarkerClick = (resource, markerProps) => {
+    dispatch(
+      toggleInfoWindow({
+        isShown: true,
+        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+      })
+    );
+    dispatch(setSelectedPlace(resource));
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
   };
 
-  onReady = (_, map) => {
-    this.setState({ map: map });
+  const onReady = (_, map) => {
+    setMap(map);
   };
 
-  searchForLocation = location => {
-    this.setState({
-      currlat: location.lat,
-      currlon: location.lng,
-      zoom: 16,
-      searchedTap: { lat: location.lat, lng: location.lng }
-    });
+  const searchForLocation = location => {
+    setCurrentLat(location.lat);
+    setCurrentLon(location.lng);
+    setZoom(16);
+    setSearchedTap({ lat: location.lat, lng: location.lng });
   };
 
-  handleTap = e => {
-    if (
-      e.target instanceof HTMLDivElement &&
-      this.props.showingInfoWindow &&
-      !isMobile
-    ) {
-      this.props.toggleInfoWindow(false);
+  const handleTap = e => {
+    if (e.target instanceof HTMLDivElement && showingInfoWindow && !isMobile) {
+      dispatch(
+        toggleInfoWindow({
+          isShown: false,
+          infoWindowClass: isMobile
+            ? 'info-window-in'
+            : 'info-window-in-desktop'
+        })
+      );
     }
   };
 
-  toggleDrawer = () => event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    this.setState(prevState => ({
-      anchor: !prevState.anchor
-    }));
-  };
-
-  handleTag = (type, filterType, index, key) => {
+  const handleTag = (type, filterType, index, key) => {
     if (type == 0) {
-      let activeFilterTags_ = this.state.activeFilterTags;
+      let activeFilterTags_ = { ...activeFilterTags };
       activeFilterTags_[filterType][index][key] =
         !activeFilterTags_[filterType][index][key];
-      this.setState({ activeFilterTags: activeFilterTags_ });
+      setActiveFilterTags(activeFilterTags_);
     } else if (type == 1) {
-      let activeFilterTags_ = this.state.activeFilterTags;
+      let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index] == key) {
         activeFilterTags_[filterType][index] = null;
       } else {
-        activeFilterTags_[filterType][index] = key;
+        activeFilterTags_[filterType][index] = { ...key };
       }
-      this.setState({
-        activeFilterTags: activeFilterTags_
-      });
+      setActiveFilterTags(activeFilterTags_);
     }
   };
 
-  clearAllTags = () => {
-    this.setState({
-      activeFilterTags: JSON.parse(JSON.stringify(noActiveFilterTags))
-    });
+  const clearAllTags = () => {
+    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
   };
 
-  applyTags = () => {
-    this.setState({
-      appliedFilterTags: JSON.parse(JSON.stringify(this.state.activeFilterTags))
-    });
+  const applyTags = () => {
+    setAppliedFilterTags(JSON.parse(JSON.stringify(activeFilterTags)));
   };
 
-  render() {
-    return (
-      <div id="react-google-map" className={styles.mapContainer}>
-        <ReactTouchEvents onTap={this.handleTap.bind(this)}>
-          <div>
-            <Map
-              google={this.props.google}
-              className={'map'}
-              style={style}
-              zoom={this.state.zoom}
-              zoomControl={!isMobile}
-              streetViewControl={false}
-              mapTypeControl={false}
-              rotateControl={false}
-              fullscreenControl={false}
-              onReady={this.onReady}
-              initialCenter={{
-                lat: this.state.currlat,
-                lng: this.state.currlon
-              }}
-              center={{
-                lat: this.state.currlat,
-                lng: this.state.currlon
-              }}
-              filterTags={this.state.appliedFilterTags}
-            >
-              {this.props.filteredResources.map((resource, index) => {
-                return (
-                  <Marker
-                    key={index}
-                    onClick={markerProps => {
-                      this.onMarkerClick(resource, markerProps);
-                    }}
-                    position={{
-                      lat: resource.latitude,
-                      lng: resource.longitude
-                    }}
-                    icon={{
-                      url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
-                    }}
-                    // This is used for marker targetting as we are unable to add custom properties with this library.
-                    // We should eventually replace this so that we can still enable the use of screen readers in the future.
-                    title={`data-cy-${index}`}
-                  />
-                );
-              })}
-
-              {this.state.searchedTap != null && (
-                <Marker
-                  name={'Your Search Result'}
-                  position={this.state.searchedTap}
-                  title={'data-cy-search-result'}
-                />
-              )}
-            </Map>
-          </div>
-        </ReactTouchEvents>
-        {isMobile && (
-          <Fade
-            in={this.props.toolbarModal == TOOLBAR_MODAL_SEARCH}
-            timeout={300}
-            style={{ position: 'fixed', pointerEvents: 'none' }}
+  return (
+    <div id="react-google-map" className={styles.mapContainer}>
+      <ReactTouchEvents onTap={handleTap}>
+        <div>
+          <Map
+            google={google}
+            className="map"
+            style={style}
+            zoom={zoom}
+            zoomControl={!isMobile}
+            streetViewControl={false}
+            mapTypeControl={false}
+            rotateControl={false}
+            fullscreenControl={false}
+            onReady={onReady}
+            initialCenter={{
+              lat: currentLat,
+              lng: currentLon
+            }}
+            center={{
+              lat: currentLat,
+              lng: currentLon
+            }}
+            filterTags={appliedFilterTags}
           >
-            <div
-              style={{
-                width: '100vw',
-                height: '100dvh',
-                backgroundColor: 'rgba(0, 0, 0, 0.15)'
-              }}
-            ></div>
-          </Fade>
-        )}
-        <Stack position="absolute" bottom="0px" height="143px" width="34%">
-          <Stack direction="row" spacing={2}>
-            <SearchBar
-              className="searchBar"
-              search={location => this.searchForLocation(location)}
-            />
-            <TutorialModal
-              showButton={isMobile ? !this.state.isSearchBarShown : false}
-            />
-          </Stack>
-          <ChooseResource />
-          <Filter
-            resourceType={this.props.resourceType}
-            filters={filters}
-            handleTag={this.handleTag}
-            clearAll={this.clearAllTags}
-            applyTags={this.applyTags}
-            activeTags={this.state.activeFilterTags}
+            {filteredResources.map((resource, index) => {
+              return (
+                <Marker
+                  key={index}
+                  onClick={markerProps => {
+                    onMarkerClick(resource, markerProps);
+                  }}
+                  position={{
+                    lat: resource.latitude,
+                    lng: resource.longitude
+                  }}
+                  icon={{
+                    url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
+                  }}
+                  // This is used for marker targeting as we are unable to add custom properties with this library.
+                  // We should eventually replace this so that we can still enable the use of screen readers in the future.
+                  title={`data-cy-${index}`}
+                />
+              );
+            })}
+
+            {searchedTap != null && (
+              <Marker
+                name="Your Search Result"
+                position={searchedTap}
+                title="data-cy-search-result"
+              />
+            )}
+          </Map>
+        </div>
+      </ReactTouchEvents>
+      {isMobile && (
+        <Fade
+          in={toolbarModal == TOOLBAR_MODAL_SEARCH}
+          timeout={300}
+          style={{ position: 'fixed', pointerEvents: 'none' }}
+        >
+          <div
+            style={{
+              width: '100vw',
+              height: '100dvh',
+              backgroundColor: 'rgba(0, 0, 0, 0.15)'
+            }}
+          ></div>
+        </Fade>
+      )}
+      <Stack position="absolute" bottom="0px" height="143px" width="34%">
+        <Stack direction="row" spacing={2}>
+          <SearchBar
+            className="searchBar"
+            search={location => searchForLocation(location)}
           />
-          <AddResourceModalV2 />
-          <Toolbar map={this.state.map} />
+          <TutorialModal />
         </Stack>
-        <SelectedTap />
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  filtered: state.filterMarkers.filtered,
-  handicap: state.filterMarkers.handicap,
-  allResources: state.filterMarkers.allResources,
-  filteredResources: selectFilteredResource(state),
-  filterFunction: state.filterMarkers.filterFunction,
-  mapCenter: state.filterMarkers.mapCenter,
-  resourceType: state.filterMarkers.resourceType,
-  showingInfoWindow: state.filterMarkers.showingInfoWindow,
-  toolbarModal: state.filterMarkers.toolbarModal
-  // infoIsExpanded: state.infoIsExpanded
-});
-
-const mapDispatchToProps = {
-  setFilterFunction,
-  toggleInfoWindow,
-  setUserLocation,
-  setMapCenter,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  setToolbarModal,
-  setSelectedPlace,
-  getResources
+        <ChooseResource />
+        <Filter
+          resourceType={resourceType}
+          filters={filters}
+          handleTag={handleTag}
+          clearAll={clearAllTags}
+          applyTags={applyTags}
+          activeTags={activeFilterTags}
+        />
+        <AddResourceModalV2 />
+        <Toolbar map={map} />
+      </Stack>
+      <SelectedTap />
+    </div>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  GoogleApiWrapper({
-    apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
-    LoadingContainer: LoadingContainer,
-    version: 'quarterly'
-  })(ReactGoogleMaps)
-);
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
+  LoadingContainer: LoadingContainer,
+  version: 'quarterly'
+})(ReactGoogleMaps);

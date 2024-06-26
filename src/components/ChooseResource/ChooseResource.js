@@ -1,13 +1,15 @@
-import React from 'react';
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 import DesktopChooseResource from './DesktopChooseResource';
 import MobileChooseResource from './MobileChooseResource';
 
 const ChooseResource = () => {
-    return (
-        <>{isMobile ? <MobileChooseResource /> : <DesktopChooseResource />}</>
-    );
+
+  const isMobile = useIsMobile();
+
+  return (
+    <>{isMobile ? <MobileChooseResource /> : <DesktopChooseResource />}</>
+  );
 };
 
 export default ChooseResource;

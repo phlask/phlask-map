@@ -1,5 +1,4 @@
 import IconButton from '@mui/material/Button';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
@@ -19,8 +18,6 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
-
-import { isMobile } from 'react-device-detect';
 
 import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
 import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
@@ -42,6 +39,7 @@ import Box from '@mui/material/Box';
 import ChooseResource from '../ChooseResource/ChooseResource';
 
 import NavigationItem from './NavigationItem';
+import useIsMobile from 'hooks/useIsMobile';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -64,7 +62,7 @@ function distance(lat1, lon1, lat2, lon2) {
 // @param {ResourceEntry[]} data
 // @return {ResourceEntry}
 function getClosest(data, userLocation) {
-  let distances = data.map((resource, index) => {
+  const distances = data.map((resource, index) => {
     return {
       resource,
       distance: distance(
@@ -77,28 +75,20 @@ function getClosest(data, userLocation) {
   });
 
   // Return the resource with the minimum distance value
-  if (!distances) return null;
+  if (!distances.length) return null;
   return distances.reduce(
     (min, p) => (p.distance < min.distance ? p : min),
     distances[0]
   ).resource;
 }
 
-function getCoordinates() {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-}
-
-function Toolbar(props) {
-
+function Toolbar({ map }) {
   const dispatch = useDispatch();
-
+  const isMobile = useIsMobile();
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -130,14 +120,17 @@ function Toolbar(props) {
       lat: userLocation.lat,
       lon: userLocation.lng
     });
-
+    if (!closest) return;
     dispatch(setSelectedPlace(closest));
 
-    props.map.panTo({
+    map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
-    dispatch(toggleInfoWindow(true));
+    toggleInfoWindow({
+      isShown: true,
+      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+    });
   }
 
   function closestButtonClicked() {
@@ -145,11 +138,8 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (toolbarModal === modal) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
-    } else {
-      dispatch(setToolbarModal(modal));
-    }
+    if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    else dispatch(setToolbarModal(modal));
   }
 
   let phlaskButton = null;

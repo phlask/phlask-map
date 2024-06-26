@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploader from 'react-images-upload';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
+import { geocode, RequestType } from 'react-geocode';
 import styles from '../AddResourceModal.module.scss';
 import { Controller } from 'react-hook-form';
 import {
@@ -14,7 +14,8 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
 
 const ENTRY_TYPE = [
   { entryType: 'Open access', explanation: 'Public site, open to all' },
@@ -39,6 +40,8 @@ const PageOne = ({
   setValue,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   return (
     <>
       {isMobile && (
@@ -142,7 +145,7 @@ const PageOne = ({
                             textFieldChangeHandler(addr);
                             onChange(addr);
                           })
-                          .catch(console.error);
+                          .catch(noop);
                       }
                     }}
                     style={{ backgroundColor: 'white' }}

@@ -1,5 +1,5 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_RESOURCE,

@@ -1,5 +1,6 @@
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, get, ref } from 'firebase/database';
 import { resourcesConfig } from '../firebase/firebaseConfig';
 import { testData } from '../firebase/functionalTest';
 
@@ -27,25 +28,18 @@ export const resetFilterFunction = () => ({
   type: RESET_FILTER_FUNCTION
 });
 
-export const GET_RESOURCES_SUCCESS = 'GET_RESOURCES_SUCCESS';
-export const getResourcesSuccess = allResources => ({
-  type: GET_RESOURCES_SUCCESS,
-  allResources
-});
+export const getResources = createAsyncThunk(
+  'fetch-resources',
+  async (_, { dispatch }) => {
+    const app = initializeApp(resourcesConfig);
+    const database = getDatabase(app);
 
-export const getResources = () => dispatch => {
-  const app = initializeApp(resourcesConfig);
-  const database = getDatabase(app);
-  return process.env.REACT_APP_CYPRESS_TEST
-    ? dispatch(getResourcesSuccess(testData))
-    : onValue(
-      ref(database, '/'),
-      snapshot => {
-        dispatch(getResourcesSuccess(Object.values(snapshot.val())));
-      },
-      { onlyOnce: true }
-    );
-};
+    if (process.env.REACT_APP_CYPRESS_TEST) return testData;
+    const snapshot = await get(ref(database, '/'));
+    const results = snapshot.val();
+    return Object.values(results) || [];
+  }
+);
 
 // Handles the case where a new resource is added from the submission form
 export const PUSH_NEW_RESOURCE = 'PUSH_NEW_RESOURCE';
@@ -66,29 +60,8 @@ export const setMapCenter = coords => ({
   coords
 });
 
-// export const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
-// export const toggleSearchBar = isShown => ({
-//   type: TOGGLE_SEARCH_BAR,
-//   isShown
-// });
-
-// export const TOGGLE_FILTER_MODAL = 'TOGGLE_FILTER_MODAL';
-// export const toggleFilterModal = isShown => ({
-//   type: TOGGLE_FILTER_MODAL,
-//   isShown
-// });
-
-export const TOGGLE_INFO_WINDOW = 'TOGGLE_INFO_WINDOW';
-export const toggleInfoWindow = isShown => ({
-  type: TOGGLE_INFO_WINDOW,
-  isShown
-});
-
-export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS';
-export const toggleInfoWindowClass = isShown => ({
-  type: TOGGLE_INFO_WINDOW_CLASS,
-  isShown
-});
+export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
+export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');
 
 export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED';
 export const toggleInfoExpanded = isExpanded => ({
@@ -112,11 +85,7 @@ export const setSelectedPlace = selectedPlace => ({
   selectedPlace
 });
 
-export const SET_TOOLBAR_MODAL = 'SET_TOOLBAR_MODAL';
-export const setToolbarModal = toolbarModal => ({
-  type: SET_TOOLBAR_MODAL,
-  mode: toolbarModal
-});
+export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
 
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
