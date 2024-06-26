@@ -46,8 +46,9 @@ const ResourceButton = props => {
 
 function DesktopChooseResource(props) {
 
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const dispatch = useDispatch();
+
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   const ref = useRef(null);
 
