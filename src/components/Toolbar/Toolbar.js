@@ -117,7 +117,7 @@ function Toolbar(props) {
     // This may be reproducible on Desktop.
     let data;
 
-    switch (props.resourceType) {
+    switch (resourceType) {
       case WATER_RESOURCE_TYPE:
         data = allResources;
         break;
@@ -153,7 +153,7 @@ function Toolbar(props) {
   }
 
   let phlaskButton = null;
-  switch (props.resourceType) {
+  switch (resourceType) {
     case WATER_RESOURCE_TYPE:
       phlaskButton = <WaterPhlaskButton />;
       break;
