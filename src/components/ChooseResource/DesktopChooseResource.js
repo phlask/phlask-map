@@ -1,6 +1,6 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
 import React, { useRef } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_NONE,
@@ -47,12 +47,13 @@ const ResourceButton = props => {
 function DesktopChooseResource(props) {
 
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const dispatch = useDispatch();
 
   const ref = useRef(null);
 
   const handleClickOutside = () => {
     if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))
     }
   };
 
@@ -89,28 +90,28 @@ function DesktopChooseResource(props) {
                 icon={WaterIcon}
                 color="#5286E9"
                 text="Water"
-                onClick={() => props.setResourceType(WATER_RESOURCE_TYPE)}
+                onClick={() => dispatch(setResourceType(WATER_RESOURCE_TYPE))}
                 data-cy="button-water-data-selector"
               />
               <ResourceButton
                 icon={ForagingIcon}
                 color="#5DA694"
                 text="Foraging"
-                onClick={() => props.setResourceType(FORAGE_RESOURCE_TYPE)}
+                onClick={() => dispatch(setResourceType(FORAGE_RESOURCE_TYPE))}
                 data-cy="button-foraging-data-selector"
               />
               <ResourceButton
                 icon={FoodIcon}
                 color="#FF9A55"
                 text="Food"
-                onClick={() => props.setResourceType(FOOD_RESOURCE_TYPE)}
+                onClick={() => dispatch(setResourceType(FOOD_RESOURCE_TYPE))}
                 data-cy="button-food-data-selector"
               />
               <ResourceButton
                 icon={BathroomIcon}
                 color="#9E9E9E"
                 text="Bathroom"
-                onClick={() => props.setResourceType(BATHROOM_RESOURCE_TYPE)}
+                onClick={() => dispatch(setResourceType(BATHROOM_RESOURCE_TYPE))}
                 data-cy="button-bathroom-data-selector"
               />
             </Box>
@@ -121,9 +122,4 @@ function DesktopChooseResource(props) {
   );
 }
 
-const mapDispatchToProps = {
-  setResourceType,
-  setToolbarModal,
-};
-
-export default connect(null, mapDispatchToProps)(DesktopChooseResource);
+export default DesktopChooseResource;

@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
 import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
@@ -47,12 +47,16 @@ const resourceTypeInfo = [
 
 const MobileChooseResource = (props) => {
 
+  const dispatch = useDispatch();
+
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+
   return (
     <Box>
       <Dialog
         BackdropProps={{ transitionDuration: 400 }}
-        open={props.toolbarModal === TOOLBAR_MODAL_RESOURCE}
-        onClose={() => props.setToolbarModal(TOOLBAR_MODAL_NONE)}
+        open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
+        onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
         PaperProps={{
           style: {
             background: 'transparent',
@@ -67,7 +71,7 @@ const MobileChooseResource = (props) => {
       >
         <Slide
           direction="up"
-          in={props.toolbarModal === TOOLBAR_MODAL_RESOURCE}
+          in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
           mountOnEnter
           unmountOnExit
         >
@@ -82,13 +86,4 @@ const MobileChooseResource = (props) => {
   );
 };
 
-const mapStateToProps = state => ({
-  resourceType: state.filterMarkers.resourceType,
-  toolbarModal: state.filterMarkers.toolbarModal,
-});
-
-const mapDispatchToProps = {
-  setToolbarModal,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MobileChooseResource);
+export default MobileChooseResource;

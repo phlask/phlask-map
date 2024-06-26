@@ -5,11 +5,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setResourceType } from '../../actions/actions';
 
 
-const ListItemEntry = (props) => {
+const MobileResourceEntry = (props) => {
+
+  const dispatch = useDispatch();
 
   function handleGA(type) {
     // ReactGA.event({
@@ -21,7 +23,7 @@ const ListItemEntry = (props) => {
 
   const switchType = type => {
     handleGA(type);
-    props.setResourceType(type);
+    dispatch(setResourceType(type));
   };
 
   return (
@@ -43,8 +45,4 @@ const ListItemEntry = (props) => {
   );
 };
 
-const mapDispatchToProps = {
-  setResourceType,
-};
-
-export default connect(null, mapDispatchToProps)(ListItemEntry);
+export default MobileResourceEntry;

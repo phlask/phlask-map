@@ -1,17 +1,15 @@
 import IconButton from '@mui/material/Button';
 import React from 'react';
 import ReactGA from 'react-ga4';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  setMapCenter,
   setSelectedPlace,
   setToolbarModal,
-  setUserLocation,
   toggleInfoWindow,
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
@@ -42,7 +40,6 @@ import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/Wate
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
-import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import ChooseResource from '../ChooseResource/ChooseResource';
 
 import NavigationItem from './NavigationItem';
@@ -95,9 +92,13 @@ function getCoordinates() {
 }
 
 function Toolbar(props) {
-  const resourceType = useSelector(resourceTypeSelector);
 
+  const dispatch = useDispatch();
 
+  const resourceType = useSelector(state => state.filterMarkers.resourceType);
+  const allResources = useSelector(state => state.filterMarkers.allResources);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
@@ -119,25 +120,25 @@ function Toolbar(props) {
 
     switch (props.resourceType) {
       case WATER_RESOURCE_TYPE:
-        data = props?.allResources;
+        data = allResources;
         break;
       // TODO(vontell): Filter based on requested type
       default:
-        data = props?.allResources;
+        data = allResources;
     }
 
     const closest = getClosest(data, {
-      lat: props.userLocation.lat,
-      lon: props.userLocation.lng
+      lat: userLocation.lat,
+      lon: userLocation.lng
     });
 
-    props.setSelectedPlace(closest);
+    dispatch(setSelectedPlace(closest));
 
     props.map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
-    props.toggleInfoWindow(true);
+    dispatch(toggleInfoWindow(true));
   }
 
   function closestButtonClicked() {
@@ -145,10 +146,10 @@ function Toolbar(props) {
   }
 
   function toolbarClicked(modal) {
-    if (props.toolbarModal === modal) {
-      props.setToolbarModal(TOOLBAR_MODAL_NONE);
+    if (toolbarModal === modal) {
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     } else {
-      props.setToolbarModal(modal);
+      dispatch(setToolbarModal(modal));
     }
   }
 
@@ -213,7 +214,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_RESOURCE
+                toolbarModal == TOOLBAR_MODAL_RESOURCE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -242,7 +243,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_FILTER
+                toolbarModal == TOOLBAR_MODAL_FILTER
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -271,7 +272,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_SEARCH
+                toolbarModal == TOOLBAR_MODAL_SEARCH
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -300,7 +301,7 @@ function Toolbar(props) {
               flexDirection: 'column',
               p: 0,
               filter:
-                props.toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -376,24 +377,4 @@ function Toolbar(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  resourceType: state.filterMarkers.resourceType,
-  allResources: state.filterMarkers.allResources,
-  userLocation: state.filterMarkers.userLocation,
-  toolbarModal: state.filterMarkers.toolbarModal,
-});
-
-const mapDispatchToProps = {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
-  setToolbarModal,
-  setSelectedPlace,
-  toggleInfoWindow,
-  setMapCenter,
-  setUserLocation
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default Toolbar;
