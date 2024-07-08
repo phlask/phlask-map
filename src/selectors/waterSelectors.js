@@ -5,13 +5,14 @@ import { hours } from '../helpers/hours';
 const getTapFilters = state => state.filterMarkers.tapFilters;
 const getAllResources = state => state.filterMarkers.allResources;
 const getResourceType = state => state.filterMarkers.resourceType;
+const filters = state => state.filterMarkers.filters;
 
 /**
  * This creates a selector for all resources filtered by the requested filters.
  */
 const selectFilteredResource = createSelector(
-  [getAllResources, getResourceType],
-  (allResources, resourceType) => {
+  [getAllResources, getResourceType, filters],
+  (allResources, resourceType, filters) => {
     // First, filter based on resource
     return allResources.filter(resource => {
       return resource.resource_type === resourceType;

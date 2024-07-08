@@ -4,20 +4,6 @@ import { getDatabase, get, ref } from 'firebase/database';
 import { resourcesConfig } from '../firebase/firebaseConfig';
 import { testData } from '../firebase/functionalTest';
 
-export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
-export const setToggleState = (toggle, toggleState) => ({
-  type: SET_TOGGLE_STATE,
-  toggle,
-  toggleState
-});
-
-export const SET_TOGGLE_STATE_FOOD = 'SET_TOGGLE_STATE_FOOD';
-export const setToggleStateFood = (toggle, toggleState) => ({
-  type: SET_TOGGLE_STATE_FOOD,
-  toggle,
-  toggleState
-});
-
 export const SET_FILTER_FUNCTION = 'SET_FILTER_FUNCTION';
 export const setFilterFunction = () => ({
   type: SET_FILTER_FUNCTION

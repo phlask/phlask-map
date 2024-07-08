@@ -9,7 +9,7 @@ import {
   setUserLocation,
   toggleInfoWindow,
   getResources,
-  setSelectedPlace
+  setSelectedPlace, setFilterFunction
 } from '../../actions/actions';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -154,6 +154,7 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
+  const filters = useSelector(state => state.filterMarkers.filters); // { "tags": [] }
 
   const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
@@ -251,20 +252,11 @@ export const ReactGoogleMaps = ({ google }) => {
   };
 
   const handleTag = (type, filterType, index, key) => {
-    if (type == 0) {
-      let activeFilterTags_ = { ...activeFilterTags };
-      activeFilterTags_[filterType][index][key] =
-        !activeFilterTags_[filterType][index][key];
-      setActiveFilterTags(activeFilterTags_);
-    } else if (type == 1) {
-      let activeFilterTags_ = { ...activeFilterTags };
-      if (activeFilterTags_[filterType][index] == key) {
-        activeFilterTags_[filterType][index] = null;
-      } else {
-        activeFilterTags_[filterType][index] = { ...key };
-      }
-      setActiveFilterTags(activeFilterTags_);
-    }
+    // Figure out, based on what was just tapped, what is the tag?
+    // Scenario: Adding the tag (toggled on)
+    let tag = null //...
+    let newFilters = filters.tags.push(tag);
+    dispatch(setFilterFunction(newFilters));
   };
 
   const clearAllTags = () => {
