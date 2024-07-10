@@ -1,20 +1,20 @@
-import { isMobile } from 'react-device-detect';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
   mapCenter: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   // Change to reflect user's current location
   userLocation: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   showingInfoWindow: false,
   infoIsExpanded: false,
-  infoWindowClass: isMobile ? 'info-window-out' : 'info-window-out-desktop',
+  infoWindowClass: 'info-window-out-desktop',
   tapFilters: {
     filtered: false,
     handicap: false,
@@ -88,8 +88,8 @@ export default (state = initialState, act) => {
     case actions.SET_MAP_CENTER:
       return { ...state, mapCenter: act.coords };
 
-    case actions.GET_RESOURCES_SUCCESS:
-      return { ...state, allResources: act.allResources };
+    case actions.getResources.fulfilled.type:
+      return { ...state, allResources: act.payload };
 
     case actions.PUSH_NEW_RESOURCE:
       return {
@@ -121,27 +121,16 @@ export default (state = initialState, act) => {
             showingInfoWindow: true
           };
 
-    case actions.TOGGLE_INFO_WINDOW:
-      return act.isShown
-        ? {
-            ...state,
-            showingInfoWindow: act.isShown,
-            infoWindowClass: isMobile
-              ? 'info-window-in'
-              : 'info-window-in-desktop'
-          }
-        : { ...state, showingInfoWindow: act.isShown };
-
-    case actions.TOGGLE_INFO_WINDOW_CLASS:
+    case actions.toggleInfoWindow.type:
       return {
         ...state,
-        infoWindowClass: isMobile
-          ? act.isShown
-            ? 'info-window-in'
-            : 'info-window-out'
-          : act.isShown
-          ? 'info-window-in-desktop'
-          : 'info-window-out-desktop'
+        showingInfoWindow: act.payload.isShown,
+        infoWindowClass: act.payload.infoWindowClass
+      };
+    case actions.toggleInfoWindowClass.type:
+      return {
+        ...state,
+        infoWindowClass: act.payload.infoWindowClass
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
@@ -204,27 +193,22 @@ export default (state = initialState, act) => {
       };
     }
 
-    case actions.SET_TOOLBAR_MODAL:
-      return { ...state, toolbarModal: act.mode };
+    case actions.setToolbarModal.type:
+      return { ...state, toolbarModal: act.payload };
 
     // Toggle Phlask type & close the info window
-    case actions.TOGGLE_RESOURCE_TYPE:
+    case actions.toggleResourceType.type:
       return {
         ...state,
-        resourceType: act.mode,
-        infoWindowClass:
-          act.mode !== state.showingInfoWindow
-            ? isMobile
-              ? 'info-window-out'
-              : 'info-window-out-desktop'
-            : state.infoWindowClass
+        resourceType: act.payload.resourceType,
+        infoWindowClass: act.payload.infoWindowClass
       };
 
     case actions.CHANGE_RESOURCE_TYPE:
       return { ...state, resourceType: act.resourceType };
 
-    case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: !act.isShown };
+    case actions.toggleResourceMenu.type:
+      return { ...state, isResourceMenuShown: !act.payload.isShown };
 
     default:
       return state;

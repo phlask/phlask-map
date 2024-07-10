@@ -20,8 +20,8 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
 
 import { WEBSITE_REGEX } from '../utils';
 
@@ -56,6 +56,8 @@ const PageOne = ({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   const FORAGE_TYPE = [
     {
       forageType: 'Nut',
@@ -193,7 +195,7 @@ const PageOne = ({
                             textFieldChangeHandler(addr);
                             onChange(addr);
                           })
-                          .catch(console.error);
+                          .catch(noop);
                       }
                     }}
                     style={{ backgroundColor: 'white' }}

@@ -4,37 +4,26 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Action from '../../actions/actions';
 import { isResourceMenuShownSelector } from '../../hooks/selectors';
+import useIsMobile from 'hooks/useIsMobile';
+import { toggleResourceMenu, toggleResourceType } from 'actions/actions';
 
 const ListItemEntry = ({ resourceType, icon, actionLabel }) => {
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
-  const toggleResourceMenu = () => {
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_MENU,
-      isShown: isResourceMenuShown
-    });
-  };
-
-  function handleGA(type) {
-    // ReactGA.event({
-    //   category: `ResourceMenu`,
-    //   action: 'MapChangedTo',
-    //   label: `${type}`
-    // });
-  }
-
   const switchType = type => {
-    handleGA(type);
-    dispatch({
-      type: Action.TOGGLE_RESOURCE_TYPE,
-      mode: type
-    });
-    toggleResourceMenu();
+    dispatch(
+      toggleResourceType({
+        resourceType: type,
+        infoWindowClass: isMobile
+          ? 'info-window-out'
+          : 'info-window-out-desktop'
+      })
+    );
+    dispatch(toggleResourceMenu({ isShown: isResourceMenuShown }));
   };
 
   return (

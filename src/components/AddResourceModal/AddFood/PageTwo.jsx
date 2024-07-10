@@ -12,7 +12,7 @@ import {
   ListItem
 } from '@mui/material';
 
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 const PageTwo = ({
   onDrop,
@@ -27,6 +27,8 @@ const PageTwo = ({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   const FOOD_HELPFUL_INFO = [
     {
       label: 'Wheelchair accessible',

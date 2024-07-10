@@ -31,10 +31,6 @@ const VerificationButton = props => {
   const [name, setName] = useState('');
   const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
 
-  if (!resource) {
-    return;
-  }
-
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setPassword('');
@@ -94,6 +90,10 @@ const VerificationButton = props => {
     };
     updateFirebaseEntry(newResource);
   }, []);
+
+  if (!resource) {
+    return;
+  }
 
   return (
     <div
