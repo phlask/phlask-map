@@ -19,8 +19,27 @@ export const setToggleStateFood = (toggle, toggleState) => ({
 });
 
 export const SET_FILTER_FUNCTION = 'SET_FILTER_FUNCTION';
-export const setFilterFunction = () => ({
-  type: SET_FILTER_FUNCTION
+export const setFilterFunction = (tag) => ({
+  type: SET_FILTER_FUNCTION,
+  tag,
+});
+
+export const SET_ENTRY_FILTER_FUNCTION = 'SET_ENTRY_FILTER_FUNCTION';
+export const setEntryFilterFunction = (tag) => ({
+  type: SET_ENTRY_FILTER_FUNCTION,
+  tag,
+});
+
+export const REMOVE_FILTER_FUNCTION = 'REMOVE_FILTER_FUNCTION';
+export const removeFilterFunction = (tag) => ({
+  type: REMOVE_FILTER_FUNCTION,
+  tag,
+});
+
+export const REMOVE_ENTRY_FILTER_FUNCTION = 'REMOVE_ENTRY_FILTER_FUNCTION';
+export const removeEntryFilterFunction = (tag) => ({
+  type: REMOVE_ENTRY_FILTER_FUNCTION,
+  tag,
 });
 
 export const RESET_FILTER_FUNCTION = 'RESET_FILTER_FUNCTION';

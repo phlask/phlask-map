@@ -15,6 +15,8 @@ const initialState = {
   showingInfoWindow: false,
   infoIsExpanded: false,
   infoWindowClass: 'info-window-out-desktop',
+  filterTags: [],
+  filterEntry: "",
   tapFilters: {
     filtered: false,
     handicap: false,
@@ -98,7 +100,29 @@ export default (state = initialState, act) => {
       };
 
     case actions.SET_FILTER_FUNCTION:
-      return { filterFunction: !state.filterFunction, ...state };
+      return { ...state, filterTags: [...state.filterTags, act.tag] }
+
+    case actions.SET_ENTRY_FILTER_FUNCTION:
+      return { ...state, filterEntry: act.tag }
+
+    case actions.REMOVE_FILTER_FUNCTION:
+      return {
+        ...state,
+        filterTags: state.filterTags.filter(x => x !== act.tag)
+      }
+
+    case actions.REMOVE_ENTRY_FILTER_FUNCTION:
+      return {
+        ...state,
+        filterEntry: ''
+      }
+
+    case actions.RESET_FILTER_FUNCTION:
+      return {
+        ...state,
+        filterTags: [],
+        filterEntry: ''
+      };
 
     case actions.SET_SELECTED_PLACE:
       // if passed Selected Place as an object, set selected place as the object
@@ -106,10 +130,10 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-            ...state,
-            selectedPlace: state.allResources[act.selectedPlace],
-            showingInfoWindow: true
-          };
+          ...state,
+          selectedPlace: state.allResources[act.selectedPlace],
+          showingInfoWindow: true
+        };
 
     case actions.toggleInfoWindow.type:
       return {
@@ -126,27 +150,27 @@ export default (state = initialState, act) => {
     case actions.TOGGLE_INFO_EXPANDED:
       return { ...state, infoIsExpanded: act.isExpanded };
 
-    case actions.RESET_FILTER_FUNCTION:
-      return {
-        ...state,
-        tapFilters: {
-          accessTypesHidden: [],
-          filtered: false,
-          handicap: false,
-          sparkling: false,
-          openNow: false
-        },
-        foodFilters: {
-          foodSite: false,
-          school: false,
-          charter: false,
-          pha: false,
-          idRequired: false,
-          kidOnly: false,
-          openNow: false,
-          accessTypesHidden: []
-        }
-      };
+    // case actions.RESET_FILTER_FUNCTION:
+    //   return {
+    //     ...state,
+    //     tapFilters: {
+    //       accessTypesHidden: [],
+    //       filtered: false,
+    //       handicap: false,
+    //       sparkling: false,
+    //       openNow: false
+    //     },
+    //     foodFilters: {
+    //       foodSite: false,
+    //       school: false,
+    //       charter: false,
+    //       pha: false,
+    //       idRequired: false,
+    //       kidOnly: false,
+    //       openNow: false,
+    //       accessTypesHidden: []
+    //     }
+    //   };
 
     case actions.SET_FILTERED_TAP_TYPES: {
       let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];

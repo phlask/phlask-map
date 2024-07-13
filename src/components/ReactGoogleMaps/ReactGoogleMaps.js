@@ -9,7 +9,12 @@ import {
   setUserLocation,
   toggleInfoWindow,
   getResources,
-  setSelectedPlace
+  setSelectedPlace,
+  setFilterFunction,
+  resetFilterFunction,
+  removeFilterFunction,
+  removeEntryFilterFunction,
+  setEntryFilterFunction,
 } from '../../actions/actions';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
@@ -21,7 +26,7 @@ import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
-import selectFilteredResource from '../../selectors/waterSelectors';
+import selectFilteredResource from '../../selectors/resourceSelectors';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
 
@@ -143,7 +148,7 @@ for (const [key, value] of Object.entries(filters)) {
     if (category.type == 0) {
       data.push(new Array(category.tags.length).fill(false));
     } else {
-      data.push(null);
+      data.push(category.tags.length);
     }
   });
   noActiveFilterTags[key] = data;
@@ -154,6 +159,7 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
+  // const filterTags = useSelector(state => state.filterMarkers.filterTags);
 
   const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
@@ -168,10 +174,10 @@ export const ReactGoogleMaps = ({ google }) => {
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
-    JSON.parse(JSON.stringify(noActiveFilterTags))
+    noActiveFilterTags
   );
   const [appliedFilterTags, setAppliedFilterTags] = useState(
-    JSON.parse(JSON.stringify(noActiveFilterTags))
+    noActiveFilterTags
   );
 
   useEffect(() => {
@@ -250,29 +256,41 @@ export const ReactGoogleMaps = ({ google }) => {
     }
   };
 
-  const handleTag = (type, filterType, index, key) => {
+  const handleTag = (type, filterType, filterTag, index, key) => {
+    //handles multi select filters
     if (type == 0) {
       let activeFilterTags_ = { ...activeFilterTags };
+      if (activeFilterTags_[filterType][index][key]) {
+        dispatch(removeFilterFunction(filterTag))
+      }
+      else {
+        dispatch(setFilterFunction(filterTag))
+      }
       activeFilterTags_[filterType][index][key] =
         !activeFilterTags_[filterType][index][key];
       setActiveFilterTags(activeFilterTags_);
-    } else if (type == 1) {
+    }
+    //handles single select entry/organization filters
+    else if (type == 1) {
       let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index] == key) {
         activeFilterTags_[filterType][index] = null;
+        dispatch(removeEntryFilterFunction(filterTag))
       } else {
-        activeFilterTags_[filterType][index] = { ...key };
+        activeFilterTags_[filterType][index] = key;
+        dispatch(setEntryFilterFunction(filterTag))
       }
       setActiveFilterTags(activeFilterTags_);
     }
   };
 
   const clearAllTags = () => {
-    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
+    setActiveFilterTags(noActiveFilterTags);
+    dispatch(resetFilterFunction())
   };
 
   const applyTags = () => {
-    setAppliedFilterTags(JSON.parse(JSON.stringify(activeFilterTags)));
+    setAppliedFilterTags(activeFilterTags);
   };
 
   return (
