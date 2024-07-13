@@ -174,10 +174,10 @@ export const ReactGoogleMaps = ({ google }) => {
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
-    noActiveFilterTags
+    JSON.parse(JSON.stringify(noActiveFilterTags))
   );
   const [appliedFilterTags, setAppliedFilterTags] = useState(
-    noActiveFilterTags
+    JSON.parse(JSON.stringify(noActiveFilterTags))
   );
 
   useEffect(() => {
@@ -285,12 +285,12 @@ export const ReactGoogleMaps = ({ google }) => {
   };
 
   const clearAllTags = () => {
-    setActiveFilterTags(noActiveFilterTags);
+    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
     dispatch(resetFilterFunction())
   };
 
   const applyTags = () => {
-    setAppliedFilterTags(activeFilterTags);
+    setAppliedFilterTags(JSON.parse(JSON.stringify(activeFilterTags)));
   };
 
   return (
