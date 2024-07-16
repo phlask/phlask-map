@@ -114,17 +114,6 @@ function MobileHead() {
               </IconButton>
             </Box>
           </Box>
-          <Collapse
-            in={pageExpand}
-            timeout="auto"
-            onEntered={() => {
-              if (pageExpand) {
-                setVerticalAnimFinished1(true);
-              }
-            }}
-          >
-            <Box sx={{ height: '50px' }}></Box>
-          </Collapse>
           <Collapse in={menuExpand} timeout="auto">
             <Box
               sx={{
@@ -152,32 +141,7 @@ function MobileHead() {
               </DropLink>
             </Box>
           </Collapse>
-          <Collapse
-            in={pageExpand}
-            timeout="auto"
-            onEntered={() => {
-              if (pageExpand) {
-                setVerticalAnimFinished2(true);
-              }
-            }}
-          >
-            <Box
-              sx={{
-                height: 'calc(100vh - 50px - 25px - 274px - 76px - 32px - 25px)'
-              }}
-            ></Box>
-          </Collapse>
         </Box>
-        <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
-          <Box
-            sx={{
-              width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
-              padding: '25px'
-            }}
-          >
-            {verticalAnimFinished1 && verticalAnimFinished2 && shownPage}
-          </Box>
-        </Collapse>
       </Paper>
     </Box>
   );
