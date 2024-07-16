@@ -47,7 +47,7 @@ const VerificationButton = props => {
     const { id, ...filteredResource } = resource;
     set(ref(database, `/${resource.id}`), filteredResource);
     setHasBeenUpdated(true);
-    dispatch(updateExistingResource(resource));
+    dispatch(updateExistingResource({resource}));
     dispatch(setSelectedPlace(resource));
   };
 
@@ -130,6 +130,7 @@ const VerificationButton = props => {
                 placeholder="Your name"
                 style={{ width: '100%', marginBottom: '10px' }}
                 type="text"
+                autoComplete="disabled"
                 value={name}
                 onChange={e => {
                   setName(e.target.value);
@@ -138,7 +139,8 @@ const VerificationButton = props => {
               <Input
                 placeholder="The admin password"
                 style={{ width: '100%', marginBottom: '10px' }}
-                type="text"
+                type="password"
+                autoComplete="disabled"
                 value={password}
                 onChange={e => {
                   setPassword(e.target.value);
@@ -167,7 +169,7 @@ const VerificationButton = props => {
                 </Button>
                 <Button
                   onClick={() => {
-                    if (btoa(password) == PASSWORD) {
+                    if (btoa(password) === PASSWORD) {
                       setIsAdmin(true);
                     } else {
                       setLoginError('Invalid password');
@@ -200,8 +202,11 @@ const VerificationButton = props => {
 
                   <Button
                     onClick={markAsVerified}
-                    style={{
+                    sx={{
                       backgroundColor: 'green',
+                      '&:hover': {
+                        backgroundColor: 'green',
+                      },
                       color: 'white',
                       padding: '10px',
                       margin: '5px',
@@ -213,8 +218,11 @@ const VerificationButton = props => {
                   </Button>
                   <Button
                     onClick={markAsUnverified}
-                    style={{
+                    sx={{
                       backgroundColor: 'orange',
+                      '&:hover': {
+                        backgroundColor: 'orange',
+                      },
                       color: 'white',
                       padding: '10px',
                       margin: '5px',
@@ -222,12 +230,15 @@ const VerificationButton = props => {
                       width: '100%'
                     }}
                   >
-                    MARK AS UNVERIFIED
+                    Mark as Unverified
                   </Button>
                   <Button
                     onClick={markAsInactive}
-                    style={{
+                    sx={{
                       backgroundColor: 'red',
+                      '&:hover': {
+                        backgroundColor: 'red',
+                      },
                       color: 'white',
                       padding: '10px',
                       margin: '5px',
@@ -235,12 +246,15 @@ const VerificationButton = props => {
                       width: '100%'
                     }}
                   >
-                    MARK AS INACTIVE
+                    Mark as Inactive
                   </Button>
                   <Button
                     onClick={closeModal}
-                    style={{
+                    sx={{
                       backgroundColor: 'grey',
+                      '&:hover': {
+                        backgroundColor: 'grey',
+                      },
                       color: 'white',
                       padding: '10px',
                       margin: '5px',
@@ -248,7 +262,7 @@ const VerificationButton = props => {
                       width: '100%'
                     }}
                   >
-                    CANCEL
+                    Cancel
                   </Button>
                 </div>
               )}
@@ -257,8 +271,11 @@ const VerificationButton = props => {
                   <p>Your change has been recorded. Thanks!</p>
                   <Button
                     onClick={closeModal}
-                    style={{
+                    sx={{
                       backgroundColor: 'grey',
+                      '&:hover': {
+                        backgroundColor: 'grey',
+                      },
                       color: 'white',
                       padding: '10px',
                       margin: '5px',
@@ -266,7 +283,7 @@ const VerificationButton = props => {
                       width: '100%'
                     }}
                   >
-                    CLOSE
+                    Close
                   </Button>
                 </div>
               )}

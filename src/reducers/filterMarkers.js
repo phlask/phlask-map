@@ -97,12 +97,12 @@ export default (state = initialState, act) => {
         allResources: [...state.allResources, act.newResource]
       };
 
-    case actions.UPDATE_EXISTING_RESOURCE:
+    case actions.updateExistingResource.type:
       return {
         ...state,
         allResources: state.allResources.map(resource =>
-          resource.id === act.updatedResource.id
-            ? act.updatedResource
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
             : resource
         )
       };
