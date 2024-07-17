@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-  Button,
-  Collapse,
-  IconButton,
-  Box,
-  Paper,
-  SwipeableDrawer
-} from '@mui/material';
+
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import CloseIcon from '../../components/icons/CloseIcon';
 import DropLink from '../../components/Buttons/DropLink';
 import { HeaderContext } from '../../contexts/HeaderContext';

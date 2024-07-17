@@ -67,7 +67,7 @@ export const DesktopHead = props => {
             </Button>
           </Box>
           <Collapse
-            in={shownPage}
+            in={Boolean(shownPage)}
             timeout="auto"
             onEntered={() => {
               if (shownPage) {
@@ -106,7 +106,7 @@ export const DesktopHead = props => {
             </Box>
           </Collapse>
           <Collapse
-            in={shownPage}
+            in={Boolean(shownPage)}
             timeout="auto"
             onEntered={() => {
               if (shownPage) {
@@ -121,7 +121,11 @@ export const DesktopHead = props => {
             ></Box>
           </Collapse>
         </Box>
-        <Collapse orientation="horizontal" in={shownPage} timeout="auto">
+        <Collapse
+          orientation="horizontal"
+          in={Boolean(shownPage)}
+          timeout="auto"
+        >
           <Box
             sx={{
               width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
