@@ -10,7 +10,6 @@ import { resourcesConfig } from '../../firebase/firebaseConfig';
 
 import { debounce } from '../../utils/debounce';
 import ChooseResource from './ChooseResource';
-import ShareSocials from './ShareSocials';
 import AddFood from './AddFood/AddFood';
 import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
@@ -19,6 +18,7 @@ import ModalWrapper from './ModalWrapper';
 import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { pushNewResource, setSelectedPlace } from '../../actions/actions';
+import ConfirmationModal from './ConfirmationSuccessModal/ConfirmationModal';
 
 import {
   WATER_RESOURCE_TYPE,
@@ -377,7 +377,7 @@ export default function AddResourceModalV2(props) {
       {values.formStep == 'addWaterTap' && (
         <AddWaterTap
           prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
+          next={() => onChangeFormStep('confirmationSuccess')}
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
@@ -409,7 +409,7 @@ export default function AddResourceModalV2(props) {
       {values.formStep === 'addFood' && (
         <AddFood
           prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
+          next={() => onChangeFormStep('confirmationSuccess')}
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
@@ -441,7 +441,7 @@ export default function AddResourceModalV2(props) {
       {values.formStep === 'addBathroom' && (
         <AddBathroom
           prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
+          next={() => onChangeFormStep('confirmationSuccess')}
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
@@ -467,7 +467,7 @@ export default function AddResourceModalV2(props) {
       {values.formStep === 'addForaging' && (
         <AddForaging
           prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
+          next={() => onChangeFormStep('confirmationSuccess')}
           page={values.page}
           onNextPageChange={onChangeNextPage}
           onPrevPageChange={onChangePrevPage}
@@ -493,7 +493,7 @@ export default function AddResourceModalV2(props) {
         />
       )}
 
-      {values.formStep === 'shareSocials' && <ShareSocials />}
+      {values.formStep === 'confirmationSuccess' && <ConfirmationModal />}
     </ModalWrapper>
   );
 }

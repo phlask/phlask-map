@@ -1,15 +1,16 @@
-import React from "react";
-import styles from "./AddResourceModal.module.scss";
-import { Modal, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import styles from './AddResourceModal.module.scss';
+import { Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
   faTwitter,
   faInstagram,
   faGithub
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
+import ConfirmationModal from './ConfirmationSuccessModal/ConfirmationModal';
 
-function ShareSocials() {
+function ConfirmationSuccess() {
   return (
     <div className={styles.modalContent}>
       <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
@@ -55,8 +56,9 @@ function ShareSocials() {
         </a>
       </div>
       <p className={styles.socialShareMessage}>#phlask</p>
+      <ConfirmationModal />
     </div>
   );
 }
 
-export default ShareSocials;
+export default ConfirmationSuccess;
