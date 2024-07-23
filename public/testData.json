@@ -17,7 +17,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -44,7 +48,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -71,7 +79,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -98,7 +110,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -125,7 +141,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -152,7 +172,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -179,7 +203,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -206,7 +234,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -237,7 +269,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -263,7 +299,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -289,7 +329,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -315,7 +359,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -341,7 +389,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -367,7 +419,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -393,7 +449,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -419,7 +479,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     }
