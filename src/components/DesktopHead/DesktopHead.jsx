@@ -17,7 +17,6 @@ export const DesktopHead = props => {
     menuExpand,
     setShowMapControls,
     showMapControls,
-    pageExpand,
     verticalAnimFinished1,
     verticalAnimFinished2,
     setVerticalAnimFinished1,
@@ -68,10 +67,10 @@ export const DesktopHead = props => {
             </Button>
           </Box>
           <Collapse
-            in={pageExpand}
+            in={Boolean(shownPage)}
             timeout="auto"
             onEntered={() => {
-              if (pageExpand) {
+              if (shownPage) {
                 setVerticalAnimFinished1(true);
               }
             }}
@@ -107,10 +106,10 @@ export const DesktopHead = props => {
             </Box>
           </Collapse>
           <Collapse
-            in={pageExpand}
+            in={Boolean(shownPage)}
             timeout="auto"
             onEntered={() => {
-              if (pageExpand) {
+              if (shownPage) {
                 setVerticalAnimFinished2(true);
               }
             }}
@@ -122,7 +121,11 @@ export const DesktopHead = props => {
             ></Box>
           </Collapse>
         </Box>
-        <Collapse orientation="horizontal" in={pageExpand} timeout="auto">
+        <Collapse
+          orientation="horizontal"
+          in={Boolean(shownPage)}
+          timeout="auto"
+        >
           <Box
             sx={{
               width: 'min(900px, calc(100vw - 25px - 25px - 310px))',
