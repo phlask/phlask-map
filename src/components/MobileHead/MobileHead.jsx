@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import noop from 'utils/noop';
 import CloseIcon from '../../components/icons/CloseIcon';
 import DropLink from '../../components/Buttons/DropLink';
 import { HeaderContext } from '../../contexts/HeaderContext';
@@ -154,7 +155,7 @@ function MobileHead() {
       <SwipeableDrawer
         anchor="bottom"
         open={Boolean(shownPage)}
-        onOpen={() => {}}
+        onOpen={noop}
         onClose={() => menuClicked(shownPage)}
       >
         <Box sx={theme => ({ padding: theme.spacing(1) })}>{shownPage}</Box>
