@@ -128,7 +128,7 @@ const VerificationButton = props => {
               </p>
               <Input
                 placeholder="Your name"
-                style={{ width: '100%', marginBottom: '10px' }}
+                sx={{ width: '100%', marginBottom: '10px' }}
                 type="text"
                 autoComplete="disabled"
                 value={name}
@@ -138,7 +138,7 @@ const VerificationButton = props => {
               />
               <Input
                 placeholder="The admin password"
-                style={{ width: '100%', marginBottom: '10px' }}
+                sx={{ width: '100%', marginBottom: '10px' }}
                 type="password"
                 autoComplete="disabled"
                 value={password}
@@ -157,9 +157,12 @@ const VerificationButton = props => {
               >
                 <Button
                   onClick={closeModal}
-                  style={{
+                  sx={{
                     flex: 1,
                     backgroundColor: 'gray',
+                    '&:hover': {
+                      backgroundColor: 'gray',
+                    },
                     color: 'white',
                     borderRadius: '4px',
                     padding: '4px'
@@ -175,9 +178,12 @@ const VerificationButton = props => {
                       setLoginError('Invalid password');
                     }
                   }}
-                  style={{
+                  sx={{
                     flex: 1,
                     backgroundColor: 'blue',
+                    '&:hover': {
+                      backgroundColor: 'blue',
+                    },
                     color: 'white',
                     borderRadius: '4px',
                     padding: '4px'
