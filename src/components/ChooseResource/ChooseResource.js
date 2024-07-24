@@ -1,21 +1,26 @@
 import { Box, Button, Collapse, Paper } from '@mui/material';
-import React from 'react';
-import { isMobile } from 'react-device-detect';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CHANGE_PHLASK_TYPE,
-  PHLASK_TYPE_BATHROOM,
-  PHLASK_TYPE_FOOD,
-  PHLASK_TYPE_FORAGING,
-  PHLASK_TYPE_WATER,
-  TOOLBAR_MODAL_RESOURCE
+  CHANGE_RESOURCE_TYPE,
+  TOOLBAR_MODAL_RESOURCE,
+  TOOLBAR_MODAL_NONE,
+  setToolbarModal
 } from '../../actions/actions';
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 import styles from './ChooseResource.module.scss';
 
 import { ReactComponent as BathroomIcon } from '../icons/BathroomIconChooseResource.svg';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconChooseResource.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
+import useOnClickOutside from '../../components/AddResourceModal/useOnClickOutside.js';
+import useIsMobile from 'hooks/useIsMobile';
 
 const ResourceButton = props => {
   const Icon = props.icon;
@@ -32,6 +37,7 @@ const ResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={props.onClick}
+      data-cy={props['data-cy']}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.text}</p>
@@ -40,9 +46,21 @@ const ResourceButton = props => {
 };
 
 export default function ChooseResource(props) {
+  const isMobile = useIsMobile();
+
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.toolbarModal);
-  const phlaskType = useSelector(state => state.phlaskType);
+
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+
+  const ref = useRef(null);
+
+  const handleClickOutside = () => {
+    if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
+      dispatch(setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE }));
+    }
+  };
+
+  useOnClickOutside(ref, handleClickOutside);
 
   return (
     <>
@@ -55,6 +73,7 @@ export default function ChooseResource(props) {
             width: '686px',
             borderRadius: '10px'
           }}
+          ref={ref}
         >
           <Collapse
             in={toolbarModal == TOOLBAR_MODAL_RESOURCE}
@@ -77,10 +96,11 @@ export default function ChooseResource(props) {
                   text="Water"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_WATER
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: WATER_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-water-data-selector"
                 />
                 <ResourceButton
                   icon={ForagingIcon}
@@ -88,10 +108,11 @@ export default function ChooseResource(props) {
                   text="Foraging"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_FORAGING
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: FORAGE_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-foraging-data-selector"
                 />
                 <ResourceButton
                   icon={FoodIcon}
@@ -99,10 +120,11 @@ export default function ChooseResource(props) {
                   text="Food"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_FOOD
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: FOOD_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-food-data-selector"
                 />
                 <ResourceButton
                   icon={BathroomIcon}
@@ -110,10 +132,11 @@ export default function ChooseResource(props) {
                   text="Bathroom"
                   onClick={() => {
                     dispatch({
-                      type: CHANGE_PHLASK_TYPE,
-                      phlaskType: PHLASK_TYPE_BATHROOM
+                      type: CHANGE_RESOURCE_TYPE,
+                      resourceType: BATHROOM_RESOURCE_TYPE
                     });
                   }}
+                  data-cy="button-bathroom-data-selector"
                 />
               </Box>
             </Box>

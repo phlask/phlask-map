@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import waterImg from '../images/waterButton.png';
-import foodImg from '../images/foodButton.png';
-import phlaskImg from '../images/PHLASK Button.png';
-import styles from './TutorialModal.module.scss';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSlidersH, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
-import schoolIcon from '../images/food-marker-icons/school.png';
-import charterSchoolIcon from '../images/food-marker-icons/charter-school.png';
+import { useEffect, useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import phlaskFilterIcon from '../icons/PhlaskFilterIcon';
+import phlaskImg from '../images/PHLASK Button.png';
+import charterSchoolIcon from '../images/food-marker-icons/charter-school.png';
+import schoolIcon from '../images/food-marker-icons/school.png';
+import foodImg from '../images/foodButton.png';
+import waterImg from '../images/waterButton.png';
+import styles from './TutorialModal.module.scss';
 
-const TutorialModal = ({ showButton }) => {
+const TutorialModal = () => {
   const [showModal, setShowModal] = useState(null);
   const [modalStep, setModalStep] = useState(1);
   const [showModalPreference, setShowModalPreference] = useLocalStorage(
@@ -20,11 +20,6 @@ const TutorialModal = ({ showButton }) => {
   );
   const [showModalCheckbox, setShowModalCheckbox] = useState(true);
   const [modalCheckbox, setModalCheckbox] = useState(false);
-
-  function handleShow() {
-    setShowModal(true);
-    setShowModalCheckbox(false);
-  }
 
   function handleClose() {
     setShowModal(false);
@@ -50,7 +45,7 @@ const TutorialModal = ({ showButton }) => {
 
   useEffect(() => {
     setShowModal(showModalPreference);
-  }, []);
+  }, [showModalPreference]);
 
   const modalContent = {
     1: {
@@ -195,22 +190,12 @@ const TutorialModal = ({ showButton }) => {
               Next
             </Button>
           ) : (
-            <Button variant="red" onClick={handleClose}>
+            <Button aria-label="Close" variant="red" onClick={handleClose}>
               Close
             </Button>
           )}
         </Modal.Footer>
       </Modal>
-      {showButton && (
-        <button onClick={handleShow} className={styles.infoButton}>
-          <FontAwesomeIcon
-            icon={faInfoCircle}
-            size="2x"
-            color="#999"
-            className={styles.infoIcon}
-          />
-        </button>
-      )}
     </>
   );
 };

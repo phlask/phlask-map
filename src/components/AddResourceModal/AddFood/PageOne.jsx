@@ -20,8 +20,8 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
 
 const PageOne = ({
   // state values and handlers for the textfields
@@ -50,6 +50,8 @@ const PageOne = ({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   const FOOD_TYPE = [
     {
       id: '0',
@@ -213,7 +215,7 @@ const PageOne = ({
                             textFieldChangeHandler(addr);
                             onChange(addr);
                           })
-                          .catch(console.error);
+                          .catch(noop);
                       }
                     }}
                     style={{ backgroundColor: 'white' }}
@@ -262,7 +264,7 @@ const PageOne = ({
       <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
           rules={{
-            required: true,
+            required: false,
             pattern: /^[A-Za-z]{1,}[.]{1}[a-z]{2,3}/
           }}
           control={control}

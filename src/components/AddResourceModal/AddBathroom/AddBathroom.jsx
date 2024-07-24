@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
 import styles from '../AddResourceModal.module.scss';
-import { deleteApp } from 'firebase/app';
-import { connectToFirebase } from '../utils';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 
-import { isMobile } from 'react-device-detect';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import useIsMobile from 'hooks/useIsMobile';
 
 function AddBathroom({
   prev,
@@ -21,7 +19,6 @@ function AddBathroom({
   onNextPageChange,
   onPrevPageChange,
   onSubmit,
-  onDbConnectionChange,
   onDrop,
   name,
   address,
@@ -38,23 +35,8 @@ function AddBathroom({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) {
-  useEffect(() => {
-    // create connection to appropriate database
-    // based on resource type and hostname of the page
-    // (e.g. phlask.me, connect to prod)
-    const firebaseConnection = connectToFirebase(
-      window.location.hostname,
-      'bathroom'
-    );
-    onDbConnectionChange(firebaseConnection);
-
-    // call back to delete app connection whenever component unmounts
-    return () => {
-      deleteApp(firebaseConnection);
-    };
-  }, []);
-
-  const userLocation = useSelector(state => state.userLocation);
+  const isMobile = useIsMobile();
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   useEffect(() => {
     setDefaults({
@@ -78,8 +60,6 @@ function AddBathroom({
       *This field is required* <br />
     </span>
   );
-
-  const getVariableName = variable => Object.keys(variable)[0];
 
   return (
     <Box overflow={'scroll'} justifyContent={'center'}>
@@ -131,7 +111,6 @@ function AddBathroom({
                 hasFountain={hasFountain}
                 errors={errors}
                 control={control}
-                getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
               />

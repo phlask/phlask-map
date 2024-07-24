@@ -1,15 +1,15 @@
-import React from 'react';
 import styles from './AddResourceModal.module.scss';
 import Button from '@mui/material/Button';
 
-import { useDispatch, useSelector } from 'react-redux';
+import useIsMobile from 'hooks/useIsMobile';
+import { useDispatch } from 'react-redux';
 import { ReactComponent as WaterIconCR } from '../icons/WaterIconChooseResource.svg';
 import { ReactComponent as FoodIconCR } from '../icons/FoodIconChooseResource.svg';
 import { ReactComponent as ForagingIconCR } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as ToiletIconCR } from '../icons/ToiletIconChooseResource.svg';
-import { isMobile } from 'react-device-detect';
 
 function ChooseResource({ setFormStep }) {
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
   return (
@@ -24,6 +24,7 @@ function ChooseResource({ setFormStep }) {
       </h3>
       <div className={styles.buttonWrapper}>
         <Button
+          data-cy="button-contribute-water"
           className={styles.modalButton}
           variant={isMobile ? 'water' : 'waterDesktop'}
           onClick={() => setFormStep('addWaterTap')}
@@ -34,7 +35,7 @@ function ChooseResource({ setFormStep }) {
           }}
         >
           <WaterIconCR />
-          <span>Water</span>
+          Water
         </Button>
         <Button
           className={styles.modalButton}

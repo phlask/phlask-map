@@ -1,10 +1,10 @@
-import thunk from "redux-thunk";
-import filterMarkers from "./reducers/filterMarkers";
-import { configureStore } from "@reduxjs/toolkit";
+import thunk from 'redux-thunk';
+import reducer from './reducers/root';
+import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
-  reducer: filterMarkers,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware([thunk]),
+  reducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware([thunk])
 });
 
 export default store;

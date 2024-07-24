@@ -2,9 +2,7 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Action from '../../actions/actions';
 import { isResourceMenuShownSelector } from '../../hooks/selectors';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
@@ -12,26 +10,34 @@ import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 import ListItemEntry from './ListItemEntry';
 
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
+import { toggleResourceMenu } from '../../actions/actions';
+
 const listItems = [
   {
     resourceType: 'Water',
     icon: <WaterIcon />,
-    actionLabel: Action.PHLASK_TYPE_WATER
+    actionLabel: WATER_RESOURCE_TYPE
   },
   {
     resourceType: 'Food',
     icon: <FoodIcon />,
-    actionLabel: Action.PHLASK_TYPE_FOOD
+    actionLabel: FOOD_RESOURCE_TYPE
   },
   {
     resourceType: 'Foraging',
     icon: <ForagingIcon />,
-    actionLabel: Action.PHLASK_TYPE_FORAGING
+    actionLabel: FORAGE_RESOURCE_TYPE
   },
   {
     resourceType: 'Bathroom',
     icon: <ToiletIcon />,
-    actionLabel: Action.PHLASK_TYPE_BATHROOM
+    actionLabel: BATHROOM_RESOURCE_TYPE
   }
 ];
 
@@ -39,11 +45,8 @@ const ResourceMenu = () => {
   const dispatch = useDispatch();
   const isResourceMenuShown = useSelector(isResourceMenuShownSelector);
 
-  const toggleResourceMenu = () => {
-    // dispatch({
-    //   type: Action.TOGGLE_RESOURCE_MENU,
-    //   isShown: isResourceMenuShown
-    // });
+  const handleToggleResourceMenu = () => {
+    dispatch(toggleResourceMenu({ isShown: isResourceMenuShown }));
   };
 
   return (
@@ -51,7 +54,7 @@ const ResourceMenu = () => {
       <Dialog
         BackdropProps={{ transitionDuration: 400 }}
         open={isResourceMenuShown}
-        onClose={() => toggleResourceMenu()}
+        onClose={() => handleToggleResourceMenu()}
         PaperProps={{
           style: {
             background: 'transparent',

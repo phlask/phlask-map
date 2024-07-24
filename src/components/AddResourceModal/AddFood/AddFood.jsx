@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
 import styles from '../AddResourceModal.module.scss';
-import { deleteApp } from 'firebase/app';
-import { connectToFirebase } from '../utils';
 import { useForm, Controller } from 'react-hook-form';
 import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
-import { isMobile } from 'react-device-detect';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import useIsMobile from 'hooks/useIsMobile';
 
 function AddFood({
   prev,
@@ -21,7 +19,6 @@ function AddFood({
   onNextPageChange,
   onPrevPageChange,
   onSubmit,
-  onDbConnectionChange,
   onDrop,
   name,
   address,
@@ -44,25 +41,10 @@ function AddFood({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) {
-  useEffect(() => {
-    // create connection to appropriate database
-    // based on resource type and hostname of the page
-    // (e.g. phlask.me, connect to prod)
-    const firebaseConnection = connectToFirebase(
-      window.location.hostname,
-      'food'
-    );
-    onDbConnectionChange(firebaseConnection);
-
-    // call back to delete app connection whenever component unmounts
-    return () => {
-      deleteApp(firebaseConnection);
-    };
-  }, []);
-
+  const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 
-  const userLocation = useSelector(state => state.userLocation);
+  const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   useEffect(() => {
     setDefaults({
