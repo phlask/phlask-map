@@ -162,8 +162,8 @@ export const ReactGoogleMaps = ({ google }) => {
   );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
-  const [currentLat, setCurrentLat] = useState(mapCenter.lat);
-  const [currentLon, setCurrentLon] = useState(mapCenter.lng);
+  const [currentLat, setCurrentLat] = useState(CITY_HALL_COORDINATES.latitude);
+  const [currentLon, setCurrentLon] = useState(CITY_HALL_COORDINATES.longitude);
   const [zoom, setZoom] = useState(16);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
@@ -180,40 +180,6 @@ export const ReactGoogleMaps = ({ google }) => {
     }
   }, [allResources.length, dispatch]);
 
-  useEffect(() => {
-    const setDefaultLocation = () => {
-      setCurrentLat(parseFloat(CITY_HALL_COORDINATES.latitude));
-      setCurrentLon(parseFloat(CITY_HALL_COORDINATES.longitude));
-    };
-    getCoordinates()
-      .then(position => {
-        if (
-          Number.isNaN(position.coords.latitude) ||
-          Number.isNaN(position.coords.longitude)
-        ) {
-          setDefaultLocation();
-        } else {
-          dispatch(
-            setMapCenter({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            })
-          );
-          dispatch(
-            setUserLocation({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            })
-          );
-          setCurrentLat(position.coords.latitude);
-          setCurrentLon(position.coords.longitude);
-        }
-      })
-      .catch(() => {
-        setDefaultLocation();
-      });
-  }, [dispatch]);
-
   //toggle window goes here
   const onMarkerClick = (resource, markerProps) => {
     dispatch(
@@ -223,7 +189,10 @@ export const ReactGoogleMaps = ({ google }) => {
       })
     );
     dispatch(setSelectedPlace(resource));
+    setCurrentLat(resource.latitude);
+    setCurrentLon(resource.longitude);
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
+
   };
 
   const onReady = (_, map) => {
@@ -290,10 +259,6 @@ export const ReactGoogleMaps = ({ google }) => {
             rotateControl={false}
             fullscreenControl={false}
             onReady={onReady}
-            initialCenter={{
-              lat: currentLat,
-              lng: currentLon
-            }}
             center={{
               lat: currentLat,
               lng: currentLon
