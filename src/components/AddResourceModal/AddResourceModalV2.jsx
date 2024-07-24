@@ -16,9 +16,9 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { getDatabase, ref, push } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { pushNewResource, setSelectedPlace } from '../../actions/actions';
+import { pushNewResource } from '../../actions/actions';
 
 import {
   WATER_RESOURCE_TYPE,
@@ -251,7 +251,11 @@ export default function AddResourceModalV2(props) {
         source: {
           type: 'MANUAL'
         },
-        verified: false,
+        verification: {
+          last_modified: new Date().toISOString(),
+          last_modifier: 'phlask_app',
+          verified: false
+        },
         resource_type: resourceType,
         address: values.address,
         city: city,
@@ -350,8 +354,11 @@ export default function AddResourceModalV2(props) {
       // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
-      push(ref(database, '/'), newResource);
-      dispatch(pushNewResource(newResource));
+      push(ref(database, '/'), newResource).then(result => {
+        const id = result._path.pieces[0];
+        newResource.id = id;
+        dispatch(pushNewResource(newResource));
+      });
     });
   };
 

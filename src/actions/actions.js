@@ -37,7 +37,12 @@ export const getResources = createAsyncThunk(
     if (process.env.REACT_APP_CYPRESS_TEST) return testData;
     const snapshot = await get(ref(database, '/'));
     const results = snapshot.val();
-    return Object.values(results) || [];
+    return Object.entries(results).map(
+      ([id, resource]) => ({
+        ...resource,
+        id
+      })
+    );
   }
 );
 
@@ -47,6 +52,9 @@ export const pushNewResource = newResource => ({
   type: PUSH_NEW_RESOURCE,
   newResource
 });
+
+// Handles the case where an existing resource is updated from the submission form
+export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const setUserLocation = coords => ({

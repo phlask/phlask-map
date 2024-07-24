@@ -97,6 +97,16 @@ export default (state = initialState, act) => {
         allResources: [...state.allResources, act.newResource]
       };
 
+    case actions.updateExistingResource.type:
+      return {
+        ...state,
+        allResources: state.allResources.map(resource =>
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
+            : resource
+        )
+      };
+
     case actions.SET_FILTER_FUNCTION:
       return { filterFunction: !state.filterFunction, ...state };
 
