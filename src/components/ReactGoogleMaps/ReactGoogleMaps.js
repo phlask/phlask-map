@@ -180,6 +180,20 @@ export const ReactGoogleMaps = ({ google }) => {
     }
   }, [allResources.length, dispatch]);
 
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      try {
+        const position = await getCoordinates();
+        setCurrentLat(position.coords.latitude);
+        setCurrentLon(position.coords.longitude);
+      } catch (error) {
+        console.error("Error obtaining geolocation. Default coordinates will be used.");
+      }
+    };
+
+    fetchCoordinates();
+  }, []);
+  
   //toggle window goes here
   const onMarkerClick = (resource, markerProps) => {
     dispatch(
