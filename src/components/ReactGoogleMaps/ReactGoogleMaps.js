@@ -159,8 +159,6 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  // const filterTags = useSelector(state => state.filterMarkers.filterTags);
-
   const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const showingInfoWindow = useSelector(
@@ -261,10 +259,10 @@ export const ReactGoogleMaps = ({ google }) => {
     if (type == 0) {
       let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index][key]) {
-        dispatch(removeFilterFunction(filterTag))
+        dispatch(removeFilterFunction({ tag: filterTag }))
       }
       else {
-        dispatch(setFilterFunction(filterTag))
+        dispatch(setFilterFunction({ tag: filterTag }))
       }
       activeFilterTags_[filterType][index][key] =
         !activeFilterTags_[filterType][index][key];
@@ -275,10 +273,10 @@ export const ReactGoogleMaps = ({ google }) => {
       let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index] == key) {
         activeFilterTags_[filterType][index] = null;
-        dispatch(removeEntryFilterFunction(filterTag))
+        dispatch(removeEntryFilterFunction())
       } else {
         activeFilterTags_[filterType][index] = key;
-        dispatch(setEntryFilterFunction(filterTag))
+        dispatch(setEntryFilterFunction({ tag: filterTag }))
       }
       setActiveFilterTags(activeFilterTags_);
     }

@@ -205,25 +205,6 @@ export default function Filter({
                   Resources: {filteredResources.length}
                 </p>
               </Box>
-              {/* <Box>
-                <Button
-                  onClick={applyTags}
-                  style={{
-                    marginRight: '20px',
-                    padding: '10px 20px',
-                    width: 'fit-content',
-                    position: 'relative',
-                    float: 'right',
-                    border: '1px solid #09A2E5',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    color: '#09A2E5'
-                  }}
-                  data-cy="filter-apply-button"
-                >
-                  Apply
-                </Button>
-              </Box> */}
             </Box>
           </Collapse>
         </Paper>

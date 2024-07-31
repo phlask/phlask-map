@@ -17,19 +17,6 @@ const initialState = {
   infoWindowClass: 'info-window-out-desktop',
   filterTags: [],
   filterEntry: "",
-  tapFilters: {
-    filtered: false,
-    handicap: false,
-    sparkling: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
-  foodFilters: {
-    idRequired: false,
-    kidOnly: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
   /** @type {ResourceEntry[]} */
   allResources: [],
   selectedPlace: {},
@@ -99,25 +86,25 @@ export default (state = initialState, act) => {
         allResources: [...state.allResources, act.newResource]
       };
 
-    case actions.SET_FILTER_FUNCTION:
-      return { ...state, filterTags: [...state.filterTags, act.tag] }
+    case actions.setFilterFunction.type:
+      return { ...state, filterTags: [...state.filterTags, act.payload.tag] }
 
-    case actions.SET_ENTRY_FILTER_FUNCTION:
-      return { ...state, filterEntry: act.tag }
+    case actions.setEntryFilterFunction.type:
+      return { ...state, filterEntry: act.payload.tag }
 
-    case actions.REMOVE_FILTER_FUNCTION:
+    case actions.removeFilterFunction.type:
       return {
         ...state,
-        filterTags: state.filterTags.filter(x => x !== act.tag)
+        filterTags: state.filterTags.filter(x => x !== act.payload.tag)
       }
 
-    case actions.REMOVE_ENTRY_FILTER_FUNCTION:
+    case actions.removeEntryFilterFunction.type:
       return {
         ...state,
         filterEntry: ''
       }
 
-    case actions.RESET_FILTER_FUNCTION:
+    case actions.resetFilterFunction.type:
       return {
         ...state,
         filterTags: [],

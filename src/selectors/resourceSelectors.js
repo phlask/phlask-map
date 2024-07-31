@@ -5,6 +5,7 @@ const getResourceType = state => state.filterMarkers.resourceType;
 const filterTags = state => state.filterMarkers.filterTags;
 const filterEntry = state => state.filterMarkers.filterEntry;
 
+//this controls the mapping between values shown in the frontend and values used in the database, keys correspond to frontend and values to the database
 const tagMapping = {
   //ENTRY TYPES
   'Open Access': 'OPEN',
@@ -50,8 +51,8 @@ const tagMapping = {
 
 const propertyMapping = {
   'WATER': ['dispenser_type', 'tags'],
-  'FOOD': [],
-  'FORAGE': [],
+  'FOOD': ['food_type', 'distribution_type'],
+  'FORAGE': ['forage_type', 'tags'],
   'BATHROOM': ['tags']
 }
 
