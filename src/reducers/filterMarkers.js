@@ -146,28 +146,6 @@ export default (state = initialState, act) => {
     case actions.TOGGLE_INFO_EXPANDED:
       return { ...state, infoIsExpanded: act.isExpanded };
 
-    // case actions.RESET_FILTER_FUNCTION:
-    //   return {
-    //     ...state,
-    //     tapFilters: {
-    //       accessTypesHidden: [],
-    //       filtered: false,
-    //       handicap: false,
-    //       sparkling: false,
-    //       openNow: false
-    //     },
-    //     foodFilters: {
-    //       foodSite: false,
-    //       school: false,
-    //       charter: false,
-    //       pha: false,
-    //       idRequired: false,
-    //       kidOnly: false,
-    //       openNow: false,
-    //       accessTypesHidden: []
-    //     }
-    //   };
-
     case actions.SET_FILTERED_TAP_TYPES: {
       let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
       if (currentAccessTypesHidden.includes(act.tapType)) {
