@@ -18,15 +18,16 @@ export const setToggleStateFood = (toggle, toggleState) => ({
   toggleState
 });
 
-export const SET_FILTER_FUNCTION = 'SET_FILTER_FUNCTION';
-export const setFilterFunction = () => ({
-  type: SET_FILTER_FUNCTION
-});
+export const setFilterFunction = createAction('SET_FILTER_FUNCTION')
 
-export const RESET_FILTER_FUNCTION = 'RESET_FILTER_FUNCTION';
-export const resetFilterFunction = () => ({
-  type: RESET_FILTER_FUNCTION
-});
+export const setEntryFilterFunction = createAction('SET_ENTRY_FILTER_FUNCTION')
+
+export const removeFilterFunction = createAction('REMOVE_FILTER_FUNCTION')
+
+export const removeEntryFilterFunction = createAction('REMOVE_ENTRY_FILTER_FUNCTION')
+
+export const resetFilterFunction = createAction('RESET_FILTER_FUNCTION')
+
 
 export const getResources = createAsyncThunk(
   'fetch-resources',

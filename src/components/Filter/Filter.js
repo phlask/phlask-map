@@ -11,6 +11,7 @@ import styles from './Filter.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import useIsMobile from 'hooks/useIsMobile';
+import selectFilteredResource from 'selectors/resourceSelectors';
 
 const FilterTags = ({ tags, activeTags, resourceType, index, handleTag }) => (
   <Box className={styles.filterTags}>
@@ -24,7 +25,7 @@ const FilterTags = ({ tags, activeTags, resourceType, index, handleTag }) => (
             : '')
         }
         onClick={() => {
-          handleTag(0, resourceType, index, key);
+          handleTag(0, resourceType, tag, index, key);
         }}
         data-cy={`filter-option-${tag}`}
       >
@@ -52,7 +53,7 @@ const FilterTagsExclusive = ({
             : '')
         }
         onClick={() => {
-          handleTag(1, resourceType, index, key);
+          handleTag(1, resourceType, tag, index, key);
         }}
         data-cy={`filter-option-${tag}`}
       >
@@ -73,6 +74,7 @@ export default function Filter({
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const filteredResources = useSelector(state => selectFilteredResource(state));
   return (
     <>
       {!isMobile && (
@@ -183,11 +185,14 @@ export default function Filter({
                   Clear All
                 </p>
               </Box>
-              <Box>
-                <Button
-                  onClick={applyTags}
+              <Box
+                sx={{
+                  margin: '0px 20px'
+                }}
+              >
+                <p
                   style={{
-                    marginRight: '20px',
+                    margin: '10px',
                     padding: '10px 20px',
                     width: 'fit-content',
                     position: 'relative',
@@ -195,12 +200,10 @@ export default function Filter({
                     border: '1px solid #09A2E5',
                     borderRadius: '8px',
                     fontWeight: '600',
-                    color: '#09A2E5'
                   }}
-                  data-cy="filter-apply-button"
                 >
-                  Apply
-                </Button>
+                  Resources: {filteredResources.length}
+                </p>
               </Box>
             </Box>
           </Collapse>
