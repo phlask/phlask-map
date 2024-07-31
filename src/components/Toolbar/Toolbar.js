@@ -41,6 +41,7 @@ import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import NavigationItem from './NavigationItem';
 import useIsMobile from 'hooks/useIsMobile';
+import selectFilteredResource from '../../selectors/waterSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -88,6 +89,7 @@ function Toolbar({ map }) {
   const isMobile = useIsMobile();
   const resourceType = useSelector(resourceTypeSelector);
   const allResources = useSelector(state => state.filterMarkers.allResources);
+  const filteredResources = useSelector(state => selectFilteredResource(state));
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const isResourceMenuShown = useSelector(
@@ -109,31 +111,20 @@ function Toolbar({ map }) {
     // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
-    let data;
-
-    switch (resourceType) {
-      case WATER_RESOURCE_TYPE:
-        data = allResources;
-        break;
-      // TODO(vontell): Filter based on requested type
-      default:
-        data = allResources;
-    }
-
-    const closest = getClosest(data, {
+    const closest = getClosest(filteredResources, {
       lat: userLocation.lat,
       lon: userLocation.lng
     });
     if (!closest) return;
-    dispatch(setSelectedPlace(closest));
 
+    dispatch(toggleInfoWindow({
+      isShown: true,
+      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+    }));
+    dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
-    });
-    toggleInfoWindow({
-      isShown: true,
-      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
     });
   }
 
