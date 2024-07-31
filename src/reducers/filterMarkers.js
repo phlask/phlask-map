@@ -110,6 +110,15 @@ export default (state = initialState, act) => {
         filterTags: [],
         filterEntry: ''
       };
+    case actions.updateExistingResource.type:
+      return {
+        ...state,
+        allResources: state.allResources.map(resource =>
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
+            : resource
+        )
+      };
 
     case actions.SET_SELECTED_PLACE:
       // if passed Selected Place as an object, set selected place as the object
