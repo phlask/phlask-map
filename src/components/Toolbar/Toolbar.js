@@ -116,15 +116,15 @@ function Toolbar({ map }) {
       lon: userLocation.lng
     });
     if (!closest) return;
-    dispatch(setSelectedPlace(closest));
 
+    dispatch(toggleInfoWindow({
+      isShown: true,
+      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+    }));
+    dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
-    });
-    toggleInfoWindow({
-      isShown: true,
-      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
     });
   }
 
