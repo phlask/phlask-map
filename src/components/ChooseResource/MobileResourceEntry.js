@@ -6,11 +6,13 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setResourceType } from '../../actions/actions';
+import {
+  setResourceType,
+  setToolbarModal,
+  TOOLBAR_MODAL_NONE
+} from '../../actions/actions';
 
-
-const MobileResourceEntry = (props) => {
-
+const MobileResourceEntry = props => {
   const dispatch = useDispatch();
 
   function handleGA(type) {
@@ -24,6 +26,7 @@ const MobileResourceEntry = (props) => {
   const switchType = type => {
     handleGA(type);
     dispatch(setResourceType(type));
+    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
   };
 
   return (
