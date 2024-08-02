@@ -32,7 +32,7 @@ const initialState = {
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  resourceType: WATER_RESOURCE_TYPE,
+  resourceType: WATER_RESOURCE_TYPE
 };
 
 export default (state = initialState, act) => {
@@ -105,10 +105,10 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-          ...state,
-          selectedPlace: state.allResources[act.selectedPlace],
-          showingInfoWindow: true
-        };
+            ...state,
+            selectedPlace: state.allResources[act.selectedPlace],
+            showingInfoWindow: true
+          };
 
     case actions.toggleInfoWindow.type:
       return {
@@ -185,8 +185,8 @@ export default (state = initialState, act) => {
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };
 
-    case actions.SET_RESOURCE_TYPE:
-      return { ...state, resourceType: act.resourceType };
+    case actions.setResourceType.type:
+      return { ...state, resourceType: act.payload };
 
     default:
       return state;

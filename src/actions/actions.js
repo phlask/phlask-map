@@ -93,8 +93,4 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const SET_RESOURCE_TYPE = 'SET_RESOURCE_TYPE';
-export const setResourceType = resourceType => ({
-  type: SET_RESOURCE_TYPE,
-  resourceType
-});
+export const setResourceType = createAction('SET_RESOURCE_TYPE');
