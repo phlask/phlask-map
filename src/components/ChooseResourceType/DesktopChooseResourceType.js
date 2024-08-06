@@ -1,6 +1,10 @@
-import { Box, Button, Collapse, Paper } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import Paper from '@mui/material/Paper';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   resetFilterFunction,
   setResourceType,
@@ -8,23 +12,12 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE
 } from '../../actions/actions';
-import { } from '../../actions/actions';
-import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
-import styles from './ChooseResourceType.module.scss';
-import { ReactComponent as BathroomIcon } from '../icons/BathroomIconChooseResource.svg';
-import { ReactComponent as FoodIcon } from '../icons/FoodIconChooseResource.svg';
-import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResource.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
 import useOnClickOutside from '../AddResourceModal/useOnClickOutside.js';
+import styles from './ChooseResourceType.module.scss';
 
-
-const ResourceButton = props => {
-  const Icon = props.icon;
+const DesktopResourceButton = props => {
+  const dispatch = useDispatch();
+  const Icon = props.desktopIcon;
   return (
     <Button
       sx={{
@@ -37,21 +30,21 @@ const ResourceButton = props => {
         placeItems: 'center',
         borderRadius: '8px'
       }}
-      onClick={props.onClick}
+      onClick={() => {
+        dispatch(resetFilterFunction())
+        dispatch(setResourceType(props.type))
+      }}
       data-cy={props["data-cy"]}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
-      <p className={styles.label}>{props.text}</p>
+      <p className={styles.label}>{props.textLabel}</p>
     </Button>
   );
 };
 
 function DesktopChooseResourceType(props) {
-
   const dispatch = useDispatch();
-
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-
   const ref = useRef(null);
 
   const handleClickOutside = () => {
@@ -89,46 +82,12 @@ function DesktopChooseResourceType(props) {
               </p>
             </Box>
             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-              <ResourceButton
-                icon={WaterIcon}
-                color="#5286E9"
-                text="Water"
-                onClick={() => {
-                  dispatch(resetFilterFunction())
-                  dispatch(setResourceType(WATER_RESOURCE_TYPE))
-                }}
-                data-cy="button-water-data-selector"
-              />
-              <ResourceButton
-                icon={ForagingIcon}
-                color="#5DA694"
-                text="Foraging"
-                onClick={() => {
-                  dispatch(resetFilterFunction())
-                  dispatch(setResourceType(FORAGE_RESOURCE_TYPE))
-                }}
-                data-cy="button-foraging-data-selector"
-              />
-              <ResourceButton
-                icon={FoodIcon}
-                color="#FF9A55"
-                text="Food"
-                onClick={() => {
-                  dispatch(resetFilterFunction())
-                  dispatch(setResourceType(FOOD_RESOURCE_TYPE))
-                }}
-                data-cy="button-food-data-selector"
-              />
-              <ResourceButton
-                icon={BathroomIcon}
-                color="#9E9E9E"
-                text="Bathroom"
-                onClick={() => {
-                  dispatch(resetFilterFunction())
-                  dispatch(setResourceType(BATHROOM_RESOURCE_TYPE))
-                }}
-                data-cy="button-bathroom-data-selector"
-              />
+              {props.resourceTypeInfo.map(entry => (
+                <DesktopResourceButton
+                  key={entry.type}
+                  {...entry}
+                  data-cy={`button-${entry.type}-data-selector`}
+                />))}
             </Box>
           </Box>
         </Collapse>

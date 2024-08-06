@@ -2,52 +2,62 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
+import Grid from '@mui/material/Grid';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactComponent as FoodIcon } from '../icons/FoodIconV2.svg';
-import { ReactComponent as ForagingIcon } from '../icons/ForagingIconV2.svg';
-import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
-import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
-import MobileResourceEntry from './MobileResourceEntry';
+
 import {
+  resetFilterFunction,
+  setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE
 } from '../../actions/actions';
-import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
 
-
-const resourceTypeInfo = [
-  {
-    resourceType: WATER_RESOURCE_TYPE,
-    resourceTextLabel: 'Water',
-    icon: <WaterIcon />,
-  },
-  {
-    resourceType: FOOD_RESOURCE_TYPE,
-    resourceTextLabel: 'Food',
-    icon: <FoodIcon />,
-  },
-  {
-    resourceType: FORAGE_RESOURCE_TYPE,
-    resourceTextLabel: 'Foraging',
-    icon: <ForagingIcon />,
-  },
-  {
-    resourceType: BATHROOM_RESOURCE_TYPE,
-    resourceTextLabel: 'Bathroom',
-    icon: <ToiletIcon />,
-  }
-];
-
-const MobileChooseResourceType = (props) => {
-
+const MobileResourceButton = props => {
   const dispatch = useDispatch();
 
+  function handleGA(type) {
+    // ReactGA.event({
+    //   category: `ResourceMenu`,
+    //   action: 'MapChangedTo',
+    //   label: `${type}`
+    // });
+  }
+
+  const switchType = type => {
+    handleGA(type);
+    dispatch(setResourceType(type));
+    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+  };
+
+  return (
+    <ListItemButton
+      sx={{ alignItems: 'end' }}
+      onClick={() => {
+        dispatch(resetFilterFunction())
+        switchType(props.type)
+      }}
+    >
+      <ListItemIcon><props.mobileIcon /></ListItemIcon>
+      <ListItemText>
+        <Grid container justifyContent={'flex-start'}>
+          <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
+            <Typography variant="body1" fontSize={15}>
+              {props.textLabel}
+            </Typography>
+          </Box>
+        </Grid>
+      </ListItemText>
+    </ListItemButton>
+  );
+};
+
+const MobileChooseResourceType = (props) => {
+  const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   return (
@@ -75,8 +85,8 @@ const MobileChooseResourceType = (props) => {
           unmountOnExit
         >
           <List sx={{ maxWidth: 210 }}>
-            {resourceTypeInfo?.map(entry => (
-              <MobileResourceEntry key={entry.resourceType} {...entry} />
+            {props.resourceTypeInfo.map(entry => (
+              <MobileResourceButton key={entry.type} {...entry} />
             ))}
           </List>
         </Slide>
