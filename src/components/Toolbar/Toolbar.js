@@ -40,8 +40,8 @@ import Box from '@mui/material/Box';
 import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
 import ResourceMenu from '../ResourceMenu/ResourceMenu';
 import NavigationItem from './NavigationItem';
-import useIsMobile from 'hooks/useIsMobile';
-import selectFilteredResource from '../../selectors/waterSelectors';
+import useIsMobile from '../../hooks/useIsMobile';
+import selectFilteredResource from '../../selectors/resourceSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
@@ -53,7 +53,7 @@ function distance(lat1, lon1, lat2, lon2) {
     (Math.cos(lat1 * p) *
       Math.cos(lat2 * p) *
       (1 - Math.cos((lon2 - lon1) * p))) /
-      2;
+    2;
   return 12742 * Math.asin(Math.sqrt(a));
 }
 
