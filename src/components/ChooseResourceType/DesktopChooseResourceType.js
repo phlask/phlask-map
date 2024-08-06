@@ -68,7 +68,7 @@ function DesktopChooseResourceType(props) {
         ref={ref}
       >
         <Collapse
-          in={toolbarModal == TOOLBAR_MODAL_RESOURCE}
+          in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
           orientation="vertical"
           timeout="auto"
         >
