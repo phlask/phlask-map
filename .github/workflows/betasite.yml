@@ -25,7 +25,7 @@ jobs:
       run: |
          echo Build started on `date`
          echo Building the webapp...
-         docker-compose run prod_build
+         docker compose run prod_build
          echo Build completed on `date`
          echo Pushing the webapp to S3...
          aws s3 sync docker/build s3://beta.phlask.me --acl public-read --delete
