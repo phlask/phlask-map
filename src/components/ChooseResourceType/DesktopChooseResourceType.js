@@ -15,12 +15,12 @@ import {
   BATHROOM_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
-import styles from './ChooseResource.module.scss';
+import styles from './ChooseResourceType.module.scss';
 import { ReactComponent as BathroomIcon } from '../icons/BathroomIconChooseResource.svg';
 import { ReactComponent as FoodIcon } from '../icons/FoodIconChooseResource.svg';
 import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResource.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
-import useOnClickOutside from '../../components/AddResourceModal/useOnClickOutside.js';
+import useOnClickOutside from '../AddResourceModal/useOnClickOutside.js';
 
 
 const ResourceButton = props => {
@@ -46,7 +46,7 @@ const ResourceButton = props => {
   );
 };
 
-function DesktopChooseResource(props) {
+function DesktopChooseResourceType(props) {
 
   const dispatch = useDispatch();
 
@@ -137,4 +137,4 @@ function DesktopChooseResource(props) {
   );
 }
 
-export default DesktopChooseResource;
+export default DesktopChooseResourceType;

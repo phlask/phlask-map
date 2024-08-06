@@ -36,7 +36,7 @@ import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/Wate
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
-import ChooseResource from '../ChooseResource/ChooseResource';
+import ChooseResource from '../ChooseResourceType/ChooseResourceType';
 
 import NavigationItem from './NavigationItem';
 import useIsMobile from 'hooks/useIsMobile';

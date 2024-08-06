@@ -44,7 +44,7 @@ const resourceTypeInfo = [
   }
 ];
 
-const MobileChooseResource = (props) => {
+const MobileChooseResourceType = (props) => {
 
   const dispatch = useDispatch();
 
@@ -85,4 +85,4 @@ const MobileChooseResource = (props) => {
   );
 };
 
-export default MobileChooseResource;
+export default MobileChooseResourceType;
