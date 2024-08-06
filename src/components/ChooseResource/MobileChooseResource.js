@@ -9,9 +9,9 @@ import { ReactComponent as ToiletIcon } from '../icons/ToiletIconV2.svg';
 import { ReactComponent as WaterIcon } from '../icons/WaterIconV2.svg';
 import MobileResourceEntry from './MobileResourceEntry';
 import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
   setToolbarModal,
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE
 } from '../../actions/actions';
 import {
   WATER_RESOURCE_TYPE,

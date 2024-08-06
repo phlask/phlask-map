@@ -3,6 +3,7 @@ import Contact from 'components/Pages/Contact';
 import Join from 'components/Pages/Join';
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import useIsMobile from 'hooks/useIsMobile';
 
 const HeaderContext = createContext({});
 
@@ -13,12 +14,13 @@ const HeaderProvider = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
   const [menuExpand, setMenuExpand] = useState(false);
-  const [pageExpand, setPageExpand] = useState(false);
+
   const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
   const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
   const [shownPage, setShownPage] = useState(null);
   const isSearchShown = useSelector(state => state.filterMarkers.isSearchShown);
   const isFilterShown = useSelector(state => state.filterMarkers.isFilterShown);
+  const isMobile = useIsMobile();
 
   // Define any functions or values you want to expose to consumers of the context
   const open = Boolean(anchorEl);
@@ -26,7 +28,6 @@ const HeaderProvider = ({ children }) => {
     if (menuExpand) {
       setVerticalAnimFinished1(false);
       setVerticalAnimFinished2(false);
-      setPageExpand(false);
       setShownPage(null);
     }
     setMenuExpand(!menuExpand);
@@ -40,10 +41,8 @@ const HeaderProvider = ({ children }) => {
     if (page == shownPage) {
       setVerticalAnimFinished1(false);
       setVerticalAnimFinished2(false);
-      setPageExpand(false);
       setShownPage(null);
     } else {
-      setPageExpand(true);
       switch (page) {
         case 'about':
           page = <About />;
@@ -56,6 +55,9 @@ const HeaderProvider = ({ children }) => {
           break;
         default:
           break;
+      }
+      if (isMobile) {
+        setMenuExpand(false);
       }
       setShownPage(page);
     }
@@ -84,8 +86,6 @@ const HeaderProvider = ({ children }) => {
     setShowMapControls,
     menuExpand,
     setMenuExpand,
-    pageExpand,
-    setPageExpand,
     verticalAnimFinished1,
     setVerticalAnimFinished1,
     verticalAnimFinished2,

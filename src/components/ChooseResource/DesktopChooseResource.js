@@ -2,11 +2,13 @@ import { Box, Button, Collapse, Paper } from '@mui/material';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_NONE,
+  resetFilterFunction,
+  setResourceType,
   setToolbarModal,
-  setResourceType
+  TOOLBAR_MODAL_NONE,
+  TOOLBAR_MODAL_RESOURCE
 } from '../../actions/actions';
+import { } from '../../actions/actions';
 import {
   WATER_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
@@ -91,28 +93,40 @@ function DesktopChooseResource(props) {
                 icon={WaterIcon}
                 color="#5286E9"
                 text="Water"
-                onClick={() => dispatch(setResourceType(WATER_RESOURCE_TYPE))}
+                onClick={() => {
+                  dispatch(resetFilterFunction())
+                  dispatch(setResourceType(WATER_RESOURCE_TYPE))
+                }}
                 data-cy="button-water-data-selector"
               />
               <ResourceButton
                 icon={ForagingIcon}
                 color="#5DA694"
                 text="Foraging"
-                onClick={() => dispatch(setResourceType(FORAGE_RESOURCE_TYPE))}
+                onClick={() => {
+                  dispatch(resetFilterFunction())
+                  dispatch(setResourceType(FORAGE_RESOURCE_TYPE))
+                }}
                 data-cy="button-foraging-data-selector"
               />
               <ResourceButton
                 icon={FoodIcon}
                 color="#FF9A55"
                 text="Food"
-                onClick={() => dispatch(setResourceType(FOOD_RESOURCE_TYPE))}
+                onClick={() => {
+                  dispatch(resetFilterFunction())
+                  dispatch(setResourceType(FOOD_RESOURCE_TYPE))
+                }}
                 data-cy="button-food-data-selector"
               />
               <ResourceButton
                 icon={BathroomIcon}
                 color="#9E9E9E"
                 text="Bathroom"
-                onClick={() => dispatch(setResourceType(BATHROOM_RESOURCE_TYPE))}
+                onClick={() => {
+                  dispatch(resetFilterFunction())
+                  dispatch(setResourceType(BATHROOM_RESOURCE_TYPE))
+                }}
                 data-cy="button-bathroom-data-selector"
               />
             </Box>

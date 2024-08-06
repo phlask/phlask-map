@@ -7,6 +7,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
+  resetFilterFunction,
   setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE
@@ -32,7 +33,11 @@ const MobileResourceEntry = props => {
   return (
     <ListItemButton
       sx={{ alignItems: 'end' }}
-      onClick={() => switchType(props.resourceType)}
+      onClick={() => {
+        dispatch(resetFilterFunction())
+        switchType(props.resourceType)
+      }}
+
     >
       <ListItemIcon>{props.icon}</ListItemIcon>
       <ListItemText>

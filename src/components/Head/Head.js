@@ -9,26 +9,9 @@ import useIsMobile from 'hooks/useIsMobile.js';
 export default function Head(props) {
   const isMobile = useIsMobile();
 
-  let page = null;
-  switch (HeaderProvider.shownPage) {
-    case 'about':
-      page = <About />;
-      break;
-    case 'join':
-      page = <Join />;
-      break;
-    case 'contact':
-      page = <Contact />;
-      break;
-    default:
-      break;
-  }
-
   return (
-    <>
-      <HeaderProvider>
-        {isMobile ? <MobileHead /> : <DesktopHead />}
-      </HeaderProvider>
-    </>
+    <HeaderProvider>
+      {isMobile ? <MobileHead /> : <DesktopHead />}
+    </HeaderProvider>
   );
 }
