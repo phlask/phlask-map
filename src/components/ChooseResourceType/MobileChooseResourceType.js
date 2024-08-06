@@ -67,7 +67,7 @@ const MobileChooseResourceType = (props) => {
         open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
         onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
         PaperProps={{
-          style: {
+          sx: {
             background: 'transparent',
             overflow: 'visible',
             boxShadow: 'none',
