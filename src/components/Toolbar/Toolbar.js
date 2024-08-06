@@ -39,8 +39,8 @@ import Box from '@mui/material/Box';
 import ChooseResource from '../ChooseResourceType/ChooseResourceType';
 
 import NavigationItem from './NavigationItem';
-import useIsMobile from 'hooks/useIsMobile';
-import selectFilteredResource from '../../selectors/waterSelectors';
+import useIsMobile from '../../hooks/useIsMobile';
+import selectFilteredResource from '../../selectors/resourceSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
