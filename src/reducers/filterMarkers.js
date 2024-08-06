@@ -15,19 +15,8 @@ const initialState = {
   showingInfoWindow: false,
   infoIsExpanded: false,
   infoWindowClass: 'info-window-out-desktop',
-  tapFilters: {
-    filtered: false,
-    handicap: false,
-    sparkling: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
-  foodFilters: {
-    idRequired: false,
-    kidOnly: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
+  filterTags: [],
+  filterEntry: "",
   /** @type {ResourceEntry[]} */
   allResources: [],
   selectedPlace: {},
@@ -97,8 +86,39 @@ export default (state = initialState, act) => {
         allResources: [...state.allResources, act.newResource]
       };
 
-    case actions.SET_FILTER_FUNCTION:
-      return { filterFunction: !state.filterFunction, ...state };
+    case actions.setFilterFunction.type:
+      return { ...state, filterTags: [...state.filterTags, act.payload.tag] }
+
+    case actions.setEntryFilterFunction.type:
+      return { ...state, filterEntry: act.payload.tag }
+
+    case actions.removeFilterFunction.type:
+      return {
+        ...state,
+        filterTags: state.filterTags.filter(x => x !== act.payload.tag)
+      }
+
+    case actions.removeEntryFilterFunction.type:
+      return {
+        ...state,
+        filterEntry: ''
+      }
+
+    case actions.resetFilterFunction.type:
+      return {
+        ...state,
+        filterTags: [],
+        filterEntry: ''
+      };
+    case actions.updateExistingResource.type:
+      return {
+        ...state,
+        allResources: state.allResources.map(resource =>
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
+            : resource
+        )
+      };
 
     case actions.SET_SELECTED_PLACE:
       // if passed Selected Place as an object, set selected place as the object
@@ -106,10 +126,10 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-            ...state,
-            selectedPlace: state.allResources[act.selectedPlace],
-            showingInfoWindow: true
-          };
+          ...state,
+          selectedPlace: state.allResources[act.selectedPlace],
+          showingInfoWindow: true
+        };
 
     case actions.toggleInfoWindow.type:
       return {
@@ -125,28 +145,6 @@ export default (state = initialState, act) => {
 
     case actions.TOGGLE_INFO_EXPANDED:
       return { ...state, infoIsExpanded: act.isExpanded };
-
-    case actions.RESET_FILTER_FUNCTION:
-      return {
-        ...state,
-        tapFilters: {
-          accessTypesHidden: [],
-          filtered: false,
-          handicap: false,
-          sparkling: false,
-          openNow: false
-        },
-        foodFilters: {
-          foodSite: false,
-          school: false,
-          charter: false,
-          pha: false,
-          idRequired: false,
-          kidOnly: false,
-          openNow: false,
-          accessTypesHidden: []
-        }
-      };
 
     case actions.SET_FILTERED_TAP_TYPES: {
       let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];

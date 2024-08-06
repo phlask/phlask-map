@@ -21,6 +21,7 @@ import { ReactComponent as ForagingIcon } from '../icons/ForagingIconChooseResou
 import { ReactComponent as WaterIcon } from '../icons/WaterIconChooseResource.svg';
 import useOnClickOutside from '../../components/AddResourceModal/useOnClickOutside.js';
 import useIsMobile from 'hooks/useIsMobile';
+import { resetFilterFunction } from '../../actions/actions';
 
 const ResourceButton = props => {
   const Icon = props.icon;
@@ -95,6 +96,7 @@ export default function ChooseResource(props) {
                   color="#5286E9"
                   text="Water"
                   onClick={() => {
+                    dispatch(resetFilterFunction())
                     dispatch({
                       type: CHANGE_RESOURCE_TYPE,
                       resourceType: WATER_RESOURCE_TYPE
@@ -107,6 +109,7 @@ export default function ChooseResource(props) {
                   color="#5DA694"
                   text="Foraging"
                   onClick={() => {
+                    dispatch(resetFilterFunction())
                     dispatch({
                       type: CHANGE_RESOURCE_TYPE,
                       resourceType: FORAGE_RESOURCE_TYPE
@@ -119,6 +122,7 @@ export default function ChooseResource(props) {
                   color="#FF9A55"
                   text="Food"
                   onClick={() => {
+                    dispatch(resetFilterFunction())
                     dispatch({
                       type: CHANGE_RESOURCE_TYPE,
                       resourceType: FOOD_RESOURCE_TYPE
@@ -131,6 +135,7 @@ export default function ChooseResource(props) {
                   color="#9E9E9E"
                   text="Bathroom"
                   onClick={() => {
+                    dispatch(resetFilterFunction())
                     dispatch({
                       type: CHANGE_RESOURCE_TYPE,
                       resourceType: BATHROOM_RESOURCE_TYPE
