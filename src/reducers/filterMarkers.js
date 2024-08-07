@@ -1,46 +1,29 @@
-import { isMobile } from 'react-device-detect';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import * as actions from '../actions/actions';
+import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
   mapCenter: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   // Change to reflect user's current location
   userLocation: {
-    lat: parseFloat('39.952744'),
-    lng: parseFloat('-75.163500')
+    lat: parseFloat(CITY_HALL_COORDINATES.latitude),
+    lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
   showingInfoWindow: false,
   infoIsExpanded: false,
-  infoWindowClass: isMobile ? 'info-window-out' : 'info-window-out-desktop',
-  tapFilters: {
-    filtered: false,
-    handicap: false,
-    sparkling: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
-  foodFilters: {
-    idRequired: false,
-    kidOnly: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
-  bathroomFilters: {
-    // TODO
-  },
-  foragingFilters: {},
-  allTaps: [],
-  allFoodOrgs: [],
-  allBathroomTaps: [],
-  allForagingTaps: [],
+  infoWindowClass: 'info-window-out-desktop',
+  filterTags: [],
+  filterEntry: "",
+  /** @type {ResourceEntry[]} */
+  allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
   searchBarMapTint: actions.SEARCH_BAR_MAP_TINT_OFF,
   tapInfoOpenedWhileSearchOpen: false,
-  phlaskType: actions.PHLASK_TYPE_WATER,
-  isResourceMenuShown: false
+  resourceType: WATER_RESOURCE_TYPE,
 };
 
 export default (state = initialState, act) => {
@@ -95,105 +78,75 @@ export default (state = initialState, act) => {
     case actions.SET_MAP_CENTER:
       return { ...state, mapCenter: act.coords };
 
-    case actions.GET_TAPS_SUCCESS:
-      return { ...state, allTaps: act.allTaps, filteredTaps: act.allTaps };
+    case actions.getResources.fulfilled.type:
+      return { ...state, allResources: act.payload };
 
-    case actions.GET_FOOD_SUCCESS:
+    case actions.PUSH_NEW_RESOURCE:
       return {
         ...state,
-        allFoodOrgs: act.allFoodOrgs,
-        filteredOrgs: act.allFoodOrgs
+        allResources: [...state.allResources, act.newResource]
       };
 
-    case actions.GET_BATHROOM_SUCCESS:
-      return { ...state, allBathroomTaps: act.allBathroomTaps };
+    case actions.setFilterFunction.type:
+      return { ...state, filterTags: [...state.filterTags, act.payload.tag] }
 
-    case actions.GET_FORAGING_SUCCESS:
-      return { ...state, allForagingTaps: act.allForagingTaps };
+    case actions.setEntryFilterFunction.type:
+      return { ...state, filterEntry: act.payload.tag }
 
-    case actions.SET_FILTER_FUNCTION:
-      // console.log('set filter func');
-      return { filterFunction: !state.filterFunction, ...state };
+    case actions.removeFilterFunction.type:
+      return {
+        ...state,
+        filterTags: state.filterTags.filter(x => x !== act.payload.tag)
+      }
+
+    case actions.removeEntryFilterFunction.type:
+      return {
+        ...state,
+        filterEntry: ''
+      }
+
+    case actions.resetFilterFunction.type:
+      return {
+        ...state,
+        filterTags: [],
+        filterEntry: ''
+      };
+    case actions.updateExistingResource.type:
+      return {
+        ...state,
+        allResources: state.allResources.map(resource =>
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
+            : resource
+        )
+      };
 
     case actions.SET_SELECTED_PLACE:
-      // console.log('Selected Place: ' + act.selectedPlace.organization);
-      // console.log(state.alltaps[act.id]);
-
       // if passed Selected Place as an object, set selected place as the object
       // if passed an ID, locate the item using ID, then set selected place
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
           ...state,
-          selectedPlace:
-            state.phlaskType === actions.PHLASK_TYPE_WATER
-              ? state.allTaps[act.selectedPlace]
-              : state.allFoodOrgs[act.selectedPlace],
+          selectedPlace: state.allResources[act.selectedPlace],
           showingInfoWindow: true
         };
 
-    case actions.TOGGLE_INFO_WINDOW:
-      // console.log('Info Window Class: ' + state.infoWindowClass);
-
-      var trueOrFalse = false;
-      if (act.isShown && state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH) {
-        trueOrFalse = true;
-      }
-
-      return act.isShown
-        ? {
-          ...state,
-          showingInfoWindow: act.isShown,
-          infoWindowClass: isMobile
-            ? 'info-window-in'
-            : 'info-window-in-desktop',
-          tapInfoOpenedWhileSearchOpen: trueOrFalse,
-          searchBarMapTint: actions.SEARCH_BAR_MAP_TINT_OFF,
-        }
-        : {
-          ...state,
-          showingInfoWindow: act.isShown,
-        };
-
-    case actions.TOGGLE_INFO_WINDOW_CLASS:
-      // console.log("Info Window Class: " + state.infoWindowClass);
-      // console.log("Is Mobile: " + isMobile);
-
+    case actions.toggleInfoWindow.type:
       return {
         ...state,
-        infoWindowClass: isMobile
-          ? act.isShown
-            ? 'info-window-in'
-            : 'info-window-out'
-          : act.isShown
-            ? 'info-window-in-desktop'
-            : 'info-window-out-desktop'
+        showingInfoWindow: act.payload.isShown,
+        infoWindowClass: act.payload.infoWindowClass,
+        searchBarMapTint: act.payload.isShown ? actions.SEARCH_BAR_MAP_TINT_OFF : state.searchBarMapTint
+      };
+    case actions.toggleInfoWindowClass.type:
+      return {
+        ...state,
+        infoWindowClass: act.payload.infoWindowClass
       };
 
     case actions.TOGGLE_INFO_EXPANDED:
       return { ...state, infoIsExpanded: act.isExpanded };
-
-    case actions.RESET_FILTER_FUNCTION:
-      return {
-        ...state,
-        tapFilters: {
-          accessTypesHidden: [],
-          filtered: false,
-          handicap: false,
-          sparkling: false,
-          openNow: false
-        },
-        foodFilters: {
-          foodSite: false,
-          school: false,
-          charter: false,
-          pha: false,
-          idRequired: false,
-          kidOnly: false,
-          openNow: false,
-          accessTypesHidden: []
-        }
-      };
 
     case actions.SET_FILTERED_TAP_TYPES: {
       let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
@@ -236,27 +189,11 @@ export default (state = initialState, act) => {
     case actions.SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN:
       return { ...state, tapInfoOpenedWhileSearchOpen: act.trueOrFalse }
 
-    case actions.SET_TOOLBAR_MODAL:
-      return { ...state, toolbarModal: act.mode };
+    case actions.setToolbarModal.type:
+      return { ...state, toolbarModal: act.payload };
 
-    // Toggle Phlask type & close the info window
-    case actions.TOGGLE_PHLASK_TYPE:
-      return {
-        ...state,
-        phlaskType: act.mode,
-        infoWindowClass:
-          act.mode !== state.showingInfoWindow
-            ? isMobile
-              ? 'info-window-out'
-              : 'info-window-out-desktop'
-            : state.infoWindowClass
-      };
-
-    case actions.CHANGE_PHLASK_TYPE:
-      return { ...state, phlaskType: act.phlaskType };
-
-    case actions.TOGGLE_RESOURCE_MENU:
-      return { ...state, isResourceMenuShown: !act.isShown };
+    case actions.setResourceType.type:
+      return { ...state, resourceType: act.payload };
 
     default:
       return state;

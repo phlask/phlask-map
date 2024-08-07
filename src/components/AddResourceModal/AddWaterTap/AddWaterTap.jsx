@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
+import { setDefaults } from 'react-geocode';
 import styles from '../AddResourceModal.module.scss';
-import { deleteApp } from 'firebase/app';
-import { connectToFirebase } from '../utils';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -11,7 +9,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 function AddWaterTap({
   prev,
@@ -20,7 +18,6 @@ function AddWaterTap({
   onNextPageChange,
   onPrevPageChange,
   onSubmit,
-  onDbConnectionChange,
   onDrop,
   // state values and handlers for the textfields
   name,
@@ -47,23 +44,7 @@ function AddWaterTap({
   checkboxChangeHandler,
   textFieldChangeHandler
 }) {
-  useEffect(() => {
-    // create connection to appropriate database
-    // based on resource type and hostname of the page
-    // (e.g. phlask.me, connect to prod)
-    // and then set dbconnection to the returned connection
-    const firebaseConnection = connectToFirebase(
-      window.location.hostname,
-      'water'
-    );
-    onDbConnectionChange(firebaseConnection);
-
-    // call back to delete app connection whenever component unmounts
-    return () => {
-      deleteApp(firebaseConnection);
-    };
-  }, []);
-
+  const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   useEffect(() => {

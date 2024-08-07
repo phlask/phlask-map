@@ -1,67 +1,50 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-import React from 'react';
-import { isMobile } from 'react-device-detect';
+import { useRef, useState } from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
-import { connect } from 'react-redux';
 import {
-  setSearchBarMapTint,
   SEARCH_BAR_MAP_TINT_OFF,
   SEARCH_BAR_MAP_TINT_ON,
-  setTapInfoOpenedWhileSearchOpen,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
+  setSearchBarMapTint,
+  setTapInfoOpenedWhileSearchOpen,
 } from '../../actions/actions';
 import styles from './SearchBar.module.scss';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
+import { useSelector, useDispatch } from 'react-redux';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-      refSearchBar: React.createRef(),
-      refSearchBarInput: React.createRef()
-    };
-  }
+const SearchBar = ({ search }) => {
+  const refSearchBarInput = useRef();
+  const [address, setAddress] = useState('');
+  const tapInfoOpenedWhileSearchOpen = useSelector(state => state.filterMarkers.tapInfoOpenedWhileSearchOpen);
+  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const isMobile = useIsMobile();
+  const dispatch = useDispatch();
 
-  handleChange = address => {
-    this.setState({ address });
-    this.props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON);
-  };
-
-  handleSelect = address => {
-    this.setState({ address });
-    this.props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF);
-
+  const handleSelect = address => {
+    setAddress(address);
+    dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF));
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.search(latLng))
-      .catch(error => console.error('Error', error));
+      .then(latLng => search(latLng))
+      .catch(noop);
   };
 
-  componentDidMount() {
-    // this.setSearchDisplayType();
-  }
-
-  render() {
-    return (
-      <>
-        {this.props.toolbarModal == TOOLBAR_MODAL_SEARCH && (<>
+  return (
+    <>
+      {toolbarModal == TOOLBAR_MODAL_SEARCH && (
+        <>
           {!isMobile ? (
-            <div
-              className={styles.desktopSearch}
-            >
+            <div className={styles.desktopSearch}>
               <PlacesAutocomplete
-                value={this.state.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelect}
               >
                 {({
                   getInputProps,
@@ -70,7 +53,9 @@ class SearchBar extends React.Component {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0 ? styles.hasDropdown : ''
+                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
+                      ? styles.hasDropdown
+                      : ''
                       }`}
                   >
                     {/* type="search" is only HTML5 compliant */}
@@ -80,7 +65,6 @@ class SearchBar extends React.Component {
                       })}
                       className={`${styles.searchInput} form-control`}
                       type="search"
-                      ref={this.state.refSearchBar}
                       startAdornment={
                         <InputAdornment position="end">
                           <SearchIcon />
@@ -118,9 +102,9 @@ class SearchBar extends React.Component {
           ) : (
             <div className={styles.mobileSearch}>
               <PlacesAutocomplete
-                value={this.state.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelect}
               >
                 {({
                   getInputProps,
@@ -129,18 +113,18 @@ class SearchBar extends React.Component {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0 ? styles.hasDropdown : ''
+                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
+                      ? styles.hasDropdown
+                      : ''
                       }`}
                   >
-                    {/* type="search" is only HTML5 compliant */}
                     <Input autoFocus
                       {...getInputProps({
                         placeholder: 'Search for Resources near...'
                       })}
                       className={styles.mobileSearchInput}
-                      inputRef={this.state.refSearchBarInput}
+                      inputRef={refSearchBarInput}
                       type="search"
-                      ref={this.state.refSearchBar}
                       endAdornment={
                         <InputAdornment position="start">
                           <SearchIcon />
@@ -148,17 +132,17 @@ class SearchBar extends React.Component {
                       }
                       disableUnderline={true}
                       onFocus={() => {
-                        if (!this.props.tapInfoOpenedWhileSearchOpen) {
-                          this.props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON);
+                        if (!tapInfoOpenedWhileSearchOpen) {
+                          dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON));
                         }
                         else {
-                          this.props.setTapInfoOpenedWhileSearchOpen(false);
-                          this.state.refSearchBarInput.current.blur();
+                          dispatch(setTapInfoOpenedWhileSearchOpen(false));
+                          refSearchBarInput.current.blur();
                         }
                       }
                       }
                       onBlur={() => {
-                        this.props.setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF);
+                        dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF));
                       }}
                     />
                     {loading && (
@@ -189,27 +173,11 @@ class SearchBar extends React.Component {
                 )}
               </PlacesAutocomplete>
             </div>
-          )}</>
-        )}
-      </>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  tapInfoOpenedWhileSearchOpen: state.filterMarkers.tapInfoOpenedWhileSearchOpen,
-  searchBarMapTint: state.filterMarkers.searchBarMapTint,
-  toolbarModal: state.filterMarkers.toolbarModal,
-});
-
-const mapDispatchToProps = {
-  setTapInfoOpenedWhileSearchOpen,
-  setSearchBarMapTint,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_NONE,
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default SearchBar;

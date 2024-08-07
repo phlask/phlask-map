@@ -15,7 +15,7 @@ Code behind the PHLASK Web Map
 │   ├── fixtures                       <-- Fixtures for mocked out data
 │   └── integration                    <-- Source files for unit tests
 ├── cypress.json
-├── docker-compose.yml
+├── docker compose.yml
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -79,7 +79,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
 
 1.  Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
 1.  Navigate to the root of the cloned repo: `cd phlask-map`
-1.  Build the container with docker-compose: `docker-compose build app`.
+1.  Build the container with docker compose: `docker compose build app`.
 
     Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
 
@@ -89,7 +89,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     => => writing image sha256:c98c...
     ```
 
-1.  Run the container with docker-compose: `docker-compose up app`
+1.  Run the container with docker compose: `docker compose up app`
 
     Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
 

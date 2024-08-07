@@ -11,8 +11,7 @@ import {
   TextField,
   ListItem
 } from '@mui/material';
-
-import { isMobile } from 'react-device-detect';
+import useIsMobile from 'hooks/useIsMobile';
 
 const PageTwo = ({
   onDrop,
@@ -25,40 +24,41 @@ const PageTwo = ({
   hasFountain,
   errors,
   control,
-  getVariableName,
   checkboxChangeHandler,
   textFieldChangeHandler
 }) => {
+  const isMobile = useIsMobile();
+
   const BATHROOM_HELPFUL_INFO = [
     {
       label: 'Wheelchair accessible',
       value: handicapAccessible,
-      name: getVariableName({ handicapAccessible })
+      name: 'handicapAccessible'
     },
     {
       label: 'Gender neutral',
       value: genderNeutral,
-      name: getVariableName({ genderNeutral })
+      name: 'genderNeutral'
     },
     {
       label: 'Changing table',
       value: changingTable,
-      name: getVariableName({ changingTable })
+      name: 'changingTable'
     },
     {
       label: 'Single occupancy',
       value: singleOccupancy,
-      name: getVariableName({ singleOccupancy })
+      name: 'singleOccupancy'
     },
     {
       label: 'Family bathroom',
       value: familyBathroom,
-      name: getVariableName({ familyBathroom })
+      name: 'familyBathroom'
     },
     {
       label: 'Also has water fountain',
       value: hasFountain,
-      name: getVariableName({ hasFountain })
+      name: 'hasFountain'
     }
   ];
   return (

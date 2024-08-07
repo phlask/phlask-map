@@ -1,0 +1,1 @@
+//NOTE: This test is effectively covered by other tests, so testing this interaction individually is redundant.

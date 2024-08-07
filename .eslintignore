@@ -6,7 +6,7 @@ cypress/
 # Build directory
 docker/
 build/
+./src/serviceWorker
 
 # Unused files
 Legend.js
-TypeToggle.js

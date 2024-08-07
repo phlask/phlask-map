@@ -158,15 +158,6 @@ function SharedFormFields({
           />
         </Stack>
       </FormControl>
-
-      {/* <Form.Group controlId="name" value={name} onChange={onNameChange}>
-        <Form.Label className={styles.modalFormLabel}>Name</Form.Label>
-        <Form.Control
-          className={styles.modalFormTextInput}
-          text="text"
-          placeholder="Organization, store, facility, etc."
-        />
-      </Form.Group> */}
     </>
   );
 }
