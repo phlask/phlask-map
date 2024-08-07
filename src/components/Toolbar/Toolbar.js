@@ -1,5 +1,5 @@
 import IconButton from '@mui/material/Button';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
@@ -9,7 +9,6 @@ import {
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow,
-  toggleResourceMenu
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -37,8 +36,8 @@ import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/Wate
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
-import { resourceTypeSelector } from '../../selectors/filterMarkersSelectors';
-import ResourceMenu from '../ResourceMenu/ResourceMenu';
+import ChooseResource from '../ChooseResourceType/ChooseResourceType';
+
 import NavigationItem from './NavigationItem';
 import useIsMobile from '../../hooks/useIsMobile';
 import selectFilteredResource from '../../selectors/resourceSelectors';
@@ -87,14 +86,11 @@ function getClosest(data, userLocation) {
 function Toolbar({ map }) {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const resourceType = useSelector(resourceTypeSelector);
+  const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-  const isResourceMenuShown = useSelector(
-    state => state.filterMarkers.isResourceMenuShown
-  );
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -133,9 +129,8 @@ function Toolbar({ map }) {
   }
 
   function toolbarClicked(modal) {
-    dispatch(
-      setToolbarModal(toolbarModal === modal ? TOOLBAR_MODAL_NONE : modal)
-    );
+    if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    else dispatch(setToolbarModal(modal));
   }
 
   let phlaskButton = null;
@@ -199,7 +194,7 @@ function Toolbar({ map }) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_RESOURCE
+                toolbarModal === TOOLBAR_MODAL_RESOURCE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -228,7 +223,7 @@ function Toolbar({ map }) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_FILTER
+                toolbarModal === TOOLBAR_MODAL_FILTER
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -257,7 +252,7 @@ function Toolbar({ map }) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_SEARCH
+                toolbarModal === TOOLBAR_MODAL_SEARCH
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -286,7 +281,7 @@ function Toolbar({ map }) {
               flexDirection: 'column',
               p: 0,
               filter:
-                toolbarModal == TOOLBAR_MODAL_CONTRIBUTE
+                toolbarModal === TOOLBAR_MODAL_CONTRIBUTE
                   ? blackToGrayFilter
                   : 'none',
               '&:hover': {
@@ -326,11 +321,9 @@ function Toolbar({ map }) {
               data-cy="button-resource-type-menu"
               label={<Typography fontSize="small">Resources</Typography>}
               icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() =>
-                toggleResourceMenu({ isShown: isResourceMenuShown })
-              }
+              onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
             />
-            <ResourceMenu />
+            <ChooseResource />
             <NavigationItem
               central
               label={

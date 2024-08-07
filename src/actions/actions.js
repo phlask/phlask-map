@@ -68,9 +68,8 @@ export const setMapCenter = coords => ({
   type: SET_MAP_CENTER,
   coords
 });
-export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 
-export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS';
+export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');
 
 export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED';
@@ -103,12 +102,4 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const toggleResourceType = createAction('TOGGLE_RESOURCE_TYPE');
-
-export const toggleResourceMenu = createAction('TOGGLE_RESOURCE_MENU');
-
-export const CHANGE_RESOURCE_TYPE = 'CHANGE_RESOURCE_TYPE';
-export const changeResourceType = resourceType => ({
-  type: CHANGE_RESOURCE_TYPE,
-  resourceType
-});
+export const setResourceType = createAction('SET_RESOURCE_TYPE');

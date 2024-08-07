@@ -19,9 +19,9 @@ describe('site info', () => {
 
   it('should successfully display a food site', () => {
     // Switch to food view
-    cy.get('[data-cy=button-resource-type-menu]').click();
-    cy.get('[data-cy=button-food-data-selector').click();
-    cy.get('[data-cy=button-resource-type-menu]').click();
+    cy.get('[data-cy=button-resource-type-menu]').click()
+    cy.get('[data-cy=button-FOOD-data-selector]').click()
+    cy.get('[data-cy=button-resource-type-menu]').click()
 
     // Load a sample food site
     // This is currently using live data, but should be updated to make use of test data.
