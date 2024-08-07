@@ -8,14 +8,10 @@ describe("crowdsourcing form", () => {
     beforeEach(() => {
       cy.visit("/");
 
-      // NOTE: This line currently uses components that are due to be updated.
-      // Close the tutorial modal
-      cy.get('[aria-label=Close]').click()
-
       // Load the contribution menu
       cy.get('[data-cy=button-contribute-menu]').click()
     });
-  
+
     it("should successfully submit a water site for testing", () => {
       // Load the form
       cy.get('[data-cy=button-contribute-water]').click()
@@ -36,7 +32,7 @@ describe("crowdsourcing form", () => {
       cy.get('input[name="handicapAccessible"]').click()
       cy.get('input[name="waterVesselNeeded"]').click()
       cy.get('textarea[name="guidelines"]').type("Cypress Test")
-      // TODO Uncomment this and validate the post-submission screen content once 
+      // TODO Uncomment this and validate the post-submission screen content once
       //      we have implemented a mechanism to ensure tests do not actually send data to our live DB.
       // cy.get('input[type="submit').click()
     });
