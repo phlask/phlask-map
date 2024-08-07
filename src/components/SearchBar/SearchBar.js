@@ -7,10 +7,8 @@ import PlacesAutocomplete, {
   getLatLng
 } from 'react-places-autocomplete';
 import {
-  SEARCH_BAR_MAP_TINT_OFF,
-  SEARCH_BAR_MAP_TINT_ON,
   TOOLBAR_MODAL_SEARCH,
-  setSearchBarMapTint,
+  setSearchBarMapTintOn,
   setTapInfoOpenedWhileSearchOpen,
 } from '../../actions/actions';
 import styles from './SearchBar.module.scss';
@@ -28,12 +26,12 @@ const SearchBar = ({ search }) => {
 
   const handleChange = address => {
     setAddress(address);
-    dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON));
+    dispatch(setSearchBarMapTintOn(true));
   };
 
   const handleSelect = address => {
     setAddress(address);
-    dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF));
+    dispatch(setSearchBarMapTintOn(false));
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => search(latLng))
@@ -138,7 +136,7 @@ const SearchBar = ({ search }) => {
                       disableUnderline={true}
                       onFocus={() => {
                         if (!tapInfoOpenedWhileSearchOpen) {
-                          dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON));
+                          dispatch(setSearchBarMapTintOn(true));
                         }
                         else {
                           dispatch(setTapInfoOpenedWhileSearchOpen(false));
@@ -147,7 +145,7 @@ const SearchBar = ({ search }) => {
                       }
                       }
                       onBlur={() => {
-                        dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF));
+                        dispatch(setSearchBarMapTintOn(false));
                       }}
                     />
                     {loading && (

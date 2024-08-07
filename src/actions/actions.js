@@ -94,22 +94,10 @@ export const setSelectedPlace = selectedPlace => ({
   selectedPlace
 });
 
-export const SET_SEARCH_BAR_MAP_TINT = 'SET_SEARCH_BAR_MAP_TINT';
-export const setSearchBarMapTint = searchBarMapTintOnOrOff => ({
-  type: SET_SEARCH_BAR_MAP_TINT,
-  mode: searchBarMapTintOnOrOff
-})
-export const SEARCH_BAR_MAP_TINT_ON = 'SEARCH_BAR_MAP_TINT_ON';
-export const SEARCH_BAR_MAP_TINT_OFF = 'SEARCH_BAR_MAP_TINT_OFF';
-
-export const SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN = 'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
-export const setTapInfoOpenedWhileSearchOpen = trueOrFalse => ({
-  type: SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN,
-  trueOrFalse
-})
+export const setSearchBarMapTintOn = createAction('SET_SEARCH_BAR_MAP_TINT');
+export const setTapInfoOpenedWhileSearchOpen = createAction('SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN');
 
 export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
-
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';

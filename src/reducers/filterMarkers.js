@@ -21,7 +21,7 @@ const initialState = {
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  searchBarMapTint: actions.SEARCH_BAR_MAP_TINT_OFF,
+  setSearchBarMapTintOn: false,
   tapInfoOpenedWhileSearchOpen: false,
   resourceType: WATER_RESOURCE_TYPE,
 };
@@ -137,11 +137,11 @@ export default (state = initialState, act) => {
         ...state,
         showingInfoWindow: act.payload.isShown,
         infoWindowClass: act.payload.infoWindowClass,
-        searchBarMapTint: act.payload.isShown ? actions.SEARCH_BAR_MAP_TINT_OFF : state.searchBarMapTint,
+        searchBarMapTintOn: act.payload.isShown ? false : state.setSearchBarMapTintOn,
         tapInfoOpenedWhileSearchOpen:
           act.payload.isShown && (state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH) ? true : false
       };
-      
+
     case actions.toggleInfoWindowClass.type:
       return {
         ...state,
@@ -186,11 +186,11 @@ export default (state = initialState, act) => {
       };
     }
 
-    case actions.SET_SEARCH_BAR_MAP_TINT:
-      return { ...state, searchBarMapTint: act.mode }
+    case actions.setSearchBarMapTintOn.type:
+      return { ...state, searchBarMapTintOn: act.payload }
 
-    case actions.SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN:
-      return { ...state, tapInfoOpenedWhileSearchOpen: act.trueOrFalse }
+    case actions.setTapInfoOpenedWhileSearchOpen.type:
+      return { ...state, tapInfoOpenedWhileSearchOpen: act.payload }
 
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };
