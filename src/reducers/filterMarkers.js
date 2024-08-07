@@ -137,8 +137,11 @@ export default (state = initialState, act) => {
         ...state,
         showingInfoWindow: act.payload.isShown,
         infoWindowClass: act.payload.infoWindowClass,
-        searchBarMapTint: act.payload.isShown ? actions.SEARCH_BAR_MAP_TINT_OFF : state.searchBarMapTint
+        searchBarMapTint: act.payload.isShown ? actions.SEARCH_BAR_MAP_TINT_OFF : state.searchBarMapTint,
+        tapInfoOpenedWhileSearchOpen:
+          act.payload.isShown && (state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH) ? true : false
       };
+      
     case actions.toggleInfoWindowClass.type:
       return {
         ...state,

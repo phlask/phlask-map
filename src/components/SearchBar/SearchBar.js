@@ -26,6 +26,11 @@ const SearchBar = ({ search }) => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
+  const handleChange = address => {
+    setAddress(address);
+    dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_ON));
+  };
+
   const handleSelect = address => {
     setAddress(address);
     dispatch(setSearchBarMapTint(SEARCH_BAR_MAP_TINT_OFF));
@@ -43,7 +48,7 @@ const SearchBar = ({ search }) => {
             <div className={styles.desktopSearch}>
               <PlacesAutocomplete
                 value={address}
-                onChange={setAddress}
+                onChange={handleChange}
                 onSelect={handleSelect}
               >
                 {({
@@ -103,7 +108,7 @@ const SearchBar = ({ search }) => {
             <div className={styles.mobileSearch}>
               <PlacesAutocomplete
                 value={address}
-                onChange={setAddress}
+                onChange={handleChange}
                 onSelect={handleSelect}
               >
                 {({

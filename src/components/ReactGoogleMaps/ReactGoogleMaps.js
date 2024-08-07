@@ -349,7 +349,7 @@ export const ReactGoogleMaps = ({ google }) => {
       </ReactTouchEvents >
       {isMobile && (
         <Fade
-          in={searchBarMapTint == SEARCH_BAR_MAP_TINT_ON}
+          in={searchBarMapTint === SEARCH_BAR_MAP_TINT_ON}
           timeout={300}
           style={{ position: 'fixed', pointerEvents: 'none' }}
         >
