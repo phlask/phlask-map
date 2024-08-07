@@ -1,7 +1,7 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
-import styles from './SelectedTapMobileInfo.module.scss';
+import styles from './SelectedTapDetails.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
@@ -185,9 +185,9 @@ function SelectedTapDetails(props) {
             onClick={() =>
               window.open(
                 'https://www.google.com/maps/dir/?api=1&destination=' +
-                  resource.latitude +
-                  ',' +
-                  resource.longitude,
+                resource.latitude +
+                ',' +
+                resource.longitude,
                 '_blank'
               )
             }

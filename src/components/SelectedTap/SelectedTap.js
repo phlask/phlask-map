@@ -14,7 +14,7 @@ import './SelectedTap.css';
 
 import { Paper, SwipeableDrawer } from '@mui/material';
 
-import SelectedTapDetails from '../SelectedTapMobile/SelectedTapDetails';
+import SelectedTapDetails from '../SelectedTapDetails/SelectedTapDetails';
 
 import useIsMobile from 'hooks/useIsMobile';
 
