@@ -1,34 +1,34 @@
 import { Fade } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
+import useIsMobile from 'hooks/useIsMobile';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
   TOOLBAR_MODAL_SEARCH,
+  getResources,
+  removeEntryFilterFunction,
+  removeFilterFunction,
+  resetFilterFunction,
+  setEntryFilterFunction,
+  setFilterFunction,
   setMapCenter,
+  setSelectedPlace,
   setUserLocation,
   toggleInfoWindow,
-  getResources,
-  setSelectedPlace,
-  setFilterFunction,
-  resetFilterFunction,
-  removeFilterFunction,
-  removeEntryFilterFunction,
-  setEntryFilterFunction,
 } from '../../actions/actions';
-import SearchBar from '../SearchBar/SearchBar';
-import SelectedTap from '../SelectedTap/SelectedTap';
-import styles from './ReactGoogleMaps.module.scss';
-import Stack from '@mui/material/Stack';
+import selectFilteredResource from '../../selectors/resourceSelectors';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResource from '../ChooseResource/ChooseResource';
-import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
+import SearchBar from '../SearchBar/SearchBar';
+import SelectedTap from '../SelectedTap/SelectedTap';
 import Toolbar from '../Toolbar/Toolbar';
+import TutorialModal from '../TutorialModal/TutorialModal';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
-import selectFilteredResource from '../../selectors/resourceSelectors';
-import useIsMobile from 'hooks/useIsMobile';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import styles from './ReactGoogleMaps.module.scss';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
