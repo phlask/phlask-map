@@ -22,7 +22,6 @@ import styles from './ReactGoogleMaps.module.scss';
 import Stack from '@mui/material/Stack';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
-import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
@@ -368,7 +367,6 @@ export const ReactGoogleMaps = ({ google }) => {
             className="searchBar"
             search={location => searchForLocation(location)}
           />
-          <TutorialModal />
         </Stack>
         <ChooseResourceType />
         <Filter
