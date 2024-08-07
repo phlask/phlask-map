@@ -21,8 +21,7 @@ const initialState = {
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  resourceType: WATER_RESOURCE_TYPE,
-  isResourceMenuShown: false
+  resourceType: WATER_RESOURCE_TYPE
 };
 
 export default (state = initialState, act) => {
@@ -184,19 +183,8 @@ export default (state = initialState, act) => {
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };
 
-    // Toggle Phlask type & close the info window
-    case actions.toggleResourceType.type:
-      return {
-        ...state,
-        resourceType: act.payload.resourceType,
-        infoWindowClass: act.payload.infoWindowClass
-      };
-
-    case actions.CHANGE_RESOURCE_TYPE:
-      return { ...state, resourceType: act.resourceType };
-
-    case actions.toggleResourceMenu.type:
-      return { ...state, isResourceMenuShown: !act.payload.isShown };
+    case actions.setResourceType.type:
+      return { ...state, resourceType: act.payload };
 
     default:
       return state;

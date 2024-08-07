@@ -21,7 +21,7 @@ import SelectedTap from '../SelectedTap/SelectedTap';
 import styles from './ReactGoogleMaps.module.scss';
 import Stack from '@mui/material/Stack';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
-import ChooseResource from '../ChooseResource/ChooseResource';
+import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
 import TutorialModal from '../TutorialModal/TutorialModal';
 import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
@@ -370,7 +370,7 @@ export const ReactGoogleMaps = ({ google }) => {
           />
           <TutorialModal />
         </Stack>
-        <ChooseResource />
+        <ChooseResourceType />
         <Filter
           resourceType={resourceType}
           filters={filters}
