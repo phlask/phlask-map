@@ -44,13 +44,18 @@ function SelectedTapDetails(props) {
   const latLongFormatted = getFormattedLatLong(resource.latitude, resource.longitude);
 
   // Assign title and subtitles, using fallbacks when data is missing
-  let resourceTitle, resourceSubtitleOne, resourceSubtitleTwo;
-  if (resource.name.trim().length > 0) {
+  let resourceTitle = "", resourceSubtitleOne, resourceSubtitleTwo;
+  if (resource.name !== undefined && resource.name.trim().length > 0 &&
+    resource.address !== undefined && resource.address.trim().length > 0) {
     resourceTitle = resource.name;
     resourceSubtitleOne = resource.address;
     resourceSubtitleTwo = latLongFormatted;
   }
-  else if (resource.address.trim().length > 0) {
+  else if (resource.name !== undefined && resource.name.trim().length > 0) {
+    resourceTitle = resource.name;
+    resourceSubtitleOne = latLongFormatted;
+  }
+  else if (resource.address !== undefined && resource.address.trim().length > 0) {
     resourceTitle = resource.address;
     resourceSubtitleOne = latLongFormatted;
   }
