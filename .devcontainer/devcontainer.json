@@ -27,5 +27,5 @@
   },
   "forwardPorts": [3000],
   "postCreateCommand": "yarn install",
-  "remoteUser": "node"
+  "remoteUser": "jedi"
 }
