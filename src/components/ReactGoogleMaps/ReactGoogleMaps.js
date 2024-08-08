@@ -21,12 +21,11 @@ import {
 } from '../../actions/actions';
 import selectFilteredResource from '../../selectors/resourceSelectors';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
-import ChooseResource from '../ChooseResource/ChooseResource';
+import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
 import Filter from '../Filter/Filter';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
 import Toolbar from '../Toolbar/Toolbar';
-import TutorialModal from '../TutorialModal/TutorialModal';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import styles from './ReactGoogleMaps.module.scss';
 
@@ -368,9 +367,8 @@ export const ReactGoogleMaps = ({ google }) => {
             className="searchBar"
             search={location => searchForLocation(location)}
           />
-          <TutorialModal />
         </Stack>
-        <ChooseResource />
+        <ChooseResourceType />
         <Filter
           resourceType={resourceType}
           filters={filters}
