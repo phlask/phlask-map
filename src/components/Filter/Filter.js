@@ -74,7 +74,6 @@ export default function Filter({
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  console.log(toolbarModal == TOOLBAR_MODAL_FILTER);
   return (
     <>
       {!isMobile && (

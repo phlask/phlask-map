@@ -1,34 +1,30 @@
-import ImageUploader from 'react-images-upload';
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { initializeApp } from 'firebase/app';
-import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_CONTRIBUTE
-} from '../../actions/actions';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TOOLBAR_MODAL_NONE } from '../../actions/actions';
 import { resourcesConfig } from '../../firebase/firebaseConfig';
 
-import { debounce } from '../../utils/debounce';
-import ChooseResource from './ChooseResource';
-import ShareSocials from './ShareSocials';
-import AddFood from './AddFood/AddFood';
-import AddBathroom from './AddBathroom/AddBathroom';
-import AddForaging from './AddForaging/AddForaging';
-import AddWaterTap from './AddWaterTap/AddWaterTap';
-import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, push } from 'firebase/database';
+import { getDatabase, push, ref } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { pushNewResource } from '../../actions/actions';
+import { debounce } from '../../utils/debounce';
+import AddBathroom from './AddBathroom/AddBathroom';
+import AddFood from './AddFood/AddFood';
+import AddForaging from './AddForaging/AddForaging';
+import AddWaterTap from './AddWaterTap/AddWaterTap';
+import ChooseResource from './ChooseResource';
+import ModalWrapper from './ModalWrapper';
+import ShareSocials from './ShareSocials';
 
+import noop from 'utils/noop';
 import {
-  WATER_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
+  WATER_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
-import noop from 'utils/noop';
 
-export default function AddResourceModalV2(props) {
+const AddResourceModalV2 = props => {
   const initialState = {
     page: 0,
     pictures: [],
@@ -370,12 +366,12 @@ export default function AddResourceModalV2(props) {
   };
 
   return (
-    <ModalWrapper
-      open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
-      onClose={handleClose}
-    >
+    <ModalWrapper>
       {values.formStep === 'chooseResource' && (
-        <ChooseResource setFormStep={onChangeFormStep} />
+        <ChooseResource
+          resourceTypeInfo={props.resourceTypeInfo}
+          setFormStep={onChangeFormStep}
+        />
       )}
 
       {values.formStep == 'addWaterTap' && (
@@ -500,4 +496,6 @@ export default function AddResourceModalV2(props) {
       {values.formStep === 'shareSocials' && <ShareSocials />}
     </ModalWrapper>
   );
-}
+};
+
+export default AddResourceModalV2;
