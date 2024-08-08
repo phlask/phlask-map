@@ -41,7 +41,7 @@ const ModalWrapper = props => {
             height: '100%'
           }}
         >
-          {props.children}
+          <>{props.children}</>
         </Modal>
       )}
     </>

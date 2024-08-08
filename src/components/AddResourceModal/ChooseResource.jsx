@@ -1,16 +1,18 @@
+import CloseIcon from '@mui/icons-material/Close';
 import styles from './AddResourceModal.module.scss';
 
-import { Box, Button } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import { useDispatch } from 'react-redux';
+import { setToolbarModal, TOOLBAR_MODAL_NONE } from '../../actions/actions';
 
-const DesktopResourceButton = props => {
+const ResourceButton = props => {
   const dispatch = useDispatch();
   const Icon = props.desktopIcon;
   return (
     <Button
       sx={{
-        margin: '12px',
+        margin: props.margin,
         backgroundColor: props.color,
         '&:hover': { backgroundColor: props.color },
         display: 'grid',
@@ -47,87 +49,76 @@ const ChooseResource = props => {
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             {props.resourceTypeInfo.map(entry => (
-              <DesktopResourceButton
+              <ResourceButton
+                margin="12px"
                 key={entry.type}
                 {...entry}
                 data-cy={`button-${entry.type}-data-selector`}
-                setFormStep={() => {
-                  props.setFormStep(entry.formName);
-                }}
+                setFormStep={() => props.setFormStep(entry.formName)}
               />
             ))}
           </Box>
         </Box>
       )}
-      {/* {isMobile && (
-        <Paper className={styles.dialog}>
-          <h2 className={styles.greyHeader}>Add a Resource</h2>
-          <h3 className={styles.subHeader}>
-            Choose the type of resource you like
-            <br />
-            to add and submit the form.
-          </h3>
-          <div className={styles.buttonWrapper}>
-            <Button
-              data-cy="button-contribute-water"
-              className={styles.modalButton}
-              variant={'water'}
-              onClick={() => setFormStep('addWaterTap')}
+      {isMobile && (
+        <Box
+          sx={{
+            padding: '40px',
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#ffffff'
+          }}
+        >
+          <IconButton
+            aria-label="close"
+            onClick={() => {
+              dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+            }}
+            sx={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              color: '#000000'
+            }}
+            size="large"
+          >
+            <CloseIcon
               sx={{
-                textTransform: 'capitalize',
-                fontSize: '20px',
-                lineHeight: '1'
+                fontSize: 32
               }}
-            >
-              <WaterIconCR />
-              Water
-            </Button>
-            <Button
-              className={styles.modalButton}
-              variant={'food'}
-              onClick={() => setFormStep('addFood')}
-              sx={{
-                textTransform: 'capitalize',
-                fontSize: '20px',
-                lineHeight: '1'
-              }}
-            >
-              <FoodIconCR />
-              Food
-            </Button>
-            <Button
-              className={styles.modalButton}
-              variant={'bathrooms'}
-              onClick={() => setFormStep('addBathroom')}
-              sx={{
-                textTransform: 'capitalize',
-                fontSize: '20px',
-                lineHeight: '1'
-              }}
-            >
-              <ToiletIconCR />
-              Bathrooms
-            </Button>
-            <Button
-              // this copy is different than the copy from the figma page,
-              // this might be a bit more clear? can make a point to ask
-              // about this next week
-
-              className={styles.modalButton}
-              variant={'foraging'}
-              onClick={() => setFormStep('addForaging')}
-              sx={{
-                textTransform: 'capitalize',
-                fontSize: '20px',
-                lineHeight: '1'
-              }}
-            >
-              <ForagingIconCR />
-              Foraging
-            </Button>
-          </div>
-        </Paper>
-      )} */}
+            />
+          </IconButton>
+          <Box
+            sx={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 'calc(100% - 64px - 40px - 20px)'
+            }}
+          >
+            <Box sx={{ marginBottom: '25px' }}>
+              <h1 className={styles.header}>Add a Site</h1>
+              <p className={styles.description}>
+                Choose the type of resource you would like
+                <br />
+                to add and submit the form.
+              </p>
+            </Box>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+              {props.resourceTypeInfo.map(entry => (
+                <ResourceButton
+                  margin="10px 20px"
+                  key={entry.type}
+                  {...entry}
+                  data-cy={`button-${entry.type}-data-selector`}
+                  setFormStep={() => props.setFormStep(entry.formName)}
+                />
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      )}
     </>
   );
 };

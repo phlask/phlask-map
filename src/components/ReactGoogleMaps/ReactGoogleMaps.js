@@ -72,7 +72,7 @@ const resourceTypeInfo = [
     color: "#5DA694",
     desktopIcon: DesktopForagingIcon,
     mobileIcon: MobileForagingIcon,
-    formName: 'addFood'
+    formName: 'addForaging'
   },
   {
     type: FOOD_RESOURCE_TYPE,
@@ -80,7 +80,7 @@ const resourceTypeInfo = [
     color: "#FF9A55",
     desktopIcon: DesktopFoodIcon,
     mobileIcon: MobileFoodIcon,
-    formName: 'addBathroom'
+    formName: 'addFood'
   },
   {
     type: BATHROOM_RESOURCE_TYPE,
@@ -88,7 +88,7 @@ const resourceTypeInfo = [
     color: "#9E9E9E",
     desktopIcon: DesktopBathroomIcon,
     mobileIcon: MobileBathroomIcon,
-    formName: 'addForaging'
+    formName: 'addBathroom'
   }
 ]
 

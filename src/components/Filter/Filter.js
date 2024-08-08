@@ -111,7 +111,7 @@ export default function Filter({
                 sx={{
                   position: 'absolute',
                   right: '20px',
-                  top: 5,
+                  top: '5px',
                   color: '#fff',
                   '&:hover': {
                     color: '#fff'
