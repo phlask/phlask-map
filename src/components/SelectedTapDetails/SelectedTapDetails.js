@@ -41,6 +41,23 @@ function SelectedTapDetails(props) {
     return <div></div>;
   }
 
+  const latLongFormatted = getFormattedLatLong(resource.latitude, resource.longitude);
+
+  // Assign title and subtitles, using fallbacks when data is missing
+  let resourceTitle, resourceSubtitleOne, resourceSubtitleTwo;
+  if (resource.name.trim().length > 0) {
+    resourceTitle = resource.name;
+    resourceSubtitleOne = resource.address;
+    resourceSubtitleTwo = latLongFormatted;
+  }
+  else if (resource.address.trim().length > 0) {
+    resourceTitle = resource.address;
+    resourceSubtitleOne = latLongFormatted;
+  }
+  else if ((resource.latitude !== undefined) && resource.longitude !== undefined) {
+    resourceTitle = latLongFormatted;
+  }
+
   let icon;
   switch (resource.resource_type) {
     case WATER_RESOURCE_TYPE:
@@ -177,9 +194,9 @@ function SelectedTapDetails(props) {
         />
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization} data-cy="tap-organization-name">
-            {resource.name}
+            {resourceTitle}
           </h2>
-          <p>{resource.address}</p>
+          <p className={styles.subtitles}>{resourceSubtitleOne}<br />{resourceSubtitleTwo}</p>
           {props.children}
           <Button
             onClick={() =>
@@ -270,6 +287,73 @@ function getTagsFromResource(resource) {
   }
 
   return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
+}
+
+/**
+ * Converts degrees given in decimal to DMS (degrees, minutes, and seconds), where seconds are
+ * rounded to the tenth place. The returned degrees are not clamped or wrapped in any way.
+ *
+ * @param {number} degrees Degrees given in decimal
+ */
+function decimalDegreesToDMS(decimalDegrees) {
+  let integralDegrees = Math.trunc(decimalDegrees);
+  const fractionalDegrees = Math.abs(decimalDegrees) - Math.abs(integralDegrees);
+  const fractionalDegreesInMinutes = fractionalDegrees * 60;
+  let minutes = Math.trunc(fractionalDegreesInMinutes);
+  const remainingFractionalDegreesInMinutes = fractionalDegreesInMinutes - minutes;
+  const seconds = remainingFractionalDegreesInMinutes * 60;
+  let roundedSeconds = Number(seconds.toFixed(1));
+  // Account for rounding edge case
+  if (roundedSeconds === 60) {
+    minutes += 1;
+    roundedSeconds = 0;
+  }
+  if (minutes === 60) {
+    integralDegrees += 1;
+    minutes = 0;
+  }
+  return {
+    deg: integralDegrees,
+    min: minutes,
+    sec: roundedSeconds
+  }
+}
+
+/**
+ * Returns a formatted string with the latitude and longitude.
+ * Example return value: 13°39'49.7"N 45°9'35.6"E
+ *
+ * Clamps latitude values to be within [-90, 90] and wraps longitude
+ * values to be within [-180, 180).
+ *
+ * @param {number} latitude Latitude given as a decimal
+ * @param {number} longitude Longitude given as a decimal
+ * @returns {string} A formatted string with the latitude and logitude
+ */
+function getFormattedLatLong(latitude, longitude) {
+  let clampedLatitude, wrappedLongitude;
+
+  if (latitude < -90)
+    clampedLatitude = -90;
+  else if (latitude > 90)
+    clampedLatitude = 90;
+  else
+    clampedLatitude = latitude;
+
+  wrappedLongitude = longitude % 180;
+
+  const latitudeDMS = decimalDegreesToDMS(clampedLatitude);
+  const longitudeDMS = decimalDegreesToDMS(wrappedLongitude);
+
+  const latitudeDir = latitudeDMS.deg < 0 ? 'S' : 'N';
+  const longitudeDir = longitudeDMS.deg < 0 ? 'W' : 'E';
+
+  const latitudeFormatted =
+    `${latitudeDMS.deg}\u00B0${latitudeDMS.min}'${latitudeDMS.sec}"${latitudeDir}`;
+  const longitudeFormatted =
+    `${longitudeDMS.deg}\u00B0${longitudeDMS.min}'${longitudeDMS.sec}"${longitudeDir}`;
+
+  return `${latitudeFormatted} ${longitudeFormatted}`;
 }
 
 export default SelectedTapDetails;
