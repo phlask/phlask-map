@@ -1,13 +1,9 @@
-import CloseIcon from '@mui/icons-material/Close';
 import styles from './AddResourceModal.module.scss';
 
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import { useDispatch } from 'react-redux';
-import { setToolbarModal, TOOLBAR_MODAL_NONE } from '../../actions/actions';
 
 const ResourceButton = props => {
-  const dispatch = useDispatch();
   const Icon = props.desktopIcon;
   return (
     <Button
@@ -34,7 +30,6 @@ const ResourceButton = props => {
 
 const ChooseResource = props => {
   const isMobile = useIsMobile();
-  const dispatch = useDispatch();
   return (
     <>
       {!isMobile && (
@@ -69,25 +64,6 @@ const ChooseResource = props => {
             backgroundColor: '#ffffff'
           }}
         >
-          <IconButton
-            aria-label="close"
-            onClick={() => {
-              dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
-            }}
-            sx={{
-              position: 'absolute',
-              right: '20px',
-              top: '20px',
-              color: '#000000'
-            }}
-            size="large"
-          >
-            <CloseIcon
-              sx={{
-                fontSize: 32
-              }}
-            />
-          </IconButton>
           <Box
             sx={{
               position: 'absolute',

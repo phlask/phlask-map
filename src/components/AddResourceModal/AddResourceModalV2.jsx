@@ -360,14 +360,13 @@ const AddResourceModalV2 = props => {
 
   const handleClose = () => {
     // on close we should reset form state so user can submit another resource
-
     setValues(initialState);
     setToolbarModal(TOOLBAR_MODAL_NONE);
   };
 
   return (
-    <ModalWrapper>
-      {values.formStep === 'chooseResource' && (
+    <ModalWrapper values={values}>
+      {values.formStep == 'chooseResource' && (
         <ChooseResource
           resourceTypeInfo={props.resourceTypeInfo}
           setFormStep={onChangeFormStep}
