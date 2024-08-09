@@ -86,7 +86,10 @@ const MobileChooseResourceType = (props) => {
         >
           <List sx={{ maxWidth: 210 }}>
             {props.resourceTypeInfo.map(entry => (
-              <MobileResourceButton key={entry.type} {...entry} />
+              <MobileResourceButton
+                key={entry.type}
+                {...entry}
+                data-cy={`button-${entry.type}-data-selector`} />
             ))}
           </List>
         </Slide>
