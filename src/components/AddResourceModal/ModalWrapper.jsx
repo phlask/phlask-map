@@ -3,11 +3,7 @@ import { Collapse, IconButton, Modal, Paper } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux/es/exports';
-import {
-  setToolbarModal,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_NONE
-} from '../../actions/actions';
+import { TOOLBAR_MODAL_CONTRIBUTE } from '../../actions/actions';
 /*
   Higher Order Component that returns a Dialog for mobile and a non modal Dialog for Desktop
  */
@@ -38,7 +34,11 @@ const ModalWrapper = props => {
         </Paper>
       )}
       {isMobile && (
-        <Modal open={toolbarModal == TOOLBAR_MODAL_CONTRIBUTE}>
+        <Modal
+          open={toolbarModal == TOOLBAR_MODAL_CONTRIBUTE}
+          hideBackdrop={true}
+          sx={{ overflow: 'scroll', backgroundColor: '#ffffff' }}
+        >
           <Paper
             sx={{
               left: 0,
@@ -50,7 +50,7 @@ const ModalWrapper = props => {
             <IconButton
               aria-label="close"
               onClick={() => {
-                dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+                props.handleClose();
               }}
               sx={{
                 position: 'absolute',

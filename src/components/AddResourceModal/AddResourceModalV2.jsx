@@ -365,7 +365,7 @@ const AddResourceModalV2 = props => {
   };
 
   return (
-    <ModalWrapper values={values}>
+    <ModalWrapper handleClose={handleClose} values={values}>
       {values.formStep == 'chooseResource' && (
         <ChooseResource
           resourceTypeInfo={props.resourceTypeInfo}

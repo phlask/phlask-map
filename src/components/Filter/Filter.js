@@ -220,6 +220,9 @@ export default function Filter({
           PaperProps={{ sx: { borderRadius: '10px' } }}
         >
           <Box className={styles.header}>
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ position: 'relative', left: '50%', transform: 'translateX(-50%)', width: '24px', height: '4px', borderRadius: '2px', backgroundColor: '#ffffff' }} />
+            </Box>
             <h1>{filters[resourceType].title}</h1>
           </Box>
 
