@@ -22,7 +22,6 @@ describe('modals', () => {
     cy.get('.MuiDialog-root:not(div[aria-hidden="true"]) [data-cy=mobile-button-FOOD-data-selector]').click();
 
     // Load a sample food site
-    // This is currently using live data, but should be updated to make use of test data.
     cy.get('[title=data-cy-1]').click();
 
     // Confirm that the modal that pops up shows the correct name for the location
