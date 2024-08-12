@@ -187,7 +187,7 @@ export const ReactGoogleMaps = ({ google }) => {
         setCurrentLat(position.coords.latitude);
         setCurrentLon(position.coords.longitude);
       } catch (error) {
-        console.error("Error obtaining geolocation. Default coordinates will be used.");
+        // Do nothing
       }
     };
 
