@@ -89,6 +89,10 @@ function SelectedTapDetails(props) {
       return;
     }
     setPointerPositionY(e.nativeEvent.offsetY);
+    console.log("offsetY:");
+    console.log(e.nativeEvent.offsetY);
+    console.log("clientY:");
+    console.log(e.nativeEvent.clientY);
 
     if (!infoCollapse && e.nativeEvent.offsetY < 0) {
       setInfoCollapse(true);
@@ -112,11 +116,11 @@ function SelectedTapDetails(props) {
   };
 
   return (
-    <div className={styles.halfInfo} onPointerMove={detectSwipe}>
+    <div className={styles.halfInfo} onPointerMove={detectSwipe} data-cy="expanded-site-info">
       {isMobile && !infoCollapse ? (
         <button className={styles.swipeIcon}></button>
       ) : (
-        <div className={styles.expandedToolBar}>
+        <div className={styles.expandedToolBar} data-cy="mobile-site-info-drawer-open">
           <div>
             <IconButton
               color="primary"
@@ -185,9 +189,9 @@ function SelectedTapDetails(props) {
             onClick={() =>
               window.open(
                 'https://www.google.com/maps/dir/?api=1&destination=' +
-                  resource.latitude +
-                  ',' +
-                  resource.longitude,
+                resource.latitude +
+                ',' +
+                resource.longitude,
                 '_blank'
               )
             }
@@ -220,7 +224,7 @@ function SelectedTapDetails(props) {
         <div className={styles.halfInfoExpand}>
           <div className={styles.details}>
             <h3>Description</h3>
-            <p>
+            <p data-cy="tap-description">
               {resource.description
                 ? resource.description
                 : 'No description provided'}

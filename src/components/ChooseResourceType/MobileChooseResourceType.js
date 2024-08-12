@@ -42,7 +42,9 @@ const MobileResourceButton = props => {
         switchType(props.type)
       }}
     >
-      <ListItemIcon><props.mobileIcon /></ListItemIcon>
+      <ListItemIcon>
+        <props.mobileIcon data-cy={props['data-cy']} />
+      </ListItemIcon>
       <ListItemText>
         <Grid container justifyContent={'flex-start'}>
           <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
@@ -52,7 +54,7 @@ const MobileResourceButton = props => {
           </Box>
         </Grid>
       </ListItemText>
-    </ListItemButton>
+    </ListItemButton >
   );
 };
 
@@ -86,7 +88,11 @@ const MobileChooseResourceType = (props) => {
         >
           <List sx={{ maxWidth: 210 }}>
             {props.resourceTypeInfo.map(entry => (
-              <MobileResourceButton key={entry.type} {...entry} />
+              <MobileResourceButton
+                {...entry}
+                key={entry.type}
+                data-cy={`mobile-button-${entry.type}-data-selector`}
+              />
             ))}
           </List>
         </Slide>
