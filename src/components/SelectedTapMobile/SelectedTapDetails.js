@@ -89,10 +89,6 @@ function SelectedTapDetails(props) {
       return;
     }
     setPointerPositionY(e.nativeEvent.offsetY);
-    console.log("offsetY:");
-    console.log(e.nativeEvent.offsetY);
-    console.log("clientY:");
-    console.log(e.nativeEvent.clientY);
 
     if (!infoCollapse && e.nativeEvent.offsetY < 0) {
       setInfoCollapse(true);
