@@ -1,5 +1,4 @@
-import React from 'react';
-import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
+import PhlaskIcon from '../icons/PHLASK_v2.svg?react';
 import styles from './Pages.module.scss';
 
 const Acknowledgements = () => (
@@ -7,10 +6,11 @@ const Acknowledgements = () => (
     <h1 className={styles.pageHeader}>Acknowledgements</h1>
     <div>
       <p className={styles.pageText}>
-      The PHLASK app has been created with the help of many Code for Philly volunteers, including:
+        The PHLASK app has been created with the help of many Code for Philly
+        volunteers, including:
       </p>
-  </div>
+    </div>
   </div>
 );
 
-export default Acknowledgements; 
+export default Acknowledgements;

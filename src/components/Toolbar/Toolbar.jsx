@@ -8,7 +8,7 @@ import {
   TOOLBAR_MODAL_SEARCH,
   setSelectedPlace,
   setToolbarModal,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -19,19 +19,19 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
 
-import { ReactComponent as ToiletIcon } from '../icons/CircleBathroomIcon.svg';
-import { ReactComponent as FoodIcon } from '../icons/CircleFoodIcon.svg';
-import { ReactComponent as ForagingIcon } from '../icons/CircleForagingIcon.svg';
-import { ReactComponent as WaterIcon } from '../icons/CircleWaterIcon.svg';
-import { ReactComponent as ContributeIcon } from '../icons/ContributeIcon.svg';
-import { ReactComponent as FilterIcon } from '../icons/FilterIcon.svg';
-import { ReactComponent as ResourceIcon } from '../icons/ResourceIcon.svg';
-import { ReactComponent as SearchIcon } from '../icons/SearchIcon.svg';
+import ToiletIcon from '../icons/CircleBathroomIcon.svg?react';
+import FoodIcon from '../icons/CircleFoodIcon.svg?react';
+import ForagingIcon from '../icons/CircleForagingIcon.svg?react';
+import WaterIcon from '../icons/CircleWaterIcon.svg?react';
+import ContributeIcon from '../icons/ContributeIcon.svg?react';
+import FilterIcon from '../icons/FilterIcon.svg?react';
+import ResourceIcon from '../icons/ResourceIcon.svg?react';
+import SearchIcon from '../icons/SearchIcon.svg?react';
 
-import { ReactComponent as BathroomPhlaskButton } from '../icons/PhlaskButtons/BathroomPhlaskButton.svg';
-import { ReactComponent as FoodPhlaskButton } from '../icons/PhlaskButtons/FoodPhlaskButton.svg';
-import { ReactComponent as ForagingPhlaskButton } from '../icons/PhlaskButtons/ForagingPhlaskButton.svg';
-import { ReactComponent as WaterPhlaskButton } from '../icons/PhlaskButtons/WaterPhlaskButton.svg';
+import BathroomPhlaskButton from '../icons/PhlaskButtons/BathroomPhlaskButton.svg?react';
+import FoodPhlaskButton from '../icons/PhlaskButtons/FoodPhlaskButton.svg?react';
+import ForagingPhlaskButton from '../icons/PhlaskButtons/ForagingPhlaskButton.svg?react';
+import WaterPhlaskButton from '../icons/PhlaskButtons/WaterPhlaskButton.svg?react';
 
 import { SvgIcon, Typography } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -52,7 +52,7 @@ function distance(lat1, lon1, lat2, lon2) {
     (Math.cos(lat1 * p) *
       Math.cos(lat2 * p) *
       (1 - Math.cos((lon2 - lon1) * p))) /
-    2;
+      2;
   return 12742 * Math.asin(Math.sqrt(a));
 }
 
@@ -113,10 +113,12 @@ function Toolbar({ map }) {
     });
     if (!closest) return;
 
-    dispatch(toggleInfoWindow({
-      isShown: true,
-      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
-    }));
+    dispatch(
+      toggleInfoWindow({
+        isShown: true,
+        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+      })
+    );
     dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
@@ -133,19 +135,19 @@ function Toolbar({ map }) {
     else dispatch(setToolbarModal(modal));
   }
 
-  let phlaskButton = null;
+  let PhlaskIcon = null;
   switch (resourceType) {
     case WATER_RESOURCE_TYPE:
-      phlaskButton = <WaterPhlaskButton />;
+      PhlaskIcon = WaterPhlaskButton;
       break;
     case FOOD_RESOURCE_TYPE:
-      phlaskButton = <FoodPhlaskButton />;
+      PhlaskIcon = FoodPhlaskButton;
       break;
     case FORAGE_RESOURCE_TYPE:
-      phlaskButton = <ForagingPhlaskButton />;
+      PhlaskIcon = ForagingPhlaskButton;
       break;
     case BATHROOM_RESOURCE_TYPE:
-      phlaskButton = <BathroomPhlaskButton />;
+      PhlaskIcon = BathroomPhlaskButton;
       break;
     default:
       break;
@@ -184,7 +186,7 @@ function Toolbar({ map }) {
             disableFocusRipple={true}
             disableRipple={true}
           >
-            {phlaskButton}
+            <PhlaskIcon width="245" height="64" />
           </IconButton>
           <IconButton
             variant="text"
@@ -193,6 +195,7 @@ function Toolbar({ map }) {
               display: 'flex',
               flexDirection: 'column',
               p: 0,
+              fontSize: 32,
               filter:
                 toolbarModal === TOOLBAR_MODAL_RESOURCE
                   ? blackToGrayFilter
@@ -207,7 +210,7 @@ function Toolbar({ map }) {
             disableRipple={true}
             data-cy="button-resource-type-menu"
           >
-            <ResourceIcon style={{ color: '#f80' }} />
+            <ResourceIcon />
             <Typography
               style={{ textTransform: 'none', color: 'black' }}
               fontSize={'small'}
@@ -221,6 +224,7 @@ function Toolbar({ map }) {
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
+              fontSize: 32,
               p: 0,
               filter:
                 toolbarModal === TOOLBAR_MODAL_FILTER
@@ -250,6 +254,7 @@ function Toolbar({ map }) {
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
+              fontSize: 32,
               p: 0,
               filter:
                 toolbarModal === TOOLBAR_MODAL_SEARCH
@@ -279,6 +284,7 @@ function Toolbar({ map }) {
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
+              fontSize: 32,
               p: 0,
               filter:
                 toolbarModal === TOOLBAR_MODAL_CONTRIBUTE

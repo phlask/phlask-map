@@ -1,10 +1,11 @@
-import React from 'react';
-import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
+import PhlaskIcon from '../icons/PHLASK_v2.svg?react';
 import styles from './Pages.module.scss';
 
 const About = () => (
   <div className={styles.page}>
-    <h1 className={styles.pageHeader} data-cy="about-header">About PHLASK</h1>
+    <h1 className={styles.pageHeader} data-cy="about-header">
+      About PHLASK
+    </h1>
     <div>
       <h2 className={styles.pageSubheader}>What is PHLASK?</h2>
       <p className={styles.pageText}>
@@ -99,7 +100,7 @@ const About = () => (
           boxShadow: '1px 1px 4px 0px #00000033'
         }}
       >
-        <PhlaskIcon />
+        <PhlaskIcon width="154" height="39" />
       </div>
     </div>
     <div>

@@ -2,6 +2,7 @@
   "name": "phlask-react",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -57,6 +58,7 @@
     "@storybook/react": "^7.0.10",
     "@storybook/react-webpack5": "^7.0.10",
     "@storybook/testing-library": "^0.1.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
@@ -66,12 +68,17 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.6.2",
     "react-scripts": "^5.0.1",
-    "storybook": "^7.0.10"
+    "storybook": "^7.0.10",
+    "unplugin-fonts": "^1.1.1",
+    "vite": "^5.4.2",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "vite",
     "start:cypress": "REACT_APP_CYPRESS_TEST=true react-scripts start",
-    "build": "react-scripts build",
+    "build": "vite build",
     "testDataGen": "node cypress/testDataGenerator.js",
     "test": "yarn testDataGen && cypress run",
     "test:mobile": "cypress run --config-file cypress.mobile.config.js",
@@ -80,7 +87,8 @@
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
     "format": "prettier \"src/**/*.{js,css,html}\" --write",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public"
+    "build-storybook": "storybook build -s public",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": "plugin:react/recommended",

@@ -1,17 +1,17 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './SelectedTapMobileInfo.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { ReactComponent as DirectionIcon } from '../images/ArrowElbowUpRight.svg';
-import { ReactComponent as CaretDownSvg } from '../images/CaretDown.svg';
-import { ReactComponent as ExportSvg } from '../images/Export.svg';
+import DirectionIcon from '../images/ArrowElbowUpRight.svg?react';
+import CaretDownSvg from '../images/CaretDown.svg?react';
+import ExportSvg from '../images/Export.svg?react';
 
-import FountainIcon from '../icons/CircleWaterIcon.svg';
-import ForagingIcon from '../icons/CircleForagingIcon.svg';
-import FoodIcon from '../icons/CircleFoodIcon.svg';
-import BathroomIcon from '../icons/CircleBathroomIcon.svg';
+import FountainIcon from '../icons/CircleWaterIcon.svg?react';
+import ForagingIcon from '../icons/CircleForagingIcon.svg?react';
+import FoodIcon from '../icons/CircleFoodIcon.svg?react';
+import BathroomIcon from '../icons/CircleBathroomIcon.svg?react';
 
 import {
   WATER_RESOURCE_TYPE,

@@ -8,13 +8,11 @@ import {
   styled
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ReactComponent as CloseIcon } from '../icons/CloseIcon.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../icons/PhlaskNoText.svg';
-import { ReactComponent as PhlaskIcon } from '../icons/PHLASK_v2.svg';
-import { ReactComponent as PlusCircleIcon } from '../icons/PlusCircle.svg';
-import { ReactComponent as UsersIcon } from '../icons/UsersIcon.svg';
+import CloseIcon from '../icons/CloseIcon.svg?react';
+import PhlaskNoTextIcon from '../icons/PhlaskNoText.svg?react';
+import PhlaskIcon from '../icons/PHLASK_v2.svg?react';
+import UsersIcon from '../icons/UsersIcon.svg?react';
 
 const SidebarLink = styled(NavLink)(({ theme }) => ({
   color: '#2D3748',

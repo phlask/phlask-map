@@ -12,7 +12,7 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE
 } from '../../actions/actions';
-import useOnClickOutside from '../AddResourceModal/useOnClickOutside.js';
+import useOnClickOutside from '../AddResourceModal/useOnClickOutside';
 import styles from './ChooseResourceType.module.scss';
 
 const DesktopResourceButton = props => {
@@ -31,10 +31,10 @@ const DesktopResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={() => {
-        dispatch(resetFilterFunction())
-        dispatch(setResourceType(props.type))
+        dispatch(resetFilterFunction());
+        dispatch(setResourceType(props.type));
       }}
-      data-cy={props["data-cy"]}
+      data-cy={props['data-cy']}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.textLabel}</p>
@@ -49,7 +49,7 @@ function DesktopChooseResourceType(props) {
 
   const handleClickOutside = () => {
     if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     }
   };
 
@@ -87,7 +87,8 @@ function DesktopChooseResourceType(props) {
                   key={entry.type}
                   {...entry}
                   data-cy={`button-${entry.type}-data-selector`}
-                />))}
+                />
+              ))}
             </Box>
           </Box>
         </Collapse>

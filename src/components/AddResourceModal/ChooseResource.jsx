@@ -3,10 +3,10 @@ import Button from '@mui/material/Button';
 
 import useIsMobile from 'hooks/useIsMobile';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as WaterIconCR } from '../icons/WaterIconChooseResource.svg';
-import { ReactComponent as FoodIconCR } from '../icons/FoodIconChooseResource.svg';
-import { ReactComponent as ForagingIconCR } from '../icons/ForagingIconChooseResource.svg';
-import { ReactComponent as ToiletIconCR } from '../icons/ToiletIconChooseResource.svg';
+import WaterIconCR from '../icons/WaterIconChooseResource.svg?react';
+import FoodIconCR from '../icons/FoodIconChooseResource.svg?react';
+import ForagingIconCR from '../icons/ForagingIconChooseResource.svg?react';
+import ToiletIconCR from '../icons/ToiletIconChooseResource.svg?react';
 
 function ChooseResource({ setFormStep }) {
   const isMobile = useIsMobile();

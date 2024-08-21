@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { ReactComponent as FacebookIcon } from '../icons/SocialFacebook.svg';
-import { ReactComponent as InstagramIcon } from '../icons/SocialInstagram.svg';
-import { ReactComponent as TwitterIcon } from '../icons/SocialTwitter.svg';
-import { ReactComponent as ContactSubmitImage } from '../images/phlaskContactSubmit.svg';
+import { useState } from 'react';
+import FacebookIcon from '../icons/SocialFacebook.svg?react';
+import InstagramIcon from '../icons/SocialInstagram.svg?react';
+import TwitterIcon from '../icons/SocialTwitter.svg?react';
+import ContactSubmitImage from '../images/phlaskContactSubmit.svg?react';
 import styles from './Pages.module.scss';
 
 const Contact = () => {
@@ -20,7 +20,9 @@ const Contact = () => {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.pageHeader} data-cy="contact-header">Contact</h1>
+      <h1 className={styles.pageHeader} data-cy="contact-header">
+        Contact
+      </h1>
       {!submitted && (
         <div>
           <h2

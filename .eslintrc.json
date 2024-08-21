@@ -2,9 +2,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier",
     "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "prettier"
   ],
   "rules": {
     "react/prop-types": 0,
@@ -13,10 +13,6 @@
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {
-    "parser": "@babel/eslint-parser",
-    "babelOptions": {
-      "presets": ["@babel/preset-react"]
-    },
     "sourceType": "module",
     "ecmaVersion": "latest",
     "ecmaFeatures": {

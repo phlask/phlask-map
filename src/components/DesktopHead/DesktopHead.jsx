@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, IconButton, Paper, Collapse, Button } from '@mui/material';
 import CloseIcon from '../../components/icons/CloseIcon';
-import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
-import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
-import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import PhlaskIcon from '../../components/icons/PHLASK_v2.svg?react';
+import PhlaskNoTextIcon from '../../components/icons/PhlaskNoText.svg?react';
+import UsersIcon from '../../components/icons/UsersIcon.svg?react';
+import IDIcon from '../../components/icons/ModalIDRequired.svg?react';
 import { HeaderContext } from '../../contexts/HeaderContext';
 import DropLink from '../../components/Buttons/DropLink';
 
@@ -58,12 +58,7 @@ export const DesktopHead = props => {
               }}
               onClick={() => setShowMapControls(true)}
             >
-              <PhlaskIcon
-                sx={{
-                  position: 'relative',
-                  top: '-10px'
-                }}
-              />
+              <PhlaskIcon width="154" height="39" />
             </Button>
           </Box>
           <Collapse

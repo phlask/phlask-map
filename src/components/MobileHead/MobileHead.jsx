@@ -10,12 +10,12 @@ import noop from 'utils/noop';
 import CloseIcon from '../../components/icons/CloseIcon';
 import DropLink from '../../components/Buttons/DropLink';
 import { HeaderContext } from '../../contexts/HeaderContext';
-import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
-import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
-import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
-import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
-import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import FilterIcon from '../../components/icons/FilterIcon.svg?react';
+import PhlaskIcon from '../../components/icons/PHLASK_v2.svg?react';
+import SearchIcon from '../../components/icons/SearchIcon.svg?react';
+import PhlaskNoTextIcon from '../../components/icons/PhlaskNoText.svg?react';
+import UsersIcon from '../../components/icons/UsersIcon.svg?react';
+import IDIcon from '../../components/icons/ModalIDRequired.svg?react';
 import {
   setToolbarModal,
   TOOLBAR_MODAL_FILTER,

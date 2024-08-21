@@ -1,0 +1,9 @@
+{
+  "icon": true,
+  "typescript": false,
+  "jsxRuntime": "classic",
+  "exportType": "default",
+  "prettierConfig": ".prettierrc",
+  "ref": true,
+  "titleProp": true
+}

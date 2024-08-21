@@ -1,5 +1,4 @@
-import ModalWrapper from 'components/AddResourceModal/ModalWrapper';
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import { getDatabase, set, ref } from 'firebase/database';
 import { resourcesConfig } from '../../firebase/firebaseConfig';
@@ -39,17 +38,20 @@ const VerificationButton = props => {
     setLoginError('');
   }, []);
 
-  const updateFirebaseEntry = resource => {
-    // TODO(vontell): We probably should not init this here every time, although it is likely fine.
-    const app = initializeApp(resourcesConfig);
-    const database = getDatabase(app);
-    // Removed ID since we don't want that as part of the saved data structure
-    const { id, ...filteredResource } = resource;
-    set(ref(database, `/${resource.id}`), filteredResource);
-    setHasBeenUpdated(true);
-    dispatch(updateExistingResource({resource}));
-    dispatch(setSelectedPlace(resource));
-  };
+  const updateFirebaseEntry = useCallback(
+    resource => {
+      // TODO(vontell): We probably should not init this here every time, although it is likely fine.
+      const app = initializeApp(resourcesConfig);
+      const database = getDatabase(app);
+      // Removed ID since we don't want that as part of the saved data structure
+      const { id, ...filteredResource } = resource;
+      set(ref(database, `/${resource.id}`), filteredResource);
+      setHasBeenUpdated(true);
+      dispatch(updateExistingResource({ resource }));
+      dispatch(setSelectedPlace(resource));
+    },
+    [dispatch]
+  );
 
   const markAsVerified = useCallback(() => {
     const newVerification = {
@@ -62,7 +64,7 @@ const VerificationButton = props => {
       verification: newVerification
     };
     updateFirebaseEntry(newResource);
-  }, [name, resource.verification]);
+  }, [name, resource, updateFirebaseEntry]);
 
   const markAsUnverified = useCallback(() => {
     const newVerification = {
@@ -75,7 +77,7 @@ const VerificationButton = props => {
       verification: newVerification
     };
     updateFirebaseEntry(newResource);
-  }, []);
+  }, [name, resource, updateFirebaseEntry]);
 
   const markAsInactive = useCallback(() => {
     const newVerification = {
@@ -89,7 +91,7 @@ const VerificationButton = props => {
       verification: newVerification
     };
     updateFirebaseEntry(newResource);
-  }, []);
+  }, [name, resource, updateFirebaseEntry]);
 
   if (!resource) {
     return;
@@ -161,7 +163,7 @@ const VerificationButton = props => {
                     flex: 1,
                     backgroundColor: 'gray',
                     '&:hover': {
-                      backgroundColor: 'gray',
+                      backgroundColor: 'gray'
                     },
                     color: 'white',
                     borderRadius: '4px',
@@ -182,7 +184,7 @@ const VerificationButton = props => {
                     flex: 1,
                     backgroundColor: 'blue',
                     '&:hover': {
-                      backgroundColor: 'blue',
+                      backgroundColor: 'blue'
                     },
                     color: 'white',
                     borderRadius: '4px',
@@ -211,7 +213,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'green',
                       '&:hover': {
-                        backgroundColor: 'green',
+                        backgroundColor: 'green'
                       },
                       color: 'white',
                       padding: '10px',
@@ -227,7 +229,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'orange',
                       '&:hover': {
-                        backgroundColor: 'orange',
+                        backgroundColor: 'orange'
                       },
                       color: 'white',
                       padding: '10px',
@@ -243,7 +245,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'red',
                       '&:hover': {
-                        backgroundColor: 'red',
+                        backgroundColor: 'red'
                       },
                       color: 'white',
                       padding: '10px',
@@ -259,7 +261,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'grey',
                       '&:hover': {
-                        backgroundColor: 'grey',
+                        backgroundColor: 'grey'
                       },
                       color: 'white',
                       padding: '10px',
@@ -280,7 +282,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'grey',
                       '&:hover': {
-                        backgroundColor: 'grey',
+                        backgroundColor: 'grey'
                       },
                       color: 'white',
                       padding: '10px',

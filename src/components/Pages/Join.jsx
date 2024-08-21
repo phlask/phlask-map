@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
-import { ReactComponent as CivicIcon } from '../icons/JoinCivicIcon.svg';
-import { ReactComponent as DataIcon } from '../icons/JoinDataIcon.svg';
-import { ReactComponent as DesignIcon } from '../icons/JoinDesignIcon.svg';
-import { ReactComponent as DevelopementIcon } from '../icons/JoinDevelopmentIcon.svg';
-import { ReactComponent as ManagementIcon } from '../icons/JoinManagementIcon.svg';
+import CivicIcon from '../icons/JoinCivicIcon.svg?react';
+import DataIcon from '../icons/JoinDataIcon.svg?react';
+import DesignIcon from '../icons/JoinDesignIcon.svg?react';
+import DevelopementIcon from '../icons/JoinDevelopmentIcon.svg?react';
+import ManagementIcon from '../icons/JoinManagementIcon.svg?react';
 import { fetchContributors } from '../../reducers/contributors';
 import styles from './Pages.module.scss';
 import ContributorsList from '../ContributorsList/ContributorsList';
@@ -16,6 +16,7 @@ const Circle = props => {
   return (
     <div
       style={{
+        fontSize: 25,
         display: 'grid',
         placeItems: 'center',
         aspectRatio: '1 / 1',
@@ -25,13 +26,13 @@ const Circle = props => {
       <div
         style={{
           width: '150px',
-          padding: '15px',
+          padding: '14px',
           backgroundColor: '#55C8FB6B',
           borderRadius: '50%',
           aspectRatio: '1 / 1'
         }}
       >
-        <Icon style={{ height: '25px', marginBottom: '5px' }} />
+        <Icon />
         <h2
           style={{
             margin: 0,
@@ -70,7 +71,9 @@ const Join = () => {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.pageHeader} data-cy="jointeam-header">Join the team</h1>
+      <h1 className={styles.pageHeader} data-cy="jointeam-header">
+        Join the team
+      </h1>
       <div>
         <p className={styles.pageText}>
           PHLASK volunteers come from a wide array of socioeconomic, educational
