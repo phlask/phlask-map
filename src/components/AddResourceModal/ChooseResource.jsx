@@ -1,16 +1,15 @@
 import styles from './AddResourceModal.module.scss';
-import Button from '@mui/material/Button';
 
 import useIsMobile from 'hooks/useIsMobile';
-import { useDispatch } from 'react-redux';
-import WaterIconCR from '../icons/WaterIconChooseResource.svg?react';
-import FoodIconCR from '../icons/FoodIconChooseResource.svg?react';
-import ForagingIconCR from '../icons/ForagingIconChooseResource.svg?react';
-import ToiletIconCR from '../icons/ToiletIconChooseResource.svg?react';
+import ResourceButton from '../ResourceButton/ResourceButton';
+import Box from '@mui/material/Box';
+import WaterIcon from '../icons/WaterIconChooseResource.svg?react';
+import FoodIcon from '../icons/FoodIconChooseResource.svg?react';
+import ForagingIcon from '../icons/ForagingIconChooseResource.svg?react';
+import BathroomIcon from '../icons/ToiletIconChooseResource.svg?react';
 
 function ChooseResource({ setFormStep }) {
   const isMobile = useIsMobile();
-  const dispatch = useDispatch();
 
   return (
     <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
@@ -22,65 +21,38 @@ function ChooseResource({ setFormStep }) {
         <br />
         to add and submit the form.
       </h3>
-      <div className={styles.buttonWrapper}>
-        <Button
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+        <ResourceButton
+          icon={WaterIcon}
           data-cy="button-contribute-water"
-          className={styles.modalButton}
-          variant={isMobile ? 'water' : 'waterDesktop'}
+          color="#5286E9"
+          text="Water"
           onClick={() => setFormStep('addWaterTap')}
-          sx={{
-            textTransform: 'capitalize',
-            fontSize: '20px',
-            lineHeight: '1'
-          }}
-        >
-          <WaterIconCR />
-          Water
-        </Button>
-        <Button
-          className={styles.modalButton}
-          variant={isMobile ? 'food' : 'foodDesktop'}
+        />
+        <ResourceButton
+          icon={ForagingIcon}
+          color="#5DA694"
+          text="Foraging"
+          data-cy="button-contribute-foraging"
           onClick={() => setFormStep('addFood')}
-          sx={{
-            textTransform: 'capitalize',
-            fontSize: '20px',
-            lineHeight: '1'
-          }}
-        >
-          <FoodIconCR />
-          Food
-        </Button>
-        <Button
-          className={styles.modalButton}
-          variant={isMobile ? 'bathrooms' : 'bathroomsDesktop'}
-          onClick={() => setFormStep('addBathroom')}
-          sx={{
-            textTransform: 'capitalize',
-            fontSize: '20px',
-            lineHeight: '1'
-          }}
-        >
-          <ToiletIconCR />
-          Bathrooms
-        </Button>
-        <Button
-          // this copy is different than the copy from the figma page,
-          // this might be a bit more clear? can make a point to ask
-          // about this next week
+        />
 
-          className={styles.modalButton}
-          variant={isMobile ? 'foraging' : 'foragingDesktop'}
+        <ResourceButton
+          icon={FoodIcon}
+          color="#FF9A55"
+          text="Food"
+          data-cy="button-contribute-food"
+          onClick={() => setFormStep('addBathroom')}
+        />
+
+        <ResourceButton
+          icon={BathroomIcon}
+          color="#9E9E9E"
+          text="Bathroom"
+          data-cy="button-contribute-bathroom"
           onClick={() => setFormStep('addForaging')}
-          sx={{
-            textTransform: 'capitalize',
-            fontSize: '20px',
-            lineHeight: '1'
-          }}
-        >
-          <ForagingIconCR />
-          Foraging
-        </Button>
-      </div>
+        />
+      </Box>
     </div>
   );
 }
