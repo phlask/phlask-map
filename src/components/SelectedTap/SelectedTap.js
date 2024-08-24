@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass
+  toggleInfoWindowClass,
 } from '../../actions/actions';
 import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
 

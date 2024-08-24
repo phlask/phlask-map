@@ -94,8 +94,10 @@ export const setSelectedPlace = selectedPlace => ({
   selectedPlace
 });
 
-export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
+export const setSearchBarMapTintOn = createAction('SET_SEARCH_BAR_MAP_TINT');
+export const setTapInfoOpenedWhileSearchOpen = createAction('SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN');
 
+export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';

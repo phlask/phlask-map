@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
-  TOOLBAR_MODAL_SEARCH,
   setMapCenter,
   setUserLocation,
   toggleInfoWindow,
@@ -160,6 +159,7 @@ export const ReactGoogleMaps = ({ google }) => {
   const filteredResources = useSelector(state => selectFilteredResource(state));
   const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
+  const searchBarMapTintOn = useSelector(state => state.filterMarkers.searchBarMapTintOn);
   const showingInfoWindow = useSelector(
     state => state.filterMarkers.showingInfoWindow
   );
@@ -324,10 +324,10 @@ export const ReactGoogleMaps = ({ google }) => {
             )}
           </Map>
         </div>
-      </ReactTouchEvents>
+      </ReactTouchEvents >
       {isMobile && (
         <Fade
-          in={toolbarModal == TOOLBAR_MODAL_SEARCH}
+          in={searchBarMapTintOn}
           timeout={300}
           style={{ position: 'fixed', pointerEvents: 'none' }}
         >
