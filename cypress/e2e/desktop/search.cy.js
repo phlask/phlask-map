@@ -15,6 +15,6 @@ describe('search', () => {
       'span:contains("30th Street Station, Market Street, Philadelphia, PA, USA")'
     ).click();
     // Not a perfect approach since it assumes the use of GMaps creating a link tied to the updated map center
-    cy.get('a[href*="39\\.956837\\,\\-75\\.182233"]').should('exist');
+    cy.get('a[href*="39\\.95574\\,\\-75\\.18196"]').should('exist');
   });
 });
