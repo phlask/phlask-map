@@ -6,20 +6,32 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
-import { TOOLBAR_MODAL_SEARCH, setToolbarModal } from '../../actions/actions';
+import {
+  TOOLBAR_MODAL_SEARCH,
+  setSearchBarMapTintOn,
+  setTapInfoOpenedWhileSearchOpen,
+} from '../../actions/actions';
 import styles from './SearchBar.module.scss';
 import useIsMobile from 'hooks/useIsMobile';
 import noop from 'utils/noop';
-import { useSelector } from 'react-redux/es/exports';
+import { useSelector, useDispatch } from 'react-redux';
 
 const SearchBar = ({ search }) => {
-  const refSearchBar = useRef();
+  const refSearchBarInput = useRef();
   const [address, setAddress] = useState('');
+  const tapInfoOpenedWhileSearchOpen = useSelector(state => state.filterMarkers.tapInfoOpenedWhileSearchOpen);
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
+
+  const handleChange = address => {
+    setAddress(address);
+    dispatch(setSearchBarMapTintOn(true));
+  };
 
   const handleSelect = address => {
     setAddress(address);
+    dispatch(setSearchBarMapTintOn(false));
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => search(latLng))
@@ -34,7 +46,7 @@ const SearchBar = ({ search }) => {
             <div className={styles.desktopSearch}>
               <PlacesAutocomplete
                 value={address}
-                onChange={setAddress}
+                onChange={handleChange}
                 onSelect={handleSelect}
               >
                 {({
@@ -44,11 +56,10 @@ const SearchBar = ({ search }) => {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${
-                      loading || suggestions.length > 0
-                        ? styles.hasDropdown
-                        : ''
-                    }`}
+                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
+                      ? styles.hasDropdown
+                      : ''
+                      }`}
                   >
                     {/* type="search" is only HTML5 compliant */}
                     <Input
@@ -57,7 +68,6 @@ const SearchBar = ({ search }) => {
                       })}
                       className={`${styles.searchInput} form-control`}
                       type="search"
-                      ref={refSearchBar}
                       startAdornment={
                         <InputAdornment position="end">
                           <SearchIcon />
@@ -96,7 +106,7 @@ const SearchBar = ({ search }) => {
             <div className={styles.mobileSearch}>
               <PlacesAutocomplete
                 value={address}
-                onChange={setAddress}
+                onChange={handleChange}
                 onSelect={handleSelect}
               >
                 {({
@@ -106,25 +116,37 @@ const SearchBar = ({ search }) => {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${
-                      loading || suggestions.length > 0
-                        ? styles.hasDropdown
-                        : ''
-                    }`}
+                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
+                      ? styles.hasDropdown
+                      : ''
+                      }`}
                   >
-                    <Input
+                    <Input autoFocus
                       {...getInputProps({
                         placeholder: 'Search for Resources near...'
                       })}
                       className={styles.mobileSearchInput}
+                      inputRef={refSearchBarInput}
                       type="search"
-                      ref={refSearchBar}
                       endAdornment={
                         <InputAdornment position="start">
                           <SearchIcon />
                         </InputAdornment>
                       }
                       disableUnderline={true}
+                      onFocus={() => {
+                        if (!tapInfoOpenedWhileSearchOpen) {
+                          dispatch(setSearchBarMapTintOn(true));
+                        }
+                        else {
+                          dispatch(setTapInfoOpenedWhileSearchOpen(false));
+                          refSearchBarInput.current.blur();
+                        }
+                      }
+                      }
+                      onBlur={() => {
+                        dispatch(setSearchBarMapTintOn(false));
+                      }}
                     />
                     {loading && (
                       <div className={styles.autocompleteDropdown}>
