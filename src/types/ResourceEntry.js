@@ -22,9 +22,9 @@
  * @property {Verification} verification The verification details of this resource.
  * @property {"WATER" | "FOOD" | "FORAGE" | "BATHROOM"} resource_type The type of resource.
  * @property {string | undefined} address The street address of the resource (not including city, state, or zip). May include the secondary address.
- * @property {string} city The city of the resource.
- * @property {string} state The 2-letter abbreviation for the state of the resource.
- * @property {string} zip_code The zip code of the resource.
+ * @property {string | undefined} city The city of the resource.
+ * @property {string | undefined} state The 2-letter abbreviation for the state of the resource.
+ * @property {string | undefined} zip_code The zip code of the resource.
  * @property {number} latitude The latitude of the resource.
  * @property {number} longitude The longitude of the resource.
  * @property {string | undefined} gp_id The Google Places ID of the resource.

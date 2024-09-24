@@ -228,15 +228,18 @@ export default function AddResourceModalV2(props) {
       const geocodedAddresses = await geocodeByAddress(values.address);
       const geocodedAddress = geocodedAddresses[0];
       const placeId = geocodedAddress.place_id;
-      const city = geocodedAddress.address_components.find(component =>
-        component.types.includes('locality')
-      ).long_name;
-      const state = geocodedAddress.address_components.find(component =>
-        component.types.includes('administrative_area_level_1')
-      ).long_name;
-      const postalCode = geocodedAddress.address_components.find(component =>
-        component.types.includes('postal_code')
-      ).long_name;
+      const city =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('locality')
+        )?.long_name || null;
+      const state =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('administrative_area_level_1')
+        )?.long_name || null;
+      const postalCode =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('postal_code')
+        )?.long_name || null;
 
       /**
        *
@@ -355,7 +358,8 @@ export default function AddResourceModalV2(props) {
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource).then(result => {
-        const id = result._path.pieces[0];
+        const pieces = result._path.pieces || result._path.pieces_;
+        const id = pieces[0];
         newResource.id = id;
         dispatch(pushNewResource(newResource));
       });
