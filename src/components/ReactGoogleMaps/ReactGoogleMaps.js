@@ -1,32 +1,47 @@
 import { Fade } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
+import useIsMobile from 'hooks/useIsMobile';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
+  TOOLBAR_MODAL_SEARCH,
+  getResources,
+  removeEntryFilterFunction,
+  removeFilterFunction,
+  resetFilterFunction,
+  setEntryFilterFunction,
+  setFilterFunction,
   setMapCenter,
+  setSelectedPlace,
   setUserLocation,
   toggleInfoWindow,
-  getResources,
-  setSelectedPlace,
-  setFilterFunction,
-  resetFilterFunction,
-  removeFilterFunction,
-  removeEntryFilterFunction,
-  setEntryFilterFunction,
 } from '../../actions/actions';
-import SearchBar from '../SearchBar/SearchBar';
-import SelectedTap from '../SelectedTap/SelectedTap';
-import styles from './ReactGoogleMaps.module.scss';
-import Stack from '@mui/material/Stack';
+import selectFilteredResource from '../../selectors/resourceSelectors';
+import {
+  BATHROOM_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  WATER_RESOURCE_TYPE
+} from '../../types/ResourceEntry';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
 import Filter from '../Filter/Filter';
+import SearchBar from '../SearchBar/SearchBar';
+import SelectedTap from '../SelectedTap/SelectedTap';
 import Toolbar from '../Toolbar/Toolbar';
+import { ReactComponent as DesktopBathroomIcon } from '../icons/BathroomIconChooseResource.svg';
+import { ReactComponent as DesktopFoodIcon } from '../icons/FoodIconChooseResource.svg';
+import { ReactComponent as MobileFoodIcon } from '../icons/FoodIconV2.svg';
+import { ReactComponent as DesktopForagingIcon } from '../icons/ForagingIconChooseResource.svg';
+import { ReactComponent as MobileForagingIcon } from '../icons/ForagingIconV2.svg';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
-import selectFilteredResource from '../../selectors/resourceSelectors';
-import useIsMobile from 'hooks/useIsMobile';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import { ReactComponent as MobileBathroomIcon } from '../icons/ToiletIconV2.svg';
+import { ReactComponent as DesktopWaterIcon } from '../icons/WaterIconChooseResource.svg';
+import { ReactComponent as MobileWaterIcon } from '../icons/WaterIconV2.svg';
+import styles from './ReactGoogleMaps.module.scss';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -41,6 +56,41 @@ const style = {
   height: '100%',
   position: 'relative'
 };
+
+const resourceTypeInfo = [
+  {
+    type: WATER_RESOURCE_TYPE,
+    textLabel: 'Water',
+    color: "#5286E9",
+    desktopIcon: DesktopWaterIcon,
+    mobileIcon: MobileWaterIcon,
+    formName: 'addWaterTap'
+  },
+  {
+    type: FORAGE_RESOURCE_TYPE,
+    textLabel: 'Foraging',
+    color: "#5DA694",
+    desktopIcon: DesktopForagingIcon,
+    mobileIcon: MobileForagingIcon,
+    formName: 'addForaging'
+  },
+  {
+    type: FOOD_RESOURCE_TYPE,
+    textLabel: 'Food',
+    color: "#FF9A55",
+    desktopIcon: DesktopFoodIcon,
+    mobileIcon: MobileFoodIcon,
+    formName: 'addFood'
+  },
+  {
+    type: BATHROOM_RESOURCE_TYPE,
+    textLabel: 'Bathroom',
+    color: "#9E9E9E",
+    desktopIcon: DesktopBathroomIcon,
+    mobileIcon: MobileBathroomIcon,
+    formName: 'addBathroom'
+  }
+]
 
 const filters = {
   WATER: {
@@ -347,7 +397,7 @@ export const ReactGoogleMaps = ({ google }) => {
             search={location => searchForLocation(location)}
           />
         </Stack>
-        <ChooseResourceType />
+        <ChooseResourceType resourceTypeInfo={resourceTypeInfo} />
         <Filter
           resourceType={resourceType}
           filters={filters}
@@ -356,7 +406,7 @@ export const ReactGoogleMaps = ({ google }) => {
           applyTags={applyTags}
           activeTags={activeFilterTags}
         />
-        <AddResourceModalV2 />
+        <AddResourceModalV2 resourceTypeInfo={resourceTypeInfo} />
         <Toolbar map={map} />
       </Stack>
       <SelectedTap />

@@ -1,28 +1,28 @@
 import React from 'react';
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { useDispatch, useSelector } from 'react-redux';
 import noop from 'utils/noop';
-import CloseIcon from '../../components/icons/CloseIcon';
-import DropLink from '../../components/Buttons/DropLink';
-import { HeaderContext } from '../../contexts/HeaderContext';
-import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
-import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
-import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
-import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
-import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
 import {
   setToolbarModal,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_SEARCH
 } from '../../actions/actions';
-import { useSelector, useDispatch } from 'react-redux';
+import DropLink from '../../components/Buttons/DropLink';
+import CloseIcon from '../../components/icons/CloseIcon';
+import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
+import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
+import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
+import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
+import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
+import { HeaderContext } from '../../contexts/HeaderContext';
 
 function MobileHead() {
   const dispatch = useDispatch();
@@ -105,15 +105,9 @@ function MobileHead() {
                 <IconButton
                   onClick={() => {
                     if (toolbarModal != TOOLBAR_MODAL_FILTER) {
-                      dispatch(
-                        setToolbarModal({
-                          toolbarModal: TOOLBAR_MODAL_FILTER
-                        })
-                      );
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_FILTER));
                     } else {
-                      dispatch(
-                        setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
-                      );
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                     }
                   }}
                 >

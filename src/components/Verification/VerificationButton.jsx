@@ -1,16 +1,15 @@
-import ModalWrapper from 'components/AddResourceModal/ModalWrapper';
-import React, { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
-import { getDatabase, set, ref } from 'firebase/database';
-import { resourcesConfig } from '../../firebase/firebaseConfig';
-import { initializeApp } from 'firebase/app';
+import Dialog from '@mui/material/Dialog';
 import Input from '@mui/material/Input';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  updateExistingResource,
-  setSelectedPlace
+  setSelectedPlace,
+  updateExistingResource
 } from '../../actions/actions';
-import Dialog from '@mui/material/Dialog';
+import { resourcesConfig } from '../../firebase/firebaseConfig';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -47,7 +46,7 @@ const VerificationButton = props => {
     const { id, ...filteredResource } = resource;
     set(ref(database, `/${resource.id}`), filteredResource);
     setHasBeenUpdated(true);
-    dispatch(updateExistingResource({resource}));
+    dispatch(updateExistingResource({ resource }));
     dispatch(setSelectedPlace(resource));
   };
 
@@ -161,7 +160,7 @@ const VerificationButton = props => {
                     flex: 1,
                     backgroundColor: 'gray',
                     '&:hover': {
-                      backgroundColor: 'gray',
+                      backgroundColor: 'gray'
                     },
                     color: 'white',
                     borderRadius: '4px',
@@ -182,7 +181,7 @@ const VerificationButton = props => {
                     flex: 1,
                     backgroundColor: 'blue',
                     '&:hover': {
-                      backgroundColor: 'blue',
+                      backgroundColor: 'blue'
                     },
                     color: 'white',
                     borderRadius: '4px',
@@ -211,7 +210,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'green',
                       '&:hover': {
-                        backgroundColor: 'green',
+                        backgroundColor: 'green'
                       },
                       color: 'white',
                       padding: '10px',
@@ -227,7 +226,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'orange',
                       '&:hover': {
-                        backgroundColor: 'orange',
+                        backgroundColor: 'orange'
                       },
                       color: 'white',
                       padding: '10px',
@@ -243,7 +242,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'red',
                       '&:hover': {
-                        backgroundColor: 'red',
+                        backgroundColor: 'red'
                       },
                       color: 'white',
                       padding: '10px',
@@ -259,7 +258,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'grey',
                       '&:hover': {
-                        backgroundColor: 'grey',
+                        backgroundColor: 'grey'
                       },
                       color: 'white',
                       padding: '10px',
@@ -280,7 +279,7 @@ const VerificationButton = props => {
                     sx={{
                       backgroundColor: 'grey',
                       '&:hover': {
-                        backgroundColor: 'grey',
+                        backgroundColor: 'grey'
                       },
                       color: 'white',
                       padding: '10px',
