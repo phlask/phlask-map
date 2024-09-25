@@ -48,7 +48,7 @@ const ChooseResource = props => {
                 margin="12px"
                 key={entry.type}
                 {...entry}
-                data-cy={`button-${entry.type}-data-selector`}
+                data-cy={`button-${entry.type}-data-submit-selector`}
                 setFormStep={() => props.setFormStep(entry.formName)}
               />
             ))}
