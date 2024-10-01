@@ -95,9 +95,11 @@ $lighter-grey: #e9eef4;
   .expandedToolBar {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 8px;
   }
 
   .subtitles {
     line-height: 20px;
+    margin-bottom: 0.1rem;
   }
 }
