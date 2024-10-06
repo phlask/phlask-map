@@ -245,6 +245,12 @@ export const ReactGoogleMaps = ({ google }) => {
             lng: position.coords.longitude
           })
         );
+        dispatch(
+          setMapCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          })
+        )
       } catch (error) {
         // Do nothing
       }

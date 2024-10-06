@@ -57,17 +57,20 @@ export const pushNewResource = newResource => ({
 // Handles the case where an existing resource is updated from the submission form
 export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
-export const SET_USER_LOCATION = 'SET_USER_LOCATION';
-export const setUserLocation = coords => ({
-  type: SET_USER_LOCATION,
-  coords
-});
+// export const SET_USER_LOCATION = 'SET_USER_LOCATION';
+// export const setUserLocation = coords => ({
+//   type: SET_USER_LOCATION,
+//   coords
+// });
 
-export const SET_MAP_CENTER = 'SET_MAP_CENTER';
-export const setMapCenter = coords => ({
-  type: SET_MAP_CENTER,
-  coords
-});
+// export const SET_MAP_CENTER = 'SET_MAP_CENTER';
+// export const setMapCenter = coords => ({
+//   type: SET_MAP_CENTER,
+//   coords
+// });
+
+export const setUserLocation = createAction('SET_USER_LOCATION');
+export const setMapCenter = createAction('SET_MAP_CENTER');
 
 export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');

@@ -72,11 +72,11 @@ export default (state = initialState, act) => {
         }
       };
 
-    case actions.SET_USER_LOCATION:
-      return { ...state, userLocation: act.coords };
+    case actions.setUserLocation.type:
+      return { ...state, userLocation: act.payload };
 
-    case actions.SET_MAP_CENTER:
-      return { ...state, mapCenter: act.coords };
+    case actions.setMapCenter.type:
+      return { ...state, mapCenter: act.payload };
 
     case actions.getResources.fulfilled.type:
       return { ...state, allResources: act.payload };
