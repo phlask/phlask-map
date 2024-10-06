@@ -214,9 +214,6 @@ export const ReactGoogleMaps = ({ google }) => {
     state => state.filterMarkers.showingInfoWindow
   );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-
-  const [currentLat, setCurrentLat] = useState(CITY_HALL_COORDINATES.latitude);
-  const [currentLon, setCurrentLon] = useState(CITY_HALL_COORDINATES.longitude);
   const [zoom, setZoom] = useState(16);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
@@ -237,8 +234,6 @@ export const ReactGoogleMaps = ({ google }) => {
     const fetchCoordinates = async () => {
       try {
         const position = await getCoordinates();
-        setCurrentLat(position.coords.latitude);
-        setCurrentLon(position.coords.longitude);
         dispatch(
           setUserLocation({
             lat: position.coords.latitude,
@@ -268,10 +263,13 @@ export const ReactGoogleMaps = ({ google }) => {
       })
     );
     dispatch(setSelectedPlace(resource));
-    setCurrentLat(resource.latitude);
-    setCurrentLon(resource.longitude);
+    dispatch(
+      setMapCenter({
+        lat: resource.latitude,
+        lng: resource.longitude
+      })
+    )
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
-
   };
 
   const onReady = (_, map) => {
@@ -279,8 +277,12 @@ export const ReactGoogleMaps = ({ google }) => {
   };
 
   const searchForLocation = location => {
-    setCurrentLat(location.lat);
-    setCurrentLon(location.lng);
+    dispatch(
+      setMapCenter({
+        lat: location.lat,
+        lng: location.lng
+      })
+    )
     setZoom(16);
     setSearchedTap({ lat: location.lat, lng: location.lng });
   };
@@ -351,8 +353,8 @@ export const ReactGoogleMaps = ({ google }) => {
             fullscreenControl={false}
             onReady={onReady}
             center={{
-              lat: currentLat,
-              lng: currentLon
+              lat: mapCenter.lat,
+              lng: mapCenter.lng
             }}
             filterTags={appliedFilterTags}
           >

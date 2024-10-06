@@ -6,6 +6,7 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
+  setMapCenter,
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow,
@@ -111,10 +112,15 @@ function Toolbar({ map }) {
       lon: userLocation.lng
     });
 
-    if (!closest) console.log("no closest found!")
+    // if (!closest) console.log("no closest found!")
 
     if (!closest) return;
-
+    dispatch(
+      setMapCenter({
+        lat: closest.latitude,
+        lng: closest.longitude
+      })
+    )
     dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
