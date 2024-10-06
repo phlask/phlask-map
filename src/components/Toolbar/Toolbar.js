@@ -112,8 +112,6 @@ function Toolbar({ map }) {
       lon: userLocation.lng
     });
 
-    // if (!closest) console.log("no closest found!")
-
     if (!closest) return;
     dispatch(
       setLastResourcePan({
