@@ -239,6 +239,12 @@ export const ReactGoogleMaps = ({ google }) => {
         const position = await getCoordinates();
         setCurrentLat(position.coords.latitude);
         setCurrentLon(position.coords.longitude);
+        dispatch(
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          })
+        );
       } catch (error) {
         // Do nothing
       }
@@ -246,7 +252,7 @@ export const ReactGoogleMaps = ({ google }) => {
 
     fetchCoordinates();
   }, []);
-  
+
   //toggle window goes here
   const onMarkerClick = (resource, markerProps) => {
     dispatch(
