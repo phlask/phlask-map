@@ -3,7 +3,7 @@ import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
-  mapCenter: {
+  lastResourcePan: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
@@ -75,8 +75,8 @@ export default (state = initialState, act) => {
     case actions.setUserLocation.type:
       return { ...state, userLocation: act.payload };
 
-    case actions.setMapCenter.type:
-      return { ...state, mapCenter: act.payload };
+    case actions.setLastResourcePan.type:
+      return { ...state, lastResourcePan: act.payload };
 
     case actions.getResources.fulfilled.type:
       return { ...state, allResources: act.payload };

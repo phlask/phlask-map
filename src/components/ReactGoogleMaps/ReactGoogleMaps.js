@@ -14,7 +14,7 @@ import {
   resetFilterFunction,
   setEntryFilterFunction,
   setFilterFunction,
-  setMapCenter,
+  setLastResourcePan,
   setSelectedPlace,
   setUserLocation,
   toggleInfoWindow,
@@ -207,7 +207,7 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
+  const lastResourcePan = useSelector(state => state.filterMarkers.lastResourcePan);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const searchBarMapTintOn = useSelector(state => state.filterMarkers.searchBarMapTintOn);
   const showingInfoWindow = useSelector(
@@ -241,7 +241,7 @@ export const ReactGoogleMaps = ({ google }) => {
           })
         );
         dispatch(
-          setMapCenter({
+          setLastResourcePan({
             lat: position.coords.latitude,
             lng: position.coords.longitude
           })
@@ -264,7 +264,7 @@ export const ReactGoogleMaps = ({ google }) => {
     );
     dispatch(setSelectedPlace(resource));
     dispatch(
-      setMapCenter({
+      setLastResourcePan({
         lat: resource.latitude,
         lng: resource.longitude
       })
@@ -278,7 +278,7 @@ export const ReactGoogleMaps = ({ google }) => {
 
   const searchForLocation = location => {
     dispatch(
-      setMapCenter({
+      setLastResourcePan({
         lat: location.lat,
         lng: location.lng
       })
@@ -353,8 +353,8 @@ export const ReactGoogleMaps = ({ google }) => {
             fullscreenControl={false}
             onReady={onReady}
             center={{
-              lat: mapCenter.lat,
-              lng: mapCenter.lng
+              lat: lastResourcePan.lat,
+              lng: lastResourcePan.lng
             }}
             filterTags={appliedFilterTags}
           >

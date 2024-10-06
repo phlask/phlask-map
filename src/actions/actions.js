@@ -58,7 +58,7 @@ export const pushNewResource = newResource => ({
 export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
 export const setUserLocation = createAction('SET_USER_LOCATION');
-export const setMapCenter = createAction('SET_MAP_CENTER');
+export const setLastResourcePan = createAction('SET_LAST_RESOURCE_PAN');
 
 export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');

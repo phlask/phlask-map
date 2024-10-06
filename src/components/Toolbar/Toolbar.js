@@ -6,7 +6,7 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  setMapCenter,
+  setLastResourcePan,
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow,
@@ -116,7 +116,7 @@ function Toolbar({ map }) {
 
     if (!closest) return;
     dispatch(
-      setMapCenter({
+      setLastResourcePan({
         lat: closest.latitude,
         lng: closest.longitude
       })
