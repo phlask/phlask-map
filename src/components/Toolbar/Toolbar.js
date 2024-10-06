@@ -110,17 +110,25 @@ function Toolbar({ map }) {
       lat: userLocation.lat,
       lon: userLocation.lng
     });
+
+    if (!closest) console.log("no closest found!")
+
     if (!closest) return;
 
-    dispatch(toggleInfoWindow({
-      isShown: true,
-      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
-    }));
     dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
+
+    // maybe, this should be handled somwhere else, as a response to setSelectedPlace
+    // e.g. is there ever a time where we want to setSelectedPlace, but not open the info? 
+    // maybe some edge cases, but that could probably be handled elsewhere too. (e.g. if the selectedPlace does not exist.)
+    // dispatch(toggleInfoWindow({
+    //   isShown: true,
+    //   infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+    // }));
+
   }
 
   function closestButtonClicked() {

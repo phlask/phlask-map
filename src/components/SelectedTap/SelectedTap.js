@@ -131,8 +131,8 @@ const SelectedTap = () => {
         toggleInfoWindow({
           isShown,
           infoWindowClass: isMobile
-            ? 'info-window-out'
-            : 'info-window-out-desktop'
+            ? 'info-window-in'
+            : 'info-window-in-desktop'
         })
       );
     }

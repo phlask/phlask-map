@@ -129,7 +129,7 @@ export default (state = initialState, act) => {
         : {
           ...state,
           selectedPlace: state.allResources[act.selectedPlace],
-          showingInfoWindow: true
+          showingInfoWindow: true // debuggin! why is this here, and not in the other branch? 
         };
 
     case actions.toggleInfoWindow.type:
