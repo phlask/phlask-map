@@ -3,11 +3,12 @@ import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
+  // Captures location when e.g. a pin is clicked or "Near Me" is clicked
   lastResourcePan: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
-  // Change to reflect user's current location
+  // Changes to reflect user's current location if location is enabled
   userLocation: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
