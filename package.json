@@ -67,7 +67,7 @@
     "storybook": "^7.0.10"
   },
   "scripts": {
-    "start": "PORT=7000 react-scripts start",
+    "start": "react-scripts start",
     "start:cypress": "REACT_APP_CYPRESS_TEST=true react-scripts start",
     "build": "react-scripts build",
     "testDataGen": "node cypress/testDataGenerator.js",
