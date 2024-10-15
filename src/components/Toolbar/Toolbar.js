@@ -6,9 +6,10 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
+  setLastResourcePan,
   setSelectedPlace,
   setToolbarModal,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import styles from './Toolbar.module.scss';
 
@@ -51,7 +52,7 @@ function distance(lat1, lon1, lat2, lon2) {
     (Math.cos(lat1 * p) *
       Math.cos(lat2 * p) *
       (1 - Math.cos((lon2 - lon1) * p))) /
-    2;
+      2;
   return 12742 * Math.asin(Math.sqrt(a));
 }
 
@@ -112,15 +113,23 @@ function Toolbar({ map }) {
     });
     if (!closest) return;
 
-    dispatch(toggleInfoWindow({
-      isShown: true,
-      infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
-    }));
+    dispatch(
+      setLastResourcePan({
+        lat: closest.latitude,
+        lng: closest.longitude
+      })
+    );
     dispatch(setSelectedPlace(closest));
     map.panTo({
       lat: closest.latitude,
       lng: closest.longitude
     });
+    dispatch(
+      toggleInfoWindow({
+        isShown: true,
+        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+      })
+    );
   }
 
   function closestButtonClicked() {

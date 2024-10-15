@@ -14,7 +14,7 @@ import {
   resetFilterFunction,
   setEntryFilterFunction,
   setFilterFunction,
-  setMapCenter,
+  setLastResourcePan,
   setSelectedPlace,
   setUserLocation,
   toggleInfoWindow,
@@ -207,16 +207,13 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
+  const lastResourcePan = useSelector(state => state.filterMarkers.lastResourcePan);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const searchBarMapTintOn = useSelector(state => state.filterMarkers.searchBarMapTintOn);
   const showingInfoWindow = useSelector(
     state => state.filterMarkers.showingInfoWindow
   );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-
-  const [currentLat, setCurrentLat] = useState(CITY_HALL_COORDINATES.latitude);
-  const [currentLon, setCurrentLon] = useState(CITY_HALL_COORDINATES.longitude);
   const [zoom, setZoom] = useState(16);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
@@ -237,8 +234,18 @@ export const ReactGoogleMaps = ({ google }) => {
     const fetchCoordinates = async () => {
       try {
         const position = await getCoordinates();
-        setCurrentLat(position.coords.latitude);
-        setCurrentLon(position.coords.longitude);
+        dispatch(
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          })
+        );
+        dispatch(
+          setLastResourcePan({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          })
+        )
       } catch (error) {
         // Do nothing
       }
@@ -246,7 +253,7 @@ export const ReactGoogleMaps = ({ google }) => {
 
     fetchCoordinates();
   }, []);
-  
+
   //toggle window goes here
   const onMarkerClick = (resource, markerProps) => {
     dispatch(
@@ -256,10 +263,13 @@ export const ReactGoogleMaps = ({ google }) => {
       })
     );
     dispatch(setSelectedPlace(resource));
-    setCurrentLat(resource.latitude);
-    setCurrentLon(resource.longitude);
+    dispatch(
+      setLastResourcePan({
+        lat: resource.latitude,
+        lng: resource.longitude
+      })
+    )
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
-
   };
 
   const onReady = (_, map) => {
@@ -267,8 +277,12 @@ export const ReactGoogleMaps = ({ google }) => {
   };
 
   const searchForLocation = location => {
-    setCurrentLat(location.lat);
-    setCurrentLon(location.lng);
+    dispatch(
+      setLastResourcePan({
+        lat: location.lat,
+        lng: location.lng
+      })
+    )
     setZoom(16);
     setSearchedTap({ lat: location.lat, lng: location.lng });
   };
@@ -339,8 +353,8 @@ export const ReactGoogleMaps = ({ google }) => {
             fullscreenControl={false}
             onReady={onReady}
             center={{
-              lat: currentLat,
-              lng: currentLon
+              lat: lastResourcePan.lat,
+              lng: lastResourcePan.lng
             }}
             filterTags={appliedFilterTags}
           >

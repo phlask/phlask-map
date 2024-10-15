@@ -18,16 +18,17 @@ export const setToggleStateFood = (toggle, toggleState) => ({
   toggleState
 });
 
-export const setFilterFunction = createAction('SET_FILTER_FUNCTION')
+export const setFilterFunction = createAction('SET_FILTER_FUNCTION');
 
-export const setEntryFilterFunction = createAction('SET_ENTRY_FILTER_FUNCTION')
+export const setEntryFilterFunction = createAction('SET_ENTRY_FILTER_FUNCTION');
 
-export const removeFilterFunction = createAction('REMOVE_FILTER_FUNCTION')
+export const removeFilterFunction = createAction('REMOVE_FILTER_FUNCTION');
 
-export const removeEntryFilterFunction = createAction('REMOVE_ENTRY_FILTER_FUNCTION')
+export const removeEntryFilterFunction = createAction(
+  'REMOVE_ENTRY_FILTER_FUNCTION'
+);
 
-export const resetFilterFunction = createAction('RESET_FILTER_FUNCTION')
-
+export const resetFilterFunction = createAction('RESET_FILTER_FUNCTION');
 
 export const getResources = createAsyncThunk(
   'fetch-resources',
@@ -38,12 +39,10 @@ export const getResources = createAsyncThunk(
     if (process.env.REACT_APP_CYPRESS_TEST) return testData;
     const snapshot = await get(ref(database, '/'));
     const results = snapshot.val();
-    return Object.entries(results).map(
-      ([id, resource]) => ({
-        ...resource,
-        id
-      })
-    );
+    return Object.entries(results).map(([id, resource]) => ({
+      ...resource,
+      id
+    }));
   }
 );
 
@@ -57,17 +56,8 @@ export const pushNewResource = newResource => ({
 // Handles the case where an existing resource is updated from the submission form
 export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
-export const SET_USER_LOCATION = 'SET_USER_LOCATION';
-export const setUserLocation = coords => ({
-  type: SET_USER_LOCATION,
-  coords
-});
-
-export const SET_MAP_CENTER = 'SET_MAP_CENTER';
-export const setMapCenter = coords => ({
-  type: SET_MAP_CENTER,
-  coords
-});
+export const setUserLocation = createAction('SET_USER_LOCATION');
+export const setLastResourcePan = createAction('SET_LAST_RESOURCE_PAN');
 
 export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');
@@ -88,14 +78,12 @@ export const setFilteredFoodTypes = foodType => ({
   foodType
 });
 
-export const SET_SELECTED_PLACE = 'SET_SELECTED_PLACE';
-export const setSelectedPlace = selectedPlace => ({
-  type: SET_SELECTED_PLACE,
-  selectedPlace
-});
+export const setSelectedPlace = createAction('SET_SELECTED_PLACE');
 
 export const setSearchBarMapTintOn = createAction('SET_SEARCH_BAR_MAP_TINT');
-export const setTapInfoOpenedWhileSearchOpen = createAction('SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN');
+export const setTapInfoOpenedWhileSearchOpen = createAction(
+  'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
+);
 
 export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
