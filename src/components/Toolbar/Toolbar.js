@@ -248,7 +248,6 @@ function Toolbar(props) {
               Resources
             </Typography>
           </IconButton>
-          <ConfirmationModal />
           <IconButton
             variant="text"
             sx={{
