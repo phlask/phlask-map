@@ -288,7 +288,7 @@ function getTagsFromResource(resource) {
     tags.push(...(resource.food.organization_type || []));
   }
   if (resource.forage) {
-    tags.push(resource.forage.forage_type);
+    tags.push(...(resource.forage.forage_type || []));
   }
 
   return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
