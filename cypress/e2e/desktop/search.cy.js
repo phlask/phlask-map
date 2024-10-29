@@ -9,12 +9,12 @@ describe('search', () => {
     cy.get('[data-cy=button-search]').click();
 
     cy.get('input[placeholder="Search for Resources near..."]').type(
-      '30th Street Station, Market Street, Philadelphia, PA'
+      'Logan Square, North 19th Street, Philadelphia, PA, USA'
     );
     cy.get(
-      'span:contains("30th Street Station, Market Street, Philadelphia, PA, USA")'
+      'span:contains("Logan Square, North 19th Street, Philadelphia, PA, USA")'
     ).click();
     // Not a perfect approach since it assumes the use of GMaps creating a link tied to the updated map center
-    cy.get('a[href*="39\\.95574\\,\\-75\\.18196"]').should('exist');
+    cy.get('a[href*="39\\.958033\\,\\-75\\.17096"]').should('exist');
   });
 });
