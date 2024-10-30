@@ -17,7 +17,7 @@ import {
   setLastResourcePan,
   setSelectedPlace,
   setUserLocation,
-  toggleInfoWindow,
+  toggleInfoWindow
 } from '../../actions/actions';
 import selectFilteredResource from '../../selectors/resourceSelectors';
 import {
@@ -61,7 +61,7 @@ const resourceTypeInfo = [
   {
     type: WATER_RESOURCE_TYPE,
     textLabel: 'Water',
-    color: "#5286E9",
+    color: '#5286E9',
     desktopIcon: DesktopWaterIcon,
     mobileIcon: MobileWaterIcon,
     formName: 'addWaterTap'
@@ -69,7 +69,7 @@ const resourceTypeInfo = [
   {
     type: FORAGE_RESOURCE_TYPE,
     textLabel: 'Foraging',
-    color: "#5DA694",
+    color: '#5DA694',
     desktopIcon: DesktopForagingIcon,
     mobileIcon: MobileForagingIcon,
     formName: 'addForaging'
@@ -77,7 +77,7 @@ const resourceTypeInfo = [
   {
     type: FOOD_RESOURCE_TYPE,
     textLabel: 'Food',
-    color: "#FF9A55",
+    color: '#FF9A55',
     desktopIcon: DesktopFoodIcon,
     mobileIcon: MobileFoodIcon,
     formName: 'addFood'
@@ -85,12 +85,12 @@ const resourceTypeInfo = [
   {
     type: BATHROOM_RESOURCE_TYPE,
     textLabel: 'Bathroom',
-    color: "#9E9E9E",
+    color: '#9E9E9E',
     desktopIcon: DesktopBathroomIcon,
     mobileIcon: MobileBathroomIcon,
     formName: 'addBathroom'
   }
-]
+];
 
 const filters = {
   WATER: {
@@ -207,9 +207,13 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  const lastResourcePan = useSelector(state => state.filterMarkers.lastResourcePan);
+  const lastResourcePan = useSelector(
+    state => state.filterMarkers.lastResourcePan
+  );
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
-  const searchBarMapTintOn = useSelector(state => state.filterMarkers.searchBarMapTintOn);
+  const searchBarMapTintOn = useSelector(
+    state => state.filterMarkers.searchBarMapTintOn
+  );
   const showingInfoWindow = useSelector(
     state => state.filterMarkers.showingInfoWindow
   );
@@ -245,7 +249,7 @@ export const ReactGoogleMaps = ({ google }) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           })
-        )
+        );
       } catch (error) {
         // Do nothing
       }
@@ -268,7 +272,7 @@ export const ReactGoogleMaps = ({ google }) => {
         lat: resource.latitude,
         lng: resource.longitude
       })
-    )
+    );
     markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
   };
 
@@ -282,7 +286,7 @@ export const ReactGoogleMaps = ({ google }) => {
         lat: location.lat,
         lng: location.lng
       })
-    )
+    );
     setZoom(16);
     setSearchedTap({ lat: location.lat, lng: location.lng });
   };
@@ -305,10 +309,9 @@ export const ReactGoogleMaps = ({ google }) => {
     if (type == 0) {
       let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index][key]) {
-        dispatch(removeFilterFunction({ tag: filterTag }))
-      }
-      else {
-        dispatch(setFilterFunction({ tag: filterTag }))
+        dispatch(removeFilterFunction({ tag: filterTag }));
+      } else {
+        dispatch(setFilterFunction({ tag: filterTag }));
       }
       activeFilterTags_[filterType][index][key] =
         !activeFilterTags_[filterType][index][key];
@@ -319,10 +322,10 @@ export const ReactGoogleMaps = ({ google }) => {
       let activeFilterTags_ = { ...activeFilterTags };
       if (activeFilterTags_[filterType][index] == key) {
         activeFilterTags_[filterType][index] = null;
-        dispatch(removeEntryFilterFunction())
+        dispatch(removeEntryFilterFunction());
       } else {
         activeFilterTags_[filterType][index] = key;
-        dispatch(setEntryFilterFunction({ tag: filterTag }))
+        dispatch(setEntryFilterFunction({ tag: filterTag }));
       }
       setActiveFilterTags(activeFilterTags_);
     }
@@ -330,7 +333,7 @@ export const ReactGoogleMaps = ({ google }) => {
 
   const clearAllTags = () => {
     setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
-    dispatch(resetFilterFunction())
+    dispatch(resetFilterFunction());
   };
 
   const applyTags = () => {
@@ -388,7 +391,7 @@ export const ReactGoogleMaps = ({ google }) => {
             )}
           </Map>
         </div>
-      </ReactTouchEvents >
+      </ReactTouchEvents>
       {isMobile && (
         <Fade
           in={searchBarMapTintOn}

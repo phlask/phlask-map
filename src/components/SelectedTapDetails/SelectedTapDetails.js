@@ -41,25 +41,37 @@ function SelectedTapDetails(props) {
     return <div></div>;
   }
 
-  const latLongFormatted = getFormattedLatLong(resource.latitude, resource.longitude);
+  const latLongFormatted = getFormattedLatLong(
+    resource.latitude,
+    resource.longitude
+  );
 
   // Assign title and subtitles, using fallbacks when data is missing
-  let resourceTitle = "", resourceSubtitleOne, resourceSubtitleTwo;
-  if (resource.name !== undefined && resource.name.trim().length > 0 &&
-    resource.address !== undefined && resource.address.trim().length > 0) {
+  let resourceTitle = '',
+    resourceSubtitleOne,
+    resourceSubtitleTwo;
+  if (
+    resource.name !== undefined &&
+    resource.name.trim().length > 0 &&
+    resource.address !== undefined &&
+    resource.address.trim().length > 0
+  ) {
     resourceTitle = resource.name;
     resourceSubtitleOne = resource.address;
     resourceSubtitleTwo = latLongFormatted;
-  }
-  else if (resource.name !== undefined && resource.name.trim().length > 0) {
+  } else if (resource.name !== undefined && resource.name.trim().length > 0) {
     resourceTitle = resource.name;
     resourceSubtitleOne = latLongFormatted;
-  }
-  else if (resource.address !== undefined && resource.address.trim().length > 0) {
+  } else if (
+    resource.address !== undefined &&
+    resource.address.trim().length > 0
+  ) {
     resourceTitle = resource.address;
     resourceSubtitleOne = latLongFormatted;
-  }
-  else if ((resource.latitude !== undefined) && resource.longitude !== undefined) {
+  } else if (
+    resource.latitude !== undefined &&
+    resource.longitude !== undefined
+  ) {
     resourceTitle = latLongFormatted;
   }
 
@@ -201,15 +213,19 @@ function SelectedTapDetails(props) {
           <h2 className={styles.organization} data-cy="tap-organization-name">
             {resourceTitle}
           </h2>
-          <p className={styles.subtitles}>{resourceSubtitleOne}<br />{resourceSubtitleTwo}</p>
+          <p className={styles.subtitles}>
+            {resourceSubtitleOne}
+            <br />
+            {resourceSubtitleTwo}
+          </p>
           {props.children}
           <Button
             onClick={() =>
               window.open(
                 'https://www.google.com/maps/dir/?api=1&destination=' +
-                resource.latitude +
-                ',' +
-                resource.longitude,
+                  resource.latitude +
+                  ',' +
+                  resource.longitude,
                 '_blank'
               )
             }
@@ -302,10 +318,12 @@ function getTagsFromResource(resource) {
  */
 function decimalDegreesToDMS(decimalDegrees) {
   let integralDegrees = Math.trunc(decimalDegrees);
-  const fractionalDegrees = Math.abs(decimalDegrees) - Math.abs(integralDegrees);
+  const fractionalDegrees =
+    Math.abs(decimalDegrees) - Math.abs(integralDegrees);
   const fractionalDegreesInMinutes = fractionalDegrees * 60;
   let minutes = Math.trunc(fractionalDegreesInMinutes);
-  const remainingFractionalDegreesInMinutes = fractionalDegreesInMinutes - minutes;
+  const remainingFractionalDegreesInMinutes =
+    fractionalDegreesInMinutes - minutes;
   const seconds = remainingFractionalDegreesInMinutes * 60;
   let roundedSeconds = Number(seconds.toFixed(1));
   // Account for rounding edge case
@@ -321,7 +339,7 @@ function decimalDegreesToDMS(decimalDegrees) {
     deg: integralDegrees,
     min: minutes,
     sec: roundedSeconds
-  }
+  };
 }
 
 /**
@@ -338,12 +356,9 @@ function decimalDegreesToDMS(decimalDegrees) {
 function getFormattedLatLong(latitude, longitude) {
   let clampedLatitude, wrappedLongitude;
 
-  if (latitude < -90)
-    clampedLatitude = -90;
-  else if (latitude > 90)
-    clampedLatitude = 90;
-  else
-    clampedLatitude = latitude;
+  if (latitude < -90) clampedLatitude = -90;
+  else if (latitude > 90) clampedLatitude = 90;
+  else clampedLatitude = latitude;
 
   wrappedLongitude = longitude % 180;
 
@@ -353,10 +368,8 @@ function getFormattedLatLong(latitude, longitude) {
   const latitudeDir = latitudeDMS.deg < 0 ? 'S' : 'N';
   const longitudeDir = longitudeDMS.deg < 0 ? 'W' : 'E';
 
-  const latitudeFormatted =
-    `${latitudeDMS.deg}\u00B0${latitudeDMS.min}'${latitudeDMS.sec}"${latitudeDir}`;
-  const longitudeFormatted =
-    `${longitudeDMS.deg}\u00B0${longitudeDMS.min}'${longitudeDMS.sec}"${longitudeDir}`;
+  const latitudeFormatted = `${latitudeDMS.deg}\u00B0${latitudeDMS.min}'${latitudeDMS.sec}"${latitudeDir}`;
+  const longitudeFormatted = `${longitudeDMS.deg}\u00B0${longitudeDMS.min}'${longitudeDMS.sec}"${longitudeDir}`;
 
   return `${latitudeFormatted} ${longitudeFormatted}`;
 }

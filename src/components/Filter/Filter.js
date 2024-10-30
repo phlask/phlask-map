@@ -1,5 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Collapse, IconButton, Paper, SwipeableDrawer } from '@mui/material';
+import {
+  Box,
+  Collapse,
+  IconButton,
+  Paper,
+  SwipeableDrawer
+} from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -104,9 +110,7 @@ export default function Filter({
                         : 'info-window-out-desktop'
                     })
                   );
-                  dispatch(
-                    setToolbarModal(TOOLBAR_MODAL_NONE)
-                  );
+                  dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                 }}
                 sx={{
                   position: 'absolute',
@@ -198,7 +202,7 @@ export default function Filter({
                     float: 'right',
                     border: '1px solid #09A2E5',
                     borderRadius: '8px',
-                    fontWeight: '600',
+                    fontWeight: '600'
                   }}
                 >
                   Resources: {filteredResources.length}
@@ -212,16 +216,26 @@ export default function Filter({
         <SwipeableDrawer
           anchor="bottom"
           onClose={() => {
-            dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))
+            dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
           }}
-          onOpen={() => { }}
+          onOpen={() => {}}
           disableSwipeToOpen={true}
           open={toolbarModal == TOOLBAR_MODAL_FILTER}
           PaperProps={{ sx: { borderRadius: '10px' } }}
         >
           <Box className={styles.header}>
             <Box sx={{ width: '100%' }}>
-              <Box sx={{ position: 'relative', left: '50%', transform: 'translateX(-50%)', width: '24px', height: '4px', borderRadius: '2px', backgroundColor: '#ffffff' }} />
+              <Box
+                sx={{
+                  position: 'relative',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '24px',
+                  height: '4px',
+                  borderRadius: '2px',
+                  backgroundColor: '#ffffff'
+                }}
+              />
             </Box>
             <h1>{filters[resourceType].title}</h1>
           </Box>
@@ -297,7 +311,7 @@ export default function Filter({
                   float: 'right',
                   border: '1px solid #09A2E5',
                   borderRadius: '8px',
-                  fontWeight: '600',
+                  fontWeight: '600'
                 }}
               >
                 Resources: {filteredResources.length}

@@ -4,7 +4,9 @@ import styles from './Pages.module.scss';
 
 const About = () => (
   <div className={styles.page}>
-    <h1 className={styles.pageHeader} data-cy="about-header">About PHLASK</h1>
+    <h1 className={styles.pageHeader} data-cy="about-header">
+      About PHLASK
+    </h1>
     <div>
       <h2 className={styles.pageSubheader}>What is PHLASK?</h2>
       <p className={styles.pageText}>

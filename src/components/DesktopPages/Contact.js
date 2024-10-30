@@ -6,10 +6,7 @@ const Share = () => {
   return (
     <div className={styles.pageText}>
       <h2>Contact</h2>
-      <Box
-        component="form"
-        autoComplete="off"
-      >
+      <Box component="form" autoComplete="off">
         <h3>Share Feedback</h3>
         <TextField id="name" label="Name" variant="outlined" />
         <TextField id="email" label="Email" variant="outlined" />
