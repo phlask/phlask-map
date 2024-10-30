@@ -220,7 +220,9 @@ const SelectedTap = () => {
               top: '20px',
               width: '708px',
               height: '700px',
-              borderRadius: '10px'
+              borderRadius: '10px',
+              maxHeight: '100%',
+              overflow: 'auto'
             }}
           >
             <SelectedTapDetails
