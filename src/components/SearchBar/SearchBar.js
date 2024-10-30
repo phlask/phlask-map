@@ -9,7 +9,7 @@ import PlacesAutocomplete, {
 import {
   TOOLBAR_MODAL_SEARCH,
   setSearchBarMapTintOn,
-  setTapInfoOpenedWhileSearchOpen,
+  setTapInfoOpenedWhileSearchOpen
 } from '../../actions/actions';
 import styles from './SearchBar.module.scss';
 import useIsMobile from 'hooks/useIsMobile';
@@ -19,7 +19,9 @@ import { useSelector, useDispatch } from 'react-redux';
 const SearchBar = ({ search }) => {
   const refSearchBarInput = useRef();
   const [address, setAddress] = useState('');
-  const tapInfoOpenedWhileSearchOpen = useSelector(state => state.filterMarkers.tapInfoOpenedWhileSearchOpen);
+  const tapInfoOpenedWhileSearchOpen = useSelector(
+    state => state.filterMarkers.tapInfoOpenedWhileSearchOpen
+  );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
@@ -56,10 +58,11 @@ const SearchBar = ({ search }) => {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
-                      ? styles.hasDropdown
-                      : ''
-                      }`}
+                    className={`${styles.searchBarContainer} ${
+                      loading || suggestions.length > 0
+                        ? styles.hasDropdown
+                        : ''
+                    }`}
                   >
                     {/* type="search" is only HTML5 compliant */}
                     <Input
@@ -116,12 +119,14 @@ const SearchBar = ({ search }) => {
                   loading
                 }) => (
                   <div
-                    className={`${styles.searchBarContainer} ${loading || suggestions.length > 0
-                      ? styles.hasDropdown
-                      : ''
-                      }`}
+                    className={`${styles.searchBarContainer} ${
+                      loading || suggestions.length > 0
+                        ? styles.hasDropdown
+                        : ''
+                    }`}
                   >
-                    <Input autoFocus
+                    <Input
+                      autoFocus
                       {...getInputProps({
                         placeholder: 'Search for Resources near...'
                       })}
@@ -137,13 +142,11 @@ const SearchBar = ({ search }) => {
                       onFocus={() => {
                         if (!tapInfoOpenedWhileSearchOpen) {
                           dispatch(setSearchBarMapTintOn(true));
-                        }
-                        else {
+                        } else {
                           dispatch(setTapInfoOpenedWhileSearchOpen(false));
                           refSearchBarInput.current.blur();
                         }
-                      }
-                      }
+                      }}
                       onBlur={() => {
                         dispatch(setSearchBarMapTintOn(false));
                       }}

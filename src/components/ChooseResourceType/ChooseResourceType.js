@@ -6,10 +6,11 @@ const ChooseResourceType = props => {
   const isMobile = useIsMobile();
   return (
     <>
-      {!isMobile ?
-        (<DesktopChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />)
-        :
-        <MobileChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />}
+      {!isMobile ? (
+        <DesktopChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />
+      ) : (
+        <MobileChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />
+      )}
     </>
   );
 };

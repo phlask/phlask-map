@@ -1,7 +1,7 @@
 // Returns the map marker icon in URI encoded svg format
 
 export default (resourceType, width = 40, height = 40) => {
-  if (resourceType === "WATER") {
+  if (resourceType === 'WATER') {
     return (
       'data:image/svg+xml;utf8,' +
       encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ export default (resourceType, width = 40, height = 40) => {
       `)
     );
   }
-  if (resourceType === "FOOD") {
+  if (resourceType === 'FOOD') {
     return (
       'data:image/svg+xml;utf8,' +
       encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,9 +49,9 @@ export default (resourceType, width = 40, height = 40) => {
       </defs>
       </svg>
       `)
-    )
+    );
   }
-  if (resourceType === "FORAGE") {
+  if (resourceType === 'FORAGE') {
     return (
       'data:image/svg+xml;utf8,' +
       encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,9 +74,9 @@ export default (resourceType, width = 40, height = 40) => {
       </defs>
       </svg>
       `)
-    )
+    );
   }
-  if (resourceType === "BATHROOM") {
+  if (resourceType === 'BATHROOM') {
     return (
       'data:image/svg+xml;utf8,' +
       encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +99,6 @@ export default (resourceType, width = 40, height = 40) => {
       </defs>
       </svg>
       `)
-    )
+    );
   }
-
 };

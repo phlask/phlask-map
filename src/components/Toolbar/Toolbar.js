@@ -214,6 +214,7 @@ function Toolbar({ map }) {
             disableFocusRipple={true}
             disableRipple={true}
             data-cy="button-resource-type-menu"
+            id="resource-type-select-button"
           >
             <ResourceIcon style={{ color: '#f80' }} />
             <Typography

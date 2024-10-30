@@ -38,11 +38,13 @@ const MobileResourceButton = props => {
     <ListItemButton
       sx={{ alignItems: 'end' }}
       onClick={() => {
-        dispatch(resetFilterFunction())
-        switchType(props.type)
+        dispatch(resetFilterFunction());
+        switchType(props.type);
       }}
     >
-      <ListItemIcon><props.mobileIcon /></ListItemIcon>
+      <ListItemIcon>
+        <props.mobileIcon />
+      </ListItemIcon>
       <ListItemText>
         <Grid container justifyContent={'flex-start'}>
           <Box mx={1.25} bgcolor={'white'} p={0.25} borderRadius={1} px={1}>
@@ -56,7 +58,7 @@ const MobileResourceButton = props => {
   );
 };
 
-const MobileChooseResourceType = (props) => {
+const MobileChooseResourceType = props => {
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
@@ -91,7 +93,7 @@ const MobileChooseResourceType = (props) => {
           </List>
         </Slide>
       </Dialog>
-    </Box >
+    </Box>
   );
 };
 

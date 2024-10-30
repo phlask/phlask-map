@@ -31,10 +31,10 @@ const DesktopResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={() => {
-        dispatch(resetFilterFunction())
-        dispatch(setResourceType(props.type))
+        dispatch(resetFilterFunction());
+        dispatch(setResourceType(props.type));
       }}
-      data-cy={props["data-cy"]}
+      data-cy={props['data-cy']}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{props.textLabel}</p>
@@ -46,14 +46,16 @@ function DesktopChooseResourceType(props) {
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const ref = useRef(null);
+  // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
+  const btnRef = document.querySelector('#resource-type-select-button');
 
   const handleClickOutside = () => {
     if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     }
   };
 
-  useOnClickOutside(ref, handleClickOutside);
+  useOnClickOutside(ref, handleClickOutside, [btnRef]);
 
   return (
     <>
@@ -87,7 +89,8 @@ function DesktopChooseResourceType(props) {
                   key={entry.type}
                   {...entry}
                   data-cy={`button-${entry.type}-data-selector`}
-                />))}
+                />
+              ))}
             </Box>
           </Box>
         </Collapse>

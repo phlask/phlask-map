@@ -2,7 +2,7 @@ import ReactGA from 'react-ga4';
 
 const trackingIdProd = 'G-SN3F4Z4MPK';
 const trackingIdBeta = 'G-MQDZENNPXK';
-const trackingIdTest = "G-KGJ72QEWMY";
+const trackingIdTest = 'G-KGJ72QEWMY';
 
 // initiatize google analytics
 export const initAnalytics = () => {
@@ -20,5 +20,8 @@ export const initAnalytics = () => {
 
 // track pageviews
 export const logPageView = page => {
-  ReactGA.send({hitType: "pageview", page: window.location.pathname + window.location.search})
+  ReactGA.send({
+    hitType: 'pageview',
+    page: window.location.pathname + window.location.search
+  });
 };
