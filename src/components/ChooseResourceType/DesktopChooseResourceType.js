@@ -46,6 +46,7 @@ function DesktopChooseResourceType(props) {
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const ref = useRef(null);
+  // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
   const btnRef = document.querySelector('#resource-type-select-button');
 
   const handleClickOutside = () => {
