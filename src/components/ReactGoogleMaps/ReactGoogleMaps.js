@@ -228,6 +228,17 @@ export const ReactGoogleMaps = ({ google }) => {
     JSON.parse(JSON.stringify(noActiveFilterTags))
   );
 
+  // The Map component from the google-maps-react library does not update
+  // when the zoomControl property is changed. Therefore, using "useEffect"
+  // to influence the change via the Google Maps Javascript API instead.
+  useEffect(() => {
+    if (map) {
+      map.setOptions({
+        zoomControl: !isMobile
+      })
+    }
+  })
+
   useEffect(() => {
     if (!allResources.length) {
       dispatch(getResources());
@@ -349,7 +360,6 @@ export const ReactGoogleMaps = ({ google }) => {
             className="map"
             style={style}
             zoom={zoom}
-            zoomControl={!isMobile}
             streetViewControl={false}
             mapTypeControl={false}
             rotateControl={false}
