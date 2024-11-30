@@ -42,6 +42,7 @@ const AddResourceModalV2 = props => {
     closeModal: false,
     latitude: null,
     longitude: null,
+    isValidAddress: false,
 
     // ADD WATER
     filtration: false,
@@ -116,10 +117,16 @@ const AddResourceModalV2 = props => {
         setValues(prevValues => ({
           ...prevValues,
           latitude: lat,
-          longitude: lng
+          longitude: lng,
+          isValidAddress: true
         }));
       })
-      .catch(noop);
+      .catch(() => {
+        setValues(prevValues => ({
+          ...prevValues,
+          isValidAddress: false
+        }));
+      });
   }, 500); // 500ms debounce delay
 
   const textFieldChangeHandler = eventOrString => {
@@ -406,6 +413,7 @@ const AddResourceModalV2 = props => {
           guidelines={values.guidelines}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -438,6 +446,7 @@ const AddResourceModalV2 = props => {
           guidelines={values.guidelines}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -464,6 +473,7 @@ const AddResourceModalV2 = props => {
           hasFountain={values.hasFountain}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -493,6 +503,7 @@ const AddResourceModalV2 = props => {
           communityGarden={values.communityGarden}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
