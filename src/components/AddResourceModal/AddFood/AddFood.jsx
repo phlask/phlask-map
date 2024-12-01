@@ -39,7 +39,8 @@ function AddFood({
   distributionTypeOther,
   guidelines,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) {
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
@@ -120,6 +121,7 @@ function AddFood({
                 getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (

@@ -38,7 +38,8 @@ function AddForaging({
   inSeason,
   communityGarden,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -123,6 +124,7 @@ function AddForaging({
                 getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (

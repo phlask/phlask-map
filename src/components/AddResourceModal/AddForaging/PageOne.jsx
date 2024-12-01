@@ -54,7 +54,8 @@ const PageOne = ({
   setValue,
   getVariableName,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) => {
   const isMobile = useIsMobile();
 
@@ -138,7 +139,10 @@ const PageOne = ({
       </Grid>
       <Grid item xs={12} xm={12} lg={6} xl={6}>
         <Controller
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            validate: value => isValidAddress || 'Please enter a valid address'
+          }}
           control={control}
           name="address"
           defaultValue={''}
@@ -174,7 +178,11 @@ const PageOne = ({
                     }}
                     helperText={
                       <Stack component={'span'}>
-                        {errors.address && requiredFieldMsg}
+                        {errors.address && (
+                          <span>
+                            {errors.address.message || requiredFieldMsg}
+                          </span>
+                        )}
                         <Link>
                           {'Use my location instead  '}
                           <MyLocationIcon sx={{ fontSize: 10 }} />

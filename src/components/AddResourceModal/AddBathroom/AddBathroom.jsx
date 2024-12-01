@@ -33,7 +33,8 @@ function AddBathroom({
   handicapAccessible,
   hasFountain,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -97,6 +98,7 @@ function AddBathroom({
                 control={control}
                 setValue={setValue}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (
