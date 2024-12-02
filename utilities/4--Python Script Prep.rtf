@@ -1,9 +1,9 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2580
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica-BoldOblique;\f2\fswiss\fcharset0 Helvetica;
 }
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww24840\viewh15920\viewkind0
+{\colortbl;\red255\green255\blue255;\red255\green255\blue10;}
+{\*\expandedcolortbl;;\cssrgb\c99942\c98555\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww26700\viewh15080\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f0\b\fs30 \cf0 \ul \ulc0 Python Script Prep\
@@ -30,10 +30,12 @@ Again, welcome aboard
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b ChatGPT Response:\
+\f0\b \cf0 ChatGPT Response:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f2\b0 \
+\f2\b0 \cf0 \
 To create a Python script that displays a welcome message when a developer opens a code base or directory, you can leverage the use of a simple script file. However, triggering this script automatically when a directory is opened is not straightforward across all operating systems and development environments. Instead, we can create a script that developers can run manually when they start working in the directory.\
 \
 Here's a Python script that prints the welcome message:\
@@ -43,10 +45,10 @@ Here's a Python script that prints the welcome message:\
 \
 def print_welcome_message():\
     message = """\
-    Hello, and welcome aboard, new developer(s)! We're glad to have you as part of the PHLASK team.\
-    As you get started with your GH tickets--and PHLASK dev work in general, please note that you can find a number of resources in the "Utilities" folder/sub-dir.\
+   \cb2  Hello, and welcome aboard, new developer(s)! We're glad to have you as part of the PHLASK team.\
+    As you get started with your GH tickets--and PHLASK dev work in general, please note that you can find a number of resources in the "Utilities" folder.\
     Again, welcome aboard! :-)\
-    """\
+\cb1     """\
     print(message)\
 \
 if __name__ == "__main__":\
@@ -111,9 +113,8 @@ This approach provides a welcoming message to new developers and guides them to 
 \cf0 //==========//\\\\//==========//\\\\//==========//\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b \cf0 \ul \ulc0 Part B: [Add Details Here]\
+\f0\b \ul Part B: [Add Details Here]\
 
 \f2\b0 \ulnone \
 [And other details here\'85]}
