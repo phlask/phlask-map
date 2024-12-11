@@ -17,7 +17,7 @@ describe("crowdsourcing form", () => {
     cy.get('[data-cy=button-WATER-data-submit-selector]').click()
 
     cy.get('input[name="name"]').type("Cypress Test Name", { force: true })
-    cy.get('input[name="address-textbox"').type("City Hall Room 708, Philadelphia, PA 19107, USA")
+    cy.get('input[name="address-textbox"]').type("City Hall Room 708, Philadelphia, PA 19107, USA")
     cy.get('input[name="website"]').type("cypress.test")
     cy.get('textarea[name="description"]').type("Cypress Test Description")
     cy.get('div[id="entry"]').click({ force: true })
@@ -38,7 +38,32 @@ describe("crowdsourcing form", () => {
   });
 
   it("should successfully submit a food site for testing", () => {
-    // TODO
+    // Load the form
+    cy.get('[data-cy=button-FOOD-data-submit-selector]').click()
+
+    cy.get('input[name="name"]').type("Cypress Food Test Name", { force: true })
+    cy.get('input[name="address-textbox"]').type("City Hall Room 708, Philadelphia, PA 19107, USA")
+    cy.get('input[name="website"]').type("cypress.test")
+    cy.get('textarea[name="description"]').type("Cypress Test Food Description")
+    cy.get('div[id="organization"]').click({ force: true })
+    cy.get('li[data-value="Non-profit"]').click()
+    cy.get('svg[data-testid="ExpandMoreIcon"]').eq(0).click()
+    cy.get('input[name="perishable"]').click({ force: true })
+    cy.get('input[name="nonPerishable"]').click()
+    cy.get('input[name="prepared"]').click()
+    cy.get('input[name="foodTypeOther"]').click()
+    cy.get('svg[data-testid="ExpandMoreIcon"]').eq(0).click()
+    cy.get('svg[data-testid="ExpandMoreIcon"]').eq(1).click({ force: true })
+    cy.get('input[name="eatOnSite"]').click()
+    cy.get('input[name="delivery"]').click()
+    cy.get('input[name="pickUp"]').click()
+    cy.get('input[name="distributionTypeOther"]').click()
+    cy.get('svg[data-testid="ArrowForwardIosIcon"]').click()
+    cy.get('input[name="handicapAccessible"]').click()
+    cy.get('input[name="idRequired"]').click()
+    cy.get('input[name="childrenOnly"]').click()
+    cy.get('input[name="communityFridges"]').click()
+    cy.get('textarea[name="guidelines"]').type("Cypress Test Long Enough To See Behind the Nav Overlay")
   });
 
   it("should successfully submit a foraging site for testing", () => {
