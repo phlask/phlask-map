@@ -120,7 +120,6 @@ const SharedFormFields = ({
                       : { backgroundColor: '#ffffff', cursor: 'pointer' };
 
                     const {
-                      key,
                       id,
                       onMouseEnter,
                       onMouseLeave,
@@ -135,7 +134,7 @@ const SharedFormFields = ({
                     });
                     return (
                       <div
-                        key={key}
+                        key={crypto.randomUUID()}
                         id={id}
                         role="option"
                         onMouseEnter={onMouseEnter}
