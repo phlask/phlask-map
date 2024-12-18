@@ -12,7 +12,7 @@ import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
 import sampleImg from 'components/images/phlask-tessellation.png';
 import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
-import SelectedTapDetails from 'components/SelectedTapMobile/SelectedTapDetails';
+import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails';
 
 import './SelectedTap.css';
 
@@ -99,8 +99,8 @@ const SelectedTap = () => {
         toggleInfoWindow({
           isShown,
           infoWindowClass: isMobile
-            ? 'info-window-out'
-            : 'info-window-out-desktop'
+            ? 'info-window-in'
+            : 'info-window-in-desktop'
         })
       );
     }
@@ -215,7 +215,9 @@ const SelectedTap = () => {
               top: '20px',
               width: '708px',
               height: '700px',
-              borderRadius: '10px'
+              borderRadius: '10px',
+              maxHeight: '100%',
+              overflow: 'auto'
             }}
           >
             <SelectedTapDetails

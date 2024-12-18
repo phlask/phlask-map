@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
-import { useForm, Controller } from 'react-hook-form';
+import { setDefaults } from 'react-geocode';
+import { useForm } from 'react-hook-form';
 import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import styles from '../AddResourceModal.module.scss';
 
 const AddFood = ({
   prev,
@@ -39,7 +39,8 @@ const AddFood = ({
   distributionTypeOther,
   guidelines,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) => {
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
@@ -120,6 +121,7 @@ const AddFood = ({
                 getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (
@@ -176,6 +178,6 @@ const AddFood = ({
       </CardContent>
     </Card>
   );
-}
+};
 
 export default AddFood;

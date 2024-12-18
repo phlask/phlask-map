@@ -10,6 +10,7 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
+  setLastResourcePan,
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow
@@ -113,9 +114,9 @@ const Toolbar = () => {
     if (!closest) return;
 
     dispatch(
-      toggleInfoWindow({
-        isShown: true,
-        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+      setLastResourcePan({
+        lat: closest.latitude,
+        lng: closest.longitude
       })
     );
     dispatch(setSelectedPlace(closest));
@@ -125,6 +126,12 @@ const Toolbar = () => {
         lng: closest.longitude
       });
     }
+    dispatch(
+      toggleInfoWindow({
+        isShown: true,
+        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
+      })
+    );
   };
 
   const toolbarClicked = modal => {
@@ -166,6 +173,7 @@ const Toolbar = () => {
         <BottomNavigation showLabels>
           <NavigationItem
             data-cy="button-resource-type-menu"
+            id="resource-type-select-button"
             label={<Typography fontSize="small">Resources</Typography>}
             icon={
               <ResourceIcon
@@ -181,7 +189,7 @@ const Toolbar = () => {
             central
             label={
               <Typography fontSize="small" color="black" marginTop="-1">
-                PHL<b>ASK</b>
+                Near me
               </Typography>
             }
             icon={

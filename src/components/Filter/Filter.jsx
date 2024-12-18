@@ -1,9 +1,15 @@
-import { Box, Collapse, Paper } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  Paper,
+  SwipeableDrawer
+} from '@mui/material';
+import useIsMobile from 'hooks/useIsMobile';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import useIsMobile from 'hooks/useIsMobile';
 import selectFilteredResource from 'selectors/resourceSelectors';
 import {
   setToolbarModal,
@@ -11,6 +17,7 @@ import {
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE
 } from 'actions/actions';
+import noop from 'utils/noop';
 import styles from './Filter.module.scss';
 
 const FilterTags = ({ tags, activeTags, resourceType, index, handleTag }) => (
@@ -98,14 +105,12 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                         : 'info-window-out-desktop'
                     })
                   );
-                  dispatch(
-                    setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
-                  );
+                  dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                 }}
                 sx={{
                   position: 'absolute',
                   right: '20px',
-                  top: 5,
+                  top: '5px',
                   color: '#fff',
                   '&:hover': {
                     color: '#fff'
@@ -200,7 +205,97 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
           </Collapse>
         </Paper>
       )}
-      {isMobile && <Paper />}
+      {isMobile && (
+        <SwipeableDrawer
+          anchor="bottom"
+          onClose={() => {
+            dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+          }}
+          onOpen={noop}
+          disableSwipeToOpen
+          open={toolbarModal === TOOLBAR_MODAL_FILTER}
+          PaperProps={{ sx: { borderRadius: '10px' } }}
+        >
+          <Box className={styles.header}>
+            <Box sx={{ width: '100%' }}>
+              <Box
+                sx={{
+                  position: 'relative',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '24px',
+                  height: '4px',
+                  borderRadius: '2px',
+                  backgroundColor: '#ffffff'
+                }}
+              />
+            </Box>
+            <h1>{filters[resourceType].title}</h1>
+          </Box>
+
+          <Box sx={{ margin: '20px' }}>
+            {filters[resourceType].categories.map((category, index) => (
+              <React.Fragment key={category.header}>
+                <h2 className={styles.label}>{category.header}</h2>
+                {category.type === 0 ? (
+                  <FilterTags
+                    tags={category.tags}
+                    resourceType={resourceType}
+                    index={index}
+                    handleTag={handleTag}
+                    activeTags={activeTags}
+                  />
+                ) : (
+                  <FilterTagsExclusive
+                    tags={category.tags}
+                    resourceType={resourceType}
+                    index={index}
+                    handleTag={handleTag}
+                    activeTags={activeTags}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </Box>
+          <Box
+            sx={{
+              marginBottom: '10px',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              fontSize: '16.8px',
+              fontFamily: "'Inter', sans-serif"
+            }}
+          >
+            <Box
+              sx={{
+                margin: '10px 20px'
+              }}
+            >
+              <Button onClick={clearAll}>Clear All</Button>
+            </Box>
+            <Box
+              sx={{
+                margin: '0px 20px'
+              }}
+            >
+              <p
+                style={{
+                  margin: '10px',
+                  padding: '10px 20px',
+                  width: 'fit-content',
+                  position: 'relative',
+                  float: 'right',
+                  border: '1px solid #09A2E5',
+                  borderRadius: '8px',
+                  fontWeight: '600'
+                }}
+              >
+                Resources: {filteredResources.length}
+              </p>
+            </Box>
+          </Box>
+        </SwipeableDrawer>
+      )}
     </>
   );
 };

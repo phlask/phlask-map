@@ -3,11 +3,12 @@ import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
-  mapCenter: {
+  // Captures location when e.g. a pin is clicked or "Near Me" is clicked
+  lastResourcePan: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
-  // Change to reflect user's current location
+  // Changes to reflect user's current location if location is enabled
   userLocation: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
@@ -21,6 +22,8 @@ const initialState = {
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
+  setSearchBarMapTintOn: false,
+  tapInfoOpenedWhileSearchOpen: false,
   resourceType: WATER_RESOURCE_TYPE
 };
 
@@ -70,11 +73,11 @@ export default (state = initialState, act = {}) => {
         }
       };
 
-    case actions.SET_USER_LOCATION:
-      return { ...state, userLocation: act.coords };
+    case actions.setUserLocation.type:
+      return { ...state, userLocation: act.payload };
 
-    case actions.SET_MAP_CENTER:
-      return { ...state, mapCenter: act.coords };
+    case actions.setLastResourcePan.type:
+      return { ...state, lastResourcePan: act.payload };
 
     case actions.getResources.fulfilled.type:
       return { ...state, allResources: act.payload };
@@ -119,23 +122,27 @@ export default (state = initialState, act = {}) => {
         )
       };
 
-    case actions.SET_SELECTED_PLACE:
-      // if passed Selected Place as an object, set selected place as the object
-      // if passed an ID, locate the item using ID, then set selected place
-      return typeof act.selectedPlace === 'object'
-        ? { ...state, selectedPlace: act.selectedPlace }
-        : {
-            ...state,
-            selectedPlace: state.allResources[act.selectedPlace],
-            showingInfoWindow: true
-          };
+    case actions.setSelectedPlace.type:
+      return {
+        ...state,
+        selectedPlace: act.payload,
+        showingInfoWindow: true
+      };
 
     case actions.toggleInfoWindow.type:
       return {
         ...state,
         showingInfoWindow: act.payload.isShown,
-        infoWindowClass: act.payload.infoWindowClass
+        infoWindowClass: act.payload.infoWindowClass,
+        searchBarMapTintOn: act.payload.isShown
+          ? false
+          : state.setSearchBarMapTintOn,
+        tapInfoOpenedWhileSearchOpen: !!(
+          act.payload.isShown &&
+          state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH
+        )
       };
+
     case actions.toggleInfoWindowClass.type:
       return {
         ...state,
@@ -179,6 +186,12 @@ export default (state = initialState, act = {}) => {
         }
       };
     }
+
+    case actions.setSearchBarMapTintOn.type:
+      return { ...state, searchBarMapTintOn: act.payload };
+
+    case actions.setTapInfoOpenedWhileSearchOpen.type:
+      return { ...state, tapInfoOpenedWhileSearchOpen: act.payload };
 
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };

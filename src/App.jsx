@@ -8,7 +8,7 @@ import theme from 'theme';
 import store from 'store';
 import { Provider } from 'react-redux';
 
-const App = props => {
+const App = () => {
   initAnalytics();
   logPageView();
   return (

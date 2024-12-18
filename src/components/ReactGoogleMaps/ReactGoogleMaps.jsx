@@ -153,7 +153,9 @@ const ReactGoogleMaps = () => {
   const isMobile = useIsMobile();
   const filteredResources = useSelector(state => selectFilteredResource(state));
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const searchBarMapTintOn = useSelector(
+    state => state.filterMarkers.searchBarMapTintOn
+  );
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
@@ -279,7 +281,7 @@ const ReactGoogleMaps = () => {
 
         {isMobile && (
           <Fade
-            in={toolbarModal === TOOLBAR_MODAL_SEARCH}
+            in={searchBarMapTintOn}
             timeout={300}
             style={{ position: 'fixed', pointerEvents: 'none' }}
           >

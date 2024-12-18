@@ -56,17 +56,8 @@ export const pushNewResource = newResource => ({
 // Handles the case where an existing resource is updated from the submission form
 export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
-export const SET_USER_LOCATION = 'SET_USER_LOCATION';
-export const setUserLocation = coords => ({
-  type: SET_USER_LOCATION,
-  coords
-});
-
-export const SET_MAP_CENTER = 'SET_MAP_CENTER';
-export const setMapCenter = coords => ({
-  type: SET_MAP_CENTER,
-  coords
-});
+export const setUserLocation = createAction('SET_USER_LOCATION');
+export const setLastResourcePan = createAction('SET_LAST_RESOURCE_PAN');
 
 export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');
@@ -87,14 +78,14 @@ export const setFilteredFoodTypes = foodType => ({
   foodType
 });
 
-export const SET_SELECTED_PLACE = 'SET_SELECTED_PLACE';
-export const setSelectedPlace = selectedPlace => ({
-  type: SET_SELECTED_PLACE,
-  selectedPlace
-});
+export const setSelectedPlace = createAction('SET_SELECTED_PLACE');
+
+export const setSearchBarMapTintOn = createAction('SET_SEARCH_BAR_MAP_TINT');
+export const setTapInfoOpenedWhileSearchOpen = createAction(
+  'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
+);
 
 export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
-
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';

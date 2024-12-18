@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
+import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 
@@ -10,7 +10,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import styles from '../AddResourceModal.module.scss';
 
 const AddBathroom = ({
   prev,
@@ -33,7 +32,8 @@ const AddBathroom = ({
   handicapAccessible,
   hasFountain,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -97,6 +97,7 @@ const AddBathroom = ({
                 control={control}
                 setValue={setValue}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (
@@ -154,6 +155,6 @@ const AddBathroom = ({
       </CardContent>
     </Box>
   );
-}
+};
 
 export default AddBathroom;

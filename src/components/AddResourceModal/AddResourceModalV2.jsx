@@ -28,7 +28,7 @@ import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 
-const AddResourceModalV2 = props => {
+const AddResourceModalV2 = () => {
   const initialState = {
     page: 0,
     pictures: [],
@@ -46,6 +46,7 @@ const AddResourceModalV2 = props => {
     closeModal: false,
     latitude: null,
     longitude: null,
+    isValidAddress: false,
 
     // ADD WATER
     filtration: false,
@@ -93,7 +94,6 @@ const AddResourceModalV2 = props => {
 
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const setToolbarModal = modal => {
@@ -120,10 +120,16 @@ const AddResourceModalV2 = props => {
         setValues(prevValues => ({
           ...prevValues,
           latitude: lat,
-          longitude: lng
+          longitude: lng,
+          isValidAddress: true
         }));
       })
-      .catch(noop);
+      .catch(() => {
+        setValues(prevValues => ({
+          ...prevValues,
+          isValidAddress: false
+        }));
+      });
   }, 500); // 500ms debounce delay
 
   const textFieldChangeHandler = eventOrString => {
@@ -219,15 +225,18 @@ const AddResourceModalV2 = props => {
       const geocodedAddresses = await geocodeByAddress(values.address);
       const geocodedAddress = geocodedAddresses[0];
       const placeId = geocodedAddress.place_id;
-      const city = geocodedAddress.address_components.find(component =>
-        component.types.includes('locality')
-      ).long_name;
-      const state = geocodedAddress.address_components.find(component =>
-        component.types.includes('administrative_area_level_1')
-      ).long_name;
-      const postalCode = geocodedAddress.address_components.find(component =>
-        component.types.includes('postal_code')
-      ).long_name;
+      const city =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('locality')
+        )?.long_name || null;
+      const state =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('administrative_area_level_1')
+        )?.long_name || null;
+      const postalCode =
+        geocodedAddress.address_components.find(component =>
+          component.types.includes('postal_code')
+        )?.long_name || null;
 
       /**
        *
@@ -356,16 +365,12 @@ const AddResourceModalV2 = props => {
 
   const handleClose = () => {
     // on close we should reset form state so user can submit another resource
-
     setValues(initialState);
     setToolbarModal(TOOLBAR_MODAL_NONE);
   };
 
   return (
-    <ModalWrapper
-      open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
-      onClose={handleClose}
-    >
+    <ModalWrapper handleClose={handleClose} values={values}>
       {values.formStep === 'chooseResource' && (
         <ChooseResource setFormStep={onChangeFormStep} />
       )}
@@ -399,6 +404,7 @@ const AddResourceModalV2 = props => {
           guidelines={values.guidelines}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -431,6 +437,7 @@ const AddResourceModalV2 = props => {
           guidelines={values.guidelines}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -457,6 +464,7 @@ const AddResourceModalV2 = props => {
           hasFountain={values.hasFountain}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 
@@ -486,6 +494,7 @@ const AddResourceModalV2 = props => {
           communityGarden={values.communityGarden}
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
+          isValidAddress={values.isValidAddress}
         />
       )}
 

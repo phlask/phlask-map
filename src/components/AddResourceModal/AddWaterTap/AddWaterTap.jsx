@@ -42,7 +42,8 @@ const AddWaterTap = ({
   // Other
   guidelines,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -122,6 +123,7 @@ const AddWaterTap = ({
                 getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (
@@ -178,6 +180,6 @@ const AddWaterTap = ({
       </CardContent>
     </Box>
   );
-}
+};
 
 export default AddWaterTap;

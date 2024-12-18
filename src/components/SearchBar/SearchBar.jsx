@@ -8,18 +8,32 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import useIsMobile from 'hooks/useIsMobile';
 import noop from 'utils/noop';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  TOOLBAR_MODAL_SEARCH,
+  setSearchBarMapTintOn,
+  setTapInfoOpenedWhileSearchOpen
+} from 'actions/actions';
 import styles from './SearchBar.module.scss';
-import { TOOLBAR_MODAL_SEARCH, setToolbarModal } from '../../actions/actions';
 
 const SearchBar = ({ search }) => {
-  const refSearchBar = useRef();
+  const refSearchBarInput = useRef();
   const [address, setAddress] = useState('');
+  const tapInfoOpenedWhileSearchOpen = useSelector(
+    state => state.filterMarkers.tapInfoOpenedWhileSearchOpen
+  );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
+
+  const handleChange = newAddress => {
+    setAddress(newAddress);
+    dispatch(setSearchBarMapTintOn(true));
+  };
 
   const handleSelect = newAddress => {
     setAddress(newAddress);
+    dispatch(setSearchBarMapTintOn(false));
     geocodeByAddress(newAddress)
       .then(results => getLatLng(results[0]))
       .then(latLng => search(latLng))
@@ -35,7 +49,7 @@ const SearchBar = ({ search }) => {
       <div className={styles.mobileSearch}>
         <PlacesAutocomplete
           value={address}
-          onChange={setAddress}
+          onChange={handleChange}
           onSelect={handleSelect}
         >
           {({
@@ -67,6 +81,7 @@ const SearchBar = ({ search }) => {
                 }`}
               >
                 <Input
+                  autoFocus
                   autoComplete={autoComplete}
                   role={role}
                   aria-autocomplete={ariaAutocomplete}
@@ -74,12 +89,11 @@ const SearchBar = ({ search }) => {
                   aria-activedescendant={ariaActiveDescendent}
                   disabled={disabled}
                   onKeyDown={onKeyDown}
-                  onBlur={onBlur}
                   onChange={onChange}
                   value={value}
                   className={styles.mobileSearchInput}
                   type={type}
-                  ref={refSearchBar}
+                  ref={refSearchBarInput}
                   placeholder={placeholder}
                   endAdornment={
                     <InputAdornment position="start">
@@ -87,6 +101,18 @@ const SearchBar = ({ search }) => {
                     </InputAdornment>
                   }
                   disableUnderline
+                  onFocus={() => {
+                    if (!tapInfoOpenedWhileSearchOpen) {
+                      dispatch(setSearchBarMapTintOn(true));
+                    } else {
+                      dispatch(setTapInfoOpenedWhileSearchOpen(false));
+                      refSearchBarInput.current.blur();
+                    }
+                  }}
+                  onBlur={() => {
+                    onBlur();
+                    dispatch(setSearchBarMapTintOn(false));
+                  }}
                 />
                 {loading && (
                   <div className={styles.autocompleteDropdown}>Loading...</div>
@@ -146,7 +172,7 @@ const SearchBar = ({ search }) => {
     <div className={styles.desktopSearch}>
       <PlacesAutocomplete
         value={address}
-        onChange={setAddress}
+        onChange={handleChange}
         onSelect={handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
@@ -187,7 +213,7 @@ const SearchBar = ({ search }) => {
                 value={value}
                 className={`${styles.searchInput} form-control`}
                 type={type}
-                inputRef={refSearchBar}
+                inputRef={refSearchBarInput}
                 placeholder={placeholder}
                 startAdornment={
                   <InputAdornment position="end">

@@ -1,9 +1,20 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-const useOnClickOutside = (ref, callback) => {
+/**
+ * What it does.
+ *
+ * @param ref {React.MutableRefObject<Element>} - React Ref pointing to the DOM element we want to track clicks outside of
+ * @param callback {(React.SyntheticEvent<Element, Event>) => void} - Callback function that gets called when you click outside
+ * @param [exclusions] {Element[]} - List of DOM nodes to exclude from the click handler.
+ *
+ */
+const useOnClickOutside = (ref, callback, exclusions) => {
   useEffect(() => {
-    const listener = (event) => {
-      if (!ref.current || ref.current.contains(event.target)) {
+    const listener = event => {
+      if (
+        ref?.current?.contains(event.target) ||
+        exclusions?.some(el => el?.contains(event.target))
+      ) {
         return;
       }
 
@@ -17,7 +28,7 @@ const useOnClickOutside = (ref, callback) => {
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener);
     };
-  }, [ref, callback]);
+  }, [ref, callback, exclusions]);
 };
 
 export default useOnClickOutside;

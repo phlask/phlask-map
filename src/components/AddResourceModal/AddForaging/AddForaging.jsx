@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
+import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
+import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import styles from '../AddResourceModal.module.scss';
 
 const AddForaging = ({
   prev,
@@ -38,7 +38,8 @@ const AddForaging = ({
   inSeason,
   communityGarden,
   checkboxChangeHandler,
-  textFieldChangeHandler
+  textFieldChangeHandler,
+  isValidAddress
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
@@ -123,6 +124,7 @@ const AddForaging = ({
                 getVariableName={getVariableName}
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
+                isValidAddress={isValidAddress}
               />
             )}
             {(page === 1 || isMobile) && (
@@ -178,6 +180,6 @@ const AddForaging = ({
       </CardContent>
     </Card>
   );
-}
+};
 
 export default AddForaging;

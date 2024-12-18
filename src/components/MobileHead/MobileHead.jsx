@@ -1,22 +1,17 @@
 import React from 'react';
 
-import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { useDispatch, useSelector } from 'react-redux';
 import noop from 'utils/noop';
-import { useSelector, useDispatch } from 'react-redux';
 import CloseIcon from 'components/icons/CloseIcon';
-import DropLink from 'components/Buttons/DropLink';
 import { HeaderContext } from 'contexts/HeaderContext';
 import FilterIcon from 'icons/FilterIcon';
 import PhlaskIcon from 'icons/PhlaskV2';
 import SearchIcon from 'icons/SearchIcon';
-import PhlaskNoTextIcon from 'icons/PhlaskNoText';
-import UsersIcon from 'icons/UsersIcon';
-import IDIcon from 'icons/ModalIdRequired';
 import {
   setToolbarModal,
   TOOLBAR_MODAL_FILTER,
@@ -96,15 +91,9 @@ const MobileHead = () => {
                 <IconButton
                   onClick={() => {
                     if (toolbarModal !== TOOLBAR_MODAL_FILTER) {
-                      dispatch(
-                        setToolbarModal({
-                          toolbarModal: TOOLBAR_MODAL_FILTER
-                        })
-                      );
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_FILTER));
                     } else {
-                      dispatch(
-                        setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
-                      );
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                     }
                   }}
                 >
