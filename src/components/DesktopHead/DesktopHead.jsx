@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box, IconButton, Paper, Collapse, Button } from '@mui/material';
-import CloseIcon from '../../components/icons/CloseIcon';
-import PhlaskIcon from '../../components/icons/PHLASK_v2.svg?react';
-import PhlaskNoTextIcon from '../../components/icons/PhlaskNoText.svg?react';
-import UsersIcon from '../../components/icons/UsersIcon.svg?react';
-import IDIcon from '../../components/icons/ModalIDRequired.svg?react';
-import { HeaderContext } from '../../contexts/HeaderContext';
-import DropLink from '../../components/Buttons/DropLink';
+import CloseIcon from 'components/icons/CloseIcon';
+import PhlaskIcon from 'icons/PhlaskV2';
+import PhlaskNoTextIcon from 'icons/PhlaskNoText';
+import UsersIcon from 'icons/UsersIcon';
+import IDIcon from 'icons/ModalIdRequired';
+import { HeaderContext } from 'contexts/HeaderContext';
+import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
 
-export const DesktopHead = props => {
+const DesktopHead = props => {
   const headerContext = React.useContext(HeaderContext);
   const {
     shownPage,
@@ -22,6 +22,18 @@ export const DesktopHead = props => {
     setVerticalAnimFinished1,
     setVerticalAnimFinished2
   } = headerContext;
+
+  const buttonStyles = {
+    color: '#2D3748',
+    backgroundColor: 'transparent',
+    width: 'fit-content',
+    textDecoration: 'none',
+    margin: '10px 10px',
+    borderRadius: '24px',
+    padding: '0 20px',
+    fontSize: '16px'
+  };
+
   return (
     <Box
       sx={{
@@ -69,37 +81,11 @@ export const DesktopHead = props => {
                 setVerticalAnimFinished1(true);
               }
             }}
-          ></Collapse>
-          <Collapse in={menuExpand} timeout="auto">
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              <DropLink
-                onClick={() => menuClicked('about')}
-                startIcon={<PhlaskNoTextIcon />}
-                data-cy="sidebar-about-button"
-              >
-                About
-              </DropLink>
-              <DropLink
-                onClick={() => menuClicked('join')}
-                startIcon={<UsersIcon />}
-                data-cy="sidebar-jointeam-button"
-              >
-                Join the team
-              </DropLink>
-              <DropLink
-                onClick={() => menuClicked('contact')}
-                startIcon={<IDIcon />}
-                data-cy="sidebar-contact-button"
-              >
-                Contact
-              </DropLink>
-            </Box>
-          </Collapse>
+          />
+          <NavigationButtons
+            onItemClick={page => menuClicked(page)}
+            isOpen={menuExpand}
+          />
           <Collapse
             in={Boolean(shownPage)}
             timeout="auto"
@@ -113,7 +99,7 @@ export const DesktopHead = props => {
               sx={{
                 height: 'calc(100vh - 50px - 25px - 274px - 76px - 32px - 25px)'
               }}
-            ></Box>
+            />
           </Collapse>
         </Box>
         <Collapse
@@ -134,3 +120,5 @@ export const DesktopHead = props => {
     </Box>
   );
 };
+
+export default DesktopHead;

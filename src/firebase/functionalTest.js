@@ -1,1 +1,5 @@
-export const testData = await fetch("./testData.json").then(response => {return response.json()})
+const testData = await fetch('./testData.json').then(response =>
+  response.json()
+);
+
+export default testData;

@@ -4,8 +4,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ContributorsListItem from './ContributorsListItem';
 
-const ContributorsList = ({ items = [], title = 'Contributors' }) => {
-  return (
+const ContributorsList = ({ items = [], title = 'Contributors' }) => (
     <Grid item>
       <Typography variant="h6" color="#73839E">
         {title}
@@ -20,6 +19,5 @@ const ContributorsList = ({ items = [], title = 'Contributors' }) => {
       </List>
     </Grid>
   );
-};
 
 export default ContributorsList;

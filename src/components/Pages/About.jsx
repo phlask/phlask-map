@@ -1,4 +1,4 @@
-import PhlaskIcon from '../icons/PHLASK_v2.svg?react';
+import PhlaskIcon from 'icons/PhlaskV2';
 import styles from './Pages.module.scss';
 
 const About = () => (

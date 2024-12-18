@@ -1,14 +1,25 @@
-import ImageUploader from 'react-images-upload';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, push } from 'firebase/database';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import noop from 'utils/noop';
 import {
   TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_CONTRIBUTE
-} from '../../actions/actions';
-import { resourcesConfig } from '../../firebase/firebaseConfig';
+  TOOLBAR_MODAL_CONTRIBUTE,
+  pushNewResource
+} from 'actions/actions';
+import { resourcesConfig } from 'firebase/firebaseConfig';
 
-import { debounce } from '../../utils/debounce';
+import debounce from 'utils/debounce';
+
+import {
+  WATER_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  BATHROOM_RESOURCE_TYPE
+} from 'types/ResourceEntry';
+
 import ChooseResource from './ChooseResource';
 import ShareSocials from './ShareSocials';
 import AddFood from './AddFood/AddFood';
@@ -16,19 +27,8 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import { getDatabase, ref, push } from 'firebase/database';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { pushNewResource } from '../../actions/actions';
 
-import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
-import noop from 'utils/noop';
-
-export default function AddResourceModalV2(props) {
+const AddResourceModalV2 = props => {
   const initialState = {
     page: 0,
     pictures: [],
@@ -97,16 +97,16 @@ export default function AddResourceModalV2(props) {
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const setToolbarModal = modal => {
-    dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
+    dispatch({ type: 'SET_TOOLBAR_MODAL', modal });
   };
 
   const checkboxChangeHandler = e => {
-    setValues(prevValues => {
-      return { ...prevValues, [e.target.name]: e.target.checked };
-    });
+    setValues(prevValues => ({
+      ...prevValues,
+      [e.target.name]: e.target.checked
+    }));
   };
 
-  // Use imported debounce to prevent the geocoding API from being called too frequently
   const debouncedGeocode = debounce(address => {
     geocodeByAddress(address)
       .then(results => {
@@ -155,9 +155,7 @@ export default function AddResourceModalV2(props) {
   // controls which modal state to show
   // (e.g. choose resource, add water tap, social links)
   const onChangeFormStep = step => {
-    setValues(prevValues => {
-      return { ...prevValues, formStep: step };
-    });
+    setValues(prevValues => ({ ...prevValues, formStep: step }));
   };
 
   const onChangeNextPage = () => {
@@ -184,9 +182,7 @@ export default function AddResourceModalV2(props) {
   };
 
   const onDrop = picture => {
-    setValues(prevValues => {
-      return { ...prevValues, pictures: picture };
-    });
+    setValues(prevValues => ({ ...prevValues, pictures: picture }));
   };
 
   const submitImage = imageFile => {
@@ -194,33 +190,28 @@ export default function AddResourceModalV2(props) {
     // Upload the image with a PUT request
     // Store the image URL in state.images
     const imageType = imageFile.type;
-    const submitUrl = '/submit-image?type=' + imageType;
+    const submitUrl = `/submit-image?type=${imageType}`;
 
     return fetch(submitUrl)
       .then(response => response.json())
-      .then(data => {
-        return fetch(data.putURL, {
+      .then(data =>
+        fetch(data.putURL, {
           method: 'PUT',
           headers: {
             'Content-Type': imageFile.type
           },
           body: imageFile
-        }).then(() => {
-          return data.getURL;
-        });
-      })
+        }).then(() => data.getURL)
+      )
       .catch(noop);
   };
 
   const onSubmit = (resourceType, e) => {
     e.preventDefault();
-    var upload_promises = [];
-    // Upload images
-    values.pictures.forEach(picture => {
-      upload_promises.push(submitImage(picture));
-    });
 
-    return Promise.all(upload_promises).then(async images => {
+    return Promise.all(
+      values.pictures.map(picture => submitImage(picture))
+    ).then(async images => {
       // All image uploads completed, loading tap record
 
       // First, we geocode the address to fill out city, state, zip code, and gp_id from
@@ -258,19 +249,19 @@ export default function AddResourceModalV2(props) {
         },
         resource_type: resourceType,
         address: values.address,
-        city: city,
-        state: state,
+        city,
+        state,
         zip_code: postalCode,
         latitude: values.latitude || userLocation.lat,
         longitude: values.longitude || userLocation.lng,
         gp_id: placeId,
-        images: images,
+        images,
         guidelines: values.guidelines,
         description: values.description,
         name: values.name,
         status: 'OPERATIONAL', // By default, if they are creating a resource, we assume it is operational
         entry_type: values.entryType
-        //hours: undefined
+        // hours: undefined
       };
 
       // TODO(vontell): For now, we take the existing form data coming into values and transform these into the v1 schema
@@ -355,7 +346,8 @@ export default function AddResourceModalV2(props) {
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource).then(result => {
-        const id = result._path.pieces[0];
+        const { _path: path } = result;
+        const id = path.pieces[0];
         newResource.id = id;
         dispatch(pushNewResource(newResource));
       });
@@ -378,7 +370,7 @@ export default function AddResourceModalV2(props) {
         <ChooseResource setFormStep={onChangeFormStep} />
       )}
 
-      {values.formStep == 'addWaterTap' && (
+      {values.formStep === 'addWaterTap' && (
         <AddWaterTap
           prev={() => onChangeFormStep('chooseResource')}
           next={() => onChangeFormStep('shareSocials')}
@@ -500,4 +492,6 @@ export default function AddResourceModalV2(props) {
       {values.formStep === 'shareSocials' && <ShareSocials />}
     </ModalWrapper>
   );
-}
+};
+
+export default AddResourceModalV2;

@@ -4,8 +4,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const ContributorsListItem = ({ contributor }) => {
-  return (
+const ContributorsListItem = ({ contributor }) => (
     <ListItem sx={{ paddingInline: 0 }}>
       <Stack>
         <Box>
@@ -26,6 +25,5 @@ const ContributorsListItem = ({ contributor }) => {
       </Stack>
     </ListItem>
   );
-};
 
 export default ContributorsListItem;

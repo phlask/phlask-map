@@ -1,64 +1,61 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
-import CivicIcon from '../icons/JoinCivicIcon.svg?react';
-import DataIcon from '../icons/JoinDataIcon.svg?react';
-import DesignIcon from '../icons/JoinDesignIcon.svg?react';
-import DevelopementIcon from '../icons/JoinDevelopmentIcon.svg?react';
-import ManagementIcon from '../icons/JoinManagementIcon.svg?react';
-import { fetchContributors } from '../../reducers/contributors';
+import CivicIcon from 'icons/JoinCivicIcon';
+import DataIcon from 'icons/JoinDataIcon';
+import DesignIcon from 'icons/JoinDesignIcon';
+import DevelopementIcon from 'icons/JoinDevelopmentIcon';
+import ManagementIcon from 'icons/JoinManagementIcon';
+import { fetchContributors } from 'reducers/contributors';
+import ContributorsList from 'components/ContributorsList/ContributorsList';
 import styles from './Pages.module.scss';
-import ContributorsList from '../ContributorsList/ContributorsList';
 
-const Circle = props => {
-  const Icon = props.icon;
-  return (
+const Circle = ({ icon: Icon, title, description }) => (
+  <div
+    style={{
+      fontSize: 25,
+      display: 'grid',
+      placeItems: 'center',
+      aspectRatio: '1 / 1',
+      textAlign: 'center'
+    }}
+  >
     <div
       style={{
-        fontSize: 25,
-        display: 'grid',
-        placeItems: 'center',
-        aspectRatio: '1 / 1',
-        textAlign: 'center'
+        width: '150px',
+        padding: '14px',
+        backgroundColor: '#55C8FB6B',
+        borderRadius: '50%',
+        aspectRatio: '1 / 1'
       }}
     >
-      <div
+      <Icon />
+      <h2
         style={{
-          width: '150px',
-          padding: '14px',
-          backgroundColor: '#55C8FB6B',
-          borderRadius: '50%',
-          aspectRatio: '1 / 1'
+          margin: 0,
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 600,
+          fontSize: '16px',
+          textAlign: 'center'
         }}
       >
-        <Icon />
-        <h2
-          style={{
-            margin: 0,
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 600,
-            fontSize: '16px',
-            textAlign: 'center'
-          }}
-        >
-          {props.title}
-        </h2>
-        <p
-          style={{
-            margin: 0,
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 500,
-            fontSize: '14px',
-            textAlign: 'center'
-          }}
-        >
-          {props.desc}
-        </p>
-      </div>
+        {title}
+      </h2>
+      <p
+        style={{
+          margin: 0,
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 500,
+          fontSize: '14px',
+          textAlign: 'center'
+        }}
+      >
+        {description}
+      </p>
     </div>
-  );
-};
+  </div>
+);
 
 const Join = () => {
   const dispatch = useDispatch();
@@ -93,27 +90,27 @@ const Join = () => {
         <Circle
           icon={DevelopementIcon}
           title="Development"
-          desc="Coding and Programming"
+          description="Coding and Programming"
         />
         <Circle
           icon={DataIcon}
           title="Data"
-          desc="Collecting and organizing app data"
+          description="Collecting and organizing app data"
         />
         <Circle
           icon={ManagementIcon}
           title="Project Management"
-          desc="Task management"
+          description="Task management"
         />
         <Circle
           icon={DesignIcon}
           title="Design"
-          desc="UX/UI Design and Resarch"
+          description="UX/UI Design and Resarch"
         />
         <Circle
           icon={CivicIcon}
           title="Civic"
-          desc="Publicity and Community Engagement"
+          description="Publicity and Community Engagement"
         />
       </div>
 

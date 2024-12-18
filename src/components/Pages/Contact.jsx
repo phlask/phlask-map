@@ -1,22 +1,130 @@
-import { useState } from 'react';
-import FacebookIcon from '../icons/SocialFacebook.svg?react';
-import InstagramIcon from '../icons/SocialInstagram.svg?react';
-import TwitterIcon from '../icons/SocialTwitter.svg?react';
-import ContactSubmitImage from '../images/phlaskContactSubmit.svg?react';
+import { forwardRef, useId, useState } from 'react';
+import FacebookIcon from 'icons/SocialFacebook';
+import InstagramIcon from 'icons/SocialInstagram';
+import TwitterIcon from 'icons/SocialTwitter';
+import ContactSubmitImage from 'icons/PhlaskContactSubmit';
+import { useForm } from 'react-hook-form';
 import styles from './Pages.module.scss';
 
+const ContactInput = forwardRef(
+  (
+    {
+      label,
+      name,
+      onBlur,
+      onChange,
+      disabled,
+      max,
+      maxLength,
+      min,
+      minLength,
+      pattern,
+      required,
+      as: Element = 'input',
+      type,
+      rows
+    },
+    ref
+  ) => {
+    const id = useId();
+
+    return (
+      <div className={styles.pageContactSection}>
+        <label htmlFor={id} className={styles.pageContactLabel}>
+          {label}{' '}
+          <span className={styles.asteriskcolor}>{required && '*'}</span>
+        </label>
+        <br />
+        <Element
+          id={id}
+          name={name}
+          onBlur={onBlur}
+          onChange={onChange}
+          ref={ref}
+          disabled={disabled}
+          max={max}
+          maxLength={maxLength}
+          min={min}
+          minLength={minLength}
+          pattern={pattern}
+          required={required}
+          type={type}
+          rows={rows}
+        />
+      </div>
+    );
+  }
+);
+
+ContactInput.displayName = 'ContactInput';
+
+const ContactCheckbox = forwardRef(
+  (
+    {
+      label,
+      name,
+      onBlur,
+      onChange,
+      disabled,
+      max,
+      maxLength,
+      min,
+      minLength,
+      pattern,
+      required
+    },
+    ref
+  ) => {
+    const id = useId();
+    return (
+      <div
+        className={`${styles.pageContactSection} ${styles.pageContactSectionGrid}`}
+      >
+        <input
+          id={id}
+          type="checkbox"
+          name={name}
+          onBlur={onBlur}
+          onChange={onChange}
+          ref={ref}
+          disabled={disabled}
+          max={max}
+          maxLength={maxLength}
+          min={min}
+          minLength={minLength}
+          pattern={pattern}
+          required={required}
+          className={styles.pageContactCheckbox}
+        />
+        <label
+          htmlFor={id}
+          className={`${styles.pageText} ${styles.pageTextLabel}`}
+        >
+          {label}
+        </label>
+      </div>
+    );
+  }
+);
+
+ContactCheckbox.displayName = 'ContactCheckbox';
+
 const Contact = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [interestedResearch, setInterestedResearch] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    setSubmitted(true);
+  const onSubmit = values => {
     // put form submission logic here
+    setSubmitted(true);
   };
+
+  const { register, handleSubmit, ...form } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      feedback: '',
+      isInterestedInResearch: false
+    }
+  });
 
   return (
     <div className={styles.page}>
@@ -32,59 +140,31 @@ const Contact = () => {
           >
             Share Feedback
           </h2>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.pageContactSection}>
-              <label className={styles.pageContactLabel}>
-                Name <span className={styles.asteriskcolor}>*</span>
-              </label>
-              <br />
-              <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className={styles.pageContactSection}>
-              <label className={styles.pageContactLabel}>
-                Email <span className={styles.asteriskcolor}>*</span>
-              </label>
-              <br />
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ContactInput
+              label="Name"
+              {...register('name', { required: true })}
+            />
+            <ContactInput
+              label="Email"
+              {...register('email', { required: true })}
+            />
+            <ContactInput
+              className={styles.FeedbackInput}
+              label="Feedback"
+              as="textarea"
+              rows="4"
+              {...register('feedback', { required: true })}
+            />
 
-            <div className={styles.pageContactSection}>
-              <label className={styles.pageContactLabel}>Feedback</label>
-              <br />
-              <textarea
-                value={feedback}
-                onChange={e => setFeedback(e.target.value)}
-                className={styles.FeedbackInput}
-                rows="4"
-              />
-            </div>
+            <ContactCheckbox
+              label="I’m interested in helping PHLASK with future research"
+              {...register('isInterestedInResearch')}
+            />
 
-            <div
-              className={`${styles.pageContactSection} ${styles.pageContactSectionGrid}`}
-            >
-              <input
-                type="checkbox"
-                value={interestedResearch}
-                onChange={e => setInterestedResearch(e.target.value)}
-                className={styles.pageContactCheckbox}
-              />
-              <label className={`${styles.pageText} ${styles.pageTextLabel}`}>
-                I’m interested in helping PHLASK with future research
-              </label>
-            </div>
             <button
               type="submit"
-              onSubmit={handleSubmit}
+              disabled={!form.isValid}
               className={styles.submitButton}
             >
               <span className={styles.buttonText}>Submit Feedback</span>
@@ -96,10 +176,10 @@ const Contact = () => {
         <div>
           {/* Thank You Message Container */}
           <div className={styles.thankYouMessageContainer}>
-            <div className={styles.thankYouMessageSpacer}></div>
+            <div className={styles.thankYouMessageSpacer} />
             <ContactSubmitImage />
             <h1 className={styles.pageHeader}>Thanks for your feedback!</h1>
-            <div className={styles.thankYouMessageSpacer}></div>
+            <div className={styles.thankYouMessageSpacer} />
           </div>
 
           {/* Follow PHLASK, Connect, Social Media Icons, and Contact Email */}
@@ -112,18 +192,27 @@ const Contact = () => {
             </h2>
             <div className={styles.socialLinksContainer}>
               <a
+                aria-label="Like PHLask on Facebook"
+                target="_blank"
+                rel="noreferrer noopener"
                 href="https://www.facebook.com/PHLASKecosystem/"
                 className={styles.socialLink}
               >
                 <FacebookIcon />
               </a>
               <a
+                aria-label="Follow PHLask on Instagram"
+                target="_blank"
+                rel="noreferrer noopener"
                 href="https://www.instagram.com/phlaskecosystem/"
                 className={styles.socialLink}
               >
                 <InstagramIcon />
               </a>
               <a
+                aria-label="Follow PHLask on Twitter"
+                target="_blank"
+                rel="noreferrer noopener"
                 href="https://twitter.com/PHLASKecosystem/"
                 className={styles.socialLink}
               >

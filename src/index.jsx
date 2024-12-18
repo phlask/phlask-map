@@ -1,29 +1,27 @@
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
+import App from 'App';
 
 let basepath = '';
 // Test-specific routing logic
-let host = window.location.host;
+const { host } = window.location;
 if (host === 'test.phlask.me') {
   basepath = window.location.pathname;
 }
 
-let path = window.location.hash.slice(1);
+const path = window.location.hash.slice(1);
 if (path) {
   window.location.hash = '';
   window.history.replaceState({}, '', `${basepath}${path}`);
 }
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter basename={basepath}>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
 );

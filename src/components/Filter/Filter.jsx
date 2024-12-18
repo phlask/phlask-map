@@ -1,27 +1,27 @@
-import { Box, Button, Collapse, Paper } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Collapse, Paper } from '@mui/material';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import useIsMobile from 'hooks/useIsMobile';
+import selectFilteredResource from 'selectors/resourceSelectors';
 import {
   setToolbarModal,
   toggleInfoWindow,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE
-} from '../../actions/actions';
+} from 'actions/actions';
 import styles from './Filter.module.scss';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import useIsMobile from 'hooks/useIsMobile';
-import selectFilteredResource from 'selectors/resourceSelectors';
 
 const FilterTags = ({ tags, activeTags, resourceType, index, handleTag }) => (
   <Box className={styles.filterTags}>
     {tags.map((tag, key) => (
       <Box
-        key={key}
+        key={tag}
         className={
           styles.filterTag +
           (activeTags[resourceType][index][key]
-            ? ' ' + styles.filterTagSelected
+            ? ` ${styles.filterTagSelected}`
             : '')
         }
         onClick={() => {
@@ -45,11 +45,11 @@ const FilterTagsExclusive = ({
   <Box className={styles.filterTagsExclusive}>
     {tags.map((tag, key) => (
       <Box
-        key={key}
+        key={tag}
         className={
           styles.filterTagExclusive +
-          (activeTags[resourceType][index] == key
-            ? ' ' + styles.filterTagSelected
+          (activeTags[resourceType][index] === key
+            ? ` ${styles.filterTagSelected}`
             : '')
         }
         onClick={() => {
@@ -63,14 +63,7 @@ const FilterTagsExclusive = ({
   </Box>
 );
 
-export default function Filter({
-  filters,
-  resourceType,
-  handleTag,
-  activeTags,
-  clearAll,
-  applyTags
-}) {
+const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
@@ -88,7 +81,7 @@ export default function Filter({
           }}
         >
           <Collapse
-            in={toolbarModal == TOOLBAR_MODAL_FILTER}
+            in={toolbarModal === TOOLBAR_MODAL_FILTER}
             orientation="vertical"
             timeout="auto"
           >
@@ -129,30 +122,28 @@ export default function Filter({
             </Box>
 
             <Box sx={{ margin: '20px' }}>
-              {filters[resourceType].categories.map((category, index) => {
-                return (
-                  <React.Fragment key={index}>
-                    <h2 className={styles.label}>{category.header}</h2>
-                    {category.type == 0 ? (
-                      <FilterTags
-                        tags={category.tags}
-                        resourceType={resourceType}
-                        index={index}
-                        handleTag={handleTag}
-                        activeTags={activeTags}
-                      />
-                    ) : (
-                      <FilterTagsExclusive
-                        tags={category.tags}
-                        resourceType={resourceType}
-                        index={index}
-                        handleTag={handleTag}
-                        activeTags={activeTags}
-                      />
-                    )}
-                  </React.Fragment>
-                );
-              })}
+              {filters[resourceType].categories.map((category, index) => (
+                <React.Fragment key={category.header}>
+                  <h2 className={styles.label}>{category.header}</h2>
+                  {category.type === 0 ? (
+                    <FilterTags
+                      tags={category.tags}
+                      resourceType={resourceType}
+                      index={index}
+                      handleTag={handleTag}
+                      activeTags={activeTags}
+                    />
+                  ) : (
+                    <FilterTagsExclusive
+                      tags={category.tags}
+                      resourceType={resourceType}
+                      index={index}
+                      handleTag={handleTag}
+                      activeTags={activeTags}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
             </Box>
             <Box
               sx={{
@@ -167,9 +158,9 @@ export default function Filter({
                 sx={{
                   margin: '10px 20px'
                 }}
+                onClick={clearAll}
               >
                 <p
-                  onClick={clearAll}
                   style={{
                     margin: 0,
                     width: 'fit-content',
@@ -199,7 +190,7 @@ export default function Filter({
                     float: 'right',
                     border: '1px solid #09A2E5',
                     borderRadius: '8px',
-                    fontWeight: '600',
+                    fontWeight: '600'
                   }}
                 >
                   Resources: {filteredResources.length}
@@ -209,7 +200,9 @@ export default function Filter({
           </Collapse>
         </Paper>
       )}
-      {isMobile && <Paper></Paper>}
+      {isMobile && <Paper />}
     </>
   );
-}
+};
+
+export default Filter;

@@ -1,5 +1,9 @@
+import { useMap } from '@vis.gl/react-google-maps';
 import IconButton from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import { SvgIcon, Typography } from '@mui/material';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import Box from '@mui/material/Box';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
@@ -9,44 +13,40 @@ import {
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow
-} from '../../actions/actions';
-import styles from './Toolbar.module.scss';
+} from 'actions/actions';
 
 import {
   WATER_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
+} from 'types/ResourceEntry';
 
-import ToiletIcon from '../icons/CircleBathroomIcon.svg?react';
-import FoodIcon from '../icons/CircleFoodIcon.svg?react';
-import ForagingIcon from '../icons/CircleForagingIcon.svg?react';
-import WaterIcon from '../icons/CircleWaterIcon.svg?react';
-import ContributeIcon from '../icons/ContributeIcon.svg?react';
-import FilterIcon from '../icons/FilterIcon.svg?react';
-import ResourceIcon from '../icons/ResourceIcon.svg?react';
-import SearchIcon from '../icons/SearchIcon.svg?react';
+import ToiletIcon from 'icons/CircleBathroomIcon';
+import FoodIcon from 'icons/CircleFoodIcon';
+import ForagingIcon from 'icons/CircleForagingIcon';
+import WaterIcon from 'icons/CircleWaterIcon';
+import ContributeIcon from 'icons/ContributeIcon';
+import FilterIcon from 'icons/FilterIcon';
+import ResourceIcon from 'icons/ResourceIcon';
+import SearchIcon from 'icons/SearchIcon';
 
-import BathroomPhlaskButton from '../icons/PhlaskButtons/BathroomPhlaskButton.svg?react';
-import FoodPhlaskButton from '../icons/PhlaskButtons/FoodPhlaskButton.svg?react';
-import ForagingPhlaskButton from '../icons/PhlaskButtons/ForagingPhlaskButton.svg?react';
-import WaterPhlaskButton from '../icons/PhlaskButtons/WaterPhlaskButton.svg?react';
+import BathroomPhlaskButton from 'icons/BathroomPhlaskButton';
+import FoodPhlaskButton from 'icons/FoodPhlaskButton';
+import ForagingPhlaskButton from 'icons/ForagingPhlaskButton';
+import WaterPhlaskButton from 'icons/WaterPhlaskButton';
 
-import { SvgIcon, Typography } from '@mui/material';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import Box from '@mui/material/Box';
-import ChooseResource from '../ChooseResourceType/ChooseResourceType';
-
+import useIsMobile from 'hooks/useIsMobile';
+import selectFilteredResource from 'selectors/resourceSelectors';
+import ChooseResource from 'components/ChooseResourceType/ChooseResourceType';
+import styles from './Toolbar.module.scss';
 import NavigationItem from './NavigationItem';
-import useIsMobile from '../../hooks/useIsMobile';
-import selectFilteredResource from '../../selectors/resourceSelectors';
 
 // Actual Magic: https://stackoverflow.com/a/41337005
 // Distance calculates the distance between two lat/lon pairs
 function distance(lat1, lon1, lat2, lon2) {
-  var p = 0.017453292519943295;
-  var a =
+  const p = 0.017453292519943295;
+  const a =
     0.5 -
     Math.cos((lat2 - lat1) * p) / 2 +
     (Math.cos(lat1 * p) *
@@ -63,17 +63,15 @@ function distance(lat1, lon1, lat2, lon2) {
 // @param {ResourceEntry[]} data
 // @return {ResourceEntry}
 function getClosest(data, userLocation) {
-  const distances = data.map((resource, index) => {
-    return {
-      resource,
-      distance: distance(
-        userLocation['lat'],
-        userLocation['lon'],
-        resource.latitude,
-        resource.longitude
-      )
-    };
-  });
+  const distances = data.map((resource, index) => ({
+    resource,
+    distance: distance(
+      userLocation.lat,
+      userLocation.lon,
+      resource.latitude,
+      resource.longitude
+    )
+  }));
 
   // Return the resource with the minimum distance value
   if (!distances.length) return null;
@@ -83,7 +81,8 @@ function getClosest(data, userLocation) {
   ).resource;
 }
 
-function Toolbar({ map }) {
+const Toolbar = () => {
+  const map = useMap();
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
@@ -102,7 +101,7 @@ function Toolbar({ map }) {
     default: WaterIcon
   }[resourceType ?? 'default'];
 
-  async function setClosest() {
+  const setClosest = async () => {
     // If the user clicks very fast, it crashes.
     // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
@@ -120,20 +119,18 @@ function Toolbar({ map }) {
       })
     );
     dispatch(setSelectedPlace(closest));
-    map.panTo({
-      lat: closest.latitude,
-      lng: closest.longitude
-    });
-  }
+    if (map) {
+      map.panTo({
+        lat: closest.latitude,
+        lng: closest.longitude
+      });
+    }
+  };
 
-  function closestButtonClicked() {
-    setClosest();
-  }
-
-  function toolbarClicked(modal) {
+  const toolbarClicked = modal => {
     if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     else dispatch(setToolbarModal(modal));
-  }
+  };
 
   let PhlaskIcon = null;
   switch (resourceType) {
@@ -153,214 +150,221 @@ function Toolbar({ map }) {
       break;
   }
 
-  return (
-    <>
-      {!isMobile ? (
-        <Box
-          sx={{
-            display: 'flex',
-            position: 'absolute',
-            left: '32px',
-            bottom: '32px',
-            px: '40px',
-            py: '12px',
-            gap: '40px',
-            backgroundColor: 'white',
-            boxShadow:
-              '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
-            minWidth: '400px',
-            borderRadius: '10px',
-            justifyContent: 'space-between',
-            zIndex: 1
-          }}
-        >
-          {/* DESKTOP VERSION OF THE TOOLBAR (V2) */}
-          <IconButton
-            sx={{
-              display: 'flex',
-              minWidth: '188px',
-              flexDirection: 'column',
-              p: 0
-            }}
-            onClick={closestButtonClicked}
-            disableFocusRipple={true}
-            disableRipple={true}
-          >
-            <PhlaskIcon width="245" height="64" />
-          </IconButton>
-          <IconButton
-            variant="text"
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              p: 0,
-              fontSize: 32,
-              filter:
-                toolbarModal === TOOLBAR_MODAL_RESOURCE
-                  ? blackToGrayFilter
-                  : 'none',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                filter: blackToGrayFilter
-              }
-            }}
-            onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
-            disableFocusRipple={true}
-            disableRipple={true}
+  if (isMobile) {
+    return (
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          pb: '25px',
+          pt: '10px',
+          bgcolor: 'white'
+        }}
+      >
+        <BottomNavigation showLabels>
+          <NavigationItem
             data-cy="button-resource-type-menu"
-          >
-            <ResourceIcon />
-            <Typography
-              style={{ textTransform: 'none', color: 'black' }}
-              fontSize={'small'}
-            >
-              Resources
-            </Typography>
-          </IconButton>
-          <IconButton
-            variant="text"
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: 32,
-              p: 0,
-              filter:
-                toolbarModal === TOOLBAR_MODAL_FILTER
-                  ? blackToGrayFilter
-                  : 'none',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                filter: blackToGrayFilter
-              }
-            }}
-            onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
-            disableFocusRipple={true}
-            disableRipple={true}
-            data-cy="button-filter-menu"
-          >
-            <FilterIcon />
-            <Typography
-              style={{ textTransform: 'none', color: 'black' }}
-              fontSize={'small'}
-            >
-              Filter
-            </Typography>
-          </IconButton>
-          <IconButton
-            variant="text"
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: 32,
-              p: 0,
-              filter:
-                toolbarModal === TOOLBAR_MODAL_SEARCH
-                  ? blackToGrayFilter
-                  : 'none',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                filter: blackToGrayFilter
-              }
-            }}
-            onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
-            disableFocusRipple={true}
-            disableRipple={true}
-            data-cy="button-search"
-          >
-            <SearchIcon />
-            <Typography
-              style={{ textTransform: 'none', color: 'black' }}
-              fontSize={'small'}
-            >
-              Search
-            </Typography>
-          </IconButton>
-          <IconButton
-            variant="text"
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: 32,
-              p: 0,
-              filter:
-                toolbarModal === TOOLBAR_MODAL_CONTRIBUTE
-                  ? blackToGrayFilter
-                  : 'none',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                filter: blackToGrayFilter
-              }
-            }}
-            onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
-            disableFocusRipple={true}
-            disableRipple={true}
+            label={<Typography fontSize="small">Resources</Typography>}
+            icon={
+              <ResourceIcon
+                className={styles.resourceButton}
+                height="32"
+                width="32"
+              />
+            }
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
+          />
+          <ChooseResource />
+          <NavigationItem
+            central
+            label={
+              <Typography fontSize="small" color="black" marginTop="-1">
+                PHL<b>ASK</b>
+              </Typography>
+            }
+            icon={
+              <SvgIcon
+                component={selectedResourceIcon}
+                sx={{ fontSize: 90 }}
+                inheritViewBox
+                onClick={setClosest}
+              />
+            }
+          />
+          <NavigationItem
             data-cy="button-contribute-menu"
-          >
-            <ContributeIcon />
-            <Typography
-              style={{ textTransform: 'none', color: 'black' }}
-              fontSize={'small'}
-            >
-              Add Site
-            </Typography>
-          </IconButton>
-        </Box>
-      ) : (
-        // MOBILE VERSION OF THE TOOLBAR (V2)
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            pb: '25px',
-            pt: '10px',
-            bgcolor: 'white'
-          }}
+            label={
+              <Typography noWrap fontSize="small">
+                Add Site
+              </Typography>
+            }
+            icon={
+              <ContributeIcon
+                className={styles.contributeButton}
+                height="32"
+                width="32"
+              />
+            }
+            onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
+          />
+        </BottomNavigation>
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        position: 'absolute',
+        left: '32px',
+        bottom: '32px',
+        px: '40px',
+        py: '12px',
+        gap: '40px',
+        backgroundColor: 'white',
+        boxShadow:
+          '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
+        minWidth: '400px',
+        borderRadius: '10px',
+        justifyContent: 'space-between',
+        zIndex: 1
+      }}
+    >
+      {/* DESKTOP VERSION OF THE TOOLBAR (V2) */}
+      <IconButton
+        sx={{
+          display: 'flex',
+          minWidth: '188px',
+          flexDirection: 'column',
+          p: 0
+        }}
+        onClick={setClosest}
+        disableFocusRipple
+        disableRipple
+      >
+        <PhlaskIcon width="245" height="64" />
+      </IconButton>
+      <IconButton
+        variant="text"
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          p: 0,
+          fontSize: 32,
+          filter:
+            toolbarModal === TOOLBAR_MODAL_RESOURCE
+              ? blackToGrayFilter
+              : 'none',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            filter: blackToGrayFilter
+          }
+        }}
+        onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
+        disableFocusRipple
+        disableRipple
+        data-cy="button-resource-type-menu"
+      >
+        <ResourceIcon />
+        <Typography
+          style={{ textTransform: 'none', color: 'black' }}
+          fontSize="small"
         >
-          <BottomNavigation showLabels>
-            <NavigationItem
-              data-cy="button-resource-type-menu"
-              label={<Typography fontSize="small">Resources</Typography>}
-              icon={<ResourceIcon className={styles.resourceButton} />}
-              onClick={() => toolbarClicked(TOOLBAR_MODAL_RESOURCE)}
-            />
-            <ChooseResource />
-            <NavigationItem
-              central
-              label={
-                <Typography fontSize="small" color="black" marginTop="-1">
-                  PHL<b>ASK</b>
-                </Typography>
-              }
-              icon={
-                <SvgIcon
-                  component={selectedResourceIcon}
-                  sx={{ fontSize: 90 }}
-                  inheritViewBox={true}
-                  onClick={closestButtonClicked}
-                />
-              }
-            />
-            <NavigationItem
-              data-cy="button-contribute-menu"
-              label={
-                <Typography noWrap fontSize="small">
-                  Add Site
-                </Typography>
-              }
-              icon={<ContributeIcon className={styles.contributeButton} />}
-              onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
-            />
-          </BottomNavigation>
-        </Box>
-      )}
-    </>
+          Resources
+        </Typography>
+      </IconButton>
+      <IconButton
+        variant="text"
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          fontSize: 32,
+          p: 0,
+          filter:
+            toolbarModal === TOOLBAR_MODAL_FILTER ? blackToGrayFilter : 'none',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            filter: blackToGrayFilter
+          }
+        }}
+        onClick={() => toolbarClicked(TOOLBAR_MODAL_FILTER)}
+        disableFocusRipple
+        disableRipple
+        data-cy="button-filter-menu"
+      >
+        <FilterIcon />
+        <Typography
+          style={{ textTransform: 'none', color: 'black' }}
+          fontSize="small"
+        >
+          Filter
+        </Typography>
+      </IconButton>
+      <IconButton
+        variant="text"
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          fontSize: 32,
+          p: 0,
+          filter:
+            toolbarModal === TOOLBAR_MODAL_SEARCH ? blackToGrayFilter : 'none',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            filter: blackToGrayFilter
+          }
+        }}
+        onClick={() => toolbarClicked(TOOLBAR_MODAL_SEARCH)}
+        disableFocusRipple
+        disableRipple
+        data-cy="button-search"
+      >
+        <SearchIcon />
+        <Typography
+          style={{ textTransform: 'none', color: 'black' }}
+          fontSize="small"
+        >
+          Search
+        </Typography>
+      </IconButton>
+      <IconButton
+        variant="text"
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          fontSize: 32,
+          p: 0,
+          filter:
+            toolbarModal === TOOLBAR_MODAL_CONTRIBUTE
+              ? blackToGrayFilter
+              : 'none',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            filter: blackToGrayFilter
+          }
+        }}
+        onClick={() => toolbarClicked(TOOLBAR_MODAL_CONTRIBUTE)}
+        disableFocusRipple
+        disableRipple
+        data-cy="button-contribute-menu"
+      >
+        <ContributeIcon />
+        <Typography
+          style={{ textTransform: 'none', color: 'black' }}
+          fontSize="small"
+        >
+          Add Site
+        </Typography>
+      </IconButton>
+    </Box>
   );
-}
+};
 
 export default Toolbar;

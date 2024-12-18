@@ -3,7 +3,7 @@
   "name": "Phlask Map",
   "icons": [
     {
-      "src": "./src/assets/icons/favicon.png",
+      "src": "./src/assets/favicon.png",
       "type": "image/png",
       "sizes": "800x808"
     }

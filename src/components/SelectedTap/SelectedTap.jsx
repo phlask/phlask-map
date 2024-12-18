@@ -1,22 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useSelector, useDispatch } from 'react-redux';
+import useIsMobile from 'hooks/useIsMobile';
+import { Paper, SwipeableDrawer } from '@mui/material';
 import {
   toggleInfoExpanded,
   toggleInfoWindow,
   toggleInfoWindowClass
-} from '../../actions/actions';
-import SelectedTapHours from '../SelectedTapHours/SelectedTapHours';
+} from 'actions/actions';
+import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
-import sampleImg from '../images/phlask-tessellation.png';
-import sampleImg2x from '../images/phlask-tessellation@2x.png';
+import sampleImg from 'components/images/phlask-tessellation.png';
+import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
+import SelectedTapDetails from 'components/SelectedTapMobile/SelectedTapDetails';
+
 import './SelectedTap.css';
-
-import { Paper, SwipeableDrawer } from '@mui/material';
-
-import SelectedTapDetails from '../SelectedTapMobile/SelectedTapDetails';
-
-import useIsMobile from 'hooks/useIsMobile';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -62,11 +60,11 @@ const SelectedTap = () => {
       .then(data => {
         if (!data.features) return;
         // duration is returned in seconds
-        let duration = Math.round(
+        const duration = Math.round(
           data.features[0].properties.summary.duration / 60
         );
         // distance is returned in m = 0.00062 mi
-        let distance = (
+        const distance = (
           data.features[0].properties.summary.distance * 0.00062
         ).toFixed(1);
 
@@ -79,39 +77,9 @@ const SelectedTap = () => {
     userLocation?.lng
   ]);
 
-  const handleToggleInfoExpanded = shouldExpand => {
-    if (!shouldExpand) {
-      // Start animation before unmounting description
-      setTimeout(() => {
-        setIsDescriptionShown(shouldExpand);
-      }, 600);
-      // Expand or Collapse
-      animateInfoExpansion(shouldExpand);
-      // Close if in preview mode
-      if (infoIsExpanded) {
-        handleToggleInfoWindow({
-          isShown: false,
-          infoWindowClass: isMobile
-            ? 'info-window-out'
-            : 'info-window-out-desktop'
-        });
-      }
-    } else {
-      // Set height on first render to animate expansion
-      if (Object.keys(infoExpansionStyle).length < 1) {
-        setInfoExpansionStyle({
-          height: previewHeight
-        });
-
-        setIsDescriptionShown(shouldExpand);
-
-        animateInfoExpansion(shouldExpand);
-      } else {
-        setIsDescriptionShown(shouldExpand);
-
-        animateInfoExpansion(shouldExpand);
-      }
-    }
+  const animateInfoExpansion = shouldExpand => {
+    setInfoExpansionStyle({ height: shouldExpand ? '80%' : previewHeight });
+    dispatch(toggleInfoExpanded(shouldExpand));
   };
 
   const handleToggleInfoWindow = isShown => {
@@ -150,9 +118,36 @@ const SelectedTap = () => {
     }
   };
 
-  const animateInfoExpansion = shouldExpand => {
-    setInfoExpansionStyle({ height: shouldExpand ? '80%' : previewHeight });
-    dispatch(toggleInfoExpanded(shouldExpand));
+  const handleToggleInfoExpanded = shouldExpand => {
+    if (!shouldExpand) {
+      // Start animation before unmounting description
+      setTimeout(() => {
+        setIsDescriptionShown(shouldExpand);
+      }, 600);
+      // Expand or Collapse
+      animateInfoExpansion(shouldExpand);
+      // Close if in preview mode
+      if (infoIsExpanded) {
+        handleToggleInfoWindow({
+          isShown: false,
+          infoWindowClass: isMobile
+            ? 'info-window-out'
+            : 'info-window-out-desktop'
+        });
+      }
+    } else if (Object.keys(infoExpansionStyle).length < 1) {
+      setInfoExpansionStyle({
+        height: previewHeight
+      });
+
+      setIsDescriptionShown(shouldExpand);
+
+      animateInfoExpansion(shouldExpand);
+    } else {
+      setIsDescriptionShown(shouldExpand);
+
+      animateInfoExpansion(shouldExpand);
+    }
   };
 
   const handleGA = useCallback(() => {
@@ -232,10 +227,7 @@ const SelectedTap = () => {
               isMobile={false}
               closeModal={() => handleToggleInfoWindow(false)}
             >
-              <SelectedTapHours
-                infoIsExpanded={true}
-                selectedPlace={selectedPlace}
-              />
+              <SelectedTapHours infoIsExpanded selectedPlace={selectedPlace} />
             </SelectedTapDetails>
           </Paper>
         </div>

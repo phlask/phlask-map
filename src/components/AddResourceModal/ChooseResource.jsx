@@ -1,14 +1,15 @@
+import useIsMobile from 'hooks/useIsMobile';
+import Box from '@mui/material/Box';
+
+import ResourceButton from 'components/ResourceButton/ResourceButton';
+import WaterIcon from 'icons/WaterIconChooseResource';
+import FoodIcon from 'icons/FoodIconChooseResource';
+import ForagingIcon from 'icons/ForagingIconChooseResource';
+import BathroomIcon from 'icons/ToiletIconChooseResource';
+
 import styles from './AddResourceModal.module.scss';
 
-import useIsMobile from 'hooks/useIsMobile';
-import ResourceButton from '../ResourceButton/ResourceButton';
-import Box from '@mui/material/Box';
-import WaterIcon from '../icons/WaterIconChooseResource.svg?react';
-import FoodIcon from '../icons/FoodIconChooseResource.svg?react';
-import ForagingIcon from '../icons/ForagingIconChooseResource.svg?react';
-import BathroomIcon from '../icons/ToiletIconChooseResource.svg?react';
-
-function ChooseResource({ setFormStep }) {
+const ChooseResource = ({ setFormStep }) => {
   const isMobile = useIsMobile();
 
   return (
@@ -55,6 +56,6 @@ function ChooseResource({ setFormStep }) {
       </Box>
     </div>
   );
-}
+};
 
 export default ChooseResource;

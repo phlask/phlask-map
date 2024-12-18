@@ -1,12 +1,12 @@
 import { Fade } from '@mui/material';
-import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
+import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ReactTouchEvents from 'react-touch-events';
+import useIsMobile from 'hooks/useIsMobile';
+import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import Stack from '@mui/material/Stack';
 import {
   TOOLBAR_MODAL_SEARCH,
-  setMapCenter,
-  setUserLocation,
   toggleInfoWindow,
   getResources,
   setSelectedPlace,
@@ -14,32 +14,27 @@ import {
   resetFilterFunction,
   removeFilterFunction,
   removeEntryFilterFunction,
-  setEntryFilterFunction,
+  setEntryFilterFunction
 } from '../../actions/actions';
 import SearchBar from '../SearchBar/SearchBar';
 import SelectedTap from '../SelectedTap/SelectedTap';
 import styles from './ReactGoogleMaps.module.scss';
-import Stack from '@mui/material/Stack';
 import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
 import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
 import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import selectFilteredResource from '../../selectors/resourceSelectors';
-import useIsMobile from 'hooks/useIsMobile';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
 
 function getCoordinates() {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
-const LoadingContainer = () => <div>Looking for water!</div>;
-
 const style = {
   width: '100%',
-  height: '100%',
+  height: '100vh',
   position: 'relative'
 };
 
@@ -140,64 +135,49 @@ const filters = {
   }
 };
 
-let noActiveFilterTags = {};
-for (const [key, value] of Object.entries(filters)) {
-  let data = [];
-  value.categories.map(category => {
-    if (category.type == 0) {
-      data.push(new Array(category.tags.length).fill(false));
-    } else {
-      data.push(category.tags.length);
-    }
-  });
-  noActiveFilterTags[key] = data;
-}
+const noActiveFilterTags = Object.entries(filters).reduce(
+  (prev, [key, value]) => ({
+    ...prev,
+    [key]: value.categories.map(category => {
+      if (category.type === 0) {
+        return new Array(category.tags.length).fill(false);
+      }
+      return category.tags.length;
+    })
+  }),
+  {}
+);
 
-export const ReactGoogleMaps = ({ google }) => {
+const ReactGoogleMaps = () => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
-  const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
-  const showingInfoWindow = useSelector(
-    state => state.filterMarkers.showingInfoWindow
-  );
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-
-  const [currentLat, setCurrentLat] = useState(CITY_HALL_COORDINATES.latitude);
-  const [currentLon, setCurrentLon] = useState(CITY_HALL_COORDINATES.longitude);
-  const [zoom, setZoom] = useState(16);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
     JSON.parse(JSON.stringify(noActiveFilterTags))
   );
-  const [appliedFilterTags, setAppliedFilterTags] = useState(
-    JSON.parse(JSON.stringify(noActiveFilterTags))
-  );
 
   useEffect(() => {
-    if (!allResources.length) {
-      dispatch(getResources());
-    }
-  }, [allResources.length, dispatch]);
+    dispatch(getResources());
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchCoordinates = async () => {
       try {
         const position = await getCoordinates();
-        setCurrentLat(position.coords.latitude);
-        setCurrentLon(position.coords.longitude);
+        map.panTo(position.coords);
       } catch (error) {
         // Do nothing
       }
     };
 
     fetchCoordinates();
-  }, []);
-  
-  //toggle window goes here
+  }, [map]);
+
+  // toggle window goes here
   const onMarkerClick = (resource, markerProps) => {
     dispatch(
       toggleInfoWindow({
@@ -205,167 +185,135 @@ export const ReactGoogleMaps = ({ google }) => {
         infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
       })
     );
+    map.panTo({
+      lat: Number(resource.latitude),
+      lng: Number(resource.longitude)
+    });
     dispatch(setSelectedPlace(resource));
-    setCurrentLat(resource.latitude);
-    setCurrentLon(resource.longitude);
-    markerProps.map.panTo({ lat: resource.latitude, lng: resource.longitude });
-
   };
 
-  const onReady = (_, map) => {
-    setMap(map);
+  const onReady = event => {
+    setMap(prev => prev || event.map);
   };
 
   const searchForLocation = location => {
-    setCurrentLat(location.lat);
-    setCurrentLon(location.lng);
-    setZoom(16);
-    setSearchedTap({ lat: location.lat, lng: location.lng });
-  };
-
-  const handleTap = e => {
-    if (e.target instanceof HTMLDivElement && showingInfoWindow && !isMobile) {
-      dispatch(
-        toggleInfoWindow({
-          isShown: false,
-          infoWindowClass: isMobile
-            ? 'info-window-in'
-            : 'info-window-in-desktop'
-        })
-      );
-    }
+    map.panTo(location);
+    map.setZoom(16);
+    setSearchedTap({ lat: Number(location.lat), lng: Number(location.lng) });
   };
 
   const handleTag = (type, filterType, filterTag, index, key) => {
-    //handles multi select filters
-    if (type == 0) {
-      let activeFilterTags_ = { ...activeFilterTags };
-      if (activeFilterTags_[filterType][index][key]) {
-        dispatch(removeFilterFunction({ tag: filterTag }))
-      }
-      else {
-        dispatch(setFilterFunction({ tag: filterTag }))
-      }
-      activeFilterTags_[filterType][index][key] =
-        !activeFilterTags_[filterType][index][key];
-      setActiveFilterTags(activeFilterTags_);
-    }
-    //handles single select entry/organization filters
-    else if (type == 1) {
-      let activeFilterTags_ = { ...activeFilterTags };
-      if (activeFilterTags_[filterType][index] == key) {
-        activeFilterTags_[filterType][index] = null;
-        dispatch(removeEntryFilterFunction())
+    const updatedActiveFilterTags = { ...activeFilterTags };
+
+    // handles multi select filters
+    if (type === 0) {
+      if (updatedActiveFilterTags[filterType][index][key]) {
+        dispatch(removeFilterFunction({ tag: filterTag }));
       } else {
-        activeFilterTags_[filterType][index] = key;
-        dispatch(setEntryFilterFunction({ tag: filterTag }))
+        dispatch(setFilterFunction({ tag: filterTag }));
       }
-      setActiveFilterTags(activeFilterTags_);
+      updatedActiveFilterTags[filterType][index][key] =
+        !updatedActiveFilterTags[filterType][index][key];
+      setActiveFilterTags(updatedActiveFilterTags);
+    }
+    // handles single select entry/organization filters
+    else if (type === 1) {
+      if (updatedActiveFilterTags[filterType][index] === key) {
+        updatedActiveFilterTags[filterType][index] = null;
+        dispatch(removeEntryFilterFunction());
+      } else {
+        updatedActiveFilterTags[filterType][index] = key;
+        dispatch(setEntryFilterFunction({ tag: filterTag }));
+      }
+      setActiveFilterTags(updatedActiveFilterTags);
     }
   };
 
   const clearAllTags = () => {
     setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
-    dispatch(resetFilterFunction())
-  };
-
-  const applyTags = () => {
-    setAppliedFilterTags(JSON.parse(JSON.stringify(activeFilterTags)));
+    dispatch(resetFilterFunction());
   };
 
   return (
-    <div id="react-google-map" className={styles.mapContainer}>
-      <ReactTouchEvents onTap={handleTap}>
-        <div>
-          <Map
-            google={google}
-            className="map"
-            style={style}
-            zoom={zoom}
-            zoomControl={!isMobile}
-            streetViewControl={false}
-            mapTypeControl={false}
-            rotateControl={false}
-            fullscreenControl={false}
-            onReady={onReady}
-            center={{
-              lat: currentLat,
-              lng: currentLon
+    <APIProvider
+      apiKey="AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I"
+      libraries={['places']}
+    >
+      <Map
+        className={styles.mapContainer}
+        style={style}
+        defaultZoom={16}
+        zoomControl={!isMobile}
+        streetViewControl={false}
+        mapTypeControl={false}
+        rotateControl={false}
+        fullscreenControl={false}
+        onIdle={onReady}
+        defaultCenter={{
+          lat: CITY_HALL_COORDINATES.latitude,
+          lng: CITY_HALL_COORDINATES.longitude
+        }}
+        mapId="DEMO_MAP_ID"
+      >
+        {filteredResources.map((resource, index) => (
+          <Marker
+            key={resource.date_created}
+            onClick={() => {
+              onMarkerClick(resource);
             }}
-            filterTags={appliedFilterTags}
-          >
-            {filteredResources.map((resource, index) => {
-              return (
-                <Marker
-                  key={index}
-                  onClick={markerProps => {
-                    onMarkerClick(resource, markerProps);
-                  }}
-                  position={{
-                    lat: resource.latitude,
-                    lng: resource.longitude
-                  }}
-                  icon={{
-                    url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
-                  }}
-                  // This is used for marker targeting as we are unable to add custom properties with this library.
-                  // We should eventually replace this so that we can still enable the use of screen readers in the future.
-                  title={`data-cy-${index}`}
-                />
-              );
-            })}
-
-            {searchedTap != null && (
-              <Marker
-                name="Your Search Result"
-                position={searchedTap}
-                title="data-cy-search-result"
-              />
-            )}
-          </Map>
-        </div>
-      </ReactTouchEvents>
-      {isMobile && (
-        <Fade
-          in={toolbarModal == TOOLBAR_MODAL_SEARCH}
-          timeout={300}
-          style={{ position: 'fixed', pointerEvents: 'none' }}
-        >
-          <div
-            style={{
-              width: '100vw',
-              height: '100dvh',
-              backgroundColor: 'rgba(0, 0, 0, 0.15)'
-            }}
-          ></div>
-        </Fade>
-      )}
-      <Stack position="absolute" bottom="0px" height="143px" width="34%">
-        <Stack direction="row" spacing={2}>
-          <SearchBar
-            className="searchBar"
-            search={location => searchForLocation(location)}
+            position={{ lat: resource.latitude, lng: resource.longitude }}
+            icon={{ url: phlaskMarkerIconV2(resource.resource_type, 56, 56) }}
+            // This is used for marker targeting as we are unable to add custom properties with this library.
+            // We should eventually replace this so that we can still enable the use of screen readers in the future.
+            title={`data-cy-${index}`}
           />
+        ))}
+
+        {searchedTap ? (
+          <Marker
+            name="Your Search Result"
+            position={searchedTap}
+            title="data-cy-search-result"
+          />
+        ) : null}
+
+        {isMobile && (
+          <Fade
+            in={toolbarModal === TOOLBAR_MODAL_SEARCH}
+            timeout={300}
+            style={{ position: 'fixed', pointerEvents: 'none' }}
+          >
+            <div
+              style={{
+                width: '100vw',
+                height: '100dvh',
+                backgroundColor: 'rgba(0, 0, 0, 0.15)'
+              }}
+            />
+          </Fade>
+        )}
+        <Stack position="absolute" bottom="0px" height="143px" width="34%">
+          <Stack direction="row" spacing={2}>
+            <SearchBar
+              className="searchBar"
+              search={location => searchForLocation(location)}
+            />
+          </Stack>
+          <ChooseResourceType />
+          <Filter
+            resourceType={resourceType}
+            filters={filters}
+            handleTag={handleTag}
+            clearAll={clearAllTags}
+            activeTags={activeFilterTags}
+          />
+          <AddResourceModalV2 />
+          <Toolbar />
         </Stack>
-        <ChooseResourceType />
-        <Filter
-          resourceType={resourceType}
-          filters={filters}
-          handleTag={handleTag}
-          clearAll={clearAllTags}
-          applyTags={applyTags}
-          activeTags={activeFilterTags}
-        />
-        <AddResourceModalV2 />
-        <Toolbar map={map} />
-      </Stack>
-      <SelectedTap />
-    </div>
+        <SelectedTap />
+      </Map>
+    </APIProvider>
   );
 };
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',
-  LoadingContainer: LoadingContainer,
-  version: 'quarterly'
-})(ReactGoogleMaps);
+export default ReactGoogleMaps;

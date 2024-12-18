@@ -2,13 +2,12 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import styles from "./AddResourceModal.module.scss";
 
-function SharedAccordionFields({
+const SharedAccordionFields = ({
   phlaskStatement,
   onPhlaskStatementChange,
   normsAndRules,
   onNormsAndRulesChange
-}) {
-  return (
+}) => (
     <>
       <Form.Group
         controlId="phlaskStatement"
@@ -41,7 +40,6 @@ function SharedAccordionFields({
         />
       </Form.Group>
     </>
-  );
-}
+  )
 
 export default SharedAccordionFields;

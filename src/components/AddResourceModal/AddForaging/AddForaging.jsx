@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useIsMobile from 'hooks/useIsMobile';
+import styles from '../AddResourceModal.module.scss';
 
-function AddForaging({
+const AddForaging = ({
   prev,
   next,
   page,
@@ -39,7 +39,7 @@ function AddForaging({
   communityGarden,
   checkboxChangeHandler,
   textFieldChangeHandler
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 

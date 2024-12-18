@@ -16,7 +16,7 @@ const initialState = {
   infoIsExpanded: false,
   infoWindowClass: 'info-window-out-desktop',
   filterTags: [],
-  filterEntry: "",
+  filterEntry: '',
   /** @type {ResourceEntry[]} */
   allResources: [],
   selectedPlace: {},
@@ -24,7 +24,7 @@ const initialState = {
   resourceType: WATER_RESOURCE_TYPE
 };
 
-export default (state = initialState, act) => {
+export default (state = initialState, act = {}) => {
   switch (act.type) {
     case actions.SET_TOGGLE_STATE:
       return {
@@ -86,22 +86,22 @@ export default (state = initialState, act) => {
       };
 
     case actions.setFilterFunction.type:
-      return { ...state, filterTags: [...state.filterTags, act.payload.tag] }
+      return { ...state, filterTags: [...state.filterTags, act.payload.tag] };
 
     case actions.setEntryFilterFunction.type:
-      return { ...state, filterEntry: act.payload.tag }
+      return { ...state, filterEntry: act.payload.tag };
 
     case actions.removeFilterFunction.type:
       return {
         ...state,
         filterTags: state.filterTags.filter(x => x !== act.payload.tag)
-      }
+      };
 
     case actions.removeEntryFilterFunction.type:
       return {
         ...state,
         filterEntry: ''
-      }
+      };
 
     case actions.resetFilterFunction.type:
       return {
@@ -125,10 +125,10 @@ export default (state = initialState, act) => {
       return typeof act.selectedPlace === 'object'
         ? { ...state, selectedPlace: act.selectedPlace }
         : {
-          ...state,
-          selectedPlace: state.allResources[act.selectedPlace],
-          showingInfoWindow: true
-        };
+            ...state,
+            selectedPlace: state.allResources[act.selectedPlace],
+            showingInfoWindow: true
+          };
 
     case actions.toggleInfoWindow.type:
       return {

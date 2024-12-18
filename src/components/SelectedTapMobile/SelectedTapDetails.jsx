@@ -1,44 +1,77 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
-import styles from './SelectedTapMobileInfo.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
+import VerificationButton from 'components/Verification/VerificationButton';
 
-import DirectionIcon from '../images/ArrowElbowUpRight.svg?react';
-import CaretDownSvg from '../images/CaretDown.svg?react';
-import ExportSvg from '../images/Export.svg?react';
+import DirectionIcon from 'icons/ArrowElbowUpRight';
+import CaretDownSvg from 'icons/CaretDown';
+import ExportSvg from 'icons/Export';
 
-import FountainIcon from '../icons/CircleWaterIcon.svg?react';
-import ForagingIcon from '../icons/CircleForagingIcon.svg?react';
-import FoodIcon from '../icons/CircleFoodIcon.svg?react';
-import BathroomIcon from '../icons/CircleBathroomIcon.svg?react';
+import FountainIcon from 'icons/CircleWaterIcon';
+import ForagingIcon from 'icons/CircleForagingIcon';
+import FoodIcon from 'icons/CircleFoodIcon';
+import BathroomIcon from 'icons/CircleBathroomIcon';
 
 import {
   WATER_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
-import VerificationButton from 'components/Verification/VerificationButton';
+} from 'types/ResourceEntry';
+import noop from 'utils/noop';
 
-function SelectedTapDetails(props) {
+import styles from './SelectedTapMobileInfo.module.scss';
+
+/**
+ * Get a list of tags to display for a resources
+ * @param {ResourceEntry} resource
+ * @returns {Array<string>} A list of tags to display in the UI
+ */
+function getTagsFromResource(resource) {
+  // First, get the tags
+  const tags = [
+    resource.water,
+    resource.food,
+    resource.forage,
+    resource.bathroom
+  ]
+    .filter(Boolean) // Filter out any missing resources if it is not that type
+    .flatMap(item => item.tags);
+
+  // Then , get resource-specific information
+  if (resource.water) {
+    tags.push(...(resource.water.dispenser_type || []));
+  }
+  if (resource.food) {
+    tags.push(...(resource.food.food_type || []));
+    tags.push(...(resource.food.distribution_type || []));
+    tags.push(...(resource.food.organization_type || []));
+  }
+  if (resource.forage) {
+    tags.push(resource.forage.forage_type);
+  }
+
+  return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
+}
+const SelectedTapDetails = ({
+  image,
+  estWalkTime,
+  infoCollapse,
+  setInfoCollapse,
+  isMobile,
+  closeModal,
+  selectedPlace,
+  children
+}) => {
   const [pointerPositionY, setPointerPositionY] = useState(0);
-
-  const {
-    image,
-    estWalkTime,
-    infoCollapse,
-    setInfoCollapse,
-    isMobile,
-    closeModal
-  } = props;
 
   /**
    * @type {ResourceEntry}
    */
-  const resource = props.selectedPlace;
+  const resource = selectedPlace;
 
   if (resource == null || Object.keys(resource).length === 0) {
-    return <div></div>;
+    return <div />;
   }
 
   let icon;
@@ -114,7 +147,12 @@ function SelectedTapDetails(props) {
   return (
     <div className={styles.halfInfo} onPointerMove={detectSwipe}>
       {isMobile && !infoCollapse ? (
-        <button className={styles.swipeIcon}></button>
+        <button
+          type="button"
+          onClick={noop}
+          className={styles.swipeIcon}
+          aria-label="swipe"
+        />
       ) : (
         <div className={styles.expandedToolBar}>
           <div>
@@ -127,9 +165,9 @@ function SelectedTapDetails(props) {
               <ExportSvg />
             </IconButton>
             {/* TODO: Add this back in once we have real options! */}
-            {/*<IconButton color="primary" aria-label="more" component="label">*/}
-            {/*  <ThreeDotSvg />*/}
-            {/*</IconButton>*/}
+            {/* <IconButton color="primary" aria-label="more" component="label"> */}
+            {/*  <ThreeDotSvg /> */}
+            {/* </IconButton> */}
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
           {isMobile && (
@@ -180,14 +218,11 @@ function SelectedTapDetails(props) {
             {resource.name}
           </h2>
           <p>{resource.address}</p>
-          {props.children}
+          {children}
           <Button
             onClick={() =>
               window.open(
-                'https://www.google.com/maps/dir/?api=1&destination=' +
-                  resource.latitude +
-                  ',' +
-                  resource.longitude,
+                `https://www.google.com/maps/dir/?api=1&destination=${resource.latitude},${resource.longitude}`,
                 '_blank'
               )
             }
@@ -209,7 +244,7 @@ function SelectedTapDetails(props) {
       <div className={styles.tagGroup}>
         <hr className={styles.topDivider} />
         {tags.map((tag, index) => (
-          <TagButton size="small" variant="outlined" key={index}>
+          <TagButton size="small" variant="outlined" key={tag}>
             {tag.replace('_', ' ')}
           </TagButton>
         ))}
@@ -238,38 +273,6 @@ function SelectedTapDetails(props) {
       </Collapse>
     </div>
   );
-}
-
-/**
- * Get a list of tags to display for a resources
- * @param {ResourceEntry} resource
- * @returns {Array<string>} A list of tags to display in the UI
- */
-function getTagsFromResource(resource) {
-  // First, get the tags
-  const tags = [
-    resource.water,
-    resource.food,
-    resource.forage,
-    resource.bathroom
-  ]
-    .filter(Boolean) // Filter out any missing resources if it is not that type
-    .flatMap(item => item.tags);
-
-  // Then , get resource-specific information
-  if (resource.water) {
-    tags.push(...(resource.water.dispenser_type || []));
-  }
-  if (resource.food) {
-    tags.push(...(resource.food.food_type || []));
-    tags.push(...(resource.food.distribution_type || []));
-    tags.push(...(resource.food.organization_type || []));
-  }
-  if (resource.forage) {
-    tags.push(resource.forage.forage_type);
-  }
-
-  return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
-}
+};
 
 export default SelectedTapDetails;

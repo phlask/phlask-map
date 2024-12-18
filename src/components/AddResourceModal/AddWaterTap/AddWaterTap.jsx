@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import useIsMobile from 'hooks/useIsMobile';
+import styles from '../AddResourceModal.module.scss';
 
-function AddWaterTap({
+const AddWaterTap = ({
   prev,
   next,
   page,
@@ -43,7 +43,7 @@ function AddWaterTap({
   guidelines,
   checkboxChangeHandler,
   textFieldChangeHandler
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -74,8 +74,8 @@ function AddWaterTap({
 
   return (
     <Box
-      overflow={'scroll'}
-      justifyContent={'center'}
+      overflow="scroll"
+      justifyContent="center"
       // width={isMobile ? '100%' : ''}
     >
       <Typography

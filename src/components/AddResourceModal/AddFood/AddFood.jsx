@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geocode, setDefaults, RequestType } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
 import { useForm, Controller } from 'react-hook-form';
 import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useIsMobile from 'hooks/useIsMobile';
+import styles from '../AddResourceModal.module.scss';
 
-function AddFood({
+const AddFood = ({
   prev,
   next,
   page,
@@ -40,7 +40,7 @@ function AddFood({
   guidelines,
   checkboxChangeHandler,
   textFieldChangeHandler
-}) {
+}) => {
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 

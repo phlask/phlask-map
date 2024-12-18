@@ -1,14 +1,13 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import ImageUploader from 'react-images-upload';
-import styles from './AddResourceModal.module.scss';
-//import classes from './Form.module.scss';
 import PlacesAutocomplete, {
   geocodeByAddress,
   geocodeByPlaceId,
   getLatLng
 } from 'react-places-autocomplete';
 import {
+  Button,
   FormControl,
   FormHelperText,
   OutlinedInput,
@@ -23,6 +22,7 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import { useForm, Controller } from 'react-hook-form';
+import styles from './AddResourceModal.module.scss';
 
 const addressStyles = {
   width: '100%',
@@ -32,45 +32,37 @@ const addressStyles = {
   border: '1px solid #ced4da'
 };
 
-function SharedFormFields({
-  //////////////////////////////////////////////////////////////////////////////
-  ////// TODO: Am going to need to decide what to do with these props
-  //////////////////////////////////////////////////////////////////////////////
+const SharedFormFields = ({
+  /// ///////////////////////////////////////////////////////////////////////////
+  /// /// TODO: Am going to need to decide what to do with these props
+  /// ///////////////////////////////////////////////////////////////////////////
   onDrop,
-  name,
-  onNameChange,
   address,
-  onAddressChange,
-  website,
-  onWebsiteChange,
-  description,
-  onDescriptionChange,
-  siteCategory
-}) {
+  onAddressChange
+}) => {
   // FOR ADDRESS AUTOFILL
-  const handleChange = address => {
-    onAddressChange(address);
+  const handleChange = newAddress => {
+    onAddressChange(newAddress);
   };
 
-  const handleSelect = address => {
-    onAddressChange(address);
+  const handleSelect = newAddress => {
+    onAddressChange(newAddress);
   };
 
   const {
     register,
-    handleSubmit,
     formState: { errors }
   } = useForm();
 
   return (
     <>
       <ImageUploader
-        withIcon={true}
+        withIcon
         buttonText="Choose images"
         onChange={onDrop}
         imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
         maxFileSize={5242880}
-        withPreview={true}
+        withPreview
       />
 
       <FormControl>
@@ -82,7 +74,7 @@ function SharedFormFields({
             helperText="Enter a name for the resource. (Example: City Hall)"
             InputLabelProps={{ shrink: true }}
             {...register('name', { required: true })}
-            error={errors.name ? true : false}
+            error={!!errors.name}
           />
           <PlacesAutocomplete
             value={address}
@@ -100,14 +92,13 @@ function SharedFormFields({
                   id="address"
                   label="Street address *"
                   helperText={
-                    <Link>
+                    <Button variant="text">
                       {'Use my location instead '}{' '}
                       <MyLocationIcon sx={{ fontSize: 10 }} />
-                    </Link>
+                    </Button>
                   }
                   FormHelperTextProps={{
-                    sx: { marginLeft: 'auto', marginRight: 0 },
-                    onClick: () => alert('Use My Location onClick PlaceHolder!')
+                    sx: { marginLeft: 'auto', marginRight: 0 }
                   }}
                   style={{ backgroundColor: 'white' }}
                   InputLabelProps={{ shrink: true }}
@@ -127,13 +118,36 @@ function SharedFormFields({
                     const style = suggestion.active
                       ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                       : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                    const {
+                      key,
+                      id,
+                      onMouseEnter,
+                      onMouseLeave,
+                      onMouseDown,
+                      onMouseUp,
+                      onTouchStart,
+                      onTouchEnd,
+                      onClick
+                    } = getSuggestionItemProps(suggestion, {
+                      className,
+                      style
+                    });
                     return (
                       <div
-                        {...getSuggestionItemProps(suggestion, {
-                          className,
-                          style
-                        })}
-                        key={i}
+                        key={key}
+                        id={id}
+                        role="option"
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        onMouseDown={onMouseDown}
+                        onMouseUp={onMouseUp}
+                        onTouchStart={onTouchStart}
+                        onTouchEnd={onTouchEnd}
+                        onClick={onClick}
+                        onKeyDown={onClick}
+                        tabIndex={0}
+                        aria-selected={suggestion.active}
                       >
                         <span>{suggestion.description}</span>
                       </div>
@@ -160,6 +174,6 @@ function SharedFormFields({
       </FormControl>
     </>
   );
-}
+};
 
 export default SharedFormFields;

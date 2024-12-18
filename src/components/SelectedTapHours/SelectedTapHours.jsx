@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-import { hours } from '../../helpers/hours';
+import hours from 'helpers/hours';
 import styles from './SelectedTapHours.module.scss';
-import useIsMobile from 'hooks/useIsMobile';
 
-const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
-  const [isHoursExpanded, setIsHoursExpanded] = useState(false);
-  const [currentDay, setCurrentDay] = useState(new Date().getDay());
+/**
+ *
+ * @param {object} props
+ * @param {import('types/ResourceEntry').ResourceEntry} [props.selectedPlace]
+ * @param {boolean} [props.infoIsExpanded]
+ * @returns
+ */
+const SelectedTapHours = ({ selectedPlace }) => {
+  const currentDay = new Date().getDay();
   const [currentOrgHours, setCurrentOrgHours] = useState(false);
-  const [hoursList, setHoursList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -16,33 +20,26 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
     // There are multiple formats that the hours can be in, so we need to check for each one
     // In the 7 entries case...
     if (selectedPlace.hours && selectedPlace.hours.length === 7) {
-      const hoursList = [];
+      const updatedHoursList = [];
 
-      selectedPlace.hours.map((orgHours, index) => {
-        const formattedHours = {
-          day: hours.getDays(index),
-          open:
-            orgHours.open !== undefined && orgHours.open !== ''
-              ? hours.getSimpleHours(orgHours.open)
-              : null,
-          close:
-            orgHours.close !== undefined && orgHours.close !== ''
-              ? hours.getSimpleHours(orgHours.close)
-              : null
-        };
-        hoursList.push(formattedHours);
-      });
+      selectedPlace.hours.forEach((orgHours, index) => ({
+        day: hours.getDays(index),
+        open:
+          orgHours.open !== undefined && orgHours.open !== ''
+            ? hours.getSimpleHours(orgHours.open)
+            : null,
+        close:
+          orgHours.close !== undefined && orgHours.close !== ''
+            ? hours.getSimpleHours(orgHours.close)
+            : null
+      }));
 
       // Shift array so current day is first
       const date = new Date();
       const day = date.getDay();
-      for (let x = 0; x < day; x++) {
-        hoursList.push(hoursList.shift());
+      for (let x = 0; x < day; x += 1) {
+        updatedHoursList.push(updatedHoursList.shift());
       }
-
-      setHoursList(hoursList);
-
-      setCurrentDay(new Date().getDay());
 
       if (selectedPlace.hours[currentDay] !== undefined) {
         if (
@@ -67,40 +64,34 @@ const SelectedTapHours = ({ infoIsExpanded, selectedPlace }) => {
         }
       }
     } else {
-      setHoursList([]);
       setCurrentOrgHours(false);
       setIsOpen(null);
     }
   }, [currentDay, selectedPlace]);
 
-  return (
-    <>
-      <div className={styles.tapHoursMobile}>
-        <div id="tap-info-org-status">
-          <p
-            style={
-              isOpen
-                ? { color: 'green' }
-                : isOpen !== null
-                ? { color: 'red' }
-                : { color: 'orange' }
-            }
-          >
-            {isOpen
-              ? 'Open'
-              : isOpen !== null
-              ? 'Closed'
-              : 'Open times unavailable'}
-          </p>
-        </div>
+  let placeOpeningInfo;
+  if (isOpen) {
+    placeOpeningInfo = { color: 'green', label: 'Open' };
+  } else if (!isOpen) {
+    placeOpeningInfo = { color: 'red', label: 'Closed' };
+  } else if (typeof isOpen === 'undefined') {
+    placeOpeningInfo = { color: 'orange', label: 'Open times unavailable' };
+  }
 
-        {currentOrgHours && (
-          <p>
-            <span>&nbsp;-</span> <span>closes {currentOrgHours.close}</span>
-          </p>
-        )}
+  return (
+    <div className={styles.tapHoursMobile}>
+      <div id="tap-info-org-status">
+        <p style={{ color: placeOpeningInfo.color }}>
+          {placeOpeningInfo.label}
+        </p>
       </div>
-    </>
+
+      {currentOrgHours && (
+        <p>
+          <span>&nbsp;-</span> <span>closes {currentOrgHours.close}</span>
+        </p>
+      )}
+    </div>
   );
 };
 

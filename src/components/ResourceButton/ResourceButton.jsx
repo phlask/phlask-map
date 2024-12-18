@@ -22,7 +22,7 @@ const ResourceButton = ({
     onClick={onClick}
     data-cy={dataCy}
   >
-    <Icon className={styles.icon} width="45px" height="45px" />
+    <Icon className={styles.icon} width={45} height={45} />
     <p className={styles.label}>{text}</p>
   </Button>
 );

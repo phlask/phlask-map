@@ -64,6 +64,8 @@ $fullViewportHeight: 100vh; // Represents the full height of the viewport
 }
 
 .pageContactSection {
+  margin-bottom: 20px;
+
   input[type='text'],
   input[type='email'],
   .textInput {
@@ -80,7 +82,6 @@ $fullViewportHeight: 100vh; // Represents the full height of the viewport
     border-radius: $border-radius;
     resize: vertical;
   }
-  margin-bottom: 20px;
 }
 
 .pageContactLabel {
@@ -162,7 +163,6 @@ $fullViewportHeight: 100vh; // Represents the full height of the viewport
     }
   }
 }
-
 
 .otherInquiries {
   margin: 0;
