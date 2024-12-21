@@ -78,17 +78,38 @@ function AddWaterTap({
       justifyContent={'center'}
       // width={isMobile ? '100%' : ''}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5286E9"
-        color="common.white"
-      >
-        Add Water Resource
-      </Typography>
+      {isMobile ? (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="flex-end"
+          padding="0px 20px 10px"
+          height="88px"
+          backgroundColor="#5286E9"
+          color="common.white"
+        >
+          Add Water Resource
+        </Typography>
+      ):
+      (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          height="64px"
+          backgroundColor="#5286E9"
+          color="common.white"
+          textAlign="center"
+          fontFamily="Inter"
+          fontWeight={600}
+          padding="20px 0"
+          fontSize={20.16}
+        >
+          Add a Water Site
+        </Typography>
+
+      )}
       <CardContent width="770px">
         <form
           onSubmit={handleSubmit((data, e) => {

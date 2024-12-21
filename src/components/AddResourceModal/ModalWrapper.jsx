@@ -28,7 +28,30 @@ const ModalWrapper = props => {
             in={toolbarModal == TOOLBAR_MODAL_CONTRIBUTE}
             orientation="vertical"
             timeout="auto"
+            onExited={props.onExited}
           >
+            <IconButton
+              aria-label="close"
+              onClick={() => props.handleClose()}
+              sx={{
+                position: 'absolute',
+                width: '23px',
+                height: '22.3px',
+                right: '42px',
+                top: '19px',
+                color:
+                  props.values.formStep == 'chooseResource' || props.values.formStep == 'shareSocials'
+                    ? '#000000'
+                    : '#ffffff'
+              }}
+              size="large"
+            >
+              <CloseIcon
+                sx={{
+                  fontSize: 32
+                }}
+              />
+            </IconButton>
             {props.children}
           </Collapse>
         </Paper>

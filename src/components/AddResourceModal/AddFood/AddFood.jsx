@@ -76,17 +76,38 @@ function AddFood({
         justifyContent: 'center'
       }}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#FF9A55"
-        color="common.white"
-      >
-        Add a Food Resource
-      </Typography>
+      {isMobile ? (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="flex-end"
+          padding="0px 20px 10px"
+          height="88px"
+          backgroundColor="#FF9A55"
+          color="common.white"
+        >
+          Add a Food Resource
+        </Typography>
+      ):
+      (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          height="64px"
+          backgroundColor="#FF9A55"
+          color="common.white"
+          textAlign="center"
+          fontFamily="Inter"
+          fontWeight={600}
+          padding="20px 0"
+          fontSize={20.16}
+        >
+          Add a Food Site
+        </Typography>
+
+      )}
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {

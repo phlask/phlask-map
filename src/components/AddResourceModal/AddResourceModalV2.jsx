@@ -24,72 +24,71 @@ import {
   WATER_RESOURCE_TYPE
 } from '../../types/ResourceEntry';
 
+const initialState = {
+  page: 0,
+  pictures: [],
+  images: [],
+  name: '',
+  entryType: '',
+  address: '',
+  website: '',
+  description: '',
+  guidelines: '',
+  handicapAccessible: false,
+  idRequired: false,
+  count: 0,
+  formStep: 'chooseResource',
+  closeModal: false,
+  latitude: null,
+  longitude: null,
+
+  // ADD WATER
+  filtration: false,
+  waterVesselNeeded: false,
+  drinkingFountain: false,
+  bottleFillerAndFountain: false,
+  sink: false,
+  waterJug: false,
+  sodaMachine: false,
+  pitcher: false,
+  waterCooler: false,
+  dispenserTypeOther: false,
+
+  // ADD FOOD MODAL FIELDS
+  childrenOnly: false,
+  communityFridges: false,
+  organization: '',
+  perishable: false,
+  nonPerishable: false,
+  prepared: false,
+  foodTypeOther: false,
+  eatOnSite: false,
+  delivery: false,
+  pickUp: false,
+  distributionTypeOther: false,
+
+  // ADD FORAGING MODAL FIELDS
+  nut: false,
+  fruit: false,
+  leaves: false,
+  bark: false,
+  flowers: false,
+  root: false,
+  medicinal: false,
+  inSeason: false,
+  communityGarden: false,
+
+  // BATHROOM
+  changingTable: false,
+  genderNeutral: false,
+  familyBathroom: false,
+  singleOccupancy: false,
+  hasFountain: false
+};
+
 const AddResourceModalV2 = props => {
-  const initialState = {
-    page: 0,
-    pictures: [],
-    images: [],
-    name: '',
-    entryType: '',
-    address: '',
-    website: '',
-    description: '',
-    guidelines: '',
-    handicapAccessible: false,
-    idRequired: false,
-    count: 0,
-    formStep: 'chooseResource',
-    closeModal: false,
-    latitude: null,
-    longitude: null,
-
-    // ADD WATER
-    filtration: false,
-    waterVesselNeeded: false,
-    drinkingFountain: false,
-    bottleFillerAndFountain: false,
-    sink: false,
-    waterJug: false,
-    sodaMachine: false,
-    pitcher: false,
-    waterCooler: false,
-    dispenserTypeOther: false,
-
-    // ADD FOOD MODAL FIELDS
-    childrenOnly: false,
-    communityFridges: false,
-    organization: '',
-    perishable: false,
-    nonPerishable: false,
-    prepared: false,
-    foodTypeOther: false,
-    eatOnSite: false,
-    delivery: false,
-    pickUp: false,
-    distributionTypeOther: false,
-
-    // ADD FORAGING MODAL FIELDS
-    nut: false,
-    fruit: false,
-    leaves: false,
-    bark: false,
-    flowers: false,
-    root: false,
-    medicinal: false,
-    inSeason: false,
-    communityGarden: false,
-
-    // BATHROOM
-    changingTable: false,
-    genderNeutral: false,
-    familyBathroom: false,
-    singleOccupancy: false,
-    hasFountain: false
-  };
-
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const setToolbarModal = modal => {
@@ -350,7 +349,7 @@ const AddResourceModalV2 = props => {
         };
       }
 
-      // TODO(vontell): We probably should not init this here ever time, although it is likely fine.
+      // TODO(vontell): We probably should not init this here every time, although it is likely fine.
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource).then(result => {
@@ -363,13 +362,15 @@ const AddResourceModalV2 = props => {
   };
 
   const handleClose = () => {
-    // on close we should reset form state so user can submit another resource
+    setToolbarModal(TOOLBAR_MODAL_NONE)
+  };
+
+  const onExitedWrapper = () => {
     setValues(initialState);
-    setToolbarModal(TOOLBAR_MODAL_NONE);
   };
 
   return (
-    <ModalWrapper handleClose={handleClose} values={values}>
+    <ModalWrapper handleClose={handleClose} values={values} onExited={onExitedWrapper}>
       {values.formStep == 'chooseResource' && (
         <ChooseResource
           resourceTypeInfo={props.resourceTypeInfo}

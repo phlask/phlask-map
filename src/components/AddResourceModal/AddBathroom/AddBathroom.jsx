@@ -63,17 +63,38 @@ function AddBathroom({
 
   return (
     <Box overflow={'scroll'} justifyContent={'center'}>
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#7C7C7C"
-        color="common.white"
-      >
-        Add Bathroom Resource
-      </Typography>
+      {isMobile ? (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="flex-end"
+          padding="0px 20px 10px"
+          height="88px"
+          backgroundColor="#7C7C7C"
+          color="common.white"
+        >
+          Add Bathroom Resource
+        </Typography>
+      ):
+      (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          height="64px"
+          backgroundColor="#7C7C7C"
+          color="common.white"
+          textAlign="center"
+          fontFamily="Inter"
+          fontWeight={600}
+          padding="20px 0"
+          fontSize={20.16}
+        >
+          Add a Bathroom Site
+        </Typography>
+
+      )}
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {

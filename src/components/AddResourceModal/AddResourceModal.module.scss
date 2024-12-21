@@ -31,3 +31,52 @@
   font-weight: 600;
   text-transform: none;
 }
+
+.socialShareMessageHeader {
+  width: 389px;
+  height: 24px;
+
+  /* Type Scale/H1
+
+  Full page header
+  */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24.19px;
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: 0.02em;
+
+  /* UI/UI-8 */
+  color: #60718C;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.socialShareMessage {
+  width: 389px;
+  height: 24px;
+
+  /* Type Scale/body1 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+  text-align: center;
+
+  /* UI/UI-8 */
+  color: #60718C;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+}

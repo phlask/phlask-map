@@ -75,17 +75,38 @@ function AddForaging({
         justifyContent: 'center'
       }}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5DA694"
-        color="common.white"
-      >
-        Add a Foraging Resource
-      </Typography>
+      {isMobile ? (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="flex-end"
+          padding="0px 20px 10px"
+          height="88px"
+          backgroundColor="#5DA694"
+          color="common.white"
+        >
+          Add a Foraging Resource
+        </Typography>
+      ):
+      (
+        <Typography
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          height="64px"
+          backgroundColor="#5DA694"
+          color="common.white"
+          textAlign="center"
+          fontFamily="Inter"
+          fontWeight={600}
+          padding="20px 0"
+          fontSize={20.16}
+        >
+          Add a Foraging Site
+        </Typography>
+
+      )}
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {

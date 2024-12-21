@@ -1,6 +1,4 @@
-import React from "react";
-import styles from "./AddResourceModal.module.scss";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -9,8 +7,15 @@ import {
   faGithub
 } from "@fortawesome/free-brands-svg-icons";
 
+import { ReactComponent as PhillySkyline } from '../../components/icons/PhillySkyline.svg';
+import styles from "./AddResourceModal.module.scss";
+import useIsMobile from 'hooks/useIsMobile';
+
 function ShareSocials() {
-  return (
+  const isMobile = useIsMobile();
+
+  return isMobile ? (
+    // MOBILE VIEW
     <div className={styles.modalContent}>
       <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
       <p className={styles.socialShareMessage}>
@@ -55,6 +60,20 @@ function ShareSocials() {
         </a>
       </div>
       <p className={styles.socialShareMessage}>#phlask</p>
+    </div>
+  ):
+  // DESKTOP VIEW
+  (
+    <div>
+      <div className={styles.modalContent} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: '419px' }}>
+        <PhillySkyline />
+        <p className={styles.socialShareMessageHeader}>
+          Thank you for your submission!
+        </p>
+        <p className={styles.socialShareMessage}>
+          You should see your site pop up on the map in a few days
+        </p>
+      </div>
     </div>
   );
 }
