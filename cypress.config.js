@@ -1,10 +1,10 @@
-const { defineConfig } = require('cypress')
+import { defineConfig } from 'cypress';
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
-    "watchForFileChanges": false,
-    "specPattern": "cypress/e2e/desktop/*.cy.{js,jsx,ts,tsx}",
-    "baseUrl": "http://localhost:3000",
-    "video": true
-  },
-})
+    watchForFileChanges: false,
+    specPattern: 'cypress/e2e/desktop/*.cy.{js,jsx,ts,tsx}',
+    baseUrl: 'http://localhost:3000',
+    video: true
+  }
+});
