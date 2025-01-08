@@ -79,7 +79,7 @@ function App(props) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [setEnabled]);
 
   return (
     <ThemeProvider theme={theme}>
