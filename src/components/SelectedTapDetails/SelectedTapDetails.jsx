@@ -1,6 +1,5 @@
 import { Button, Collapse, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 import DirectionIcon from 'icons/ArrowElbowUpRight';
@@ -144,6 +143,7 @@ const SelectedTapDetails = ({
   let resourceTitle = '';
   let resourceSubtitleOne;
   let resourceSubtitleTwo;
+
   if (
     resource.name !== undefined &&
     resource.name.trim().length > 0 &&

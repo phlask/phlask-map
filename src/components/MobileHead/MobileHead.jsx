@@ -10,15 +10,15 @@ import noop from 'utils/noop';
 import CloseIcon from 'components/icons/CloseIcon';
 import { HeaderContext } from 'contexts/HeaderContext';
 import FilterIcon from 'icons/FilterIcon';
-import PhlaskIcon from 'icons/PhlaskV2';
 import SearchIcon from 'icons/SearchIcon';
 import {
   setToolbarModal,
+  TOOLBAR_MODAL_SEARCH,
   TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_SEARCH
+  TOOLBAR_MODAL_NONE
 } from 'actions/actions';
 import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
+import { PhlaskV2 } from 'icons';
 
 const MobileHead = () => {
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const MobileHead = () => {
                 }}
                 onClick={() => setShowMapControls(true)}
               >
-                <PhlaskIcon width="154px" height="39px" />
+                <PhlaskV2 width="154px" height="39px" />
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconButton

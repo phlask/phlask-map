@@ -19,8 +19,8 @@ services:
     build: .
     entrypoint: bash -c "yarn build"
     environment:
-      CI: 'false'
+      CI: "false"
       VITE_DB_URL:
     volumes:
-      - './docker/build:/usr/src/app/build'
-      - './docker/testResults:/usr/src/app/testResults'
+      - "./docker/build:/usr/src/app/build"
+      - "./docker/testResults:/usr/src/app/testResults"

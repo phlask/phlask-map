@@ -4,11 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import noop from 'utils/noop';
-import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_CONTRIBUTE,
-  pushNewResource
-} from 'actions/actions';
+import { TOOLBAR_MODAL_NONE, pushNewResource } from 'actions/actions';
 import { resourcesConfig } from 'firebase/firebaseConfig';
 
 import debounce from 'utils/debounce';
@@ -20,8 +16,8 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import ChooseResource from './ChooseResource';
 import ShareSocials from './ShareSocials';
+import ChooseResource from './ChooseResource';
 import AddFood from './AddFood/AddFood';
 import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';

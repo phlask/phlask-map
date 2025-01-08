@@ -1,11 +1,11 @@
 import useIsMobile from 'hooks/useIsMobile';
 import Box from '@mui/material/Box';
 
-import ResourceButton from 'components/ResourceButton/ResourceButton';
 import WaterIcon from 'icons/WaterIconChooseResource';
 import FoodIcon from 'icons/FoodIconChooseResource';
 import ForagingIcon from 'icons/ForagingIconChooseResource';
 import BathroomIcon from 'icons/ToiletIconChooseResource';
+import ResourceButton from 'components/ResourceButton/ResourceButton';
 
 import styles from './AddResourceModal.module.scss';
 

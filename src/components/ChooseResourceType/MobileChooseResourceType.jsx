@@ -67,8 +67,6 @@ const MobileChooseResourceType = () => {
   return (
     <Box>
       <Dialog
-        slotProps={{ backdrop: { transitionDuration: 400 } }}
-        open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
         onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
         PaperProps={{
           sx: {
