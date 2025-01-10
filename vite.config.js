@@ -9,7 +9,6 @@ export default defineConfig(() => ({
     outDir: 'build',
     target: 'es2022'
   },
-
   plugins: [
     react(),
     tsconfigPaths({ allowJS: true }),
