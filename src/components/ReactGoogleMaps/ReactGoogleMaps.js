@@ -1,13 +1,11 @@
 import { Fade } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import useIsMobile from 'hooks/useIsMobile';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTouchEvents from 'react-touch-events';
 import {
-  TOOLBAR_MODAL_SEARCH,
   getResources,
   removeEntryFilterFunction,
   removeFilterFunction,
@@ -424,7 +422,7 @@ export const ReactGoogleMaps = ({ google }) => {
             search={location => searchForLocation(location)}
           />
         </Stack>
-        <ChooseResourceType resourceTypeInfo={resourceTypeInfo} />
+        <ChooseResourceType resourceTypeInfo={resourceTypeInfo} clearAllTags={clearAllTags} />
         <Filter
           resourceType={resourceType}
           filters={filters}

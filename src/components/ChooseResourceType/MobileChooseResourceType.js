@@ -1,16 +1,15 @@
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
-import List from '@mui/material/List';
-import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  resetFilterFunction,
   setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE,
@@ -38,7 +37,7 @@ const MobileResourceButton = props => {
     <ListItemButton
       sx={{ alignItems: 'end' }}
       onClick={() => {
-        dispatch(resetFilterFunction());
+        props.clearAllTags();
         switchType(props.type);
       }}
     >
@@ -88,7 +87,7 @@ const MobileChooseResourceType = props => {
         >
           <List sx={{ maxWidth: 210 }}>
             {props.resourceTypeInfo.map(entry => (
-              <MobileResourceButton key={entry.type} {...entry} />
+              <MobileResourceButton key={entry.type} {...entry} clearAllTags={props.clearAllTags} />
             ))}
           </List>
         </Slide>
