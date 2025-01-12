@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  resetFilterFunction,
   setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE,
@@ -31,7 +30,7 @@ const DesktopResourceButton = props => {
         borderRadius: '8px'
       }}
       onClick={() => {
-        dispatch(resetFilterFunction());
+        props.clearAllTags();
         dispatch(setResourceType(props.type));
       }}
       data-cy={props['data-cy']}
@@ -89,6 +88,7 @@ function DesktopChooseResourceType(props) {
                   key={entry.type}
                   {...entry}
                   data-cy={`button-${entry.type}-data-selector`}
+                  clearAllTags={props.clearAllTags}
                 />
               ))}
             </Box>

@@ -7,9 +7,9 @@ const ChooseResourceType = props => {
   return (
     <>
       {!isMobile ? (
-        <DesktopChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />
+        <DesktopChooseResourceType resourceTypeInfo={props.resourceTypeInfo} clearAllTags={props.clearAllTags} />
       ) : (
-        <MobileChooseResourceType resourceTypeInfo={props.resourceTypeInfo} />
+        <MobileChooseResourceType resourceTypeInfo={props.resourceTypeInfo} clearAllTags={props.clearAllTags} />
       )}
     </>
   );
