@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push } from 'firebase/database';
@@ -103,30 +103,34 @@ const AddResourceModalV2 = () => {
     }));
   };
 
-  const debouncedGeocode = debounce(address => {
-    geocodeByAddress(address)
-      .then(results => {
-        if (results.length === 0) {
-          throw new Error('ZERO_RESULTS');
-        }
-        return getLatLng(results[0]);
-      })
-      .then(({ lat, lng }) => {
-        // Update the state with the latitude and longitude
-        setValues(prevValues => ({
-          ...prevValues,
-          latitude: lat,
-          longitude: lng,
-          isValidAddress: true
-        }));
-      })
-      .catch(() => {
-        setValues(prevValues => ({
-          ...prevValues,
-          isValidAddress: false
-        }));
-      });
-  }, 500); // 500ms debounce delay
+  const debouncedGeocode = useMemo(
+    () =>
+      debounce(address => {
+        geocodeByAddress(address)
+          .then(results => {
+            if (results.length === 0) {
+              throw new Error('ZERO_RESULTS');
+            }
+            return getLatLng(results[0]);
+          })
+          .then(({ lat, lng }) => {
+            // Update the state with the latitude and longitude
+            setValues(prevValues => ({
+              ...prevValues,
+              latitude: lat,
+              longitude: lng,
+              isValidAddress: true
+            }));
+          })
+          .catch(() => {
+            setValues(prevValues => ({
+              ...prevValues,
+              isValidAddress: false
+            }));
+          });
+      }, 500),
+    []
+  ); // 500ms debounce delay
 
   const textFieldChangeHandler = eventOrString => {
     let newValue;

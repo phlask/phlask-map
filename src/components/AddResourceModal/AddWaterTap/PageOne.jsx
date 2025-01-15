@@ -205,11 +205,12 @@ const PageOne = ({
                   <div>
                     <TextField
                       id="address"
-                      name="address-textbox"
+                      name={field.name}
                       label="Street address *"
                       fullWidth
                       onChange={e => {
                         field.onChange(e);
+                        onChange(e);
                         textFieldChangeHandler(e);
                       }}
                       helperText={
