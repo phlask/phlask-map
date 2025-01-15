@@ -10,13 +10,11 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import ShareSocials from '../ShareSocials';
 
 const AddBathroom = ({
-  prev,
-  next,
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -61,6 +59,10 @@ const AddBathroom = ({
     </span>
   );
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Box overflow="scroll" justifyContent="center">
       <Typography
@@ -78,7 +80,7 @@ const AddBathroom = ({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -130,7 +132,7 @@ const AddBathroom = ({
                 color="primary"
                 aria-label="previous-page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -138,12 +140,12 @@ const AddBathroom = ({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >

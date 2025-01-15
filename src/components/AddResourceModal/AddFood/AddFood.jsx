@@ -11,13 +11,11 @@ import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import ShareSocials from '../ShareSocials';
 
 const AddFood = ({
-  prev,
-  next,
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -70,6 +68,10 @@ const AddFood = ({
     </span>
   );
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Card
       style={{
@@ -92,7 +94,7 @@ const AddFood = ({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -151,9 +153,9 @@ const AddFood = ({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -166,7 +168,7 @@ const AddFood = ({
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >

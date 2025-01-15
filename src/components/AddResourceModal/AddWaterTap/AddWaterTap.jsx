@@ -10,13 +10,11 @@ import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
 import styles from '../AddResourceModal.module.scss';
+import ShareSocials from '../ShareSocials';
 
 const AddWaterTap = ({
-  prev,
-  next,
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   // state values and handlers for the textfields
@@ -73,6 +71,10 @@ const AddWaterTap = ({
 
   const getVariableName = variable => Object.keys(variable)[0];
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Box
       overflow="scroll"
@@ -94,7 +96,7 @@ const AddWaterTap = ({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -153,9 +155,9 @@ const AddWaterTap = ({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -163,12 +165,12 @@ const AddWaterTap = ({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >

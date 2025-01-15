@@ -10,13 +10,11 @@ import useIsMobile from 'hooks/useIsMobile';
 import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import ShareSocials from '../ShareSocials';
 
 const AddForaging = ({
-  prev,
-  next,
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -69,6 +67,10 @@ const AddForaging = ({
 
   const getVariableName = variable => Object.keys(variable)[0];
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Card
       style={{
@@ -91,7 +93,7 @@ const AddForaging = ({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -153,9 +155,9 @@ const AddForaging = ({
               <IconButton
                 type="button"
                 style={{ color: 'gray' }}
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -163,12 +165,12 @@ const AddForaging = ({
               <IconButton
                 type="button"
                 style={{ color: 'gray' }}
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >

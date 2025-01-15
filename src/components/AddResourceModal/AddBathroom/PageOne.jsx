@@ -136,7 +136,9 @@ const PageOne = ({
                     }}
                     helperText={
                       <Stack component="span">
-                        {errors.address.message && requiredFieldMsg}
+                        {errors.address &&
+                          errors.address.message &&
+                          requiredFieldMsg}
                         <Button variant="text">
                           Use my location instead
                           <MyLocationIcon sx={{ fontSize: 10 }} />

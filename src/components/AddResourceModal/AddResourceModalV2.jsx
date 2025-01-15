@@ -25,8 +25,20 @@ import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 
 const AddResourceModalV2 = () => {
+  const [page, setPage] = useState(0);
+  const [resourceForm, setResourceForm] = useState(null);
+
+  const onPageChange = update => {
+    setPage(prev => {
+      const newValue = Math.max(0, update(prev));
+      if (newValue === 0) {
+        setResourceForm(null);
+      }
+      return newValue;
+    });
+  };
+
   const initialState = {
-    page: 0,
     pictures: [],
     images: [],
     name: '',
@@ -38,7 +50,6 @@ const AddResourceModalV2 = () => {
     handicapAccessible: false,
     idRequired: false,
     count: 0,
-    formStep: 'chooseResource',
     closeModal: false,
     latitude: null,
     longitude: null,
@@ -162,29 +173,6 @@ const AddResourceModalV2 = () => {
   // (e.g. choose resource, add water tap, social links)
   const onChangeFormStep = step => {
     setValues(prevValues => ({ ...prevValues, formStep: step }));
-  };
-
-  const onChangeNextPage = () => {
-    setValues(prevValues => {
-      if (prevValues.page < 1) {
-        return { ...prevValues, page: prevValues.page + 1 };
-      }
-
-      return { ...prevValues };
-    });
-  };
-
-  const onChangePrevPage = () => {
-    setValues(prevValues => {
-      if (prevValues.page > 0) {
-        return { ...prevValues, page: prevValues.page - 1 };
-      }
-
-      // return to chooseResource modal if already on first page of desktop form and they click the prevPage button
-      onChangeFormStep('chooseResource');
-
-      return { ...prevValues };
-    });
   };
 
   const onDrop = picture => {
@@ -365,23 +353,23 @@ const AddResourceModalV2 = () => {
 
   const handleClose = () => {
     // on close we should reset form state so user can submit another resource
+    setPage(0);
     setValues(initialState);
     setToolbarModal(TOOLBAR_MODAL_NONE);
   };
 
   return (
     <ModalWrapper handleClose={handleClose} values={values}>
-      {values.formStep === 'chooseResource' && (
-        <ChooseResource setFormStep={onChangeFormStep} />
+      {!resourceForm && (
+        <ChooseResource
+          onSelectResource={resource => setResourceForm(resource)}
+        />
       )}
 
-      {values.formStep === 'addWaterTap' && (
+      {resourceForm === WATER_RESOURCE_TYPE && (
         <AddWaterTap
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -408,13 +396,10 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {values.formStep === 'addFood' && (
+      {resourceForm === FOOD_RESOURCE_TYPE && (
         <AddFood
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -441,13 +426,10 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {values.formStep === 'addBathroom' && (
+      {resourceForm === BATHROOM_RESOURCE_TYPE && (
         <AddBathroom
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -468,13 +450,10 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {values.formStep === 'addForaging' && (
+      {resourceForm === FORAGE_RESOURCE_TYPE && (
         <AddForaging
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -497,8 +476,6 @@ const AddResourceModalV2 = () => {
           isValidAddress={values.isValidAddress}
         />
       )}
-
-      {values.formStep === 'shareSocials' && <ShareSocials />}
     </ModalWrapper>
   );
 };
