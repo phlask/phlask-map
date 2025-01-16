@@ -32,3 +32,9 @@ resources/
 
 # testing
 newrelic_agent.log
+
+# Firebase Certs
+firebase_cert.json
+
+# Python Virtual Environments
+.venv/
