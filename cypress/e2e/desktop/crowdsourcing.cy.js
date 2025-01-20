@@ -29,7 +29,7 @@ describe('crowdsourcing form', () => {
     cy.get('[data-cy=button-contribute-water]').click();
 
     cy.get('input[name="name"]').type('Cypress Test Name', { force: true });
-    cy.get('input[name="address-textbox"]').type(
+    cy.get('input[id="address"]').type(
       'City Hall Room 708, Philadelphia, PA 19107, USA'
     );
     cy.get('input[name="website"]').type('cypress.test');
@@ -73,7 +73,7 @@ describe('crowdsourcing form', () => {
     cy.get('input[name="name"]').type('Cypress Food Test Name', {
       force: true
     });
-    cy.get('input[name="address-textbox"]').type(
+    cy.get('input[id="address"]').type(
       'City Hall Room 708, Philadelphia, PA 19107, USA'
     );
     cy.get('input[name="website"]').type('cypress.test');

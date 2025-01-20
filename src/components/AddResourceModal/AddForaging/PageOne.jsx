@@ -130,9 +130,7 @@ const PageOne = ({
               helperText={
                 <span>
                   {errors.name && requiredFieldMsg}
-                  <Typography fontSize={!isMobile ? 10.5 : 13}>
-                    Enter a name for the resource. (Example: City Hall){' '}
-                  </Typography>
+                  Enter a name for the resource. (Example: City Hall)
                 </span>
               }
               error={!!errors.name}
@@ -183,7 +181,8 @@ const PageOne = ({
                   disabled,
                   onKeyDown,
                   onBlur,
-                  value
+                  value,
+                  onChange
                 } = getInputProps({
                   className: 'modalAddressAutofill',
                   id: 'address'
@@ -192,11 +191,12 @@ const PageOne = ({
                   <div>
                     <TextField
                       id="address"
-                      name="address-textbox"
+                      name={field.name}
                       label="Street address *"
                       fullWidth
                       onChange={e => {
                         field.onChange(e);
+                        onChange(e);
                         textFieldChangeHandler(e);
                       }}
                       helperText={
