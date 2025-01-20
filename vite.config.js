@@ -7,7 +7,8 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig(() => ({
   build: {
     outDir: 'build',
-    target: 'es2022'
+    target: 'es2022',
+    base: './' // This is set to allow for deployments on dynamic subpaths (i.e. - test.phlask.me)
   },
   plugins: [
     react(),

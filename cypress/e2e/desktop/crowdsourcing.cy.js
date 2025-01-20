@@ -74,8 +74,9 @@ describe('crowdsourcing form', () => {
       force: true
     });
     cy.get('input[id="address"]').type(
-      'City Hall Room 708, Philadelphia, PA 19107, USA'
-    );
+      'City Hall Room 708, Philadelphia, PA 19107, USA', {
+      force: true
+    });
     cy.get('input[name="website"]').type('cypress.test');
     cy.get('textarea[name="description"]').type(
       'Cypress Test Food Description'
