@@ -1,4 +1,4 @@
-const testData = await fetch('./testData.json').then(response =>
+const testData = await fetch('/testData.json').then(response =>
   response.json()
 );
 
