@@ -26,10 +26,10 @@ describe('crowdsourcing form', () => {
     const helpfulInfoTypes = ['handicapAccessible', 'waterVesselNeeded'];
 
     // Load the form
-    cy.get('[data-cy=button-WATER-data-submit-selector]').click();
+    cy.get('[data-cy=button-contribute-water]').click();
 
     cy.get('input[name="name"]').type('Cypress Test Name', { force: true });
-    cy.get('input[name="address-textbox"]').type(
+    cy.get('input[id="address"]').type(
       'City Hall Room 708, Philadelphia, PA 19107, USA'
     );
     cy.get('input[name="website"]').type('cypress.test');
@@ -68,14 +68,15 @@ describe('crowdsourcing form', () => {
     ];
 
     // Load the form
-    cy.get('[data-cy=button-FOOD-data-submit-selector]').click();
+    cy.get('[data-cy=button-contribute-food]').click();
 
     cy.get('input[name="name"]').type('Cypress Food Test Name', {
       force: true
     });
-    cy.get('input[name="address-textbox"]').type(
-      'City Hall Room 708, Philadelphia, PA 19107, USA'
-    );
+    cy.get('input[id="address"]').type(
+      'City Hall Room 708, Philadelphia, PA 19107, USA', {
+      force: true
+    });
     cy.get('input[name="website"]').type('cypress.test');
     cy.get('textarea[name="description"]').type(
       'Cypress Test Food Description'

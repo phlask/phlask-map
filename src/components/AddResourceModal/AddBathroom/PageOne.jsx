@@ -105,6 +105,7 @@ const PageOne = ({
           render={({ field }) => (
             <PlacesAutocomplete
               name={field.name}
+              value={field.value}
               onBlur={field.onBlur}
               ref={field.ref}
               disabled={field.disabled}
@@ -122,109 +123,135 @@ const PageOne = ({
                 suggestions,
                 getSuggestionItemProps,
                 loading
-              }) => (
-                <div>
-                  <TextField
-                    value={field.value}
-                    id="address"
-                    name="address-textbox"
-                    label="Street address *"
-                    fullWidth
-                    onChange={e => {
-                      field.onChange(e);
-                      textFieldChangeHandler(e);
-                    }}
-                    helperText={
-                      <Stack component="span">
-                        {errors.address &&
-                          errors.address.message &&
-                          requiredFieldMsg}
-                        <Button variant="text">
-                          Use my location instead
-                          <MyLocationIcon sx={{ fontSize: 10 }} />
-                        </Button>
-                      </Stack>
-                    }
-                    error={!!errors.address}
-                    FormHelperTextProps={{
-                      sx: { marginLeft: 'auto', marginRight: 0 },
-                      onClick: e => {
-                        // Will autofill the street address textbox with user's current address,
-                        // after clicking 'use my address instead'
-                        const { lat, lng } = userLocation;
-                        geocode(RequestType.LATLNG, `${lat},${lng}`)
-                          .then(({ results }) => {
-                            const addr = results[0].formatted_address;
-                            setValue('address-textbox', addr); // react-hook-form setValue
-                            textFieldChangeHandler(addr);
-                            field.onChange(addr);
-                          })
-                          .catch(noop);
+              }) => {
+                const {
+                  type,
+                  autoComplete,
+                  role,
+                  'aria-autocomplete': ariaAutocomplete,
+                  'aria-expanded': ariaExpanded,
+                  'aria-activedescendant': ariaActiveDescendent,
+                  disabled,
+                  onKeyDown,
+                  onBlur,
+                  value,
+                  onChange
+                } = getInputProps({
+                  className: 'modalAddressAutofill',
+                  id: 'address'
+                });
+                return (
+                  <div>
+                    <TextField
+                      id="address"
+                      name={field.name}
+                      label="Street address *"
+                      fullWidth
+                      onChange={e => {
+                        field.onChange(e);
+                        onChange(e);
+                        textFieldChangeHandler(e);
+                      }}
+                      helperText={
+                        <Stack component="span">
+                          {errors.address && (
+                            <span>
+                              {errors.address.message || requiredFieldMsg}
+                            </span>
+                          )}
+                          <Button variant="text">
+                            Use my location instead
+                            <MyLocationIcon sx={{ fontSize: 10 }} />
+                          </Button>
+                        </Stack>
                       }
-                    }}
-                    style={{ backgroundColor: 'white' }}
-                    InputLabelProps={{ shrink: true }}
-                    {...getInputProps({
-                      className: 'modalAddressAutofill',
-                      id: 'address'
-                    })}
-                    className={styles.modalAddressAutofill}
-                  />
-                  <div className="autocomplete-dropdown-container">
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion, i) => {
-                      const className = suggestion.active
-                        ? 'suggestion-item--active'
-                        : 'suggestion-item';
-                      // inline style for demonstration purpose
-                      const style = suggestion.active
-                        ? {
-                            backgroundColor: '#fafafa',
-                            cursor: 'pointer'
-                          }
-                        : {
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer'
-                          };
+                      error={!!errors.address}
+                      FormHelperTextProps={{
+                        sx: { marginLeft: 'auto', marginRight: 0 },
+                        onClick: e => {
+                          // Will autofill the street address textbox with user's current address,
+                          // after clicking 'use my address instead'
+                          const { lat, lng } = userLocation;
+                          geocode(RequestType.LATLNG, `${lat},${lng}`)
+                            .then(({ results }) => {
+                              const addr = results[0].formatted_address;
+                              setValue('address-textbox', addr); // react-hook-form setValue
+                              textFieldChangeHandler(addr);
+                              field.onChange(addr);
+                            })
+                            .catch(noop);
+                        }
+                      }}
+                      style={{ backgroundColor: 'white' }}
+                      InputLabelProps={{ shrink: true }}
+                      type={type}
+                      autoComplete={autoComplete}
+                      role={role}
+                      aria-autocomplete={ariaAutocomplete}
+                      aria-expanded={ariaExpanded}
+                      aria-activedescendant={ariaActiveDescendent}
+                      disabled={disabled}
+                      onKeyDown={onKeyDown}
+                      onBlur={onBlur}
+                      value={value}
+                      className={styles.modalAddressAutofill}
+                    />
+                    <div className="autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map((suggestion, i) => {
+                        const className = suggestion.active
+                          ? 'suggestion-item--active'
+                          : 'suggestion-item';
+                        // inline style for demonstration purpose
+                        const style = suggestion.active
+                          ? {
+                              backgroundColor: '#fafafa',
+                              cursor: 'pointer'
+                            }
+                          : {
+                              backgroundColor: '#ffffff',
+                              cursor: 'pointer'
+                            };
 
-                      const {
-                        key,
-                        id,
-                        onMouseEnter,
-                        onMouseLeave,
-                        onMouseDown,
-                        onMouseUp,
-                        onTouchStart,
-                        onTouchEnd,
-                        onClick
-                      } = getSuggestionItemProps(suggestion, {
-                        className,
-                        style
-                      });
+                        const {
+                          key,
+                          id,
+                          onMouseEnter,
+                          onMouseLeave,
+                          onMouseDown,
+                          onMouseUp,
+                          onTouchStart,
+                          onTouchEnd,
+                          onClick,
+                        } = getSuggestionItemProps(suggestion, {
+                          className,
+                          style
+                        });
 
-                      return (
-                        <div
-                          key={key}
-                          id={id}
-                          role="option"
-                          onMouseEnter={onMouseEnter}
-                          onMouseLeave={onMouseLeave}
-                          onMouseDown={onMouseDown}
-                          onMouseUp={onMouseUp}
-                          onTouchStart={onTouchStart}
-                          onTouchEnd={onTouchEnd}
-                          onClick={onClick}
-                          onKeyDown={onClick}
-                          tabIndex={0}
-                          aria-selected={suggestion.active}
-                        >
-                          <span>{suggestion.description}</span>
-                        </div>
-                      );
-                    })}
+                        return (
+                          <div
+                            key={key}
+                            id={id}
+                            role="option"
+                            onMouseEnter={onMouseEnter}
+                            onMouseLeave={onMouseLeave}
+                            onMouseDown={onMouseDown}
+                            onMouseUp={onMouseUp}
+                            onTouchStart={onTouchStart}
+                            onTouchEnd={onTouchEnd}
+                            onClick={onClick}
+                            onKeyDown={onClick}
+                            tabIndex={0}
+                            aria-selected={suggestion.active}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              }}
             </PlacesAutocomplete>
           )}
         />
