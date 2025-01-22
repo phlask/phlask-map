@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
 import noop from 'utils/noop';
+import useIsMobile from 'hooks/useIsMobile';
 import { TOOLBAR_MODAL_NONE, pushNewResource } from 'actions/actions';
 import { resourcesConfig } from 'firebase/firebaseConfig';
 
@@ -16,7 +19,6 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import ShareSocials from './ShareSocials';
 import ChooseResource from './ChooseResource';
 import AddFood from './AddFood/AddFood';
 import AddBathroom from './AddBathroom/AddBathroom';
@@ -41,53 +43,55 @@ const initialState = {
   longitude: null,
   isValidAddress: false,
 
-// ADD WATER
-filtration: false,
-waterVesselNeeded: false,
-drinkingFountain: false,
-bottleFillerAndFountain: false,
-sink: false,
-waterJug: false,
-sodaMachine: false,
-pitcher: false,
-waterCooler: false,
-dispenserTypeOther: false,
+  // ADD WATER
+  filtration: false,
+  waterVesselNeeded: false,
+  drinkingFountain: false,
+  bottleFillerAndFountain: false,
+  sink: false,
+  waterJug: false,
+  sodaMachine: false,
+  pitcher: false,
+  waterCooler: false,
+  dispenserTypeOther: false,
 
-// ADD FOOD MODAL FIELDS
-childrenOnly: false,
-communityFridges: false,
-organization: '',
-perishable: false,
-nonPerishable: false,
-prepared: false,
-foodTypeOther: false,
-eatOnSite: false,
-delivery: false,
-pickUp: false,
-distributionTypeOther: false,
+  // ADD FOOD MODAL FIELDS
+  childrenOnly: false,
+  communityFridges: false,
+  organization: '',
+  perishable: false,
+  nonPerishable: false,
+  prepared: false,
+  foodTypeOther: false,
+  eatOnSite: false,
+  delivery: false,
+  pickUp: false,
+  distributionTypeOther: false,
 
-// ADD FORAGING MODAL FIELDS
-nut: false,
-fruit: false,
-leaves: false,
-bark: false,
-flowers: false,
-root: false,
-medicinal: false,
-inSeason: false,
-communityGarden: false,
+  // ADD FORAGING MODAL FIELDS
+  nut: false,
+  fruit: false,
+  leaves: false,
+  bark: false,
+  flowers: false,
+  root: false,
+  medicinal: false,
+  inSeason: false,
+  communityGarden: false,
 
-// BATHROOM
-changingTable: false,
-genderNeutral: false,
-familyBathroom: false,
-singleOccupancy: false,
-hasFountain: false
+  // BATHROOM
+  changingTable: false,
+  genderNeutral: false,
+  familyBathroom: false,
+  singleOccupancy: false,
+  hasFountain: false
 };
 
 const AddResourceModalV2 = () => {
   const [page, setPage] = useState(0);
   const [resourceForm, setResourceForm] = useState(null);
+
+  const isMobile = useIsMobile();
 
   const onPageChange = update => {
     setPage(prev => {
@@ -358,10 +362,36 @@ const AddResourceModalV2 = () => {
 
   const onExitedWrapper = () => {
     setValues(initialState);
+    setResourceForm(null)
   };
 
   return (
-    <ModalWrapper handleClose={handleClose} values={values} onExited={onExitedWrapper}>
+    <ModalWrapper onExited={onExitedWrapper}>
+      <IconButton
+        aria-label="close"
+        onClick={() => handleClose()}
+        sx={{
+          position: 'absolute',
+          width: isMobile ? '32px' : '23px',
+          height: isMobile ? '32px' : '22.3px',
+          right: isMobile ? null : '42px',
+          top: isMobile ? '101px' : '19px',
+          left: isMobile ? '329px' : null,
+          color:
+            // Page = 2 assumes Desktop page 2 = Share Socials view
+            // Page 2 is not reachable via any Mobile flows
+            !resourceForm || page === 2
+              ? 'black'
+              : 'white'
+        }}
+        size="large"
+      >
+        <CloseIcon
+          sx={{
+            fontSize: 32
+          }}
+        />
+      </IconButton>
       {!resourceForm && (
         <ChooseResource
           onSelectResource={resource => setResourceForm(resource)}
