@@ -1,15 +1,15 @@
+import { useSelector } from 'react-redux';
+import Paper from '@mui/material/Paper';
 import CloseIcon from '@mui/icons-material/Close';
-import { Collapse, IconButton, Modal, Paper } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux/es/exports';
-import { TOOLBAR_MODAL_CONTRIBUTE } from '../../actions/actions';
+import { Collapse, IconButton, Modal } from '@mui/material';
+import { TOOLBAR_MODAL_CONTRIBUTE } from 'actions/actions';
+
 /*
   Higher Order Component that returns a Dialog for mobile and a non modal Dialog for Desktop
  */
 
-const ModalWrapper = props => {
-  const dispatch = useDispatch();
+const ModalWrapper = ({ children, handleClose, values, onExited }) => {
   const isMobile = useIsMobile();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   return (
@@ -25,14 +25,14 @@ const ModalWrapper = props => {
           }}
         >
           <Collapse
-            in={toolbarModal == TOOLBAR_MODAL_CONTRIBUTE}
+            in={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
             orientation="vertical"
             timeout="auto"
-            onExited={props.onExited}
+            onExited={onExited}
           >
             <IconButton
               aria-label="close"
-              onClick={() => props.handleClose()}
+              onClick={() => handleClose()}
               sx={{
                 position: 'absolute',
                 width: '23px',
@@ -40,7 +40,7 @@ const ModalWrapper = props => {
                 right: '42px',
                 top: '19px',
                 color:
-                  props.values.formStep == 'chooseResource' || props.values.formStep == 'shareSocials'
+                  values.formStep === 'chooseResource' || values.formStep === 'shareSocials' // TODO: Replace this with something that does not use formstep
                     ? '#000000'
                     : '#ffffff'
               }}
@@ -52,14 +52,14 @@ const ModalWrapper = props => {
                 }}
               />
             </IconButton>
-            {props.children}
+            {children}
           </Collapse>
         </Paper>
       )}
       {isMobile && (
         <Modal
-          open={toolbarModal == TOOLBAR_MODAL_CONTRIBUTE}
-          hideBackdrop={true}
+          open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
+          hideBackdrop
           sx={{ overflow: 'scroll', backgroundColor: '#ffffff' }}
         >
           <Paper
@@ -73,19 +73,17 @@ const ModalWrapper = props => {
             <IconButton
               aria-label="close"
               onClick={() => {
-                props.handleClose();
+                handleClose();
               }}
               sx={{
                 position: 'absolute',
                 right: '20px',
                 top:
-                  props.values.formStep == 'chooseResource'
+                  values.formStep === 'chooseResource'
                     ? '20px'
                     : 'calc(1rem + 20px)',
                 color:
-                  props.values.formStep == 'chooseResource'
-                    ? '#000000'
-                    : '#ffffff'
+                  values.formStep === 'chooseResource' ? '#000000' : '#ffffff'
               }}
               size="large"
             >
@@ -95,7 +93,7 @@ const ModalWrapper = props => {
                 }}
               />
             </IconButton>
-            {props.children}
+            {children}
           </Paper>
         </Modal>
       )}

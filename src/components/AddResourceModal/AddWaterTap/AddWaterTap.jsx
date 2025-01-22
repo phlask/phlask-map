@@ -1,22 +1,20 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import useIsMobile from 'hooks/useIsMobile';
+import styles from '../AddResourceModal.module.scss';
+import ShareSocials from '../ShareSocials';
 
-function AddWaterTap({
-  prev,
-  next,
+const AddWaterTap = ({
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   // state values and handlers for the textfields
@@ -44,7 +42,7 @@ function AddWaterTap({
   checkboxChangeHandler,
   textFieldChangeHandler,
   isValidAddress
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -73,10 +71,14 @@ function AddWaterTap({
 
   const getVariableName = variable => Object.keys(variable)[0];
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Box
-      overflow={'scroll'}
-      justifyContent={'center'}
+      overflow="scroll"
+      justifyContent="center"
       // width={isMobile ? '100%' : ''}
     >
       {isMobile ? (
@@ -115,7 +117,7 @@ function AddWaterTap({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -174,9 +176,9 @@ function AddWaterTap({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -184,12 +186,12 @@ function AddWaterTap({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >
@@ -201,6 +203,6 @@ function AddWaterTap({
       </CardContent>
     </Box>
   );
-}
+};
 
 export default AddWaterTap;

@@ -1,23 +1,22 @@
-import { Modal } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Modal } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
   faTwitter,
   faInstagram,
   faGithub
-} from "@fortawesome/free-brands-svg-icons";
-
-import { ReactComponent as PhillySkyline } from '../../components/icons/PhillySkyline.svg';
-import styles from "./AddResourceModal.module.scss";
+} from '@fortawesome/free-brands-svg-icons';
 import useIsMobile from 'hooks/useIsMobile';
+import PhillySkyline from 'icons/PhillySkyline';
+import styles from './AddResourceModal.module.scss';
 
-function ShareSocials() {
+const ShareSocials = () => {
   const isMobile = useIsMobile();
 
   return isMobile ? (
     // MOBILE VIEW
     <div className={styles.modalContent}>
-      <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
+      <Modal.Header className={styles.modalHeader} closeButton />
       <p className={styles.socialShareMessage}>
         You have successfully submitted a resource.
       </p>

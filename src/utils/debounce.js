@@ -5,10 +5,12 @@
  * @param {number} wait - The number of milliseconds to delay.
  * @returns {Function} A debounced version of the input function.
  */
-export function debounce(func, wait) {
+function debounce(func, wait) {
   let timeout;
-  return function (...args) {
+  return (...args) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
 }
+
+export default debounce;

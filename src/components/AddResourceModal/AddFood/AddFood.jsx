@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
-import { useForm, Controller } from 'react-hook-form';
+import { setDefaults } from 'react-geocode';
+import { useForm } from 'react-hook-form';
 import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useIsMobile from 'hooks/useIsMobile';
+import ShareSocials from '../ShareSocials';
 
-function AddFood({
-  prev,
-  next,
+const AddFood = ({
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -41,7 +39,7 @@ function AddFood({
   checkboxChangeHandler,
   textFieldChangeHandler,
   isValidAddress
-}) {
+}) => {
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 
@@ -69,6 +67,10 @@ function AddFood({
       *This field is required* <br />
     </span>
   );
+
+  if (page === 2) {
+    return <ShareSocials />;
+  }
 
   return (
     <Card
@@ -113,7 +115,7 @@ function AddFood({
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -172,9 +174,9 @@ function AddFood({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -187,7 +189,7 @@ function AddFood({
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >
@@ -199,6 +201,6 @@ function AddFood({
       </CardContent>
     </Card>
   );
-}
+};
 
 export default AddFood;

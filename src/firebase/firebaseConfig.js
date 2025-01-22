@@ -1,8 +1,8 @@
 // Sets the Phlask Database URL to use the test instance unless overriden
 // This environment variable will also need to be set in the prod build pipeline to "https://phlask-prod.firebaseio.com"
 // https://github.com/phlask/phlask-map/issues/498
-let phlaskDatabaseUrl =
-  process.env.REACT_APP_DB_URL || 'https://phlask-beta.firebaseio.com';
+const phlaskDatabaseUrl =
+  import.meta.env.VITE_DB_URL || 'https://phlask-beta.firebaseio.com';
 
 export const resourcesConfig = {
   apiKey: 'AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I',

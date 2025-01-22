@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, get, ref } from 'firebase/database';
 import { resourcesConfig } from '../firebase/firebaseConfig';
-import { testData } from '../firebase/functionalTest';
+import testData from '../firebase/functionalTest';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -36,7 +36,7 @@ export const getResources = createAsyncThunk(
     const app = initializeApp(resourcesConfig);
     const database = getDatabase(app);
 
-    if (process.env.REACT_APP_CYPRESS_TEST) return testData;
+    if (import.meta.env.VITE_CYPRESS_TEST) return testData;
     const snapshot = await get(ref(database, '/'));
     const results = snapshot.val();
     return Object.entries(results).map(([id, resource]) => ({

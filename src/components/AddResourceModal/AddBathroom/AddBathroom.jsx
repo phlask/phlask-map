@@ -1,23 +1,20 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
+import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useIsMobile from 'hooks/useIsMobile';
+import ShareSocials from '../ShareSocials';
 
-function AddBathroom({
-  prev,
-  next,
+const AddBathroom = ({
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -35,7 +32,7 @@ function AddBathroom({
   checkboxChangeHandler,
   textFieldChangeHandler,
   isValidAddress
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -62,8 +59,12 @@ function AddBathroom({
     </span>
   );
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
-    <Box overflow={'scroll'} justifyContent={'center'}>
+    <Box overflow="scroll" justifyContent="center">
       {isMobile ? (
         <Typography
           display="flex"
@@ -94,13 +95,12 @@ function AddBathroom({
         >
           Add a Bathroom Site
         </Typography>
-
       )}
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -152,7 +152,7 @@ function AddBathroom({
                 color="primary"
                 aria-label="previous-page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -160,12 +160,12 @@ function AddBathroom({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >
@@ -177,6 +177,6 @@ function AddBathroom({
       </CardContent>
     </Box>
   );
-}
+};
 
 export default AddBathroom;

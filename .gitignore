@@ -32,3 +32,4 @@ resources/
 
 # testing
 newrelic_agent.log
+*storybook.log
