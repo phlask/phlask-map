@@ -65,7 +65,7 @@ const ShareSocials = () => {
   (
     <div>
       <div className={styles.modalContent} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: '419px' }}>
-        <PhillySkyline />
+        <PhillySkyline width="258.5" height="225.37" />
         <p className={styles.socialShareMessageHeader}>
           Thank you for your submission!
         </p>
