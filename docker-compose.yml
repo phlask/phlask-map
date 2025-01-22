@@ -3,24 +3,24 @@ services:
     build: .
     stdin_open: true
     ports:
-    - "3000:3000"
+      - '5173:5173'
     entrypoint: bash -c "yarn install && yarn start"
     volumes:
-    - ".:/usr/src/app"
+      - '.:/usr/src/app'
   bash:
     build: .
     ports:
-    - "3000:3000"
+      - '5173:5173'
     stdin_open: true
     entrypoint: /bin/bash
     volumes:
-    - ".:/usr/src/app"
+      - '.:/usr/src/app'
   prod_build:
     build: .
     entrypoint: bash -c "yarn build"
-    environment: 
-      CI: "false"
-      REACT_APP_DB_URL: 
+    environment:
+      CI: 'false'
+      VITE_DB_URL:
     volumes:
-    - "./docker/build:/usr/src/app/build"
-    - "./docker/testResults:/usr/src/app/testResults"
+      - './docker/build:/usr/src/app/build'
+      - './docker/testResults:/usr/src/app/testResults'

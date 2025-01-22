@@ -100,7 +100,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     Starting the development server...
     ```
 
-1.  Navigate to localhost:3000 on your browser.
+1.  Navigate to localhost:5173 on your browser.
 
 ## Recommended Development Tools
 

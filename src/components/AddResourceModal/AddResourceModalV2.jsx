@@ -1,32 +1,44 @@
-import { initializeApp } from 'firebase/app';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TOOLBAR_MODAL_NONE } from '../../actions/actions';
-import { resourcesConfig } from '../../firebase/firebaseConfig';
-
-import { getDatabase, push, ref } from 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, push } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { pushNewResource } from '../../actions/actions';
-import { debounce } from '../../utils/debounce';
-import AddBathroom from './AddBathroom/AddBathroom';
-import AddFood from './AddFood/AddFood';
-import AddForaging from './AddForaging/AddForaging';
-import AddWaterTap from './AddWaterTap/AddWaterTap';
-import ChooseResource from './ChooseResource';
-import ModalWrapper from './ModalWrapper';
-import ShareSocials from './ShareSocials';
-
 import noop from 'utils/noop';
+import { TOOLBAR_MODAL_NONE, pushNewResource } from 'actions/actions';
+import { resourcesConfig } from 'firebase/firebaseConfig';
+
+import debounce from 'utils/debounce';
+
 import {
-  BATHROOM_RESOURCE_TYPE,
+  WATER_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE,
-  WATER_RESOURCE_TYPE
-} from '../../types/ResourceEntry';
+  BATHROOM_RESOURCE_TYPE
+} from 'types/ResourceEntry';
 
-const AddResourceModalV2 = props => {
+import ShareSocials from './ShareSocials';
+import ChooseResource from './ChooseResource';
+import AddFood from './AddFood/AddFood';
+import AddBathroom from './AddBathroom/AddBathroom';
+import AddForaging from './AddForaging/AddForaging';
+import AddWaterTap from './AddWaterTap/AddWaterTap';
+import ModalWrapper from './ModalWrapper';
+
+const AddResourceModalV2 = () => {
+  const [page, setPage] = useState(0);
+  const [resourceForm, setResourceForm] = useState(null);
+
+  const onPageChange = update => {
+    setPage(prev => {
+      const newValue = Math.max(0, update(prev));
+      if (newValue === 0) {
+        setResourceForm(null);
+      }
+      return newValue;
+    });
+  };
+
   const initialState = {
-    page: 0,
     pictures: [],
     images: [],
     name: '',
@@ -38,7 +50,6 @@ const AddResourceModalV2 = props => {
     handicapAccessible: false,
     idRequired: false,
     count: 0,
-    formStep: 'chooseResource',
     closeModal: false,
     latitude: null,
     longitude: null,
@@ -90,44 +101,47 @@ const AddResourceModalV2 = props => {
 
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
   const setToolbarModal = modal => {
-    dispatch({ type: 'SET_TOOLBAR_MODAL', modal: modal });
+    dispatch({ type: 'SET_TOOLBAR_MODAL', modal });
   };
 
   const checkboxChangeHandler = e => {
-    setValues(prevValues => {
-      return { ...prevValues, [e.target.name]: e.target.checked };
-    });
+    setValues(prevValues => ({
+      ...prevValues,
+      [e.target.name]: e.target.checked
+    }));
   };
 
-  // Use imported debounce to prevent the geocoding API from being called too frequently
-  const debouncedGeocode = debounce(address => {
-    geocodeByAddress(address)
-      .then(results => {
-        if (results.length === 0) {
-          throw new Error('ZERO_RESULTS');
-        }
-        return getLatLng(results[0]);
-      })
-      .then(({ lat, lng }) => {
-        // Update the state with the latitude and longitude
-        setValues(prevValues => ({
-          ...prevValues,
-          latitude: lat,
-          longitude: lng,
-          isValidAddress: true
-        }));
-      })
-      .catch(() => {
-        setValues(prevValues => ({
-          ...prevValues,
-          isValidAddress: false
-        }));
-      });
-  }, 500); // 500ms debounce delay
+  const debouncedGeocode = useMemo(
+    () =>
+      debounce(address => {
+        geocodeByAddress(address)
+          .then(results => {
+            if (results.length === 0) {
+              throw new Error('ZERO_RESULTS');
+            }
+            return getLatLng(results[0]);
+          })
+          .then(({ lat, lng }) => {
+            // Update the state with the latitude and longitude
+            setValues(prevValues => ({
+              ...prevValues,
+              latitude: lat,
+              longitude: lng,
+              isValidAddress: true
+            }));
+          })
+          .catch(() => {
+            setValues(prevValues => ({
+              ...prevValues,
+              isValidAddress: false
+            }));
+          });
+      }, 500),
+    []
+  ); // 500ms debounce delay
 
   const textFieldChangeHandler = eventOrString => {
     let newValue;
@@ -158,38 +172,11 @@ const AddResourceModalV2 = props => {
   // controls which modal state to show
   // (e.g. choose resource, add water tap, social links)
   const onChangeFormStep = step => {
-    setValues(prevValues => {
-      return { ...prevValues, formStep: step };
-    });
-  };
-
-  const onChangeNextPage = () => {
-    setValues(prevValues => {
-      if (prevValues.page < 1) {
-        return { ...prevValues, page: prevValues.page + 1 };
-      }
-
-      return { ...prevValues };
-    });
-  };
-
-  const onChangePrevPage = () => {
-    setValues(prevValues => {
-      if (prevValues.page > 0) {
-        return { ...prevValues, page: prevValues.page - 1 };
-      }
-
-      // return to chooseResource modal if already on first page of desktop form and they click the prevPage button
-      onChangeFormStep('chooseResource');
-
-      return { ...prevValues };
-    });
+    setValues(prevValues => ({ ...prevValues, formStep: step }));
   };
 
   const onDrop = picture => {
-    setValues(prevValues => {
-      return { ...prevValues, pictures: picture };
-    });
+    setValues(prevValues => ({ ...prevValues, pictures: picture }));
   };
 
   const submitImage = imageFile => {
@@ -197,33 +184,28 @@ const AddResourceModalV2 = props => {
     // Upload the image with a PUT request
     // Store the image URL in state.images
     const imageType = imageFile.type;
-    const submitUrl = '/submit-image?type=' + imageType;
+    const submitUrl = `/submit-image?type=${imageType}`;
 
     return fetch(submitUrl)
       .then(response => response.json())
-      .then(data => {
-        return fetch(data.putURL, {
+      .then(data =>
+        fetch(data.putURL, {
           method: 'PUT',
           headers: {
             'Content-Type': imageFile.type
           },
           body: imageFile
-        }).then(() => {
-          return data.getURL;
-        });
-      })
+        }).then(() => data.getURL)
+      )
       .catch(noop);
   };
 
   const onSubmit = (resourceType, e) => {
     e.preventDefault();
-    var upload_promises = [];
-    // Upload images
-    values.pictures.forEach(picture => {
-      upload_promises.push(submitImage(picture));
-    });
 
-    return Promise.all(upload_promises).then(async images => {
+    return Promise.all(
+      values.pictures.map(picture => submitImage(picture))
+    ).then(async images => {
       // All image uploads completed, loading tap record
 
       // First, we geocode the address to fill out city, state, zip code, and gp_id from
@@ -264,19 +246,19 @@ const AddResourceModalV2 = props => {
         },
         resource_type: resourceType,
         address: values.address,
-        city: city,
-        state: state,
+        city,
+        state,
         zip_code: postalCode,
         latitude: values.latitude || userLocation.lat,
         longitude: values.longitude || userLocation.lng,
         gp_id: placeId,
-        images: images,
+        images,
         guidelines: values.guidelines,
         description: values.description,
         name: values.name,
         status: 'OPERATIONAL', // By default, if they are creating a resource, we assume it is operational
         entry_type: values.entryType
-        //hours: undefined
+        // hours: undefined
       };
 
       // TODO(vontell): For now, we take the existing form data coming into values and transform these into the v1 schema
@@ -361,8 +343,8 @@ const AddResourceModalV2 = props => {
       const app = initializeApp(resourcesConfig);
       const database = getDatabase(app);
       push(ref(database, '/'), newResource).then(result => {
-        const pieces = result._path.pieces || result._path.pieces_;
-        const id = pieces[0];
+        const { _path: path } = result;
+        const id = path.pieces[0];
         newResource.id = id;
         dispatch(pushNewResource(newResource));
       });
@@ -371,26 +353,23 @@ const AddResourceModalV2 = props => {
 
   const handleClose = () => {
     // on close we should reset form state so user can submit another resource
+    setPage(0);
     setValues(initialState);
     setToolbarModal(TOOLBAR_MODAL_NONE);
   };
 
   return (
     <ModalWrapper handleClose={handleClose} values={values}>
-      {values.formStep == 'chooseResource' && (
+      {!resourceForm && (
         <ChooseResource
-          resourceTypeInfo={props.resourceTypeInfo}
-          setFormStep={onChangeFormStep}
+          onSelectResource={resource => setResourceForm(resource)}
         />
       )}
 
-      {values.formStep == 'addWaterTap' && (
+      {resourceForm === WATER_RESOURCE_TYPE && (
         <AddWaterTap
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -417,13 +396,10 @@ const AddResourceModalV2 = props => {
         />
       )}
 
-      {values.formStep === 'addFood' && (
+      {resourceForm === FOOD_RESOURCE_TYPE && (
         <AddFood
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -450,13 +426,10 @@ const AddResourceModalV2 = props => {
         />
       )}
 
-      {values.formStep === 'addBathroom' && (
+      {resourceForm === BATHROOM_RESOURCE_TYPE && (
         <AddBathroom
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -477,13 +450,10 @@ const AddResourceModalV2 = props => {
         />
       )}
 
-      {values.formStep === 'addForaging' && (
+      {resourceForm === FORAGE_RESOURCE_TYPE && (
         <AddForaging
-          prev={() => onChangeFormStep('chooseResource')}
-          next={() => onChangeFormStep('shareSocials')}
-          page={values.page}
-          onNextPageChange={onChangeNextPage}
-          onPrevPageChange={onChangePrevPage}
+          onPageChange={onPageChange}
+          page={page}
           onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}
           onDrop={onDrop}
           name={values.name}
@@ -506,8 +476,6 @@ const AddResourceModalV2 = props => {
           isValidAddress={values.isValidAddress}
         />
       )}
-
-      {values.formStep === 'shareSocials' && <ShareSocials />}
     </ModalWrapper>
   );
 };
