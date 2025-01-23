@@ -1,4 +1,3 @@
-import { Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
@@ -16,7 +15,6 @@ const ShareSocials = () => {
   return isMobile ? (
     // MOBILE VIEW
     <div className={styles.modalContent}>
-      <Modal.Header className={styles.modalHeader} closeButton />
       <p className={styles.socialShareMessage}>
         You have successfully submitted a resource.
       </p>
