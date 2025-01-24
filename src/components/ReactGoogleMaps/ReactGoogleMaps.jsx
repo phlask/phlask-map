@@ -25,6 +25,7 @@ import Filter from '../Filter/Filter';
 import Toolbar from '../Toolbar/Toolbar';
 import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import selectFilteredResource from '../../selectors/resourceSelectors';
+import { getResources as getResourcesFromDb } from '../../db';
 
 function getCoordinates() {
   return new Promise((resolve, reject) => {
@@ -164,6 +165,7 @@ const ReactGoogleMaps = () => {
 
   useEffect(() => {
     dispatch(getResources());
+    getResourcesFromDb();
   }, [dispatch]);
 
   useEffect(() => {

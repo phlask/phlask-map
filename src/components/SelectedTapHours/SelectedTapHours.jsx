@@ -25,11 +25,15 @@ const SelectedTapHours = ({ selectedPlace }) => {
       selectedPlace.hours.forEach((orgHours, index) => ({
         day: hours.getDays(index),
         open:
-          orgHours.open !== undefined && orgHours.open !== ''
+          orgHours.open !== undefined &&
+          orgHours.open !== '' &&
+          orgHours.open !== null
             ? hours.getSimpleHours(orgHours.open)
             : null,
         close:
-          orgHours.close !== undefined && orgHours.close !== ''
+          orgHours.close !== undefined &&
+          orgHours.close !== '' &&
+          orgHours.close !== null
             ? hours.getSimpleHours(orgHours.close)
             : null
       }));
@@ -72,10 +76,10 @@ const SelectedTapHours = ({ selectedPlace }) => {
   let placeOpeningInfo;
   if (isOpen) {
     placeOpeningInfo = { color: 'green', label: 'Open' };
+  } else if (typeof isOpen === 'undefined' || isOpen === null) {
+    placeOpeningInfo = { color: 'orange', label: 'Open times unavailable' };
   } else if (!isOpen) {
     placeOpeningInfo = { color: 'red', label: 'Closed' };
-  } else if (typeof isOpen === 'undefined') {
-    placeOpeningInfo = { color: 'orange', label: 'Open times unavailable' };
   }
 
   return (
