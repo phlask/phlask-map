@@ -5,12 +5,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 const contributorToCircleName = contributor => {
-  if (contributor.civic_member) return 'Civic';
-  if (contributor.data_member) return 'Data';
-  if (contributor.design_member) return 'Design';
-  if (contributor.development_member) return 'Development';
-  if (contributor.project_management_member) return 'Project Management';
-  return 'Other';
+  const circles = [];
+  if (contributor.civic_member) circles.push('Civic');
+  if (contributor.data_member) circles.push('Data');
+  if (contributor.design_member) circles.push('Design');
+  if (contributor.development_member) circles.push('Development');
+  if (contributor.project_management_member) circles.push('Project Management');
+  return circles.join(', ');
 };
 
 const ContributorsListItem = ({ contributor }) => (
