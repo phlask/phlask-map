@@ -24,6 +24,7 @@ import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
 import selectFilteredResource from '../../selectors/waterSelectors';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import PinWaterActive from '../icons/PinWaterActive.svg';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -154,6 +155,7 @@ export const ReactGoogleMaps = ({ google }) => {
   const isMobile = useIsMobile();
   const allResources = useSelector(state => state.filterMarkers.allResources);
   const filteredResources = useSelector(state => selectFilteredResource(state));
+  const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
 
   const mapCenter = useSelector(state => state.filterMarkers.mapCenter);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
@@ -311,9 +313,13 @@ export const ReactGoogleMaps = ({ google }) => {
                     lat: resource.latitude,
                     lng: resource.longitude
                   }}
-                  icon={{
-                    url: phlaskMarkerIconV2(resource.resource_type, 56, 56)
-                  }}
+                  icon={
+                    resource.resource_type === 'WATER' &&
+                    selectedPlace?.latitude === resource.latitude &&
+                    selectedPlace?.longitude === resource.longitude
+                      ? { url: PinWaterActive }
+                      : phlaskMarkerIconV2(resource.resource_type, 56, 56)
+                  }
                   // This is used for marker targeting as we are unable to add custom properties with this library.
                   // We should eventually replace this so that we can still enable the use of screen readers in the future.
                   title={`data-cy-${index}`}
