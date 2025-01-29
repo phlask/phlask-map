@@ -13,7 +13,7 @@ describe('crowdsourcing form', () => {
     cy.visit('/');
 
     // Load the contribution menu
-    cy.get('[data-cy=button-contribute-menu]').click();
+    cy.get('[data-cy=button-contribute-type-menu]').click();
   });
 
   it('should successfully submit a water site for testing', () => {
@@ -74,9 +74,11 @@ describe('crowdsourcing form', () => {
       force: true
     });
     cy.get('input[id="address"]').type(
-      'City Hall Room 708, Philadelphia, PA 19107, USA', {
-      force: true
-    });
+      'City Hall Room 708, Philadelphia, PA 19107, USA',
+      {
+        force: true
+      }
+    );
     cy.get('input[name="website"]').type('cypress.test');
     cy.get('textarea[name="description"]').type(
       'Cypress Test Food Description'
