@@ -38,6 +38,7 @@ const NearMeButton = ({ onClick, resourceType = WATER_RESOURCE_TYPE }) => (
       paddingBlock: 0,
       borderRadius: '50px',
       width: '241px',
+      minHeight: 60,
       textWrap: 'nowrap',
       flexGrow: 1,
       fontSize: 28,
