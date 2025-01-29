@@ -25,6 +25,9 @@ import selectFilteredResource from '../../selectors/waterSelectors';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import PinWaterActive from '../icons/PinWaterActive.svg';
+import PinForagingActive from '../icons/PinForagingActive.svg';
+import PinFoodActive from '../icons/PinFoodActive.svg';
+import PinBathroomActive from '../icons/PinBathroomsActive.svg';
 
 function getCoordinates() {
   return new Promise(function (resolve, reject) {
@@ -313,14 +316,20 @@ export const ReactGoogleMaps = ({ google }) => {
                     lat: resource.latitude,
                     lng: resource.longitude
                   }}
-                  icon={
-                    resource.resource_type === 'WATER' &&
+               icon={
                     selectedPlace?.latitude === resource.latitude &&
                     selectedPlace?.longitude === resource.longitude
-                      ? { url: PinWaterActive }
-                      : phlaskMarkerIconV2(resource.resource_type, 56, 56)
-                  }
-                  // This is used for marker targeting as we are unable to add custom properties with this library.
+                      ? resource.resource_type === 'WATER'
+                        ? { url: PinWaterActive } 
+                        : resource.resource_type === 'FORAGE'
+                        ? { url: PinForagingActive } 
+                        : resource.resource_type === 'BATHROOM'
+                        ? { url: PinBathroomActive }
+                        : resource.resource_type === 'FOOD'
+                        ? { url: PinFoodActive } 
+                        : phlaskMarkerIconV2(resource.resource_type, 56, 56) 
+                      : phlaskMarkerIconV2(resource.resource_type, 56, 56) 
+                     } // This is used for marker targeting as we are unable to add custom properties with this library.
                   // We should eventually replace this so that we can still enable the use of screen readers in the future.
                   title={`data-cy-${index}`}
                 />
