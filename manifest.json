@@ -1,0 +1,14 @@
+{
+  "short_name": "Phlask App",
+  "name": "Phlask Map",
+  "icons": [
+    {
+      "src": "./src/assets/favicon.png",
+      "type": "image/png",
+      "sizes": "800x808"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#26A9E0",
+  "background_color": "#000000"
+}

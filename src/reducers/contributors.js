@@ -19,7 +19,7 @@ export const fetchContributors = createAsyncThunk(
           Data,
           Convener,
           Status,
-          ['Project Mgmt']: Project,
+          'Project Mgmt': Project,
           ...rest
         } = val;
         const circles = {
@@ -32,7 +32,7 @@ export const fetchContributors = createAsyncThunk(
 
         const circle = Object.entries(circles)
           .filter(([_, value]) => value === 'TRUE')
-          .map(([key]) => key)
+          .map(([circleName]) => circleName)
           .at(0);
 
         const contributor = {
@@ -42,6 +42,7 @@ export const fetchContributors = createAsyncThunk(
           isConvener: Convener === 'TRUE',
           circle
         };
+
         if (contributor.active) {
           prev.current = [...prev.current, contributor];
         } else {
@@ -52,8 +53,8 @@ export const fetchContributors = createAsyncThunk(
       { current: [], past: [] }
     );
 
-    const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
+    const shuffleArray = array => {
+      for (let i = array.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }

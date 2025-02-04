@@ -27,7 +27,7 @@ const initialState = {
   resourceType: WATER_RESOURCE_TYPE
 };
 
-export default (state = initialState, act) => {
+export default (state = initialState, act = {}) => {
   switch (act.type) {
     case actions.SET_TOGGLE_STATE:
       return {
@@ -137,11 +137,10 @@ export default (state = initialState, act) => {
         searchBarMapTintOn: act.payload.isShown
           ? false
           : state.setSearchBarMapTintOn,
-        tapInfoOpenedWhileSearchOpen:
+        tapInfoOpenedWhileSearchOpen: !!(
           act.payload.isShown &&
           state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH
-            ? true
-            : false
+        )
       };
 
     case actions.toggleInfoWindowClass.type:

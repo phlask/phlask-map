@@ -1,7 +1,23 @@
-export const hours = {
-  getFullHours: function getFullHours(hours) {
+function getTime(time) {
+  const timeSplit = time.split(':');
+  const hour = timeSplit[0];
+
+  const minuteSplit = timeSplit[1].split('');
+  const minute = minuteSplit[0] + minuteSplit[1];
+  const mer = minuteSplit[2] + minuteSplit[3];
+
+  return {
+    hour,
+    minute,
+
+    mer
+  };
+}
+
+const hours = {
+  getFullHours: function getFullHours(_hours) {
     // Check for 12:00am or hours exceeding 2400
-    const intHours = parseInt(hours);
+    const intHours = parseInt(_hours, 10);
     if (intHours >= 2400) {
       return hours === 2400 ? '12:00am' : 'Exceeded 2400 hours';
     }
@@ -10,13 +26,18 @@ export const hours = {
     const minute = time[2] + time[3];
 
     // Check for minutes exceeding 59
-    if (parseInt(minute) > 59) {
+    if (parseInt(minute, 10) > 59) {
       return 'Incorrect minute format: minutes too large';
     }
 
-    const hour = parseInt(time[0] + time[1]);
-    const newHour =
-      hour > 12 ? (hour - 12).toString() : hour === 0 ? 12 : hour.toString();
+    const hour = parseInt(time[0] + time[1], 10);
+    let newHour = hour.toString();
+
+    if (hour > 12) {
+      newHour = (hour - 12).toString();
+    } else if (hour === 0) {
+      newHour = 12;
+    }
 
     const mer = hour >= 12 ? 'pm' : 'am';
 
@@ -25,20 +46,20 @@ export const hours = {
   /* Returns a user readable time, truncating the :00 if there are no partial hours
         eg: "6pm" or "3:30pm"
     */
-  getSimpleHours: function getSimpleHours(hours) {
+  getSimpleHours: function getSimpleHours(_hours) {
     // Check for 12:00am or hours exceeding 2400
-    const intHours = parseInt(hours);
+    const intHours = parseInt(_hours, 10);
     if (intHours >= 2400) {
       return hours === 2400 ? '12:00am' : 'Exceeded 2400 hours';
     }
 
     // In some cases, time is just 4 numbers
-    if (hours.time && /\d{4}/.test(hours.time)) {
-      let hour = parseInt(hours.time.slice(0, 2));
+    if (_hours.time && /\d{4}/.test(hours.time)) {
+      let hour = parseInt(hours.time.slice(0, 2), 10);
       const minute = hours.time.slice(2, 4);
       const mer = hour >= 12 ? 'pm' : 'am';
       if (hour > 12) {
-        hour = hour - 12;
+        hour -= 12;
       }
       if (hour === 0) {
         hour = 12;
@@ -52,23 +73,26 @@ export const hours = {
     const minute = time[2] + time[3];
 
     // Check for minutes exceeding 59
-    if (parseInt(minute) > 59) {
+    if (parseInt(minute, 10) > 59) {
       return 'Incorrect minute format: minutes too large';
     }
 
-    const hour = parseInt(time[0] + time[1]);
-    const newHour =
-      hour > 12 ? (hour - 12).toString() : hour === 0 ? 12 : hour.toString();
+    const hour = parseInt(time[0] + time[1], 10);
+    let newHour = hour.toString();
+    if (hour > 12) {
+      newHour = (hour - 12).toString();
+    } else if (hour === 0) {
+      newHour = 12;
+    }
 
     const mer = hour >= 12 ? 'pm' : 'am';
 
-    if (isNaN(hour) || isNaN(minute)) {
+    if (Number.isNaN(hour) || Number.isNaN(minute)) {
       return null;
-    } else {
-      return parseInt(minute) === 0
-        ? `${newHour}${mer}`
-        : `${newHour}:${minute}${mer}`;
     }
+    return parseInt(minute, 10) === 0
+      ? `${newHour}${mer}`
+      : `${newHour}:${minute}${mer}`;
   },
 
   getHourFromMilitary: function getHourFromMilitary(hour) {
@@ -95,62 +119,19 @@ export const hours = {
     // If minutes is single digit, add "0" as first digit
     let minutes = today.getMinutes().toString();
     if (minutes.length < 2) {
-      minutes = '0' + minutes;
+      minutes = `0${minutes}`;
     }
-    const currentTime = parseInt(today.getHours().toString() + minutes);
+    const currentTime = parseInt(today.getHours().toString() + minutes, 10);
 
-    return currentTime > parseInt(open) && currentTime < parseInt(close)
-      ? true
-      : false;
+    return !!(
+      currentTime > parseInt(open, 10) && currentTime < parseInt(close, 10)
+    );
   },
 
   getOrgTimes: times => {
     const timeSplit = times.split('-');
     const open = getTime(timeSplit[0]);
-    const close = getTime(timeSplit[1]);
   }
 };
 
-/*** Food Org Hours ***/
-
-function convertToMilitary(time) {
-  if (time.mer === 'am') {
-    const test = time.hour + time.minute;
-
-    if (time.hour === '12') {
-      return '00' + time.minute;
-    } else {
-      return time.hour + time.minute;
-    }
-  } else if (time.mer === 'pm') {
-    const test = (parseInt(time.hour) + 12).toString() + time.minute;
-
-    if (time.hour !== '12') {
-      return (parseInt(time.hour) + 12).toString() + time.minute;
-    } else {
-      return parseInt(time.hour).toString() + time.minute;
-    }
-  }
-}
-function getTime(time) {
-  const timeSplit = time.split(':');
-  const hour = timeSplit[0];
-
-  const minuteSplit = timeSplit[1].split('');
-  const minute = minuteSplit[0] + minuteSplit[1];
-  const mer = minuteSplit[2] + minuteSplit[3];
-
-  return {
-    hour: hour,
-    minute: minute,
-
-    mer: mer
-  };
-}
-
-function getDays(days) {
-  const week = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sat'];
-  const daysSplit = days.split(' ');
-}
-
-// hours.checkOpen(1200,1900)
+export default hours;

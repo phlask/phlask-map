@@ -29,6 +29,7 @@ docker/
 # dev files
 resources/
 .env
+*storybook.log
 
 # testing
 newrelic_agent.log
