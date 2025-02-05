@@ -113,7 +113,7 @@ const PageOne = ({
     }
   ];
 
-  const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
+  const ORGANIZATION_TYPE = ['Government', 'Business', 'Non-profit', 'Unsure'];
 
   return (
     <>
