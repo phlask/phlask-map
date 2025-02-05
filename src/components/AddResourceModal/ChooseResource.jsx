@@ -1,9 +1,10 @@
-import useIsMobile from 'hooks/useIsMobile';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 import WaterIcon from 'icons/WaterIconChooseResource';
 import FoodIcon from 'icons/FoodIconChooseResource';
-import ForagingIcon from 'icons/ForagingIconChooseResource';
+import ForagingIcon from 'icons/ForagingIcon';
 import BathroomIcon from 'icons/ToiletIconChooseResource';
 import ResourceButton from 'components/ResourceButton/ResourceButton';
 import {
@@ -13,22 +14,37 @@ import {
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import styles from './AddResourceModal.module.scss';
-
-const ChooseResource = ({ onSelectResource }) => {
-  const isMobile = useIsMobile();
-
-  return (
-    <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
-      <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
+const ChooseResource = ({ onSelectResource }) => (
+  <Stack
+    alignItems="center"
+    flexGrow={1}
+    flexShrink={0}
+    gap={2.5}
+    paddingBlock={{ xs: 2, sm: 2, md: 4 }}
+    paddingInline={{ xs: 2, sm: 2, md: 9 }}
+  >
+    <Stack gap={0.5} alignItems="center">
+      <Typography
+        fontSize={24}
+        lineHeight="30px"
+        fontWeight={600}
+        color={theme => theme.palette.global.darkUI.darkGrey3}
+        component="h3"
+      >
         Add a Site
-      </h2>
-      <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
+      </Typography>
+      <Typography
+        fontSize={14}
+        textAlign="center"
+        color={theme => theme.palette.global.darkUI.darkGrey2}
+      >
         Choose the type of resource you like
         <br />
         to add and submit the form.
-      </h3>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+      </Typography>
+    </Stack>
+    <Grid container justifyContent="center" rowGap={3} columnSpacing={2.5}>
+      <Grid item xs={12} sm={6} md={6}>
         <ResourceButton
           icon={WaterIcon}
           data-cy="button-contribute-water"
@@ -36,6 +52,8 @@ const ChooseResource = ({ onSelectResource }) => {
           text="Water"
           onClick={() => onSelectResource(WATER_RESOURCE_TYPE)}
         />
+      </Grid>
+      <Grid item xs={12} sm={6} md={6}>
         <ResourceButton
           icon={ForagingIcon}
           color="#5DA694"
@@ -43,7 +61,8 @@ const ChooseResource = ({ onSelectResource }) => {
           data-cy="button-contribute-foraging"
           onClick={() => onSelectResource(FORAGE_RESOURCE_TYPE)}
         />
-
+      </Grid>
+      <Grid item xs={12} sm={6} md={6}>
         <ResourceButton
           icon={FoodIcon}
           color="#FF9A55"
@@ -51,7 +70,8 @@ const ChooseResource = ({ onSelectResource }) => {
           data-cy="button-contribute-food"
           onClick={() => onSelectResource(FOOD_RESOURCE_TYPE)}
         />
-
+      </Grid>
+      <Grid item xs={12} sm={6} md={6}>
         <ResourceButton
           icon={BathroomIcon}
           color="#9E9E9E"
@@ -59,9 +79,9 @@ const ChooseResource = ({ onSelectResource }) => {
           data-cy="button-contribute-bathroom"
           onClick={() => onSelectResource(BATHROOM_RESOURCE_TYPE)}
         />
-      </Box>
-    </div>
-  );
-};
+      </Grid>
+    </Grid>
+  </Stack>
+);
 
 export default ChooseResource;

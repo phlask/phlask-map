@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import styles from './ResourceButton.module.scss';
 
 const ResourceButton = ({
@@ -10,20 +11,18 @@ const ResourceButton = ({
 }) => (
   <Button
     sx={{
-      margin: '12px',
       backgroundColor: color,
+      width: '100%',
       '&:hover': { backgroundColor: color },
-      display: 'grid',
-      gridTemplateColumns: '1fr',
-      gap: '5px',
-      placeItems: 'center',
       borderRadius: '8px'
     }}
     onClick={onClick}
     data-cy={dataCy}
   >
-    <Icon className={styles.icon} width={45} height={45} />
-    <p className={styles.label}>{text}</p>
+    <Stack alignItems="center">
+      <Icon className={styles.icon} width={45} height={45} />
+      <p className={styles.label}>{text}</p>
+    </Stack>
   </Button>
 );
 
