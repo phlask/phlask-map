@@ -374,9 +374,8 @@ const AddResourceModalV2 = () => {
           position: 'absolute',
           width: isMobile ? '32px' : '23px',
           height: isMobile ? '32px' : '22.3px',
-          right: isMobile ? null : '42px',
-          top: isMobile ? '101px' : '19px',
-          left: isMobile ? '329px' : null,
+          right: isMobile ? '32px' : '42px',
+          top: isMobile ? '25px' : '19px',
           color:
             // Page = 2 assumes Desktop page 2 = Share Socials view
             // Page 2 is not reachable via any Mobile flows
@@ -395,6 +394,7 @@ const AddResourceModalV2 = () => {
       {!resourceForm && (
         <ChooseResource
           onSelectResource={resource => setResourceForm(resource)}
+          isMobile={isMobile}
         />
       )}
 

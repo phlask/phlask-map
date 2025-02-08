@@ -14,7 +14,7 @@ import {
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-const ChooseResource = ({ onSelectResource }) => (
+const ChooseResource = ({ onSelectResource, isMobile }) => (
   <Stack
     alignItems="center"
     flexGrow={1}
@@ -23,7 +23,7 @@ const ChooseResource = ({ onSelectResource }) => (
     paddingBlock={{ xs: 2, sm: 2, md: 4 }}
     paddingInline={{ xs: 2, sm: 2, md: 9 }}
   >
-    <Stack gap={0.5} alignItems="center">
+    <Stack gap={0.5} alignItems="center" paddingTop={isMobile ? '72px' : null}>
       <Typography
         fontSize={24}
         lineHeight="30px"
