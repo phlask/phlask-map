@@ -6,7 +6,6 @@ import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import Stack from '@mui/material/Stack';
 import {
-  TOOLBAR_MODAL_SEARCH,
   toggleInfoWindow,
   getResources,
   setSelectedPlace,

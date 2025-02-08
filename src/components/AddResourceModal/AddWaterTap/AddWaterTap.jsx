@@ -9,7 +9,6 @@ import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import styles from '../AddResourceModal.module.scss';
 import ShareSocials from '../ShareSocials';
 
 const AddWaterTap = ({
@@ -79,23 +78,48 @@ const AddWaterTap = ({
     <Box
       overflow="scroll"
       justifyContent="center"
-      // width={isMobile ? '100%' : ''}
     >
       {isMobile ? (
-        <Typography
-          display="flex"
-          flexDirection="row"
-          alignItems="flex-end"
-          padding="0px 20px 10px"
-          height="88px"
-          backgroundColor="#5286E9"
-          color="common.white"
-        >
-          Add Water Resource
-        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            padding: '0px 20px 10px',
+            height: '88px',
+            backgroundColor: '#5286E9',
+            color: 'common.white'
+          }}>
+          {/* <Typography
+            display="flex"
+            flexDirection="row"
+            alignItems="flex-end"
+            padding="0px 20px 10px"
+            height="88px"
+            backgroundColor="#5286E9"
+            color="common.white"
+          > */}
+            Add Water Resource
+          {/* </Typography> */}
+        </Box>
       ):
       (
-        <Typography
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '64px',
+            backgroundColor: '#5286E9',
+            color: 'common.white',
+            textAlign: 'center',
+            fontFamily: 'Inter',
+            fontWeight: '600',
+            padding: '20px 0',
+            fontSize: '20.16'
+          }}>
+        {/* <Typography
           display="flex"
           flexDirection="row"
           alignItems="center"
@@ -108,9 +132,10 @@ const AddWaterTap = ({
           fontWeight={600}
           padding="20px 0"
           fontSize={20.16}
-        >
+        > */}
           Add a Water Site
-        </Typography>
+        {/* </Typography> */}
+        </Box>
 
       )}
       <CardContent width="770px">

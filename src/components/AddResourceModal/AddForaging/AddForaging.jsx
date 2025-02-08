@@ -7,7 +7,6 @@ import { Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
-import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 import ShareSocials from '../ShareSocials';

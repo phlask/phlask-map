@@ -13,17 +13,15 @@ import {
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import styles from './AddResourceModal.module.scss';
-
 const ChooseResource = ({ onSelectResource }) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={isMobile ? styles.dialog : styles.dialogDesktop}>
-      <h2 className={isMobile ? styles.greyHeader : styles.greyHeaderDesktop}>
+    <div>
+      <h2>
         Add a Site
       </h2>
-      <h3 className={isMobile ? styles.subHeader : styles.subHeaderDesktop}>
+      <h3>
         Choose the type of resource you like
         <br />
         to add and submit the form.

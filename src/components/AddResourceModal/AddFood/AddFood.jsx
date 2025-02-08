@@ -6,7 +6,6 @@ import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
