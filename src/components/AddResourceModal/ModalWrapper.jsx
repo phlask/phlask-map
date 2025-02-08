@@ -19,7 +19,7 @@ const ModalWrapper = ({ children, onExited }) => {
             position: 'absolute',
             left: '32px',
             bottom: '133px',
-            width: '686px',
+            width: '766px',
             borderRadius: '10px'
           }}
         >

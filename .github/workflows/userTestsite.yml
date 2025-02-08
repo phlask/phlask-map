@@ -3,7 +3,7 @@ name: Build User Testing Site
 on:
   push:
     branches:
-      - develop
+      - main
 env:
   AWS_DEFAULT_REGION: us-east-2
   REACT_APP_DB_URL: https://phlask-usertest.firebaseio.com
