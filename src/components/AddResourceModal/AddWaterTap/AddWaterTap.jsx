@@ -79,65 +79,27 @@ const AddWaterTap = ({
       overflow="scroll"
       justifyContent="center"
     >
-      {isMobile ? (
-        <Box
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px': '64px',
+          backgroundColor: '#5286E9',
+        }}>
+        <Typography
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            padding: '0px 20px 10px',
-            height: '88px',
-            backgroundColor: '#5286E9',
-            color: 'common.white'
-          }}>
-          {/* <Typography
-            display="flex"
-            flexDirection="row"
-            alignItems="flex-end"
-            padding="0px 20px 10px"
-            height="88px"
-            backgroundColor="#5286E9"
-            color="common.white"
-          > */}
-            Add Water Resource
-          {/* </Typography> */}
-        </Box>
-      ):
-      (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '64px',
-            backgroundColor: '#5286E9',
             color: 'common.white',
-            textAlign: 'center',
-            fontFamily: 'Inter',
-            fontWeight: '600',
-            padding: '20px 0',
-            fontSize: '20.16'
-          }}>
-        {/* <Typography
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          height="64px"
-          backgroundColor="#5286E9"
-          color="common.white"
-          textAlign="center"
-          fontFamily="Inter"
-          fontWeight={600}
-          padding="20px 0"
-          fontSize={20.16}
-        > */}
-          Add a Water Site
-        {/* </Typography> */}
-        </Box>
-
-      )}
+            textAlign: isMobile ? null : 'center',
+            fontFamily: isMobile ? null : 'Inter',
+            fontWeight: isMobile ? null : 600,
+            fontSize: isMobile ? null : 20.16
+        }}>
+          Add a Water Resource
+        </Typography>
+      </Box>
       <CardContent width="770px">
         <form
           onSubmit={handleSubmit((data, e) => {
