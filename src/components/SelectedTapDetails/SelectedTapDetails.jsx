@@ -145,21 +145,18 @@ const SelectedTapDetails = ({
   let resourceSubtitleTwo;
 
   if (
-    resource.name !== undefined &&
+    resource.name &&
     resource.name.trim().length > 0 &&
-    resource.address !== undefined &&
+    resource.address &&
     resource.address.trim().length > 0
   ) {
     resourceTitle = resource.name;
     resourceSubtitleOne = resource.address;
     resourceSubtitleTwo = latLongFormatted;
-  } else if (resource.name !== undefined && resource.name.trim().length > 0) {
+  } else if (resource.name && resource.name.trim().length > 0) {
     resourceTitle = resource.name;
     resourceSubtitleOne = latLongFormatted;
-  } else if (
-    resource.address !== undefined &&
-    resource.address.trim().length > 0
-  ) {
+  } else if (resource.address && resource.address.trim().length > 0) {
     resourceTitle = resource.address;
     resourceSubtitleOne = latLongFormatted;
   } else if (

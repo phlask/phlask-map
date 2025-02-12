@@ -1,12 +1,10 @@
 import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
-import { getDatabase, set, ref } from 'firebase/database';
-import { initializeApp } from 'firebase/app';
 import Input from '@mui/material/Input';
 import { useDispatch } from 'react-redux';
 import Dialog from '@mui/material/Dialog';
 import { updateExistingResource, setSelectedPlace } from 'actions/actions';
-import { resourcesConfig } from 'firebase/firebaseConfig';
+import { updateResource } from '../../db';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -34,14 +32,9 @@ const VerificationButton = ({ resource }) => {
     setLoginError('');
   }, []);
 
-  const updateFirebaseEntry = useCallback(
+  const updateResourceEntry = useCallback(
     selectedResource => {
-      // TODO(vontell): We probably should not init this here every time, although it is likely fine.
-      const app = initializeApp(resourcesConfig);
-      const database = getDatabase(app);
-      // Removed ID since we don't want that as part of the saved data structure
-      const { id, ...filteredResource } = selectedResource;
-      set(ref(database, `/${id}`), filteredResource);
+      updateResource(selectedResource);
       setHasBeenUpdated(true);
       dispatch(updateExistingResource({ resource: selectedResource }));
       dispatch(setSelectedPlace(selectedResource));
@@ -59,8 +52,8 @@ const VerificationButton = ({ resource }) => {
       ...resource,
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, [name, resource, updateFirebaseEntry]);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   const markAsUnverified = useCallback(() => {
     const newVerification = {
@@ -72,8 +65,8 @@ const VerificationButton = ({ resource }) => {
       ...resource,
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, [name, resource, updateFirebaseEntry]);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   const markAsInactive = useCallback(() => {
     const newVerification = {
@@ -86,8 +79,8 @@ const VerificationButton = ({ resource }) => {
       status: 'HIDDEN',
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, [name, resource, updateFirebaseEntry]);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   if (!resource) {
     return null;
