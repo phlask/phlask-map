@@ -6,7 +6,7 @@ on:
       - develop
 env:
   AWS_DEFAULT_REGION: us-east-2
-  VITE_DB_URL: https://phlask-beta.firebaseio.com
+  VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout

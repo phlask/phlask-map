@@ -1,14 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push } from 'firebase/database';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import noop from 'utils/noop';
 import useIsMobile from 'hooks/useIsMobile';
 import { TOOLBAR_MODAL_NONE, pushNewResource } from 'actions/actions';
-import { resourcesConfig } from 'firebase/firebaseConfig';
 
 import debounce from 'utils/debounce';
 
@@ -18,6 +15,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
+import { addResource } from '../../db';
 
 import ChooseResource from './ChooseResource';
 import AddFood from './AddFood/AddFood';
@@ -343,13 +341,7 @@ const AddResourceModalV2 = () => {
         };
       }
 
-      // TODO(vontell): We probably should not init this here every time, although it is likely fine.
-      const app = initializeApp(resourcesConfig);
-      const database = getDatabase(app);
-      push(ref(database, '/'), newResource).then(result => {
-        const { _path: path } = result;
-        const id = path.pieces[0];
-        newResource.id = id;
+      addResource(newResource).then(result => {
         dispatch(pushNewResource(newResource));
       });
     });

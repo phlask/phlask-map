@@ -23,7 +23,6 @@ Code behind the PHLASK Web Map
 │   ├── App.js
 │   ├── actions                        <-- Source for all Redux actions
 │   ├── components                     <-- Source for all React components
-│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
 │   ├── helpers                        <-- Helper functions shared across components/pages
 │   ├── hooks                          <-- Custom hooks
 │   ├── reducers                       <-- Redux reducers
@@ -191,5 +190,5 @@ The site runs on:
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
-- Google Firebase Realtime Database (https://firebase.google.com/docs/database)
-  - Stores the tap data used to generate the information on our site
+- Supabase (https://supabase.com/docs)
+  - Stores the resources and contributors data used to generate the information on our site
