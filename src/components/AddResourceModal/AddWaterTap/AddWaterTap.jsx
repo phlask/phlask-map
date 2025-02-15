@@ -75,10 +75,7 @@ const AddWaterTap = ({
   }
 
   return (
-    <Box
-      overflow="scroll"
-      justifyContent="center"
-    >
+    <Box overflow="scroll" justifyContent="center">
       <Box
         sx={{
           display: 'flex',
@@ -86,17 +83,23 @@ const AddWaterTap = ({
           alignItems: isMobile ? 'flex-end' : 'center',
           justifyContent: isMobile ? null : 'center',
           padding: isMobile ? '0px 20px 10px' : '20px 0',
-          height: isMobile ? '88px': '64px',
-          backgroundColor: '#5286E9',
-        }}>
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5286E9'
+        }}
+      >
         <Typography
           sx={{
             color: 'common.white',
-            textAlign: isMobile ? null : 'center',
-            fontFamily: isMobile ? null : 'Inter',
-            fontWeight: isMobile ? null : 600,
-            fontSize: isMobile ? null : 20.16
-        }}>
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
           Add a Water Resource
         </Typography>
       </Box>

@@ -2,7 +2,14 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
-import { Box, Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton
+} from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -84,17 +91,23 @@ const AddForaging = ({
           alignItems: isMobile ? 'flex-end' : 'center',
           justifyContent: isMobile ? null : 'center',
           padding: isMobile ? '0px 20px 10px' : '20px 0',
-          height: isMobile ? '88px': '64px',
-          backgroundColor: '#5DA694',
-        }}>
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5DA694'
+        }}
+      >
         <Typography
           sx={{
             color: 'common.white',
-            textAlign: isMobile ? null : 'center',
-            fontFamily: isMobile ? null : 'Inter',
-            fontWeight: isMobile ? null : 600,
-            fontSize: isMobile ? null : 20.16
-        }}>
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
           Add a Foraging Resource
         </Typography>
       </Box>
