@@ -348,13 +348,13 @@ const AddResourceModalV2 = () => {
   };
 
   const handleClose = () => {
-    setToolbarModal(TOOLBAR_MODAL_NONE)
+    setToolbarModal(TOOLBAR_MODAL_NONE);
     setPage(0);
   };
 
   const onExitedWrapper = () => {
     setValues(initialState);
-    setResourceForm(null)
+    setResourceForm(null);
   };
 
   return (
@@ -371,9 +371,7 @@ const AddResourceModalV2 = () => {
           color:
             // Page = 2 assumes Desktop page 2 = Share Socials view
             // Page 2 is not reachable via any Mobile flows
-            !resourceForm || page === 2
-              ? 'black'
-              : 'white'
+            !resourceForm || page === 2 ? 'black' : 'white'
         }}
         size="large"
       >

@@ -29,7 +29,7 @@ const ModalWrapper = ({ children, onExited }) => {
             timeout="auto"
             onExited={onExited}
           >
-          {children}
+            {children}
           </Collapse>
         </Paper>
       )}
@@ -47,7 +47,7 @@ const ModalWrapper = ({ children, onExited }) => {
               height: '100%'
             }}
           >
-          {children}
+            {children}
           </Paper>
         </Modal>
       )}

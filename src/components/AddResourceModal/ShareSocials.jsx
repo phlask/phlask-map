@@ -38,12 +38,11 @@ const ShareSocials = () => {
           flex: 'none',
           order: 2,
           flexGrow: 0
-      }}>
-      You have successfully submitted a resource.
+        }}
+      >
+        You have successfully submitted a resource.
       </Typography>
-      <Typography variant='h1'>
-        Thanks for sharing‼
-      </Typography>
+      <Typography variant="h1">Thanks for sharing‼</Typography>
       <Typography
         sx={{
           width: '389px',
@@ -66,7 +65,8 @@ const ShareSocials = () => {
           flex: 'none',
           order: 2,
           flexGrow: 0
-      }}>
+        }}
+      >
         Follow us on social media:
       </Typography>
       <Box>
@@ -120,13 +120,13 @@ const ShareSocials = () => {
           flex: 'none',
           order: 2,
           flexGrow: 0
-      }}>
+        }}
+      >
         #phlask
       </Typography>
     </Box>
-  ):
-  // DESKTOP VIEW
-  (
+  ) : (
+    // DESKTOP VIEW
     <Box
       sx={{
         display: 'flex',
@@ -135,56 +135,58 @@ const ShareSocials = () => {
         justifyContent: 'center',
         height: '419px',
         gap: '20px'
-      }}>
+      }}
+    >
       <PhillySkyline width="258.5" height="225.37" />
       <Typography
-      sx={{
-        width: '389px',
-        height: '24px',
+        sx={{
+          width: '389px',
+          height: '24px',
 
-        fontFamily: 'Inter',
-        fontStyle: 'normal',
-        fontWeight: 600,
-        fontSize: '24.19px',
-        lineHeight: '29px',
-        textAlign: 'center',
-        letterSpacing: '0.02em',
+          fontFamily: 'Inter',
+          fontStyle: 'normal',
+          fontWeight: 600,
+          fontSize: '24.19px',
+          lineHeight: '29px',
+          textAlign: 'center',
+          letterSpacing: '0.02em',
 
-        color: '#60718C',
+          color: '#60718C',
 
-        flex: 'none',
-        order: 1,
-        flexGrow: 0
-      }}>
+          flex: 'none',
+          order: 1,
+          flexGrow: 0
+        }}
+      >
         Thank you for your submission!
       </Typography>
       <Typography
-      sx={{
-        width: '389px',
-        height: '24px',
+        sx={{
+          width: '389px',
+          height: '24px',
 
-        /* Type Scale/body1 */
-        fontFamily: 'Inter',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        fontSize: '14px',
-        lineHeight: '24px',
-        /* identical to box height, or 171% */
-        textAlign: 'center',
+          /* Type Scale/body1 */
+          fontFamily: 'Inter',
+          fontStyle: 'normal',
+          fontWeight: 500,
+          fontSize: '14px',
+          lineHeight: '24px',
+          /* identical to box height, or 171% */
+          textAlign: 'center',
 
-        /* UI/UI-8 */
-        color: '#60718C',
+          /* UI/UI-8 */
+          color: '#60718C',
 
-
-        /* Inside auto layout */
-        flex: 'none',
-        order: 2,
-        flexGrow: 0
-      }}>
+          /* Inside auto layout */
+          flex: 'none',
+          order: 2,
+          flexGrow: 0
+        }}
+      >
         You should see your site pop up on the map in a few days
       </Typography>
     </Box>
   );
-}
+};
 
 export default ShareSocials;
