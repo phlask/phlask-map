@@ -65,17 +65,33 @@ const AddBathroom = ({
 
   return (
     <Box overflow="scroll" justifyContent="center">
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#7C7C7C"
-        color="common.white"
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#7C7C7C'
+        }}
       >
-        Add Bathroom Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Bathroom Resource
+        </Typography>
+      </Box>
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {

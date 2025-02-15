@@ -1,4 +1,5 @@
 // Returns the map marker icon in URI encoded svg format
+// This is used in-place of our generated icon components because this URI encoded format is needed for Google Maps to render the icons
 
 export default (resourceType, width = 40, height = 40) => {
   if (resourceType === 'WATER') {

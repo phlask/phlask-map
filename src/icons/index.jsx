@@ -27,6 +27,7 @@ export { default as JoinDevelopmentIcon } from './JoinDevelopmentIcon';
 export { default as JoinManagementIcon } from './JoinManagementIcon';
 export { default as ModalIdRequired } from './ModalIdRequired';
 export { default as PhlaskV2 } from './PhlaskV2';
+export { default as PhillySkyline } from './PhillySkyline';
 export { default as PhlaskFilterButton } from './PhlaskFilterButton';
 export { default as PhlaskNoText } from './PhlaskNoText';
 export { default as PhlaskButton } from './PhlaskButton';

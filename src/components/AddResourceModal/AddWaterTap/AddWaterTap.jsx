@@ -9,7 +9,6 @@ import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import styles from '../AddResourceModal.module.scss';
 import ShareSocials from '../ShareSocials';
 
 const AddWaterTap = ({
@@ -76,22 +75,34 @@ const AddWaterTap = ({
   }
 
   return (
-    <Box
-      overflow="scroll"
-      justifyContent="center"
-      // width={isMobile ? '100%' : ''}
-    >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5286E9"
-        color="common.white"
+    <Box overflow="scroll" justifyContent="center">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5286E9'
+        }}
       >
-        Add Water Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Water Resource
+        </Typography>
+      </Box>
       <CardContent width="770px">
         <form
           onSubmit={handleSubmit((data, e) => {

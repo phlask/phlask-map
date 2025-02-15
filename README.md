@@ -152,9 +152,6 @@ The PHLASK Map runs on a static page built with:
   - For more information on how to understand/use our Redux state, see our [Redux Guide](redux_guide.md)
 - Material UI (https://mui.com/)
   - Provides pre-built components and simplifies consistent styling across the project
-- React Bootstrap (https://react-bootstrap.netlify.com)
-  - Provides pre-built components with Bootstrap-styling baked-in
-  - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
 - Storybook (https://storybook.js.org/)

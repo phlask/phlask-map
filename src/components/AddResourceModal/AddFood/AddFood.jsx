@@ -2,11 +2,17 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
-import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Typography
+} from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 
 import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
@@ -79,17 +85,33 @@ const AddFood = ({
         justifyContent: 'center'
       }}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#FF9A55"
-        color="common.white"
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#FF9A55'
+        }}
       >
-        Add a Food Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Food Resource
+        </Typography>
+      </Box>
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {

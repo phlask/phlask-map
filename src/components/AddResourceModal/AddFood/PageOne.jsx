@@ -21,7 +21,6 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useIsMobile from 'hooks/useIsMobile';
 import noop from 'utils/noop';
-import styles from '../AddResourceModal.module.scss';
 
 import WEBSITE_REGEX from '../utils';
 
@@ -113,7 +112,7 @@ const PageOne = ({
     }
   ];
 
-  const ORGANIZATION_TYPE = ['Governmemnt', 'Business', 'Non-profit', 'Unsure'];
+  const ORGANIZATION_TYPE = ['Government', 'Business', 'Non-profit', 'Unsure'];
 
   return (
     <>
@@ -265,7 +264,6 @@ const PageOne = ({
                       onKeyDown={onKeyDown}
                       onBlur={onBlur}
                       value={value}
-                      className={styles.modalAddressAutofill}
                     />
                     <div className="autocomplete-dropdown-container">
                       {loading && <div>Loading...</div>}

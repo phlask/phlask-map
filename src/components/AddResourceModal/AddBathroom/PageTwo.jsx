@@ -11,7 +11,6 @@ import {
   ListItem
 } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import styles from '../AddResourceModal.module.scss';
 
 const PageTwo = ({
   onDrop,

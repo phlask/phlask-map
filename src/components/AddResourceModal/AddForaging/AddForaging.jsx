@@ -2,12 +2,18 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
-import { Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton
+} from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
-import styles from 'components/AddResourceModal/AddResourceModal.module.scss';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 import ShareSocials from '../ShareSocials';
@@ -78,17 +84,33 @@ const AddForaging = ({
         justifyContent: 'center'
       }}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5DA694"
-        color="common.white"
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5DA694'
+        }}
       >
-        Add a Foraging Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Foraging Resource
+        </Typography>
+      </Box>
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
