@@ -1,8 +1,6 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, get, ref } from 'firebase/database';
-import { resourcesConfig } from '../firebase/firebaseConfig';
-import { testData } from '../firebase/functionalTest';
+import testData from '../testData/functionalTest';
+import { getResources as getResourcesFromDB } from '../db';
 
 export const SET_TOGGLE_STATE = 'SET_TOGGLE_STATE';
 export const setToggleState = (toggle, toggleState) => ({
@@ -18,26 +16,24 @@ export const setToggleStateFood = (toggle, toggleState) => ({
   toggleState
 });
 
-export const SET_FILTER_FUNCTION = 'SET_FILTER_FUNCTION';
-export const setFilterFunction = () => ({
-  type: SET_FILTER_FUNCTION
-});
+export const setFilterFunction = createAction('SET_FILTER_FUNCTION');
 
-export const RESET_FILTER_FUNCTION = 'RESET_FILTER_FUNCTION';
-export const resetFilterFunction = () => ({
-  type: RESET_FILTER_FUNCTION
-});
+export const setEntryFilterFunction = createAction('SET_ENTRY_FILTER_FUNCTION');
+
+export const removeFilterFunction = createAction('REMOVE_FILTER_FUNCTION');
+
+export const removeEntryFilterFunction = createAction(
+  'REMOVE_ENTRY_FILTER_FUNCTION'
+);
+
+export const resetFilterFunction = createAction('RESET_FILTER_FUNCTION');
 
 export const getResources = createAsyncThunk(
   'fetch-resources',
   async (_, { dispatch }) => {
-    const app = initializeApp(resourcesConfig);
-    const database = getDatabase(app);
+    if (import.meta.env.VITE_CYPRESS_TEST) return testData;
 
-    if (process.env.REACT_APP_CYPRESS_TEST) return testData;
-    const snapshot = await get(ref(database, '/'));
-    const results = snapshot.val();
-    return Object.values(results) || [];
+    return getResourcesFromDB();
   }
 );
 
@@ -48,20 +44,13 @@ export const pushNewResource = newResource => ({
   newResource
 });
 
-export const SET_USER_LOCATION = 'SET_USER_LOCATION';
-export const setUserLocation = coords => ({
-  type: SET_USER_LOCATION,
-  coords
-});
+// Handles the case where an existing resource is updated from the submission form
+export const updateExistingResource = createAction('UPDATE_EXISTING_RESOURCE');
 
-export const SET_MAP_CENTER = 'SET_MAP_CENTER';
-export const setMapCenter = coords => ({
-  type: SET_MAP_CENTER,
-  coords
-});
+export const setUserLocation = createAction('SET_USER_LOCATION');
+export const setLastResourcePan = createAction('SET_LAST_RESOURCE_PAN');
+
 export const toggleInfoWindow = createAction('TOGGLE_INFO_WINDOW');
-
-export const TOGGLE_INFO_WINDOW_CLASS = 'TOGGLE_INFO_WINDOW_CLASS';
 export const toggleInfoWindowClass = createAction('TOGGLE_INFO_WINDOW_CLASS');
 
 export const TOGGLE_INFO_EXPANDED = 'TOGGLE_INFO_EXPANDED';
@@ -80,26 +69,18 @@ export const setFilteredFoodTypes = foodType => ({
   foodType
 });
 
-export const SET_SELECTED_PLACE = 'SET_SELECTED_PLACE';
-export const setSelectedPlace = selectedPlace => ({
-  type: SET_SELECTED_PLACE,
-  selectedPlace
-});
+export const setSelectedPlace = createAction('SET_SELECTED_PLACE');
+
+export const setSearchBarMapTintOn = createAction('SET_SEARCH_BAR_MAP_TINT');
+export const setTapInfoOpenedWhileSearchOpen = createAction(
+  'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
+);
 
 export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
-
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const toggleResourceType = createAction('TOGGLE_RESOURCE_TYPE');
-
-export const toggleResourceMenu = createAction('TOGGLE_RESOURCE_MENU');
-
-export const CHANGE_RESOURCE_TYPE = 'CHANGE_RESOURCE_TYPE';
-export const changeResourceType = resourceType => ({
-  type: CHANGE_RESOURCE_TYPE,
-  resourceType
-});
+export const setResourceType = createAction('SET_RESOURCE_TYPE');

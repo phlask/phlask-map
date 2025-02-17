@@ -15,7 +15,7 @@ Code behind the PHLASK Web Map
 │   ├── fixtures                       <-- Fixtures for mocked out data
 │   └── integration                    <-- Source files for unit tests
 ├── cypress.json
-├── docker-compose.yml
+├── docker compose.yml
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -23,7 +23,6 @@ Code behind the PHLASK Web Map
 │   ├── App.js
 │   ├── actions                        <-- Source for all Redux actions
 │   ├── components                     <-- Source for all React components
-│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
 │   ├── helpers                        <-- Helper functions shared across components/pages
 │   ├── hooks                          <-- Custom hooks
 │   ├── reducers                       <-- Redux reducers
@@ -51,7 +50,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
 ### Yarn
 
 1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine.
-   - You can also use use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
+   - You can also use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
    - once you have install nvm
    - run `nvm install` <- this will download the required verison (only required on the first installation)
    - run `nvm use` sets that to the active version of node in your terminal
@@ -79,7 +78,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
 
 1.  Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
 1.  Navigate to the root of the cloned repo: `cd phlask-map`
-1.  Build the container with docker-compose: `docker-compose build app`.
+1.  Build the container with docker compose: `docker compose build app`.
 
     Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
 
@@ -89,7 +88,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     => => writing image sha256:c98c...
     ```
 
-1.  Run the container with docker-compose: `docker-compose up app`
+1.  Run the container with docker compose: `docker compose up app`
 
     Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
 
@@ -100,7 +99,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     Starting the development server...
     ```
 
-1.  Navigate to localhost:3000 on your browser.
+1.  Navigate to localhost:5173 on your browser.
 
 ## Recommended Development Tools
 
@@ -153,9 +152,6 @@ The PHLASK Map runs on a static page built with:
   - For more information on how to understand/use our Redux state, see our [Redux Guide](redux_guide.md)
 - Material UI (https://mui.com/)
   - Provides pre-built components and simplifies consistent styling across the project
-- React Bootstrap (https://react-bootstrap.netlify.com)
-  - Provides pre-built components with Bootstrap-styling baked-in
-  - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
 - Storybook (https://storybook.js.org/)
@@ -194,5 +190,5 @@ The site runs on:
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
-- Google Firebase Realtime Database (https://firebase.google.com/docs/database)
-  - Stores the tap data used to generate the information on our site
+- Supabase (https://supabase.com/docs)
+  - Stores the resources and contributors data used to generate the information on our site

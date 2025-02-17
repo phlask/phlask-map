@@ -1,30 +1,26 @@
 import React from 'react';
 
-import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { useDispatch, useSelector } from 'react-redux';
 import noop from 'utils/noop';
-import CloseIcon from '../../components/icons/CloseIcon';
-import DropLink from '../../components/Buttons/DropLink';
-import { HeaderContext } from '../../contexts/HeaderContext';
-import { ReactComponent as FilterIcon } from '../../components/icons/FilterIcon.svg';
-import { ReactComponent as PhlaskIcon } from '../../components/icons/PHLASK_v2.svg';
-import { ReactComponent as SearchIcon } from '../../components/icons/SearchIcon.svg';
-import { ReactComponent as PhlaskNoTextIcon } from '../../components/icons/PhlaskNoText.svg';
-import { ReactComponent as UsersIcon } from '../../components/icons/UsersIcon.svg';
-import { ReactComponent as IDIcon } from '../../components/icons/ModalIDRequired.svg';
+import CloseIcon from 'components/icons/CloseIcon';
+import { HeaderContext } from 'contexts/HeaderContext';
+import FilterIcon from 'icons/FilterIcon';
+import SearchIcon from 'icons/SearchIcon';
 import {
   setToolbarModal,
+  TOOLBAR_MODAL_SEARCH,
   TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_SEARCH
-} from '../../actions/actions';
-import { useSelector, useDispatch } from 'react-redux';
+  TOOLBAR_MODAL_NONE
+} from 'actions/actions';
+import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
+import { PhlaskV2 } from 'icons';
 
-function MobileHead() {
+const MobileHead = () => {
   const dispatch = useDispatch();
   const headerContext = React.useContext(HeaderContext);
   const {
@@ -32,11 +28,7 @@ function MobileHead() {
     shownPage,
     menuClicked,
     toggleMenuExpand,
-    menuExpand,
-    verticalAnimFinished1,
-    verticalAnimFinished2,
-    setVerticalAnimFinished1,
-    setVerticalAnimFinished2
+    menuExpand
   } = headerContext;
 
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
@@ -75,18 +67,12 @@ function MobileHead() {
                 <CloseIcon close={menuExpand} />
               </IconButton>
               <Button
-                href="/"
                 sx={{
                   margin: '15px'
                 }}
                 onClick={() => setShowMapControls(true)}
               >
-                <PhlaskIcon
-                  sx={{
-                    position: 'relative',
-                    top: '-10px'
-                  }}
-                />
+                <PhlaskV2 width="154px" height="39px" />
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconButton
@@ -104,16 +90,10 @@ function MobileHead() {
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    if (toolbarModal != TOOLBAR_MODAL_FILTER) {
-                      dispatch(
-                        setToolbarModal({
-                          toolbarModal: TOOLBAR_MODAL_FILTER
-                        })
-                      );
+                    if (toolbarModal !== TOOLBAR_MODAL_FILTER) {
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_FILTER));
                     } else {
-                      dispatch(
-                        setToolbarModal({ toolbarModal: TOOLBAR_MODAL_NONE })
-                      );
+                      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                     }
                   }}
                 >
@@ -121,33 +101,10 @@ function MobileHead() {
                 </IconButton>
               </Box>
             </Box>
-            <Collapse in={menuExpand} timeout="auto">
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <DropLink
-                  onClick={() => menuClicked('about')}
-                  startIcon={<PhlaskNoTextIcon />}
-                >
-                  About Phlask
-                </DropLink>
-                <DropLink
-                  onClick={() => menuClicked('join')}
-                  startIcon={<UsersIcon />}
-                >
-                  Join the team
-                </DropLink>
-                <DropLink
-                  onClick={() => menuClicked('contact')}
-                  startIcon={<IDIcon />}
-                >
-                  Contact
-                </DropLink>
-              </Box>
-            </Collapse>
+            <NavigationButtons
+              isOpen={menuExpand}
+              onItemClick={page => menuClicked(page)}
+            />
           </Box>
         </Paper>
       </Box>
@@ -162,6 +119,6 @@ function MobileHead() {
       </SwipeableDrawer>
     </>
   );
-}
+};
 
 export default MobileHead;

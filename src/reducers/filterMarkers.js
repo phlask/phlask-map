@@ -3,11 +3,12 @@ import * as actions from '../actions/actions';
 import { WATER_RESOURCE_TYPE } from '../types/ResourceEntry';
 
 const initialState = {
-  mapCenter: {
+  // Captures location when e.g. a pin is clicked or "Near Me" is clicked
+  lastResourcePan: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
   },
-  // Change to reflect user's current location
+  // Changes to reflect user's current location if location is enabled
   userLocation: {
     lat: parseFloat(CITY_HALL_COORDINATES.latitude),
     lng: parseFloat(CITY_HALL_COORDINATES.longitude)
@@ -15,28 +16,18 @@ const initialState = {
   showingInfoWindow: false,
   infoIsExpanded: false,
   infoWindowClass: 'info-window-out-desktop',
-  tapFilters: {
-    filtered: false,
-    handicap: false,
-    sparkling: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
-  foodFilters: {
-    idRequired: false,
-    kidOnly: false,
-    openNow: false,
-    accessTypesHidden: []
-  },
+  filterTags: [],
+  filterEntry: '',
   /** @type {ResourceEntry[]} */
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  resourceType: WATER_RESOURCE_TYPE,
-  isResourceMenuShown: false
+  setSearchBarMapTintOn: false,
+  tapInfoOpenedWhileSearchOpen: false,
+  resourceType: WATER_RESOURCE_TYPE
 };
 
-export default (state = initialState, act) => {
+export default (state = initialState, act = {}) => {
   switch (act.type) {
     case actions.SET_TOGGLE_STATE:
       return {
@@ -82,11 +73,11 @@ export default (state = initialState, act) => {
         }
       };
 
-    case actions.SET_USER_LOCATION:
-      return { ...state, userLocation: act.coords };
+    case actions.setUserLocation.type:
+      return { ...state, userLocation: act.payload };
 
-    case actions.SET_MAP_CENTER:
-      return { ...state, mapCenter: act.coords };
+    case actions.setLastResourcePan.type:
+      return { ...state, lastResourcePan: act.payload };
 
     case actions.getResources.fulfilled.type:
       return { ...state, allResources: act.payload };
@@ -97,26 +88,61 @@ export default (state = initialState, act) => {
         allResources: [...state.allResources, act.newResource]
       };
 
-    case actions.SET_FILTER_FUNCTION:
-      return { filterFunction: !state.filterFunction, ...state };
+    case actions.setFilterFunction.type:
+      return { ...state, filterTags: [...state.filterTags, act.payload.tag] };
 
-    case actions.SET_SELECTED_PLACE:
-      // if passed Selected Place as an object, set selected place as the object
-      // if passed an ID, locate the item using ID, then set selected place
-      return typeof act.selectedPlace === 'object'
-        ? { ...state, selectedPlace: act.selectedPlace }
-        : {
-            ...state,
-            selectedPlace: state.allResources[act.selectedPlace],
-            showingInfoWindow: true
-          };
+    case actions.setEntryFilterFunction.type:
+      return { ...state, filterEntry: act.payload.tag };
+
+    case actions.removeFilterFunction.type:
+      return {
+        ...state,
+        filterTags: state.filterTags.filter(x => x !== act.payload.tag)
+      };
+
+    case actions.removeEntryFilterFunction.type:
+      return {
+        ...state,
+        filterEntry: ''
+      };
+
+    case actions.resetFilterFunction.type:
+      return {
+        ...state,
+        filterTags: [],
+        filterEntry: ''
+      };
+    case actions.updateExistingResource.type:
+      return {
+        ...state,
+        allResources: state.allResources.map(resource =>
+          resource.id === act.payload.resource.id
+            ? act.payload.resource
+            : resource
+        )
+      };
+
+    case actions.setSelectedPlace.type:
+      return {
+        ...state,
+        selectedPlace: act.payload,
+        showingInfoWindow: true
+      };
 
     case actions.toggleInfoWindow.type:
       return {
         ...state,
         showingInfoWindow: act.payload.isShown,
-        infoWindowClass: act.payload.infoWindowClass
+        infoWindowClass: act.payload.infoWindowClass,
+        searchBarMapTintOn: act.payload.isShown
+          ? false
+          : state.setSearchBarMapTintOn,
+        tapInfoOpenedWhileSearchOpen: !!(
+          act.payload.isShown &&
+          state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH
+        )
       };
+
     case actions.toggleInfoWindowClass.type:
       return {
         ...state,
@@ -125,28 +151,6 @@ export default (state = initialState, act) => {
 
     case actions.TOGGLE_INFO_EXPANDED:
       return { ...state, infoIsExpanded: act.isExpanded };
-
-    case actions.RESET_FILTER_FUNCTION:
-      return {
-        ...state,
-        tapFilters: {
-          accessTypesHidden: [],
-          filtered: false,
-          handicap: false,
-          sparkling: false,
-          openNow: false
-        },
-        foodFilters: {
-          foodSite: false,
-          school: false,
-          charter: false,
-          pha: false,
-          idRequired: false,
-          kidOnly: false,
-          openNow: false,
-          accessTypesHidden: []
-        }
-      };
 
     case actions.SET_FILTERED_TAP_TYPES: {
       let currentAccessTypesHidden = [...state.tapFilters.accessTypesHidden];
@@ -183,22 +187,17 @@ export default (state = initialState, act) => {
       };
     }
 
+    case actions.setSearchBarMapTintOn.type:
+      return { ...state, searchBarMapTintOn: act.payload };
+
+    case actions.setTapInfoOpenedWhileSearchOpen.type:
+      return { ...state, tapInfoOpenedWhileSearchOpen: act.payload };
+
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };
 
-    // Toggle Phlask type & close the info window
-    case actions.toggleResourceType.type:
-      return {
-        ...state,
-        resourceType: act.payload.resourceType,
-        infoWindowClass: act.payload.infoWindowClass
-      };
-
-    case actions.CHANGE_RESOURCE_TYPE:
-      return { ...state, resourceType: act.resourceType };
-
-    case actions.toggleResourceMenu.type:
-      return { ...state, isResourceMenuShown: !act.payload.isShown };
+    case actions.setResourceType.type:
+      return { ...state, resourceType: act.payload };
 
     default:
       return state;

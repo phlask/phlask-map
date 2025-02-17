@@ -19,26 +19,26 @@
  * @property {string} last_modified The date this resource was last modified, in ISO UTC format.
  * @property {string} last_modifier Who last modified this resource.
  * @property {DataSource} source Where this resource data came from.
- * @property {boolean} verified Whether or not this resource is currently verified.
+ * @property {Verification} verification The verification details of this resource.
  * @property {"WATER" | "FOOD" | "FORAGE" | "BATHROOM"} resource_type The type of resource.
- * @property {string | undefined} address The street address of the resource (not including city, state, or zip). May include the secondary address.
- * @property {string} city The city of the resource.
- * @property {string} state The 2-letter abbreviation for the state of the resource.
- * @property {string} zip_code The zip code of the resource.
+ * @property {string | undefined | null} address The street address of the resource (not including city, state, or zip). May include the secondary address.
+ * @property {string | undefined | null} city The city of the resource.
+ * @property {string | undefined | null} state The 2-letter abbreviation for the state of the resource.
+ * @property {string | undefined | null} zip_code The zip code of the resource.
  * @property {number} latitude The latitude of the resource.
  * @property {number} longitude The longitude of the resource.
- * @property {string | undefined} gp_id The Google Places ID of the resource.
+ * @property {string | undefined | null} gp_id The Google Places ID of the resource.
  * @property {string[]} images A list of S3 keys for images showing this resource.
- * @property {string | undefined} guidelines Any additional community guidelines or rules for this resource.
- * @property {string | undefined} description A description of the resource.
- * @property {string} name A non-address name for this location, such as the business name or park name.
- * @property {"OPERATIONAL" | "TEMPORARILY_CLOSED" | "PERMANENTLY_CLOSED"} status The current status of this resource.
- * @property {"OPEN" | "RESTRICTED" | "UNSURE" | undefined} entry_type What entry permissions are required for this resource.
- * @property {GooglePlacesPeriod[] | undefined} hours The hours of operation for this resource, if available.
- * @property {WaterInfo | undefined} water If the resource_type is WATER, the information about the water resource.
- * @property {FoodInfo | undefined} food If the resource_type is FOOD, the information about the food resource.
- * @property {ForageInfo | undefined} forage If the resource_type is FORAGE, the information about the foraging resource.
- * @property {BathroomInfo | undefined} bathroom If the resource_type is BATHROOM, the information about the bathroom resource.
+ * @property {string | undefined | null} guidelines Any additional community guidelines or rules for this resource.
+ * @property {string | undefined | null} description A description of the resource.
+ * @property {string | undefined | null} name A non-address name for this location, such as the business name or park name.
+ * @property {"OPERATIONAL" | "TEMPORARILY_CLOSED" | "PERMANENTLY_CLOSED" | "HIDDEN"} status The current status of this resource.
+ * @property {"OPEN" | "RESTRICTED" | "UNSURE" | undefined | null} entry_type What entry permissions are required for this resource.
+ * @property {GooglePlacesPeriod[] | undefined | null} hours The hours of operation for this resource, if available.
+ * @property {WaterInfo | undefined | null} water If the resource_type is WATER, the information about the water resource.
+ * @property {FoodInfo | undefined | null} food If the resource_type is FOOD, the information about the food resource.
+ * @property {ForageInfo | undefined | null} forage If the resource_type is FORAGE, the information about the foraging resource.
+ * @property {BathroomInfo | undefined | null} bathroom If the resource_type is BATHROOM, the information about the bathroom resource.
  */
 
 /**
@@ -94,7 +94,15 @@
  * @property {("WHEELCHAIR_ACCESSIBLE" | "GENDER_NEUTRAL" | "CHANGING_TABLE" | "SINGLE_OCCUPANCY" | "FAMILY")[]} tags A list of additional tags regarding this bathroom resource. Can be empty.
  */
 
-export const WATER_RESOURCE_TYPE = "WATER";
-export const FOOD_RESOURCE_TYPE = "FOOD";
-export const FORAGE_RESOURCE_TYPE = "FORAGE";
-export const BATHROOM_RESOURCE_TYPE = "BATHROOM";
+/**
+ * Details for verification status.
+ * @typedef {Object} Verification
+ * @property {boolean} verified Whether or not this resource is currently verified.
+ * @property {Date} last_modified The latest date this resource had a verification change.
+ * @property {string} verifier Who most recently changes the verification state of this resource.
+ */
+
+export const WATER_RESOURCE_TYPE = 'WATER';
+export const FOOD_RESOURCE_TYPE = 'FOOD';
+export const FORAGE_RESOURCE_TYPE = 'FORAGE';
+export const BATHROOM_RESOURCE_TYPE = 'BATHROOM';

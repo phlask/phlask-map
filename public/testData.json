@@ -3,7 +3,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:50.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -17,7 +17,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -30,7 +34,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:51.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -44,7 +48,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -57,7 +65,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:52.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -71,7 +79,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -84,7 +96,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:53.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -98,7 +110,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -111,7 +127,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:54.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -125,7 +141,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -138,7 +158,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:55.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -152,7 +172,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -165,7 +189,7 @@
         "address": "4400 Haverford Avenue",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:22:57.797447+00:00",
+        "date_created": "2024-03-31T00:22:56.797447+00:00",
         "description": "Test,Description Value.",
         "entry_type": "UNSURE",
         "last_modified": "2024-03-31T00:22:57.797447+00:00",
@@ -179,7 +203,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -206,7 +234,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "water": {
             "dispenser_type": [
@@ -219,7 +251,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:40.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -237,7 +269,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -245,7 +281,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:41.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -263,7 +299,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -271,7 +311,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:42.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -289,7 +329,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -297,7 +341,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:43.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -315,7 +359,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -323,7 +371,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:44.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -341,7 +389,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -349,7 +401,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:45.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -367,7 +419,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -393,7 +449,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     },
@@ -401,7 +461,7 @@
         "address": "3101 Tyson Ave",
         "city": "Philadelphia",
         "creator": "phlask",
-        "date_created": "2024-03-31T00:37:46.004545+00:00",
+        "date_created": "2024-03-31T00:37:47.004545+00:00",
         "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
@@ -419,7 +479,11 @@
         },
         "state": "PA",
         "status": "OPERATIONAL",
-        "verified": false,
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
         "version": 1,
         "zip_code": "19149"
     }
