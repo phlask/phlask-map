@@ -258,7 +258,7 @@ const ReactGoogleMaps = () => {
       >
         {filteredResources.map((resource, index) => (
           <Marker
-            key={resource.date_created}
+            key={resource.id}
             onClick={() => {
               onMarkerClick(resource);
             }}
