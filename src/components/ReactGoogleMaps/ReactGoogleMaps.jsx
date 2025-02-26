@@ -166,10 +166,13 @@ const ReactGoogleMaps = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (!map) {
+      return;
+    }
     const fetchCoordinates = async () => {
       try {
         const position = await getCoordinates();
-        map.panTo(position.coords);
+        map.panTo({ lat: position.latitude, lng: position.longitude });
       } catch (error) {
         // Do nothing
       }
