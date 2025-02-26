@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
+import Modal from '@mui/material/Modal';
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
 import Backdrop from '@mui/material/Backdrop';
@@ -27,7 +27,6 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE
 } from 'actions/actions';
-import { Modal, styled } from '@mui/material';
 
 const MobileResourceButton = ({ type, icon, textLabel }) => {
   const dispatch = useDispatch();
@@ -56,15 +55,6 @@ const MobileResourceButton = ({ type, icon, textLabel }) => {
     </ListItemButton>
   );
 };
-
-const StyledBackdrop = styled(Backdrop, {
-  name: 'MuiModal',
-  slot: 'Backdrop',
-  overridesResolver: (props, styles) => styles.backdrop
-})({
-  zIndex: -1,
-  opacity: 0.2
-});
 
 const MobileChooseResourceType = () => {
   const dispatch = useDispatch();
