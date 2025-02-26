@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUserLocationEnabled } from '../../reducers/user';
+import { updateUserLocationEnabled } from 'reducers/user';
 
-const GeoLocationTracker = () => {
+const GeolocationTracker = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     function setUserLocationEnabled(payload) {
       dispatch(updateUserLocationEnabled(payload));
     }
-    async function queryGeolocationPerms() {
+    async function queryGeolocationPermissions() {
       const perms = await navigator.permissions.query({ name: 'geolocation' });
       setUserLocationEnabled(perms.state === 'granted');
       perms.addEventListener('change', () => {
@@ -55,7 +55,7 @@ const GeoLocationTracker = () => {
       );
       // This is the sensible way to handle it...
     } else {
-      queryGeolocationPerms();
+      queryGeolocationPermissions();
     }
     return () => {
       clearInterval(interval);
@@ -64,4 +64,4 @@ const GeoLocationTracker = () => {
   return null;
 };
 
-export default GeoLocationTracker;
+export default GeolocationTracker;
