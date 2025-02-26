@@ -1,101 +1,94 @@
-import styles from './AddResourceModal.module.scss';
+import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
-import { Box, Button } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
+import WaterIcon from 'icons/WaterIconChooseResource';
+import FoodIcon from 'icons/FoodIconChooseResource';
+import ForagingIcon from 'icons/ForagingIcon';
+import BathroomIcon from 'icons/ToiletIconChooseResource';
+import ResourceButton from 'components/ResourceButton/ResourceButton';
+import {
+  BATHROOM_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  WATER_RESOURCE_TYPE
+} from 'types/ResourceEntry';
 
-const ResourceButton = props => {
-  const Icon = props.desktopIcon;
-  return (
-    <Button
-      sx={{
-        margin: props.margin,
-        backgroundColor: props.color,
-        '&:hover': { backgroundColor: props.color },
-        display: 'grid',
-        gridTemplateColumns: '1fr',
-        gap: '5px',
-        placeItems: 'center',
-        borderRadius: '8px'
-      }}
-      onClick={() => {
-        props.setFormStep();
-      }}
-      data-cy={props['data-cy']}
-    >
-      <Icon className={styles.icon} width="45px" height="45px" />
-      <p className={styles.label}>{props.textLabel}</p>
-    </Button>
-  );
-};
-
-const ChooseResource = props => {
+const ChooseResource = ({ onSelectResource }) => {
   const isMobile = useIsMobile();
   return (
-    <>
-      {!isMobile && (
-        <Box sx={{ padding: '40px' }}>
-          <Box>
-            <h1 className={styles.header}>Add a Site</h1>
-            <p className={styles.description}>
-              Choose the type of resource you would like
-              <br />
-              to add and submit the form.
-            </p>
-          </Box>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            {props.resourceTypeInfo.map(entry => (
-              <ResourceButton
-                margin="12px"
-                key={entry.type}
-                {...entry}
-                data-cy={`button-${entry.type}-data-submit-selector`}
-                setFormStep={() => props.setFormStep(entry.formName)}
-              />
-            ))}
-          </Box>
-        </Box>
-      )}
-      {isMobile && (
-        <Box
-          sx={{
-            padding: '40px',
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#ffffff'
-          }}
+    <Stack
+      alignItems="center"
+      flexGrow={1}
+      flexShrink={0}
+      gap={2.5}
+      paddingBlock={{ xs: 2, sm: 2, md: 4 }}
+      paddingInline={{ xs: 2, sm: 2, md: 9 }}
+    >
+      <Stack
+        gap={0.5}
+        alignItems="center"
+        paddingTop={isMobile ? '72px' : null}
+      >
+        <Typography
+          fontSize={24}
+          lineHeight="30px"
+          fontWeight={600}
+          color={theme => theme.palette.global.darkUI.darkGrey3}
+          component="h3"
         >
-          <Box
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 'calc(100% - 64px - 40px - 20px)'
-            }}
-          >
-            <Box sx={{ marginBottom: '25px' }}>
-              <h1 className={styles.header}>Add a Site</h1>
-              <p className={styles.description}>
-                Choose the type of resource you would like
-                <br />
-                to add and submit the form.
-              </p>
-            </Box>
-            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-              {props.resourceTypeInfo.map(entry => (
-                <ResourceButton
-                  margin="10px 20px"
-                  key={entry.type}
-                  {...entry}
-                  data-cy={`button-${entry.type}-data-submit-selector`}
-                  setFormStep={() => props.setFormStep(entry.formName)}
-                />
-              ))}
-            </Box>
-          </Box>
-        </Box>
-      )}
-    </>
+          Add a Site
+        </Typography>
+        <Typography
+          fontSize={14}
+          textAlign="center"
+          color={theme => theme.palette.global.darkUI.darkGrey2}
+        >
+          Choose the type of resource you like
+          <br />
+          to add and submit the form.
+        </Typography>
+      </Stack>
+      <Grid container justifyContent="center" rowGap={3} columnSpacing={2.5}>
+        <Grid item xs={12} sm={6} md={6}>
+          <ResourceButton
+            icon={WaterIcon}
+            data-cy="button-contribute-water"
+            color="#5286E9"
+            text="Water"
+            onClick={() => onSelectResource(WATER_RESOURCE_TYPE)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <ResourceButton
+            icon={ForagingIcon}
+            color="#5DA694"
+            text="Foraging"
+            data-cy="button-contribute-foraging"
+            onClick={() => onSelectResource(FORAGE_RESOURCE_TYPE)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <ResourceButton
+            icon={FoodIcon}
+            color="#FF9A55"
+            text="Food"
+            data-cy="button-contribute-food"
+            onClick={() => onSelectResource(FOOD_RESOURCE_TYPE)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <ResourceButton
+            icon={BathroomIcon}
+            color="#9E9E9E"
+            text="Bathroom"
+            data-cy="button-contribute-bathroom"
+            onClick={() => onSelectResource(BATHROOM_RESOURCE_TYPE)}
+          />
+        </Grid>
+      </Grid>
+    </Stack>
   );
 };
 

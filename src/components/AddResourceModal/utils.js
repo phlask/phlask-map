@@ -1,4 +1,4 @@
-export const WEBSITE_REGEX = new RegExp(
+const WEBSITE_REGEX = new RegExp(
   '^([a-zA-Z]+:\\/\\/)?' + // protocol (optional)
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
     '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IP (v4) address
@@ -7,3 +7,5 @@ export const WEBSITE_REGEX = new RegExp(
     '(\\#[-a-z\\d_]*)?$', // fragment locator
   'i'
 );
+
+export default WEBSITE_REGEX;

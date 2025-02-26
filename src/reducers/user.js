@@ -21,4 +21,6 @@ export const userDataSlice = createSlice({
   }
 });
 
+export const { updateUserLocationEnabled } = userDataSlice.actions;
+
 export default userDataSlice.reducer;

@@ -8,7 +8,7 @@ describe('filters', () => {
     // Load the form
 
     // Load the filter menu
-    cy.get('[data-cy=button-filter-menu]').click();
+    cy.get('[data-cy=button-filter-type-menu]').click();
   });
 
   it('should successfully show a result for each water site filter permutation', () => {
@@ -19,7 +19,7 @@ describe('filters', () => {
     cy.get('[data-cy="filter-option-ADA accessible"]').click();
     cy.get('[data-cy="filter-option-Open Access"]').click();
     // Close the filter menu
-    cy.get('[data-cy=button-filter-menu]').click();
+    cy.get('[data-cy=button-filter-type-menu]').click();
   });
 
   it('should successfully show a result for each food site filter permutation', () => {

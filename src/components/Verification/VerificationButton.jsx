@@ -1,15 +1,10 @@
+import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
 import Input from '@mui/material/Input';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
-import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  setSelectedPlace,
-  updateExistingResource
-} from '../../actions/actions';
-import { resourcesConfig } from '../../firebase/firebaseConfig';
+import Dialog from '@mui/material/Dialog';
+import { updateExistingResource, setSelectedPlace } from 'actions/actions';
+import { updateResource } from '../../db';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -19,8 +14,7 @@ const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
  * @param {ResourceEntry} props.resource The resource being verified
  * @returns
  */
-const VerificationButton = props => {
-  const { resource } = props;
+const VerificationButton = ({ resource }) => {
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,17 +32,15 @@ const VerificationButton = props => {
     setLoginError('');
   }, []);
 
-  const updateFirebaseEntry = resource => {
-    // TODO(vontell): We probably should not init this here every time, although it is likely fine.
-    const app = initializeApp(resourcesConfig);
-    const database = getDatabase(app);
-    // Removed ID since we don't want that as part of the saved data structure
-    const { id, ...filteredResource } = resource;
-    set(ref(database, `/${resource.id}`), filteredResource);
-    setHasBeenUpdated(true);
-    dispatch(updateExistingResource({ resource }));
-    dispatch(setSelectedPlace(resource));
-  };
+  const updateResourceEntry = useCallback(
+    selectedResource => {
+      updateResource(selectedResource);
+      setHasBeenUpdated(true);
+      dispatch(updateExistingResource({ resource: selectedResource }));
+      dispatch(setSelectedPlace(selectedResource));
+    },
+    [dispatch]
+  );
 
   const markAsVerified = useCallback(() => {
     const newVerification = {
@@ -60,8 +52,8 @@ const VerificationButton = props => {
       ...resource,
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, [name, resource.verification]);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   const markAsUnverified = useCallback(() => {
     const newVerification = {
@@ -73,8 +65,8 @@ const VerificationButton = props => {
       ...resource,
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, []);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   const markAsInactive = useCallback(() => {
     const newVerification = {
@@ -87,31 +79,33 @@ const VerificationButton = props => {
       status: 'HIDDEN',
       verification: newVerification
     };
-    updateFirebaseEntry(newResource);
-  }, []);
+    updateResourceEntry(newResource);
+  }, [name, resource, updateResourceEntry]);
 
   if (!resource) {
-    return;
+    return null;
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        right: '10px',
-        bottom: '10px',
-        backgroundColor: resource.verification.verified ? 'Green' : 'Tomato',
-        padding: '5px',
-        borderRadius: '5px',
-        color: 'white',
-        fontSize: '12px',
-        fontWeight: 'bold',
-        textAlign: 'center'
-      }}
-    >
-      <div onClick={() => setIsModalOpen(true)} style={{ cursor: 'pointer' }}>
+    <>
+      <button
+        type="button"
+        style={{
+          position: 'absolute',
+          right: '10px',
+          bottom: '10px',
+          backgroundColor: resource.verification.verified ? 'Green' : 'Tomato',
+          padding: '5px',
+          borderRadius: '5px',
+          color: 'white',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}
+        onClick={() => setIsModalOpen(true)}
+      >
         {resource.verification.verified ? 'VERIFIED' : 'UNVERIFIED'}
-      </div>
+      </button>
       <Dialog open={isModalOpen} onClose={closeModal}>
         <div
           style={{
@@ -296,7 +290,7 @@ const VerificationButton = props => {
           )}
         </div>
       </Dialog>
-    </div>
+    </>
   );
 };
 

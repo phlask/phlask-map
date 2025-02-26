@@ -1,22 +1,26 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geocode, setDefaults, RequestType } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
+import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
-import { Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton
+} from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useIsMobile from 'hooks/useIsMobile';
+import ShareSocials from '../ShareSocials';
 
-function AddForaging({
-  prev,
-  next,
+const AddForaging = ({
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   name,
@@ -40,7 +44,7 @@ function AddForaging({
   checkboxChangeHandler,
   textFieldChangeHandler,
   isValidAddress
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -69,6 +73,10 @@ function AddForaging({
 
   const getVariableName = variable => Object.keys(variable)[0];
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
     <Card
       style={{
@@ -76,22 +84,38 @@ function AddForaging({
         justifyContent: 'center'
       }}
     >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5DA694"
-        color="common.white"
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5DA694'
+        }}
       >
-        Add a Foraging Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Foraging Resource
+        </Typography>
+      </Box>
       <CardContent>
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -153,9 +177,9 @@ function AddForaging({
               <IconButton
                 type="button"
                 style={{ color: 'gray' }}
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -163,12 +187,12 @@ function AddForaging({
               <IconButton
                 type="button"
                 style={{ color: 'gray' }}
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >
@@ -180,6 +204,6 @@ function AddForaging({
       </CardContent>
     </Card>
   );
-}
+};
 
 export default AddForaging;

@@ -23,7 +23,6 @@ Code behind the PHLASK Web Map
 │   ├── App.js
 │   ├── actions                        <-- Source for all Redux actions
 │   ├── components                     <-- Source for all React components
-│   ├── firebase                       <-- Source for configurations used to connect to Firebase database
 │   ├── helpers                        <-- Helper functions shared across components/pages
 │   ├── hooks                          <-- Custom hooks
 │   ├── reducers                       <-- Redux reducers
@@ -100,7 +99,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
     Starting the development server...
     ```
 
-1.  Navigate to localhost:3000 on your browser.
+1.  Navigate to localhost:5173 on your browser.
 
 ## Recommended Development Tools
 
@@ -153,9 +152,6 @@ The PHLASK Map runs on a static page built with:
   - For more information on how to understand/use our Redux state, see our [Redux Guide](redux_guide.md)
 - Material UI (https://mui.com/)
   - Provides pre-built components and simplifies consistent styling across the project
-- React Bootstrap (https://react-bootstrap.netlify.com)
-  - Provides pre-built components with Bootstrap-styling baked-in
-  - NOTE: This is currently on-track for deprecation in our project in favor of Material UI
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS
 - Storybook (https://storybook.js.org/)
@@ -194,5 +190,5 @@ The site runs on:
 - AWS CloudFront (https://aws.amazon.com/cloudfront/)
   - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
   - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
-- Google Firebase Realtime Database (https://firebase.google.com/docs/database)
-  - Stores the tap data used to generate the information on our site
+- Supabase (https://supabase.com/docs)
+  - Stores the resources and contributors data used to generate the information on our site

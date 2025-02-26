@@ -1,22 +1,19 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
-import styles from '../AddResourceModal.module.scss';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import useIsMobile from 'hooks/useIsMobile';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
-import useIsMobile from 'hooks/useIsMobile';
+import ShareSocials from '../ShareSocials';
 
-function AddWaterTap({
-  prev,
-  next,
+const AddWaterTap = ({
   page,
-  onNextPageChange,
-  onPrevPageChange,
+  onPageChange,
   onSubmit,
   onDrop,
   // state values and handlers for the textfields
@@ -44,7 +41,7 @@ function AddWaterTap({
   checkboxChangeHandler,
   textFieldChangeHandler,
   isValidAddress
-}) {
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -73,28 +70,44 @@ function AddWaterTap({
 
   const getVariableName = variable => Object.keys(variable)[0];
 
+  if (page === 2) {
+    return <ShareSocials />;
+  }
+
   return (
-    <Box
-      overflow={'scroll'}
-      justifyContent={'center'}
-      // width={isMobile ? '100%' : ''}
-    >
-      <Typography
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-end"
-        padding="0px 20px 10px"
-        height="88px"
-        backgroundColor="#5286E9"
-        color="common.white"
+    <Box overflow="scroll" justifyContent="center">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: isMobile ? 'flex-end' : 'center',
+          justifyContent: isMobile ? null : 'center',
+          padding: isMobile ? '0px 20px 10px' : '20px 0',
+          height: isMobile ? '88px' : '64px',
+          backgroundColor: '#5286E9'
+        }}
       >
-        Add Water Resource
-      </Typography>
+        <Typography
+          sx={{
+            color: 'common.white',
+            ...(isMobile
+              ? {}
+              : {
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
+          }}
+        >
+          Add a Water Resource
+        </Typography>
+      </Box>
       <CardContent width="770px">
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
-              next();
+              onPageChange(prev => prev + 1);
             });
           })}
         >
@@ -153,9 +166,9 @@ function AddWaterTap({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="previous-page"
+                aria-label="Go to previous page"
                 onClick={() => {
-                  onPrevPageChange();
+                  onPageChange(prev => prev - 1);
                 }}
               >
                 <ArrowBackIosIcon />
@@ -163,12 +176,12 @@ function AddWaterTap({
               <IconButton
                 type="button"
                 color="primary"
-                aria-label="next-page"
+                aria-label="Go to next page"
                 onClick={async () => {
                   // Trigger a form validation check on form before going to next page
                   const formIsValid = await trigger();
                   if (formIsValid) {
-                    onNextPageChange();
+                    onPageChange(prev => prev + 1);
                   }
                 }}
               >
@@ -180,6 +193,6 @@ function AddWaterTap({
       </CardContent>
     </Box>
   );
-}
+};
 
 export default AddWaterTap;
