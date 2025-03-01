@@ -8,7 +8,7 @@ export default defineConfig(() => ({
   base: './', // This is set to allow for deployments on dynamic subpaths (i.e. - test.phlask.me)
   build: {
     outDir: 'build',
-    target: 'es2022',
+    target: 'es2022'
   },
   plugins: [
     react(),
