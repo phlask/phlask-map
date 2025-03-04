@@ -20,7 +20,9 @@ const ModalWrapper = ({ children, onExited }) => {
             left: '32px',
             bottom: '133px',
             width: '766px',
-            borderRadius: '10px'
+            borderRadius: '10px',
+            maxHeight: '500px',
+            overflow: 'auto'
           }}
         >
           <Collapse
