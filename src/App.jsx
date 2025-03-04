@@ -7,6 +7,7 @@ import MapPage from 'components/MapPage/MapPage';
 import theme from 'theme';
 import store from 'store';
 import { Provider } from 'react-redux';
+import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker';
 
 const App = () => {
   initAnalytics();
@@ -14,6 +15,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <GeolocationTracker />
         <CssBaseline />
         <div className="page-wrapper">
           <Head />
