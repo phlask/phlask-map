@@ -14,20 +14,27 @@ import {
   removeFilterFunction,
   removeEntryFilterFunction,
   setEntryFilterFunction
-} from '../../actions/actions';
-import SearchBar from '../SearchBar/SearchBar';
-import SelectedTap from '../SelectedTap/SelectedTap';
+} from 'actions/actions';
+import SearchBar from 'components/SearchBar/SearchBar';
+import SelectedTap from 'components/SelectedTap/SelectedTap';
+import AddResourceModalV2 from 'components/AddResourceModal/AddResourceModalV2';
+import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType';
+import Filter from 'components/Filter/Filter';
+import Toolbar from 'components/Toolbar/Toolbar';
+import PinWaterActive from 'components/icons/PinWaterActive';
+import PinForagingActive from 'components/icons/PinForagingActive';
+import PinFoodActive from 'components/icons/PinFoodActive';
+import PinBathroomActive from 'components/icons/PinBathroomActive';
+import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
+import selectFilteredResource from 'selectors/resourceSelectors';
+import {
+  BATHROOM_RESOURCE_TYPE,
+  FOOD_RESOURCE_TYPE,
+  FORAGE_RESOURCE_TYPE,
+  WATER_RESOURCE_TYPE
+} from 'types/ResourceEntry';
+
 import styles from './ReactGoogleMaps.module.scss';
-import AddResourceModalV2 from '../AddResourceModal/AddResourceModalV2';
-import ChooseResourceType from '../ChooseResourceType/ChooseResourceType';
-import Filter from '../Filter/Filter';
-import Toolbar from '../Toolbar/Toolbar';
-import PinWaterActive from '../icons/PinWaterActive';
-import PinForagingActive from '../icons/PinForagingActive';
-import PinFoodActive from '../icons/PinFoodActive';
-import PinBathroomActive from '../icons/PinBathroomActive';
-import phlaskMarkerIconV2 from '../icons/PhlaskMarkerIconV2';
-import selectFilteredResource from '../../selectors/resourceSelectors';
 
 function getCoordinates() {
   return new Promise((resolve, reject) => {
@@ -194,6 +201,7 @@ const ReactGoogleMaps = () => {
         infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
       })
     );
+
     map.panTo({
       lat: Number(resource.latitude),
       lng: Number(resource.longitude)
@@ -264,40 +272,39 @@ const ReactGoogleMaps = () => {
         }}
         mapId="DEMO_MAP_ID"
       >
-        {filteredResources.map((resource, index) => (
-          <Marker
-            key={resource.id}
-            onClick={() => {
-              onMarkerClick(resource);
-            }}
-            position={{ lat: resource.latitude, lng: resource.longitude }}
-            icon={{
-              url: (() => {
-                if (
-                  selectedPlace?.latitude === resource.latitude &&
-                  selectedPlace?.longitude === resource.longitude
-                ) {
-                  switch (resource.resource_type) {
-                    case 'WATER':
-                      return PinWaterActive();
-                    case 'FOOD':
-                      return PinFoodActive();
-                    case 'FORAGE':
-                      return PinForagingActive();
-                    case 'BATHROOM':
-                      return PinBathroomActive();
-                    default:
-                      return phlaskMarkerIconV2(resource.resource_type, 56, 56);
-                  }
-                }
-                return phlaskMarkerIconV2(resource.resource_type, 56, 56);
-              })()
-            }}
-            // This is used for marker targeting as we are unable to add custom properties with this library.
-            // We should eventually replace this so that we can still enable the use of screen readers in the future.
-            title={`data-cy-${index}`}
-          />
-        ))}
+        {filteredResources.map((resource, index) => {
+          const getPinUrl = () => {
+            const isActiveMarker =
+              selectedPlace?.latitude === resource.latitude &&
+              selectedPlace?.longitude === resource.longitude;
+
+            if (!resource.resource_type) {
+              return null;
+            }
+
+            if (!isActiveMarker) {
+              return phlaskMarkerIconV2(resource.resource_type, 56, 56);
+            }
+            return {
+              [WATER_RESOURCE_TYPE]: PinWaterActive(),
+              [FOOD_RESOURCE_TYPE]: PinFoodActive(),
+              [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
+              [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
+            }[resource.resource_type];
+          };
+
+          return (
+            <Marker
+              key={resource.id}
+              onClick={() => onMarkerClick(resource)}
+              position={{ lat: resource.latitude, lng: resource.longitude }}
+              icon={{ url: getPinUrl() }}
+              // This is used for marker targeting as we are unable to add custom properties with this library.
+              // We should eventually replace this so that we can still enable the use of screen readers in the future.
+              title={`data-cy-${index}`}
+            />
+          );
+        })}
 
         {searchedTap ? (
           <Marker
