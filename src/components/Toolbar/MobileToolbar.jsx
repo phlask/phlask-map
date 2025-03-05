@@ -35,15 +35,16 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }) => {
 
   return (
     <Box
-      sx={{
+      sx={theme => ({
         position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
         pb: '25px',
         pt: '10px',
-        bgcolor: 'white'
-      }}
+        bgcolor: 'white',
+        zIndex: theme.zIndex.appBar
+      })}
     >
       <BottomNavigation showLabels>
         <NavigationItem
