@@ -112,7 +112,11 @@ const AddFood = ({
           Add a Food Resource
         </Typography>
       </Box>
-      <CardContent>
+      <CardContent sx={{
+        maxHeight: isMobile ? undefined : '500px',
+        maxWidth: '700px',
+        overflow: 'auto'
+      }}>
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
