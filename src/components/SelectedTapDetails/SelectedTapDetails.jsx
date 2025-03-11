@@ -256,30 +256,32 @@ const SelectedTapDetails = ({
             {/* </IconButton> */}
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
-          {isMobile && (
-            <IconButton color="primary" aria-label="" onClick={minimizeModal}>
-              <CaretDownSvg />
-            </IconButton>
-          )}
-          {!isMobile && (
-            <IconButton
-              color="primary"
-              aria-label="close"
-              onClick={() => {
-                closeModal();
-              }}
-              sx={{
-                position: 'absolute',
-                right: '20px',
-                top: 5,
-                color: 'black'
-              }}
-              size="large"
-            >
-              <CloseIcon fontSize="18px" />
-            </IconButton>
-          )}
-          {/* Currently the three dot button does nothing */}
+          <div data-cy="close-selected-tap">
+            {isMobile && (
+              <IconButton color="primary" aria-label="" onClick={minimizeModal}>
+                <CaretDownSvg />
+              </IconButton>
+            )}
+            {!isMobile && (
+              <IconButton
+                color="primary"
+                aria-label="close"
+                onClick={() => {
+                  closeModal();
+                }}
+                sx={{
+                  position: 'absolute',
+                  right: '20px',
+                  top: 5,
+                  color: 'black'
+                }}
+                size="large"
+              >
+                <CloseIcon fontSize="18px" />
+              </IconButton>
+            )}
+            {/* Currently the three dot button does nothing */}
+          </div>
         </div>
       )}
       <div

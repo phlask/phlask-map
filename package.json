@@ -65,6 +65,7 @@
   "scripts": {
     "start": "vite",
     "start:cypress": "VITE_CYPRESS_TEST=true yarn start",
+    "start:integration": "VITE_GMAP_OPTIMIZED=false yarn start",
     "build": "vite build",
     "testDataGen": "node cypress/testDataGenerator.js",
     "test": "yarn testDataGen && cypress run",
