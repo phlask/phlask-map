@@ -20,7 +20,7 @@ const ModalWrapper = ({ children, onExited }) => {
             left: '32px',
             bottom: '133px',
             width: '766px',
-            borderRadius: '10px',
+            borderRadius: '10px'
           }}
         >
           <Collapse
@@ -44,7 +44,7 @@ const ModalWrapper = ({ children, onExited }) => {
               left: 0,
               top: 0,
               width: '100%',
-              height: '100%'
+              minHeight: '100%'
             }}
           >
             {children}
