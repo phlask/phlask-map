@@ -1,4 +1,4 @@
-ARG VARIANT=dev-16-bookworm
+ARG VARIANT=20-bookworm
 FROM mcr.microsoft.com/devcontainers/javascript-node:${VARIANT}
 
 ARG USERNAME=node
