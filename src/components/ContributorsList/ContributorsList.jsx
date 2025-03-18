@@ -5,19 +5,16 @@ import Typography from '@mui/material/Typography';
 import ContributorsListItem from './ContributorsListItem';
 
 const ContributorsList = ({ items = [], title = 'Contributors' }) => (
-    <Grid item>
-      <Typography variant="h6" color="#73839E">
-        {title}
-      </Typography>
-      <List>
-        {items.map(contributor => (
-          <ContributorsListItem
-            key={contributor.key}
-            contributor={contributor}
-          />
-        ))}
-      </List>
-    </Grid>
-  );
+  <Grid item>
+    <Typography variant="h6" color="#73839E">
+      {title}
+    </Typography>
+    <List>
+      {items.map(contributor => (
+        <ContributorsListItem key={contributor.id} contributor={contributor} />
+      ))}
+    </List>
+  </Grid>
+);
 
 export default ContributorsList;
