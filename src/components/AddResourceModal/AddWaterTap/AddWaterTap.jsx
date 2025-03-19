@@ -12,36 +12,36 @@ import PageTwo from './PageTwo';
 import ShareSocials from '../ShareSocials';
 
 const AddWaterTap = ({
-                       page,
-                       onPageChange,
-                       onSubmit,
-                       onDrop,
-                       // state values and handlers for the textfields
-                       name,
-                       address,
-                       website,
-                       description,
-                       entryType,
-                       // state values and handlers for "helpful info" section
-                       handicapAccessible,
-                       idRequired,
-                       waterVesselNeeded,
-                       filtration,
-                       // state values and handlers for the dispenser type drop down
-                       drinkingFountain,
-                       bottleFillerAndFountain,
-                       sink,
-                       waterJug,
-                       sodaMachine,
-                       pitcher,
-                       waterCooler,
-                       dispenserTypeOther,
-                       // Other
-                       guidelines,
-                       checkboxChangeHandler,
-                       textFieldChangeHandler,
-                       isValidAddress
-                     }) => {
+  page,
+  onPageChange,
+  onSubmit,
+  onDrop,
+  // state values and handlers for the textfields
+  name,
+  address,
+  website,
+  description,
+  entryType,
+  // state values and handlers for "helpful info" section
+  handicapAccessible,
+  idRequired,
+  waterVesselNeeded,
+  filtration,
+  // state values and handlers for the dispenser type drop down
+  drinkingFountain,
+  bottleFillerAndFountain,
+  sink,
+  waterJug,
+  sodaMachine,
+  pitcher,
+  waterCooler,
+  dispenserTypeOther,
+  // Other
+  guidelines,
+  checkboxChangeHandler,
+  textFieldChangeHandler,
+  isValidAddress
+}) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(state => state.filterMarkers.userLocation);
 
@@ -75,7 +75,7 @@ const AddWaterTap = ({
   }
 
   return (
-    <Box overflow="scroll" justifyContent="center">
+    <Box justifyContent="center">
       <Box
         sx={{
           display: 'flex',
@@ -93,21 +93,22 @@ const AddWaterTap = ({
             ...(isMobile
               ? {}
               : {
-                textAlign: 'center',
-                fontFamily: 'Inter',
-                fontWeight: 600,
-                fontSize: 20.16
-              })
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: 20.16
+                })
           }}
         >
           Add a Water Resource
         </Typography>
       </Box>
-      <CardContent sx={{
-        maxHeight: isMobile ? undefined : '500px',
-        maxWidth: '700px',
-        overflow: 'auto'
-      }}>
+      <CardContent
+        sx={{
+          maxHeight: isMobile ? undefined : '500px',
+          overflow: 'auto'
+        }}
+      >
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {

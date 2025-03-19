@@ -347,14 +347,22 @@ const AddResourceModalV2 = () => {
     });
   };
 
-  const handleClose = () => {
-    setToolbarModal(TOOLBAR_MODAL_NONE);
-    setPage(0);
-  };
-
   const onExitedWrapper = () => {
     setValues(initialState);
     setResourceForm(null);
+  };
+
+  const handleClose = () => {
+    setToolbarModal(TOOLBAR_MODAL_NONE);
+    setPage(0);
+
+    // This is done as the "Modal" component in ModalWrapper does not invoke
+    // "onClose" when it is closed using the close button.
+    // Since there is no transition animation on mobile, it is safe to immediately reset the
+    // contribution form without impacting the user's experience.
+    if (isMobile) {
+      onExitedWrapper();
+    }
   };
 
   return (

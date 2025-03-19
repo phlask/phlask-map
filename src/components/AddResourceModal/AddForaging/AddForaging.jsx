@@ -111,11 +111,12 @@ const AddForaging = ({
           Add a Foraging Resource
         </Typography>
       </Box>
-      <CardContent sx={{
-        maxHeight: isMobile ? undefined : '500px',
-        maxWidth: '700px',
-        overflow: 'auto'
-      }}>
+      <CardContent
+        sx={{
+          maxHeight: isMobile ? undefined : '500px',
+          overflow: 'auto'
+        }}
+      >
         <form
           onSubmit={handleSubmit((data, e) => {
             onSubmit(e).then(() => {
