@@ -29,9 +29,9 @@ const AddResourceSuccessMobile = () => {
       sx={{
         height: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: '120px',
-        textAlign: 'center'
+        justifyContent: 'space-between',
+        textAlign: 'center',
+        paddingBlock: '100px'
       }}
     >
       <Stack sx={{ gap: '4px' }}>

@@ -1,17 +1,21 @@
 import PhillySkyline from 'icons/PhillySkyline';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 const AddResourceSuccessDesktop = ({ onClose }) => (
-  <Box>
+  <Stack
+    sx={{
+      paddingBlock: '60px',
+      alignItems: 'center',
+      width: '100%',
+      gap: '20px'
+    }}
+  >
     <PhillySkyline width="258.5" height="225.37" />
     <Typography
       sx={{
-        width: '389px',
-        height: '24px',
-
         fontFamily: 'Inter',
         fontStyle: 'normal',
         fontWeight: 600,
@@ -31,9 +35,6 @@ const AddResourceSuccessDesktop = ({ onClose }) => (
     </Typography>
     <Typography
       sx={{
-        width: '389px',
-        height: '24px',
-
         /* Type Scale/body1 */
         fontFamily: 'Inter',
         fontStyle: 'normal',
@@ -54,7 +55,7 @@ const AddResourceSuccessDesktop = ({ onClose }) => (
     >
       You should see your site pop up on the map in a few days
     </Typography>
-  </Box>
+  </Stack>
 );
 
 export default AddResourceSuccessDesktop;
