@@ -6,10 +6,9 @@ import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
+import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-
-import ShareSocials from '../ShareSocials';
 
 const AddWaterTap = ({
   page,
@@ -71,7 +70,7 @@ const AddWaterTap = ({
   const getVariableName = variable => Object.keys(variable)[0];
 
   if (page === 2) {
-    return <ShareSocials />;
+    return <AddResourceSuccessStep />;
   }
 
   return (

@@ -15,9 +15,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import useIsMobile from 'hooks/useIsMobile';
+import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import ShareSocials from '../ShareSocials';
 
 const AddFood = ({
   page,
@@ -75,7 +75,7 @@ const AddFood = ({
   );
 
   if (page === 2) {
-    return <ShareSocials />;
+    return <AddResourceSuccessStep />;
   }
 
   return (

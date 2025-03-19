@@ -43,7 +43,8 @@ const ModalWrapper = ({ children, onExited }) => {
             sx={{
               left: 0,
               top: 0,
-              width: '100%'
+              width: '100%',
+              height: '100%'
             }}
             // This is used to configure the removal of the shadow that would normally appear in this element
             // The shadow is part of the standard MUI styling for Paper elements
