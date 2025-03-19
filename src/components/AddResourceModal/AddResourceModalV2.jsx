@@ -86,8 +86,8 @@ const initialState = {
 };
 
 const AddResourceModalV2 = () => {
-  const [page, setPage] = useState(2);
-  const [resourceForm, setResourceForm] = useState(WATER_RESOURCE_TYPE);
+  const [page, setPage] = useState(0);
+  const [resourceForm, setResourceForm] = useState(null);
 
   const isMobile = useIsMobile();
 
