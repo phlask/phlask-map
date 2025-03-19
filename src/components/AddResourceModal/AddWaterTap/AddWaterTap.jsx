@@ -74,7 +74,7 @@ const AddWaterTap = ({
   }
 
   return (
-    <Box overflow="scroll" justifyContent="center">
+    <Box justifyContent="center">
       <Box
         sx={{
           display: 'flex',
@@ -105,7 +105,6 @@ const AddWaterTap = ({
       <CardContent
         sx={{
           maxHeight: isMobile ? undefined : '500px',
-          maxWidth: '700px',
           overflow: 'auto'
         }}
       >

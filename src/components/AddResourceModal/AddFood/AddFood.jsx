@@ -115,7 +115,6 @@ const AddFood = ({
       <CardContent
         sx={{
           maxHeight: isMobile ? undefined : '500px',
-          maxWidth: '700px',
           overflow: 'auto'
         }}
       >
