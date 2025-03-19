@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import './App.css';
 import { initAnalytics, logPageView } from 'analytics';
 import Head from 'components/Head/Head';
-import MapPage from 'components/MapPage/MapPage';
+import ReactGoogleMaps from 'components/ReactGoogleMaps/ReactGoogleMaps';
 import theme from 'theme';
 import store from 'store';
 import { Provider } from 'react-redux';
@@ -19,7 +19,7 @@ const App = () => {
         <CssBaseline />
         <div className="page-wrapper">
           <Head />
-          <MapPage />
+          <ReactGoogleMaps />
         </div>
       </ThemeProvider>
     </Provider>
