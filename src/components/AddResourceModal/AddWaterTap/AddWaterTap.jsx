@@ -74,7 +74,7 @@ const AddWaterTap = ({
   }
 
   return (
-    <Box justifyContent="center">
+    <Box justifyContent="center" overflow="none">
       <Box
         sx={{
           display: 'flex',

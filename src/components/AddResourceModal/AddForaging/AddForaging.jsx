@@ -80,7 +80,7 @@ const AddForaging = ({
   return (
     <Card
       style={{
-        overflow: 'scroll',
+        overflow: 'none',
         justifyContent: 'center'
       }}
     >
