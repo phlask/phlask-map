@@ -81,7 +81,7 @@ const AddFood = ({
   return (
     <Card
       style={{
-        overflow: 'scroll',
+        overflow: 'none',
         justifyContent: 'center'
       }}
     >

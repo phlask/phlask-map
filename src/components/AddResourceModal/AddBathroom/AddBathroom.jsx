@@ -64,7 +64,7 @@ const AddBathroom = ({
   }
 
   return (
-    <Box overflow="scroll" justifyContent="center">
+    <Box overflow="none" justifyContent="center">
       <Box
         sx={{
           display: 'flex',
