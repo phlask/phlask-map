@@ -1,11 +1,11 @@
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import './App.css';
-import { initAnalytics, logPageView } from 'analytics';
+import { initAnalytics, logPageView } from 'analytics.ts';
 import Head from 'components/Head/Head';
 import ReactGoogleMaps from 'components/ReactGoogleMaps/ReactGoogleMaps';
 import theme from 'theme';
-import store from 'store';
+import store from 'store.ts';
 import { Provider } from 'react-redux';
 import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker';
 

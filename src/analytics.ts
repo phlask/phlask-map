@@ -4,7 +4,7 @@ const trackingIdProd = 'G-SN3F4Z4MPK';
 const trackingIdBeta = 'G-MQDZENNPXK';
 const trackingIdTest = 'G-KGJ72QEWMY';
 
-// initiatize google analytics
+// Initialize google analytics
 export const initAnalytics = () => {
   switch (window.location.hostname) {
     case 'phlask.me':
@@ -19,7 +19,7 @@ export const initAnalytics = () => {
 };
 
 // track pageviews
-export const logPageView = page => {
+export const logPageView = () => {
   ReactGA.send({
     hitType: 'pageview',
     page: window.location.pathname + window.location.search
