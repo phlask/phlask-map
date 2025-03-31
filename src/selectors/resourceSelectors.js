@@ -89,7 +89,7 @@ const selectFilteredResource = createSelector(
         tags.forEach(tag => {
           const tagFormatted = tagMapping[tag];
           // check to make sure resource has property with filter info
-          if (resourceTypeFormatted in resource) {
+          if (resourceTypeFormatted in resource && resource[resourceTypeFormatted] !== null) {
             let tagFound = false;
             // loop through filter info types to find filter value
             propertyMapping[resourceType].forEach(prop => {
