@@ -17,7 +17,7 @@ import {
 import styles from './SearchBar.module.scss';
 
 const SearchBar = ({ search }) => {
-  const refSearchBarInput = useRef();
+  const refSearchBarInput = useRef(null);
   const [address, setAddress] = useState('');
   const tapInfoOpenedWhileSearchOpen = useSelector(
     state => state.filterMarkers.tapInfoOpenedWhileSearchOpen
