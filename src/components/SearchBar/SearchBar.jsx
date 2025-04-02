@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useRef, useState } from 'react';
 import PlacesAutocomplete, {
@@ -80,7 +80,7 @@ const SearchBar = ({ search }) => {
                   loading || suggestions.length > 0 ? styles.hasDropdown : ''
                 }`}
               >
-                <Input
+                <FilledInput
                   autoFocus
                   autoComplete={autoComplete}
                   role={role}
@@ -200,7 +200,7 @@ const SearchBar = ({ search }) => {
               }`}
             >
               {/* type="search" is only HTML5 compliant */}
-              <Input
+              <FilledInput
                 autoComplete={autoComplete}
                 role={role}
                 aria-autocomplete={ariaAutocomplete}
@@ -211,7 +211,6 @@ const SearchBar = ({ search }) => {
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                variant="filled"
                 className={styles.searchInput}
                 type={type}
                 inputRef={refSearchBarInput}
