@@ -211,7 +211,8 @@ const SearchBar = ({ search }) => {
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                className={`${styles.searchInput} form-control`}
+                variant="filled"
+                className={styles.searchInput}
                 type={type}
                 inputRef={refSearchBarInput}
                 placeholder={placeholder}
