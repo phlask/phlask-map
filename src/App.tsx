@@ -7,7 +7,7 @@ import ReactGoogleMaps from 'components/ReactGoogleMaps/ReactGoogleMaps';
 import theme from 'theme';
 import store from 'store.ts';
 import { Provider } from 'react-redux';
-import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker';
+import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker.tsx';
 
 const App = () => {
   initAnalytics();

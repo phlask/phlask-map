@@ -15,6 +15,7 @@ import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
 import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails';
 
 import './SelectedTap.css';
+import { getUserLocation } from 'reducers/user.ts';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -42,14 +43,14 @@ const SelectedTap = () => {
 
   const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
-  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const userLocation = useSelector(getUserLocation);
 
   const getWalkingDurationAndTimes = useCallback(() => {
     if (
       !selectedPlace?.latitude ||
       !selectedPlace?.longitude ||
-      !userLocation?.lat ||
-      !userLocation?.lng
+      !userLocation?.latitude ||
+      !userLocation?.longitude
     )
       return;
     const orsAPIKey =

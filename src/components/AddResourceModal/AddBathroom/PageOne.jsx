@@ -170,8 +170,11 @@ const PageOne = ({
                         onClick: e => {
                           // Will autofill the street address textbox with user's current address,
                           // after clicking 'use my address instead'
-                          const { lat, lng } = userLocation;
-                          geocode(RequestType.LATLNG, `${lat},${lng}`)
+                          const { latitude, longitude } = userLocation;
+                          geocode(
+                            RequestType.LATLNG,
+                            `${latitude},${longitude}`
+                          )
                             .then(({ results }) => {
                               const addr = results[0].formatted_address;
                               setValue('address-textbox', addr); // react-hook-form setValue
@@ -220,7 +223,7 @@ const PageOne = ({
                           onMouseUp,
                           onTouchStart,
                           onTouchEnd,
-                          onClick,
+                          onClick
                         } = getSuggestionItemProps(suggestion, {
                           className,
                           style

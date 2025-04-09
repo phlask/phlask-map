@@ -33,6 +33,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
+import { getUserLocation } from 'reducers/user.ts';
 
 import styles from './ReactGoogleMaps.module.scss';
 
@@ -167,6 +168,7 @@ const ReactGoogleMaps = () => {
   const searchBarMapTintOn = useSelector(
     state => state.filterMarkers.searchBarMapTintOn
   );
+  const userLocation = useSelector(getUserLocation);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
@@ -181,17 +183,8 @@ const ReactGoogleMaps = () => {
     if (!map) {
       return;
     }
-    const fetchCoordinates = async () => {
-      try {
-        const position = await getCoordinates();
-        map.panTo({ lat: position.latitude, lng: position.longitude });
-      } catch (error) {
-        // Do nothing
-      }
-    };
-
-    fetchCoordinates();
-  }, [map]);
+    map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
+  }, [userLocation, map]);
 
   // toggle window goes here
   const onMarkerClick = resource => {
@@ -203,8 +196,8 @@ const ReactGoogleMaps = () => {
     );
 
     map.panTo({
-      lat: Number(resource.latitude),
-      lng: Number(resource.longitude)
+      lat: resource.latitude,
+      lng: resource.longitude
     });
     dispatch(setSelectedPlace(resource));
   };
