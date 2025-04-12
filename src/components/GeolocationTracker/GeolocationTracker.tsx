@@ -5,14 +5,6 @@ import { updateIsGrantedPermission, updateUserLocation } from 'reducers/user';
 const GeolocationTracker = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    async function queryGeolocationPermissions() {
-      const perms = await navigator.permissions.query({ name: 'geolocation' });
-      dispatch(updateIsGrantedPermission(perms.state === 'granted'));
-
-      perms.addEventListener('change', () => {
-        dispatch(updateIsGrantedPermission(perms.state === 'granted'));
-      });
-    }
     let interval: NodeJS.Timeout;
     /**
      * This one is a doosy...
@@ -65,7 +57,14 @@ const GeolocationTracker = () => {
       );
       // This is the sensible way to handle it...
     } else {
-      queryGeolocationPermissions();
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        dispatch(
+          updateUserLocation({
+            latitude: coords.latitude,
+            longitude: coords.longitude
+          })
+        );
+      });
     }
     return () => {
       clearInterval(interval);
