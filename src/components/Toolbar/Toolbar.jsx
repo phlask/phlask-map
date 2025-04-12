@@ -11,6 +11,7 @@ import useIsMobile from 'hooks/useIsMobile';
 import getClosest from 'utils/getClosest';
 import selectFilteredResource from 'selectors/resourceSelectors';
 import { useMap } from '@vis.gl/react-google-maps';
+import { getUserLocation } from 'reducers/user';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
 
@@ -20,7 +21,7 @@ const Toolbar = () => {
   const isMobile = useIsMobile();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const filteredResources = useSelector(selectFilteredResource);
-  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const userLocation = useSelector(getUserLocation);
 
   const toolbarClicked = modal => {
     if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
@@ -33,8 +34,8 @@ const Toolbar = () => {
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
     const closest = getClosest(filteredResources, {
-      lat: userLocation.lat,
-      lon: userLocation.lng
+      lat: userLocation.latitude,
+      lon: userLocation.longitude
     });
     if (!closest) return;
 

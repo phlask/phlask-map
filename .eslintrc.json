@@ -11,6 +11,16 @@
   ],
   "globals": { "google": "readonly" },
   "rules": {
+    "import/extensions": [
+      2,
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "react/jsx-filename-extension": [
       2,
       {
@@ -62,6 +72,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "moduleDirectory": ["node_modules", "src"],
         "paths": ["src"]
       }

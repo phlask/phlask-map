@@ -1,21 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUserLocationEnabled } from 'reducers/user';
+import { updateIsGrantedPermission, updateUserLocation } from 'reducers/user';
 
 const GeolocationTracker = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    function setUserLocationEnabled(payload) {
-      dispatch(updateUserLocationEnabled(payload));
-    }
-    async function queryGeolocationPermissions() {
-      const perms = await navigator.permissions.query({ name: 'geolocation' });
-      setUserLocationEnabled(perms.state === 'granted');
-      perms.addEventListener('change', () => {
-        setUserLocationEnabled(perms.state === 'granted');
-      });
-    }
-    let interval;
+    let interval: NodeJS.Timeout;
     /**
      * This one is a doosy...
      * Basically Firefox doesn't think temporary permissions should trigger the Permissions API onchange event (Which is dumb).
@@ -32,30 +22,49 @@ const GeolocationTracker = () => {
     if (navigator.userAgent.includes('Firefox')) {
       interval = setInterval(() => {
         navigator.geolocation.getCurrentPosition(
-          () => {
-            setUserLocationEnabled(true);
+          ({ coords }) => {
+            dispatch(
+              updateUserLocation({
+                latitude: coords.latitude,
+                longitude: coords.longitude
+              })
+            );
+            dispatch(updateIsGrantedPermission(true));
             clearInterval(interval);
           },
           () => {
-            setUserLocationEnabled(false);
+            dispatch(updateIsGrantedPermission(false));
             clearInterval(interval);
           }
         );
       }, 2000);
       // We also want to run this once at the start of the interval to kick off the prompts
       navigator.geolocation.getCurrentPosition(
-        () => {
-          setUserLocationEnabled(true);
+        ({ coords }) => {
+          dispatch(
+            updateUserLocation({
+              latitude: coords.latitude,
+              longitude: coords.longitude
+            })
+          );
+          dispatch(updateIsGrantedPermission(true));
           clearInterval(interval);
         },
         () => {
-          setUserLocationEnabled(false);
+          dispatch(updateIsGrantedPermission(false));
           clearInterval(interval);
         }
       );
       // This is the sensible way to handle it...
     } else {
-      queryGeolocationPermissions();
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        dispatch(
+          updateUserLocation({
+            latitude: coords.latitude,
+            longitude: coords.longitude
+          })
+        );
+      });
     }
     return () => {
       clearInterval(interval);

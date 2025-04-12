@@ -15,6 +15,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
+import { getUserLocation } from 'reducers/user';
 import { addResource } from '../../db';
 
 import ChooseResource from './ChooseResource';
@@ -103,7 +104,7 @@ const AddResourceModalV2 = () => {
 
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
-  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const userLocation = useSelector(getUserLocation);
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal });
@@ -251,8 +252,8 @@ const AddResourceModalV2 = () => {
         city,
         state,
         zip_code: postalCode,
-        latitude: values.latitude || userLocation.lat,
-        longitude: values.longitude || userLocation.lng,
+        latitude: values.latitude || userLocation.latitude,
+        longitude: values.longitude || userLocation.longitude,
         gp_id: placeId,
         images,
         guidelines: values.guidelines,

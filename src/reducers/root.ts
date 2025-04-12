@@ -5,4 +5,6 @@ import userData from './user';
 
 const reducer = combineReducers({ filterMarkers, contributors, userData });
 
+export type RootState = ReturnType<typeof reducer>;
+
 export default reducer;
