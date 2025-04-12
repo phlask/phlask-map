@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
-import { getUserLocation } from 'reducers/user.ts';
+import { getUserLocation } from 'reducers/user';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 

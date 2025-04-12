@@ -15,7 +15,7 @@ import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
 import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails';
 
 import './SelectedTap.css';
-import { getUserLocation } from 'reducers/user.ts';
+import { getUserLocation } from 'reducers/user';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -55,8 +55,8 @@ const SelectedTap = () => {
       return;
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
-    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation?.lng},
-    ${userLocation?.lat}&end=${selectedPlace?.longitude},${selectedPlace?.latitude}`)
+    fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation?.longitude},
+    ${userLocation?.latitude}&end=${selectedPlace?.longitude},${selectedPlace?.latitude}`)
       .then(response => response.json())
       .then(data => {
         if (!data.features) return;
@@ -74,8 +74,8 @@ const SelectedTap = () => {
   }, [
     selectedPlace?.latitude,
     selectedPlace?.longitude,
-    userLocation?.lat,
-    userLocation?.lng
+    userLocation?.latitude,
+    userLocation?.longitude
   ]);
 
   const animateInfoExpansion = shouldExpand => {

@@ -15,7 +15,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
-import { getUserLocation } from 'reducers/user.ts';
+import { getUserLocation } from 'reducers/user';
 import { addResource } from '../../db';
 
 import ChooseResource from './ChooseResource';

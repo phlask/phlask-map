@@ -16,6 +16,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
+import { getUserLocation } from 'reducers/user';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
@@ -49,7 +50,7 @@ const AddFood = ({
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 
-  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const userLocation = useSelector(getUserLocation);
 
   useEffect(() => {
     setDefaults({

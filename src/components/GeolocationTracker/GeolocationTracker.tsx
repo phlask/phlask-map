@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  updateIsGrantedPermission,
-  updateUserLocation
-} from 'reducers/user.ts';
+import { updateIsGrantedPermission, updateUserLocation } from 'reducers/user';
 
 const GeolocationTracker = () => {
   const dispatch = useDispatch();

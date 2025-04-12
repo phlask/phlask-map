@@ -11,7 +11,7 @@ import useIsMobile from 'hooks/useIsMobile';
 import getClosest from 'utils/getClosest';
 import selectFilteredResource from 'selectors/resourceSelectors';
 import { useMap } from '@vis.gl/react-google-maps';
-import { getUserLocation } from 'reducers/user.ts';
+import { getUserLocation } from 'reducers/user';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
 

@@ -33,7 +33,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
-import { getUserLocation } from 'reducers/user.ts';
+import { getUserLocation } from 'reducers/user';
 
 import styles from './ReactGoogleMaps.module.scss';
 
