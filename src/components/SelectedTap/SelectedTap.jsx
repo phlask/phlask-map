@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import ReactGA from 'react-ga4';
 import { useSelector, useDispatch } from 'react-redux';
 import useIsMobile from 'hooks/useIsMobile';
 import { Paper, SwipeableDrawer } from '@mui/material';
@@ -151,19 +150,10 @@ const SelectedTap = () => {
     }
   };
 
-  const handleGA = useCallback(() => {
-    ReactGA.event({
-      category: `Tap - ${resourceType}`,
-      action: 'InfoShown',
-      label: `${selectedPlace?.name}, ${selectedPlace?.address}`
-    });
-  }, [resourceType, selectedPlace?.address, selectedPlace?.name]);
-
   useEffect(() => {
-    handleGA();
     getWalkingDurationAndTimes();
     setPreviewHeight(refSelectedTap.current?.clientHeight ?? 0);
-  }, [handleGA, getWalkingDurationAndTimes]);
+  }, [getWalkingDurationAndTimes]);
 
   useEffect(() => {
     if (showingInfoWindow) {
