@@ -1,5 +1,6 @@
 import { Fade } from '@mui/material';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { usePostHog } from 'posthog-js/react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useIsMobile from 'hooks/useIsMobile';
@@ -162,6 +163,7 @@ const noActiveFilterTags = Object.entries(filters).reduce(
 const ReactGoogleMaps = () => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
+  const posthog = usePostHog();
   const filteredResources = useSelector(state => selectFilteredResource(state));
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
@@ -200,6 +202,12 @@ const ReactGoogleMaps = () => {
       lng: resource.longitude
     });
     dispatch(setSelectedPlace(resource));
+
+    posthog.capture('LocationClicked', {
+      resourceType: resource.resource_type,
+      name: resource.name,
+      address: resource.address
+    });
   };
 
   const onReady = event => {
