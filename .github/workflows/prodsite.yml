@@ -6,26 +6,27 @@ on:
       - main
 env:
   AWS_DEFAULT_REGION: us-east-2
+  VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
 permissions:
-  id-token: write   # This is required for requesting the JWT
-  contents: read    # This is required for actions/checkout
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
-      with:
-        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/prod-access
-        role-session-name: github-${{ github.sha }}
-        aws-region: ${{ env.AWS_DEFAULT_REGION }}
-    - name: Build and Deploy the Map
-      run: |
-         echo Build started on `date`
-         echo Building the webapp...
-         docker compose run prod_build
-         echo Build completed on `date`
-         echo Pushing the webapp to S3...
-         aws s3 sync docker/build s3://phlask.me --acl public-read --delete
+      - uses: actions/checkout@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/prod-access
+          role-session-name: github-${{ github.sha }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Build and Deploy the Map
+        run: |
+          echo Build started on `date`
+          echo Building the webapp...
+          docker compose run prod_build
+          echo Build completed on `date`
+          echo Pushing the webapp to S3...
+          aws s3 sync docker/build s3://phlask.me --delete

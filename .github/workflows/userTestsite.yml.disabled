@@ -1,9 +1,10 @@
+# This is temporarily disabled as we need to sort out integrating this (and the DB reset functionality) with Supabase.
 name: Build User Testing Site
 
 on:
   push:
     branches:
-      - main
+      - develop
 env:
   AWS_DEFAULT_REGION: us-east-2
   REACT_APP_DB_URL: 'https://wantycfbnzzocsbthqzs.supabase.co'
