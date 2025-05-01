@@ -1,6 +1,7 @@
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useMediaQuery } from '@mui/material';
 
 import ContributeIcon from 'icons/ContributeIcon';
 import FilterIcon from 'icons/FilterIcon';
@@ -17,6 +18,7 @@ import {
 
 const Item = ({ onClick, icon, label, type }) => {
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+  const isWideScreen = useMediaQuery('(min-width:1440px)');
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
@@ -33,9 +35,9 @@ const Item = ({ onClick, icon, label, type }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        fontSize: 32,
-        minWidth: 71,
-        minHeight: 51,
+        fontSize: isWideScreen ? 40 : 32,
+        minWidth: isWideScreen ? 85 : 71,
+        minHeight: isWideScreen ? 61 : 51,
         padding: 0,
         filter: toolbarModal === type ? blackToGrayFilter : 'none',
         '&:hover': {
@@ -50,8 +52,11 @@ const Item = ({ onClick, icon, label, type }) => {
     >
       {icon}
       <Typography
-        style={{ textTransform: 'none', color: 'black' }}
-        fontSize={14}
+        style={{ 
+          textTransform: 'none', 
+          color: 'black',
+          fontSize: isWideScreen ? 16 : 14
+        }}
         fontWeight={500}
       >
         {label}
@@ -62,6 +67,7 @@ const Item = ({ onClick, icon, label, type }) => {
 
 const DesktopToolbar = ({ onItemClick, onNearMeClick }) => {
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
+  const isWideScreen = useMediaQuery('(min-width:1440px)');
 
   return (
     <Box
@@ -70,13 +76,13 @@ const DesktopToolbar = ({ onItemClick, onNearMeClick }) => {
         position: 'absolute',
         left: '32px',
         bottom: '32px',
-        px: '40px',
-        py: '12px',
-        gap: '40px',
+        px: isWideScreen ? '48px' : '40px',
+        py: isWideScreen ? '16px' : '12px',
+        gap: isWideScreen ? '48px' : '40px',
         backgroundColor: 'white',
         boxShadow:
           '0px 3px 8px 0px rgba(0, 0, 0, 0.11), 0px 2px 4px 0px rgba(0, 0, 0, 0.21)',
-        minWidth: '400px',
+        minWidth: isWideScreen ? '480px' : '400px',
         borderRadius: '10px',
         justifyContent: 'space-between',
         zIndex: 1
