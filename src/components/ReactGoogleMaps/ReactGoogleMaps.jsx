@@ -303,6 +303,9 @@ const ReactGoogleMaps = () => {
               // This is used for marker targeting as we are unable to add custom properties with this library.
               // We should eventually replace this so that we can still enable the use of screen readers in the future.
               title={`data-cy-${index}`}
+              // Setting the map to be optimized unless it is explicitly set to false
+              // Setting it to false is used in testing to allow for targetting Markers via the DOM
+              optimized={import.meta.env.VITE_GMAP_OPTIMIZED !== 'false'}
             />
           );
         })}
