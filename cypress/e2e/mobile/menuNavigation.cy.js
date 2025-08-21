@@ -13,7 +13,16 @@ describe("menu navigation", () => {
     });
 
     it("should successfully show the join team content", () => {
-      // TODO
+      cy.viewport('iphone-x');
+      
+      // Click the hamburger menu button
+      cy.get('[data-cy=head-sidebar-button]').click();
+      
+      // Click the "Join the team" button
+      cy.get('[data-cy=sidebar-jointeam-button]').click();
+      
+      // Verify the header text displays "Join the team"
+      cy.get('[data-cy=jointeam-header]').should('have.text', 'Join the team');
     });
 
     it("should successfully show the contact form and send feedback", () => {
