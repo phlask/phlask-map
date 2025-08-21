@@ -486,5 +486,65 @@
         },
         "version": 1,
         "zip_code": "19149"
+    },
+    {
+        "address": "4400 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:50.797447+00:00",
+        "description": "Community garden with seasonal fruits and herbs",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95322480084546,
+        "longitude": -75.1646224595513,
+        "name": "Test Organization",
+        "resource_type": "FORAGE",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "forage": {
+            "forage_type": ["FRUIT", "LEAVES"],
+            "tags": ["IN_SEASON", "COMMUNITY_GARDEN"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "4401 Haverford Avenue",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:22:51.797447+00:00",
+        "description": "Wild nut trees and medicinal plants",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:22:57.797447+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95307591197137,
+        "longitude": -75.16292738387706,
+        "name": "Test Foraging Site",
+        "resource_type": "FORAGE",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:46.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "forage": {
+            "forage_type": ["NUT", "BARK", "FLOWERS"],
+            "tags": ["MEDICINAL"]
+        },
+        "zip_code": "19104"
     }
 ]

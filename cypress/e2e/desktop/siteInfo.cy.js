@@ -34,7 +34,21 @@ describe('site info', () => {
   });
 
   it('should successfully display a foraging site', () => {
-    // TODO
+    // Switch to foraging view
+    cy.get('[data-cy=button-resource-type-menu]').click()
+    cy.get('[data-cy=button-FORAGE-data-selector]').click()
+    cy.get('[data-cy=button-resource-type-menu]').click()
+
+    // Wait for foraging markers to appear on the map
+    cy.wait(2000); // Allow time for markers to load
+
+    // Load a sample foraging site - try to find any marker
+    // This is currently using live data, but should be updated to make use of test data.
+    cy.get('[title^="data-cy-"]').first().click();
+
+    // Verify that the info window appears with location name
+    cy.get('[data-cy=tap-organization-name]').should('exist');
+    cy.get('[data-cy=tap-organization-name]').invoke('text').should('not.be.empty');
   });
 
   it('should successfully display a bathroom site', () => {
