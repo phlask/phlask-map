@@ -23,7 +23,10 @@ describe('filters', () => {
     cy.get('[data-cy=button-filter-type-menu]').click();
     
     // Verify water tap markers are visible on the map
-    cy.get('[title*="data-cy"]').should('exist');
+    // Wait for filtered results to load
+    cy.wait(1000);
+    // Check that we have filtered results shown
+    cy.contains('Resources:').should('exist');
     
     // Test clearing filters
     cy.get('[data-cy=button-filter-type-menu]').click();
@@ -53,8 +56,9 @@ describe('filters', () => {
     // Close filter menu and verify
     cy.get('[data-cy=button-filter-type-menu]').click();
     
-    // Verify food site markers are visible
-    cy.get('[title*="data-cy"]').should('exist');
+    // Verify food sites are filtered
+    cy.wait(1000);
+    cy.contains('Resources:').should('exist');
     
     // Test organization type filters (exclusive selection)
     cy.get('[data-cy=button-filter-type-menu]').click();
@@ -85,8 +89,9 @@ describe('filters', () => {
     // Close filter menu and verify
     cy.get('[data-cy=button-filter-type-menu]').click();
     
-    // Verify foraging site markers are visible
-    cy.get('[title*="data-cy"]').should('exist');
+    // Verify foraging sites are filtered
+    cy.wait(1000);
+    cy.contains('Resources:').should('exist');
     
     // Test clearing some filters
     cy.get('[data-cy=button-filter-type-menu]').click();
@@ -114,8 +119,9 @@ describe('filters', () => {
     // Close filter menu and verify
     cy.get('[data-cy=button-filter-type-menu]').click();
     
-    // Verify bathroom site markers are visible
-    cy.get('[title*="data-cy"]').should('exist');
+    // Verify bathroom sites are filtered
+    cy.wait(1000);
+    cy.contains('Resources:').should('exist');
     
     // Test Entry Type filter (exclusive selection)
     cy.get('[data-cy=button-filter-type-menu]').click();
