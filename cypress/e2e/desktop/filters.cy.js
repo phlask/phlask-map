@@ -1,6 +1,8 @@
 describe('filters', () => {
   beforeEach(() => {
     cy.visit('/');
+    // Wait for the page to load and filter button to be available
+    cy.get('[data-cy=button-filter-type-menu]', { timeout: 10000 }).should('be.visible');
     // Load the filter menu
     cy.get('[data-cy=button-filter-type-menu]').click();
   });
@@ -27,7 +29,11 @@ describe('filters', () => {
 
   it('should successfully show a result for each food site filter permutation', () => {
     // Switch to food resource type
-    cy.get('[data-cy=button-resource-food]').click();
+    cy.get('[data-cy=button-resource-type-menu]').click();
+    cy.get('[data-cy=button-FOOD-data-selector]').click();
+    
+    // Re-open filter menu after resource switch
+    cy.get('[data-cy=button-filter-type-menu]').click();
     
     // Test food filter options
     cy.get('[data-cy="filter-option-Perishable goods"]').should('exist').click();
@@ -49,7 +55,11 @@ describe('filters', () => {
 
   it('should successfully show a result for each foraging site filter permutation', () => {
     // Switch to foraging resource type
-    cy.get('[data-cy=button-resource-foraging]').click();
+    cy.get('[data-cy=button-resource-type-menu]').click();
+    cy.get('[data-cy=button-FORAGE-data-selector]').click();
+    
+    // Re-open filter menu after resource switch
+    cy.get('[data-cy=button-filter-type-menu]').click();
     
     // Test foraging filter options
     cy.get('[data-cy="filter-option-Nuts"]').should('exist').click();
@@ -73,7 +83,11 @@ describe('filters', () => {
 
   it('should successfully show a result for each bathroom site filter permutation', () => {
     // Switch to bathroom resource type
-    cy.get('[data-cy=button-resource-bathroom]').click();
+    cy.get('[data-cy=button-resource-type-menu]').click();
+    cy.get('[data-cy=button-BATHROOM-data-selector]').click();
+    
+    // Re-open filter menu after resource switch
+    cy.get('[data-cy=button-filter-type-menu]').click();
     
     // Test bathroom filter options
     cy.get('[data-cy="filter-option-ADA accessible"]').should('exist').click();
