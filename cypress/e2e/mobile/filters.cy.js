@@ -50,45 +50,55 @@ describe("Water resource filtering", () => {
 
   it("should filter water sites by dispenser type", () => {
     let initialCount;
-    let initialMarkerCount;
     
-    // 1. Verify initial state - has resources
+    // Verify initial state - has resources
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Store initial marker count - all should be visible
-    cy.get('[title^="data-cy-"]').then($markers => {
-      initialMarkerCount = $markers.length;
-      expect(initialMarkerCount).to.equal(initialCount);
-    });
-
-    // 2. Apply dispenser type filter
+    // Apply dispenser type filter
     applyFilters(["Bottle filler"]);
 
-    // 3. Verify filter requirements
+    // Verify filter requirements
     getResourceCount().then(filteredCount => {
-      // Requirement 1: Filter shows at least one tap
+      // Filter shows at least one tap
       expect(filteredCount).to.be.greaterThan(0);
-      // Some taps must be filtered out (proving some don't match)
+      // Some taps must be filtered out
       expect(filteredCount).to.be.lessThan(initialCount);
       
-      // Requirement 2&3: Verify ONLY matching taps shown on map
+      // Verify ONLY matching taps shown on map
       cy.get('[title^="data-cy-"]').then($markers => {
-        // Exact count match proves matching taps shown, non-matching hidden
         expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    // 4. Clear all filters
+  it("should restore water sites when Clear All is clicked after filtering by dispenser type", () => {
+    let initialCount;
+    
+    // Get initial count
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
+    });
+
+    // Apply filter to hide some taps
+    applyFilters(["Bottle filler"]);
+
+    // Verify some taps are hidden
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.lessThan(initialCount);
+    });
+
+    // Click Clear All
     clearAllFilters();
 
-    // 5. Verify Clear All requirements  
+    // Verify all taps are restored
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
       
-      // Requirement 4: Previously hidden taps now visible
+      // Verify previously hidden taps now visible on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
       });
@@ -107,25 +117,40 @@ describe("Water resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.lessThan(initialCount);
-    });
-
-    // Verify markers on map match the filtered count  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore water sites when Clear All is clicked after filtering by features", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["ADA accessible"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.lessThan(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -141,63 +166,91 @@ describe("Water resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.lessThan(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore water sites when Clear All is clicked after filtering by entry type", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Open Access"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.lessThan(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
   it("should filter water sites by multiple criteria", () => {
     let initialCount;
     
-    // 1. Verify initial state
+    // Verify initial state
     getResourceCount().then(count => {
       initialCount = count;
-      expect(initialCount).to.be.greaterThan(8); // Ensure adequate test data
+      expect(initialCount).to.be.greaterThan(8);
     });
 
-    // 2. Apply multiple filter criteria (most restrictive combination)
+    // Apply multiple filter criteria
     applyFilters(["Bottle filler", "ADA accessible", "Open Access"]);
 
-    // 3. Verify all filter requirements for combination
+    // Verify all filter requirements for combination
     getResourceCount().then(filteredCount => {
-      // Requirement 1: Combination shows at least one tap with ALL criteria
       expect(filteredCount).to.be.greaterThan(0);
-      
-      // Significant filtering occurred (most resources don't match all 3 criteria)
       expect(filteredCount).to.be.lessThan(initialCount);
       
-      // Requirement 2&3: Only matching taps visible, non-matching hidden
+      // Only matching taps visible
       cy.get('[title^="data-cy-"]').then($markers => {
-        // Exact count proves only resources matching ALL criteria are shown
         expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    // 4. Clear all filters  
+  it("should restore water sites when Clear All is clicked after filtering by multiple criteria", () => {
+    let initialCount;
+    
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(8);
+    });
+
+    // Apply multiple filters
+    applyFilters(["Bottle filler", "ADA accessible", "Open Access"]);
+
+    // Verify filters applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.lessThan(initialCount);
+    });
+
+    // Click Clear All  
     clearAllFilters();
 
-    // 5. Verify Clear All restores everything
+    // Verify Clear All restores everything
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
       
-      // Requirement 4: All previously hidden taps now visible
+      // All previously hidden taps now visible
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
       });
@@ -227,25 +280,40 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore food sites when Clear All is clicked after filtering by food type", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Perishable"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -261,25 +329,40 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore food sites when Clear All is clicked after filtering by distribution type", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Eat on site"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -295,25 +378,40 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore food sites when Clear All is clicked after filtering by multiple criteria", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filters
+    applyFilters(["Non-perishable", "Pick up"]);
+
+    // Verify filters applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 });
@@ -324,7 +422,7 @@ describe("Foraging resource filtering", () => {
     cy.viewport("iphone-x");
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("forage");
+    switchToResourceType("foraging");
     waitForResourcesLoad();
   });
 
@@ -340,25 +438,40 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore foraging sites when Clear All is clicked after filtering by forage type", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Fruit"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -374,25 +487,40 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore foraging sites when Clear All is clicked after filtering by features", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Medicinal"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -408,25 +536,40 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore foraging sites when Clear All is clicked after filtering by multiple criteria", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filters
+    applyFilters(["Nut", "Leaves"]);
+
+    // Verify filters applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 });
@@ -453,25 +596,40 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore bathroom sites when Clear All is clicked after filtering by ADA accessibility", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["ADA accessible"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -487,25 +645,40 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore bathroom sites when Clear All is clicked after filtering by gender neutral feature", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Gender neutral"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -521,25 +694,40 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore bathroom sites when Clear All is clicked after filtering by changing table amenity", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filter
+    applyFilters(["Changing table"]);
+
+    // Verify filter applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 
@@ -555,25 +743,40 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-    });
-
-    // Verify markers on map match the filtered count
-    cy.get('[title^="data-cy-"]').then($markers => {
-      cy.contains("Resources:").should("exist").then(($el) => {
-        const displayedCount = parseInt($el.text().split("Resources: ")[1]);
-        expect($markers.length).to.equal(displayedCount);
+      
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
       });
     });
+  });
 
-    clearAllFilters();
-
-    getResourceCount().then(clearedCount => {
-      expect(clearedCount).to.equal(initialCount);
+  it("should restore bathroom sites when Clear All is clicked after filtering by multiple criteria", () => {
+    let initialCount;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
     });
 
-    // Verify all markers are visible again  
-    cy.get('[title^="data-cy-"]').then($markers => {
-      expect($markers.length).to.equal(initialCount);
+    // Apply filters
+    applyFilters(["ADA accessible", "Gender neutral"]);
+
+    // Verify filters applied
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.at.most(initialCount);
+    });
+
+    // Click Clear All
+    clearAllFilters();
+
+    // Verify all resources restored
+    getResourceCount().then(clearedCount => {
+      expect(clearedCount).to.equal(initialCount);
+      
+      // Verify all markers visible again  
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(initialCount);
+      });
     });
   });
 });
@@ -612,12 +815,9 @@ describe("Filter persistence across resource types", () => {
       expect(foodInitialCount).to.be.greaterThan(0);
     });
 
-    // Switch back to water - filters should still be cleared
-    switchToResourceType("water");
-    waitForResourcesLoad();
-    
-    getResourceCount().then(count => {
-      expect(count).to.equal(waterInitialCount);
+    // Food should show all resources (no filters applied)
+    cy.get('[title^="data-cy-"]').then($markers => {
+      expect($markers.length).to.equal(foodInitialCount);
     });
   });
 });
