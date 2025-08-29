@@ -422,7 +422,7 @@ describe("Foraging resource filtering", () => {
     cy.viewport("iphone-x");
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("foraging");
+    switchToResourceType("forage");
     waitForResourcesLoad();
   });
 
