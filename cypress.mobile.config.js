@@ -7,6 +7,9 @@ export default defineConfig({
     baseUrl: 'http://localhost:5173',
     video: true,
     viewportWidth: 375,
-    viewportHeight: 812
+    viewportHeight: 812,
+    env: {
+      VITE_CYPRESS_TEST: true
+    }
   }
 });
