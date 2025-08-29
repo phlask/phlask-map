@@ -2,13 +2,37 @@ describe("filters", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
     cy.visit("/");
+    
     // Wait for the page to load and filter button to be available
-    cy.get("[data-cy=button-filter-type-menu]", { timeout: 10000 }).should("exist");
-    // Load the filter menu
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    cy.get("[data-cy=button-filter-mobile]", { timeout: 10000 }).should("exist");
   });
 
+  // Helper function to open filter drawer
+  const openFilterDrawer = () => {
+    cy.get("[data-cy=button-filter-mobile]").click();
+    // Wait for first filter option to be visible instead of hard wait
+    cy.get('[data-cy*="filter-option-"]').should('be.visible');
+  };
+
+  // Helper function to close filter drawer
+  const closeFilterDrawer = () => {
+    cy.get("[data-cy=button-filter-mobile]").click({ force: true });
+    // Minimal wait for drawer animation with fallback
+    cy.wait(400);
+  };
+
+  // Helper function to switch resource type
+  const switchResourceType = (resourceType) => {
+    cy.get("[data-cy=button-resource-type-menu]").click();
+    cy.get(`[data-cy=button-resource-${resourceType}]`).first().click({ force: true });
+    // Wait for resource modal to close by checking if the resource menu button is clickable again
+    cy.get("[data-cy=button-resource-type-menu]").should('not.be.disabled');
+    cy.wait(200); // Minimal wait for any remaining animations
+  };
+
   it("should successfully show a result for each water site filter permutation", () => {
+    openFilterDrawer();
+    
     // Test water filter options - Dispenser Type
     cy.get('[data-cy="filter-option-Drinking fountain"]').click();
     cy.get('[data-cy="filter-option-Bottle filler"]').click();
@@ -20,28 +44,24 @@ describe("filters", () => {
     // Test water filter options - Entry Type (exclusive selection)
     cy.get('[data-cy="filter-option-Open Access"]').click();
     
-    // Close the filter menu and verify filters are applied
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
     
     // Verify water tap markers are visible on the map
-    cy.wait(1000);
-    cy.contains("Resources:").should("exist");
+    cy.contains("Resources:", { timeout: 5000 }).should("exist");
     
     // Test clearing filters
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     cy.get('[data-cy="filter-option-Drinking fountain"]').click();
     cy.get('[data-cy="filter-option-Bottle filler"]').click();
     cy.get('[data-cy="filter-option-ADA accessible"]').click();
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
   });
 
   it("should successfully show a result for each food site filter permutation", () => {
     // Switch to food resource type
-    cy.get("[data-cy=button-resource-type-menu]").click();
-    cy.get("[data-cy=button-FOOD-data-selector]").click();
+    switchResourceType('food');
     
-    // Re-open filter menu after resource switch
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     
     // Test food filter options - Food Type
     cy.get('[data-cy="filter-option-Perishable"]').should("exist").click();
@@ -52,27 +72,23 @@ describe("filters", () => {
     cy.get('[data-cy="filter-option-Eat on site"]').should("exist").click();
     cy.get('[data-cy="filter-option-Delivery"]').should("exist").click();
     
-    // Close filter menu and verify
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
     
     // Verify food sites are filtered
-    cy.wait(1000);
-    cy.contains("Resources:").should("exist");
+    cy.contains("Resources:", { timeout: 5000 }).should("exist");
     
     // Test organization type filters (exclusive selection)
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     cy.get('[data-cy="filter-option-Perishable"]').click();
     cy.get('[data-cy="filter-option-Non-profit"]').should("exist").click();
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
   });
 
   it("should successfully show a result for each foraging site filter permutation", () => {
     // Switch to foraging resource type
-    cy.get("[data-cy=button-resource-type-menu]").click();
-    cy.get("[data-cy=button-FORAGE-data-selector]").click();
+    switchResourceType('foraging');
     
-    // Re-open filter menu after resource switch
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     
     // Test foraging filter options - Forage type
     cy.get('[data-cy="filter-option-Nut"]').should("exist").click();
@@ -85,27 +101,23 @@ describe("filters", () => {
     cy.get('[data-cy="filter-option-Medicinal"]').should("exist").click();
     cy.get('[data-cy="filter-option-In season"]').should("exist").click();
     
-    // Close filter menu and verify
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
     
     // Verify foraging sites are filtered
-    cy.wait(1000);
-    cy.contains("Resources:").should("exist");
+    cy.contains("Resources:", { timeout: 5000 }).should("exist");
     
     // Test clearing some filters
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     cy.get('[data-cy="filter-option-Nut"]').click();
     cy.get('[data-cy="filter-option-Fruit"]').click();
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
   });
 
   it("should successfully show a result for each bathroom site filter permutation", () => {
     // Switch to bathroom resource type
-    cy.get("[data-cy=button-resource-type-menu]").click();
-    cy.get("[data-cy=button-BATHROOM-data-selector]").click();
+    switchResourceType('bathroom');
     
-    // Re-open filter menu after resource switch
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     
     // Test bathroom filter options - Features
     cy.get('[data-cy="filter-option-ADA accessible"]').should("exist").click();
@@ -115,19 +127,17 @@ describe("filters", () => {
     cy.get('[data-cy="filter-option-Family bathroom"]').should("exist").click();
     cy.get('[data-cy="filter-option-Has water fountain"]').should("exist").click();
     
-    // Close filter menu and verify
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
     
     // Verify bathroom sites are filtered
-    cy.wait(1000);
-    cy.contains("Resources:").should("exist");
+    cy.contains("Resources:", { timeout: 5000 }).should("exist");
     
     // Test Entry Type filter (exclusive selection)
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    openFilterDrawer();
     cy.get('[data-cy="filter-option-ADA accessible"]').click();
     cy.get('[data-cy="filter-option-Gender neutral"]').click();
     cy.get('[data-cy="filter-option-Open Access"]').should("exist").click();
     cy.get('[data-cy="filter-option-Restricted"]').should("exist").click();
-    cy.get("[data-cy=button-filter-type-menu]").click();
+    closeFilterDrawer();
   });
 });
