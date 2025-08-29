@@ -38,7 +38,7 @@ describe("filters", () => {
     cy.wait(200); // Minimal wait for any remaining animations
   };
 
-  it("should successfully show a result for each water site filter permutation", () => {
+  it("should apply water filters and reduce resource count, then restore original count on Clear All", () => {
     // Switch to water resource type to ensure known starting state
     switchResourceType('water');
     
@@ -67,6 +67,9 @@ describe("filters", () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         openFilterDrawer();
         cy.get('[data-cy="button-clear-all-mobile"]').click();
@@ -83,7 +86,7 @@ describe("filters", () => {
     });
   });
 
-  it("should successfully show a result for each food site filter permutation", () => {
+  it("should apply food filters and reduce resource count, then restore original count on Clear All", () => {
     // Switch to food resource type
     switchResourceType('food');
     
@@ -113,6 +116,9 @@ describe("filters", () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         openFilterDrawer();
         cy.get('[data-cy="button-clear-all-mobile"]').click();
@@ -129,7 +135,7 @@ describe("filters", () => {
     });
   });
 
-  it("should successfully show a result for each foraging site filter permutation", () => {
+  it("should apply foraging filters and reduce resource count, then restore original count on Clear All", () => {
     // Switch to foraging resource type
     switchResourceType('forage');
     
@@ -161,6 +167,9 @@ describe("filters", () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         openFilterDrawer();
         cy.get('[data-cy="button-clear-all-mobile"]').click();
@@ -177,7 +186,7 @@ describe("filters", () => {
     });
   });
 
-  it("should successfully show a result for each bathroom site filter permutation", () => {
+  it("should apply bathroom filters and reduce resource count, then restore original count on Clear All", () => {
     // Switch to bathroom resource type
     switchResourceType('bathroom');
     
@@ -205,6 +214,9 @@ describe("filters", () => {
       cy.contains("Resources:", { timeout: 5000 }).should("exist").then(($filteredEl) => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
+        
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
         
         // Test clearing filters using Clear All button
         openFilterDrawer();

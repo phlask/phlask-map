@@ -15,7 +15,7 @@ describe('filters', () => {
     return parseInt(text.split('Resources: ')[1]);
   };
 
-  it('should successfully show a result for each water site filter permutation', () => {
+  it('should apply water filters and reduce resource count, then restore original count on Clear All', () => {
     // Switch to water resource type to ensure known starting state
     cy.get('[data-cy=button-resource-type-menu]').click();
     cy.get('[data-cy=button-WATER-data-selector]').click();
@@ -47,6 +47,9 @@ describe('filters', () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         cy.get('[data-cy=button-filter-type-menu]').click();
         cy.get('[data-cy="button-clear-all-desktop"]').click();
@@ -63,7 +66,7 @@ describe('filters', () => {
     });
   });
 
-  it('should successfully show a result for each food site filter permutation', () => {
+  it('should apply food filters and reduce resource count, then restore original count on Clear All', () => {
     // Switch to food resource type
     cy.get('[data-cy=button-resource-type-menu]').click();
     cy.get('[data-cy=button-FOOD-data-selector]').click();
@@ -95,6 +98,9 @@ describe('filters', () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         cy.get('[data-cy=button-filter-type-menu]').click();
         cy.get('[data-cy="button-clear-all-desktop"]').click();
@@ -111,7 +117,7 @@ describe('filters', () => {
     });
   });
 
-  it('should successfully show a result for each foraging site filter permutation', () => {
+  it('should apply foraging filters and reduce resource count, then restore original count on Clear All', () => {
     // Switch to foraging resource type
     cy.get('[data-cy=button-resource-type-menu]').click();
     cy.get('[data-cy=button-FORAGE-data-selector]').click();
@@ -145,6 +151,9 @@ describe('filters', () => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
         
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
+        
         // Test clearing filters using Clear All button
         cy.get('[data-cy=button-filter-type-menu]').click();
         cy.get('[data-cy="button-clear-all-desktop"]').click();
@@ -161,7 +170,7 @@ describe('filters', () => {
     });
   });
 
-  it('should successfully show a result for each bathroom site filter permutation', () => {
+  it('should apply bathroom filters and reduce resource count, then restore original count on Clear All', () => {
     // Switch to bathroom resource type
     cy.get('[data-cy=button-resource-type-menu]').click();
     cy.get('[data-cy=button-BATHROOM-data-selector]').click();
@@ -191,6 +200,9 @@ describe('filters', () => {
       cy.contains('Resources:').should('exist').then(($filteredEl) => {
         const filteredText = $filteredEl.text();
         const filteredCount = getResourceCount(filteredText);
+        
+        // Should show fewer or equal resources when filters are applied
+        expect(filteredCount).to.be.lte(initialCount);
         
         // Test clearing filters using Clear All button
         cy.get('[data-cy=button-filter-type-menu]').click();
