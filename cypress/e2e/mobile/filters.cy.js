@@ -86,7 +86,7 @@ describe("filters", () => {
 
   it("should successfully show a result for each foraging site filter permutation", () => {
     // Switch to foraging resource type
-    switchResourceType('foraging');
+    switchResourceType('forage');
     
     openFilterDrawer();
     
