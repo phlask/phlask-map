@@ -11,7 +11,6 @@ const openFilterMenu = () => {
 
 const closeFilterMenu = () => {
   cy.get("[data-cy=button-filter-type-menu]").click();
-  cy.wait(500);
 };
 
 const applyFilters = (filters) => {

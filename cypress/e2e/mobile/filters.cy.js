@@ -11,7 +11,6 @@ const openFilterMenu = () => {
 
 const closeFilterMenu = () => {
   cy.get("[data-cy=button-filter-mobile]").click({ force: true });
-  cy.wait(500);
 };
 
 const applyFilters = (filters) => {
