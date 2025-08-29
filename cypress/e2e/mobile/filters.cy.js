@@ -48,7 +48,7 @@ describe("Water resource filtering", () => {
     waitForResourcesLoad();
   });
 
-  it("should filter water sites by dispenser type", () => {
+  it("should filter water sites by dispenser type and verify resource count changes", () => {
     let initialCount;
     
     // Verify initial state - has resources
@@ -74,7 +74,7 @@ describe("Water resource filtering", () => {
     });
   });
 
-  it("should filter water sites by features", () => {
+  it("should filter water sites by features and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -94,7 +94,7 @@ describe("Water resource filtering", () => {
     });
   });
 
-  it("should filter water sites by entry type", () => {
+  it("should filter water sites by entry type and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -114,7 +114,7 @@ describe("Water resource filtering", () => {
     });
   });
 
-  it("should filter water sites by multiple criteria and verify Clear All restores all resources", () => {
+  it("should filter water sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
     let initialCount;
     
     // Verify initial state
@@ -163,7 +163,7 @@ describe("Food resource filtering", () => {
     waitForResourcesLoad();
   });
 
-  it("should filter food sites by food type", () => {
+  it("should filter food sites by food type and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -183,7 +183,7 @@ describe("Food resource filtering", () => {
     });
   });
 
-  it("should filter food sites by distribution type", () => {
+  it("should filter food sites by distribution type and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -203,7 +203,7 @@ describe("Food resource filtering", () => {
     });
   });
 
-  it("should filter food sites by multiple criteria and verify Clear All restores all resources", () => {
+  it("should filter food sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -248,7 +248,7 @@ describe("Foraging resource filtering", () => {
     waitForResourcesLoad();
   });
 
-  it("should filter foraging sites by forage type", () => {
+  it("should filter foraging sites by forage type and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -268,7 +268,7 @@ describe("Foraging resource filtering", () => {
     });
   });
 
-  it("should filter foraging sites by features", () => {
+  it("should filter foraging sites by features and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -288,7 +288,7 @@ describe("Foraging resource filtering", () => {
     });
   });
 
-  it("should filter foraging sites by multiple criteria and verify Clear All restores all resources", () => {
+  it("should filter foraging sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -333,7 +333,7 @@ describe("Bathroom resource filtering", () => {
     waitForResourcesLoad();
   });
 
-  it("should filter bathroom sites by ADA accessibility", () => {
+  it("should filter bathroom sites by ADA accessibility and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -353,7 +353,7 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by gender neutral feature", () => {
+  it("should filter bathroom sites by gender neutral feature and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -373,7 +373,7 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by changing table amenity", () => {
+  it("should filter bathroom sites by changing table amenity and verify resource count changes", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
@@ -393,7 +393,7 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by multiple criteria and verify Clear All restores all resources", () => {
+  it("should filter bathroom sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
