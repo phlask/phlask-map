@@ -23,7 +23,7 @@ const tempImages = {
 
 const SelectedTap = () => {
   const dispatch = useDispatch();
-  const refSelectedTap = useRef();
+  const refSelectedTap = useRef(null);
   const isMobile = useIsMobile();
 
   const [previewHeight, setPreviewHeight] = useState(0);

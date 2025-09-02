@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
-import Input from '@mui/material/Input';
+import Autocomplete from '@mui/material/Autocomplete';
+import FilledInput from '@mui/material/FilledInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useRef, useState } from 'react';
 import PlacesAutocomplete, {
@@ -17,7 +18,7 @@ import {
 import styles from './SearchBar.module.scss';
 
 const SearchBar = ({ search }) => {
-  const refSearchBarInput = useRef();
+  const refSearchBarInput = useRef(null);
   const [address, setAddress] = useState('');
   const tapInfoOpenedWhileSearchOpen = useSelector(
     state => state.filterMarkers.tapInfoOpenedWhileSearchOpen
@@ -80,9 +81,9 @@ const SearchBar = ({ search }) => {
                   loading || suggestions.length > 0 ? styles.hasDropdown : ''
                 }`}
               >
-                <Input
-                  autoFocus
+                <Autocomplete
                   autoComplete={autoComplete}
+                  options={suggestions}
                   role={role}
                   aria-autocomplete={ariaAutocomplete}
                   aria-expanded={ariaExpanded}
@@ -95,7 +96,7 @@ const SearchBar = ({ search }) => {
                   type={type}
                   ref={refSearchBarInput}
                   placeholder={placeholder}
-                  endAdornment={
+                  startAdornment={
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
@@ -195,12 +196,12 @@ const SearchBar = ({ search }) => {
 
           return (
             <div
-              className={`${styles.searchBarContainer} ${
+              className={
                 loading || suggestions.length > 0 ? styles.hasDropdown : ''
-              }`}
+              }
             >
               {/* type="search" is only HTML5 compliant */}
-              <Input
+              <FilledInput
                 autoComplete={autoComplete}
                 role={role}
                 aria-autocomplete={ariaAutocomplete}
@@ -211,12 +212,12 @@ const SearchBar = ({ search }) => {
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                className={`${styles.searchInput} form-control`}
+                disableUnderline
                 type={type}
                 inputRef={refSearchBarInput}
                 placeholder={placeholder}
                 startAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
                 }
@@ -227,10 +228,6 @@ const SearchBar = ({ search }) => {
               {suggestions.length > 0 && (
                 <div className={styles.autocompleteDropdown}>
                   {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                      ? styles.suggestionItemActive
-                      : styles.suggestionItem;
-
                     const {
                       key,
                       onMouseEnter,
@@ -240,29 +237,22 @@ const SearchBar = ({ search }) => {
                       onTouchStart,
                       onTouchEnd,
                       onClick
-                    } = getSuggestionItemProps(suggestion, {
-                      className
-                    });
+                    } = getSuggestionItemProps(suggestion, {});
 
                     return (
-                      <div
-                        className={className}
+                      <button
                         key={key}
                         id={suggestion.id}
                         role="option"
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        onMouseDown={onMouseDown}
-                        onMouseUp={onMouseUp}
-                        onTouchStart={onTouchStart}
-                        onTouchEnd={onTouchEnd}
                         onClick={onClick}
-                        onKeyDown={onClick}
-                        tabIndex={0}
                         aria-selected={suggestion.active}
+                        type="submit"
+                        style={{ width: '100%', height: 30 }}
                       >
                         <span>{suggestion.description}</span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
