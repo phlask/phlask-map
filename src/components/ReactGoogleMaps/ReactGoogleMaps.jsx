@@ -313,42 +313,39 @@ const ReactGoogleMaps = () => {
             title="data-cy-search-result"
           />
         ) : null}
-
-        {isMobile && (
-          <Fade
-            in={searchBarMapTintOn}
-            timeout={300}
-            style={{ position: 'fixed', pointerEvents: 'none' }}
-          >
-            <div
-              style={{
-                width: '100vw',
-                height: '100dvh',
-                backgroundColor: 'rgba(0, 0, 0, 0.15)'
-              }}
-            />
-          </Fade>
-        )}
-        <Stack position="absolute" bottom="0px" height="143px" width="34%">
-          <Stack direction="row" spacing={2}>
-            <SearchBar
-              className="searchBar"
-              search={location => searchForLocation(location)}
-            />
-          </Stack>
-          <ChooseResourceType />
-          <Filter
-            resourceType={resourceType}
-            filters={filters}
-            handleTag={handleTag}
-            clearAll={clearAllTags}
-            activeTags={activeFilterTags}
-          />
-          <AddResourceModalV2 />
-          <Toolbar />
-        </Stack>
-        <SelectedTap />
       </Map>
+      {isMobile && (
+        <Fade
+          in={searchBarMapTintOn}
+          timeout={300}
+          style={{ position: 'fixed', pointerEvents: 'none' }}
+        >
+          <div
+            style={{
+              width: '100vw',
+              height: '100dvh',
+              backgroundColor: 'rgba(0, 0, 0, 0.15)'
+            }}
+          />
+        </Fade>
+      )}
+
+      <SearchBar
+        className="searchBar"
+        search={location => searchForLocation(location)}
+      />
+
+      <ChooseResourceType />
+      <Filter
+        resourceType={resourceType}
+        filters={filters}
+        handleTag={handleTag}
+        clearAll={clearAllTags}
+        activeTags={activeFilterTags}
+      />
+      <AddResourceModalV2 />
+      <Toolbar />
+      <SelectedTap />
     </APIProvider>
   );
 };

@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useRef, useState } from 'react';
 import PlacesAutocomplete, {
@@ -80,8 +80,7 @@ const SearchBar = ({ search }) => {
                   loading || suggestions.length > 0 ? styles.hasDropdown : ''
                 }`}
               >
-                <FilledInput
-                  autoFocus
+                <OutlinedInput
                   autoComplete={autoComplete}
                   role={role}
                   aria-autocomplete={ariaAutocomplete}
@@ -195,12 +194,12 @@ const SearchBar = ({ search }) => {
 
           return (
             <div
-              className={`${styles.searchBarContainer} ${
+              className={
                 loading || suggestions.length > 0 ? styles.hasDropdown : ''
-              }`}
+              }
             >
               {/* type="search" is only HTML5 compliant */}
-              <FilledInput
+              <OutlinedInput
                 autoComplete={autoComplete}
                 role={role}
                 aria-autocomplete={ariaAutocomplete}
@@ -211,12 +210,17 @@ const SearchBar = ({ search }) => {
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                className={styles.searchInput}
+                sx={{
+                  minWidth: 400,
+                  width: '100%',
+                  borderRadius: 12
+                }}
+                disableUnderline
                 type={type}
                 inputRef={refSearchBarInput}
                 placeholder={placeholder}
                 startAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
                 }
@@ -227,10 +231,6 @@ const SearchBar = ({ search }) => {
               {suggestions.length > 0 && (
                 <div className={styles.autocompleteDropdown}>
                   {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                      ? styles.suggestionItemActive
-                      : styles.suggestionItem;
-
                     const {
                       key,
                       onMouseEnter,
@@ -240,29 +240,22 @@ const SearchBar = ({ search }) => {
                       onTouchStart,
                       onTouchEnd,
                       onClick
-                    } = getSuggestionItemProps(suggestion, {
-                      className
-                    });
+                    } = getSuggestionItemProps(suggestion, {});
 
                     return (
-                      <div
-                        className={className}
+                      <button
                         key={crypto.randomUUID()}
                         id={suggestion.id}
                         role="option"
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        onMouseDown={onMouseDown}
-                        onMouseUp={onMouseUp}
-                        onTouchStart={onTouchStart}
-                        onTouchEnd={onTouchEnd}
                         onClick={onClick}
-                        onKeyDown={onClick}
-                        tabIndex={0}
                         aria-selected={suggestion.active}
+                        type="submit"
+                        style={{ width: '100%', height: 30 }}
                       >
                         <span>{suggestion.description}</span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
