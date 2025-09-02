@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import Autocomplete from '@mui/material/Autocomplete';
+import FilledInput from '@mui/material/FilledInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useRef, useState } from 'react';
 import PlacesAutocomplete, {
@@ -80,8 +81,9 @@ const SearchBar = ({ search }) => {
                   loading || suggestions.length > 0 ? styles.hasDropdown : ''
                 }`}
               >
-                <OutlinedInput
+                <Autocomplete
                   autoComplete={autoComplete}
+                  options={suggestions}
                   role={role}
                   aria-autocomplete={ariaAutocomplete}
                   aria-expanded={ariaExpanded}
@@ -94,7 +96,7 @@ const SearchBar = ({ search }) => {
                   type={type}
                   ref={refSearchBarInput}
                   placeholder={placeholder}
-                  endAdornment={
+                  startAdornment={
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
@@ -199,7 +201,7 @@ const SearchBar = ({ search }) => {
               }
             >
               {/* type="search" is only HTML5 compliant */}
-              <OutlinedInput
+              <FilledInput
                 autoComplete={autoComplete}
                 role={role}
                 aria-autocomplete={ariaAutocomplete}
@@ -210,11 +212,6 @@ const SearchBar = ({ search }) => {
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                sx={{
-                  minWidth: 400,
-                  width: '100%',
-                  borderRadius: 12
-                }}
                 disableUnderline
                 type={type}
                 inputRef={refSearchBarInput}
