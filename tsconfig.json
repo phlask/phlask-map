@@ -17,6 +17,7 @@
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "useDefineForClassFields": true /* Emit ECMAScript-standard-compliant class fields. */,
     "moduleDetection": "force" /* Control what method is used to detect module-format JS files. */,
+    "types": ["vite/client"],
 
     /* Modules */
     "module": "ESNext" /* Specify what module code is generated. */,

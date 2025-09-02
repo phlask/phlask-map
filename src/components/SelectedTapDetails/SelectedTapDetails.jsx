@@ -1,4 +1,4 @@
-import { Button, Collapse, IconButton } from '@mui/material';
+import { Button, Collapse, IconButton, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -294,10 +294,14 @@ const SelectedTapDetails = ({
         <VerificationButton resource={resource} />
       </div>
       <div className={styles.mainHalfInfo}>
-        <img
-          src={icon}
+        <SvgIcon
+          sx={{
+            width: '48px',
+            height: '48px'
+          }}
+          viewBox="0 0 85 85"
+          component={icon}
           alt={resource.resource_type}
-          style={{ width: '52px' }}
         />
         <div className={styles.mainHalfInfoText}>
           <h2 className={styles.organization} data-cy="tap-organization-name">

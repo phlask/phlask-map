@@ -1,18 +1,9 @@
-$color-input-border: #73839e;
-$color-asterisk: #dd1e1e;
-$color-label: #2d3748;
-$font-family-inter: 'Inter', sans-serif;
-$border-radius: 3px;
-$button-bg-color: #5286e9;
+$fullViewportHeight: 100vh; // Represents the full height of the viewport
 $header-height: 76px; // Height of the header of the page
 $verticalspacing: 32px; // vertical space buffer
 $footer-height: 50px; // Height of the footer
 $vertical-spacing-buffer: 25px; // Provides spacing between the thank you contact form and the nav bar
 $extra-space: 25px; // Extra vertical space for the contact form
-$thankYouMessage-height: 92px; // Height of the thank you message itself
-$Thankyoucontactform-height: 70px; // Height of the contact form section in Thank You
-$thankyoucontentsection-height: 296px; // Height of a main content section in Thank
-$fullViewportHeight: 100vh; // Represents the full height of the viewport
 
 .page {
   max-height: calc(
@@ -61,113 +52,4 @@ $fullViewportHeight: 100vh; // Represents the full height of the viewport
 .pageLink {
   color: #033e8c;
   text-decoration: none;
-}
-
-.pageContactSection {
-  margin-bottom: 20px;
-
-  input[type='text'],
-  input[type='email'],
-  .textInput {
-    width: min(80%, 400px);
-    height: 55px;
-    border: 1px solid $color-input-border;
-    border-radius: $border-radius;
-  }
-
-  .FeedbackInput {
-    width: min(100%, 800px);
-    height: 100px;
-    border: 1px solid $color-input-border;
-    border-radius: $border-radius;
-    resize: vertical;
-  }
-}
-
-.pageContactLabel {
-  margin: 0;
-  margin-bottom: 5px;
-  color: $color-label;
-  font-family: $font-family-inter;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 20px;
-}
-
-.asteriskcolor {
-  color: $color-asterisk;
-}
-
-.pageContactSectionGrid {
-  width: fit-content;
-  display: grid;
-  place-items: center;
-  grid-template-columns: 20px 1fr;
-  gap: 8px;
-}
-.pageContactCheckbox {
-  width: 18px;
-  height: 18px;
-}
-
-.submitButton {
-  width: min(80%, 400px);
-  margin-bottom: 20px;
-  padding: 7px 0;
-  border-radius: 8px;
-  background-color: $button-bg-color;
-}
-
-.buttonText {
-  margin-bottom: 0;
-  color: #ffffff;
-  font-family: $font-family-inter;
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 23px;
-}
-.thankYouMessageContainer {
-  text-align: center;
-}
-.thankYouMessageSpacer {
-  height: calc(
-    (
-        #{$fullViewportHeight} - #{$header-height} - #{$verticalspacing} - #{$vertical-spacing-buffer} -
-          #{$extra-space} - #{$thankYouMessage-height} - #{$Thankyoucontactform-height} -
-          #{$thankyoucontentsection-height} - #{$footer-height}
-      ) / 2
-  );
-}
-.gridContainer {
-  width: fit-content;
-  display: grid;
-  place-items: center start;
-  grid-template-columns: 304px 1fr;
-  row-gap: 20px;
-}
-.followHeader {
-  width: fit-content;
-  margin: 0;
-}
-.connectHeader {
-  margin: 0;
-}
-.socialLinksContainer {
-  width: fit-content;
-
-  .socialLink {
-    margin-right: 40px;
-    /* Remove right margin for the last social link */
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-.otherInquiries {
-  margin: 0;
-
-  .inquiryLink {
-    @extend .pageLink;
-  }
 }

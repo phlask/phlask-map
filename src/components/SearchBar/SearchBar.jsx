@@ -141,7 +141,7 @@ const SearchBar = ({ search }) => {
 
                       return (
                         <div
-                          key={crypto.randomUUID()}
+                          key={key}
                           id={id}
                           role="option"
                           onMouseEnter={onMouseEnter}
@@ -241,7 +241,7 @@ const SearchBar = ({ search }) => {
 
                     return (
                       <button
-                        key={crypto.randomUUID()}
+                        key={key}
                         id={suggestion.id}
                         role="option"
                         onMouseEnter={onMouseEnter}

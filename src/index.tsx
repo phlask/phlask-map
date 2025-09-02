@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from 'App.tsx';
+import AnalyticsWrapper from 'analytics';
 
 let basepath = '';
 // Test-specific routing logic
@@ -21,6 +22,8 @@ const root = createRoot(rootElement!);
 
 root.render(
   <StrictMode>
-    <App />
+    <AnalyticsWrapper>
+      <App />
+    </AnalyticsWrapper>
   </StrictMode>
 );

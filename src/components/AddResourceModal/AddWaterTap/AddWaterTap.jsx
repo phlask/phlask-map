@@ -7,6 +7,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
+import { getUserLocation } from 'reducers/user';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 
@@ -42,7 +43,7 @@ const AddWaterTap = ({
   isValidAddress
 }) => {
   const isMobile = useIsMobile();
-  const userLocation = useSelector(state => state.filterMarkers.userLocation);
+  const userLocation = useSelector(getUserLocation);
 
   useEffect(() => {
     setDefaults({
