@@ -19,11 +19,18 @@ describe('menu navigation', () => {
   });
 
   it('should successfully show the join team content', () => {
-    // TODO
+    // Click the join team sidebar button
+    cy.get('[data-cy=sidebar-jointeam-button]').click();
+
+    cy.get('[data-cy=jointeam-header]').should('have.text', 'Join the team');
   });
 
-  it('should successfully show the contact form and send feedback', () => {
-    // TODO
-    // Make form submission send to a test destination for validation
+  it('should successfully show the contact form', () => {
+    // Click the contact sidebar button
+    cy.get('[data-cy=sidebar-contact-button]').click();
+
+    // Verify the iframe is present
+    cy.get('iframe[title="Contact Us"]').should('exist');
+    cy.get('iframe[title="Contact Us"]').should('have.attr', 'src').and('include', 'airtable.com');
   });
 });
