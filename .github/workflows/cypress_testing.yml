@@ -3,7 +3,14 @@ name: Cypress Tests
 on: [workflow_call]
 
 jobs:
-  desktop:
+  cypress_tests:
+    strategy:
+      matrix:
+        include:
+          - spec: "cypress/e2e/desktop/*.cy.js"
+            config_file: "cypress.config.mjs"
+          - spec: "cypress/e2e/mobile/*.cy.js"
+            config_file: "cypress.mobile.config.mjs"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
@@ -16,4 +23,5 @@ jobs:
         with:
           start: yarn start:cypress
           browser: chrome
-          spec: cypress/e2e/desktop/*.cy.js
+          spec: ${{ matrix.spec }}
+          config-file: ${{ matrix.config_file }}
