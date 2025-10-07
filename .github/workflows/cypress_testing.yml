@@ -6,7 +6,10 @@ jobs:
   cypress_tests:
     strategy:
       matrix:
-        spec: ["cypress/e2e/desktop/*.cy.js","cypress/e2e/mobile/*.cy.js"]
+        - spec: "cypress/e2e/desktop/*.cy.js"
+          config_file: "cypress.config.mjs"
+        - spec: "cypress/e2e/mobile/*.cy.js"
+          config_file: "cypress.mobile.config.mjs"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
@@ -20,3 +23,4 @@ jobs:
           start: yarn start:cypress
           browser: chrome
           spec: ${{ matrix.spec }}
+          config-file: ${{ matrix.config_file }}
