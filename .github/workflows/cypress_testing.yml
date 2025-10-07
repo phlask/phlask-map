@@ -6,10 +6,11 @@ jobs:
   cypress_tests:
     strategy:
       matrix:
-        - spec: "cypress/e2e/desktop/*.cy.js"
-          config_file: "cypress.config.mjs"
-        - spec: "cypress/e2e/mobile/*.cy.js"
-          config_file: "cypress.mobile.config.mjs"
+        include:
+          - spec: "cypress/e2e/desktop/*.cy.js"
+            config_file: "cypress.config.mjs"
+          - spec: "cypress/e2e/mobile/*.cy.js"
+            config_file: "cypress.mobile.config.mjs"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
