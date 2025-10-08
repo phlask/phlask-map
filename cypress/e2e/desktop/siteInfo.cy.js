@@ -4,6 +4,19 @@
 // For each resource type, test each site detail permutation and confirm only the expected number of taps appear.
 describe('site info', () => {
   beforeEach(() => {
+    // Mock geolocation to City Hall to ensure consistent test behavior
+    cy.window().then((win) => {
+      cy.stub(win.navigator.geolocation, 'getCurrentPosition').callsFake((success) => {
+        success({
+          coords: {
+            latitude: 39.952744,
+            longitude: -75.1635,
+            accuracy: 10
+          }
+        });
+      });
+    });
+
     cy.visit('/');
   });
 
@@ -39,12 +52,8 @@ describe('site info', () => {
     cy.get('[data-cy=button-FORAGE-data-selector]').click()
     cy.get('[data-cy=button-resource-type-menu]').click()
 
-    // Wait for foraging markers to appear on the map
-    cy.wait(2000); // Allow time for markers to load
-
-    // Load a sample foraging site - try to find any marker
-    // This is currently using live data, but should be updated to make use of test data.
-    cy.get('[title^="data-cy-"]').first().click();
+    // Wait for specific foraging marker to be visible
+    cy.get('[title^="data-cy-"]').should('be.visible').first().click();
 
     // Verify that the info window appears with location name
     cy.get('[data-cy=tap-organization-name]').should('exist');
