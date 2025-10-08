@@ -42,6 +42,7 @@ const waitForResourcesLoad = () => {
 describe("Water resource filtering", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
     switchToResourceType("water");
@@ -157,6 +158,7 @@ describe("Water resource filtering", () => {
 describe("Food resource filtering", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
     switchToResourceType("food");
@@ -242,6 +244,7 @@ describe("Food resource filtering", () => {
 describe("Foraging resource filtering", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
     switchToResourceType("forage");
@@ -327,6 +330,7 @@ describe("Foraging resource filtering", () => {
 describe("Bathroom resource filtering", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
     switchToResourceType("bathroom");
@@ -432,6 +436,7 @@ describe("Bathroom resource filtering", () => {
 describe("Filter persistence across resource types", () => {
   beforeEach(() => {
     cy.viewport("iphone-x");
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-mobile]").should("exist");
   });

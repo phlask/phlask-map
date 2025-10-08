@@ -4,6 +4,7 @@
 // For each resource type, test each site detail permutation and confirm only the expected number of taps appear.
 describe('site info', () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit('/');
   });
 

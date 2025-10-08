@@ -41,6 +41,7 @@ const waitForResourcesLoad = () => {
 // Water resource filter tests
 describe("Water resource filtering", () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-type-menu]").should("exist");
     switchToResourceType("water");
@@ -155,6 +156,7 @@ describe("Water resource filtering", () => {
 // Food resource filter tests
 describe("Food resource filtering", () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-type-menu]").should("exist");
     switchToResourceType("food");
@@ -239,6 +241,7 @@ describe("Food resource filtering", () => {
 // Foraging resource filter tests
 describe("Foraging resource filtering", () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-type-menu]").should("exist");
     switchToResourceType("forage");
@@ -323,6 +326,7 @@ describe("Foraging resource filtering", () => {
 // Bathroom resource filter tests
 describe("Bathroom resource filtering", () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-type-menu]").should("exist");
     switchToResourceType("bathroom");
@@ -427,6 +431,7 @@ describe("Bathroom resource filtering", () => {
 // Cross-resource type filter persistence tests
 describe("Filter persistence across resource types", () => {
   beforeEach(() => {
+    cy.mockGeolocation();
     cy.visit("/");
     cy.get("[data-cy=button-filter-type-menu]").should("exist");
   });
