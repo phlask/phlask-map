@@ -4,19 +4,7 @@
 // For each resource type, test each site detail permutation and confirm only the expected number of taps appear.
 describe('site info', () => {
   beforeEach(() => {
-    // Mock geolocation to City Hall to ensure consistent test behavior
-    cy.window().then((win) => {
-      cy.stub(win.navigator.geolocation, 'getCurrentPosition').callsFake((success) => {
-        success({
-          coords: {
-            latitude: 39.952744,
-            longitude: -75.1635,
-            accuracy: 10
-          }
-        });
-      });
-    });
-
+    cy.mockGeolocationToCityHall();
     cy.visit('/');
   });
 
