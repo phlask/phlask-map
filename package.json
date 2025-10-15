@@ -59,7 +59,7 @@
     "storybook": "^8.2.9",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.25.0",
-    "vite": "^5.4.15",
+    "vite": "^5.4.18",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1"
@@ -70,7 +70,7 @@
     "build": "vite build",
     "testDataGen": "node cypress/testDataGenerator.js",
     "test": "yarn testDataGen && cypress run",
-    "test:mobile": "cypress run --config-file cypress.mobile.config.js",
+    "test:mobile": "cypress run --config-file cypress.mobile.config.mjs",
     "generate-icons": "npx @svgr/cli --config-file=.svgrrc.json ./src/assets/icons --out-dir=./src/icons && yarn lint --fix",
     "cypress": "cypress open",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --quiet",
