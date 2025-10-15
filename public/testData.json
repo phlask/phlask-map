@@ -26,7 +26,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -57,7 +58,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -88,7 +90,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -119,7 +122,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -150,7 +154,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -181,7 +186,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -212,7 +218,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -243,7 +250,8 @@
         "water": {
             "dispenser_type": [
                 "DRINKING_FOUNTAIN"
-            ]
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
         },
         "zip_code": "19104"
     },
@@ -256,7 +264,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -286,7 +295,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -316,7 +326,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -346,7 +357,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -376,7 +388,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -402,11 +415,12 @@
         "city": "Philadelphia",
         "creator": "phlask",
         "date_created": "2024-03-31T00:37:45.004545+00:00",
-        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+        "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nTheses food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -436,7 +450,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -466,7 +481,8 @@
         "entry_type": "UNSURE",
         "food": {
             "organization_name": "Test Organization",
-            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9"
+            "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+            "food_type": ["PERISHABLE"]
         },
         "last_modified": "2024-03-31T00:37:46.004545+00:00",
         "last_modifier": "phlask",
@@ -486,5 +502,364 @@
         },
         "version": 1,
         "zip_code": "19149"
+    },
+    {
+        "address": "3901 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:52.004545+00:00",
+        "description": "Test water with bottle filler and ADA accessible",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:37:52.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95100,
+        "longitude": -75.16800,
+        "name": "Test Water Bottle Filler",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:52.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "water": {
+            "dispenser_type": [
+                "DRINKING_FOUNTAIN",
+                "BOTTLE_FILLER"
+            ],
+            "tags": ["WHEELCHAIR_ACCESSIBLE"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3902 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:53.004545+00:00",
+        "description": "Test foraging with bark and flowers, unsure entry",
+        "entry_type": "UNSURE",
+        "last_modified": "2024-03-31T00:37:53.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95200,
+        "longitude": -75.16900,
+        "name": "Test Foraging Site",
+        "resource_type": "FORAGE",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:53.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "forage": {
+            "forage_type": ["BARK", "FLOWERS"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3903 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:54.004545+00:00",
+        "description": "Test food with all distribution types and prepared meals",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:37:54.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95300,
+        "longitude": -75.17000,
+        "name": "Test Food Site",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:54.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "food": {
+            "food_type": ["PREPARED"],
+            "distribution_type": ["EAT_ON_SITE", "DELIVERY", "PICKUP"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3904 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:55.004545+00:00",
+        "description": "Test bathroom with ADA accessible and water fountain",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:37:55.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95400,
+        "longitude": -75.17100,
+        "name": "Test Bathroom with Features",
+        "resource_type": "BATHROOM",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:55.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "bathroom": {
+            "tags": ["WHEELCHAIR_ACCESSIBLE", "HAS_FOUNTAIN"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3905 Locust Walk",
+        "city": "Philadelphia", 
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:56.004545+00:00",
+        "description": "Test water with sink and filtered water, restricted access",
+        "entry_type": "RESTRICTED",
+        "last_modified": "2024-03-31T00:37:56.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95500,
+        "longitude": -75.17200,
+        "name": "Test Water Sink Filtered",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:56.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "water": {
+            "dispenser_type": ["SINK"],
+            "tags": ["FILTERED"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3906 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask", 
+        "date_created": "2024-03-31T00:37:57.004545+00:00",
+        "description": "Test foraging with fruits and medicinal, open access",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:37:57.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95600,
+        "longitude": -75.17300,
+        "name": "Test Foraging Fruits Medicinal",
+        "resource_type": "FORAGE",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:57.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "forage": {
+            "forage_type": ["FRUIT"],
+            "tags": ["MEDICINAL"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3907 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:58.004545+00:00", 
+        "description": "Test food with non-perishable and pickup only, non-profit",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:37:58.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95700,
+        "longitude": -75.17400,
+        "name": "Test Food Non-perishable Pickup",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:58.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "food": {
+            "food_type": ["NON_PERISHABLE"],
+            "distribution_type": ["PICKUP"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3908 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:37:59.004545+00:00",
+        "description": "Test bathroom with gender neutral and changing table, restricted",
+        "entry_type": "RESTRICTED", 
+        "last_modified": "2024-03-31T00:37:59.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95800,
+        "longitude": -75.17500,
+        "name": "Test Bathroom Gender Neutral Changing",
+        "resource_type": "BATHROOM",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:37:59.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "bathroom": {
+            "tags": ["GENDER_NEUTRAL", "CHANGING_TABLE"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3909 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:38:00.004545+00:00",
+        "description": "Desktop test water: drinking fountain + bottle filler + ADA + filtered + open",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:38:00.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.95900,
+        "longitude": -75.17600,
+        "name": "Desktop Test Water All Features",
+        "resource_type": "WATER",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:38:00.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "water": {
+            "dispenser_type": ["DRINKING_FOUNTAIN", "BOTTLE_FILLER"],
+            "tags": ["WHEELCHAIR_ACCESSIBLE", "FILTERED"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3910 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:38:01.004545+00:00",
+        "description": "Desktop test food: all types + eat on site + delivery + non-profit",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:38:01.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.96000,
+        "longitude": -75.17700,
+        "name": "Desktop Test Food All Types",
+        "resource_type": "FOOD",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:38:01.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "food": {
+            "food_type": ["PERISHABLE", "NON_PERISHABLE", "PREPARED"],
+            "distribution_type": ["EAT_ON_SITE", "DELIVERY"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3911 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:38:02.004545+00:00",
+        "description": "Desktop test foraging: all types + medicinal + in season + open",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:38:02.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.96100,
+        "longitude": -75.17800,
+        "name": "Desktop Test Foraging All Types",
+        "resource_type": "FORAGE",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:38:02.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "forage": {
+            "forage_type": ["NUT", "FRUIT", "LEAVES", "BARK", "FLOWERS"],
+            "tags": ["MEDICINAL", "IN_SEASON"]
+        },
+        "zip_code": "19104"
+    },
+    {
+        "address": "3912 Locust Walk",
+        "city": "Philadelphia",
+        "creator": "phlask",
+        "date_created": "2024-03-31T00:38:03.004545+00:00",
+        "description": "Desktop test bathroom: all features + open access",
+        "entry_type": "OPEN",
+        "last_modified": "2024-03-31T00:38:03.004545+00:00",
+        "last_modifier": "phlask",
+        "latitude": 39.96200,
+        "longitude": -75.17900,
+        "name": "Desktop Test Bathroom All Features",
+        "resource_type": "BATHROOM",
+        "source": {
+            "type": "MIGRATION"
+        },
+        "state": "PA",
+        "status": "OPERATIONAL",
+        "verification": {
+            "verified": false,
+            "last_modified": "2024-03-31T00:38:03.004545+00:00",
+            "verifier": "phlask"
+        },
+        "version": 1,
+        "bathroom": {
+            "tags": ["WHEELCHAIR_ACCESSIBLE", "GENDER_NEUTRAL", "CHANGING_TABLE", "SINGLE_OCCUPANCY", "FAMILY", "HAS_FOUNTAIN"]
+        },
+        "zip_code": "19104"
     }
 ]

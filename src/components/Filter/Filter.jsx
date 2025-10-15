@@ -164,6 +164,7 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                   margin: '10px 20px'
                 }}
                 onClick={clearAll}
+                data-cy="button-clear-all-desktop"
               >
                 <p
                   style={{
@@ -271,7 +272,7 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                 margin: '10px 20px'
               }}
             >
-              <Button onClick={clearAll}>Clear All</Button>
+              <Button onClick={clearAll} data-cy="button-clear-all-mobile">Clear All</Button>
             </Box>
             <Box
               sx={{
