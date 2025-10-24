@@ -372,7 +372,6 @@ const AddResourceModalV2 = () => {
         aria-label="close"
         onClick={() => handleClose()}
         sx={{
-          position: 'absolute',
           width: isMobile ? '32px' : '23px',
           height: isMobile ? '32px' : '22.3px',
           right: isMobile ? '32px' : '42px',

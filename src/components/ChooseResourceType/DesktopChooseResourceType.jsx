@@ -73,22 +73,22 @@ const DesktopChooseResourceType = () => {
   useOnClickOutside(ref, handleClickOutside, [btnRef]);
 
   return (
-    <Paper
-      sx={{
-        position: 'absolute',
-        left: '32px',
-        bottom: '133px',
-        width: '766px',
-        borderRadius: '10px'
-      }}
-      ref={ref}
+    <Collapse
+      in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
+      orientation="vertical"
+      timeout="auto"
+      mountOnEnter
+      unmountOnExit
     >
-      <Collapse
-        in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
-        orientation="vertical"
-        timeout="auto"
+      <Paper
+        sx={{
+          left: '32px',
+          bottom: '133px',
+          borderRadius: '10px'
+        }}
+        ref={ref}
       >
-        <Box sx={{ padding: '40px' }}>
+        <Box sx={{ padding: '40px', pointerEvents: 'auto' }}>
           <Box>
             <h1 className={styles.header}>Show Resource Type</h1>
             <p className={styles.description}>
@@ -127,8 +127,8 @@ const DesktopChooseResourceType = () => {
             />
           </Box>
         </Box>
-      </Collapse>
-    </Paper>
+      </Paper>
+    </Collapse>
   );
 };
 

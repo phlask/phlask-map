@@ -6,12 +6,10 @@ $vertical-spacing-buffer: 25px; // Provides spacing between the thank you contac
 $extra-space: 25px; // Extra vertical space for the contact form
 
 .page {
-  max-height: calc(
-    #{$fullViewportHeight} - #{$header-height} - #{$verticalspacing} - #{$footer-height} -
-      #{$vertical-spacing-buffer} - #{$extra-space}
-  );
   overflow-y: auto;
   padding-right: 10px;
+  flex: 1;
+  max-height: 600px;
 }
 
 .pageHeader {

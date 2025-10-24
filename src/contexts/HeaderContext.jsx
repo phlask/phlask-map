@@ -20,9 +20,6 @@ const HeaderProvider = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMapControls, setShowMapControls] = useState(false);
   const [menuExpand, setMenuExpand] = useState(false);
-
-  const [verticalAnimFinished1, setVerticalAnimFinished1] = useState(false);
-  const [verticalAnimFinished2, setVerticalAnimFinished2] = useState(false);
   const [shownPage, setShownPage] = useState(null);
   const isSearchShown = useSelector(state => state.filterMarkers.isSearchShown);
   const isFilterShown = useSelector(state => state.filterMarkers.isFilterShown);
@@ -34,8 +31,6 @@ const HeaderProvider = ({ children }) => {
   const toggleMenuExpand = useCallback(
     event => {
       if (menuExpand) {
-        setVerticalAnimFinished1(false);
-        setVerticalAnimFinished2(false);
         setShownPage(null);
       }
       setMenuExpand(!menuExpand);
@@ -50,8 +45,6 @@ const HeaderProvider = ({ children }) => {
   const menuClicked = useCallback(
     page => {
       if (page === shownPage) {
-        setVerticalAnimFinished1(false);
-        setVerticalAnimFinished2(false);
         setShownPage(null);
       } else {
         switch (page) {
@@ -100,10 +93,6 @@ const HeaderProvider = ({ children }) => {
       setShowMapControls,
       menuExpand,
       setMenuExpand,
-      verticalAnimFinished1,
-      setVerticalAnimFinished1,
-      verticalAnimFinished2,
-      setVerticalAnimFinished2,
       shownPage,
       setShownPage,
       isSearchShown,
@@ -125,16 +114,12 @@ const HeaderProvider = ({ children }) => {
       showMapControls,
       shownPage,
       sidebarOpen,
-      toggleMenuExpand,
-      verticalAnimFinished1,
-      verticalAnimFinished2
+      toggleMenuExpand
     ]
   );
 
   // Return the HeaderContext.Provider with the headerState and any other values/functions
-  return (
-    <HeaderContext.Provider value={stateVal}>{children}</HeaderContext.Provider>
-  );
+  return <HeaderContext value={stateVal}>{children}</HeaderContext>;
 };
 
 export { HeaderContext, HeaderProvider };

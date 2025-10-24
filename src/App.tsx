@@ -1,24 +1,27 @@
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import './App.css';
-import Head from 'components/Head/Head';
 import ReactGoogleMaps from 'components/ReactGoogleMaps/ReactGoogleMaps';
-import theme from 'theme';
-import store from 'store';
-import { Provider } from 'react-redux';
-import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker';
 
-const App = () => (
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <GeolocationTracker />
-      <CssBaseline />
-      <div className="page-wrapper">
-        <Head />
-        <ReactGoogleMaps />
-      </div>
-    </ThemeProvider>
-  </Provider>
-);
+import Overlay from 'components/Overlay/Overlay';
+import { useEffect, useState } from 'react';
+import { getResources } from 'actions/actions';
+import useAppDispatch from 'hooks/useDispatch';
+
+import './App.css';
+
+const App = () => {
+  const dispatch = useAppDispatch();
+  const [searchedTap, setSearchedTap] =
+    useState<google.maps.LatLngLiteral | null>(null);
+
+  useEffect(() => {
+    dispatch(getResources());
+  }, [dispatch]);
+
+  return (
+    <>
+      <Overlay onSearch={location => setSearchedTap(location)} />
+      <ReactGoogleMaps searchedTap={searchedTap} />
+    </>
+  );
+};
 
 export default App;

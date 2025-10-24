@@ -7,7 +7,7 @@ const postHogOptions = {
   mask_all_text: true
 };
 
-const AnalyticsWrapper = ({ children }: PropsWithChildren) => {
+const AnalyticsProvider = ({ children }: PropsWithChildren) => {
   // Do not enable analytics for local development
   // This helps save on analytics costs and API limits
   if (
@@ -29,4 +29,4 @@ const AnalyticsWrapper = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default AnalyticsWrapper;
+export default AnalyticsProvider;

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
-import type { RootState } from 'reducers/root';
+import type { RootState } from 'store';
 
 type UserLocation = Pick<GeolocationCoordinates, 'latitude' | 'longitude'>;
 

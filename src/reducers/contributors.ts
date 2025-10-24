@@ -1,28 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getContributors } from '../db';
+import { getContributors } from 'db';
+import { Contributor } from 'types/Contributor';
+import shuffleArray from 'utils/shuffleArray';
 
 export const fetchContributors = createAsyncThunk(
   'fetch-contributors',
   async () => {
     const allContributors = await getContributors();
-    const shuffleArray = array => {
-      for (let i = array.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    };
 
     return shuffleArray(allContributors);
   }
 );
 
+type ContributorsState = {
+  current: Contributor[];
+  past: Contributor[];
+};
+
+const initialState: ContributorsState = { current: [], past: [] };
+
 const contributorsSlice = createSlice({
   name: 'contributors/fetch',
-  initialState: { current: [], past: [] },
+  initialState,
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchContributors.fulfilled, (state, action) => {
-      state.current = action.payload.filter(contributor => contributor.is_active);
+      state.current = action.payload.filter(
+        contributor => contributor.is_active
+      );
       state.past = action.payload.filter(contributor => !contributor.is_active);
     });
   }

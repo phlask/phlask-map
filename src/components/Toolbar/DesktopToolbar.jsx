@@ -67,9 +67,6 @@ const DesktopToolbar = ({ onItemClick, onNearMeClick }) => {
     <Box
       sx={{
         display: 'flex',
-        position: 'absolute',
-        left: '32px',
-        bottom: '32px',
         px: '40px',
         py: '12px',
         gap: '40px',
@@ -79,7 +76,8 @@ const DesktopToolbar = ({ onItemClick, onNearMeClick }) => {
         minWidth: '400px',
         borderRadius: '10px',
         justifyContent: 'space-between',
-        zIndex: 1
+        zIndex: 1,
+        pointerEvents: 'auto'
       }}
     >
       <NearMeButton resourceType={resourceType} onClick={onNearMeClick} />

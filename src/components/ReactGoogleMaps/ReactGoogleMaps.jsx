@@ -1,5 +1,5 @@
 import { Fade } from '@mui/material';
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, Marker, useMap } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -47,139 +47,20 @@ function getCoordinates() {
 const style = {
   width: '100%',
   height: '100vh',
-  position: 'relative'
+  position: 'relative',
+  zIndex: 1
 };
 
-const filters = {
-  WATER: {
-    title: 'Water Filter',
-    categories: [
-      {
-        type: 0,
-        header: 'Dispenser Type',
-        tags: [
-          'Drinking fountain',
-          'Bottle filler',
-          'Sink',
-          'Water cooler',
-          'Soda machine',
-          'Vessel'
-        ]
-      },
-      {
-        type: 0,
-        header: 'Features',
-        tags: [
-          'ADA accessible',
-          'Filtered water',
-          'Vessel needed',
-          'ID required'
-        ]
-      },
-      {
-        type: 1,
-        header: 'Entry Type',
-        tags: ['Open Access', 'Restricted', 'Unsure']
-      }
-    ]
-  },
-  FOOD: {
-    title: 'Food Filter',
-    categories: [
-      {
-        type: 0,
-        header: 'Food Type',
-        tags: ['Perishable', 'Non-perishable', 'Prepared foods and meals']
-      },
-      {
-        type: 0,
-        header: 'Distribution type',
-        tags: ['Eat on site', 'Delivery', 'Pick up']
-      },
-      {
-        type: 1,
-        header: 'Organization type',
-        tags: ['Government', 'Business', 'Non-profit', 'Unsure']
-      }
-    ]
-  },
-  FORAGE: {
-    title: 'Foraging Filter',
-    categories: [
-      {
-        type: 0,
-        header: 'Forage type',
-        tags: ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers']
-      },
-      {
-        type: 0,
-        header: 'Features',
-        tags: ['Medicinal', 'In season', 'Community garden']
-      },
-      {
-        type: 1,
-        header: 'Entry Type',
-        tags: ['Open Access', 'Restricted', 'Unsure']
-      }
-    ]
-  },
-  BATHROOM: {
-    title: 'Bathroom Filter',
-    categories: [
-      {
-        type: 0,
-        header: 'Features',
-        tags: [
-          'ADA accessible',
-          'Gender neutral',
-          'Changing table',
-          'Single occupancy',
-          'Family bathroom',
-          'Has water fountain'
-        ]
-      },
-      {
-        type: 1,
-        header: 'Entry Type',
-        tags: ['Open Access', 'Restricted', 'Unsure']
-      }
-    ]
-  }
-};
-
-const noActiveFilterTags = Object.entries(filters).reduce(
-  (prev, [key, value]) => ({
-    ...prev,
-    [key]: value.categories.map(category => {
-      if (category.type === 0) {
-        return new Array(category.tags.length).fill(false);
-      }
-      return category.tags.length;
-    })
-  }),
-  {}
-);
-
-const ReactGoogleMaps = () => {
+const ReactGoogleMaps = ({ searchedTap }) => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const filteredResources = useSelector(state => selectFilteredResource(state));
   const resourceType = useSelector(state => state.filterMarkers.resourceType);
   const selectedPlace = useSelector(state => state.filterMarkers.selectedPlace);
-  const searchBarMapTintOn = useSelector(
-    state => state.filterMarkers.searchBarMapTintOn
-  );
   const userLocation = useSelector(getUserLocation);
-  const [searchedTap, setSearchedTap] = useState(null);
-  const [map, setMap] = useState(null);
-  const [activeFilterTags, setActiveFilterTags] = useState(
-    JSON.parse(JSON.stringify(noActiveFilterTags))
-  );
 
-  useEffect(() => {
-    dispatch(getResources());
-  }, [dispatch]);
+  const map = useMap();
 
   useEffect(() => {
     if (!map) {
@@ -210,144 +91,64 @@ const ReactGoogleMaps = () => {
     });
   };
 
-  const onReady = event => {
-    setMap(prev => prev || event.map);
-  };
-
-  const searchForLocation = location => {
-    map.panTo(location);
-    map.setZoom(16);
-    setSearchedTap({ lat: Number(location.lat), lng: Number(location.lng) });
-  };
-
-  const handleTag = (type, filterType, filterTag, index, key) => {
-    const updatedActiveFilterTags = { ...activeFilterTags };
-
-    // handles multi select filters
-    if (type === 0) {
-      if (updatedActiveFilterTags[filterType][index][key]) {
-        dispatch(removeFilterFunction({ tag: filterTag }));
-      } else {
-        dispatch(setFilterFunction({ tag: filterTag }));
-      }
-      updatedActiveFilterTags[filterType][index][key] =
-        !updatedActiveFilterTags[filterType][index][key];
-      setActiveFilterTags(updatedActiveFilterTags);
-    }
-    // handles single select entry/organization filters
-    else if (type === 1) {
-      if (updatedActiveFilterTags[filterType][index] === key) {
-        updatedActiveFilterTags[filterType][index] = null;
-        dispatch(removeEntryFilterFunction());
-      } else {
-        updatedActiveFilterTags[filterType][index] = key;
-        dispatch(setEntryFilterFunction({ tag: filterTag }));
-      }
-      setActiveFilterTags(updatedActiveFilterTags);
-    }
-  };
-
-  const clearAllTags = () => {
-    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
-    dispatch(resetFilterFunction());
-  };
-
   return (
-    <APIProvider
-      apiKey="AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I"
-      libraries={['places']}
+    <Map
+      className={styles.mapContainer}
+      style={style}
+      defaultZoom={16}
+      zoomControl={!isMobile}
+      streetViewControl={false}
+      mapTypeControl={false}
+      rotateControl={false}
+      fullscreenControl={false}
+      defaultCenter={{
+        lat: CITY_HALL_COORDINATES.latitude,
+        lng: CITY_HALL_COORDINATES.longitude
+      }}
+      mapId="DEMO_MAP_ID"
     >
-      <Map
-        className={styles.mapContainer}
-        style={style}
-        defaultZoom={16}
-        zoomControl={!isMobile}
-        streetViewControl={false}
-        mapTypeControl={false}
-        rotateControl={false}
-        fullscreenControl={false}
-        onIdle={onReady}
-        defaultCenter={{
-          lat: CITY_HALL_COORDINATES.latitude,
-          lng: CITY_HALL_COORDINATES.longitude
-        }}
-        mapId="DEMO_MAP_ID"
-      >
-        {filteredResources.map((resource, index) => {
-          const getPinUrl = () => {
-            const isActiveMarker =
-              selectedPlace?.latitude === resource.latitude &&
-              selectedPlace?.longitude === resource.longitude;
+      {filteredResources.map((resource, index) => {
+        const getPinUrl = () => {
+          const isActiveMarker =
+            selectedPlace?.latitude === resource.latitude &&
+            selectedPlace?.longitude === resource.longitude;
 
-            if (!resource.resource_type) {
-              return null;
-            }
+          if (!resource.resource_type) {
+            return null;
+          }
 
-            if (!isActiveMarker) {
-              return phlaskMarkerIconV2(resource.resource_type, 56, 56);
-            }
-            return {
-              [WATER_RESOURCE_TYPE]: PinWaterActive(),
-              [FOOD_RESOURCE_TYPE]: PinFoodActive(),
-              [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
-              [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
-            }[resource.resource_type];
-          };
+          if (!isActiveMarker) {
+            return phlaskMarkerIconV2(resource.resource_type, 56, 56);
+          }
+          return {
+            [WATER_RESOURCE_TYPE]: PinWaterActive(),
+            [FOOD_RESOURCE_TYPE]: PinFoodActive(),
+            [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
+            [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
+          }[resource.resource_type];
+        };
 
-          return (
-            <Marker
-              key={resource.id}
-              onClick={() => onMarkerClick(resource)}
-              position={{ lat: resource.latitude, lng: resource.longitude }}
-              icon={{ url: getPinUrl() }}
-              // This is used for marker targeting as we are unable to add custom properties with this library.
-              // We should eventually replace this so that we can still enable the use of screen readers in the future.
-              title={`data-cy-${index}`}
-            />
-          );
-        })}
-
-        {searchedTap ? (
+        return (
           <Marker
-            name="Your Search Result"
-            position={searchedTap}
-            title="data-cy-search-result"
+            key={resource.id}
+            onClick={() => onMarkerClick(resource)}
+            position={{ lat: resource.latitude, lng: resource.longitude }}
+            icon={{ url: getPinUrl() }}
+            // This is used for marker targeting as we are unable to add custom properties with this library.
+            // We should eventually replace this so that we can still enable the use of screen readers in the future.
+            title={`data-cy-${index}`}
           />
-        ) : null}
-      </Map>
-      {isMobile && (
-        <Fade
-          in={searchBarMapTintOn}
-          timeout={300}
-          style={{ position: 'fixed', pointerEvents: 'none' }}
-        >
-          <div
-            style={{
-              width: '100vw',
-              height: '100dvh',
-              backgroundColor: 'rgba(0, 0, 0, 0.15)'
-            }}
-          />
-        </Fade>
-      )}
+        );
+      })}
 
-      <SearchBar
-        className="searchBar"
-        search={location => searchForLocation(location)}
-      />
-
-      <ChooseResourceType />
-      <Filter
-        resourceType={resourceType}
-        filters={filters}
-        handleTag={handleTag}
-        clearAll={clearAllTags}
-        activeTags={activeFilterTags}
-      />
-      <AddResourceModalV2 />
-      <Toolbar />
-      <SelectedTap />
-    </APIProvider>
+      {searchedTap ? (
+        <Marker
+          name="Your Search Result"
+          position={searchedTap}
+          title="data-cy-search-result"
+        />
+      ) : null}
+    </Map>
   );
 };
 

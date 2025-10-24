@@ -37,7 +37,6 @@ const MobileHead = () => {
       <Box
         sx={{
           backgroundColor: 'transparent',
-          position: 'absolute',
           maxWidth: '100%',
           zIndex: '9',
           width: '100%'

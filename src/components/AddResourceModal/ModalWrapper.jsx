@@ -14,24 +14,25 @@ const ModalWrapper = ({ children, onExited }) => {
   return (
     <>
       {!isMobile && (
-        <Paper
-          sx={{
-            position: 'absolute',
-            left: '32px',
-            bottom: '133px',
-            width: '766px',
-            borderRadius: '10px'
-          }}
+        <Collapse
+          in={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
+          orientation="vertical"
+          timeout="auto"
+          mountOnEnter
+          unmountOnExit
+          onExited={onExited}
         >
-          <Collapse
-            in={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
-            orientation="vertical"
-            timeout="auto"
-            onExited={onExited}
+          <Paper
+            sx={{
+              left: '32px',
+              bottom: '133px',
+              borderRadius: '10px',
+              pointerEvents: 'auto'
+            }}
           >
             {children}
-          </Collapse>
-        </Paper>
+          </Paper>
+        </Collapse>
       )}
       {isMobile && (
         <Modal

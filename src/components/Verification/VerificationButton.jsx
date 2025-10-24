@@ -36,7 +36,7 @@ const VerificationButton = ({ resource }) => {
     selectedResource => {
       updateResource(selectedResource);
       setHasBeenUpdated(true);
-      dispatch(updateExistingResource({ resource: selectedResource }));
+      dispatch(updateExistingResource(selectedResource));
       dispatch(setSelectedPlace(selectedResource));
     },
     [dispatch]

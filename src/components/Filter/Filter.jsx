@@ -5,6 +5,7 @@ import {
   Collapse,
   IconButton,
   Paper,
+  Stack,
   SwipeableDrawer
 } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
@@ -12,6 +13,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import selectFilteredResource from 'selectors/resourceSelectors';
 import {
+  removeEntryFilterFunction,
+  removeFilterFunction,
+  setEntryFilterFunction,
+  setFilterFunction,
   setToolbarModal,
   toggleInfoWindow,
   TOOLBAR_MODAL_FILTER,
@@ -70,29 +75,59 @@ const FilterTagsExclusive = ({
   </Box>
 );
 
-const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
+const Filter = ({ filters, resourceType, activeTags, onChange, clearAll }) => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
   const filteredResources = useSelector(state => selectFilteredResource(state));
+
+  const handleTag = (type, filterType, filterTag, index, key) => {
+    const updatedActiveFilterTags = { ...activeTags };
+
+    // handles multi select filters
+    if (type === 0) {
+      if (updatedActiveFilterTags[filterType][index][key]) {
+        dispatch(removeFilterFunction({ tag: filterTag }));
+      } else {
+        dispatch(setFilterFunction({ tag: filterTag }));
+      }
+      updatedActiveFilterTags[filterType][index][key] =
+        !updatedActiveFilterTags[filterType][index][key];
+      onChange(updatedActiveFilterTags);
+    }
+    // handles single select entry/organization filters
+    else if (type === 1) {
+      if (updatedActiveFilterTags[filterType][index] === key) {
+        updatedActiveFilterTags[filterType][index] = null;
+        dispatch(removeEntryFilterFunction());
+      } else {
+        updatedActiveFilterTags[filterType][index] = key;
+        dispatch(setEntryFilterFunction({ tag: filterTag }));
+      }
+      onChange(updatedActiveFilterTags);
+    }
+  };
+
   return (
     <>
       {!isMobile && (
-        <Paper
-          sx={{
-            position: 'absolute',
-            left: '32px',
-            bottom: '133px',
-            width: '686px',
-            borderRadius: '10px'
-          }}
+        <Collapse
+          in={toolbarModal === TOOLBAR_MODAL_FILTER}
+          orientation="vertical"
+          timeout={{ enter: 300, appear: 0, exit: 300 }}
+          mountOnEnter
+          unmountOnExit
         >
-          <Collapse
-            in={toolbarModal === TOOLBAR_MODAL_FILTER}
-            orientation="vertical"
-            timeout="auto"
+          <Paper
+            sx={{
+              position: 'absolute',
+              left: '32px',
+              bottom: '133px',
+              width: '686px',
+              borderRadius: '10px'
+            }}
           >
-            <Box className={styles.header}>
+            <Stack sx={{ pointerEvents: 'auto' }} className={styles.header}>
               <h1>{filters[resourceType].title}</h1>
               <IconButton
                 aria-label="close"
@@ -108,7 +143,6 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                   dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                 }}
                 sx={{
-                  position: 'absolute',
                   right: '20px',
                   top: '5px',
                   color: '#fff',
@@ -124,7 +158,7 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                   }}
                 />
               </IconButton>
-            </Box>
+            </Stack>
 
             <Box sx={{ margin: '20px' }}>
               {filters[resourceType].categories.map((category, index) => (
@@ -202,8 +236,8 @@ const Filter = ({ filters, resourceType, handleTag, activeTags, clearAll }) => {
                 </p>
               </Box>
             </Box>
-          </Collapse>
-        </Paper>
+          </Paper>
+        </Collapse>
       )}
       {isMobile && (
         <SwipeableDrawer

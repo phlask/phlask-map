@@ -13,6 +13,7 @@
 /**
  * A PHLask resource coming from our backend.
  * @typedef {Object} ResourceEntry
+ * @property {string?} id
  * @property {number | undefined} version Represents the schema that this resource entry is following.
  * @property {string} date_created The date this resource was created, in ISO UTC format.
  * @property {string} creator Who created this resource.

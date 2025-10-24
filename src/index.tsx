@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from 'App.tsx';
-import AnalyticsWrapper from 'analytics';
+import App from 'App';
+import Providers from 'components/Providers/Providers';
 
 let basepath = '';
 // Test-specific routing logic
@@ -22,8 +22,8 @@ const root = createRoot(rootElement!);
 
 root.render(
   <StrictMode>
-    <AnalyticsWrapper>
+    <Providers>
       <App />
-    </AnalyticsWrapper>
+    </Providers>
   </StrictMode>
 );

@@ -2,7 +2,7 @@ import { forwardRef, useId, useState } from 'react';
 import { Box } from '@mui/material';
 
 const Contact = () => (
-  <Box sx={{ height: '600px' }}>
+  <Box sx={{ height: '600px', width: '100%' }}>
     <iframe
       title="Contact Us"
       className="airtable-embed"

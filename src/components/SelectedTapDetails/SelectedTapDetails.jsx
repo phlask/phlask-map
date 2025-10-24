@@ -269,7 +269,6 @@ const SelectedTapDetails = ({
                 closeModal();
               }}
               sx={{
-                position: 'absolute',
                 right: '20px',
                 top: 5,
                 color: 'black'

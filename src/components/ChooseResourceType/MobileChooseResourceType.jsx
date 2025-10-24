@@ -79,7 +79,6 @@ const MobileChooseResourceType = () => {
               flexDirection: 'column',
               alignItems: 'flex-start',
               fontSize: 55,
-              position: 'absolute',
               bottom: 138,
               left: 4
             }}
