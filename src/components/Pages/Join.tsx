@@ -18,7 +18,7 @@ type CircleProps = {
   description: string;
 };
 
-const Circle = ({ icon: Icon, title, description }: CircleProps) => (
+const Circle = ({ icon, title, description }: CircleProps) => (
   <div
     style={{
       fontSize: 25,
