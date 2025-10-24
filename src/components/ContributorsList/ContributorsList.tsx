@@ -1,10 +1,18 @@
-import React from 'react';
 import List from '@mui/material/List';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { Contributor } from 'types/Contributor';
 import ContributorsListItem from './ContributorsListItem';
 
-const ContributorsList = ({ items = [], title = 'Contributors' }) => (
+type ContributorsListProps = {
+  items: Contributor[];
+  title: string;
+};
+
+const ContributorsList = ({
+  items = [],
+  title = 'Contributors'
+}: ContributorsListProps) => (
   <Grid item>
     <Typography variant="h6" color="#73839E">
       {title}

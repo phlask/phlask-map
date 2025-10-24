@@ -1,4 +1,3 @@
-import PhlaskIcon from 'icons/PhlaskV2';
 import styles from './Pages.module.scss';
 
 const Acknowledgements = () => (

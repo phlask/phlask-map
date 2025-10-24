@@ -1,10 +1,10 @@
-import React from 'react';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import type { Contributor } from 'types/Contributor';
 
-const contributorToCircleName = contributor => {
+const contributorToCircleName = (contributor: Contributor) => {
   const circles = [];
   if (contributor.civic_member) circles.push('Civic');
   if (contributor.data_member) circles.push('Data');
@@ -14,7 +14,11 @@ const contributorToCircleName = contributor => {
   return circles.join(', ');
 };
 
-const ContributorsListItem = ({ contributor }) => (
+type ContributorsListItemProps = {
+  contributor: Contributor;
+};
+
+const ContributorsListItem = ({ contributor }: ContributorsListItemProps) => (
   <ListItem sx={{ paddingInline: 0 }}>
     <Stack>
       <Box>

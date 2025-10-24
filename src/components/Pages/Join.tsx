@@ -1,17 +1,24 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ReactElement, useEffect } from 'react';
 
 import Grid from '@mui/material/Grid';
 import CivicIcon from 'icons/JoinCivicIcon';
 import DataIcon from 'icons/JoinDataIcon';
 import DesignIcon from 'icons/JoinDesignIcon';
-import DevelopementIcon from 'icons/JoinDevelopmentIcon';
+import DevelopmentIcon from 'icons/JoinDevelopmentIcon';
 import ManagementIcon from 'icons/JoinManagementIcon';
 import { fetchContributors } from 'reducers/contributors';
 import ContributorsList from 'components/ContributorsList/ContributorsList';
+import useAppDispatch from 'hooks/useDispatch';
+import useAppSelector from 'hooks/useSelector';
 import styles from './Pages.module.scss';
 
-const Circle = ({ icon: Icon, title, description }) => (
+type CircleProps = {
+  icon: ReactElement;
+  title: string;
+  description: string;
+};
+
+const Circle = ({ icon: Icon, title, description }: CircleProps) => (
   <div
     style={{
       fontSize: 25,
@@ -30,7 +37,7 @@ const Circle = ({ icon: Icon, title, description }) => (
         aspectRatio: '1 / 1'
       }}
     >
-      <Icon />
+      {icon}
       <h2
         style={{
           margin: 0,
@@ -58,9 +65,11 @@ const Circle = ({ icon: Icon, title, description }) => (
 );
 
 const Join = () => {
-  const dispatch = useDispatch();
-  const currentContributors = useSelector(state => state.contributors.current);
-  const pastContributors = useSelector(state => state.contributors.past);
+  const dispatch = useAppDispatch();
+  const currentContributors = useAppSelector(
+    state => state.contributors.current
+  );
+  const pastContributors = useAppSelector(state => state.contributors.past);
 
   useEffect(() => {
     dispatch(fetchContributors());
@@ -88,27 +97,27 @@ const Join = () => {
         }}
       >
         <Circle
-          icon={DevelopementIcon}
+          icon={<DevelopmentIcon />}
           title="Development"
           description="Coding and Programming"
         />
         <Circle
-          icon={DataIcon}
+          icon={<DataIcon />}
           title="Data"
           description="Collecting and organizing app data"
         />
         <Circle
-          icon={ManagementIcon}
+          icon={<ManagementIcon />}
           title="Project Management"
           description="Task management"
         />
         <Circle
-          icon={DesignIcon}
+          icon={<DesignIcon />}
           title="Design"
           description="UX/UI Design and Resarch"
         />
         <Circle
-          icon={CivicIcon}
+          icon={<CivicIcon />}
           title="Civic"
           description="Publicity and Community Engagement"
         />
