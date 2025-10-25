@@ -45,7 +45,8 @@
         "explicitSpread": "ignore",
         "exceptions": ["ContactInput", "ContactCheckbox", "TextField", "svg"]
       }
-    ]
+    ],
+    "react/jsx-no-duplicate-props": [2, { "ignoreCase": false }]
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {

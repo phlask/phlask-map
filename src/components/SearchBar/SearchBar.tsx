@@ -29,7 +29,8 @@ const SearchBar = ({ search }: SearchBarProps) => {
     () =>
       debounce((input: string) => {
         google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
-          input
+          input,
+          includedRegionCodes: ['us']
         })
           .then(response =>
             setSuggestions(
@@ -45,13 +46,18 @@ const SearchBar = ({ search }: SearchBarProps) => {
     []
   );
 
-  const handleSelect = async (place: google.maps.Place) => {
-    if (!place.location) {
+  const handleSelect = async (place: google.maps.places.Place) => {
+    if (!place.id) {
+      return;
+    }
+    const results = await place.fetchFields({ fields: ['location'] });
+
+    if (!results.place.location) {
       return;
     }
 
     dispatch(setSearchBarMapTintOn(false));
-    search(toLatLngLiteral(place.location));
+    search(toLatLngLiteral(results.place.location));
   };
 
   return (
@@ -61,15 +67,12 @@ const SearchBar = ({ search }: SearchBarProps) => {
         if (reason !== 'input') {
           return;
         }
-        if (!value.trim()) {
-          return;
-        }
 
         onChange(value);
       }}
       options={suggestions}
       getOptionKey={option => option.placeId}
-      getOptionLabel={option => option.mainText!.text ?? 'Name'}
+      getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
         if (reason !== 'selectOption') {
           return;
@@ -85,10 +88,12 @@ const SearchBar = ({ search }: SearchBarProps) => {
       renderInput={({ InputProps, disabled, fullWidth, id, inputProps }) => (
         <TextField
           id={id}
+          autoComplete="off"
           fullWidth={fullWidth}
           disabled={disabled}
           InputProps={{
             ...InputProps,
+            autoComplete: 'off',
             classes: { adornedStart: styles['search-icon'] || '' },
             startAdornment: (
               <InputAdornment position="start">
@@ -97,7 +102,7 @@ const SearchBar = ({ search }: SearchBarProps) => {
             ),
             disableUnderline: true
           }}
-          {...{ inputProps }}
+          inputProps={{ ...inputProps }}
           size="small"
           inputRef={inputRef}
           placeholder="Search for Resources near..."
