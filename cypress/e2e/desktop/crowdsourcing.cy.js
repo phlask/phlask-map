@@ -1,9 +1,5 @@
-// TODO
-// Add expected fail cases
-
-// For each resource type, test submitting a site with the following scenarios
-// All tap information
-// A submission with only one of each optional field for each resource type
+// Desktop crowdsourcing form tests
+// Tests form submission functionality for all resource types on desktop
 describe('crowdsourcing form', () => {
   function clickInputByName(name) {
     cy.get(`input[name="${name}"]`).click({ force: true });
@@ -104,10 +100,67 @@ describe('crowdsourcing form', () => {
   });
 
   it('should successfully submit a foraging site for testing', () => {
-    // TODO
+    const forageTypes = ['nut', 'fruit', 'leaves', 'bark', 'flowers', 'root'];
+    const helpfulInfoTypes = ['medicinal', 'inSeason', 'communityGarden'];
+
+    // Load the form
+    cy.get('[data-cy=button-contribute-foraging]').click();
+
+    // Fill Page One - Basic Info
+    cy.get('input[name="name"]').type('Cypress Foraging Test Name', { force: true });
+    cy.get('input[id="address"]').type(
+      'City Hall Room 708, Philadelphia, PA 19107, USA'
+    );
+    cy.get('input[name="website"]').type('cypress.foraging.test');
+    cy.get('textarea[name="description"]').type('Cypress Test Foraging Description');
+    cy.get('div[id="entry"]').click({ force: true });
+    cy.get('li[data-value="Open access"]').click();
+
+    // Select forage types
+    cy.get('svg[data-testid="ExpandMoreIcon"]').click();
+    forageTypes.forEach(clickInputByName);
+    cy.get('svg[data-testid="ExpandMoreIcon"]').click({ force: true });
+
+    // Navigate to Page Two
+    cy.get('svg[data-testid="ArrowForwardIosIcon"]').click();
+
+    // Fill Page Two - Helpful info
+    helpfulInfoTypes.forEach(clickInputByName);
+    cy.get('textarea[name="guidelines"]').type('Cypress Foraging Test Guidelines');
+
+    // Form submission disabled to prevent test data in live DB
   });
 
   it('should successfully submit a bathroom site for testing', () => {
-    // TODO
+    const helpfulInfoTypes = [
+      'handicapAccessible',
+      'genderNeutral',
+      'changingTable',
+      'singleOccupancy',
+      'familyBathroom',
+      'hasFountain'
+    ];
+
+    // Load the form
+    cy.get('[data-cy=button-contribute-bathroom]').click();
+
+    // Fill Page One - Basic Info
+    cy.get('input[name="name"]').type('Cypress Bathroom Test Name', { force: true });
+    cy.get('input[id="address"]').type(
+      'City Hall Room 708, Philadelphia, PA 19107, USA'
+    );
+    cy.get('input[name="website"]').type('cypress.bathroom.test');
+    cy.get('textarea[name="description"]').type('Cypress Test Bathroom Description');
+    cy.get('div[id="entry"]').click({ force: true });
+    cy.get('li[data-value="Open access"]').click();
+
+    // Navigate to Page Two
+    cy.get('svg[data-testid="ArrowForwardIosIcon"]').click();
+
+    // Fill Page Two - Helpful info
+    helpfulInfoTypes.forEach(clickInputByName);
+    cy.get('textarea[name="guidelines"]').type('Cypress Bathroom Test Guidelines');
+
+    // Form submission disabled to prevent test data in live DB
   });
 });
