@@ -123,7 +123,12 @@ const SelectedTapDetails = ({
   isMobile,
   closeModal,
   selectedPlace,
-  children
+  children,
+  isEditing,
+  setIsEditing,
+  editingResource,
+  setEditingResource,
+  onStartEdit
 }) => {
   /**
    * @type {ResourceEntry}
@@ -242,6 +247,14 @@ const SelectedTapDetails = ({
       ) : (
         <div className={styles.expandedToolBar}>
           <div>
+            <button
+              className={styles.editButton}
+              aria-label="edit"
+              onClick={() => onStartEdit(resource)}
+              type="button"
+            >
+              Edit
+            </button>
             <IconButton
               color="primary"
               aria-label="share"

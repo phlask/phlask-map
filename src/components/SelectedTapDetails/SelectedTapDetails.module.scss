@@ -98,6 +98,22 @@ $lighter-grey: #e9eef4;
     margin-bottom: 8px;
   }
 
+  .editButton {
+    background: none;
+    border: none;
+    color: #00A5EE;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .subtitles {
     line-height: 20px;
     margin-bottom: 0.1rem;
