@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
 import {
   TOOLBAR_MODAL_NONE,
-  setLastResourcePan,
+  ToolbarModalType,
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow
@@ -11,19 +10,23 @@ import useIsMobile from 'hooks/useIsMobile';
 import getClosest from 'utils/getClosest';
 import selectFilteredResource from 'selectors/resourceSelectors';
 import { useMap } from '@vis.gl/react-google-maps';
+import useAppSelector from 'hooks/useSelector';
+import useAppDispatch from 'hooks/useDispatch';
 import { getUserLocation } from 'reducers/user';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
 
 const Toolbar = () => {
   const map = useMap();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
-  const filteredResources = useSelector(selectFilteredResource);
-  const userLocation = useSelector(getUserLocation);
+  const toolbarModal = useAppSelector(
+    state => state.filterMarkers.toolbarModal
+  );
+  const filteredResources = useAppSelector(selectFilteredResource);
+  const userLocation = useAppSelector(getUserLocation);
 
-  const toolbarClicked = modal => {
+  const toolbarClicked = (modal: ToolbarModalType) => {
     if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     else dispatch(setToolbarModal(modal));
   };
@@ -39,12 +42,6 @@ const Toolbar = () => {
     });
     if (!closest) return;
 
-    dispatch(
-      setLastResourcePan({
-        lat: closest.latitude,
-        lng: closest.longitude
-      })
-    );
     dispatch(setSelectedPlace(closest));
     if (map) {
       map.panTo({

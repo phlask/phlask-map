@@ -14,8 +14,9 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
+import CloseButton from './CloseButton/CloseButton';
 
-const ChooseResource = ({ onSelectResource }) => {
+const ChooseResource = ({ onSelectResource, onClose }) => {
   const isMobile = useIsMobile();
   return (
     <Stack
@@ -25,11 +26,13 @@ const ChooseResource = ({ onSelectResource }) => {
       gap={2.5}
       paddingBlock={{ xs: 2, sm: 2, md: 4 }}
       paddingInline={{ xs: 2, sm: 2, md: 9 }}
+      position="relative"
     >
+      <CloseButton color="black" onClick={onClose} />
       <Stack
         gap={0.5}
         alignItems="center"
-        paddingTop={isMobile ? '72px' : null}
+        paddingTop={isMobile ? '72px' : undefined}
       >
         <Typography
           fontSize={24}

@@ -6,21 +6,34 @@ import ContributeIcon from 'icons/ContributeIcon';
 import FilterIcon from 'icons/FilterIcon';
 import ResourceIcon from 'icons/ResourceIcon';
 import SearchIcon from 'icons/SearchIcon';
-import { useSelector } from 'react-redux';
 import NearMeButton from 'components/NearMeButton/NearMeButton';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_FILTER,
+  TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH
+  TOOLBAR_MODAL_SEARCH,
+  ToolbarModalType
 } from 'actions/actions';
+import { MouseEventHandler, ReactElement } from 'react';
+import useAppSelector from 'hooks/useSelector';
 
-const Item = ({ onClick, icon, label, type }) => {
-  const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
+type ItemProps = {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  type: ToolbarModalType;
+  label: string;
+  icon: ReactElement;
+};
+
+const Item = ({ onClick, icon, label, type }: ItemProps) => {
+  const toolbarModal = useAppSelector(
+    state => state.filterMarkers.toolbarModal
+  );
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 
-  const testVariants = {
+  const testVariants: Record<ToolbarModalType, string> = {
+    [TOOLBAR_MODAL_NONE]: 'none',
     [TOOLBAR_MODAL_RESOURCE]: 'resource',
     [TOOLBAR_MODAL_FILTER]: 'filter',
     [TOOLBAR_MODAL_SEARCH]: 'search',
@@ -29,7 +42,6 @@ const Item = ({ onClick, icon, label, type }) => {
 
   return (
     <IconButton
-      variant="text"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -60,8 +72,18 @@ const Item = ({ onClick, icon, label, type }) => {
   );
 };
 
-const DesktopToolbar = ({ onItemClick, onNearMeClick }) => {
-  const resourceType = useSelector(state => state.filterMarkers.resourceType);
+type DesktopToolbarProps = {
+  onItemClick: (type: ToolbarModalType) => void;
+  onNearMeClick: VoidFunction;
+};
+
+const DesktopToolbar = ({
+  onItemClick,
+  onNearMeClick
+}: DesktopToolbarProps) => {
+  const resourceType = useAppSelector(
+    state => state.filterMarkers.resourceType
+  );
 
   return (
     <Box

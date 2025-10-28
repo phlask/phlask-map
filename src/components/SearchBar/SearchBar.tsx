@@ -1,33 +1,29 @@
 import { useMemo, useRef, useState } from 'react';
 import { toLatLngLiteral } from '@vis.gl/react-google-maps';
-import {
-  setSearchBarMapTintOn,
-  setTapInfoOpenedWhileSearchOpen
-} from 'actions/actions';
 import TextField from '@mui/material/TextField';
 import { Autocomplete, debounce, InputAdornment } from '@mui/material';
 import noop from 'utils/noop';
 import { SearchIcon } from 'icons';
-import useAppDispatch from 'hooks/useDispatch';
-import useAppSelector from 'hooks/useSelector';
 import styles from './SearchBar.module.scss';
 
 type SearchBarProps = { search: (location: google.maps.LatLngLiteral) => void };
 
 const SearchBar = ({ search }: SearchBarProps) => {
-  const dispatch = useAppDispatch();
-
+  const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState<
     google.maps.places.PlacePrediction[]
   >([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const tapInfoOpenedWhileSearchOpen = useAppSelector(
-    state => state.filterMarkers.tapInfoOpenedWhileSearchOpen
-  );
 
   const onChange = useMemo(
     () =>
       debounce((input: string) => {
+        if (!input) {
+          setSuggestions([]);
+          setIsSearching(false);
+        }
+
+        setIsSearching(true);
         google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
           input,
           includedRegionCodes: ['us']
@@ -41,7 +37,8 @@ const SearchBar = ({ search }: SearchBarProps) => {
                 .map(suggestion => suggestion.placePrediction!)
             )
           )
-          .catch(noop);
+          .catch(noop)
+          .finally(() => setIsSearching(false));
       }, 500),
     []
   );
@@ -56,21 +53,17 @@ const SearchBar = ({ search }: SearchBarProps) => {
       return;
     }
 
-    dispatch(setSearchBarMapTintOn(false));
     search(toLatLngLiteral(results.place.location));
   };
 
   return (
     <Autocomplete
       fullWidth={false}
-      onInputChange={(_event, value, reason) => {
-        if (reason !== 'input') {
-          return;
-        }
-
+      onInputChange={(_event, value) => {
         onChange(value);
       }}
       options={suggestions}
+      loading={isSearching}
       getOptionKey={option => option.placeId}
       getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
@@ -91,12 +84,20 @@ const SearchBar = ({ search }: SearchBarProps) => {
           autoComplete="off"
           fullWidth={fullWidth}
           disabled={disabled}
+          inputMode="search"
           InputProps={{
             ...InputProps,
             autoComplete: 'off',
+            sx: { paddingBlock: '16px !important' },
             classes: { adornedStart: styles['search-icon'] || '' },
             startAdornment: (
-              <InputAdornment position="start">
+              <InputAdornment
+                classes={{
+                  positionStart: styles['search-icon'] || '',
+                  hiddenLabel: styles['search-icon'] || ''
+                }}
+                position="start"
+              >
                 <SearchIcon height={24} width={24} />
               </InputAdornment>
             ),
@@ -107,17 +108,6 @@ const SearchBar = ({ search }: SearchBarProps) => {
           inputRef={inputRef}
           placeholder="Search for Resources near..."
           variant="filled"
-          onFocus={() => {
-            if (!tapInfoOpenedWhileSearchOpen) {
-              dispatch(setSearchBarMapTintOn(true));
-            } else {
-              dispatch(setTapInfoOpenedWhileSearchOpen(false));
-              inputRef.current?.blur();
-            }
-          }}
-          onBlur={() => {
-            dispatch(setSearchBarMapTintOn(false));
-          }}
         />
       )}
     />

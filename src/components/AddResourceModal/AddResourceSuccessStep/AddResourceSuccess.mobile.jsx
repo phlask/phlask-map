@@ -11,8 +11,9 @@ import {
   SocialTwitter
 } from 'icons';
 import { IconButton } from '@mui/material';
+import CloseButton from '../CloseButton/CloseButton';
 
-const AddResourceSuccessMobile = () => {
+const AddResourceSuccessMobile = ({ onClose }) => {
   const onShare = () => {
     if (!navigator.canShare()) {
       return;
@@ -34,6 +35,7 @@ const AddResourceSuccessMobile = () => {
         paddingBlock: '100px'
       }}
     >
+      <CloseButton onClick={onClose} color="white" />
       <Stack sx={{ gap: '4px' }}>
         <Typography
           variant="h2"

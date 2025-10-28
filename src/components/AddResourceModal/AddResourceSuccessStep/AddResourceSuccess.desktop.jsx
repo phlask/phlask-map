@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import CloseButton from '../CloseButton/CloseButton';
 
 const AddResourceSuccessDesktop = ({ onClose }) => (
   <Stack
@@ -13,6 +14,7 @@ const AddResourceSuccessDesktop = ({ onClose }) => (
       gap: '20px'
     }}
   >
+    <CloseButton onClick={onClose} color="white" />
     <PhillySkyline width="258.5" height="225.37" />
     <Typography
       sx={theme => ({

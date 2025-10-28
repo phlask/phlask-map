@@ -8,7 +8,8 @@ import ChooseResource from 'components/ChooseResourceType/ChooseResourceType';
 import ContributeIcon from 'icons/ContributeIcon';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_RESOURCE
+  TOOLBAR_MODAL_RESOURCE,
+  ToolbarModalType
 } from 'actions/actions';
 import ToiletIcon from 'icons/CircleBathroomIcon';
 import FoodIcon from 'icons/CircleFoodIcon';
@@ -20,10 +21,17 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
-import { useSelector } from 'react-redux';
+import useAppSelector from 'hooks/useSelector';
 
-const MobileToolbar = ({ onItemClick, onNearMeClick }) => {
-  const resourceType = useSelector(state => state.filterMarkers.resourceType);
+type MobileToolbarProps = {
+  onItemClick: (type: ToolbarModalType) => void;
+  onNearMeClick: VoidFunction;
+};
+
+const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
+  const resourceType = useAppSelector(
+    state => state.filterMarkers.resourceType
+  );
 
   const selectedResourceIcon = {
     [WATER_RESOURCE_TYPE]: WaterIcon,
@@ -43,7 +51,8 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }) => {
         pb: '25px',
         pt: '10px',
         bgcolor: 'white',
-        zIndex: theme.zIndex.appBar
+        zIndex: theme.zIndex.appBar,
+        pointerEvents: 'auto'
       })}
     >
       <BottomNavigation showLabels>

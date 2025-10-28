@@ -60,53 +60,52 @@ const MobileChooseResourceType = () => {
   const toolbarModal = useSelector(state => state.filterMarkers.toolbarModal);
 
   return (
-    <Box>
-      <Modal
-        open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
-        onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
-        slotProps={{ backdrop: { sx: { opacity: '0.1 !important' } } }}
+    <Modal
+      open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
+      onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
+      slotProps={{ backdrop: { sx: { opacity: '0.1 !important' } } }}
+    >
+      <Slide
+        direction="up"
+        in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
+        mountOnEnter
+        unmountOnExit
       >
-        <Slide
-          direction="up"
-          in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
-          mountOnEnter
-          unmountOnExit
+        <List
+          sx={{
+            maxWidth: 210,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            fontSize: 55,
+            position: 'absolute',
+            bottom: 138,
+            left: 4
+          }}
         >
-          <List
-            sx={{
-              maxWidth: 210,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              fontSize: 55,
-              bottom: 138,
-              left: 4
-            }}
-          >
-            <MobileResourceButton
-              icon={<MobileWaterIcon />}
-              textLabel="Water"
-              type={WATER_RESOURCE_TYPE}
-            />
-            <MobileResourceButton
-              icon={<MobileForagingIcon />}
-              textLabel="Foraging"
-              type={FORAGE_RESOURCE_TYPE}
-            />
-            <MobileResourceButton
-              icon={<MobileFoodIcon />}
-              textLabel="Food"
-              type={FOOD_RESOURCE_TYPE}
-            />
-            <MobileResourceButton
-              icon={<MobileBathroomIcon />}
-              textLabel="Bathroom"
-              type={BATHROOM_RESOURCE_TYPE}
-            />
-          </List>
-        </Slide>
-      </Modal>
-    </Box>
+          <MobileResourceButton
+            icon={<MobileWaterIcon />}
+            textLabel="Water"
+            type={WATER_RESOURCE_TYPE}
+          />
+          <MobileResourceButton
+            icon={<MobileForagingIcon />}
+            textLabel="Foraging"
+            type={FORAGE_RESOURCE_TYPE}
+          />
+          <MobileResourceButton
+            icon={<MobileFoodIcon />}
+            textLabel="Food"
+            type={FOOD_RESOURCE_TYPE}
+          />
+          <MobileResourceButton
+            icon={<MobileBathroomIcon />}
+            textLabel="Bathroom"
+            type={BATHROOM_RESOURCE_TYPE}
+          />
+        </List>
+      </Slide>
+    </Modal>
   );
 };
 

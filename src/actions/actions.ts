@@ -39,10 +39,6 @@ export const updateExistingResource = createAction<ResourceEntry>(
   'UPDATE_EXISTING_RESOURCE'
 );
 
-export const setLastResourcePan = createAction<google.maps.LatLngLiteral>(
-  'SET_LAST_RESOURCE_PAN'
-);
-
 export const toggleInfoWindow = createAction<{
   isShown: boolean;
   infoWindowClass: string;
@@ -56,20 +52,15 @@ export const toggleInfoExpanded = createAction<boolean>('TOGGLE_INFO_EXPANDED');
 export const setSelectedPlace =
   createAction<ResourceEntry>('SET_SELECTED_PLACE');
 
-export const setSearchBarMapTintOn = createAction<boolean>(
-  'SET_SEARCH_BAR_MAP_TINT'
-);
-export const setTapInfoOpenedWhileSearchOpen = createAction<boolean>(
-  'SET_TAP_INFO_OPENED_WHILE_SEARCH_OPEN'
-);
-
-export const setToolbarModal = createAction<
+export type ToolbarModalType =
   | 'TOOLBAR_MODAL_NONE'
   | 'TOOLBAR_MODAL_RESOURCE'
   | 'TOOLBAR_MODAL_FILTER'
   | 'TOOLBAR_MODAL_SEARCH'
-  | 'TOOLBAR_MODAL_CONTRIBUTE'
->('SET_TOOLBAR_MODAL');
+  | 'TOOLBAR_MODAL_CONTRIBUTE';
+
+export const setToolbarModal =
+  createAction<ToolbarModalType>('SET_TOOLBAR_MODAL');
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';

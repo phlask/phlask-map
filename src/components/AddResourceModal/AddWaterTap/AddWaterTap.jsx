@@ -10,8 +10,10 @@ import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSucce
 import { getUserLocation } from 'reducers/user';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import CloseButton from '../CloseButton/CloseButton';
 
 const AddWaterTap = ({
+  onClose,
   page,
   onPageChange,
   onSubmit,
@@ -71,7 +73,7 @@ const AddWaterTap = ({
   const getVariableName = variable => Object.keys(variable)[0];
 
   if (page === 2) {
-    return <AddResourceSuccessStep />;
+    return <AddResourceSuccessStep onClose={onClose} />;
   }
 
   return (
@@ -84,7 +86,8 @@ const AddWaterTap = ({
           justifyContent: isMobile ? null : 'center',
           padding: isMobile ? '0px 20px 10px' : '20px 0',
           height: isMobile ? '88px' : '64px',
-          backgroundColor: '#5286E9'
+          backgroundColor: '#5286E9',
+          position: 'relative'
         }}
       >
         <Typography
@@ -102,6 +105,7 @@ const AddWaterTap = ({
         >
           Add a Water Resource
         </Typography>
+        <CloseButton onClick={onClose} color="white" />
       </Box>
       <CardContent
         sx={{

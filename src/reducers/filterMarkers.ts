@@ -4,7 +4,6 @@ import * as actions from 'actions/actions';
 import { type ResourceEntry, WATER_RESOURCE_TYPE } from 'types/ResourceEntry';
 
 type FilterMarkersState = {
-  lastResourcePan: google.maps.LatLngLiteral;
   userLocation: google.maps.LatLngLiteral;
   showingInfoWindow: boolean;
   infoIsExpanded: boolean;
@@ -14,17 +13,10 @@ type FilterMarkersState = {
   allResources: ResourceEntry[];
   selectedPlace: ResourceEntry | null;
   toolbarModal: string;
-  setSearchBarMapTintOn: boolean;
-  tapInfoOpenedWhileSearchOpen: boolean;
   resourceType: 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
 };
 
 const initialState: FilterMarkersState = {
-  // Captures location when e.g. a pin is clicked or "Near Me" is clicked
-  lastResourcePan: {
-    lat: CITY_HALL_COORDINATES.latitude,
-    lng: CITY_HALL_COORDINATES.longitude
-  },
   // Changes to reflect user's current location if location is enabled
   userLocation: {
     lat: CITY_HALL_COORDINATES.latitude,
@@ -38,15 +30,10 @@ const initialState: FilterMarkersState = {
   allResources: [],
   selectedPlace: null,
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
-  setSearchBarMapTintOn: false,
-  tapInfoOpenedWhileSearchOpen: false,
   resourceType: WATER_RESOURCE_TYPE
 };
 
 const filterMarkersReducer = createReducer(initialState, builder => {
-  builder.addCase(actions.setLastResourcePan, (state, action) => {
-    state.lastResourcePan = action.payload;
-  });
   builder.addCase(actions.pushNewResource, (state, action) => {
     state.allResources.push(action.payload);
   });
@@ -79,24 +66,12 @@ const filterMarkersReducer = createReducer(initialState, builder => {
   builder.addCase(actions.toggleInfoWindow, (state, action) => {
     state.showingInfoWindow = action.payload.isShown;
     state.infoWindowClass = action.payload.infoWindowClass;
-    if (action.payload.isShown) {
-      state.setSearchBarMapTintOn = false;
-    }
-    state.tapInfoOpenedWhileSearchOpen =
-      action.payload.isShown &&
-      state.toolbarModal === actions.TOOLBAR_MODAL_SEARCH;
   });
   builder.addCase(actions.toggleInfoWindowClass, (state, action) => {
     state.infoWindowClass = action.payload.infoWindowClass;
   });
   builder.addCase(actions.toggleInfoExpanded, (state, action) => {
     state.infoIsExpanded = action.payload;
-  });
-  builder.addCase(actions.setSearchBarMapTintOn, (state, action) => {
-    state.setSearchBarMapTintOn = action.payload;
-  });
-  builder.addCase(actions.setTapInfoOpenedWhileSearchOpen, (state, action) => {
-    state.tapInfoOpenedWhileSearchOpen = action.payload;
   });
   builder.addCase(actions.setToolbarModal, (state, action) => {
     state.toolbarModal = action.payload;

@@ -21,17 +21,16 @@ import {
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
 
-import styles from './ReactGoogleMaps.module.scss';
-
 const style: CSSProperties = {
   width: '100%',
   height: '100vh',
   position: 'relative',
-  zIndex: 1
+  zIndex: 1,
+  touchAction: 'none'
 };
 
 type ReactGoogleMapsProps = {
-  searchedTap: google.maps.LatLngLiteral;
+  searchedTap: google.maps.LatLngLiteral | null;
 };
 
 const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
@@ -83,7 +82,6 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
 
   return (
     <Map
-      className={styles.mapContainer || ''}
       style={style}
       defaultZoom={16}
       zoomControl={!isMobile}

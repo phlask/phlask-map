@@ -2,14 +2,18 @@ import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessDesktop from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccess.desktop';
 import AddResourceSuccessMobile from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccess.mobile';
 
-const AddResourceSuccessStep = () => {
+type AddResourceSuccessStepProps = {
+  onClose: VoidFunction;
+};
+
+const AddResourceSuccessStep = ({ onClose }: AddResourceSuccessStepProps) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
-    return <AddResourceSuccessMobile />;
+    return <AddResourceSuccessMobile onClose={onClose} />;
   }
 
-  return <AddResourceSuccessDesktop />;
+  return <AddResourceSuccessDesktop onClose={onClose} />;
 };
 
 export default AddResourceSuccessStep;

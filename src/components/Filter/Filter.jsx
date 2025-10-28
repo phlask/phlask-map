@@ -120,14 +120,22 @@ const Filter = ({ filters, resourceType, activeTags, onChange, clearAll }) => {
         >
           <Paper
             sx={{
-              position: 'absolute',
               left: '32px',
               bottom: '133px',
               width: '686px',
-              borderRadius: '10px'
+              borderRadius: '10px',
+              pointerEvents: 'auto'
             }}
           >
-            <Stack sx={{ pointerEvents: 'auto' }} className={styles.header}>
+            <Stack
+              sx={{
+                position: 'relative',
+                pointerEvents: 'auto',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              className={styles.header}
+            >
               <h1>{filters[resourceType].title}</h1>
               <IconButton
                 aria-label="close"
@@ -143,6 +151,7 @@ const Filter = ({ filters, resourceType, activeTags, onChange, clearAll }) => {
                   dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                 }}
                 sx={{
+                  position: 'absolute',
                   right: '20px',
                   top: '5px',
                   color: '#fff',
@@ -186,7 +195,6 @@ const Filter = ({ filters, resourceType, activeTags, onChange, clearAll }) => {
             </Box>
             <Box
               sx={{
-                marginBottom: '10px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 fontSize: '16.8px',

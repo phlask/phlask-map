@@ -25,7 +25,7 @@
     "react-redux": "^9.2.0",
     "react-touch-events": "^3.0.0",
     "reselect": "^5.1.1",
-    "sass": "^1.50.1",
+    "sass": "^1.93.2",
     "zod": "^3.24.2"
   },
   "pre-commit": [

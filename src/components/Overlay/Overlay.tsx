@@ -62,11 +62,15 @@ const Overlay = ({ onSearch }: OverlayProps) => {
     <Stack
       zIndex={theme => theme.zIndex.appBar}
       position="fixed"
-      padding="25px"
       height="100vh"
       width="100vw"
       justifyContent="space-between"
-      sx={{ pointerEvents: 'none' }}
+      sx={theme => ({
+        pointerEvents: 'none',
+        [theme.breakpoints.up('md')]: {
+          padding: '25px'
+        }
+      })}
     >
       <Stack justifyContent="space-between" flex={1} height="fit-content">
         <Stack direction="row" flex={1} justifyContent="space-between">

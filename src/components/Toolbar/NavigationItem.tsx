@@ -3,7 +3,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
 const NavigationItem = styled(BottomNavigationAction, {
   shouldForwardProp: propName => propName !== 'central'
-})`
+})<{ central?: boolean }>`
   ${({ central = false }) =>
     central &&
     css`

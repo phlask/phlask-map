@@ -368,36 +368,16 @@ const AddResourceModalV2 = () => {
 
   return (
     <ModalWrapper onExited={onExitedWrapper}>
-      <IconButton
-        aria-label="close"
-        onClick={() => handleClose()}
-        sx={{
-          width: isMobile ? '32px' : '23px',
-          height: isMobile ? '32px' : '22.3px',
-          right: isMobile ? '32px' : '42px',
-          top: isMobile ? '25px' : '19px',
-          color:
-            // Page = 2 assumes Desktop page 2 = Share Socials view
-            // Page 2 is not reachable via any Mobile flows
-            !resourceForm || page === 2 ? 'black' : 'white'
-        }}
-        size="large"
-      >
-        <CloseIcon
-          sx={{
-            fontSize: 32
-          }}
-        />
-      </IconButton>
       {!resourceForm && (
         <ChooseResource
           onSelectResource={resource => setResourceForm(resource)}
-          isMobile={isMobile}
+          onClose={handleClose}
         />
       )}
 
       {resourceForm === WATER_RESOURCE_TYPE && (
         <AddWaterTap
+          onClose={handleClose}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
