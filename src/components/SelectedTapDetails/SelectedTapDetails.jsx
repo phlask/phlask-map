@@ -1,11 +1,12 @@
-import { Button, Collapse, IconButton, SvgIcon } from '@mui/material';
+import React from 'react';
+import { Button, Collapse, IconButton, SvgIcon, Menu, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
 import ExportSvg from 'icons/Export';
-import EditIcon from '@mui/icons-material/Edit';
 
 import FountainIcon from 'icons/CircleWaterIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
@@ -131,6 +132,21 @@ const SelectedTapDetails = ({
   setEditingResource,
   onStartEdit
 }) => {
+  const [menuAnchor, setMenuAnchor] = React.useState(null);
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
+
+  const handleSuggestEdit = () => {
+    onStartEdit(selectedPlace);
+    handleMenuClose();
+  };
+
   /**
    * @type {ResourceEntry}
    */
@@ -250,23 +266,19 @@ const SelectedTapDetails = ({
           <div>
             <IconButton
               color="primary"
-              aria-label="edit"
-              onClick={() => onStartEdit(resource)}
+              aria-label="more options"
+              onClick={handleMenuOpen}
             >
-              <EditIcon />
+              <MoreVertIcon />
             </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="share"
-              component="label"
-              onClick={toggleNativeShare}
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={handleMenuClose}
             >
-              <ExportSvg />
-            </IconButton>
-            {/* TODO: Add this back in once we have real options! */}
-            {/* <IconButton color="primary" aria-label="more" component="label"> */}
-            {/*  <ThreeDotSvg /> */}
-            {/* </IconButton> */}
+              <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
+              <MenuItem>Report</MenuItem>
+            </Menu>
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
           {isMobile && (
