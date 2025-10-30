@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Collapse, IconButton, SvgIcon, Menu, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
@@ -263,13 +263,13 @@ const SelectedTapDetails = ({
         <button className={styles.swipeIcon} aria-label="swipe" type="button" />
       ) : (
         <div className={styles.expandedToolBar}>
-          <div>
+          <div className={styles.toolbarActions}>
             <IconButton
-              color="primary"
               aria-label="more options"
               onClick={handleMenuOpen}
+              sx={{ color: '#2D3748' }}
             >
-              <MoreVertIcon />
+              <MoreHorizIcon />
             </IconButton>
             <Menu
               anchorEl={menuAnchor}
@@ -277,8 +277,16 @@ const SelectedTapDetails = ({
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
-              <MenuItem>Report</MenuItem>
+              <MenuItem onClick={handleMenuClose} sx={{ color: '#EF4444' }}>Report</MenuItem>
             </Menu>
+            <IconButton
+              color="primary"
+              aria-label="share"
+              component="label"
+              onClick={toggleNativeShare}
+            >
+              <ExportSvg />
+            </IconButton>
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
           {isMobile && (
