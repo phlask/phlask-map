@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
 import ExportSvg from 'icons/Export';
+import EditIcon from '@mui/icons-material/Edit';
 
 import FountainIcon from 'icons/CircleWaterIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
@@ -247,14 +248,13 @@ const SelectedTapDetails = ({
       ) : (
         <div className={styles.expandedToolBar}>
           <div>
-            <button
-              className={styles.editButton}
+            <IconButton
+              color="primary"
               aria-label="edit"
               onClick={() => onStartEdit(resource)}
-              type="button"
             >
-              Edit
-            </button>
+              <EditIcon />
+            </IconButton>
             <IconButton
               color="primary"
               aria-label="share"
