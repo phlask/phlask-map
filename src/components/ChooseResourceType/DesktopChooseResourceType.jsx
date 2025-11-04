@@ -53,9 +53,6 @@ const DesktopResourceButton = ({
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{textLabel}</p>
-      <div tabIndex="0" role="button">
-          <Button>Edit</Button>
-      </div>
     </Button>
   );
 };
