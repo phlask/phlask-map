@@ -1,4 +1,4 @@
-import { Button, Collapse, IconButton, SvgIcon } from '@mui/material';
+import { Box, Button, Collapse, IconButton, RichTreeView, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -10,6 +10,8 @@ import FountainIcon from 'icons/CircleWaterIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
 import FoodIcon from 'icons/CircleFoodIcon';
 import BathroomIcon from 'icons/CircleBathroomIcon';
+
+import React, {useState} from 'react';
 
 import {
   WATER_RESOURCE_TYPE,
@@ -114,12 +116,40 @@ function getTagsFromResource(resource) {
 
   return tags.filter(Boolean).sort(); // Tags are optional, so filter out missing tags too
 }
+// TODO: Change this so that it can use each suggestions
+  const SuggestionMessage = [
+    {
+      id: '1',
+      label: 'Suggestions',
+      children: [
+        { id: '1', label: 'The store has shutdown' },
+        { id: '2', label: 'Store no longer is open' },
+        { id: '3', label: 'Store shuts down in summer' },
+      ],
+    },
+  ]
+
+  // TODO: Fix variables to be readable
+const getAllItemsWithChildrenItemIds = () => {
+  const itemIds = [];
+  const registerItemId = (item) => {
+    if (item.children?.length) {
+      itemIds.push(item.id);
+      item.children.forEach(registerItemId);
+    }
+  };
+
+  SuggestionMessage.forEach(registerItemId);
+
+  return itemIds;
+};
 
 const SelectedTapDetails = ({
   image,
   estWalkTime,
   infoCollapse,
   setInfoCollapse,
+  setSuggestionMessage,
   isMobile,
   closeModal,
   selectedPlace,
@@ -235,6 +265,18 @@ const SelectedTapDetails = ({
     }
   };
 
+  // TODO: Have it so that these expanded items
+  // const handleExpandedItemsChange = (event, itemIds) => {
+  //   setExpandedItems(itemIds);
+  // };
+
+  // const handleExpandClick = () => {
+  //   setExpandedItems((oldExpanded) =>
+  //     oldExpanded.length === 0 ? getAllItemsWithChildrenItemIds() : [],
+  //   );
+  // };
+
+
   return (
     <div className={styles.halfInfo} onPointerMove={detectSwipe}>
       {isMobile && !infoCollapse ? (
@@ -332,6 +374,19 @@ const SelectedTapDetails = ({
             Est. walking time:{' '}
             <span className={styles.walkTime}>{estWalkTime} min</span>
           </p>
+          {
+          /*  
+          Per link: https://mui.com/x/react-tree-view/rich-tree-view/expansion/
+          TODO: MAKE THIS WORK
+          <Box sx={{ minHeight: 352, minWidth: 250 }}>
+            <RichTreeView
+              items={SuggestionMessage}
+              expandedItems={expandedItems}
+              onExpandedItemsChange={handleExpandedItemsChange}
+            />
+          </Box>
+          */
+          }
         </div>
       </div>
 
