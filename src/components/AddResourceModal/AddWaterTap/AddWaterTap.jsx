@@ -40,7 +40,8 @@ const AddWaterTap = ({
   guidelines,
   checkboxChangeHandler,
   textFieldChangeHandler,
-  isValidAddress
+  isValidAddress,
+  editMode
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(getUserLocation);
@@ -142,6 +143,7 @@ const AddWaterTap = ({
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
                 isValidAddress={isValidAddress}
+                editMode={editMode}
               />
             )}
             {(page === 1 || isMobile) && (

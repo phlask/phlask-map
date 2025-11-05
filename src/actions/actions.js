@@ -77,6 +77,7 @@ export const setTapInfoOpenedWhileSearchOpen = createAction(
 );
 
 export const setToolbarModal = createAction('SET_TOOLBAR_MODAL');
+export const setEditingResource = createAction('SET_EDITING_RESOURCE');
 export const TOOLBAR_MODAL_NONE = 'TOOLBAR_MODAL_NONE';
 export const TOOLBAR_MODAL_RESOURCE = 'TOOLBAR_MODAL_RESOURCE';
 export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';

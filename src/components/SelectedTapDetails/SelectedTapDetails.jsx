@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Collapse, IconButton, SvgIcon, Menu, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,6 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
 import ExportSvg from 'icons/Export';
+import { setEditingResource, setToolbarModal, TOOLBAR_MODAL_CONTRIBUTE } from 'actions/actions';
 
 import FountainIcon from 'icons/CircleWaterIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
@@ -125,13 +127,9 @@ const SelectedTapDetails = ({
   isMobile,
   closeModal,
   selectedPlace,
-  children,
-  isEditing,
-  setIsEditing,
-  editingResource,
-  setEditingResource,
-  onStartEdit
+  children
 }) => {
+  const dispatch = useDispatch();
   const [menuAnchor, setMenuAnchor] = React.useState(null);
 
   const handleMenuOpen = (event) => {
@@ -143,7 +141,8 @@ const SelectedTapDetails = ({
   };
 
   const handleSuggestEdit = () => {
-    onStartEdit(selectedPlace);
+    dispatch(setEditingResource(selectedPlace));
+    dispatch(setToolbarModal(TOOLBAR_MODAL_CONTRIBUTE));
     handleMenuClose();
   };
 

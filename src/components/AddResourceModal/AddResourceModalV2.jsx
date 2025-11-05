@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import CloseIcon from '@mui/icons-material/Close';
@@ -86,11 +86,80 @@ const initialState = {
   hasFountain: false
 };
 
+const mapResourceToFormState = resource => {
+  if (!resource) return initialState;
+
+  const state = {
+    name: resource.name || '',
+    address: resource.address || '',
+    website: resource.website || '',
+    description: resource.description || '',
+    guidelines: resource.guidelines || '',
+    entryType: resource.entry_type || '',
+    latitude: resource.latitude,
+    longitude: resource.longitude,
+    isValidAddress: true,
+    pictures: [],
+    images: [],
+    handicapAccessible: false,
+    idRequired: false
+  };
+
+  if (resource.resource_type === WATER_RESOURCE_TYPE) {
+    state.filtration = resource.water?.tags?.includes('FILTERED') || false;
+    state.waterVesselNeeded = resource.water?.tags?.includes('BYOB') || false;
+    state.idRequired = resource.water?.tags?.includes('ID_REQUIRED') || false;
+    state.handicapAccessible = resource.water?.tags?.includes('WHEELCHAIR_ACCESSIBLE') || false;
+    state.drinkingFountain = resource.water?.dispenser_type?.includes('DRINKING_FOUNTAIN') || false;
+    state.bottleFillerAndFountain = resource.water?.dispenser_type?.includes('BOTTLE_FILLER') || false;
+    state.sink = resource.water?.dispenser_type?.includes('SINK') || false;
+    state.waterJug = resource.water?.dispenser_type?.includes('JUG') || false;
+    state.sodaMachine = resource.water?.dispenser_type?.includes('SODA_MACHINE') || false;
+    state.pitcher = resource.water?.dispenser_type?.includes('PITCHER') || false;
+    state.waterCooler = resource.water?.dispenser_type?.includes('WATER_COOLER') || false;
+  }
+
+  if (resource.resource_type === FOOD_RESOURCE_TYPE) {
+    state.perishable = resource.food?.food_type?.includes('PERISHABLE') || false;
+    state.nonPerishable = resource.food?.food_type?.includes('NON_PERISHABLE') || false;
+    state.prepared = resource.food?.food_type?.includes('PREPARED') || false;
+    state.eatOnSite = resource.food?.distribution_type?.includes('EAT_ON_SITE') || false;
+    state.delivery = resource.food?.distribution_type?.includes('DELIVERY') || false;
+    state.pickUp = resource.food?.distribution_type?.includes('PICKUP') || false;
+    state.organization = resource.food?.organization_name || '';
+  }
+
+  if (resource.resource_type === FORAGE_RESOURCE_TYPE) {
+    state.nut = resource.forage?.forage_type?.includes('NUT') || false;
+    state.fruit = resource.forage?.forage_type?.includes('FRUIT') || false;
+    state.leaves = resource.forage?.forage_type?.includes('LEAVES') || false;
+    state.bark = resource.forage?.forage_type?.includes('BARK') || false;
+    state.flowers = resource.forage?.forage_type?.includes('FLOWERS') || false;
+    state.root = resource.forage?.forage_type?.includes('ROOT') || false;
+    state.medicinal = resource.forage?.tags?.includes('MEDICINAL') || false;
+    state.inSeason = resource.forage?.tags?.includes('IN_SEASON') || false;
+    state.communityGarden = resource.forage?.tags?.includes('COMMUNITY_GARDEN') || false;
+  }
+
+  if (resource.resource_type === BATHROOM_RESOURCE_TYPE) {
+    state.handicapAccessible = resource.bathroom?.tags?.includes('WHEELCHAIR_ACCESSIBLE') || false;
+    state.genderNeutral = resource.bathroom?.tags?.includes('GENDER_NEUTRAL') || false;
+    state.changingTable = resource.bathroom?.tags?.includes('CHANGING_TABLE') || false;
+    state.singleOccupancy = resource.bathroom?.tags?.includes('SINGLE_OCCUPANCY') || false;
+    state.familyBathroom = resource.bathroom?.tags?.includes('FAMILY') || false;
+    state.hasFountain = resource.bathroom?.tags?.includes('HAS_FOUNTAIN') || false;
+  }
+
+  return { ...initialState, ...state };
+};
+
 const AddResourceModalV2 = () => {
   const [page, setPage] = useState(0);
   const [resourceForm, setResourceForm] = useState(null);
 
   const isMobile = useIsMobile();
+  const editingResource = useSelector(state => state.filterMarkers.editingResource);
+  const isEditMode = !!editingResource;
 
   const onPageChange = update => {
     setPage(prev => {
@@ -102,13 +171,24 @@ const AddResourceModalV2 = () => {
     });
   };
 
-  const [values, setValues] = useState(initialState);
+  const [values, setValues] = useState(() => {
+    if (isEditMode && editingResource) {
+      return mapResourceToFormState(editingResource);
+    }
+    return initialState;
+  });
   const dispatch = useDispatch();
   const userLocation = useSelector(getUserLocation);
 
   const setToolbarModal = modal => {
     dispatch({ type: 'SET_TOOLBAR_MODAL', modal });
   };
+
+  useEffect(() => {
+    if (isEditMode && editingResource) {
+      setResourceForm(editingResource.resource_type);
+    }
+  }, [isEditMode, editingResource]);
 
   const checkboxChangeHandler = e => {
     setValues(prevValues => ({
@@ -158,6 +238,11 @@ const AddResourceModalV2 = () => {
       // This is a direct string input - "Use My Location" button was clicked
       newValue = eventOrString;
       fieldName = 'address';
+    }
+
+    // Don't allow address changes in edit mode
+    if (isEditMode && fieldName === 'address') {
+      return;
     }
 
     // Update the state with the new value
@@ -424,6 +509,7 @@ const AddResourceModalV2 = () => {
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
           isValidAddress={values.isValidAddress}
+          editMode={isEditMode}
         />
       )}
 
@@ -454,6 +540,7 @@ const AddResourceModalV2 = () => {
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
           isValidAddress={values.isValidAddress}
+          editMode={isEditMode}
         />
       )}
 
@@ -478,6 +565,7 @@ const AddResourceModalV2 = () => {
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
           isValidAddress={values.isValidAddress}
+          editMode={isEditMode}
         />
       )}
 
@@ -505,6 +593,7 @@ const AddResourceModalV2 = () => {
           checkboxChangeHandler={checkboxChangeHandler}
           textFieldChangeHandler={textFieldChangeHandler}
           isValidAddress={values.isValidAddress}
+          editMode={isEditMode}
         />
       )}
     </ModalWrapper>

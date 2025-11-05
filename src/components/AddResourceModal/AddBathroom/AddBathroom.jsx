@@ -32,7 +32,8 @@ const AddBathroom = ({
   hasFountain,
   checkboxChangeHandler,
   textFieldChangeHandler,
-  isValidAddress
+  isValidAddress,
+  editMode
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(getUserLocation);
@@ -122,6 +123,7 @@ const AddBathroom = ({
                 setValue={setValue}
                 textFieldChangeHandler={textFieldChangeHandler}
                 isValidAddress={isValidAddress}
+                editMode={editMode}
               />
             )}
             {(page === 1 || isMobile) && (

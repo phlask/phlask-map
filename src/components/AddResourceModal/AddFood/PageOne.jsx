@@ -50,7 +50,8 @@ const PageOne = ({
   getVariableName,
   checkboxChangeHandler,
   textFieldChangeHandler,
-  isValidAddress
+  isValidAddress,
+  editMode
 }) => {
   const isMobile = useIsMobile();
 
@@ -229,10 +230,12 @@ const PageOne = ({
                               {errors.address.message || requiredFieldMsg}
                             </span>
                           )}
-                          <Button variant="text">
-                            Use my location instead
-                            <MyLocationIcon sx={{ fontSize: 10 }} />
-                          </Button>
+                          {!editMode && (
+                            <Button variant="text">
+                              Use my location instead
+                              <MyLocationIcon sx={{ fontSize: 10 }} />
+                            </Button>
+                          )}
                         </Stack>
                       }
                       error={!!errors.address}
@@ -241,6 +244,7 @@ const PageOne = ({
                         onClick: e => {
                           // Will autofill the street address textbox with user's current address,
                           // after clicking 'use my address instead'
+                          if (editMode) return;
                           const { latitude, longitude } = userLocation;
                           geocode(
                             RequestType.LATLNG,
@@ -255,7 +259,7 @@ const PageOne = ({
                             .catch(noop);
                         }
                       }}
-                      style={{ backgroundColor: 'white' }}
+                      style={{ backgroundColor: editMode ? '#f5f5f5' : 'white' }}
                       InputLabelProps={{ shrink: true }}
                       type={type}
                       autoComplete={autoComplete}
@@ -263,7 +267,7 @@ const PageOne = ({
                       aria-autocomplete={ariaAutocomplete}
                       aria-expanded={ariaExpanded}
                       aria-activedescendant={ariaActiveDescendent}
-                      disabled={disabled}
+                      disabled={disabled || editMode}
                       onKeyDown={onKeyDown}
                       onBlur={onBlur}
                       value={value}

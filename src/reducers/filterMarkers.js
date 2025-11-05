@@ -22,6 +22,7 @@ const initialState = {
   allResources: [],
   selectedPlace: {},
   toolbarModal: actions.TOOLBAR_MODAL_NONE,
+  editingResource: null,
   setSearchBarMapTintOn: false,
   tapInfoOpenedWhileSearchOpen: false,
   resourceType: WATER_RESOURCE_TYPE
@@ -195,6 +196,9 @@ export default (state = initialState, act = {}) => {
 
     case actions.setToolbarModal.type:
       return { ...state, toolbarModal: act.payload };
+
+    case actions.setEditingResource.type:
+      return { ...state, editingResource: act.payload };
 
     case actions.setResourceType.type:
       return { ...state, resourceType: act.payload };

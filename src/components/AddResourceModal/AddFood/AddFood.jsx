@@ -45,7 +45,8 @@ const AddFood = ({
   guidelines,
   checkboxChangeHandler,
   textFieldChangeHandler,
-  isValidAddress
+  isValidAddress,
+  editMode
 }) => {
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
@@ -152,6 +153,7 @@ const AddFood = ({
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
                 isValidAddress={isValidAddress}
+                editMode={editMode}
               />
             )}
             {(page === 1 || isMobile) && (

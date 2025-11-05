@@ -44,7 +44,8 @@ const AddForaging = ({
   communityGarden,
   checkboxChangeHandler,
   textFieldChangeHandler,
-  isValidAddress
+  isValidAddress,
+  editMode
 }) => {
   const isMobile = useIsMobile();
   const userLocation = useSelector(getUserLocation);
@@ -155,6 +156,7 @@ const AddForaging = ({
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
                 isValidAddress={isValidAddress}
+                editMode={editMode}
               />
             )}
             {(page === 1 || isMobile) && (
