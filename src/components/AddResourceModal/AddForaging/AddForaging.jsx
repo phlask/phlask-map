@@ -64,8 +64,25 @@ const AddForaging = ({
     setValue,
     trigger,
     control,
+    reset,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name,
+      address,
+      website,
+      description
+    }
+  });
+
+  useEffect(() => {
+    reset({
+      name,
+      address,
+      website,
+      description
+    });
+  }, [name, address, website, description, reset]);
 
   const requiredFieldMsg = (
     <span>
@@ -110,7 +127,7 @@ const AddForaging = ({
                 })
           }}
         >
-          Add a Foraging Resource
+          {editMode ? 'Edit Foraging Resource' : 'Add a Foraging Resource'}
         </Typography>
       </Box>
       <CardContent

@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import noop from 'utils/noop';
 import useIsMobile from 'hooks/useIsMobile';
-import { TOOLBAR_MODAL_NONE, pushNewResource } from 'actions/actions';
+import { TOOLBAR_MODAL_NONE, pushNewResource, setEditingResource } from 'actions/actions';
 
 import debounce from 'utils/debounce';
 
@@ -187,6 +187,7 @@ const AddResourceModalV2 = () => {
   useEffect(() => {
     if (isEditMode && editingResource) {
       setResourceForm(editingResource.resource_type);
+      setValues(mapResourceToFormState(editingResource));
     }
   }, [isEditMode, editingResource]);
 
@@ -436,6 +437,7 @@ const AddResourceModalV2 = () => {
   const onExitedWrapper = () => {
     setValues(initialState);
     setResourceForm(null);
+    dispatch(setEditingResource(null));
   };
 
   const handleClose = () => {
@@ -484,6 +486,7 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === WATER_RESOURCE_TYPE && (
         <AddWaterTap
+          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
@@ -515,6 +518,7 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === FOOD_RESOURCE_TYPE && (
         <AddFood
+          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
@@ -546,6 +550,7 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === BATHROOM_RESOURCE_TYPE && (
         <AddBathroom
+          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
@@ -571,6 +576,7 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === FORAGE_RESOURCE_TYPE && (
         <AddForaging
+          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}

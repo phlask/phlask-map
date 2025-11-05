@@ -60,8 +60,25 @@ const AddWaterTap = ({
     setValue,
     trigger,
     control,
+    reset,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name,
+      address,
+      website,
+      description
+    }
+  });
+
+  useEffect(() => {
+    reset({
+      name,
+      address,
+      website,
+      description
+    });
+  }, [name, address, website, description, reset]);
 
   const requiredFieldMsg = (
     <span>
@@ -101,7 +118,7 @@ const AddWaterTap = ({
                 })
           }}
         >
-          Add a Water Resource
+          {editMode ? 'Edit Water Resource' : 'Add a Water Resource'}
         </Typography>
       </Box>
       <CardContent

@@ -52,8 +52,25 @@ const AddBathroom = ({
     setValue,
     trigger,
     control,
+    reset,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name,
+      address,
+      website,
+      description
+    }
+  });
+
+  useEffect(() => {
+    reset({
+      name,
+      address,
+      website,
+      description
+    });
+  }, [name, address, website, description, reset]);
 
   const requiredFieldMsg = (
     <span>
@@ -91,7 +108,7 @@ const AddBathroom = ({
                 })
           }}
         >
-          Add a Bathroom Resource
+          {editMode ? 'Edit Bathroom Resource' : 'Add a Bathroom Resource'}
         </Typography>
       </Box>
       <CardContent

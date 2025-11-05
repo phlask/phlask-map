@@ -67,8 +67,25 @@ const AddFood = ({
     setValue,
     trigger,
     control,
+    reset,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name,
+      address,
+      website,
+      description
+    }
+  });
+
+  useEffect(() => {
+    reset({
+      name,
+      address,
+      website,
+      description
+    });
+  }, [name, address, website, description, reset]);
 
   const requiredFieldMsg = (
     <span>
@@ -111,7 +128,7 @@ const AddFood = ({
                 })
           }}
         >
-          Add a Food Resource
+          {editMode ? 'Edit Food Resource' : 'Add a Food Resource'}
         </Typography>
       </Box>
       <CardContent
