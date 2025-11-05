@@ -2,7 +2,7 @@ import { Button, Collapse, Stack } from '@mui/material';
 import PhlaskNoTextIcon from 'icons/PhlaskNoText';
 import UsersIcon from 'icons/UsersIcon';
 import IDIcon from 'icons/ModalIdRequired';
-import { HeaderMenuPage } from 'contexts/HeaderContext';
+import type { HeaderMenuPage } from 'contexts/HeaderContext';
 
 const buttonStyles = {
   color: '#2D3748',

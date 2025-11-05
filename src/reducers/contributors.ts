@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getContributors } from 'db';
-import { Contributor } from 'types/Contributor';
+import type { Contributor } from 'types/Contributor';
 import shuffleArray from 'utils/shuffleArray';
 
 export const fetchContributors = createAsyncThunk(
