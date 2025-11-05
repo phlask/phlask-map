@@ -69,6 +69,10 @@ $lighter-grey: #e9eef4;
         font-weight: 600;
       }
     }
+    .dateModified {
+      flex-grow: 1;
+      text-align: right;
+    }
   }
 
   .halfInfoExpand {

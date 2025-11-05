@@ -65,7 +65,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "start:cypress": "VITE_CYPRESS_TEST=true yarn start",
     "build": "vite build",
     "testDataGen": "node cypress/testDataGenerator.js",
