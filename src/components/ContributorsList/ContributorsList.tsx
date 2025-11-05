@@ -1,7 +1,7 @@
 import List from '@mui/material/List';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { Contributor } from 'types/Contributor';
+import type { Contributor } from 'types/Contributor';
 import ContributorsListItem from './ContributorsListItem';
 
 type ContributorsListProps = {
@@ -13,7 +13,7 @@ const ContributorsList = ({
   items = [],
   title = 'Contributors'
 }: ContributorsListProps) => (
-  <Grid item>
+  <Grid>
     <Typography variant="h6" color="#73839E">
       {title}
     </Typography>

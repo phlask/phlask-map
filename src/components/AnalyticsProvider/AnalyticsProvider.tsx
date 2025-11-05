@@ -1,5 +1,5 @@
 import { PostHogProvider } from 'posthog-js/react';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 const postHogOptions = {
   api_host:

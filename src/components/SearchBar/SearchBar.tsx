@@ -85,29 +85,32 @@ const SearchBar = ({ search }: SearchBarProps) => {
           fullWidth={fullWidth}
           disabled={disabled}
           inputMode="search"
-          InputProps={{
-            ...InputProps,
-            autoComplete: 'off',
-            sx: { paddingBlock: '16px !important' },
-            classes: { adornedStart: styles['search-icon'] || '' },
-            startAdornment: (
-              <InputAdornment
-                classes={{
-                  positionStart: styles['search-icon'] || '',
-                  hiddenLabel: styles['search-icon'] || ''
-                }}
-                position="start"
-              >
-                <SearchIcon height={24} width={24} />
-              </InputAdornment>
-            ),
-            disableUnderline: true
-          }}
-          inputProps={{ ...inputProps }}
           size="small"
           inputRef={inputRef}
           placeholder="Search for Resources near..."
           variant="filled"
+          slotProps={{
+            input: {
+              ...InputProps,
+              autoComplete: 'off',
+              sx: { paddingBlock: '16px !important' },
+              classes: { adornedStart: styles['search-icon'] || '' },
+              startAdornment: (
+                <InputAdornment
+                  classes={{
+                    positionStart: styles['search-icon'] || '',
+                    hiddenLabel: styles['search-icon'] || ''
+                  }}
+                  position="start"
+                >
+                  <SearchIcon height={24} width={24} />
+                </InputAdornment>
+              ),
+              disableUnderline: true
+            },
+
+            htmlInput: { ...inputProps }
+          }}
         />
       )}
     />

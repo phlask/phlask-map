@@ -1,44 +1,7 @@
 {
-  "include": ["src"],
-  "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/.tsbuildinfo",
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    "useDefineForClassFields": true,
-    "moduleDetection": "force",
-    "types": ["vite/client"],
-
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "paths": { "*": ["./src/*"] },
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "allowArbitraryExtensions": true,
-
-    "allowJs": true,
-    "noEmit": true,
-
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "strictBuiltinIteratorReturn": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true,
-
-    "skipLibCheck": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

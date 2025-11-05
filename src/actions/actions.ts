@@ -1,8 +1,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
-import testData from '../testData/functionalTest';
-import { getResources as getResourcesFromDB } from '../db';
+import testData from 'testData/functionalTest';
+import { getResources as getResourcesFromDB } from 'db';
 
 export const setFilterFunction = createAction<{ tag: string }>(
   'SET_FILTER_FUNCTION'
@@ -52,12 +52,12 @@ export const toggleInfoExpanded = createAction<boolean>('TOGGLE_INFO_EXPANDED');
 export const setSelectedPlace =
   createAction<ResourceEntry>('SET_SELECTED_PLACE');
 
-export type ToolbarModalType =
-  | 'TOOLBAR_MODAL_NONE'
-  | 'TOOLBAR_MODAL_RESOURCE'
-  | 'TOOLBAR_MODAL_FILTER'
-  | 'TOOLBAR_MODAL_SEARCH'
-  | 'TOOLBAR_MODAL_CONTRIBUTE';
+export type ToolbarModalType = `TOOLBAR_MODAL_${
+  | 'NONE'
+  | 'RESOURCE'
+  | 'FILTER'
+  | 'SEARCH'
+  | 'CONTRIBUTE'}`;
 
 export const setToolbarModal =
   createAction<ToolbarModalType>('SET_TOOLBAR_MODAL');
@@ -67,6 +67,6 @@ export const TOOLBAR_MODAL_FILTER = 'TOOLBAR_MODAL_FILTER';
 export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
-export const setResourceType = createAction<
-  'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM'
->('SET_RESOURCE_TYPE');
+export type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
+
+export const setResourceType = createAction<ResourceType>('SET_RESOURCE_TYPE');

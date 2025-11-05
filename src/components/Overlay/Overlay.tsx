@@ -1,6 +1,6 @@
 import { Box, Fade, Stack } from '@mui/material';
 import { useMap } from '@vis.gl/react-google-maps';
-import { resetFilterFunction, TOOLBAR_MODAL_SEARCH } from 'actions/actions';
+import { TOOLBAR_MODAL_SEARCH } from 'actions/actions';
 import AddResourceModalV2 from 'components/AddResourceModal/AddResourceModalV2';
 import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType';
 import Filter from 'components/Filter/Filter';
@@ -8,30 +8,13 @@ import Head from 'components/Head/Head';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedTap from 'components/SelectedTap/SelectedTap';
 import Toolbar from 'components/Toolbar/Toolbar';
-import filters from 'fixtures/filters';
-import useAppDispatch from 'hooks/useDispatch';
 import useAppSelector from 'hooks/useSelector';
-import { useState } from 'react';
 
 type OverlayProps = {
   onSearch: (location: google.maps.LatLngLiteral) => void;
 };
 
-const noActiveFilterTags = Object.entries(filters).reduce(
-  (prev, [key, value]) => ({
-    ...prev,
-    [key]: value.categories.map(category => {
-      if (category.type === 0) {
-        return new Array(category.tags.length).fill(false);
-      }
-      return category.tags.length;
-    })
-  }),
-  {}
-);
-
 const Overlay = ({ onSearch }: OverlayProps) => {
-  const dispatch = useAppDispatch();
   const map = useMap();
   const resourceType = useAppSelector(
     state => state.filterMarkers.resourceType
@@ -39,9 +22,6 @@ const Overlay = ({ onSearch }: OverlayProps) => {
   const toolbarModal = useAppSelector(
     state => state.filterMarkers.toolbarModal
   );
-  const [activeFilterTags, setActiveFilterTags] = useState<{
-    [filter: string]: string[];
-  }>(JSON.parse(JSON.stringify(noActiveFilterTags)));
 
   const searchForLocation = (location: google.maps.LatLngLiteral) => {
     if (!map) {
@@ -51,11 +31,6 @@ const Overlay = ({ onSearch }: OverlayProps) => {
     map.panTo(location);
     map.setZoom(16);
     onSearch({ lat: Number(location.lat), lng: Number(location.lng) });
-  };
-
-  const clearAllTags = () => {
-    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
-    dispatch(resetFilterFunction());
   };
 
   return (
@@ -90,13 +65,7 @@ const Overlay = ({ onSearch }: OverlayProps) => {
           </Fade>
 
           <ChooseResourceType />
-          <Filter
-            resourceType={resourceType}
-            filters={filters}
-            clearAll={clearAllTags}
-            onChange={setActiveFilterTags}
-            activeTags={activeFilterTags}
-          />
+          <Filter resourceType={resourceType} />
           <AddResourceModalV2 />
           <Toolbar />
         </Stack>

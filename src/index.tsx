@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, type Container } from 'react-dom/client';
 import App from 'App';
 import Providers from 'components/Providers/Providers';
 
@@ -18,7 +18,13 @@ if (path) {
 
 const rootElement = document.getElementById('root');
 // We use a non-null assertion here because we are sure that an element with id root exists
-const root = createRoot(rootElement!);
+if (!rootElement) {
+  throw new Error(
+    "Couldn't load the React application on a non-existing element with id 'root'."
+  );
+}
+
+const root = createRoot(rootElement satisfies Container);
 
 root.render(
   <StrictMode>

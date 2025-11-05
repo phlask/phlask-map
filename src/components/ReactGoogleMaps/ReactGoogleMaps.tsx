@@ -1,6 +1,6 @@
 import { Map, Marker, useMap } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
-import { CSSProperties, useEffect } from 'react';
+import { type CSSProperties, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';

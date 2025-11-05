@@ -9,7 +9,7 @@ import ContributeIcon from 'icons/ContributeIcon';
 import {
   TOOLBAR_MODAL_CONTRIBUTE,
   TOOLBAR_MODAL_RESOURCE,
-  ToolbarModalType
+  type ToolbarModalType
 } from 'actions/actions';
 import ToiletIcon from 'icons/CircleBathroomIcon';
 import FoodIcon from 'icons/CircleFoodIcon';

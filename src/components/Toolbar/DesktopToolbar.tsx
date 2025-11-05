@@ -13,9 +13,9 @@ import {
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   TOOLBAR_MODAL_SEARCH,
-  ToolbarModalType
+  type ToolbarModalType
 } from 'actions/actions';
-import { MouseEventHandler, ReactElement } from 'react';
+import type { MouseEventHandler, ReactElement } from 'react';
 import useAppSelector from 'hooks/useSelector';
 
 type ItemProps = {

@@ -1,8 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import type { RootState } from 'store';
 
-type UserLocation = Pick<GeolocationCoordinates, 'latitude' | 'longitude'>;
+export type UserLocation = Pick<
+  GeolocationCoordinates,
+  'latitude' | 'longitude'
+>;
 
 type UserState = {
   userLocation: UserLocation;

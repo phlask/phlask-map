@@ -1,3 +1,3 @@
-function noop(..._args: unknown[]) {}
+function noop() {}
 
 export default noop;

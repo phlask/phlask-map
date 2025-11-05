@@ -1,10 +1,8 @@
 {
   "icon": true,
-  "typescript": false,
-  "jsxRuntime": "classic",
+  "typescript": true,
+  "jsxRuntime": "automatic",
   "exportType": "default",
   "prettierConfig": ".prettierrc",
-  "ref": true,
-  "titleProp": true,
-  "ext": "jsx"
+  "ref": true
 }

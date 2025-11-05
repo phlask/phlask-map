@@ -1,6 +1,6 @@
 import {
   TOOLBAR_MODAL_NONE,
-  ToolbarModalType,
+  type ToolbarModalType,
   setSelectedPlace,
   setToolbarModal,
   toggleInfoWindow
@@ -36,10 +36,7 @@ const Toolbar = () => {
     // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
-    const closest = getClosest(filteredResources, {
-      lat: userLocation.latitude,
-      lon: userLocation.longitude
-    });
+    const closest = getClosest(filteredResources, userLocation);
     if (!closest) return;
 
     dispatch(setSelectedPlace(closest));

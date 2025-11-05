@@ -12,8 +12,8 @@ type FilterMarkersState = {
   filterEntry: string;
   allResources: ResourceEntry[];
   selectedPlace: ResourceEntry | null;
-  toolbarModal: string;
-  resourceType: 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
+  toolbarModal: actions.ToolbarModalType;
+  resourceType: actions.ResourceType;
 };
 
 const initialState: FilterMarkersState = {
