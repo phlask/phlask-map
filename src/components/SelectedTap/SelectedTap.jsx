@@ -32,6 +32,8 @@ const SelectedTap = () => {
 
   const [walkingDuration, setWalkingDuration] = useState(0);
   const [infoCollapseMobile, setInfoCollapseMobile] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingResource, setEditingResource] = useState(null);
 
   const showingInfoWindow = useSelector(
     state => state.filterMarkers.showingInfoWindow
@@ -80,6 +82,11 @@ const SelectedTap = () => {
   const animateInfoExpansion = shouldExpand => {
     setInfoExpansionStyle({ height: shouldExpand ? '80%' : previewHeight });
     dispatch(toggleInfoExpanded(shouldExpand));
+  };
+
+  const handleStartEdit = resource => {
+    setIsEditing(true);
+    setEditingResource(resource);
   };
 
   const handleToggleInfoWindow = isShown => {
@@ -186,6 +193,11 @@ const SelectedTap = () => {
                 infoCollapse={infoCollapseMobile}
                 setInfoCollapse={setInfoCollapseMobile}
                 isMobile
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editingResource={editingResource}
+                setEditingResource={setEditingResource}
+                onStartEdit={handleStartEdit}
               >
                 <SelectedTapHours
                   infoIsExpanded={infoIsExpanded}
@@ -219,6 +231,11 @@ const SelectedTap = () => {
               setInfoCollapse={setInfoCollapseMobile}
               isMobile={false}
               closeModal={() => handleToggleInfoWindow(false)}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              editingResource={editingResource}
+              setEditingResource={setEditingResource}
+              onStartEdit={handleStartEdit}
             >
               <SelectedTapHours infoIsExpanded selectedPlace={selectedPlace} />
             </SelectedTapDetails>

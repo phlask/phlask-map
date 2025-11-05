@@ -1,6 +1,8 @@
-import { Button, Collapse, IconButton, SvgIcon } from '@mui/material';
+import React from 'react';
+import { Button, Collapse, IconButton, SvgIcon, Menu, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
@@ -123,8 +125,28 @@ const SelectedTapDetails = ({
   isMobile,
   closeModal,
   selectedPlace,
-  children
+  children,
+  isEditing,
+  setIsEditing,
+  editingResource,
+  setEditingResource,
+  onStartEdit
 }) => {
+  const [menuAnchor, setMenuAnchor] = React.useState(null);
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
+
+  const handleSuggestEdit = () => {
+    onStartEdit(selectedPlace);
+    handleMenuClose();
+  };
+
   /**
    * @type {ResourceEntry}
    */
@@ -241,7 +263,22 @@ const SelectedTapDetails = ({
         <button className={styles.swipeIcon} aria-label="swipe" type="button" />
       ) : (
         <div className={styles.expandedToolBar}>
-          <div>
+          <div className={styles.toolbarActions}>
+            <IconButton
+              aria-label="more options"
+              onClick={handleMenuOpen}
+              sx={{ color: '#2D3748' }}
+            >
+              <MoreHorizIcon />
+            </IconButton>
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
+              <MenuItem onClick={handleMenuClose} sx={{ color: '#EF4444' }}>Report</MenuItem>
+            </Menu>
             <IconButton
               color="primary"
               aria-label="share"
@@ -250,10 +287,6 @@ const SelectedTapDetails = ({
             >
               <ExportSvg />
             </IconButton>
-            {/* TODO: Add this back in once we have real options! */}
-            {/* <IconButton color="primary" aria-label="more" component="label"> */}
-            {/*  <ThreeDotSvg /> */}
-            {/* </IconButton> */}
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
           {isMobile && (

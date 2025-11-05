@@ -98,6 +98,12 @@ $lighter-grey: #e9eef4;
     margin-bottom: 8px;
   }
 
+  .toolbarActions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
   .subtitles {
     line-height: 20px;
     margin-bottom: 0.1rem;
