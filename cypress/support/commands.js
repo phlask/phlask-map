@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// Mock geolocation to Philadelphia City Hall coordinates
+// Ensures consistent test behavior regardless of tester's actual location
+Cypress.Commands.add('mockGeolocationToCityHall', () => {
+  cy.window().then((win) => {
+    cy.stub(win.navigator.geolocation, 'getCurrentPosition').callsFake((success) => {
+      success({
+        coords: {
+          latitude: 39.952744,
+          longitude: -75.1635,
+          accuracy: 10
+        }
+      });
+    });
+  });
+});

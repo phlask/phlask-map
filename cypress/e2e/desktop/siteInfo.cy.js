@@ -4,6 +4,7 @@
 // For each resource type, test each site detail permutation and confirm only the expected number of taps appear.
 describe('site info', () => {
   beforeEach(() => {
+    cy.mockGeolocationToCityHall();
     cy.visit('/');
   });
 
@@ -34,7 +35,17 @@ describe('site info', () => {
   });
 
   it('should successfully display a foraging site', () => {
-    // TODO
+    // Switch to foraging view
+    cy.get('[data-cy=button-resource-type-menu]').click()
+    cy.get('[data-cy=button-FORAGE-data-selector]').click()
+    cy.get('[data-cy=button-resource-type-menu]').click()
+
+    // Wait for specific foraging marker to be visible
+    cy.get('[title^="data-cy-"]').should('be.visible').first().click();
+
+    // Verify that the info window appears with location name
+    cy.get('[data-cy=tap-organization-name]').should('exist');
+    cy.get('[data-cy=tap-organization-name]').invoke('text').should('not.be.empty');
   });
 
   it('should successfully display a bathroom site', () => {
