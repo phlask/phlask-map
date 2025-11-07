@@ -1,6 +1,14 @@
-import { Button, Collapse, IconButton, SvgIcon } from '@mui/material';
+import {
+  Button,
+  Collapse,
+  IconButton,
+  SvgIcon,
+  Menu,
+  MenuItem
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import DirectionIcon from 'icons/ArrowElbowUpRight';
 import CaretDownSvg from 'icons/CaretDown';
@@ -21,7 +29,12 @@ import {
 import VerificationButton from 'components/Verification/VerificationButton';
 import styles from './SelectedTapDetails.module.scss';
 import useIsMobile from 'hooks/useIsMobile';
-import type { PointerEventHandler, ReactNode } from 'react';
+import {
+  useState,
+  type MouseEventHandler,
+  type PointerEventHandler,
+  type ReactNode
+} from 'react';
 import noop from 'utils/noop';
 
 /**
@@ -121,6 +134,7 @@ type SelectedTapDetailsProps = {
   closeModal?: VoidFunction;
   selectedPlace: ResourceEntry;
   children: ReactNode;
+  onStartEdit: VoidFunction;
 };
 
 const SelectedTapDetails = ({
@@ -130,8 +144,27 @@ const SelectedTapDetails = ({
   setInfoCollapse,
   closeModal = noop,
   selectedPlace,
-  children
+  children,
+  onStartEdit
 }: SelectedTapDetailsProps) => {
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+
+  const handleMenuOpen: MouseEventHandler<HTMLButtonElement> = event => {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
+
+    setMenuAnchor(event.target);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
+
+  const handleSuggestEdit = () => {
+    onStartEdit();
+    handleMenuClose();
+  };
   const isMobile = useIsMobile();
   const resource = selectedPlace;
 
@@ -246,7 +279,24 @@ const SelectedTapDetails = ({
         <button className={styles.swipeIcon} aria-label="swipe" type="button" />
       ) : (
         <div className={styles.expandedToolBar}>
-          <div>
+          <div className={styles.toolbarActions}>
+            <IconButton
+              aria-label="more options"
+              onClick={handleMenuOpen}
+              sx={{ color: '#2D3748' }}
+            >
+              <MoreHorizIcon />
+            </IconButton>
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
+              <MenuItem onClick={handleMenuClose} sx={{ color: '#EF4444' }}>
+                Report
+              </MenuItem>
+            </Menu>
             <IconButton
               color="primary"
               aria-label="share"
@@ -255,10 +305,6 @@ const SelectedTapDetails = ({
             >
               <ExportSvg />
             </IconButton>
-            {/* TODO: Add this back in once we have real options! */}
-            {/* <IconButton color="primary" aria-label="more" component="label"> */}
-            {/*  <ThreeDotSvg /> */}
-            {/* </IconButton> */}
           </div>
           {/* On mobile, show the minimize button. On desktop, show the close button */}
           {isMobile && (

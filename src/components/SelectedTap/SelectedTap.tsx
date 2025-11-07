@@ -23,10 +23,13 @@ const SelectedTap = () => {
   const refSelectedTap = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  const [previewHeight, setPreviewHeight] = useState(0);
+  // const [previewHeight, setPreviewHeight] = useState(0);
 
   const [walkingDuration, setWalkingDuration] = useState(0);
   const [infoCollapseMobile, setInfoCollapseMobile] = useState(false);
+  // TODO: Connect this feature
+  // https://github.com/phlask/phlask-map/issues/649
+  const [_isEditing, setIsEditing] = useState<boolean | null>(false);
 
   const showingInfoWindow = useAppSelector(
     state => state.filterMarkers.showingInfoWindow
@@ -66,6 +69,10 @@ const SelectedTap = () => {
     userLocation?.longitude
   ]);
 
+  const handleStartEdit = () => {
+    setIsEditing(true);
+  };
+
   const handleToggleInfoWindow = (isShown: boolean) => {
     let infoWindowClass = 'info-window-';
     infoWindowClass += isShown ? 'in' : 'out';
@@ -99,16 +106,7 @@ const SelectedTap = () => {
 
   useEffect(() => {
     getWalkingDurationAndTimes();
-    setPreviewHeight(refSelectedTap.current?.clientHeight ?? 0);
   }, [getWalkingDurationAndTimes]);
-
-  useEffect(() => {
-    if (showingInfoWindow) {
-      if (isMobile && previewHeight !== refSelectedTap.current?.clientHeight) {
-        setPreviewHeight(refSelectedTap.current?.clientHeight ?? 0);
-      }
-    }
-  }, [isMobile, previewHeight, showingInfoWindow]);
 
   return (
     <div>
@@ -129,7 +127,8 @@ const SelectedTap = () => {
                 estWalkTime={walkingDuration}
                 selectedPlace={selectedPlace}
                 infoCollapse={infoCollapseMobile}
-                setInfoCollapse={value => setInfoCollapseMobile(value)}
+                setInfoCollapse={setInfoCollapseMobile}
+                onStartEdit={handleStartEdit}
               >
                 <SelectedTapHours selectedPlace={selectedPlace} />
               </SelectedTapDetails>
@@ -159,6 +158,7 @@ const SelectedTap = () => {
               infoCollapse={infoCollapseMobile}
               setInfoCollapse={setInfoCollapseMobile}
               closeModal={() => handleToggleInfoWindow(false)}
+              onStartEdit={handleStartEdit}
             >
               <SelectedTapHours selectedPlace={selectedPlace} />
             </SelectedTapDetails>
