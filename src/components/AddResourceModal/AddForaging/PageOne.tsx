@@ -1,4 +1,4 @@
-import ImageUploader from 'react-images-upload';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocode, RequestType } from 'react-geocode';
 import { Controller } from 'react-hook-form';
@@ -93,13 +93,25 @@ const PageOne = ({
     <>
       {isMobile && (
         <ImageUploader
-          withIcon
-          buttonText="Choose images"
-          buttonStyles={{ backgroundColor: '#5286E9' }}
-          onChange={onDrop}
-          imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
-          maxFileSize={5242880}
-          withPreview
+          onDrop={onDrop}
+          accept={{
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
+            'image/gif': ['.gif']
+          }}
+          maxSize={5242880}
+          maxFiles={1}
+          renderContent={() => (
+            <Button
+              sx={{
+                color: 'white',
+                borderRadius: '8px',
+                background: '#5286E9'
+              }}
+            >
+              Choose Image
+            </Button>
+          )}
         />
       )}
       <Grid
