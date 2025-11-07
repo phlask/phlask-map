@@ -119,7 +119,7 @@ const SelectedTap = () => {
               onOpen={() => handleToggleInfoWindow(true)}
               onClose={() => handleToggleInfoWindow(false)}
               slotProps={{
-                paper: { square: false }
+                paper: { square: false, sx: { height: '80vh' } }
               }}
             >
               <SelectedTapDetails

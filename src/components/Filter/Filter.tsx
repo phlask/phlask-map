@@ -327,7 +327,7 @@ const Filter = ({ resourceType }: FilterProps) => {
           disableSwipeToOpen
           open={toolbarModal === TOOLBAR_MODAL_FILTER}
           slotProps={{
-            paper: { sx: { borderRadius: '10px' } }
+            paper: { sx: { borderRadius: '10px', height: '70vh' } }
           }}
         >
           <Box className={styles.header}>
