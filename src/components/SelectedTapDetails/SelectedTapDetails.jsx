@@ -338,10 +338,14 @@ const SelectedTapDetails = ({
             <span className={styles.walkTime}>{estWalkTime} min</span>
           </p>
         </div>
-        <div className={styles.dateModified}>
-          <h3>Last Modified</h3>
-          <p>{resourceLastUpdated}</p>
-        </div>
+        {
+          resourceLastUpdated && (
+            <div className={styles.dateModified}>
+              <h3>Last Modified</h3>
+              <p>{resourceLastUpdated}</p>
+            </div>
+          )
+        }
       </div>
 
       <div className={styles.tagGroup}>
