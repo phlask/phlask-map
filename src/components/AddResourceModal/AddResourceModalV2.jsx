@@ -241,11 +241,6 @@ const AddResourceModalV2 = () => {
       fieldName = 'address';
     }
 
-    // Don't allow address changes in edit mode
-    if (isEditMode && fieldName === 'address') {
-      return;
-    }
-
     // Update the state with the new value
     setValues(prevValues => ({
       ...prevValues,
@@ -428,9 +423,18 @@ const AddResourceModalV2 = () => {
         };
       }
 
-      addResource(newResource).then(result => {
-        dispatch(pushNewResource(newResource));
-      });
+      // If editing an existing resource, we should submit as a suggestion instead of creating a new resource
+      // TODO: Implement suggestion submission workflow with admin review/approval system
+      if (isEditMode && editingResource?.id) {
+        // For now, editing is disabled - awaiting suggestion workflow implementation
+        console.warn('Edit suggestions not yet implemented');
+        dispatch(setEditingResource(null));
+      } else {
+        // Adding a new resource
+        addResource(newResource).then(result => {
+          dispatch(pushNewResource(newResource));
+        });
+      }
     });
   };
 

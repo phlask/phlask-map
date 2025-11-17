@@ -159,12 +159,10 @@ const PageOne = ({
                               {errors.address.message || requiredFieldMsg}
                             </span>
                           )}
-                          {!editMode && (
-                            <Button variant="text">
-                              Use my location instead
-                              <MyLocationIcon sx={{ fontSize: 10 }} />
-                            </Button>
-                          )}
+                          <Button variant="text">
+                            Use my location instead
+                            <MyLocationIcon sx={{ fontSize: 10 }} />
+                          </Button>
                         </Stack>
                       }
                       error={!!errors.address}
@@ -173,7 +171,6 @@ const PageOne = ({
                         onClick: e => {
                           // Will autofill the street address textbox with user's current address,
                           // after clicking 'use my address instead'
-                          if (editMode) return;
                           const { latitude, longitude } = userLocation;
                           geocode(
                             RequestType.LATLNG,
@@ -188,7 +185,7 @@ const PageOne = ({
                             .catch(noop);
                         }
                       }}
-                      style={{ backgroundColor: editMode ? '#f5f5f5' : 'white' }}
+                      style={{ backgroundColor: 'white' }}
                       InputLabelProps={{ shrink: true }}
                       type={type}
                       autoComplete={autoComplete}
@@ -196,7 +193,7 @@ const PageOne = ({
                       aria-autocomplete={ariaAutocomplete}
                       aria-expanded={ariaExpanded}
                       aria-activedescendant={ariaActiveDescendent}
-                      disabled={disabled || editMode}
+                      disabled={disabled}
                       onKeyDown={onKeyDown}
                       onBlur={onBlur}
                       value={value}
