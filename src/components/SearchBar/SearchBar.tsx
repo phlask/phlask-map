@@ -31,6 +31,9 @@ const SearchBar = ({ search }: SearchBarProps) => {
 
         onSelect(value.toPlace());
       }}
+      slotProps={{
+        popupIndicator: { sx: { marginRight: '16px' } }
+      }}
       classes={{ root: styles.root || '' }}
       renderInput={({ InputProps, disabled, fullWidth, id, inputProps }) => (
         <TextField
@@ -41,12 +44,24 @@ const SearchBar = ({ search }: SearchBarProps) => {
           inputMode="search"
           size="small"
           placeholder="Search for Resources near..."
-          variant="filled"
+          variant="standard"
           slotProps={{
+            root: {
+              sx: {
+                background: '#ffffff',
+                borderRadius: 4,
+                paddingBlock: '16px',
+                paddingInline: 0
+              }
+            },
             input: {
               ...InputProps,
               autoComplete: 'off',
-              sx: { paddingBlock: '16px !important' },
+              sx: {
+                borderRadius: 4,
+                paddingLeft: '16px',
+                paddingRight: '60px !important'
+              },
               classes: { adornedStart: styles['search-icon'] || '' },
               startAdornment: (
                 <InputAdornment

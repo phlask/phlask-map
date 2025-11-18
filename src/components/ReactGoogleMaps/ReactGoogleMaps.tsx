@@ -1,10 +1,9 @@
 import { Map, Marker, useMap } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
-import { toggleInfoWindow, setSelectedPlace } from 'actions/actions';
+import { setSelectedPlace, getResources } from 'actions/actions';
 import PinWaterActive from 'components/icons/PinWaterActive';
 import PinForagingActive from 'components/icons/PinForagingActive';
 import PinFoodActive from 'components/icons/PinFoodActive';
@@ -20,6 +19,7 @@ import {
 } from 'types/ResourceEntry';
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
+import useAppDispatch from 'hooks/useDispatch';
 
 const style: CSSProperties = {
   width: '100%',
@@ -34,7 +34,7 @@ type ReactGoogleMapsProps = {
 };
 
 const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const filteredResources = useAppSelector(state =>
@@ -48,6 +48,10 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const map = useMap();
 
   useEffect(() => {
+    dispatch(getResources());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!map) {
       return;
     }
@@ -56,12 +60,6 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
 
   // toggle window goes here
   const onMarkerClick = (resource: ResourceEntry) => {
-    dispatch(
-      toggleInfoWindow({
-        isShown: true,
-        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
-      })
-    );
     dispatch(setSelectedPlace(resource));
 
     if (!map) {
@@ -90,8 +88,8 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
       rotateControl={false}
       fullscreenControl={false}
       defaultCenter={{
-        lat: CITY_HALL_COORDINATES.latitude,
-        lng: CITY_HALL_COORDINATES.longitude
+        lat: selectedPlace?.latitude ?? CITY_HALL_COORDINATES.latitude,
+        lng: selectedPlace?.longitude ?? CITY_HALL_COORDINATES.longitude
       }}
       mapId="DEMO_MAP_ID"
     >

@@ -39,18 +39,9 @@ export const updateExistingResource = createAction<ResourceEntry>(
   'UPDATE_EXISTING_RESOURCE'
 );
 
-export const toggleInfoWindow = createAction<{
-  isShown: boolean;
-  infoWindowClass: string;
-}>('TOGGLE_INFO_WINDOW');
-export const toggleInfoWindowClass = createAction<{ infoWindowClass: string }>(
-  'TOGGLE_INFO_WINDOW_CLASS'
+export const setSelectedPlace = createAction<ResourceEntry | null>(
+  'SET_SELECTED_PLACE'
 );
-
-export const toggleInfoExpanded = createAction<boolean>('TOGGLE_INFO_EXPANDED');
-
-export const setSelectedPlace =
-  createAction<ResourceEntry>('SET_SELECTED_PLACE');
 
 export type ToolbarModalType = `TOOLBAR_MODAL_${
   | 'NONE'

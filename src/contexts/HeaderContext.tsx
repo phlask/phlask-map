@@ -14,17 +14,19 @@ import noop from 'utils/noop';
 export type HeaderMenuPage = 'about' | 'join' | 'contact';
 
 type HeaderContextValue = {
-  menuExpand: boolean;
+  isMenuOpen: boolean;
   shownPage: ReactNode | null;
-  toggleMenuExpand: VoidFunction;
-  menuClicked: (page: HeaderMenuPage | null) => void;
+  onMenuOpen: VoidFunction;
+  onMenuClose: VoidFunction;
+  onMenuItemClick: (page: HeaderMenuPage | null) => void;
 };
 
 const HeaderContext = createContext<HeaderContextValue>({
-  menuExpand: false,
+  isMenuOpen: false,
   shownPage: null,
-  toggleMenuExpand: noop,
-  menuClicked: noop
+  onMenuOpen: noop,
+  onMenuClose: noop,
+  onMenuItemClick: noop
 });
 
 type HeaderProviderProps = {
@@ -33,21 +35,28 @@ type HeaderProviderProps = {
 
 // Create a HeaderProvider component
 const HeaderProvider = ({ children }: HeaderProviderProps) => {
-  const [menuExpand, setMenuExpand] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [shownPage, setShownPage] = useState<ReactNode | null>(null);
   const isMobile = useIsMobile();
 
-  const toggleMenuExpand = useCallback(() => {
-    if (menuExpand) {
+  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
+
+  const onMenuClose = useCallback(() => {
+    setShownPage(null);
+    setIsMenuOpen(false);
+  }, []);
+
+  const toggleMenuOpen = useCallback(() => {
+    if (isMenuOpen) {
       setShownPage(null);
     }
-    setMenuExpand(!menuExpand);
-  }, [menuExpand]);
+    setIsMenuOpen(prev => !prev);
+  }, [isMenuOpen]);
 
-  const menuClicked = useCallback(
+  const onMenuItemClick = useCallback(
     (page: HeaderMenuPage | null) => {
       if (isMobile) {
-        setMenuExpand(false);
+        setIsMenuOpen(false);
       }
 
       setShownPage(prev => {
@@ -76,12 +85,13 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
 
   const stateVal = useMemo(
     () => ({
-      menuExpand,
+      isMenuOpen: isMenuOpen,
       shownPage,
-      toggleMenuExpand,
-      menuClicked
+      onMenuClose,
+      onMenuOpen,
+      onMenuItemClick
     }),
-    [menuClicked, menuExpand, shownPage, toggleMenuExpand]
+    [onMenuItemClick, isMenuOpen, shownPage, toggleMenuOpen]
   );
 
   return <HeaderContext value={stateVal}>{children}</HeaderContext>;

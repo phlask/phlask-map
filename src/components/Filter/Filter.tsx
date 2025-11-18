@@ -18,7 +18,6 @@ import {
   setEntryFilterFunction,
   setFilterFunction,
   setToolbarModal,
-  toggleInfoWindow,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE,
   type ResourceType
@@ -210,14 +209,6 @@ const Filter = ({ resourceType }: FilterProps) => {
               <IconButton
                 aria-label="close"
                 onClick={() => {
-                  dispatch(
-                    toggleInfoWindow({
-                      isShown: false,
-                      infoWindowClass: isMobile
-                        ? 'info-window-out'
-                        : 'info-window-out-desktop'
-                    })
-                  );
                   dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
                 }}
                 sx={{

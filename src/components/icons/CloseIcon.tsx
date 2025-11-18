@@ -12,10 +12,10 @@ const CloseIconBar = styled(Box)({
 });
 
 type CloseIconProps = {
-  close: boolean;
+  isOpen: boolean;
 };
 
-const CloseIcon = ({ close }: CloseIconProps) => (
+const CloseIcon = ({ isOpen }: CloseIconProps) => (
   <Box
     sx={{
       position: 'relative',
@@ -26,21 +26,23 @@ const CloseIcon = ({ close }: CloseIconProps) => (
     <CloseIconBar
       sx={{
         top: '7px',
-        transform: `translateY(${close ? 8 : 0}px) rotate(${close ? 45 : 0}deg)`
+        transform: `translateY(${isOpen ? 8 : 0}px) rotate(${
+          isOpen ? 45 : 0
+        }deg)`
       }}
     />
     <CloseIconBar
       sx={{
         top: '15px',
-        transform: `rotate(${close ? 45 : 0}deg)`,
-        opacity: `${close ? 0 : 1}`
+        transform: `rotate(${isOpen ? 45 : 0}deg)`,
+        opacity: `${isOpen ? 0 : 1}`
       }}
     />
     <CloseIconBar
       sx={{
         top: '23px',
-        transform: `translateY(${close ? -8 : 0}px) rotate(${
-          close ? -45 : 0
+        transform: `translateY(${isOpen ? -8 : 0}px) rotate(${
+          isOpen ? -45 : 0
         }deg)`
       }}
     />

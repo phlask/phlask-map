@@ -2,8 +2,7 @@ import {
   TOOLBAR_MODAL_NONE,
   type ToolbarModalType,
   setSelectedPlace,
-  setToolbarModal,
-  toggleInfoWindow
+  setToolbarModal
 } from 'actions/actions';
 
 import useIsMobile from 'hooks/useIsMobile';
@@ -46,12 +45,6 @@ const Toolbar = () => {
         lng: closest.longitude
       });
     }
-    dispatch(
-      toggleInfoWindow({
-        isShown: true,
-        infoWindowClass: isMobile ? 'info-window-in' : 'info-window-in-desktop'
-      })
-    );
   };
 
   if (isMobile) {

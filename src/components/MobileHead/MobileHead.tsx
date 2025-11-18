@@ -24,7 +24,7 @@ import useAppSelector from 'hooks/useSelector';
 const MobileHead = () => {
   const dispatch = useDispatch();
   const headerContext = React.useContext(HeaderContext);
-  const { shownPage, menuClicked, toggleMenuExpand, menuExpand } =
+  const { shownPage, onMenuItemClick, isMenuOpen, onMenuClose, onMenuOpen } =
     headerContext;
 
   const toolbarModal = useAppSelector(
@@ -59,10 +59,10 @@ const MobileHead = () => {
                 sx={{
                   margin: '15px'
                 }}
-                onClick={toggleMenuExpand}
+                onClick={isMenuOpen ? onMenuClose : onMenuOpen}
                 data-cy="head-sidebar-button"
               >
-                <CloseIcon close={menuExpand} />
+                <CloseIcon isOpen={isMenuOpen} />
               </IconButton>
               <Button
                 sx={{
@@ -99,8 +99,8 @@ const MobileHead = () => {
               </Box>
             </Box>
             <NavigationButtons
-              isOpen={menuExpand}
-              onItemClick={page => menuClicked(page)}
+              isOpen={isMenuOpen}
+              onItemClick={page => onMenuItemClick(page)}
             />
           </Box>
         </Paper>
@@ -110,7 +110,7 @@ const MobileHead = () => {
         anchor="bottom"
         open={Boolean(shownPage)}
         onOpen={noop}
-        onClose={() => menuClicked(null)}
+        onClose={() => onMenuItemClick(null)}
       >
         <Box sx={theme => ({ padding: theme.spacing(1) })}>{shownPage}</Box>
       </SwipeableDrawer>

@@ -57,21 +57,20 @@ const filterMarkersReducer = createReducer(initialState, builder => {
     state.filterEntry = '';
   });
   builder.addCase(actions.updateExistingResource, (state, action) => {
-    state.allResources.findIndex(resource => resource.id === action.payload.id);
+    const resourceIndex = state.allResources.findIndex(
+      resource => resource.id === action.payload.id
+    );
+
+    const isResourceExists = resourceIndex !== -1;
+    if (!isResourceExists) {
+      return;
+    }
+
+    state.allResources.splice(resourceIndex, 1, action.payload);
   });
   builder.addCase(actions.setSelectedPlace, (state, action) => {
     state.selectedPlace = action.payload;
     state.showingInfoWindow = true;
-  });
-  builder.addCase(actions.toggleInfoWindow, (state, action) => {
-    state.showingInfoWindow = action.payload.isShown;
-    state.infoWindowClass = action.payload.infoWindowClass;
-  });
-  builder.addCase(actions.toggleInfoWindowClass, (state, action) => {
-    state.infoWindowClass = action.payload.infoWindowClass;
-  });
-  builder.addCase(actions.toggleInfoExpanded, (state, action) => {
-    state.infoIsExpanded = action.payload;
   });
   builder.addCase(actions.setToolbarModal, (state, action) => {
     state.toolbarModal = action.payload;

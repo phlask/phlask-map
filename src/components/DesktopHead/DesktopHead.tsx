@@ -7,7 +7,7 @@ import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
 
 const DesktopHead = () => {
   const headerContext = React.useContext(HeaderContext);
-  const { shownPage, menuClicked, toggleMenuExpand, menuExpand } =
+  const { shownPage, onMenuItemClick, isMenuOpen, onMenuClose, onMenuOpen } =
     headerContext;
 
   return (
@@ -23,10 +23,10 @@ const DesktopHead = () => {
               sx={{
                 margin: '15px'
               }}
-              onClick={toggleMenuExpand}
+              onClick={isMenuOpen ? onMenuClose : onMenuOpen}
               data-cy="head-sidebar-button"
             >
-              <CloseIcon close={menuExpand} />
+              <CloseIcon isOpen={isMenuOpen} />
             </IconButton>
             <Button
               sx={{
@@ -38,8 +38,8 @@ const DesktopHead = () => {
           </Box>
           <Collapse in={Boolean(shownPage)} timeout="auto" />
           <NavigationButtons
-            onItemClick={page => menuClicked(page)}
-            isOpen={menuExpand}
+            onItemClick={page => onMenuItemClick(page)}
+            isOpen={isMenuOpen}
           />
         </Box>
       </Paper>
