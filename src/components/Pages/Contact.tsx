@@ -9,7 +9,7 @@ const Contact = () => {
   };
 
   return (
-    <Box sx={{ height: '600px', width: '100%' }}>
+    <Box sx={{ height: '600px', width: '100%', position: 'relative' }}>
       {loading && (
         <Box
           sx={{
