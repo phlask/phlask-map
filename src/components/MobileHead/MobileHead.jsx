@@ -89,6 +89,7 @@ const MobileHead = () => {
                   <SearchIcon />
                 </IconButton>
                 <IconButton
+                  data-cy="button-filter-mobile"
                   onClick={() => {
                     if (toolbarModal !== TOOLBAR_MODAL_FILTER) {
                       dispatch(setToolbarModal(TOOLBAR_MODAL_FILTER));

@@ -37,6 +37,7 @@ const MobileResourceButton = ({ type, icon, textLabel }) => {
 
   return (
     <ListItemButton
+      data-cy={`button-resource-${type.toLowerCase()}`}
       sx={{ alignItems: 'center', gap: 1.5 }}
       onClick={() => {
         dispatch(resetFilterFunction());
