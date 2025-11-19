@@ -27,6 +27,7 @@ const clearAllFilters = () => {
   closeFilterMenu();
 };
 
+// Checks the Resource Count div in the filter view for the expected number of resources shown
 const getResourceCount = () => {
   return cy.contains("Resources:").should("exist").then(($el) => {
     return parseInt($el.text().split("Resources: ")[1]);
@@ -50,7 +51,7 @@ describe("Water resource filtering", () => {
 
   it("should filter water sites by dispenser type and verify resource count changes", () => {
     let initialCount;
-    
+
     // Verify initial state - has resources
     getResourceCount().then(count => {
       initialCount = count;
@@ -66,7 +67,7 @@ describe("Water resource filtering", () => {
       expect(filteredCount).to.be.greaterThan(0);
       // Some taps must be filtered out
       expect(filteredCount).to.be.lessThan(initialCount);
-      
+
       // Verify ONLY matching taps shown on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -86,7 +87,7 @@ describe("Water resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.lessThan(initialCount);
-      
+
       // Verify markers on map match the filtered count  
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -106,7 +107,7 @@ describe("Water resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.lessThan(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -116,7 +117,7 @@ describe("Water resource filtering", () => {
 
   it("should filter water sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
     let initialCount;
-    
+
     // Verify initial state
     getResourceCount().then(count => {
       initialCount = count;
@@ -130,7 +131,7 @@ describe("Water resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.lessThan(initialCount);
-      
+
       // Only matching taps visible
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -144,7 +145,7 @@ describe("Water resource filtering", () => {
     // Verify Clear All restores everything
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
-      
+
       // All previously hidden taps now visible on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
@@ -175,7 +176,7 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -195,7 +196,7 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -215,7 +216,7 @@ describe("Food resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -229,7 +230,7 @@ describe("Food resource filtering", () => {
     // Verify Clear All restores everything
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
-      
+
       // All previously hidden taps now visible on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
@@ -260,7 +261,7 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -280,7 +281,7 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -300,7 +301,7 @@ describe("Foraging resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -314,7 +315,7 @@ describe("Foraging resource filtering", () => {
     // Verify Clear All restores everything
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
-      
+
       // All previously hidden taps now visible on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
@@ -345,7 +346,7 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -365,7 +366,7 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -385,7 +386,7 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -405,7 +406,7 @@ describe("Bathroom resource filtering", () => {
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
       expect(filteredCount).to.be.at.most(initialCount);
-      
+
       // Verify markers on map match the filtered count
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(filteredCount);
@@ -419,7 +420,7 @@ describe("Bathroom resource filtering", () => {
     // Verify Clear All restores everything
     getResourceCount().then(clearedCount => {
       expect(clearedCount).to.equal(initialCount);
-      
+
       // All previously hidden taps now visible on map
       cy.get('[title^="data-cy-"]').then($markers => {
         expect($markers.length).to.equal(initialCount);
@@ -440,14 +441,14 @@ describe("Filter persistence across resource types", () => {
     // Start with water and apply filters
     switchToResourceType("water");
     waitForResourcesLoad();
-    
+
     let waterInitialCount;
     getResourceCount().then(count => {
       waterInitialCount = count;
     });
 
     applyFilters(["Bottle filler"]);
-    
+
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.lessThan(waterInitialCount);
     });
@@ -455,7 +456,7 @@ describe("Filter persistence across resource types", () => {
     // Switch to food - filters should be cleared
     switchToResourceType("food");
     waitForResourcesLoad();
-    
+
     let foodInitialCount;
     getResourceCount().then(count => {
       foodInitialCount = count;
