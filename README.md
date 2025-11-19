@@ -49,7 +49,7 @@ Note that `core hours per month` means each core on your codespace consumes inde
 
 ### Yarn
 
-1. Ensure you have [nodejs v16](https://nodejs.org/download/release/latest-v16.x/) installed on your machine.
+1. Ensure you have [nodejs v20](https://nodejs.org/download/release/latest-v20.x/) installed on your machine.
    - You can also use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
    - once you have install nvm
    - run `nvm install` <- this will download the required verison (only required on the first installation)
@@ -182,13 +182,3 @@ Tests follow the convention of being placed in a `<test-file-name>.spec.js` file
 To add new tests, create a `*.spec.js` file at the top level of `/cypress/integration`.
 
 Refer to `/cypress/integration/example` for the kinds of things cypress can test for -- NOTE the `*.spec.js` files are configured to not run when running `npm run test`.
-
-The site runs on:
-
-- AWS S3 (https://aws.amazon.com/s3/)
-  - Stores the static files generated from the ReactJS build which present the map page
-- AWS CloudFront (https://aws.amazon.com/cloudfront/)
-  - Serves as a global Content Delivery Network (CDN) for the content hosted in S3
-  - Enables us to have a custom domain with SSL in order to ensure your traffic to the page is encrypted via HTTPS (https://en.wikipedia.org/wiki/HTTPS)
-- Supabase (https://supabase.com/docs)
-  - Stores the resources and contributors data used to generate the information on our site
