@@ -26,7 +26,6 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
   const isMobile = useIsMobile();
   return (
     <Stack
-      alignItems="center"
       flexGrow={1}
       flexShrink={0}
       gap={2.5}

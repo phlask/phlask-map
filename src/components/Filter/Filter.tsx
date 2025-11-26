@@ -191,7 +191,6 @@ const Filter = ({ resourceType }: FilterProps) => {
             sx={{
               left: '32px',
               bottom: '133px',
-              width: '686px',
               borderRadius: '10px',
               pointerEvents: 'auto'
             }}

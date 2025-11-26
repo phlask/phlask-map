@@ -1,12 +1,16 @@
 .root {
-  position: absolute;
+  position: fixed;
   top: 100px;
   width: 100%;
+  padding-inline: 15px;
+
   border-radius: 28px;
   pointer-events: auto;
+  z-index: 2;
   @media only screen and (min-width: 670px) {
     top: unset;
     position: relative;
+    padding-inline: 0;
 
     justify-content: flex-start;
     align-items: center;

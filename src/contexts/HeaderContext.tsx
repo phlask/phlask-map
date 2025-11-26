@@ -49,6 +49,7 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
   const onMenuClose = useCallback(() => {
     setShownPage(null);
     setIsMenuOpen(false);
+    setActiveOverlaySectionContext(null);
   }, []);
 
   const onMenuItemClick = useCallback(
