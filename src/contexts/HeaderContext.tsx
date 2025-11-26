@@ -5,11 +5,13 @@ import {
   createContext,
   type ReactNode,
   useCallback,
+  useContext,
   useMemo,
   useState
 } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import noop from 'utils/noop';
+import { ActiveOverlaySectionContext } from './ActiveOverlaySectionContext';
 
 export type HeaderMenuPage = 'about' | 'join' | 'contact';
 
@@ -35,6 +37,9 @@ type HeaderProviderProps = {
 
 // Create a HeaderProvider component
 const HeaderProvider = ({ children }: HeaderProviderProps) => {
+  const [_, setActiveOverlaySectionContext] = useContext(
+    ActiveOverlaySectionContext
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [shownPage, setShownPage] = useState<ReactNode | null>(null);
   const isMobile = useIsMobile();
@@ -46,13 +51,6 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
     setIsMenuOpen(false);
   }, []);
 
-  const toggleMenuOpen = useCallback(() => {
-    if (isMenuOpen) {
-      setShownPage(null);
-    }
-    setIsMenuOpen(prev => !prev);
-  }, [isMenuOpen]);
-
   const onMenuItemClick = useCallback(
     (page: HeaderMenuPage | null) => {
       if (isMobile) {
@@ -61,12 +59,16 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
 
       setShownPage(prev => {
         if (!page) {
+          setActiveOverlaySectionContext(null);
           return null;
         }
 
         if (page === prev) {
+          setActiveOverlaySectionContext(null);
           return null;
         }
+
+        setActiveOverlaySectionContext('head-menu-page');
 
         switch (page) {
           case 'about':
@@ -91,7 +93,7 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
       onMenuOpen,
       onMenuItemClick
     }),
-    [onMenuItemClick, isMenuOpen, shownPage, toggleMenuOpen]
+    [onMenuItemClick, isMenuOpen, shownPage]
   );
 
   return <HeaderContext value={stateVal}>{children}</HeaderContext>;
