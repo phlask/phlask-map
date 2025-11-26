@@ -267,6 +267,7 @@ const Filter = ({ resourceType }: FilterProps) => {
                   margin: '10px 20px'
                 }}
                 onClick={clearAllTags}
+                data-cy="button-clear-all-desktop"
               >
                 <p
                   style={{
@@ -376,7 +377,9 @@ const Filter = ({ resourceType }: FilterProps) => {
                 margin: '10px 20px'
               }}
             >
-              <Button onClick={clearAllTags}>Clear All</Button>
+              <Button onClick={clearAllTags} data-cy="button-clear-all-mobile">
+                Clear All
+              </Button>
             </Box>
             <Box
               sx={{
