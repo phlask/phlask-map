@@ -65,6 +65,39 @@ const Circle = ({ icon, title, description }: CircleProps) => (
   </div>
 );
 
+const ROLE_CARDS = [
+  {
+    id: 'dev',
+    title: 'Development',
+    description: 'Coding and Programming',
+    icon: <DevelopmentIcon />
+  },
+  {
+    id: 'data',
+    title: 'Data',
+    description: 'Collecting and organizing app data',
+    icon: <DataIcon />
+  },
+  {
+    id: 'mgmt',
+    title: 'Project Management',
+    description: 'Task management',
+    icon: <ManagementIcon />
+  },
+  {
+    id: 'design',
+    title: 'Design',
+    description: 'UX/UI Design and Research',
+    icon: <DesignIcon />
+  },
+  {
+    id: 'civic',
+    title: 'Civic',
+    description: 'Publicity and Community Engagement',
+    icon: <CivicIcon />
+  }
+];
+
 const Join = () => {
   const dispatch = useAppDispatch();
   const currentContributors = useAppSelector(
@@ -91,7 +124,7 @@ const Join = () => {
         </p>
       </div>
 
-      {/* REVIEW: I reckon these can be dymically rednered? */}
+      {/* Role Cards */}
       <div
         style={{
           height: 'fit-content',
@@ -99,31 +132,14 @@ const Join = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))'
         }}
       >
-        <Circle
-          icon={<DevelopmentIcon />}
-          title="Development"
-          description="Coding and Programming"
-        />
-        <Circle
-          icon={<DataIcon />}
-          title="Data"
-          description="Collecting and organizing app data"
-        />
-        <Circle
-          icon={<ManagementIcon />}
-          title="Project Management"
-          description="Task management"
-        />
-        <Circle
-          icon={<DesignIcon />}
-          title="Design"
-          description="UX/UI Design and Resarch"
-        />
-        <Circle
-          icon={<CivicIcon />}
-          title="Civic"
-          description="Publicity and Community Engagement"
-        />
+        {ROLE_CARDS.map(card => (
+          <Circle
+            key={card.id}
+            icon={card.icon}
+            title={card.title}
+            description={card.description}
+          />
+        ))}
       </div>
 
       <div>
@@ -136,7 +152,7 @@ const Join = () => {
         >
           <div
             style={{
-              width: '75%',
+              width: '80%',
               padding: '20px',
               border: '2px solid #F4D85B',
               borderRadius: '10px',
