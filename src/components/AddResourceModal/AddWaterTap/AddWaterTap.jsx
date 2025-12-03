@@ -60,7 +60,6 @@ const AddWaterTap = ({
     setValue,
     trigger,
     control,
-    reset,
     formState: { errors }
   } = useForm({
     defaultValues: {
@@ -70,15 +69,6 @@ const AddWaterTap = ({
       description
     }
   });
-
-  useEffect(() => {
-    reset({
-      name,
-      address,
-      website,
-      description
-    });
-  }, [name, address, website, description, reset]);
 
   const requiredFieldMsg = (
     <span>

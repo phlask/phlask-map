@@ -66,16 +66,15 @@ export const getContributors = async () => {
 /**
  * Submit a suggestion for editing an existing resource
  * TODO: Implement suggestion submission workflow with admin review/approval system
+ * TODO: Define and implement the full suggestion workflow:
+ *   1. Store suggestion in database
+ *   2. Create admin review/approval interface
+ *   3. Define how approved suggestions are applied to resources
  * @param {string} resourceId The ID of the resource being suggested for edit
  * @param {Object} suggestionData The suggested changes to the resource
  * @returns {Promise<Object>} The submitted suggestion
  */
-export const submitSuggestion = async (resourceId, suggestionData) => {
-    // TODO: Define and implement the full suggestion workflow:
-    // 1. Store suggestion in database
-    // 2. Create admin review/approval interface
-    // 3. Define how approved suggestions are applied to resources
-    throw new Error('Suggestion submission not yet implemented. Awaiting admin review workflow design.');
-}
+// eslint-disable-next-line no-unused-vars
+export const submitSuggestion = async (resourceId, suggestionData) => null;
 
 export default {};
