@@ -124,7 +124,6 @@ const Join = () => {
         </p>
       </div>
 
-      {/* Role Cards */}
       <div
         style={{
           height: 'fit-content',
