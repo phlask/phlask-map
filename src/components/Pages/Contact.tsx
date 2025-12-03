@@ -26,7 +26,9 @@ const Contact = () => {
           <CircularProgress />
         </Box>
       )}
-
+      //TODO: iframe is taking time to load and also airtable is loading tons of
+      stuff for a simple form // Maybe make custom form and make API calls to
+      air table?
       <iframe
         title="Contact Us"
         className="airtable-embed"

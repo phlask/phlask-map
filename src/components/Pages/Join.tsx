@@ -1,4 +1,5 @@
-import { ReactElement, useEffect } from 'react';
+import { useEffect } from 'react';
+import type { ReactElement } from 'react';
 
 import Grid from '@mui/material/Grid';
 import CivicIcon from 'icons/JoinCivicIcon';
@@ -89,6 +90,8 @@ const Join = () => {
           into &quot;circles&quot; by job function:
         </p>
       </div>
+
+      {/* REVIEW: I reckon these can be dymically rednered? */}
       <div
         style={{
           height: 'fit-content',
@@ -133,7 +136,7 @@ const Join = () => {
         >
           <div
             style={{
-              width: '55%',
+              width: '75%',
               padding: '20px',
               border: '2px solid #F4D85B',
               borderRadius: '10px',
@@ -149,6 +152,7 @@ const Join = () => {
             </p>
           </div>
         </div>
+
         <div>
           <p className={styles.pageText}>
             To join the team, visit{' '}
@@ -185,12 +189,14 @@ const Join = () => {
             </li>
           </ol>
         </div>
+
         <div id="acknowledgements-section">
           <h2>Acknowledgements</h2>
-          <p>
+          <p className={styles.pageText}>
             This project was made possible by the time, mentorship, and
             expertise of our dedicated team of volunteers.
           </p>
+
           <Grid container className="contributors" spacing={6}>
             <ContributorsList
               title="Current Contributors"

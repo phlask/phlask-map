@@ -44,6 +44,8 @@ export const addResource = {
   }
 };
 
+// FIXME: Update this db - contributorDatabaseName = 'contributors' to get Updated Contributors rendered on Join Page
+// URL: https://wantycfbnzzocsbthqzs.supabase.co/rest/v1/contributors?select=*
 export const getContributors = async () => {
   const { data, error } = await supabase
     .from(contributorDatabaseName)

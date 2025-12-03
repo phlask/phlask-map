@@ -1,5 +1,6 @@
 import styles from './Pages.module.scss';
 
+// REVIEW: Checked around and this component is not being used. Maybe remove?
 const Acknowledgements = () => (
   <div className={styles.page}>
     <h1 className={styles.pageHeader}>Acknowledgements</h1>

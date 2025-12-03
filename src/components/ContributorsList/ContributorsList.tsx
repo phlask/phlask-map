@@ -5,13 +5,13 @@ import type { Contributor } from 'types/Contributor';
 import ContributorsListItem from './ContributorsListItem';
 
 type ContributorsListProps = {
-  items: Contributor[];
   title: string;
+  items: Contributor[];
 };
 
 const ContributorsList = ({
-  items = [],
-  title = 'Contributors'
+  title = 'Contributors',
+  items = []
 }: ContributorsListProps) => (
   <Grid>
     <Typography variant="h6" color="#73839E">
