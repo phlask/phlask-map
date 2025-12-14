@@ -8,13 +8,9 @@ import Head from 'components/Head/Head';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedTap from 'components/SelectedTap/SelectedTap';
 import Toolbar from 'components/Toolbar/Toolbar';
-import {
-  ActiveOverlaySectionContext,
-  type OverlaySection
-} from 'contexts/ActiveOverlaySectionContext';
 import useIsMobile from 'hooks/useIsMobile';
 import useAppSelector from 'hooks/useSelector';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 type OverlayProps = {
   children: ReactNode;
@@ -22,8 +18,6 @@ type OverlayProps = {
 };
 
 const Overlay = ({ onSearch, children }: OverlayProps) => {
-  const [activeOverlaySection, setActiveOverlaySection] =
-    useState<OverlaySection | null>(null);
   const isMobile = useIsMobile();
   const map = useMap();
   const resourceType = useAppSelector(
@@ -44,9 +38,7 @@ const Overlay = ({ onSearch, children }: OverlayProps) => {
   };
 
   return (
-    <ActiveOverlaySectionContext
-      value={[activeOverlaySection, setActiveOverlaySection]}
-    >
+    <>
       <Stack
         zIndex={theme => theme.zIndex.appBar}
         position="fixed"
@@ -89,12 +81,11 @@ const Overlay = ({ onSearch, children }: OverlayProps) => {
           isMobile && children
         }
       </Stack>
-
       {
         // On desktop, pointer events are disabled
         !isMobile && children
       }
-    </ActiveOverlaySectionContext>
+    </>
   );
 };
 
