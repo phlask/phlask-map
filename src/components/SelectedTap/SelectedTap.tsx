@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
-import { Paper, SwipeableDrawer } from '@mui/material';
+import { SwipeableDrawer } from '@mui/material';
 import { setSelectedPlace } from 'actions/actions';
 import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
@@ -8,7 +8,6 @@ import sampleImg from 'components/images/phlask-tessellation.png';
 import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
 import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails';
 
-import './SelectedTap.css';
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
@@ -22,8 +21,6 @@ const tempImages = {
 const SelectedTap = () => {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
-
-  // const [previewHeight, setPreviewHeight] = useState(0);
 
   const [walkingDuration, setWalkingDuration] = useState(0);
   // TODO: Connect this feature
@@ -80,8 +77,8 @@ const SelectedTap = () => {
     <div>
       <div id="tap-info-container-mobile">
         <SwipeableDrawer
-          open={isMobile && Boolean(selectedPlace)}
-          anchor="bottom"
+          open={Boolean(selectedPlace)}
+          anchor={isMobile ? 'bottom' : 'right'}
           onOpen={noop}
           onClose={onClose}
           transitionDuration={300}
@@ -89,7 +86,13 @@ const SelectedTap = () => {
             backdrop: { onClick: noop },
             paper: {
               square: false,
-              sx: { height: '60vh' }
+              sx: theme => ({
+                height: '60vh',
+                [theme.breakpoints.up('md')]: {
+                  height: '100%',
+                  width: '30%'
+                }
+              })
             }
           }}
         >
@@ -106,32 +109,6 @@ const SelectedTap = () => {
           )}
         </SwipeableDrawer>
       </div>
-      {!isMobile && selectedPlace && (
-        <div>
-          {/* Desktop dialog panel */}
-          <Paper
-            sx={{
-              right: '32px',
-              top: '20px',
-              width: '50vw',
-              maxHeight: '70vh',
-              borderRadius: '10px',
-              overflow: 'auto',
-              pointerEvents: 'auto'
-            }}
-          >
-            <SelectedTapDetails
-              image={tempImages.tapImg}
-              estWalkTime={walkingDuration}
-              selectedPlace={selectedPlace}
-              onClose={onClose}
-              onStartEdit={handleStartEdit}
-            >
-              <SelectedTapHours selectedPlace={selectedPlace} />
-            </SelectedTapDetails>
-          </Paper>
-        </div>
-      )}
     </div>
   );
 };
