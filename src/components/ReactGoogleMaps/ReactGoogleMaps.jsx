@@ -171,6 +171,7 @@ const ReactGoogleMaps = () => {
     state => state.filterMarkers.searchBarMapTintOn
   );
   const userLocation = useSelector(getUserLocation);
+  const editingResource = useSelector(state => state.filterMarkers.editingResource);
   const [searchedTap, setSearchedTap] = useState(null);
   const [map, setMap] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState(
@@ -190,6 +191,9 @@ const ReactGoogleMaps = () => {
 
   // toggle window goes here
   const onMarkerClick = resource => {
+    // Prevent switching resources while editing
+    if (editingResource) return;
+
     dispatch(
       toggleInfoWindow({
         isShown: true,

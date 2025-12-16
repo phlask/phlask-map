@@ -478,7 +478,7 @@ const AddResourceModalV2 = () => {
         dispatch(setEditingResource(null));
       } else {
         // Adding a new resource
-        addResource(newResource).then(result => {
+        addResource(newResource).then(_result => {
           dispatch(pushNewResource(newResource));
         });
       }
@@ -535,10 +535,8 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {/* key forces remount when switching resources to reinitialize form state */}
       {resourceForm === WATER_RESOURCE_TYPE && (
         <AddWaterTap
-          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
@@ -570,7 +568,6 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === FOOD_RESOURCE_TYPE && (
         <AddFood
-          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
@@ -602,7 +599,6 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === BATHROOM_RESOURCE_TYPE && (
         <AddBathroom
-          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
@@ -628,7 +624,6 @@ const AddResourceModalV2 = () => {
 
       {resourceForm === FORAGE_RESOURCE_TYPE && (
         <AddForaging
-          key={editingResource?.id || 'new'}
           onPageChange={onPageChange}
           page={page}
           onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}
