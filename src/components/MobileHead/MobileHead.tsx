@@ -37,8 +37,7 @@ const MobileHead = () => {
           backgroundColor: 'transparent',
           maxWidth: '100%',
           zIndex: '9',
-          width: '100%',
-          pointerEvents: 'auto'
+          width: '100%'
         }}
       >
         <Paper

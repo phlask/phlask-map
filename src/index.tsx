@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot, type Container } from 'react-dom/client';
-import App from 'App';
 import Providers from 'components/Providers/Providers';
+import { RouterProvider } from 'react-router';
+import { router } from 'router';
 
 let basepath = '';
 // Test-specific routing logic
@@ -29,7 +30,7 @@ const root = createRoot(rootElement satisfies Container);
 root.render(
   <StrictMode>
     <Providers>
-      <App />
+      <RouterProvider router={router} />
     </Providers>
   </StrictMode>
 );

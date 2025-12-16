@@ -17,6 +17,8 @@ import {
 } from 'actions/actions';
 import type { MouseEventHandler, ReactElement } from 'react';
 import useAppSelector from 'hooks/useSelector';
+import { WATER_RESOURCE_TYPE } from 'types/ResourceEntry';
+import useResourceType from 'hooks/useResourceType';
 
 type ItemProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -81,9 +83,7 @@ const DesktopToolbar = ({
   onItemClick,
   onNearMeClick
 }: DesktopToolbarProps) => {
-  const resourceType = useAppSelector(
-    state => state.filterMarkers.resourceType
-  );
+  const { resourceType } = useResourceType();
 
   return (
     <Box
@@ -98,11 +98,13 @@ const DesktopToolbar = ({
         minWidth: '400px',
         borderRadius: '10px',
         justifyContent: 'space-between',
-        zIndex: 1,
-        pointerEvents: 'auto'
+        zIndex: 1
       }}
     >
-      <NearMeButton resourceType={resourceType} onClick={onNearMeClick} />
+      <NearMeButton
+        resourceType={resourceType || WATER_RESOURCE_TYPE}
+        onClick={onNearMeClick}
+      />
       <Item
         icon={<ResourceIcon />}
         label="Resources"

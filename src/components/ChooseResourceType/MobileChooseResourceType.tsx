@@ -20,7 +20,6 @@ import {
 
 import {
   resetFilterFunction,
-  setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
@@ -29,6 +28,7 @@ import {
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
 import type { ReactNode } from 'react';
+import useResourceType from 'hooks/useResourceType';
 
 type MobileResourceButtonProps = {
   type: ResourceType;
@@ -41,10 +41,11 @@ const MobileResourceButton = ({
   icon,
   textLabel
 }: MobileResourceButtonProps) => {
+  const { setResourceType } = useResourceType();
   const dispatch = useAppDispatch();
 
   const switchType = (newType: ResourceType) => {
-    dispatch(setResourceType(newType));
+    setResourceType(newType);
     dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
   };
 

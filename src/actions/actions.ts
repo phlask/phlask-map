@@ -59,5 +59,3 @@ export const TOOLBAR_MODAL_SEARCH = 'TOOLBAR_MODAL_SEARCH';
 export const TOOLBAR_MODAL_CONTRIBUTE = 'TOOLBAR_MODAL_CONTRIBUTE';
 
 export type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
-
-export const setResourceType = createAction<ResourceType>('SET_RESOURCE_TYPE');

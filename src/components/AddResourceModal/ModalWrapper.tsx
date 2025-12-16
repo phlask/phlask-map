@@ -52,8 +52,7 @@ const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '60vw',
-          borderRadius: '10px',
-          pointerEvents: 'auto'
+          borderRadius: '10px'
         }}
       >
         {children}

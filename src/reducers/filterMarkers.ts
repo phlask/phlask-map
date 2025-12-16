@@ -75,8 +75,5 @@ const filterMarkersReducer = createReducer(initialState, builder => {
   builder.addCase(actions.setToolbarModal, (state, action) => {
     state.toolbarModal = action.payload;
   });
-  builder.addCase(actions.setResourceType, (state, action) => {
-    state.resourceType = action.payload;
-  });
 });
 export default filterMarkersReducer;

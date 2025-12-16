@@ -21,7 +21,7 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
-import useAppSelector from 'hooks/useSelector';
+import useResourceType from 'hooks/useResourceType';
 
 type MobileToolbarProps = {
   onItemClick: (type: ToolbarModalType) => void;
@@ -29,9 +29,7 @@ type MobileToolbarProps = {
 };
 
 const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
-  const resourceType = useAppSelector(
-    state => state.filterMarkers.resourceType
-  );
+  const { resourceType } = useResourceType();
 
   const selectedResourceIcon = {
     [WATER_RESOURCE_TYPE]: WaterIcon,
@@ -39,7 +37,7 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
     [FORAGE_RESOURCE_TYPE]: ForagingIcon,
     [BATHROOM_RESOURCE_TYPE]: ToiletIcon,
     default: WaterIcon
-  }[resourceType ?? 'default'];
+  }[resourceType ?? 'default']!;
 
   return (
     <Box
@@ -51,8 +49,7 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
         pb: '25px',
         pt: '10px',
         bgcolor: 'white',
-        zIndex: theme.zIndex.appBar,
-        pointerEvents: 'auto'
+        zIndex: theme.zIndex.appBar
       })}
     >
       <BottomNavigation showLabels>

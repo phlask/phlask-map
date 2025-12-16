@@ -11,7 +11,7 @@ const DesktopHead = () => {
     headerContext;
 
   return (
-    <Stack direction="row" height="fit-content" sx={{ pointerEvents: 'auto' }}>
+    <Stack direction="row" height="fit-content">
       <Paper
         sx={{
           borderRadius: '10px'

@@ -15,7 +15,6 @@ import {
 
 import {
   resetFilterFunction,
-  setResourceType,
   setToolbarModal,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
@@ -26,6 +25,7 @@ import styles from './ChooseResourceType.module.scss';
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
 import { Modal } from '@mui/material';
+import useResourceType from 'hooks/useResourceType';
 
 type DesktopResourceButtonProps = {
   desktopIcon: FunctionComponent<{
@@ -45,6 +45,7 @@ const DesktopResourceButton = ({
   textLabel
 }: DesktopResourceButtonProps) => {
   const dispatch = useAppDispatch();
+  const { setResourceType } = useResourceType();
 
   return (
     <Button
@@ -60,8 +61,8 @@ const DesktopResourceButton = ({
       }}
       onClick={() => {
         dispatch(resetFilterFunction());
-        dispatch(setResourceType(type));
         dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+        setResourceType(type);
       }}
       data-cy={`button-${type}-data-selector`}
     >
@@ -104,7 +105,7 @@ const DesktopChooseResourceType = () => {
         }}
         ref={ref}
       >
-        <Box sx={{ padding: '40px', pointerEvents: 'auto' }}>
+        <Box sx={{ padding: '40px' }}>
           <Box>
             <h1 className={styles.header}>Show Resource Type</h1>
             <p className={styles.description}>

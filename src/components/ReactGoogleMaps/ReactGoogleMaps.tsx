@@ -9,7 +9,6 @@ import PinForagingActive from 'components/icons/PinForagingActive';
 import PinFoodActive from 'components/icons/PinFoodActive';
 import PinBathroomActive from 'components/icons/PinBathroomActive';
 import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
-import selectFilteredResource from 'selectors/resourceSelectors';
 import {
   BATHROOM_RESOURCE_TYPE,
   FOOD_RESOURCE_TYPE,
@@ -20,6 +19,8 @@ import {
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
+import { getAllResources } from 'selectors/resourceSelectors';
+import useResourceType from 'hooks/useResourceType';
 
 const style: CSSProperties = {
   width: '100%',
@@ -37,12 +38,11 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
   const posthog = usePostHog();
-  const filteredResources = useAppSelector(state =>
-    selectFilteredResource(state)
-  );
+  const allResources = useAppSelector(getAllResources);
   const selectedPlace = useAppSelector(
     state => state.filterMarkers.selectedPlace
   );
+  const { resourceType } = useResourceType();
   const userLocation = useAppSelector(getUserLocation);
 
   const map = useMap();
@@ -78,6 +78,22 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
     });
   };
 
+  const getPinUrl = (resource: ResourceEntry) => {
+    const isActiveMarker =
+      selectedPlace?.latitude === resource.latitude &&
+      selectedPlace?.longitude === resource.longitude;
+
+    if (!isActiveMarker) {
+      return phlaskMarkerIconV2(resource.resource_type, 56, 56);
+    }
+    return {
+      [WATER_RESOURCE_TYPE]: PinWaterActive(),
+      [FOOD_RESOURCE_TYPE]: PinFoodActive(),
+      [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
+      [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
+    }[resource.resource_type];
+  };
+
   return (
     <Map
       style={style}
@@ -93,38 +109,21 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
       }}
       mapId="DEMO_MAP_ID"
     >
-      {filteredResources.map((resource, index) => {
-        if (!resource.resource_type) {
-          return null;
-        }
-        const getPinUrl = () => {
-          const isActiveMarker =
-            selectedPlace?.latitude === resource.latitude &&
-            selectedPlace?.longitude === resource.longitude;
-
-          if (!isActiveMarker) {
-            return phlaskMarkerIconV2(resource.resource_type, 56, 56);
-          }
-          return {
-            [WATER_RESOURCE_TYPE]: PinWaterActive(),
-            [FOOD_RESOURCE_TYPE]: PinFoodActive(),
-            [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
-            [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
-          }[resource.resource_type];
-        };
-
-        return (
-          <Marker
-            key={resource.id}
-            onClick={() => onMarkerClick(resource)}
-            position={{ lat: resource.latitude, lng: resource.longitude }}
-            icon={{ url: getPinUrl() || '' }}
-            // This is used for marker targeting as we are unable to add custom properties with this library.
-            // We should eventually replace this so that we can still enable the use of screen readers in the future.
-            title={`data-cy-${index}`}
-          />
-        );
-      })}
+      {allResources
+        .filter(resource => resource.resource_type === resourceType)
+        .map((resource, index) => {
+          return (
+            <Marker
+              key={resource.id}
+              onClick={() => onMarkerClick(resource)}
+              position={{ lat: resource.latitude, lng: resource.longitude }}
+              icon={{ url: getPinUrl(resource) || '' }}
+              // This is used for marker targeting as we are unable to add custom properties with this library.
+              // We should eventually replace this so that we can still enable the use of screen readers in the future.
+              title={`data-cy-${index}`}
+            />
+          );
+        })}
 
       {searchedTap ? (
         <Marker position={searchedTap} title="data-cy-search-result" />

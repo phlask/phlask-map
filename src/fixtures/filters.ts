@@ -93,6 +93,6 @@ const filters = {
       }
     ]
   }
-};
+} as const;
 
 export default filters;

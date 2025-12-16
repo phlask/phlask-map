@@ -37,14 +37,16 @@ const NearMeButton = ({
   resourceType = WATER_RESOURCE_TYPE
 }: NearMeButtonProps) => (
   <Button
-    startIcon={resourceIcons[resourceType]}
+    startIcon={resourceIcons[resourceType || WATER_RESOURCE_TYPE]}
     onClick={onClick}
     sx={theme => ({
       fontFamily: 'Exo',
       color: 'white',
       backgroundColor:
         // @ts-expect-error Need to fix theme declaration
-        theme.palette.resources[resourceStyle[resourceType]].main,
+        theme.palette.resources[
+          resourceStyle[resourceType || WATER_RESOURCE_TYPE]
+        ].main,
       paddingInline: '47px',
       paddingBlock: 0,
       borderRadius: '50px',
@@ -58,7 +60,9 @@ const NearMeButton = ({
       ':hover': {
         backgroundColor:
           // @ts-expect-error Need to fix theme declaration
-          theme.palette.resources[resourceStyle[resourceType]].light
+          theme.palette.resources[
+            resourceStyle[resourceType || WATER_RESOURCE_TYPE]
+          ].light
       }
     })}
   >

@@ -1,63 +1,29 @@
 import { Box, Button, SwipeableDrawer } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import React, { useState } from 'react';
-import selectFilteredResource from 'selectors/resourceSelectors';
+import React from 'react';
 import {
-  removeEntryFilterFunction,
-  removeFilterFunction,
-  resetFilterFunction,
-  setEntryFilterFunction,
-  setFilterFunction,
   setToolbarModal,
   TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  type ResourceType
+  TOOLBAR_MODAL_NONE
 } from 'actions/actions';
 import noop from 'utils/noop';
 import styles from './Filter.module.scss';
 import useAppSelector from 'hooks/useSelector';
 import filters from 'fixtures/filters';
 import useAppDispatch from 'hooks/useDispatch';
-
-type ActiveFilterTagState = {
-  [key: string]: (boolean[] | number)[];
-};
+import useResourceType from 'hooks/useResourceType';
 
 type FilterTagsProps = {
-  tags: string[];
-  activeTags: ActiveFilterTagState;
-  resourceType: ResourceType;
-  index: number;
-  handleTag: (
-    type: number,
-    resourceType: ResourceType,
-    filterTag: string,
-    index: number,
-    key: number
-  ) => void;
+  tags?: string[];
 };
 
-const FilterTags = ({
-  tags,
-  activeTags,
-  resourceType,
-  index,
-  handleTag
-}: FilterTagsProps) => (
+const FilterTags = ({ tags = [] }) => (
   <Box className={styles.filterTags}>
-    {tags.map((tag, key) => (
+    {tags.map(tag => (
       <Box
         key={tag}
-        className={
-          styles.filterTag +
-          // @ts-expect-error Change filter to be powered by query params
-          (activeTags[resourceType][index][key]
-            ? ` ${styles.filterTagSelected}`
-            : '')
-        }
-        onClick={() => {
-          handleTag(0, resourceType, tag, index, key);
-        }}
+        className={styles.filterTag}
+        onClick={noop}
         data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
@@ -66,107 +32,33 @@ const FilterTags = ({
   </Box>
 );
 
-const FilterTagsExclusive = ({
-  tags,
-  activeTags,
-  resourceType,
-  index,
-  handleTag
-}: FilterTagsProps) => (
+const FilterTagsExclusive = ({ tags = [] }: FilterTagsProps) => (
   <Box className={styles.filterTagsExclusive}>
-    {tags.map((tag, key) => (
+    {tags.map(tag => (
       <Box
         key={tag}
-        className={
-          styles.filterTagExclusive +
-          (activeTags[resourceType][index] === key
-            ? ` ${styles.filterTagSelected}`
-            : '')
-        }
-        onClick={() => {
-          handleTag(1, resourceType, tag, index, key);
-        }}
+        className={styles.filterTagExclusive}
+        onClick={noop}
         data-cy={`filter-option-${tag}`}
       >
         <p>{tag}</p>
       </Box>
     ))}
   </Box>
-);
-
-const noActiveFilterTags = Object.entries(filters).reduce<{
-  [key: string]: (boolean[] | number)[];
-}>(
-  (prev, [key, value]) => ({
-    ...prev,
-    [key]: value.categories.map(category => {
-      if (category.type === 0) {
-        return new Array(category.tags.length).fill(false);
-      }
-      return category.tags.length;
-    })
-  }),
-  {}
 );
 
 const Filter = () => {
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
-  const [activeFilterTags, setActiveFilterTags] =
-    useState<ActiveFilterTagState>(noActiveFilterTags);
-
-  const resourceType = useAppSelector(
-    state => state.filterMarkers.resourceType
-  );
+  const { resourceType, setResourceType } = useResourceType();
 
   const toolbarModal = useAppSelector(
     state => state.filterMarkers.toolbarModal
   );
-  const filteredResources = useAppSelector(state =>
-    selectFilteredResource(state)
-  );
 
-  const clearAllTags = () => {
-    setActiveFilterTags(JSON.parse(JSON.stringify(noActiveFilterTags)));
-    dispatch(resetFilterFunction());
-  };
-
-  const handleTag = (
-    type: number,
-    filterType: ResourceType,
-    filterTag: string,
-    index: number,
-    key: number
-  ) => {
-    const updatedActiveFilterTags = { ...activeFilterTags };
-
-    // handles multi select filters
-    if (type === 0) {
-      // @ts-expect-error Change filter to be powered by query params
-      if (updatedActiveFilterTags[filterType][index][key]) {
-        dispatch(removeFilterFunction({ tag: filterTag }));
-      } else {
-        dispatch(setFilterFunction({ tag: filterTag }));
-      }
-      // @ts-expect-error Change filter to be powered by query params
-      updatedActiveFilterTags[filterType][index][key] =
-        // @ts-expect-error Change filter to be powered by query params
-        !updatedActiveFilterTags[filterType][index][key];
-      setActiveFilterTags(updatedActiveFilterTags);
-    }
-    // handles single select entry/organization filters
-    else if (type === 1) {
-      if (updatedActiveFilterTags[filterType][index] === key) {
-        // @ts-expect-error Change filter to be powered by query params
-        updatedActiveFilterTags[filterType][index] = null;
-        dispatch(removeEntryFilterFunction());
-      } else {
-        updatedActiveFilterTags[filterType][index] = key;
-        dispatch(setEntryFilterFunction({ tag: filterTag }));
-      }
-      setActiveFilterTags(updatedActiveFilterTags);
-    }
-  };
+  if (!filters[resourceType]) {
+    return null;
+  }
 
   return (
     <SwipeableDrawer
@@ -207,26 +99,10 @@ const Filter = () => {
       </Box>
 
       <Box sx={{ margin: '20px' }}>
-        {filters[resourceType].categories.map((category, index) => (
+        {filters[resourceType].categories.map(category => (
           <React.Fragment key={category.header}>
             <h2 className={styles.label}>{category.header}</h2>
-            {category.type === 0 ? (
-              <FilterTags
-                tags={category.tags}
-                resourceType={resourceType}
-                index={index}
-                handleTag={handleTag}
-                activeTags={activeFilterTags}
-              />
-            ) : (
-              <FilterTagsExclusive
-                tags={category.tags}
-                resourceType={resourceType}
-                index={index}
-                handleTag={handleTag}
-                activeTags={activeFilterTags}
-              />
-            )}
+            {category.type === 0 ? <FilterTags /> : <FilterTagsExclusive />}
           </React.Fragment>
         ))}
       </Box>
@@ -244,7 +120,12 @@ const Filter = () => {
             margin: '10px 20px'
           }}
         >
-          <Button onClick={clearAllTags} data-cy="button-clear-all-mobile">
+          <Button
+            onClick={() => {
+              setResourceType(resourceType);
+            }}
+            data-cy="button-clear-all-mobile"
+          >
             Clear All
           </Button>
         </Box>
@@ -265,7 +146,7 @@ const Filter = () => {
               fontWeight: '600'
             }}
           >
-            Resources: {filteredResources.length}
+            Resources: 0
           </p>
         </Box>
       </Box>
