@@ -8,21 +8,14 @@ import Head from 'components/Head/Head';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedTap from 'components/SelectedTap/SelectedTap';
 import Toolbar from 'components/Toolbar/Toolbar';
-import useIsMobile from 'hooks/useIsMobile';
 import useAppSelector from 'hooks/useSelector';
-import { type ReactNode } from 'react';
 
 type OverlayProps = {
-  children: ReactNode;
   onSearch: (location: google.maps.LatLngLiteral) => void;
 };
 
-const Overlay = ({ onSearch, children }: OverlayProps) => {
-  const isMobile = useIsMobile();
+const Overlay = ({ onSearch }: OverlayProps) => {
   const map = useMap();
-  const resourceType = useAppSelector(
-    state => state.filterMarkers.resourceType
-  );
   const toolbarModal = useAppSelector(
     state => state.filterMarkers.toolbarModal
   );
@@ -40,51 +33,50 @@ const Overlay = ({ onSearch, children }: OverlayProps) => {
   return (
     <>
       <Stack
-        zIndex={theme => theme.zIndex.appBar}
-        position="fixed"
-        height="100vh"
-        width="100vw"
-        justifyContent="space-between"
         sx={theme => ({
-          pointerEvents: !isMobile ? 'none' : 'all',
+          zIndex: theme.zIndex.appBar,
+          position: 'fixed',
+          width: '100vw',
           [theme.breakpoints.up('md')]: {
-            padding: '25px'
+            width: 'auto',
+            top: '25px',
+            left: '25px'
           }
         })}
+        justifyContent="space-between"
+        flex={1}
+        height="fit-content"
       >
-        <Stack justifyContent="space-between" flex={1} height="fit-content">
-          <Stack direction="row" flex={1} justifyContent="space-between">
-            <Head />
-            <SelectedTap />
-          </Stack>
-
-          <Stack maxWidth="765px" gap={2}>
-            <Fade
-              in={toolbarModal === TOOLBAR_MODAL_SEARCH}
-              mountOnEnter
-              timeout={300}
-            >
-              <Box>
-                <SearchBar search={location => searchForLocation(location)} />
-              </Box>
-            </Fade>
-
-            <ChooseResourceType />
-            <Filter resourceType={resourceType} />
-            <AddResourceModalV2 />
-            <Toolbar />
-          </Stack>
-        </Stack>
-        {
-          // On mobile, we want the map to be part of this container
-          // so that it reacts to pointer events
-          isMobile && children
-        }
+        <Head />
       </Stack>
-      {
-        // On desktop, pointer events are disabled
-        !isMobile && children
-      }
+
+      <Stack
+        sx={theme => ({
+          position: 'fixed',
+          bottom: '25px',
+          left: '25px',
+          zIndex: theme.zIndex.appBar,
+          maxWidth: '765px'
+        })}
+        gap={2}
+      >
+        <Fade
+          in={toolbarModal === TOOLBAR_MODAL_SEARCH}
+          mountOnEnter
+          timeout={300}
+        >
+          <Box>
+            <SearchBar search={location => searchForLocation(location)} />
+          </Box>
+        </Fade>
+
+        <ChooseResourceType />
+        <Filter />
+        <AddResourceModalV2 />
+        <Toolbar />
+      </Stack>
+
+      <SelectedTap />
     </>
   );
 };

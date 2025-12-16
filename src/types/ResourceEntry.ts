@@ -49,45 +49,67 @@ type GooglePlacesPeriod = {
   open: GooglePlacesTimePoint;
 };
 
+export type WaterDispenserType =
+  | 'DRINKING_FOUNTAIN'
+  | 'BOTTLE_FILLER'
+  | 'SINK'
+  | 'JUG'
+  | 'SODA_MACHINE'
+  | 'PITCHER'
+  | 'WATER_COOLER';
+
+export type WaterTag =
+  | 'WHEELCHAIR_ACCESSIBLE'
+  | 'FILTERED'
+  | 'BYOB'
+  | 'ID_REQUIRED';
+
 /** Details for a WATER resource. */
 export type WaterInfo = {
-  dispenser_type: (
-    | 'DRINKING_FOUNTAIN'
-    | 'BOTTLE_FILLER'
-    | 'SINK'
-    | 'JUG'
-    | 'SODA_MACHINE'
-    | 'PITCHER'
-    | 'WATER_COOLER'
-  )[];
-  tags: ('WHEELCHAIR_ACCESSIBLE' | 'FILTERED' | 'BYOB' | 'ID_REQUIRED')[];
+  dispenser_type: WaterDispenserType[];
+  tags: WaterTag[];
 };
+
+export type FoodType = 'PERISHABLE' | 'NON_PERISHABLE' | 'PREPARED';
+
+export type FoodDistributionType = 'EAT_ON_SITE' | 'DELIVERY' | 'PICKUP';
+
+export type FoodOrganizationType =
+  | 'GOVERNMENT'
+  | 'BUSINESS'
+  | 'NON_PROFIT'
+  | 'UNSURE';
 
 /** Details for a FOOD resource. */
 export type FoodInfo = {
-  food_type: ('PERISHABLE' | 'NON_PERISHABLE' | 'PREPARED')[];
-  distribution_type: ('EAT_ON_SITE' | 'DELIVERY' | 'PICKUP')[];
-  organization_type: ('GOVERNMENT' | 'BUSINESS' | 'NON_PROFIT' | 'UNSURE')[];
+  food_type: FoodType[];
+  distribution_type: FoodDistributionType[];
+  organization_type: FoodOrganizationType[];
   organization_name?: string;
   organization_url: string;
   tags: string[];
 };
 
+export type ForageType = 'NUT' | 'FRUIT' | 'LEAVES' | 'BARK' | 'FLOWERS';
+
+export type ForageTag = 'MEDICINAL' | 'IN_SEASON' | 'COMMUNITY_GARDEN';
+
 /** Details for a FORAGE resource. */
 export type ForageInfo = {
-  forage_type: ('NUT' | 'FRUIT' | 'LEAVES' | 'BARK' | 'FLOWERS')[];
-  tags: ('MEDICINAL' | 'IN_SEASON' | 'COMMUNITY_GARDEN')[];
+  forage_type: ForageType[];
+  tags: ForageTag[];
 };
+
+export type BathroomType =
+  | 'WHEELCHAIR_ACCESSIBLE'
+  | 'GENDER_NEUTRAL'
+  | 'CHANGING_TABLE'
+  | 'SINGLE_OCCUPANCY'
+  | 'FAMILY';
 
 /** Details for a BATHROOM resource. */
 export type BathroomInfo = {
-  tags: (
-    | 'WHEELCHAIR_ACCESSIBLE'
-    | 'GENDER_NEUTRAL'
-    | 'CHANGING_TABLE'
-    | 'SINGLE_OCCUPANCY'
-    | 'FAMILY'
-  )[];
+  tags: BathroomType[];
 };
 
 export type ResourceEntry = {

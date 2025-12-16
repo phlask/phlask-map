@@ -19,7 +19,15 @@ import {
   FOOD_RESOURCE_TYPE,
   FORAGE_RESOURCE_TYPE,
   BATHROOM_RESOURCE_TYPE,
-  type ResourceEntry
+  type ResourceEntry,
+  type BathroomType,
+  type ForageType,
+  type ForageTag,
+  type FoodType,
+  type FoodDistributionType,
+  type FoodOrganizationType,
+  type WaterDispenserType,
+  type WaterTag
 } from 'types/ResourceEntry';
 import { getUserLocation } from 'reducers/user';
 import { addResource } from '../../db';
@@ -100,7 +108,7 @@ const AddResourceModalV2 = () => {
   const isMobile = useIsMobile();
 
   const onPageChange = (update: (prev: number) => number) => {
-    setPage(prev => {
+    return setPage(prev => {
       const newValue = Math.max(0, update(prev));
       if (newValue === 0) {
         setResourceForm(null);
@@ -285,13 +293,13 @@ const AddResourceModalV2 = () => {
             values.sodaMachine ? 'SODA_MACHINE' : null,
             values.pitcher ? 'PITCHER' : null,
             values.waterCooler ? 'WATER_COOLER' : null
-          ].filter(Boolean),
+          ].filter(Boolean) as WaterDispenserType[],
           tags: [
             values.handicapAccessible ? 'WHEELCHAIR_ACCESSIBLE' : null,
             values.filtration ? 'FILTERED' : null,
             values.waterVesselNeeded ? 'BYOB' : null,
             values.idRequired ? 'ID_REQUIRED' : null
-          ].filter(Boolean)
+          ].filter(Boolean) as WaterTag[]
         };
       }
 
@@ -301,19 +309,20 @@ const AddResourceModalV2 = () => {
             values.perishable ? 'PERISHABLE' : null,
             values.nonPerishable ? 'NON_PERISHABLE' : null,
             values.prepared ? 'PREPARED' : null
-          ].filter(Boolean),
+          ].filter(Boolean) as FoodType[],
           distribution_type: [
             values.eatOnSite ? 'EAT_ON_SITE' : null,
             values.delivery ? 'DELIVERY' : null,
             values.pickUp ? 'PICKUP' : null
-          ].filter(Boolean),
+          ].filter(Boolean) as FoodDistributionType[],
           organization_type: [
             values.organization
               ? values.organization.toUpperCase().replace(/\s+/g, '_')
               : null
-          ].filter(Boolean),
+          ].filter(Boolean) as FoodOrganizationType[],
           organization_name: values.organization,
-          organization_url: values.website
+          organization_url: values.website,
+          tags: []
         };
       }
 
@@ -326,12 +335,12 @@ const AddResourceModalV2 = () => {
             values.bark ? 'BARK' : null,
             values.flowers ? 'FLOWERS' : null,
             values.root ? 'ROOT' : null
-          ].filter(Boolean),
+          ].filter(Boolean) as ForageType[],
           tags: [
             values.medicinal ? 'MEDICINAL' : null,
             values.inSeason ? 'IN_SEASON' : null,
             values.communityGarden ? 'COMMUNITY_GARDEN' : null
-          ].filter(Boolean)
+          ].filter(Boolean) as ForageTag[]
         };
       }
 
@@ -344,7 +353,7 @@ const AddResourceModalV2 = () => {
             values.singleOccupancy ? 'SINGLE_OCCUPANCY' : null,
             values.familyBathroom ? 'FAMILY' : null,
             values.hasFountain ? 'HAS_FOUNTAIN' : null
-          ].filter(Boolean)
+          ].filter(Boolean) as BathroomType[]
         };
       }
 
@@ -371,6 +380,7 @@ const AddResourceModalV2 = () => {
       onExitedWrapper();
     }
   };
+
 
   return (
     <ModalWrapper onExited={onExitedWrapper}>

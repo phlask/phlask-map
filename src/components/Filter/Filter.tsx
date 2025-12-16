@@ -1,13 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
-import {
-  Box,
-  Button,
-  Collapse,
-  IconButton,
-  Paper,
-  Stack,
-  SwipeableDrawer
-} from '@mui/material';
+import { Box, Button, SwipeableDrawer } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import React, { useState } from 'react';
 import selectFilteredResource from 'selectors/resourceSelectors';
@@ -103,10 +94,6 @@ const FilterTagsExclusive = ({
   </Box>
 );
 
-type FilterProps = {
-  resourceType: ResourceType;
-};
-
 const noActiveFilterTags = Object.entries(filters).reduce<{
   [key: string]: (boolean[] | number)[];
 }>(
@@ -122,11 +109,15 @@ const noActiveFilterTags = Object.entries(filters).reduce<{
   {}
 );
 
-const Filter = ({ resourceType }: FilterProps) => {
+const Filter = () => {
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
   const [activeFilterTags, setActiveFilterTags] =
     useState<ActiveFilterTagState>(noActiveFilterTags);
+
+  const resourceType = useAppSelector(
+    state => state.filterMarkers.resourceType
+  );
 
   const toolbarModal = useAppSelector(
     state => state.filterMarkers.toolbarModal
@@ -178,232 +169,107 @@ const Filter = ({ resourceType }: FilterProps) => {
   };
 
   return (
-    <>
-      {!isMobile && (
-        <Collapse
-          in={toolbarModal === TOOLBAR_MODAL_FILTER}
-          orientation="vertical"
-          timeout={{ enter: 300, appear: 0, exit: 300 }}
-          mountOnEnter
-          unmountOnExit
-        >
-          <Paper
-            sx={{
-              left: '32px',
-              bottom: '133px',
-              borderRadius: '10px',
-              pointerEvents: 'auto'
-            }}
-          >
-            <Stack
+    <SwipeableDrawer
+      anchor={isMobile ? 'bottom' : 'left'}
+      onClose={() => {
+        dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+      }}
+      onOpen={noop}
+      disableSwipeToOpen
+      open={toolbarModal === TOOLBAR_MODAL_FILTER}
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: '10px',
+            width: isMobile ? 'auto' : '30vw',
+            height: isMobile ? '70vh' : '100%'
+          }
+        }
+      }}
+    >
+      <Box className={styles.header}>
+        <Box sx={{ width: '100%' }}>
+          {isMobile ? (
+            <Box
               sx={{
                 position: 'relative',
-                pointerEvents: 'auto',
-                alignItems: 'center',
-                justifyContent: 'center'
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '24px',
+                height: '4px',
+                borderRadius: '2px',
+                backgroundColor: '#ffffff'
               }}
-              className={styles.header}
-            >
-              <h1>{filters[resourceType].title}</h1>
-              <IconButton
-                aria-label="close"
-                onClick={() => {
-                  dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
-                }}
-                sx={{
-                  position: 'absolute',
-                  right: '20px',
-                  top: '5px',
-                  color: '#fff',
-                  '&:hover': {
-                    color: '#fff'
-                  }
-                }}
-                size="large"
-              >
-                <CloseIcon
-                  sx={{
-                    fontSize: 34
-                  }}
-                />
-              </IconButton>
-            </Stack>
+            />
+          ) : null}
+        </Box>
+        <h1>{filters[resourceType].title}</h1>
+      </Box>
 
-            <Box sx={{ margin: '20px' }}>
-              {filters[resourceType].categories.map((category, index) => (
-                <React.Fragment key={category.header}>
-                  <h2 className={styles.label}>{category.header}</h2>
-                  {category.type === 0 ? (
-                    <FilterTags
-                      tags={category.tags}
-                      resourceType={resourceType}
-                      index={index}
-                      handleTag={handleTag}
-                      activeTags={activeFilterTags}
-                    />
-                  ) : (
-                    <FilterTagsExclusive
-                      tags={category.tags}
-                      resourceType={resourceType}
-                      index={index}
-                      handleTag={handleTag}
-                      activeTags={activeFilterTags}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </Box>
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                fontSize: '16.8px',
-                fontFamily: "'Inter', sans-serif"
-              }}
-            >
-              <Box
-                sx={{
-                  margin: '10px 20px'
-                }}
-                onClick={clearAllTags}
-                data-cy="button-clear-all-desktop"
-              >
-                <p
-                  style={{
-                    margin: 0,
-                    width: 'fit-content',
-                    position: 'relative',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    borderBottom: '2px solid #2D3748',
-                    fontWeight: '500',
-                    cursor: 'pointer',
-                    userSelect: 'none'
-                  }}
-                >
-                  Clear All
-                </p>
-              </Box>
-              <Box
-                sx={{
-                  margin: '0px 20px'
-                }}
-              >
-                <p
-                  style={{
-                    margin: '10px',
-                    padding: '10px 20px',
-                    width: 'fit-content',
-                    position: 'relative',
-                    float: 'right',
-                    border: '1px solid #09A2E5',
-                    borderRadius: '8px',
-                    fontWeight: '600'
-                  }}
-                >
-                  Resources: {filteredResources.length}
-                </p>
-              </Box>
-            </Box>
-          </Paper>
-        </Collapse>
-      )}
-      {isMobile && (
-        <SwipeableDrawer
-          anchor="bottom"
-          onClose={() => {
-            dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
-          }}
-          onOpen={noop}
-          disableSwipeToOpen
-          open={toolbarModal === TOOLBAR_MODAL_FILTER}
-          slotProps={{
-            paper: { sx: { borderRadius: '10px', height: '70vh' } }
+      <Box sx={{ margin: '20px' }}>
+        {filters[resourceType].categories.map((category, index) => (
+          <React.Fragment key={category.header}>
+            <h2 className={styles.label}>{category.header}</h2>
+            {category.type === 0 ? (
+              <FilterTags
+                tags={category.tags}
+                resourceType={resourceType}
+                index={index}
+                handleTag={handleTag}
+                activeTags={activeFilterTags}
+              />
+            ) : (
+              <FilterTagsExclusive
+                tags={category.tags}
+                resourceType={resourceType}
+                index={index}
+                handleTag={handleTag}
+                activeTags={activeFilterTags}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </Box>
+      <Box
+        sx={{
+          marginBottom: '10px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          fontSize: '16.8px',
+          fontFamily: "'Inter', sans-serif"
+        }}
+      >
+        <Box
+          sx={{
+            margin: '10px 20px'
           }}
         >
-          <Box className={styles.header}>
-            <Box sx={{ width: '100%' }}>
-              <Box
-                sx={{
-                  position: 'relative',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '24px',
-                  height: '4px',
-                  borderRadius: '2px',
-                  backgroundColor: '#ffffff'
-                }}
-              />
-            </Box>
-            <h1>{filters[resourceType].title}</h1>
-          </Box>
-
-          <Box sx={{ margin: '20px' }}>
-            {filters[resourceType].categories.map((category, index) => (
-              <React.Fragment key={category.header}>
-                <h2 className={styles.label}>{category.header}</h2>
-                {category.type === 0 ? (
-                  <FilterTags
-                    tags={category.tags}
-                    resourceType={resourceType}
-                    index={index}
-                    handleTag={handleTag}
-                    activeTags={activeFilterTags}
-                  />
-                ) : (
-                  <FilterTagsExclusive
-                    tags={category.tags}
-                    resourceType={resourceType}
-                    index={index}
-                    handleTag={handleTag}
-                    activeTags={activeFilterTags}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </Box>
-          <Box
-            sx={{
-              marginBottom: '10px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              fontSize: '16.8px',
-              fontFamily: "'Inter', sans-serif"
+          <Button onClick={clearAllTags} data-cy="button-clear-all-mobile">
+            Clear All
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            margin: '0px 20px'
+          }}
+        >
+          <p
+            style={{
+              margin: '10px',
+              padding: '10px 20px',
+              width: 'fit-content',
+              position: 'relative',
+              float: 'right',
+              border: '1px solid #09A2E5',
+              borderRadius: '8px',
+              fontWeight: '600'
             }}
           >
-            <Box
-              sx={{
-                margin: '10px 20px'
-              }}
-            >
-              <Button onClick={clearAllTags} data-cy="button-clear-all-mobile">
-                Clear All
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                margin: '0px 20px'
-              }}
-            >
-              <p
-                style={{
-                  margin: '10px',
-                  padding: '10px 20px',
-                  width: 'fit-content',
-                  position: 'relative',
-                  float: 'right',
-                  border: '1px solid #09A2E5',
-                  borderRadius: '8px',
-                  fontWeight: '600'
-                }}
-              >
-                Resources: {filteredResources.length}
-              </p>
-            </Box>
-          </Box>
-        </SwipeableDrawer>
-      )}
-    </>
+            Resources: {filteredResources.length}
+          </p>
+        </Box>
+      </Box>
+    </SwipeableDrawer>
   );
 };
 

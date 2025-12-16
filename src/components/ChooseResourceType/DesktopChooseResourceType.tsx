@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
 import Paper from '@mui/material/Paper';
 import { useRef, type FunctionComponent } from 'react';
 import DesktopWaterIcon from 'icons/WaterIconChooseResource';
@@ -26,6 +25,7 @@ import useOnClickOutside from '../AddResourceModal/useOnClickOutside';
 import styles from './ChooseResourceType.module.scss';
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
+import { Modal } from '@mui/material';
 
 type DesktopResourceButtonProps = {
   desktopIcon: FunctionComponent<{
@@ -61,6 +61,7 @@ const DesktopResourceButton = ({
       onClick={() => {
         dispatch(resetFilterFunction());
         dispatch(setResourceType(type));
+        dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
       }}
       data-cy={`button-${type}-data-selector`}
     >
@@ -78,26 +79,27 @@ const DesktopChooseResourceType = () => {
   const ref = useRef<HTMLDivElement>(null);
   // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
   const btnRef = document.querySelector('#resource-type-select-button');
+
+  const onClose = () => {
+    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+  };
   const handleClickOutside = () => {
     if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
-      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+      onClose();
     }
   };
 
   useOnClickOutside(ref, handleClickOutside, [btnRef]);
 
   return (
-    <Collapse
-      in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
-      orientation="vertical"
-      timeout="auto"
-      mountOnEnter
-      unmountOnExit
-    >
+    <Modal open={toolbarModal === TOOLBAR_MODAL_RESOURCE} onClose={onClose}>
       <Paper
         sx={{
-          left: '32px',
-          bottom: '133px',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '60vw',
           borderRadius: '10px'
         }}
         ref={ref}
@@ -142,7 +144,7 @@ const DesktopChooseResourceType = () => {
           </Box>
         </Box>
       </Paper>
-    </Collapse>
+    </Modal>
   );
 };
 
