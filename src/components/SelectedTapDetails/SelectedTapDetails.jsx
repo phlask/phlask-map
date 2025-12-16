@@ -165,6 +165,7 @@ const SelectedTapDetails = ({
   let resourceTitle = '';
   let resourceSubtitleOne;
   let resourceSubtitleTwo;
+  let resourceLastUpdated;
 
   if (
     resource.name &&
@@ -186,6 +187,10 @@ const SelectedTapDetails = ({
     resource.longitude !== undefined
   ) {
     resourceTitle = latLongFormatted;
+  }
+
+  if (resource.last_modified) {
+    resourceLastUpdated = new Date(resource.last_modified).toDateString();
   }
 
   let icon;
@@ -366,6 +371,14 @@ const SelectedTapDetails = ({
             <span className={styles.walkTime}>{estWalkTime} min</span>
           </p>
         </div>
+        {
+          resourceLastUpdated && (
+            <div className={styles.dateModified}>
+              <h3>Last Modified</h3>
+              <p>{resourceLastUpdated}</p>
+            </div>
+          )
+        }
       </div>
 
       <div className={styles.tagGroup}>
