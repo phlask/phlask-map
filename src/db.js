@@ -74,7 +74,6 @@ export const getContributors = async () => {
  * @param {Object} suggestionData The suggested changes to the resource
  * @returns {Promise<Object>} The submitted suggestion
  */
-// eslint-disable-next-line no-unused-vars
-export const submitSuggestion = async (resourceId, suggestionData) => null;
+export const submitSuggestion = async (_resourceId, _suggestionData) => null;
 
 export default {};
