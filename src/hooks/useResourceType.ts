@@ -7,7 +7,7 @@ export const ResourceType = {
   BATHROOM: 'BATHROOM'
 } as const;
 
-type ResourceTypeOption = keyof typeof ResourceType;
+export type ResourceTypeOption = keyof typeof ResourceType;
 
 const RESOURCE_QUERY_PARAM = 'resource-type';
 

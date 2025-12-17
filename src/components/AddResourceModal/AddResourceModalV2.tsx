@@ -6,8 +6,6 @@ import noop from 'utils/noop';
 import useIsMobile from 'hooks/useIsMobile';
 import {
   TOOLBAR_MODAL_NONE,
-  pushNewResource,
-  setToolbarModal,
   type ResourceType,
   type ToolbarModalType
 } from 'actions/actions';
@@ -39,6 +37,7 @@ import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 import useAppSelector from 'hooks/useSelector';
+import { setToolbarModal } from 'reducers/toolbar';
 
 const initialState = {
   pictures: [],
@@ -358,7 +357,7 @@ const AddResourceModalV2 = () => {
       }
 
       addResource.render(newResource).then(() => {
-        dispatch(pushNewResource(newResource));
+        // invalidate resources query
       });
     });
   };
@@ -380,7 +379,6 @@ const AddResourceModalV2 = () => {
       onExitedWrapper();
     }
   };
-
 
   return (
     <ModalWrapper onExited={onExitedWrapper}>

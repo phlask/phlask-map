@@ -12,7 +12,6 @@ import { HeaderContext } from 'contexts/HeaderContext';
 import FilterIcon from 'icons/FilterIcon';
 import SearchIcon from 'icons/SearchIcon';
 import {
-  setToolbarModal,
   TOOLBAR_MODAL_SEARCH,
   TOOLBAR_MODAL_FILTER,
   TOOLBAR_MODAL_NONE
@@ -20,6 +19,7 @@ import {
 import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
 import { PhlaskV2 } from 'icons';
 import useAppSelector from 'hooks/useSelector';
+import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
 
 const MobileHead = () => {
   const dispatch = useDispatch();
@@ -27,9 +27,7 @@ const MobileHead = () => {
   const { shownPage, onMenuItemClick, isMenuOpen, onMenuClose, onMenuOpen } =
     headerContext;
 
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
   return (
     <>
       <Box

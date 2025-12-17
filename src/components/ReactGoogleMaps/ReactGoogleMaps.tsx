@@ -3,7 +3,6 @@ import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties, useEffect } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
-import { setSelectedPlace, getResources } from 'actions/actions';
 import PinWaterActive from 'components/icons/PinWaterActive';
 import PinForagingActive from 'components/icons/PinForagingActive';
 import PinFoodActive from 'components/icons/PinFoodActive';
@@ -18,9 +17,9 @@ import {
 } from 'types/ResourceEntry';
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
-import useAppDispatch from 'hooks/useDispatch';
-import { getAllResources } from 'selectors/resourceSelectors';
 import useResourceType from 'hooks/useResourceType';
+import useSelectedPlace from 'hooks/useSelectedResource';
+import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
 
 const style: CSSProperties = {
   width: '100%',
@@ -35,21 +34,15 @@ type ReactGoogleMapsProps = {
 };
 
 const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
-  const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
   const posthog = usePostHog();
-  const allResources = useAppSelector(getAllResources);
-  const selectedPlace = useAppSelector(
-    state => state.filterMarkers.selectedPlace
-  );
+  const { selectedPlace, setSelectedPlace } = useSelectedPlace();
   const { resourceType } = useResourceType();
   const userLocation = useAppSelector(getUserLocation);
 
   const map = useMap();
 
-  useEffect(() => {
-    dispatch(getResources());
-  }, [dispatch]);
+  const { data: resources } = useGetResourcesQuery({ resourceType });
 
   useEffect(() => {
     if (!map) {
@@ -60,7 +53,7 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
 
   // toggle window goes here
   const onMarkerClick = (resource: ResourceEntry) => {
-    dispatch(setSelectedPlace(resource));
+    setSelectedPlace(resource);
 
     if (!map) {
       return;
@@ -79,9 +72,7 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   };
 
   const getPinUrl = (resource: ResourceEntry) => {
-    const isActiveMarker =
-      selectedPlace?.latitude === resource.latitude &&
-      selectedPlace?.longitude === resource.longitude;
+    const isActiveMarker = selectedPlace === resource.id;
 
     if (!isActiveMarker) {
       return phlaskMarkerIconV2(resource.resource_type, 56, 56);
@@ -104,26 +95,24 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
       rotateControl={false}
       fullscreenControl={false}
       defaultCenter={{
-        lat: selectedPlace?.latitude ?? CITY_HALL_COORDINATES.latitude,
-        lng: selectedPlace?.longitude ?? CITY_HALL_COORDINATES.longitude
+        lat: CITY_HALL_COORDINATES.latitude,
+        lng: CITY_HALL_COORDINATES.longitude
       }}
       mapId="DEMO_MAP_ID"
     >
-      {allResources
-        .filter(resource => resource.resource_type === resourceType)
-        .map((resource, index) => {
-          return (
-            <Marker
-              key={resource.id}
-              onClick={() => onMarkerClick(resource)}
-              position={{ lat: resource.latitude, lng: resource.longitude }}
-              icon={{ url: getPinUrl(resource) || '' }}
-              // This is used for marker targeting as we are unable to add custom properties with this library.
-              // We should eventually replace this so that we can still enable the use of screen readers in the future.
-              title={`data-cy-${index}`}
-            />
-          );
-        })}
+      {resources?.map((resource, index) => {
+        return (
+          <Marker
+            key={resource.id}
+            onClick={() => onMarkerClick(resource)}
+            position={{ lat: resource.latitude, lng: resource.longitude }}
+            icon={{ url: getPinUrl(resource) || '' }}
+            // This is used for marker targeting as we are unable to add custom properties with this library.
+            // We should eventually replace this so that we can still enable the use of screen readers in the future.
+            title={`data-cy-${index}`}
+          />
+        );
+      })}
 
       {searchedTap ? (
         <Marker position={searchedTap} title="data-cy-search-result" />

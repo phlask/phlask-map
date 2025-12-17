@@ -19,8 +19,6 @@ import {
 } from 'types/ResourceEntry';
 
 import {
-  resetFilterFunction,
-  setToolbarModal,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   type ResourceType
@@ -29,6 +27,7 @@ import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
 import type { ReactNode } from 'react';
 import useResourceType from 'hooks/useResourceType';
+import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
 
 type MobileResourceButtonProps = {
   type: ResourceType;
@@ -54,7 +53,6 @@ const MobileResourceButton = ({
       data-cy={`button-resource-${type.toLowerCase()}`}
       sx={{ alignItems: 'center', gap: 1.5 }}
       onClick={() => {
-        dispatch(resetFilterFunction());
         switchType(type);
       }}
     >
@@ -72,9 +70,7 @@ const MobileResourceButton = ({
 
 const MobileChooseResourceType = () => {
   const dispatch = useAppDispatch();
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
 
   return (
     <Modal

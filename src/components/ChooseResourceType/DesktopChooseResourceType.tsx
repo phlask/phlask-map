@@ -14,8 +14,6 @@ import {
 } from 'types/ResourceEntry';
 
 import {
-  resetFilterFunction,
-  setToolbarModal,
   TOOLBAR_MODAL_NONE,
   TOOLBAR_MODAL_RESOURCE,
   type ResourceType
@@ -26,6 +24,7 @@ import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
 import { Modal } from '@mui/material';
 import useResourceType from 'hooks/useResourceType';
+import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
 
 type DesktopResourceButtonProps = {
   desktopIcon: FunctionComponent<{
@@ -60,7 +59,6 @@ const DesktopResourceButton = ({
         borderRadius: '8px'
       }}
       onClick={() => {
-        dispatch(resetFilterFunction());
         dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
         setResourceType(type);
       }}
@@ -74,9 +72,7 @@ const DesktopResourceButton = ({
 
 const DesktopChooseResourceType = () => {
   const dispatch = useAppDispatch();
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
   const ref = useRef<HTMLDivElement>(null);
   // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
   const btnRef = document.querySelector('#resource-type-select-button');

@@ -1,29 +1,28 @@
-import {
-  TOOLBAR_MODAL_NONE,
-  type ToolbarModalType,
-  setSelectedPlace,
-  setToolbarModal
-} from 'actions/actions';
+import { TOOLBAR_MODAL_NONE, type ToolbarModalType } from 'actions/actions';
 
 import useIsMobile from 'hooks/useIsMobile';
 import getClosest from 'utils/getClosest';
-import { getAllResources } from 'selectors/resourceSelectors';
 import { useMap } from '@vis.gl/react-google-maps';
 import useAppSelector from 'hooks/useSelector';
 import useAppDispatch from 'hooks/useDispatch';
 import { getUserLocation } from 'reducers/user';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
+import useSelectedPlace from 'hooks/useSelectedResource';
+import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
+import useResourceType from 'hooks/useResourceType';
+import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
 
 const Toolbar = () => {
   const map = useMap();
+  const { setSelectedPlace } = useSelectedPlace();
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
-  const allResources = useAppSelector(getAllResources);
+  const toolbarModal = useAppSelector(getToolbarModal);
   const userLocation = useAppSelector(getUserLocation);
+  const { resourceType } = useResourceType();
+
+  const { data: resources = [] } = useGetResourcesQuery({ resourceType });
 
   const toolbarClicked = (modal: ToolbarModalType) => {
     if (toolbarModal === modal) dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
@@ -35,10 +34,10 @@ const Toolbar = () => {
     // NOTE: This was left as an acceptable scenario for now,
     // as it is difficult for a user to do this reliably due to the popup of the location panel.
     // This may be reproducible on Desktop.
-    const closest = getClosest(allResources, userLocation);
+    const closest = getClosest(resources, userLocation);
     if (!closest) return;
 
-    dispatch(setSelectedPlace(closest));
+    setSelectedPlace(closest);
     if (map) {
       map.panTo({
         lat: closest.latitude,

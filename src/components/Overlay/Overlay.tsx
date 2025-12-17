@@ -9,6 +9,7 @@ import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedTap from 'components/SelectedTap/SelectedTap';
 import Toolbar from 'components/Toolbar/Toolbar';
 import useAppSelector from 'hooks/useSelector';
+import { getToolbarModal } from 'reducers/toolbar';
 
 type OverlayProps = {
   onSearch: (location: google.maps.LatLngLiteral) => void;
@@ -16,9 +17,7 @@ type OverlayProps = {
 
 const Overlay = ({ onSearch }: OverlayProps) => {
   const map = useMap();
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
 
   const searchForLocation = (location: google.maps.LatLngLiteral) => {
     if (!map) {

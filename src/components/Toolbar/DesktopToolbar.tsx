@@ -19,6 +19,7 @@ import type { MouseEventHandler, ReactElement } from 'react';
 import useAppSelector from 'hooks/useSelector';
 import { WATER_RESOURCE_TYPE } from 'types/ResourceEntry';
 import useResourceType from 'hooks/useResourceType';
+import { getToolbarModal } from 'reducers/toolbar';
 
 type ItemProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -28,9 +29,7 @@ type ItemProps = {
 };
 
 const Item = ({ onClick, icon, label, type }: ItemProps) => {
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
 

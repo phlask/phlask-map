@@ -5,6 +5,7 @@ import { TOOLBAR_MODAL_CONTRIBUTE } from 'actions/actions';
 import type { ReactNode } from 'react';
 import useAppSelector from 'hooks/useSelector';
 import noop from 'utils/noop';
+import { getToolbarModal } from 'reducers/toolbar';
 
 type ModalWrapperProps = {
   children: ReactNode;
@@ -13,9 +14,7 @@ type ModalWrapperProps = {
 
 const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
   const isMobile = useIsMobile();
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
 
   if (isMobile) {
     return (

@@ -1,17 +1,14 @@
 import { Box, Button, SwipeableDrawer } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import React from 'react';
-import {
-  setToolbarModal,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE
-} from 'actions/actions';
+import { TOOLBAR_MODAL_FILTER, TOOLBAR_MODAL_NONE } from 'actions/actions';
 import noop from 'utils/noop';
 import styles from './Filter.module.scss';
 import useAppSelector from 'hooks/useSelector';
 import filters from 'fixtures/filters';
 import useAppDispatch from 'hooks/useDispatch';
 import useResourceType from 'hooks/useResourceType';
+import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
 
 type FilterTagsProps = {
   tags?: string[];
@@ -52,9 +49,7 @@ const Filter = () => {
   const dispatch = useAppDispatch();
   const { resourceType, setResourceType } = useResourceType();
 
-  const toolbarModal = useAppSelector(
-    state => state.filterMarkers.toolbarModal
-  );
+  const toolbarModal = useAppSelector(getToolbarModal);
 
   if (!filters[resourceType]) {
     return null;

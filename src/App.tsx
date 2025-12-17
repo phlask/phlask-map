@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <Overlay onSearch={location => setSearchedTap(location)} />
-        <ReactGoogleMaps searchedTap={searchedTap} />
+      <ReactGoogleMaps searchedTap={searchedTap} />
     </>
   );
 };

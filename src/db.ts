@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import type { ResourceEntry } from 'types/ResourceEntry';
+import type { ResourceTypeOption } from 'hooks/useResourceType';
 
 // Need access to the database? Message us in the #phlask-data channel on Slack
 const databaseUrl =
@@ -12,8 +13,59 @@ const contributorDatabaseName = 'contributors';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
-export const getResources = async () => {
-  const { data, error } = await supabase.from(resourceDatabaseName).select('*');
+export type FetchResourcesOptions = {
+  /** The number of resources to fetch per page (default: 50) */
+  limit?: number;
+  /** The offset for pagination (default: 0) */
+  offset?: number;
+  /** Filter by resource type */
+  resourceType?: ResourceTypeOption;
+  /** Filter by status */
+  status?:
+    | 'OPERATIONAL'
+    | 'TEMPORARILY_CLOSED'
+    | 'PERMANENTLY_CLOSED'
+    | 'HIDDEN';
+};
+
+export async function getResources(
+  options: FetchResourcesOptions = {}
+): Promise<ResourceEntry[]> {
+  const { limit, offset, resourceType, status } = options;
+
+  // Build the query with filters
+  let query = supabase
+    .from(resourceDatabaseName)
+    .select('*', { count: 'exact' });
+
+  if (typeof limit === 'number' && typeof offset === 'number') {
+    query = query.range(offset, offset + limit - 1);
+  }
+
+  // Apply filters if provided
+  if (resourceType) {
+    query = query.eq('resource_type', resourceType);
+  }
+  if (status) {
+    query = query.eq('status', status);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw new Error(`Failed to fetch resources: ${error.message}`);
+  }
+
+  return (data || []) as ResourceEntry[];
+}
+
+export const getResourceById = async (id: string): Promise<ResourceEntry> => {
+  const { data, error } = await supabase
+    .from(resourceDatabaseName)
+    .select('*')
+    .eq('id', id)
+    .single();
+
   if (error) {
     throw error;
   }

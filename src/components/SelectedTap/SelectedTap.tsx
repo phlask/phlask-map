@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
-import { setSelectedPlace } from 'actions/actions';
 import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
 import sampleImg from 'components/images/phlask-tessellation.png';
@@ -10,8 +9,10 @@ import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails
 
 import { getUserLocation } from 'reducers/user';
 import useAppSelector from 'hooks/useSelector';
-import useAppDispatch from 'hooks/useDispatch';
 import noop from 'utils/noop';
+import useSelectedPlace from 'hooks/useSelectedResource';
+import { useQuery } from '@tanstack/react-query';
+import { getResourceById } from 'db';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -19,23 +20,26 @@ const tempImages = {
 };
 
 const SelectedTap = () => {
-  const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
+  const { selectedPlace, setSelectedPlace } = useSelectedPlace();
+
+  const { data } = useQuery({
+    queryKey: ['selected-place', selectedPlace],
+    queryFn: () => getResourceById(selectedPlace!),
+    enabled: !!selectedPlace
+  });
 
   const [walkingDuration, setWalkingDuration] = useState(0);
   // TODO: Connect this feature
   // https://github.com/phlask/phlask-map/issues/649
   const [_isEditing, setIsEditing] = useState<boolean | null>(false);
 
-  const selectedPlace = useAppSelector(
-    state => state.filterMarkers.selectedPlace
-  );
   const userLocation = useAppSelector(getUserLocation);
 
   const getWalkingDurationAndTimes = useCallback(() => {
     if (
-      !selectedPlace?.latitude ||
-      !selectedPlace?.longitude ||
+      !data?.latitude ||
+      !data?.longitude ||
       !userLocation?.latitude ||
       !userLocation?.longitude
     )
@@ -43,7 +47,7 @@ const SelectedTap = () => {
     const orsAPIKey =
       '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
     fetch(`https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${orsAPIKey}&start=${userLocation?.longitude},
-    ${userLocation?.latitude}&end=${selectedPlace?.longitude},${selectedPlace?.latitude}`)
+    ${userLocation?.latitude}&end=${data?.longitude},${data?.latitude}`)
       .then(response => response.json())
       .then(data => {
         if (!data.features) return;
@@ -55,8 +59,8 @@ const SelectedTap = () => {
         setWalkingDuration(duration);
       });
   }, [
-    selectedPlace?.latitude,
-    selectedPlace?.longitude,
+    data?.latitude,
+    data?.longitude,
     userLocation?.latitude,
     userLocation?.longitude
   ]);
@@ -66,7 +70,7 @@ const SelectedTap = () => {
   };
 
   const onClose = () => {
-    dispatch(setSelectedPlace(null));
+    setSelectedPlace(null);
   };
 
   useEffect(() => {
@@ -96,15 +100,15 @@ const SelectedTap = () => {
             }
           }}
         >
-          {selectedPlace && (
+          {data && (
             <SelectedTapDetails
               image={tempImages.tapImg}
               estWalkTime={walkingDuration}
-              selectedPlace={selectedPlace}
+              selectedPlace={data}
               onStartEdit={handleStartEdit}
               onClose={onClose}
             >
-              <SelectedTapHours selectedPlace={selectedPlace} />
+              <SelectedTapHours selectedPlace={data} />
             </SelectedTapDetails>
           )}
         </SwipeableDrawer>

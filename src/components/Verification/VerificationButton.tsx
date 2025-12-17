@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import { useDispatch } from 'react-redux';
 import Dialog from '@mui/material/Dialog';
-import { updateExistingResource, setSelectedPlace } from 'actions/actions';
 import { updateResource } from '../../db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
+import useSelectedPlace from 'hooks/useSelectedResource';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -15,6 +15,7 @@ type VerificationButtonProps = {
 
 const VerificationButton = ({ resource }: VerificationButtonProps) => {
   const dispatch = useDispatch();
+  const { setSelectedPlace } = useSelectedPlace();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState('');
@@ -35,8 +36,8 @@ const VerificationButton = ({ resource }: VerificationButtonProps) => {
     (selectedResource: ResourceEntry) => {
       updateResource.render(selectedResource);
       setHasBeenUpdated(true);
-      dispatch(updateExistingResource(selectedResource));
-      dispatch(setSelectedPlace(selectedResource));
+      // invalidate resource in the resources list
+      setSelectedPlace(selectedResource);
     },
     [dispatch]
   );
