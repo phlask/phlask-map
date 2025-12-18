@@ -3,7 +3,7 @@ import App from 'App';
 
 export const router = createBrowserRouter([
   {
-    index: true,
+    path: '*',
     element: <App />
   }
 ]);
