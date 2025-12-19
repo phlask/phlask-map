@@ -203,6 +203,7 @@ const AddForaging = ({
                 type="button"
                 style={{ color: 'gray' }}
                 aria-label="Go to previous page"
+                disabled={page === 0 && editMode}
                 onClick={() => {
                   onPageChange(prev => prev - 1);
                 }}

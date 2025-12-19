@@ -212,7 +212,7 @@ const AddResourceModalV2 = () => {
   const onPageChange = update => {
     setPage(prev => {
       const newValue = Math.max(0, update(prev));
-      if (newValue === 0) {
+      if (newValue === 0 && !isEditMode) {
         setResourceForm(null);
       }
       return newValue;

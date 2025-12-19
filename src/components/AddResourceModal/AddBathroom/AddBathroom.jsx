@@ -172,6 +172,7 @@ const AddBathroom = ({
                 type="button"
                 color="primary"
                 aria-label="previous-page"
+                disabled={page === 0 && editMode}
                 onClick={() => {
                   onPageChange(prev => prev - 1);
                 }}

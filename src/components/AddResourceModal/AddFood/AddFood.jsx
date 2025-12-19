@@ -201,6 +201,7 @@ const AddFood = ({
                 type="button"
                 color="primary"
                 aria-label="Go to previous page"
+                disabled={page === 0 && editMode}
                 onClick={() => {
                   onPageChange(prev => prev - 1);
                 }}
