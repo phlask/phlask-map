@@ -5,7 +5,9 @@ import { Paper, SwipeableDrawer } from '@mui/material';
 import {
   toggleInfoExpanded,
   toggleInfoWindow,
-  toggleInfoWindowClass
+  toggleInfoWindowClass,
+  setToolbarModal,
+  TOOLBAR_MODAL_NONE
 } from 'actions/actions';
 import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
@@ -115,6 +117,8 @@ const SelectedTap = () => {
         })
       );
       setInfoCollapseMobile(false);
+      // Close edit modal if open
+      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
     }
   };
 
