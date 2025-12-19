@@ -27,6 +27,7 @@ const ModalWrapper = ({ children, onExited }) => {
             in={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
             orientation="vertical"
             timeout="auto"
+            unmountOnExit
             onExited={onExited}
           >
             {children}
