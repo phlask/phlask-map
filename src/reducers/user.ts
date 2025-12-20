@@ -1,6 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
-import type { RootState } from 'store';
 
 export type UserLocation = Pick<
   GeolocationCoordinates,
@@ -20,8 +19,8 @@ const initialState: UserState = {
   isGrantedPermission: false
 };
 
-export const userDataSlice = createSlice({
-  name: 'users',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
     updateUserLocation(state, action: PayloadAction<UserLocation>) {
@@ -30,16 +29,16 @@ export const userDataSlice = createSlice({
     updateIsGrantedPermission(state, action: PayloadAction<boolean>) {
       state.isGrantedPermission = action.payload;
     }
+  },
+  selectors: {
+    getUserLocation: state => state.userLocation,
+    getIsGrantedPermission: state => state.isGrantedPermission
   }
 });
 
 export const { updateUserLocation, updateIsGrantedPermission } =
-  userDataSlice.actions;
+  userSlice.actions;
 
-export const getUserLocation = (state: RootState) =>
-  state.userData.userLocation;
+export const { getUserLocation, getIsGrantedPermission } = userSlice.selectors;
 
-export const getIsGrantedPermission = (state: RootState) =>
-  state.userData.isGrantedPermission;
-
-export default userDataSlice.reducer;
+export default userSlice.reducer;

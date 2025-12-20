@@ -1,9 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import toolbar from './toolbar';
-import contributors from './contributors';
-import userData from './user';
+import user from './user';
 
-const reducer = combineReducers({ toolbar, contributors, userData });
+const reducer = combineReducers({ toolbar, user });
 
 export type RootState = ReturnType<typeof reducer>;
 

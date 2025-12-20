@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
+import type { Contributor } from 'types/Contributor';
 
 // Need access to the database? Message us in the #phlask-data channel on Slack
 const databaseUrl =
@@ -36,7 +37,7 @@ export async function getResources(
   // Build the query with filters
   let query = supabase
     .from(resourceDatabaseName)
-    .select('*', { count: 'exact' });
+    .select('id,name,latitude,longitude,resource_type', { count: 'exact' });
 
   if (typeof limit === 'number' && typeof offset === 'number') {
     query = query.range(offset, offset + limit - 1);
@@ -96,7 +97,7 @@ export const addResource = {
   }
 };
 
-export const getContributors = async () => {
+export const getContributors = async (): Promise<Contributor[]> => {
   const { data, error } = await supabase
     .from(contributorDatabaseName)
     .select('*');

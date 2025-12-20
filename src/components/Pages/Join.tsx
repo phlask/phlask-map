@@ -1,16 +1,12 @@
-import { ReactElement, useEffect } from 'react';
+import { type ReactElement } from 'react';
 
-import Grid from '@mui/material/Grid';
 import CivicIcon from 'icons/JoinCivicIcon';
 import DataIcon from 'icons/JoinDataIcon';
 import DesignIcon from 'icons/JoinDesignIcon';
 import DevelopmentIcon from 'icons/JoinDevelopmentIcon';
 import ManagementIcon from 'icons/JoinManagementIcon';
-import { fetchContributors } from 'reducers/contributors';
-import ContributorsList from 'components/ContributorsList/ContributorsList';
-import useAppDispatch from 'hooks/useDispatch';
-import useAppSelector from 'hooks/useSelector';
 import styles from './Pages.module.scss';
+import AcknowledgementsSection from 'components/AcknowledgementsSection/AcknowledgementsSection';
 
 type CircleProps = {
   icon: ReactElement;
@@ -65,16 +61,6 @@ const Circle = ({ icon, title, description }: CircleProps) => (
 );
 
 const Join = () => {
-  const dispatch = useAppDispatch();
-  const currentContributors = useAppSelector(
-    state => state.contributors.current
-  );
-  const pastContributors = useAppSelector(state => state.contributors.past);
-
-  useEffect(() => {
-    dispatch(fetchContributors());
-  }, [dispatch]);
-
   return (
     <div className={styles.page}>
       <h1 className={styles.pageHeader} data-cy="jointeam-header">
@@ -185,23 +171,7 @@ const Join = () => {
             </li>
           </ol>
         </div>
-        <div id="acknowledgements-section">
-          <h2>Acknowledgements</h2>
-          <p>
-            This project was made possible by the time, mentorship, and
-            expertise of our dedicated team of volunteers.
-          </p>
-          <Grid container className="contributors" spacing={6}>
-            <ContributorsList
-              title="Current Contributors"
-              items={currentContributors}
-            />
-            <ContributorsList
-              title="Past Contributors"
-              items={pastContributors}
-            />
-          </Grid>
-        </div>
+        <AcknowledgementsSection />
       </div>
     </div>
   );
