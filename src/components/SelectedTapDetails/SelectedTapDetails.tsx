@@ -34,6 +34,7 @@ import { useState, type MouseEventHandler, type ReactNode } from 'react';
 import noop from 'utils/noop';
 
 import styles from './SelectedTapDetails.module.scss';
+import EstimatedWalkingDuration from 'components/EstimatedWalkTime/EstimatedWalkTime';
 
 /**
  * Converts degrees given in decimal to DMS (degrees, minutes, and seconds), where seconds are
@@ -126,7 +127,6 @@ function getTagsFromResource(resource: ResourceEntry): string[] {
 
 type SelectedTapDetailsProps = {
   image: string;
-  estWalkTime: number;
   onClose?: VoidFunction;
   selectedPlace: ResourceEntry;
   children: ReactNode;
@@ -149,7 +149,6 @@ const TagButton = styled(Button)({
 
 const SelectedTapDetails = ({
   image,
-  estWalkTime,
   onClose = noop,
   selectedPlace,
   children,
@@ -237,12 +236,14 @@ const SelectedTapDetails = ({
   };
 
   const toggleNativeShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: document.title,
-        url: window.location.href
-      });
+    if (!navigator.share) {
+      return;
     }
+
+    navigator.share({
+      title: document.title,
+      url: window.location.href
+    });
   };
 
   return (
@@ -344,10 +345,7 @@ const SelectedTapDetails = ({
             >
               Directions
             </Button>
-            <p className={styles.estWalkTime}>
-              Est. walking time:{' '}
-              <span className={styles.walkTime}>{estWalkTime} min</span>
-            </p>
+            <EstimatedWalkingDuration selectedPlace={selectedPlace} />
           </div>
         </div>
 
