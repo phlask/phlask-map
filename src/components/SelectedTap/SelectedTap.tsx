@@ -21,10 +21,11 @@ const SelectedTap = () => {
   const isMobile = useIsMobile();
   const { selectedPlace, setSelectedPlace } = useSelectedPlace();
 
-  const { data } = useQuery({
+  const { data = null, isError } = useQuery({
     queryKey: ['selected-place', selectedPlace],
     queryFn: () => getResourceById(selectedPlace!),
-    enabled: !!selectedPlace
+    enabled: !!selectedPlace,
+    retry: false
   });
 
   // TODO: Connect this feature
@@ -40,41 +41,36 @@ const SelectedTap = () => {
   };
 
   return (
-    <div>
-      <div id="tap-info-container-mobile">
-        <SwipeableDrawer
-          open={Boolean(selectedPlace)}
-          anchor={isMobile ? 'bottom' : 'right'}
-          onOpen={noop}
-          onClose={onClose}
-          transitionDuration={300}
-          slotProps={{
-            backdrop: { onClick: noop },
-            paper: {
-              square: false,
-              sx: theme => ({
-                height: '60vh',
-                [theme.breakpoints.up('md')]: {
-                  height: '100%',
-                  width: '30%'
-                }
-              })
+    <SwipeableDrawer
+      open={Boolean(selectedPlace)}
+      anchor={isMobile ? 'bottom' : 'right'}
+      onOpen={noop}
+      onClose={onClose}
+      transitionDuration={300}
+      slotProps={{
+        backdrop: { onClick: noop },
+        paper: {
+          square: false,
+          sx: theme => ({
+            height: '60vh',
+            [theme.breakpoints.up('md')]: {
+              height: '100%',
+              width: '30%'
             }
-          }}
-        >
-          {data && (
-            <SelectedTapDetails
-              image={tempImages.tapImg}
-              selectedPlace={data}
-              onStartEdit={handleStartEdit}
-              onClose={onClose}
-            >
-              <SelectedTapHours selectedPlace={data} />
-            </SelectedTapDetails>
-          )}
-        </SwipeableDrawer>
-      </div>
-    </div>
+          })
+        }
+      }}
+    >
+      <SelectedTapDetails
+        image={tempImages.tapImg}
+        selectedPlace={data}
+        isError={isError}
+        onStartEdit={handleStartEdit}
+        onClose={onClose}
+      >
+        {data ? <SelectedTapHours selectedPlace={data} /> : null}
+      </SelectedTapDetails>
+    </SwipeableDrawer>
   );
 };
 

@@ -6,7 +6,8 @@ import {
   MenuItem,
   Toolbar,
   AppBar,
-  Stack
+  Stack,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
@@ -128,7 +129,8 @@ function getTagsFromResource(resource: ResourceEntry): string[] {
 type SelectedTapDetailsProps = {
   image: string;
   onClose?: VoidFunction;
-  selectedPlace: ResourceEntry;
+  selectedPlace: ResourceEntry | null;
+  isError?: boolean;
   children: ReactNode;
   onStartEdit: VoidFunction;
 };
@@ -151,10 +153,33 @@ const SelectedTapDetails = ({
   image,
   onClose = noop,
   selectedPlace,
+  isError = false,
   children,
   onStartEdit
 }: SelectedTapDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const isMobile = useIsMobile();
+
+  if (isError) {
+    return (
+      <Stack
+        textAlign="center"
+        width="100%"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography>
+          The Resource you're looking for was not found. Please close this
+          dialog and select another one
+        </Typography>
+      </Stack>
+    );
+  }
+
+  if (!selectedPlace) {
+    return null;
+  }
 
   const handleMenuOpen: MouseEventHandler<HTMLButtonElement> = event => {
     // We use event.currentTarget to ensure we target the button, not the SVG Icon
@@ -173,7 +198,6 @@ const SelectedTapDetails = ({
     onStartEdit();
     handleMenuClose();
   };
-  const isMobile = useIsMobile();
 
   const latLongFormatted = getFormattedLatLong(
     selectedPlace.latitude,
