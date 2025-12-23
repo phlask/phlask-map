@@ -13,8 +13,11 @@ const AcknowledgementsSection = () => {
         our dedicated team of volunteers.
       </p>
       <Grid container className="contributors" spacing={6}>
-        <ContributorsList title="Current Contributors" items={data.current} />
-        <ContributorsList title="Past Contributors" items={data.past} />
+        <ContributorsList
+          title="Current Contributors"
+          items={data?.current ?? []}
+        />
+        <ContributorsList title="Past Contributors" items={data?.past ?? []} />
       </Grid>
     </div>
   );
