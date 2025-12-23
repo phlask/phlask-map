@@ -15,11 +15,10 @@ import {
   WATER_RESOURCE_TYPE,
   type ResourceEntry
 } from 'types/ResourceEntry';
-import { getUserLocation } from 'reducers/user';
-import useAppSelector from 'hooks/useSelector';
 import useResourceType from 'hooks/useResourceType';
 import useSelectedPlace from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
+import useUserLocation from 'hooks/useUserLocation';
 
 const style: CSSProperties = {
   width: '100%',
@@ -38,7 +37,7 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const posthog = usePostHog();
   const { selectedPlace, setSelectedPlace } = useSelectedPlace();
   const { resourceType } = useResourceType();
-  const userLocation = useAppSelector(getUserLocation);
+  const { data: userLocation } = useUserLocation();
 
   const map = useMap();
 
@@ -48,6 +47,7 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
     if (!map) {
       return;
     }
+
     map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
   }, [userLocation, map]);
 

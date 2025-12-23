@@ -7,39 +7,22 @@ import FilterIcon from 'icons/FilterIcon';
 import ResourceIcon from 'icons/ResourceIcon';
 import SearchIcon from 'icons/SearchIcon';
 import NearMeButton from 'components/NearMeButton/NearMeButton';
-import {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  TOOLBAR_MODAL_SEARCH,
-  type ToolbarModalType
-} from 'actions/actions';
 import type { MouseEventHandler, ReactElement } from 'react';
-import useAppSelector from 'hooks/useSelector';
 import { WATER_RESOURCE_TYPE } from 'types/ResourceEntry';
 import useResourceType from 'hooks/useResourceType';
-import { getToolbarModal } from 'reducers/toolbar';
+import { useToolbarContext, type ToolbarModal } from 'contexts/ToolbarContext';
 
 type ItemProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  type: ToolbarModalType;
+  type: ToolbarModal;
   label: string;
   icon: ReactElement;
 };
 
 const Item = ({ onClick, icon, label, type }: ItemProps) => {
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toolbarModal } = useToolbarContext();
   const blackToGrayFilter =
     'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
-
-  const testVariants: Record<ToolbarModalType, string> = {
-    [TOOLBAR_MODAL_NONE]: 'none',
-    [TOOLBAR_MODAL_RESOURCE]: 'resource',
-    [TOOLBAR_MODAL_FILTER]: 'filter',
-    [TOOLBAR_MODAL_SEARCH]: 'search',
-    [TOOLBAR_MODAL_CONTRIBUTE]: 'contribute'
-  };
 
   return (
     <IconButton
@@ -59,7 +42,7 @@ const Item = ({ onClick, icon, label, type }: ItemProps) => {
       onClick={onClick}
       disableFocusRipple
       disableRipple
-      data-cy={`button-${testVariants[type]}-type-menu`}
+      data-cy={`button-${type}-type-menu`}
     >
       {icon}
       <Typography
@@ -74,15 +57,12 @@ const Item = ({ onClick, icon, label, type }: ItemProps) => {
 };
 
 type DesktopToolbarProps = {
-  onItemClick: (type: ToolbarModalType) => void;
   onNearMeClick: VoidFunction;
 };
 
-const DesktopToolbar = ({
-  onItemClick,
-  onNearMeClick
-}: DesktopToolbarProps) => {
+const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
   const { resourceType } = useResourceType();
+  const { toggle } = useToolbarContext();
 
   return (
     <Box
@@ -107,26 +87,26 @@ const DesktopToolbar = ({
       <Item
         icon={<ResourceIcon />}
         label="Resources"
-        onClick={() => onItemClick(TOOLBAR_MODAL_RESOURCE)}
-        type={TOOLBAR_MODAL_RESOURCE}
+        onClick={() => toggle('resource')}
+        type="resource"
       />
       <Item
         icon={<FilterIcon />}
         label="Filter"
-        onClick={() => onItemClick(TOOLBAR_MODAL_FILTER)}
-        type={TOOLBAR_MODAL_FILTER}
+        onClick={() => toggle('filter')}
+        type="filter"
       />
       <Item
         icon={<SearchIcon />}
         label="Search"
-        onClick={() => onItemClick(TOOLBAR_MODAL_SEARCH)}
-        type={TOOLBAR_MODAL_SEARCH}
+        onClick={() => toggle('search')}
+        type="search"
       />
       <Item
         icon={<ContributeIcon />}
         label="Add Site"
-        onClick={() => onItemClick(TOOLBAR_MODAL_CONTRIBUTE)}
-        type={TOOLBAR_MODAL_CONTRIBUTE}
+        onClick={() => toggle('contribute')}
+        type="contribute"
       />
     </Box>
   );

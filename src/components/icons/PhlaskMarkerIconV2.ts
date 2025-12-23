@@ -1,9 +1,9 @@
 // Returns the map marker icon in URI encoded svg format
 // This is used in-place of our generated icon components because this URI encoded format is needed for Google Maps to render the icons
 
-import type { ResourceType } from 'actions/actions';
+import type { ResourceTypeOption } from 'hooks/useResourceType';
 
-export default (resourceType: ResourceType, width = 40, height = 40) => {
+export default (resourceType: ResourceTypeOption, width = 40, height = 40) => {
   if (resourceType === 'WATER') {
     return `data:image/svg+xml;utf8,${encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_d_568_38814)">

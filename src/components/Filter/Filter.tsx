@@ -1,14 +1,11 @@
 import { Box, Button, SwipeableDrawer } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import React from 'react';
-import { TOOLBAR_MODAL_FILTER, TOOLBAR_MODAL_NONE } from 'actions/actions';
 import noop from 'utils/noop';
 import styles from './Filter.module.scss';
-import useAppSelector from 'hooks/useSelector';
 import filters from 'fixtures/filters';
-import useAppDispatch from 'hooks/useDispatch';
 import useResourceType from 'hooks/useResourceType';
-import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type FilterTagsProps = {
   tags?: string[];
@@ -46,10 +43,9 @@ const FilterTagsExclusive = ({ tags = [] }: FilterTagsProps) => (
 
 const Filter = () => {
   const isMobile = useIsMobile();
-  const dispatch = useAppDispatch();
   const { resourceType, setResourceType } = useResourceType();
 
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toolbarModal, setToolbarModal } = useToolbarContext();
 
   if (!filters[resourceType]) {
     return null;
@@ -59,11 +55,11 @@ const Filter = () => {
     <SwipeableDrawer
       anchor={isMobile ? 'bottom' : 'left'}
       onClose={() => {
-        dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+        setToolbarModal(null);
       }}
       onOpen={noop}
       disableSwipeToOpen
-      open={toolbarModal === TOOLBAR_MODAL_FILTER}
+      open={toolbarModal === 'filter'}
       slotProps={{
         paper: {
           sx: {

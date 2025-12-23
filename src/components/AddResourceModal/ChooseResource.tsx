@@ -15,10 +15,10 @@ import {
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 import CloseButton from './CloseButton/CloseButton';
-import type { ResourceType } from 'actions/actions';
+import type { ResourceTypeOption } from 'hooks/useResourceType';
 
 type ChooseResourceProps = {
-  onSelectResource: (type: ResourceType) => void;
+  onSelectResource: (type: ResourceTypeOption) => void;
   onClose: VoidFunction;
 };
 

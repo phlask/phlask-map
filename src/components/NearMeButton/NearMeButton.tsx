@@ -10,8 +10,8 @@ import {
   FORAGE_RESOURCE_TYPE,
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
-import type { ResourceType } from 'actions/actions';
 import type { MouseEventHandler } from 'react';
+import type { ResourceTypeOption } from 'hooks/useResourceType';
 
 const resourceStyle = {
   [WATER_RESOURCE_TYPE]: 'water',
@@ -29,7 +29,7 @@ const resourceIcons = {
 
 type NearMeButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  resourceType: ResourceType;
+  resourceType: ResourceTypeOption;
 };
 
 const NearMeButton = ({

@@ -18,19 +18,14 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  type ResourceType
-} from 'actions/actions';
-import useAppSelector from 'hooks/useSelector';
-import useAppDispatch from 'hooks/useDispatch';
-import type { ReactNode } from 'react';
-import useResourceType from 'hooks/useResourceType';
-import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
+import { type ReactNode } from 'react';
+import useResourceType, {
+  type ResourceTypeOption
+} from 'hooks/useResourceType';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type MobileResourceButtonProps = {
-  type: ResourceType;
+  type: ResourceTypeOption;
   icon: ReactNode;
   textLabel: string;
 };
@@ -41,11 +36,11 @@ const MobileResourceButton = ({
   textLabel
 }: MobileResourceButtonProps) => {
   const { setResourceType } = useResourceType();
-  const dispatch = useAppDispatch();
+  const { setToolbarModal } = useToolbarContext();
 
-  const switchType = (newType: ResourceType) => {
+  const switchType = (newType: ResourceTypeOption) => {
     setResourceType(newType);
-    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    setToolbarModal(null);
   };
 
   return (
@@ -69,18 +64,17 @@ const MobileResourceButton = ({
 };
 
 const MobileChooseResourceType = () => {
-  const dispatch = useAppDispatch();
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toolbarModal, setToolbarModal } = useToolbarContext();
 
   return (
     <Modal
-      open={toolbarModal === TOOLBAR_MODAL_RESOURCE}
-      onClose={() => dispatch(setToolbarModal(TOOLBAR_MODAL_NONE))}
+      open={toolbarModal === 'resource'}
+      onClose={() => setToolbarModal(null)}
       slotProps={{ backdrop: { sx: { opacity: '0.1 !important' } } }}
     >
       <Slide
         direction="up"
-        in={toolbarModal === TOOLBAR_MODAL_RESOURCE}
+        in={toolbarModal === 'resource'}
         mountOnEnter
         unmountOnExit
       >

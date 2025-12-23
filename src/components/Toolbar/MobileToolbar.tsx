@@ -6,11 +6,7 @@ import NavigationItem from 'components/Toolbar/NavigationItem';
 import ResourceIcon from 'icons/ResourceIcon';
 import ChooseResource from 'components/ChooseResourceType/ChooseResourceType';
 import ContributeIcon from 'icons/ContributeIcon';
-import {
-  TOOLBAR_MODAL_CONTRIBUTE,
-  TOOLBAR_MODAL_RESOURCE,
-  type ToolbarModalType
-} from 'actions/actions';
+
 import ToiletIcon from 'icons/CircleBathroomIcon';
 import FoodIcon from 'icons/CircleFoodIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
@@ -22,14 +18,15 @@ import {
   WATER_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 import useResourceType from 'hooks/useResourceType';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type MobileToolbarProps = {
-  onItemClick: (type: ToolbarModalType) => void;
   onNearMeClick: VoidFunction;
 };
 
-const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
+const MobileToolbar = ({ onNearMeClick }: MobileToolbarProps) => {
   const { resourceType } = useResourceType();
+  const { toggle } = useToolbarContext();
 
   const selectedResourceIcon = {
     [WATER_RESOURCE_TYPE]: WaterIcon,
@@ -58,7 +55,7 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
           id="resource-type-select-button"
           label={<Typography fontSize="small">Resources</Typography>}
           icon={<ResourceIcon height="32" width="32" />}
-          onClick={() => onItemClick(TOOLBAR_MODAL_RESOURCE)}
+          onClick={() => toggle('resource')}
         />
         <ChooseResource />
         <NavigationItem
@@ -85,7 +82,7 @@ const MobileToolbar = ({ onItemClick, onNearMeClick }: MobileToolbarProps) => {
             </Typography>
           }
           icon={<ContributeIcon height="32" width="32" />}
-          onClick={() => onItemClick(TOOLBAR_MODAL_CONTRIBUTE)}
+          onClick={() => toggle('contribute')}
         />
       </BottomNavigation>
     </Box>

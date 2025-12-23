@@ -13,18 +13,13 @@ import {
   BATHROOM_RESOURCE_TYPE
 } from 'types/ResourceEntry';
 
-import {
-  TOOLBAR_MODAL_NONE,
-  TOOLBAR_MODAL_RESOURCE,
-  type ResourceType
-} from 'actions/actions';
 import useOnClickOutside from '../AddResourceModal/useOnClickOutside';
 import styles from './ChooseResourceType.module.scss';
-import useAppSelector from 'hooks/useSelector';
-import useAppDispatch from 'hooks/useDispatch';
 import { Modal } from '@mui/material';
-import useResourceType from 'hooks/useResourceType';
-import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
+import useResourceType, {
+  type ResourceTypeOption
+} from 'hooks/useResourceType';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type DesktopResourceButtonProps = {
   desktopIcon: FunctionComponent<{
@@ -33,7 +28,7 @@ type DesktopResourceButtonProps = {
     height: string;
   }>;
   color: string;
-  type: ResourceType;
+  type: ResourceTypeOption;
   textLabel: string;
 };
 
@@ -43,8 +38,8 @@ const DesktopResourceButton = ({
   type,
   textLabel
 }: DesktopResourceButtonProps) => {
-  const dispatch = useAppDispatch();
   const { setResourceType } = useResourceType();
+  const { setToolbarModal } = useToolbarContext();
 
   return (
     <Button
@@ -59,7 +54,7 @@ const DesktopResourceButton = ({
         borderRadius: '8px'
       }}
       onClick={() => {
-        dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+        setToolbarModal(null);
         setResourceType(type);
       }}
       data-cy={`button-${type}-data-selector`}
@@ -71,17 +66,16 @@ const DesktopResourceButton = ({
 };
 
 const DesktopChooseResourceType = () => {
-  const dispatch = useAppDispatch();
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toolbarModal, setToolbarModal } = useToolbarContext();
   const ref = useRef<HTMLDivElement>(null);
   // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
   const btnRef = document.querySelector('#resource-type-select-button');
 
   const onClose = () => {
-    dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
+    setToolbarModal(null);
   };
   const handleClickOutside = () => {
-    if (toolbarModal === TOOLBAR_MODAL_RESOURCE) {
+    if (toolbarModal === 'resource') {
       onClose();
     }
   };
@@ -89,7 +83,7 @@ const DesktopChooseResourceType = () => {
   useOnClickOutside(ref, handleClickOutside, [btnRef]);
 
   return (
-    <Modal open={toolbarModal === TOOLBAR_MODAL_RESOURCE} onClose={onClose}>
+    <Modal open={toolbarModal === 'resource'} onClose={onClose}>
       <Paper
         sx={{
           position: 'absolute',

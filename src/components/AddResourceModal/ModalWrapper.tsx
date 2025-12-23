@@ -1,11 +1,9 @@
 import Paper from '@mui/material/Paper';
 import useIsMobile from 'hooks/useIsMobile';
 import { Modal, SwipeableDrawer } from '@mui/material';
-import { TOOLBAR_MODAL_CONTRIBUTE } from 'actions/actions';
-import type { ReactNode } from 'react';
-import useAppSelector from 'hooks/useSelector';
+import { type ReactNode } from 'react';
 import noop from 'utils/noop';
-import { getToolbarModal } from 'reducers/toolbar';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type ModalWrapperProps = {
   children: ReactNode;
@@ -14,13 +12,13 @@ type ModalWrapperProps = {
 
 const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
   const isMobile = useIsMobile();
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toolbarModal } = useToolbarContext();
 
   if (isMobile) {
     return (
       <SwipeableDrawer
         anchor="bottom"
-        open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE}
+        open={toolbarModal === 'contribute'}
         onOpen={noop}
         onClose={onExited}
         hideBackdrop
@@ -43,7 +41,7 @@ const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
   }
 
   return (
-    <Modal open={toolbarModal === TOOLBAR_MODAL_CONTRIBUTE} onClose={noop}>
+    <Modal open={toolbarModal === 'contribute'} onClose={noop}>
       <Paper
         sx={{
           position: 'absolute',

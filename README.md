@@ -21,12 +21,9 @@ Code behind the PHLASK Web Map
 ├── public
 ├── src                                <-- Source files for project
 │   ├── App.js
-│   ├── actions                        <-- Source for all Redux actions
 │   ├── components                     <-- Source for all React components
 │   ├── helpers                        <-- Helper functions shared across components/pages
 │   ├── hooks                          <-- Custom hooks
-│   ├── reducers                       <-- Redux reducers
-│   ├── selectors                      <-- Source for all Redux selectors
 │   └── theme.js                       <-- Theme file for Material UI
 ├── yarn-error.log
 └── yarn.lock
@@ -107,14 +104,6 @@ Note that `core hours per month` means each core on your codespace consumes inde
 
 We use Prettier to ensure a consistent code formatting across the project, if you are running VSCode, please make sure to install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), the project configuration will ensure that Prettier is set as your default formatter as well.
 
-### Redux State Viewing
-
-During development, you may need to make changes to components which interact with Redux state. If you would like to have a better idea of the values in the Redux state while in development, install the Redux DevTools using the instructions here: https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
-
-For a guide on how to use the extension check the [Docs section of their documentation](https://github.com/reduxjs/redux-devtools/tree/main/extension#docs). This video in particular may be useful: https://egghead.io/lessons/javascript-getting-started-with-redux-dev-tools
-
-For more information on how to understand/use the PHLASK Map Redux state, see our [Redux Guide](redux_guide.md)
-
 ### Storybook
 
 We use Storybook for documentation and testing of the PHLask components and design system.
@@ -146,11 +135,9 @@ The PHLASK Map runs on a static page built with:
 
 - ReactJS (https://reactjs.org)
   - Builds the static content that composes the map page
-- Redux (https://redux.js.org/)
-  - Provides a single state which is accessible across the application.
-  - This is used to simplify passing state properties when they need to be modified by child/sibling components.
-  - For more information on how to understand/use our Redux state, see our [Redux Guide](redux_guide.md)
-- Material UI (https://mui.com/)
+- TanStack Query (https://tanstack.com/query/latest/docs/framework/react)
+  - Provides a data fetching solution for React
+- MUI (https://mui.com/)
   - Provides pre-built components and simplifies consistent styling across the project
 - GitHub Actions (https://github.com/features/actions)
   - Runs the required compute to build the site on ReactJS

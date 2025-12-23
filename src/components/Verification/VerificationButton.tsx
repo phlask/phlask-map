@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import { useDispatch } from 'react-redux';
 import Dialog from '@mui/material/Dialog';
 import { updateResource } from '../../db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
@@ -14,7 +13,6 @@ type VerificationButtonProps = {
 };
 
 const VerificationButton = ({ resource }: VerificationButtonProps) => {
-  const dispatch = useDispatch();
   const { setSelectedPlace } = useSelectedPlace();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,15 +30,12 @@ const VerificationButton = ({ resource }: VerificationButtonProps) => {
     setLoginError('');
   }, []);
 
-  const updateResourceEntry = useCallback(
-    (selectedResource: ResourceEntry) => {
-      updateResource.render(selectedResource);
-      setHasBeenUpdated(true);
-      // invalidate resource in the resources list
-      setSelectedPlace(selectedResource);
-    },
-    [dispatch]
-  );
+  const updateResourceEntry = useCallback((selectedResource: ResourceEntry) => {
+    updateResource.render(selectedResource);
+    setHasBeenUpdated(true);
+    // invalidate resource in the resources list
+    setSelectedPlace(selectedResource);
+  }, []);
 
   const markAsVerified = useCallback(() => {
     const newVerification: Verification = {

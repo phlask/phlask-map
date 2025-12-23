@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { setDefaults } from 'react-geocode';
 import { useForm } from 'react-hook-form';
 import { Box, CardContent, Grid, Typography, IconButton } from '@mui/material';
@@ -7,10 +6,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
-import { getUserLocation } from 'reducers/user';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 import CloseButton from '../CloseButton/CloseButton';
+import useUserLocation from 'hooks/useUserLocation';
 
 const AddWaterTap = ({
   onClose,
@@ -45,7 +44,7 @@ const AddWaterTap = ({
   isValidAddress
 }) => {
   const isMobile = useIsMobile();
-  const userLocation = useSelector(getUserLocation);
+  const { data: userLocation } = useUserLocation();
 
   useEffect(() => {
     setDefaults({
@@ -122,7 +121,7 @@ const AddWaterTap = ({
         >
           <Grid container columnSpacing={1} rowSpacing={2}>
             {(page === 0 || isMobile) && ( // only use multi-step form on desktop
-              (<PageOne
+              <PageOne
                 onDrop={onDrop}
                 name={name}
                 address={address}
@@ -146,7 +145,7 @@ const AddWaterTap = ({
                 checkboxChangeHandler={checkboxChangeHandler}
                 textFieldChangeHandler={textFieldChangeHandler}
                 isValidAddress={isValidAddress}
-              />)
+              />
             )}
             {(page === 1 || isMobile) && (
               <PageTwo

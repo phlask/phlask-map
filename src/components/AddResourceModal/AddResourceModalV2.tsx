@@ -1,14 +1,8 @@
 import { useMemo, useState, type ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
 // @ts-expect-error need to use the updated geocoding API
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import noop from 'utils/noop';
 import useIsMobile from 'hooks/useIsMobile';
-import {
-  TOOLBAR_MODAL_NONE,
-  type ResourceType,
-  type ToolbarModalType
-} from 'actions/actions';
 
 import debounce from 'utils/debounce';
 
@@ -27,7 +21,6 @@ import {
   type WaterDispenserType,
   type WaterTag
 } from 'types/ResourceEntry';
-import { getUserLocation } from 'reducers/user';
 import { addResource } from '../../db';
 
 import ChooseResource from './ChooseResource';
@@ -36,8 +29,9 @@ import AddBathroom from './AddBathroom/AddBathroom';
 import AddForaging from './AddForaging/AddForaging';
 import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
-import useAppSelector from 'hooks/useSelector';
-import { setToolbarModal } from 'reducers/toolbar';
+import useUserLocation from 'hooks/useUserLocation';
+import { useToolbarContext } from 'contexts/ToolbarContext';
+import type { ResourceTypeOption } from 'hooks/useResourceType';
 
 const initialState = {
   pictures: [],
@@ -102,7 +96,9 @@ const initialState = {
 
 const AddResourceModalV2 = () => {
   const [page, setPage] = useState(0);
-  const [resourceForm, setResourceForm] = useState<ResourceType | null>(null);
+  const [resourceForm, setResourceForm] = useState<ResourceTypeOption | null>(
+    null
+  );
 
   const isMobile = useIsMobile();
 
@@ -117,12 +113,8 @@ const AddResourceModalV2 = () => {
   };
 
   const [values, setValues] = useState(initialState);
-  const dispatch = useDispatch();
-  const userLocation = useAppSelector(getUserLocation);
-
-  const setToolbar = (modalType: ToolbarModalType) => {
-    dispatch(setToolbarModal(modalType));
-  };
+  const { setToolbarModal } = useToolbarContext();
+  const { data: userLocation } = useUserLocation();
 
   const checkboxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValues(prevValues => ({
@@ -220,7 +212,7 @@ const AddResourceModalV2 = () => {
       .catch(noop);
   };
 
-  const onSubmit = (resourceType: ResourceType, e: SubmitEvent) => {
+  const onSubmit = (resourceType: ResourceTypeOption, e: SubmitEvent) => {
     e.preventDefault();
 
     return Promise.all(
@@ -368,7 +360,7 @@ const AddResourceModalV2 = () => {
   };
 
   const handleClose = () => {
-    setToolbar(TOOLBAR_MODAL_NONE);
+    setToolbarModal(null);
     setPage(0);
 
     // This is done as the "Modal" component in ModalWrapper does not invoke

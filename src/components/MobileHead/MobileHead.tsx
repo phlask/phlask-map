@@ -5,29 +5,21 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { useDispatch } from 'react-redux';
 import noop from 'utils/noop';
 import CloseIcon from 'components/icons/CloseIcon';
 import { HeaderContext } from 'contexts/HeaderContext';
 import FilterIcon from 'icons/FilterIcon';
 import SearchIcon from 'icons/SearchIcon';
-import {
-  TOOLBAR_MODAL_SEARCH,
-  TOOLBAR_MODAL_FILTER,
-  TOOLBAR_MODAL_NONE
-} from 'actions/actions';
 import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
 import { PhlaskV2 } from 'icons';
-import useAppSelector from 'hooks/useSelector';
-import { getToolbarModal, setToolbarModal } from 'reducers/toolbar';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 const MobileHead = () => {
-  const dispatch = useDispatch();
   const headerContext = React.useContext(HeaderContext);
   const { shownPage, onMenuItemClick, isMenuOpen, onMenuClose, onMenuOpen } =
     headerContext;
 
-  const toolbarModal = useAppSelector(getToolbarModal);
+  const { toggle } = useToolbarContext();
   return (
     <>
       <Box
@@ -69,28 +61,12 @@ const MobileHead = () => {
                 <PhlaskV2 width="154px" height="39px" />
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <IconButton
-                  onClick={() => {
-                    dispatch(
-                      setToolbarModal(
-                        toolbarModal !== TOOLBAR_MODAL_SEARCH
-                          ? TOOLBAR_MODAL_SEARCH
-                          : TOOLBAR_MODAL_NONE
-                      )
-                    );
-                  }}
-                >
+                <IconButton onClick={() => toggle('search')}>
                   <SearchIcon />
                 </IconButton>
                 <IconButton
                   data-cy="button-filter-mobile"
-                  onClick={() => {
-                    if (toolbarModal !== TOOLBAR_MODAL_FILTER) {
-                      dispatch(setToolbarModal(TOOLBAR_MODAL_FILTER));
-                    } else {
-                      dispatch(setToolbarModal(TOOLBAR_MODAL_NONE));
-                    }
-                  }}
+                  onClick={() => toggle('filter')}
                 >
                   <FilterIcon />
                 </IconButton>
