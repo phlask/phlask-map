@@ -73,18 +73,18 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
         }
       });
     },
-    [isMobile, shownPage]
+    [isMobile]
   );
 
   const stateVal = useMemo(
     () => ({
-      isMenuOpen: isMenuOpen,
+      isMenuOpen,
       shownPage,
       onMenuClose,
       onMenuOpen,
       onMenuItemClick
     }),
-    [onMenuItemClick, isMenuOpen, shownPage]
+    [isMenuOpen, shownPage, onMenuClose, onMenuOpen, onMenuItemClick]
   );
 
   return <HeaderContext value={stateVal}>{children}</HeaderContext>;

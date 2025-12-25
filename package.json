@@ -67,7 +67,7 @@
     "test:mobile": "cypress run --config-file cypress.mobile.config.mjs",
     "generate-icons": "npx @svgr/cli --config-file=.svgrrc.json ./src/assets/icons --out-dir=./src/icons && yarn lint --fix",
     "cypress": "cypress open",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --quiet",
+    "lint": "eslint src --quiet",
     "format": "prettier \"src/**/*.{js,css,html}\" --write",
     "serve": "vite preview",
     "storybook": "storybook dev -p 6006",

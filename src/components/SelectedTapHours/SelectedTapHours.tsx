@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import hours from 'helpers/hours';
-import styles from './SelectedTapHours.module.scss';
 import type { ResourceEntry } from 'types/ResourceEntry';
+import { Stack, Typography } from '@mui/material';
 
 type SelectedTapHoursProps = {
   selectedPlace: ResourceEntry;
@@ -27,7 +27,7 @@ const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
       selectedPlace.hours[currentDay].open.hour,
       selectedPlace.hours[currentDay].close.hour
     );
-  }, []);
+  }, [selectedPlace.hours]);
 
   const placeOpeningInfo = useMemo(() => {
     if (isPlaceOpen) {
@@ -38,22 +38,19 @@ const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
     }
 
     return { color: 'red', label: 'Closed' };
-  }, []);
+  }, [isPlaceOpen]);
 
   return (
-    <div className={styles.tapHoursMobile}>
-      <div id="tap-info-org-status">
-        <p style={{ color: placeOpeningInfo.color }}>
-          {placeOpeningInfo.label}
-        </p>
-      </div>
-
-      {closingTime && (
-        <p>
-          <span>&nbsp;-</span> <span>closes {closingTime}</span>
-        </p>
-      )}
-    </div>
+    <Stack direction="row">
+      <Typography sx={{ fontSize: '0.875rem' }} color={placeOpeningInfo.color}>
+        {placeOpeningInfo.label}
+        {closingTime ? (
+          <>
+            <span>&nbsp;- Closes {closingTime}</span>
+          </>
+        ) : null}
+      </Typography>
+    </Stack>
   );
 };
 

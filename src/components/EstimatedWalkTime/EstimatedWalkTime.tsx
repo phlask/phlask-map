@@ -17,9 +17,14 @@ const EstimatedWalkingDuration = ({
   }
 
   return (
-    <Typography fontWeight={400}>
+    <Typography color="#60718C" fontSize={14} fontWeight={400}>
       Est. walking time:{' '}
-      <Typography component="span" fontWeight={600} sx={{ color: '#2d3748' }}>
+      <Typography
+        fontSize={14}
+        component="span"
+        fontWeight={600}
+        sx={{ color: '#2d3748' }}
+      >
         {walkingDuration ? `${walkingDuration} minutes` : 'Not Available'}
       </Typography>
     </Typography>

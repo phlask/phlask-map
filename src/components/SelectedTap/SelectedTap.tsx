@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
-import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
 
 import sampleImg from 'components/images/phlask-tessellation.png';
 import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
@@ -55,7 +54,7 @@ const SelectedTap = () => {
             height: '60vh',
             [theme.breakpoints.up('md')]: {
               height: '100%',
-              width: '30%'
+              width: '40%'
             }
           })
         }
@@ -67,9 +66,7 @@ const SelectedTap = () => {
         isError={isError}
         onStartEdit={handleStartEdit}
         onClose={onClose}
-      >
-        {data ? <SelectedTapHours selectedPlace={data} /> : null}
-      </SelectedTapDetails>
+      />
     </SwipeableDrawer>
   );
 };

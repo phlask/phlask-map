@@ -18,10 +18,10 @@ export default defineConfig([
       reactRefresh.configs.vite,
       storybook.configs['flat/recommended'],
       pluginCypress.configs.recommended,
-      pluginCypress.configs.globals
+      pluginCypress.configs.globals,
+      reactHooks.configs.flat['recommended-latest']
     ],
     plugins: {
-      'react-hooks': reactHooks.configs['recommended-latest'],
       eslintConfigPrettier
     },
     languageOptions: {

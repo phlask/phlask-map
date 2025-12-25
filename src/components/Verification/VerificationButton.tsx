@@ -30,12 +30,15 @@ const VerificationButton = ({ resource }: VerificationButtonProps) => {
     setLoginError('');
   }, []);
 
-  const updateResourceEntry = useCallback((selectedResource: ResourceEntry) => {
-    updateResource.render(selectedResource);
-    setHasBeenUpdated(true);
-    // invalidate resource in the resources list
-    setSelectedPlace(selectedResource);
-  }, []);
+  const updateResourceEntry = useCallback(
+    (selectedResource: ResourceEntry) => {
+      updateResource.render(selectedResource);
+      setHasBeenUpdated(true);
+      // invalidate resource in the resources list
+      setSelectedPlace(selectedResource);
+    },
+    [setSelectedPlace]
+  );
 
   const markAsVerified = useCallback(() => {
     const newVerification: Verification = {

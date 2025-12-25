@@ -18,11 +18,6 @@ const Toolbar = () => {
   const { data: resources = [] } = useGetResourcesQuery({ resourceType });
 
   const onNearMeClick = async () => {
-    // If the user clicks very fast, it crashes.
-    // NOTE: This was left as an acceptable scenario for now,
-    // as it is difficult for a user to do this reliably due to the popup of the location panel.
-    // This may be reproducible on Desktop.
-
     const closest = getClosest(resources, userLocation);
     if (!closest) return;
 

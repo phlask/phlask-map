@@ -63,12 +63,12 @@ const Overlay = ({ onSearch }: OverlayProps) => {
           </Box>
         </Fade>
 
-        <ChooseResourceType />
-        <Filter />
-        <AddResourceModalV2 />
         <Toolbar />
       </Stack>
 
+      <ChooseResourceType />
+      <Filter />
+      <AddResourceModalV2 />
       <SelectedTap />
     </>
   );

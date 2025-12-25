@@ -32,7 +32,10 @@ const SearchBar = ({ search }: SearchBarProps) => {
         onSelect(value.toPlace());
       }}
       slotProps={{
-        popupIndicator: { sx: { marginRight: '16px' } }
+        popupIndicator: { sx: { marginRight: '16px' } },
+        paper: {
+          sx: { borderEndStartRadius: '16px', borderEndEndRadius: '16px' }
+        }
       }}
       classes={{ root: styles.root || '' }}
       renderInput={({ InputProps, disabled, fullWidth, id, inputProps }) => (
