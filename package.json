@@ -18,7 +18,7 @@
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
     "react-geocode": "^1.0.0-alpha.0",
-    "react-hook-form": "7.66.0",
+    "react-hook-form": "7.69.0",
     "react-places-autocomplete": "^7.3.0",
     "react-router": "^7.10.1",
     "reselect": "^5.1.1",

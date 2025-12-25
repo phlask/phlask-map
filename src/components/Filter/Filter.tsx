@@ -1,55 +1,29 @@
-import { Box, Button, SwipeableDrawer } from '@mui/material';
+import { Box, SwipeableDrawer } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import React from 'react';
 import noop from 'utils/noop';
-import styles from './Filter.module.scss';
-import filters from 'fixtures/filters';
-import useResourceType from 'hooks/useResourceType';
+import useResourceType, { ResourceType } from 'hooks/useResourceType';
 import { useToolbarContext } from 'contexts/ToolbarContext';
-
-type FilterTagsProps = {
-  tags?: string[];
-};
-
-const FilterTags = ({ tags = [] }) => (
-  <Box className={styles.filterTags}>
-    {tags.map(tag => (
-      <Box
-        key={tag}
-        className={styles.filterTag}
-        onClick={noop}
-        data-cy={`filter-option-${tag}`}
-      >
-        <p>{tag}</p>
-      </Box>
-    ))}
-  </Box>
-);
-
-const FilterTagsExclusive = ({ tags = [] }: FilterTagsProps) => (
-  <Box className={styles.filterTagsExclusive}>
-    {tags.map(tag => (
-      <Box
-        key={tag}
-        className={styles.filterTagExclusive}
-        onClick={noop}
-        data-cy={`filter-option-${tag}`}
-      >
-        <p>{tag}</p>
-      </Box>
-    ))}
-  </Box>
-);
+import WaterFilter from './WaterFilter';
+import FoodFilter from './FoodFilter';
+import ForagingFilter from './ForagingFilter';
+import BathroomFilter from './BathroomFilter';
 
 const Filter = () => {
   const isMobile = useIsMobile();
-  const { resourceType, setResourceType } = useResourceType();
+  const { resourceType } = useResourceType();
 
   const { toolbarModal, setToolbarModal } = useToolbarContext();
 
-  if (!filters[resourceType]) {
+  if (!resourceType) {
     return null;
   }
+
+  const filterElement = {
+    [ResourceType.WATER]: <WaterFilter />,
+    [ResourceType.FOOD]: <FoodFilter />,
+    [ResourceType.FORAGE]: <ForagingFilter />,
+    [ResourceType.BATHROOM]: <BathroomFilter />
+  }[resourceType];
 
   return (
     <SwipeableDrawer
@@ -64,83 +38,28 @@ const Filter = () => {
         paper: {
           sx: {
             borderRadius: '10px',
-            width: isMobile ? 'auto' : '30vw',
+            width: isMobile ? 'auto' : '40%',
             height: isMobile ? '70vh' : '100%'
           }
         }
       }}
     >
-      <Box className={styles.header}>
+      {isMobile ? (
         <Box sx={{ width: '100%' }}>
-          {isMobile ? (
-            <Box
-              sx={{
-                position: 'relative',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '24px',
-                height: '4px',
-                borderRadius: '2px',
-                backgroundColor: '#ffffff'
-              }}
-            />
-          ) : null}
-        </Box>
-        <h1>{filters[resourceType].title}</h1>
-      </Box>
-
-      <Box sx={{ margin: '20px' }}>
-        {filters[resourceType].categories.map(category => (
-          <React.Fragment key={category.header}>
-            <h2 className={styles.label}>{category.header}</h2>
-            {category.type === 0 ? <FilterTags /> : <FilterTagsExclusive />}
-          </React.Fragment>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          marginBottom: '10px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          fontSize: '16.8px',
-          fontFamily: "'Inter', sans-serif"
-        }}
-      >
-        <Box
-          sx={{
-            margin: '10px 20px'
-          }}
-        >
-          <Button
-            onClick={() => {
-              setResourceType(resourceType);
-            }}
-            data-cy="button-clear-all-mobile"
-          >
-            Clear All
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            margin: '0px 20px'
-          }}
-        >
-          <p
-            style={{
-              margin: '10px',
-              padding: '10px 20px',
-              width: 'fit-content',
+          <Box
+            sx={{
               position: 'relative',
-              float: 'right',
-              border: '1px solid #09A2E5',
-              borderRadius: '8px',
-              fontWeight: '600'
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '24px',
+              height: '4px',
+              borderRadius: '2px',
+              backgroundColor: '#ffffff'
             }}
-          >
-            Resources: 0
-          </p>
+          />
         </Box>
-      </Box>
+      ) : null}
+      {filterElement}
     </SwipeableDrawer>
   );
 };
