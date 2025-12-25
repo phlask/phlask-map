@@ -1,7 +1,7 @@
 import { Chip, Divider, Stack } from '@mui/material';
 import type { ResourceEntry } from 'types/ResourceEntry';
+import formatTag from 'utils/formatTag';
 import getTagsFromResource from 'utils/getTagsFromResource';
-import toTitleCase from 'utils/toTitleCase';
 
 type SelectedResourceTagsProps = {
   resource: ResourceEntry;
@@ -17,7 +17,7 @@ const SelectedResourceTags = ({ resource }: SelectedResourceTagsProps) => {
           <Chip
             variant="outlined"
             key={tag}
-            label={toTitleCase(tag.replaceAll('_', ' '))}
+            label={formatTag(tag)}
             sx={{
               borderRadius: '3px',
               border: '1px solid #2D3748',

@@ -27,17 +27,20 @@ export type FetchResourcesOptions = {
     | 'TEMPORARILY_CLOSED'
     | 'PERMANENTLY_CLOSED'
     | 'HIDDEN';
+  filters?: { name: string; value: string | string[] }[];
 };
 
 export async function getResources(
   options: FetchResourcesOptions = {}
 ): Promise<ResourceEntry[]> {
-  const { limit, offset, resourceType, status } = options;
+  const { limit, offset, resourceType, status, filters = [] } = options;
 
   // Build the query with filters
   let query = supabase
     .from(resourceDatabaseName)
-    .select('id,name,latitude,longitude,resource_type', { count: 'exact' });
+    .select(`id,name,latitude,longitude,resource_type,entry_type`, {
+      count: 'exact'
+    });
 
   if (typeof limit === 'number' && typeof offset === 'number') {
     query = query.range(offset, offset + limit - 1);
@@ -47,8 +50,26 @@ export async function getResources(
   if (resourceType) {
     query = query.eq('resource_type', resourceType);
   }
+
   if (status) {
     query = query.eq('status', status);
+  }
+
+  if (filters.length) {
+    filters
+      .filter(({ value }) => {
+        if (Array.isArray(value)) {
+          return Boolean(value.length);
+        }
+        return Boolean(value);
+      })
+      .forEach(({ name, value }) => {
+        query = query.filter(
+          name,
+          'eq',
+          Array.isArray(value) ? JSON.stringify(value) : value
+        );
+      });
   }
 
   const { data, error } = await query;

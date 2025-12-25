@@ -19,6 +19,7 @@ import useResourceType from 'hooks/useResourceType';
 import useSelectedPlace from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
 import useUserLocation from 'hooks/useUserLocation';
+import { useSearchParams } from 'react-router';
 
 const style: CSSProperties = {
   width: '100%',
@@ -38,10 +39,20 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const { selectedPlace, setSelectedPlace } = useSelectedPlace();
   const { resourceType } = useResourceType();
   const { data: userLocation } = useUserLocation();
+  const [searchParams] = useSearchParams();
+
+  const filters = [
+    {
+      name: 'water->dispenser_type',
+      value: searchParams.getAll('water.dispenser_type')
+    },
+    { name: 'water->tags', value: searchParams.getAll('water.tags') },
+    { name: 'entry_type', value: searchParams.get('entry_type') || '' }
+  ];
 
   const map = useMap();
 
-  const { data: resources } = useGetResourcesQuery({ resourceType });
+  const { data: resources } = useGetResourcesQuery({ resourceType, filters });
 
   useEffect(() => {
     if (!map) {

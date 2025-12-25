@@ -55,7 +55,7 @@ export type WaterDispenserType =
   | 'SINK'
   | 'JUG'
   | 'SODA_MACHINE'
-  | 'PITCHER'
+  | 'VESSEL'
   | 'WATER_COOLER';
 
 export type WaterTag =
@@ -112,6 +112,8 @@ export type BathroomInfo = {
   tags: BathroomType[];
 };
 
+export type ResourceEntryType = 'OPEN' | 'RESTRICTED' | 'UNSURE';
+
 export type ResourceEntry = {
   id?: string;
   /** Represents the schema that this resource entry is following. */
@@ -159,7 +161,7 @@ export type ResourceEntry = {
     | 'PERMANENTLY_CLOSED'
     | 'HIDDEN';
   /** What entry permissions are required for this resource. */
-  entry_type?: 'OPEN' | 'RESTRICTED' | 'UNSURE' | null;
+  entry_type?: ResourceEntryType | null;
   /** The hours of operation for this resource, if available. */
   hours?: GooglePlacesPeriod[] | null;
   /** If the resource_type is WATER, the information about the water resource. */
