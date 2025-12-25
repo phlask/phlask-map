@@ -7,7 +7,6 @@ import MultipleChoiceFilter from './MultipleChoiceFilter';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import { useSearchParams } from 'react-router';
 import SingleChoiceFilter from './SingleChoiceFilter';
-import { DevTool } from '@hookform/devtools';
 import type {
   ResourceEntryType,
   WaterDispenserType,
@@ -62,7 +61,7 @@ const WaterFilter = () => {
     defaultValues
   });
   const { setToolbarModal } = useToolbarContext();
-  const { control, reset, handleSubmit } = methods;
+  const { reset, handleSubmit } = methods;
 
   const onSubmit = (values: WaterFilterFormValues) => {
     setSearchParams(prev => {
@@ -119,7 +118,6 @@ const WaterFilter = () => {
           <FilterActions />
         </FilterContent>
       </form>
-      <DevTool control={control} />
     </FormProvider>
   );
 };

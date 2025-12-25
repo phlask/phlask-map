@@ -47,7 +47,19 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
       value: searchParams.getAll('water.dispenser_type')
     },
     { name: 'water->tags', value: searchParams.getAll('water.tags') },
-    { name: 'entry_type', value: searchParams.get('entry_type') || '' }
+    { name: 'entry_type', value: searchParams.get('entry_type') || '' },
+    {
+      name: 'food->food_type',
+      value: searchParams.getAll('food.food_type')
+    },
+    {
+      name: 'food->distribution_type',
+      value: searchParams.getAll('food.distribution_type')
+    },
+    {
+      name: 'food.organization_type',
+      value: searchParams.get('food.organization_type') || ''
+    }
   ];
 
   const map = useMap();
