@@ -1,7 +1,0 @@
-{
-  "include": ["src", "globals.ts"],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "paths": { "*": ["./src/*"] }
-  }
-}
