@@ -36,6 +36,7 @@
     "@storybook/addon-links": "^10.0.3",
     "@storybook/addon-onboarding": "^10.0.3",
     "@storybook/react-vite": "^10.0.3",
+    "@types/google.maps": "^3.58.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^5.1.0",

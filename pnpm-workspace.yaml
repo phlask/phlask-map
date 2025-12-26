@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - core-js
+  - cypress
+  - esbuild
+  - pre-commit
+  - spawn-sync
+  - supabase

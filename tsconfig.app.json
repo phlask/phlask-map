@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "cypress", "open-route-service.d.ts"]
+  "include": ["src", "cypress", "open-route-service.d.ts", "globals.ts"]
 }
