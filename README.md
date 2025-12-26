@@ -19,14 +19,13 @@ Code behind the PHLASK Web Map
 ├── package-lock.json
 ├── package.json
 ├── public
-├── src                                <-- Source files for project
-│   ├── App.js
-│   ├── components                     <-- Source for all React components
-│   ├── helpers                        <-- Helper functions shared across components/pages
-│   ├── hooks                          <-- Custom hooks
-│   └── theme.js                       <-- Theme file for Material UI
-├── yarn-error.log
-└── yarn.lock
+└── src                                <-- Source files for project
+    ├── App.js
+    ├── components                     <-- Source for all React components
+    ├── helpers                        <-- Helper functions shared across components/pages
+    ├── hooks                          <-- Custom hooks
+    └── theme.js                       <-- Theme file for Material UI
+
 
 ```
 
@@ -36,7 +35,7 @@ Code behind the PHLASK Web Map
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/phlask/phlask-map/tree/develop?quickstart=1)
 
-GitHub Codespaces provides you with a remote development environment without needing to install anything locally. You can also connect to your Codespace from VSCode, if desired. A default codespace configuration in the `.devcontainer/devcontainer.json` file has been prepared that will ensure your codespace has everything needed to run PHLASK. Once the codespace has started, you should be able to use the Terminal window in the bottom to run `yarn start`. That will load a local development copy of the PHLASK site for you to test with.
+GitHub Codespaces provides you with a remote development environment without needing to install anything locally. You can also connect to your Codespace from VSCode, if desired. A default codespace configuration in the `.devcontainer/devcontainer.json` file has been prepared that will ensure your codespace has everything needed to run PHLASK. Once the codespace has started, you should be able to use the Terminal window in the bottom to run `pnpm start`. That will load a local development copy of the PHLASK site for you to test with.
 
 To learn more about Codespaces, review this page: https://github.com/features/codespaces
 
@@ -44,59 +43,61 @@ As of this writing, PHLASK does not fund these codespaces. However, GitHub offer
 
 Note that `core hours per month` means each core on your codespace consumes independent hours from your code hour limit. If you choose a 2-core space (sufficient for PHLASK), you use 2 core-hours every hour from the free `core hours per month` allowance.
 
-### Yarn
+### pnpm
 
 1. Ensure you have [nodejs v20](https://nodejs.org/download/release/latest-v20.x/) installed on your machine.
    - You can also use [nvm](https://github.com/nvm-sh/nvm/tree/master#install--update-script).
    - once you have install nvm
    - run `nvm install` <- this will download the required verison (only required on the first installation)
    - run `nvm use` sets that to the active version of node in your terminal
-1. Ensure you have [Yarn](https://yarnpkg.com/en/) installed on your machine
-1. Run `yarn install`
-1. Run `yarn start`
+1. Ensure you have [pnpm](https://pnpm.io/) installed on your machine
+1. Run `pnpm install`
+1. Run `pnpm start`
 
 ### Docker
 
-1.  Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-    - Follow installer instructions provided by Docker
+  - Follow installer instructions provided by Docker
 
-1.  Open up a terminal (Powershell on Windows, Terminal on Mac, bash on Linux, or whatever your preferred terminal is)
-1.  Confirm Docker Desktop installed successful: `docker --version`
+- Open up a terminal (Powershell on Windows, Terminal on Mac, bash on Linux, or whatever your preferred terminal is)
 
-    Expected output:
+- Confirm Docker Desktop installed successful: `docker --version`
 
-    ```
-      $ docker --version
-      # something similar to below should be printed out
-      # older versions of Docker OK
-      Docker version x.y.z, build xxx
-    ```
+  Expected output:
 
-1.  Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
-1.  Navigate to the root of the cloned repo: `cd phlask-map`
-1.  Build the container with docker compose: `docker compose build app`.
+  ```sh
+    $ docker --version
+    # something similar to below should be printed out
+    # older versions of Docker OK
+    Docker version x.y.z, build xxx
+  ```
 
-    Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
+- Clone this repo: `git clone git@github.com:phlask/phlask-map.git`
 
-    ```
-    [+] Building 238.2s (12/12) FINISHED
-    ...
-    => => writing image sha256:c98c...
-    ```
+- Navigate to the root of the cloned repo: `cd phlask-map`
+- Build the container with docker compose: `docker compose build app`.
 
-1.  Run the container with docker compose: `docker compose up app`
+  Note: this may take awhile. In the past this has taken ~5 minutes. If this step takes longer than 10 minutes, kill the process and try again. Final output should look like this:
 
-    Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
+  ```sh
+  [+] Building 238.2s (12/12) FINISHED
+  ...
+  => => writing image sha256:c98c...
+  ```
 
-    ```
-    Beta site https://beta.phlask.me/
-    Project is running at http://172.21.112.1/
-    ...
-    Starting the development server...
-    ```
+- Run the container with docker compose: `docker compose up app`
 
-1.  Navigate to localhost:5173 on your browser.
+  Note: this may take awhile. Once the application is up, output similar to this should be printed out to the console:
+
+  ```sh
+  Beta site https://beta.phlask.me/
+  Project is running at http://172.21.112.1/
+  ...
+  Starting the development server...
+  ```
+
+- Navigate to localhost:5173 on your browser.
 
 ## Recommended Development Tools
 
@@ -108,7 +109,7 @@ We use Prettier to ensure a consistent code formatting across the project, if yo
 
 We use Storybook for documentation and testing of the PHLask components and design system.
 
-You can run `yarn storybook` in order to access it.
+You can run `pnpm storybook` in order to access it.
 
 We highly recommend for any new collaborators to access Storybook in order to get more familiar with our components and how to use them.
 
@@ -153,8 +154,8 @@ This project uses [Cypress](https://www.cypress.io/) for testing.
 This project has been configed to run all tests in the `cypress/integration` directory. To run these tests:
 
 1. `cd` into the root (top-level) directory of the project
-2. ensure that you have all requirements installed with `yarn install` or `npm install`
-3. run `yarn test`
+2. ensure that you have all requirements installed with `pnpm install`
+3. run `pnpm test`
 
 #### Testing in Docker
 

@@ -21,7 +21,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: yarn start:cypress
+          start: pnpm start:cypress
           browser: chrome
           spec: ${{ matrix.spec }}
           config-file: ${{ matrix.config_file }}
