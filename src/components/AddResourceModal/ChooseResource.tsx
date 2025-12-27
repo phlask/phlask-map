@@ -8,14 +8,8 @@ import FoodIcon from 'icons/FoodIconChooseResource';
 import ForagingIcon from 'icons/ForagingIcon';
 import BathroomIcon from 'icons/ToiletIconChooseResource';
 import ResourceButton from 'components/ResourceButton/ResourceButton';
-import {
-  BATHROOM_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  WATER_RESOURCE_TYPE
-} from 'types/ResourceEntry';
 import CloseButton from './CloseButton/CloseButton';
-import type { ResourceTypeOption } from 'hooks/useResourceType';
+import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 
 type ChooseResourceProps = {
   onSelectResource: (type: ResourceTypeOption) => void;
@@ -73,7 +67,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
             data-cy="button-contribute-water"
             color="#5286E9"
             text="Water"
-            onClick={() => onSelectResource(WATER_RESOURCE_TYPE)}
+            onClick={() => onSelectResource(ResourceType.WATER)}
           />
         </Grid>
         <Grid
@@ -88,7 +82,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
             color="#5DA694"
             text="Foraging"
             data-cy="button-contribute-foraging"
-            onClick={() => onSelectResource(FORAGE_RESOURCE_TYPE)}
+            onClick={() => onSelectResource(ResourceType.FORAGE)}
           />
         </Grid>
         <Grid
@@ -103,7 +97,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
             color="#FF9A55"
             text="Food"
             data-cy="button-contribute-food"
-            onClick={() => onSelectResource(FOOD_RESOURCE_TYPE)}
+            onClick={() => onSelectResource(ResourceType.FOOD)}
           />
         </Grid>
         <Grid
@@ -118,7 +112,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
             color="#9E9E9E"
             text="Bathroom"
             data-cy="button-contribute-bathroom"
-            onClick={() => onSelectResource(BATHROOM_RESOURCE_TYPE)}
+            onClick={() => onSelectResource(ResourceType.BATHROOM)}
           />
         </Grid>
       </Grid>

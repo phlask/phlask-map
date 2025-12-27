@@ -11,15 +11,9 @@ import MobileFoodIcon from 'icons/FoodIconV2';
 import MobileForagingIcon from 'icons/ForagingIconV2';
 import MobileBathroomIcon from 'icons/ToiletIconV2';
 
-import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
-} from 'types/ResourceEntry';
-
 import { type ReactNode } from 'react';
 import useResourceType, {
+  ResourceType,
   type ResourceTypeOption
 } from 'hooks/useResourceType';
 import { useToolbarContext } from 'contexts/ToolbarContext';
@@ -93,22 +87,22 @@ const MobileChooseResourceType = () => {
           <MobileResourceButton
             icon={<MobileWaterIcon />}
             textLabel="Water"
-            type={WATER_RESOURCE_TYPE}
+            type={ResourceType.WATER}
           />
           <MobileResourceButton
             icon={<MobileForagingIcon />}
             textLabel="Foraging"
-            type={FORAGE_RESOURCE_TYPE}
+            type={ResourceType.FORAGE}
           />
           <MobileResourceButton
             icon={<MobileFoodIcon />}
             textLabel="Food"
-            type={FOOD_RESOURCE_TYPE}
+            type={ResourceType.FOOD}
           />
           <MobileResourceButton
             icon={<MobileBathroomIcon />}
             textLabel="Bathroom"
-            type={BATHROOM_RESOURCE_TYPE}
+            type={ResourceType.BATHROOM}
           />
         </List>
       </Slide>

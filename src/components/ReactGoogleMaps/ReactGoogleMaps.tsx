@@ -8,14 +8,8 @@ import PinForagingActive from 'components/icons/PinForagingActive';
 import PinFoodActive from 'components/icons/PinFoodActive';
 import PinBathroomActive from 'components/icons/PinBathroomActive';
 import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
-import {
-  BATHROOM_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  WATER_RESOURCE_TYPE,
-  type ResourceEntry
-} from 'types/ResourceEntry';
-import useResourceType from 'hooks/useResourceType';
+import { type ResourceEntry } from 'types/ResourceEntry';
+import useResourceType, { ResourceType } from 'hooks/useResourceType';
 import useSelectedPlace from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
 import useUserLocation from 'hooks/useUserLocation';
@@ -101,10 +95,10 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
       return phlaskMarkerIconV2(resource.resource_type, 56, 56);
     }
     return {
-      [WATER_RESOURCE_TYPE]: PinWaterActive(),
-      [FOOD_RESOURCE_TYPE]: PinFoodActive(),
-      [FORAGE_RESOURCE_TYPE]: PinForagingActive(),
-      [BATHROOM_RESOURCE_TYPE]: PinBathroomActive()
+      [ResourceType.WATER]: PinWaterActive(),
+      [ResourceType.FOOD]: PinFoodActive(),
+      [ResourceType.FORAGE]: PinForagingActive(),
+      [ResourceType.BATHROOM]: PinBathroomActive()
     }[resource.resource_type];
   };
 

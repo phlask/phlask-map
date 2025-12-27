@@ -6,17 +6,12 @@ import DesktopWaterIcon from 'icons/WaterIconChooseResource';
 import DesktopBathroomIcon from 'icons/BathroomIconChooseResource';
 import DesktopFoodIcon from 'icons/FoodIconChooseResource';
 import DesktopForagingIcon from 'icons/ForagingIconChooseResource';
-import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE
-} from 'types/ResourceEntry';
 
 import useOnClickOutside from '../AddResourceModal/useOnClickOutside';
 import styles from './ChooseResourceType.module.scss';
 import { Modal } from '@mui/material';
 import useResourceType, {
+  ResourceType,
   type ResourceTypeOption
 } from 'hooks/useResourceType';
 import { useToolbarContext } from 'contexts/ToolbarContext';
@@ -108,28 +103,28 @@ const DesktopChooseResourceType = () => {
             <DesktopResourceButton
               desktopIcon={DesktopWaterIcon}
               color="#5286E9"
-              type={WATER_RESOURCE_TYPE}
+              type={ResourceType.WATER}
               textLabel="Water"
             />
 
             <DesktopResourceButton
               desktopIcon={DesktopForagingIcon}
               color="#5DA694"
-              type={FORAGE_RESOURCE_TYPE}
+              type={ResourceType.FORAGE}
               textLabel="Foraging"
             />
 
             <DesktopResourceButton
               desktopIcon={DesktopFoodIcon}
               color="#FF9A55"
-              type={FOOD_RESOURCE_TYPE}
+              type={ResourceType.FOOD}
               textLabel="Food"
             />
 
             <DesktopResourceButton
               desktopIcon={DesktopBathroomIcon}
               color="#9E9E9E"
-              type={BATHROOM_RESOURCE_TYPE}
+              type={ResourceType.BATHROOM}
               textLabel="Bathroom"
             />
           </Box>

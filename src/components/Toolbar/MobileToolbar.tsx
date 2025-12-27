@@ -11,13 +11,7 @@ import ToiletIcon from 'icons/CircleBathroomIcon';
 import FoodIcon from 'icons/CircleFoodIcon';
 import ForagingIcon from 'icons/CircleForagingIcon';
 import WaterIcon from 'icons/CircleWaterIcon';
-import {
-  BATHROOM_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  WATER_RESOURCE_TYPE
-} from 'types/ResourceEntry';
-import useResourceType from 'hooks/useResourceType';
+import useResourceType, { ResourceType } from 'hooks/useResourceType';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type MobileToolbarProps = {
@@ -29,10 +23,10 @@ const MobileToolbar = ({ onNearMeClick }: MobileToolbarProps) => {
   const { toggle } = useToolbarContext();
 
   const selectedResourceIcon = {
-    [WATER_RESOURCE_TYPE]: WaterIcon,
-    [FOOD_RESOURCE_TYPE]: FoodIcon,
-    [FORAGE_RESOURCE_TYPE]: ForagingIcon,
-    [BATHROOM_RESOURCE_TYPE]: ToiletIcon,
+    [ResourceType.WATER]: WaterIcon,
+    [ResourceType.FOOD]: FoodIcon,
+    [ResourceType.FORAGE]: ForagingIcon,
+    [ResourceType.BATHROOM]: ToiletIcon,
     default: WaterIcon
   }[resourceType ?? 'default']!;
 

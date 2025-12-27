@@ -100,7 +100,7 @@ export type ForageInfo = {
   tags: ForageTag[];
 };
 
-export type BathroomType =
+export type BathroomTag =
   | 'WHEELCHAIR_ACCESSIBLE'
   | 'GENDER_NEUTRAL'
   | 'CHANGING_TABLE'
@@ -109,7 +109,7 @@ export type BathroomType =
 
 /** Details for a BATHROOM resource. */
 export type BathroomInfo = {
-  tags: BathroomType[];
+  tags: BathroomTag[];
 };
 
 export type ResourceEntryType = 'OPEN' | 'RESTRICTED' | 'UNSURE';
@@ -173,8 +173,3 @@ export type ResourceEntry = {
   /**  If the resource_type is BATHROOM, the information about the bathroom resource. */
   bathroom?: BathroomInfo | null;
 };
-
-export const WATER_RESOURCE_TYPE = 'WATER';
-export const FOOD_RESOURCE_TYPE = 'FOOD';
-export const FORAGE_RESOURCE_TYPE = 'FORAGE';
-export const BATHROOM_RESOURCE_TYPE = 'BATHROOM';

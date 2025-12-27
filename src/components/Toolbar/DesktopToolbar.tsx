@@ -8,7 +8,6 @@ import ResourceIcon from 'icons/ResourceIcon';
 import SearchIcon from 'icons/SearchIcon';
 import NearMeButton from 'components/NearMeButton/NearMeButton';
 import type { MouseEventHandler, ReactElement } from 'react';
-import { WATER_RESOURCE_TYPE } from 'types/ResourceEntry';
 import useResourceType from 'hooks/useResourceType';
 import { useToolbarContext, type ToolbarModal } from 'contexts/ToolbarContext';
 
@@ -80,10 +79,7 @@ const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
         zIndex: 1
       }}
     >
-      <NearMeButton
-        resourceType={resourceType || WATER_RESOURCE_TYPE}
-        onClick={onNearMeClick}
-      />
+      <NearMeButton resourceType={resourceType} onClick={onNearMeClick} />
       <Item
         icon={<ResourceIcon />}
         label="Resources"

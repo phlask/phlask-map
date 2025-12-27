@@ -7,12 +7,8 @@ import useIsMobile from 'hooks/useIsMobile';
 import debounce from 'utils/debounce';
 
 import {
-  WATER_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  BATHROOM_RESOURCE_TYPE,
   type ResourceEntry,
-  type BathroomType,
+  type BathroomTag,
   type ForageType,
   type ForageTag,
   type FoodType,
@@ -31,7 +27,7 @@ import AddWaterTap from './AddWaterTap/AddWaterTap';
 import ModalWrapper from './ModalWrapper';
 import useUserLocation from 'hooks/useUserLocation';
 import { useToolbarContext } from 'contexts/ToolbarContext';
-import type { ResourceTypeOption } from 'hooks/useResourceType';
+import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 
 const initialState = {
   pictures: [],
@@ -274,7 +270,7 @@ const AddResourceModalV2 = () => {
       // was the simplest to save on time.
 
       // Set the details for the specific resource type
-      if (resourceType === WATER_RESOURCE_TYPE) {
+      if (resourceType === ResourceType.WATER) {
         newResource.water = {
           dispenser_type: [
             values.drinkingFountain ? 'DRINKING_FOUNTAIN' : null,
@@ -294,7 +290,7 @@ const AddResourceModalV2 = () => {
         };
       }
 
-      if (resourceType === FOOD_RESOURCE_TYPE) {
+      if (resourceType === ResourceType.FOOD) {
         newResource.food = {
           food_type: [
             values.perishable ? 'PERISHABLE' : null,
@@ -317,7 +313,7 @@ const AddResourceModalV2 = () => {
         };
       }
 
-      if (resourceType === FORAGE_RESOURCE_TYPE) {
+      if (resourceType === ResourceType.FORAGE) {
         newResource.forage = {
           forage_type: [
             values.nut ? 'NUT' : null,
@@ -335,7 +331,7 @@ const AddResourceModalV2 = () => {
         };
       }
 
-      if (resourceType === BATHROOM_RESOURCE_TYPE) {
+      if (resourceType === ResourceType.BATHROOM) {
         newResource.bathroom = {
           tags: [
             values.handicapAccessible ? 'WHEELCHAIR_ACCESSIBLE' : null,
@@ -344,7 +340,7 @@ const AddResourceModalV2 = () => {
             values.singleOccupancy ? 'SINGLE_OCCUPANCY' : null,
             values.familyBathroom ? 'FAMILY' : null,
             values.hasFountain ? 'HAS_FOUNTAIN' : null
-          ].filter(Boolean) as BathroomType[]
+          ].filter(Boolean) as BathroomTag[]
         };
       }
 
@@ -381,12 +377,12 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {resourceForm === WATER_RESOURCE_TYPE && (
+      {resourceForm === ResourceType.WATER && (
         <AddWaterTap
           onClose={handleClose}
           onPageChange={onPageChange}
           page={page}
-          onSubmit={e => onSubmit(WATER_RESOURCE_TYPE, e)}
+          onSubmit={e => onSubmit(resourceForm, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -412,12 +408,12 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {resourceForm === FOOD_RESOURCE_TYPE && (
+      {resourceForm === ResourceType.FOOD && (
         <AddFood
           onClose={handleClose}
           onPageChange={onPageChange}
           page={page}
-          onSubmit={e => onSubmit(FOOD_RESOURCE_TYPE, e)}
+          onSubmit={e => onSubmit(resourceForm, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -443,12 +439,12 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {resourceForm === BATHROOM_RESOURCE_TYPE && (
+      {resourceForm === ResourceType.BATHROOM && (
         <AddBathroom
           onClose={handleClose}
           onPageChange={onPageChange}
           page={page}
-          onSubmit={e => onSubmit(BATHROOM_RESOURCE_TYPE, e)}
+          onSubmit={e => onSubmit(resourceForm, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}
@@ -468,12 +464,12 @@ const AddResourceModalV2 = () => {
         />
       )}
 
-      {resourceForm === FORAGE_RESOURCE_TYPE && (
+      {resourceForm === ResourceType.FORAGE && (
         <AddForaging
           onClose={handleClose}
           onPageChange={onPageChange}
           page={page}
-          onSubmit={e => onSubmit(FORAGE_RESOURCE_TYPE, e)}
+          onSubmit={e => onSubmit(resourceForm, e)}
           onDrop={onDrop}
           name={values.name}
           address={values.address}

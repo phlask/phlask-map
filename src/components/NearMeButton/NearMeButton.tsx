@@ -3,28 +3,21 @@ import WaterIcon from 'icons/WaterIconChooseResource';
 import FoodIcon from 'icons/FoodIconChooseResource';
 import ForagingIcon from 'icons/ForagingIconNearMeIcon';
 import BathroomIcon from 'icons/ToiletIconChooseResource';
-
-import {
-  BATHROOM_RESOURCE_TYPE,
-  FOOD_RESOURCE_TYPE,
-  FORAGE_RESOURCE_TYPE,
-  WATER_RESOURCE_TYPE
-} from 'types/ResourceEntry';
 import type { MouseEventHandler } from 'react';
-import type { ResourceTypeOption } from 'hooks/useResourceType';
+import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 
 const resourceStyle = {
-  [WATER_RESOURCE_TYPE]: 'water',
-  [FOOD_RESOURCE_TYPE]: 'food',
-  [FORAGE_RESOURCE_TYPE]: 'foraging',
-  [BATHROOM_RESOURCE_TYPE]: 'bathrooms'
+  [ResourceType.WATER]: 'water',
+  [ResourceType.FOOD]: 'food',
+  [ResourceType.FORAGE]: 'foraging',
+  [ResourceType.BATHROOM]: 'bathrooms'
 };
 
 const resourceIcons = {
-  [WATER_RESOURCE_TYPE]: <WaterIcon width="28" height="37" />,
-  [FOOD_RESOURCE_TYPE]: <FoodIcon width="28" height="37" />,
-  [FORAGE_RESOURCE_TYPE]: <ForagingIcon width="28" height="37" />,
-  [BATHROOM_RESOURCE_TYPE]: <BathroomIcon width="28" height="37" />
+  [ResourceType.WATER]: <WaterIcon width="28" height="37" />,
+  [ResourceType.FOOD]: <FoodIcon width="28" height="37" />,
+  [ResourceType.FORAGE]: <ForagingIcon width="28" height="37" />,
+  [ResourceType.BATHROOM]: <BathroomIcon width="28" height="37" />
 };
 
 type NearMeButtonProps = {
@@ -34,19 +27,17 @@ type NearMeButtonProps = {
 
 const NearMeButton = ({
   onClick,
-  resourceType = WATER_RESOURCE_TYPE
+  resourceType = ResourceType.WATER
 }: NearMeButtonProps) => (
   <Button
-    startIcon={resourceIcons[resourceType || WATER_RESOURCE_TYPE]}
+    startIcon={resourceIcons[resourceType]}
     onClick={onClick}
     sx={theme => ({
       fontFamily: 'Exo',
       color: 'white',
       backgroundColor:
         // @ts-expect-error Need to fix theme declaration
-        theme.palette.resources[
-          resourceStyle[resourceType || WATER_RESOURCE_TYPE]
-        ].main,
+        theme.palette.resources[resourceStyle[resourceType]].main,
       paddingInline: '47px',
       paddingBlock: 0,
       borderRadius: '50px',
@@ -60,9 +51,7 @@ const NearMeButton = ({
       ':hover': {
         backgroundColor:
           // @ts-expect-error Need to fix theme declaration
-          theme.palette.resources[
-            resourceStyle[resourceType || WATER_RESOURCE_TYPE]
-          ].light
+          theme.palette.resources[resourceStyle[resourceType]].light
       }
     })}
   >
