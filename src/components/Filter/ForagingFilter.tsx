@@ -1,52 +1,72 @@
-import { ButtonGroup, Stack } from '@mui/material';
-import FilterSection from './FilterSection';
-import FilterButton from './FilterButton';
-import DividedButtonGroup from './DividedButtonGroup';
+import { Stack } from '@mui/material';
 import FilterHeader from './FilterHeader';
 import FilterContent from './FilterContent';
 import FilterActions from './FilterActions';
+import useFilter from 'hooks/useFilter';
+import { FormProvider } from 'react-hook-form';
+import type { FilterFormFilter } from 'hooks/useFilterForm';
+import useFilterForm from 'hooks/useFilterForm';
+import MultipleChoiceFilter from './MultipleChoiceFilter';
+import SingleChoiceFilter from './SingleChoiceFilter';
 
-const forageTypes = ['Nut', 'Fruit', 'Leaves', 'Bark', 'Flowers'];
+type ForagingFilterFormValues = {
+  forage_type: string[];
+  tags: string[];
+  entry_type: string;
+};
 
-const features = ['Medicinal', 'In season', 'Community garden'];
-
-const entryTypes = ['Open Access', 'Restricted', 'Unsure'];
+const initialValues = {
+  forage_type: [],
+  tags: [],
+  entry_type: ''
+} satisfies ForagingFilterFormValues;
 
 const ForagingFilter = () => {
+  const forageTypeFilter = useFilter('forage.forage_type');
+  const forageTagsFilter = useFilter('forage.tags');
+  const entryTypeFilter = useFilter('entry_type');
+
+  const filters = [
+    { path: 'forage_type', filter: forageTypeFilter },
+    { path: 'tags', filter: forageTagsFilter },
+    { path: 'entry_type', filter: entryTypeFilter }
+  ] satisfies FilterFormFilter<ForagingFilterFormValues>[];
+
+  const { methods, onReset, onSubmit } = useFilterForm({
+    initialValues,
+    filters
+  });
+
   return (
-    <>
-      <FilterHeader>Foraging Filter</FilterHeader>
-      <FilterContent>
-        <Stack gap="25px">
-          <FilterSection label="Forage Type">
-            <DividedButtonGroup>
-              {forageTypes.map(type => (
-                <FilterButton variant="outlined" key={type}>
-                  {type}
-                </FilterButton>
-              ))}
-            </DividedButtonGroup>
-          </FilterSection>
-          <FilterSection label="Features">
-            <DividedButtonGroup>
-              {features.map(feature => (
-                <FilterButton variant="outlined" key={feature}>
-                  {feature}
-                </FilterButton>
-              ))}
-            </DividedButtonGroup>
-          </FilterSection>
-          <FilterSection label="Entry Type">
-            <ButtonGroup fullWidth>
-              {entryTypes.map(type => (
-                <FilterButton key={type}>{type}</FilterButton>
-              ))}
-            </ButtonGroup>
-          </FilterSection>
-        </Stack>
-        <FilterActions />
-      </FilterContent>
-    </>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={onSubmit}
+        onReset={onReset}
+        style={{ display: 'flex', flexDirection: 'column', flex: 1 }}
+      >
+        <FilterHeader>Foraging Filter</FilterHeader>
+        <FilterContent>
+          <Stack gap="25px">
+            <MultipleChoiceFilter<ForagingFilterFormValues>
+              name="forage_type"
+              label={forageTypeFilter.label}
+              items={forageTypeFilter.options}
+            />
+            <MultipleChoiceFilter<ForagingFilterFormValues>
+              name="tags"
+              label={forageTagsFilter.label}
+              items={forageTagsFilter.options}
+            />
+            <SingleChoiceFilter<ForagingFilterFormValues>
+              name="entry_type"
+              label={entryTypeFilter.label}
+              items={entryTypeFilter.options}
+            />
+          </Stack>
+          <FilterActions />
+        </FilterContent>
+      </form>
+    </FormProvider>
   );
 };
 

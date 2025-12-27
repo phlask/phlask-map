@@ -2,97 +2,45 @@ import { Stack } from '@mui/material';
 import FilterHeader from './FilterHeader';
 import FilterContent from './FilterContent';
 import FilterActions from './FilterActions';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import MultipleChoiceFilter from './MultipleChoiceFilter';
-import { useToolbarContext } from 'contexts/ToolbarContext';
-import { useSearchParams } from 'react-router';
 import SingleChoiceFilter from './SingleChoiceFilter';
-import type {
-  ResourceEntryType,
-  WaterDispenserType,
-  WaterTag
-} from 'types/ResourceEntry';
-
-const dispenserTypes = [
-  'BOTTLE_FILLER',
-  'DRINKING_FOUNTAIN',
-  'JUG',
-  'SINK',
-  'SODA_MACHINE',
-  'VESSEL',
-  'WATER_COOLER'
-] satisfies WaterDispenserType[];
-
-const features = [
-  'BYOB',
-  'FILTERED',
-  'ID_REQUIRED',
-  'WHEELCHAIR_ACCESSIBLE'
-] satisfies WaterTag[];
-
-const entryTypes = [
-  'OPEN',
-  'RESTRICTED',
-  'UNSURE'
-] satisfies ResourceEntryType[];
+import useFilter from 'hooks/useFilter';
+import useFilterForm, { type FilterFormFilter } from 'hooks/useFilterForm';
 
 type WaterFilterFormValues = {
   dispenser_type: string[];
-  features: string[];
+  tags: string[];
   entry_type: string;
 };
 
 const initialValues = {
   dispenser_type: [],
-  features: [],
+  tags: [],
   entry_type: ''
 } satisfies WaterFilterFormValues;
 
 const WaterFilter = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispenserTypeFilter = useFilter('water.dispenser_type');
+  const waterTagsFilter = useFilter('water.tags');
+  const entryTypeFilter = useFilter('entry_type');
 
-  const defaultValues = {
-    dispenser_type: searchParams.getAll('water.dispenser_type'),
-    features: searchParams.getAll('water.tags'),
-    entry_type: searchParams.get('entry_type') || ''
-  } satisfies WaterFilterFormValues;
+  const filters = [
+    { path: 'dispenser_type', filter: dispenserTypeFilter },
+    { path: 'tags', filter: waterTagsFilter },
+    { path: 'entry_type', filter: entryTypeFilter }
+  ] satisfies FilterFormFilter<WaterFilterFormValues>[];
 
-  const methods = useForm({
-    defaultValues
+  const { methods, onReset, onSubmit } = useFilterForm({
+    initialValues,
+    filters
   });
-  const { setToolbarModal } = useToolbarContext();
-  const { reset, handleSubmit } = methods;
-
-  const onSubmit = (values: WaterFilterFormValues) => {
-    setSearchParams(prev => {
-      const { dispenser_type, features, entry_type } = values;
-      prev.delete('water.dispenser_type');
-      dispenser_type.forEach(value => {
-        prev.append('water.dispenser_type', value);
-      });
-
-      prev.delete('water.tags');
-      features.forEach(feature => {
-        prev.append('water.tags', feature);
-      });
-
-      if (!entry_type) {
-        prev.delete('entry_type');
-      } else {
-        prev.set('entry_type', entry_type);
-      }
-
-      return prev;
-    });
-
-    setToolbarModal(null);
-  };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => reset(initialValues)}
+        onSubmit={onSubmit}
+        onReset={onReset}
         style={{ display: 'flex', flexDirection: 'column', flex: 1 }}
       >
         <FilterHeader>Water Filter</FilterHeader>
@@ -100,19 +48,19 @@ const WaterFilter = () => {
         <FilterContent>
           <Stack gap="25px">
             <MultipleChoiceFilter<WaterFilterFormValues>
-              label="Dispenser Type"
               name="dispenser_type"
-              items={dispenserTypes}
+              label={dispenserTypeFilter.label}
+              items={dispenserTypeFilter.options}
             />
             <MultipleChoiceFilter<WaterFilterFormValues>
-              label="Features"
-              items={features}
-              name="features"
+              name="tags"
+              label={waterTagsFilter.label}
+              items={waterTagsFilter.options}
             />
-            <SingleChoiceFilter
+            <SingleChoiceFilter<WaterFilterFormValues>
               name="entry_type"
-              label="Entry Type"
-              items={entryTypes}
+              label={entryTypeFilter.label}
+              items={entryTypeFilter.options}
             />
           </Stack>
           <FilterActions />

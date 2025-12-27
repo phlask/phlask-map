@@ -105,6 +105,7 @@ export type BathroomTag =
   | 'GENDER_NEUTRAL'
   | 'CHANGING_TABLE'
   | 'SINGLE_OCCUPANCY'
+  | 'HAS_FOUNTAIN'
   | 'FAMILY';
 
 /** Details for a BATHROOM resource. */

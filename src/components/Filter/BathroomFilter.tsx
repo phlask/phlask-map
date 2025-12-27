@@ -1,48 +1,63 @@
-import { ButtonGroup, Stack } from '@mui/material';
-import FilterSection from './FilterSection';
-import DividedButtonGroup from './DividedButtonGroup';
-import FilterButton from './FilterButton';
+import { Stack } from '@mui/material';
 import FilterHeader from './FilterHeader';
 import FilterContent from './FilterContent';
 import FilterActions from './FilterActions';
+import useFilter from 'hooks/useFilter';
+import type { FilterFormFilter } from 'hooks/useFilterForm';
+import { FormProvider } from 'react-hook-form';
+import MultipleChoiceFilter from './MultipleChoiceFilter';
+import SingleChoiceFilter from './SingleChoiceFilter';
+import useFilterForm from 'hooks/useFilterForm';
 
-const features = [
-  'ADA accessible',
-  'Gender neutral',
-  'Changing table',
-  'Single occupancy',
-  'Family bathroom',
-  'Has water fountain'
-];
+type BathroomFilterFormValues = {
+  tags: string[];
+  entry_type: string;
+};
 
-const entryTypes = ['Open Access', 'Restricted', 'Unsure'];
+const initialValues = {
+  tags: [],
+  entry_type: ''
+} satisfies BathroomFilterFormValues;
 
 const BathroomFilter = () => {
+  const bathroomTagsFilter = useFilter('bathroom.tags');
+  const entryTypeFilter = useFilter('entry_type');
+
+  const filters = [
+    { path: 'tags', filter: bathroomTagsFilter },
+    { path: 'entry_type', filter: entryTypeFilter }
+  ] satisfies FilterFormFilter<BathroomFilterFormValues>[];
+
+  const { methods, onReset, onSubmit } = useFilterForm({
+    initialValues,
+    filters
+  });
+
   return (
-    <>
-      <FilterHeader>Foraging Filter</FilterHeader>
-      <FilterContent>
-        <Stack gap="25px">
-          <FilterSection label="Features">
-            <DividedButtonGroup>
-              {features.map(feature => (
-                <FilterButton variant="outlined" key={feature}>
-                  {feature}
-                </FilterButton>
-              ))}
-            </DividedButtonGroup>
-          </FilterSection>
-          <FilterSection label="Entry Type">
-            <ButtonGroup>
-              {entryTypes.map(type => (
-                <FilterButton key={type}>{type}</FilterButton>
-              ))}
-            </ButtonGroup>
-          </FilterSection>
-        </Stack>
-        <FilterActions />
-      </FilterContent>
-    </>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={onSubmit}
+        onReset={onReset}
+        style={{ display: 'flex', flexDirection: 'column', flex: 1 }}
+      >
+        <FilterHeader>Bathroom Filter</FilterHeader>
+        <FilterContent>
+          <Stack gap="25px">
+            <MultipleChoiceFilter<BathroomFilterFormValues>
+              name="tags"
+              label={bathroomTagsFilter.label}
+              items={bathroomTagsFilter.options}
+            />
+            <SingleChoiceFilter<BathroomFilterFormValues>
+              name="entry_type"
+              label={entryTypeFilter.label}
+              items={entryTypeFilter.options}
+            />
+          </Stack>
+          <FilterActions />
+        </FilterContent>
+      </form>
+    </FormProvider>
   );
 };
 

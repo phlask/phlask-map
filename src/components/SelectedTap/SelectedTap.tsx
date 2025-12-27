@@ -8,8 +8,7 @@ import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails
 
 import noop from 'utils/noop';
 import useSelectedPlace from 'hooks/useSelectedResource';
-import { useQuery } from '@tanstack/react-query';
-import { getResourceById } from 'db';
+import { useSelectedPlaceQuery } from 'hooks/useSelectedPlaceQuery';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -18,14 +17,8 @@ const tempImages = {
 
 const SelectedTap = () => {
   const isMobile = useIsMobile();
-  const { selectedPlace, setSelectedPlace } = useSelectedPlace();
-
-  const { data = null, isError } = useQuery({
-    queryKey: ['selected-place', selectedPlace],
-    queryFn: () => getResourceById(selectedPlace!),
-    enabled: !!selectedPlace,
-    retry: false
-  });
+  const { setSelectedPlace } = useSelectedPlace();
+  const { data, isError, isEnabled } = useSelectedPlaceQuery();
 
   // TODO: Connect this feature
   // https://github.com/phlask/phlask-map/issues/649
@@ -41,7 +34,7 @@ const SelectedTap = () => {
 
   return (
     <SwipeableDrawer
-      open={Boolean(selectedPlace)}
+      open={isEnabled}
       anchor={isMobile ? 'bottom' : 'right'}
       onOpen={noop}
       onClose={onClose}

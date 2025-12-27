@@ -5,7 +5,7 @@ import shuffleArray from 'utils/shuffleArray';
 
 type SelectedContributors = Record<'past' | 'current', Contributor[]>;
 
-const useContributors = () =>
+const useContributorsQuery = () =>
   useQuery({
     queryKey: ['contributors'],
     queryFn: () => getContributors().then(shuffleArray),
@@ -25,4 +25,4 @@ const useContributors = () =>
     staleTime: 1000 * 60 * 30 // 30 minutes
   });
 
-export default useContributors;
+export default useContributorsQuery;
