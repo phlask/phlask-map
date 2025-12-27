@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libno
 
 RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
+RUN npm install --global corepack@latest && corepack enable pnpm
+
 RUN pnpm install
 
 COPY . .
