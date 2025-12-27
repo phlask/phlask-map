@@ -7,6 +7,9 @@ const FilterHeader = ({ children }: PropsWithChildren) => {
       direction="row"
       justifyContent="center"
       sx={{
+        position: 'sticky',
+        top: 0,
+
         background: '#60718C',
         paddingBlock: '20px'
       }}

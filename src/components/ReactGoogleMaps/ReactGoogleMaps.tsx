@@ -34,11 +34,14 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const { resourceType } = useResourceType();
   const { data: userLocation } = useUserLocation();
 
-  const filters = useActiveFilters();
+  const { activeFilters } = useActiveFilters();
 
   const map = useMap();
 
-  const { data: resources } = useGetResourcesQuery({ resourceType, filters });
+  const { data: resources } = useGetResourcesQuery({
+    resourceType,
+    filters: activeFilters
+  });
 
   useEffect(() => {
     if (!map) {

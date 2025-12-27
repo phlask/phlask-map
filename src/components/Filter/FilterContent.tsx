@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 
 const FilterContent = ({ children }: PropsWithChildren) => {
   return (
-    <Stack padding="20px" flex={1} justifyContent="space-between">
+    <Stack padding="20px" flex={1} justifyContent="space-between" gap={2}>
       {children}
     </Stack>
   );

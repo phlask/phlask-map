@@ -13,11 +13,14 @@ import SearchIcon from 'icons/SearchIcon';
 import NavigationButtons from 'components/NavigationButtons/NavigationButtons';
 import { PhlaskV2 } from 'icons';
 import { useToolbarContext } from 'contexts/ToolbarContext';
+import useActiveFilters from 'hooks/useActiveFilters';
 
 const MobileHead = () => {
   const headerContext = React.useContext(HeaderContext);
   const { shownPage, onMenuItemClick, isMenuOpen, onMenuClose, onMenuOpen } =
     headerContext;
+
+  const { hasActiveFilters } = useActiveFilters();
 
   const { toggle } = useToolbarContext();
   return (
@@ -32,8 +35,7 @@ const MobileHead = () => {
       >
         <Paper
           sx={{
-            display: 'flex',
-            padding: '0 0 0 0'
+            display: 'flex'
           }}
         >
           <Box sx={{ height: 'fit-content', width: '100%' }}>
@@ -53,20 +55,26 @@ const MobileHead = () => {
               >
                 <CloseIcon isOpen={isMenuOpen} />
               </IconButton>
-              <Button
-                sx={{
-                  margin: '15px'
-                }}
-              >
+              <Button>
                 <PhlaskV2 width="154px" height="39px" />
               </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginInlineEnd: '15px'
+                }}
+              >
                 <IconButton onClick={() => toggle('search')}>
                   <SearchIcon />
                 </IconButton>
                 <IconButton
+                  disableRipple
                   data-cy="button-filter-mobile"
                   onClick={() => toggle('filter')}
+                  sx={{
+                    background: hasActiveFilters ? '#9DAEC8' : 'transparent'
+                  }}
                 >
                   <FilterIcon />
                 </IconButton>

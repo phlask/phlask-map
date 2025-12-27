@@ -1,5 +1,3 @@
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import ContributeIcon from 'icons/ContributeIcon';
@@ -7,53 +5,10 @@ import FilterIcon from 'icons/FilterIcon';
 import ResourceIcon from 'icons/ResourceIcon';
 import SearchIcon from 'icons/SearchIcon';
 import NearMeButton from 'components/NearMeButton/NearMeButton';
-import type { MouseEventHandler, ReactElement } from 'react';
 import useResourceType from 'hooks/useResourceType';
 import { useToolbarContext, type ToolbarModal } from 'contexts/ToolbarContext';
-
-type ItemProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  type: ToolbarModal;
-  label: string;
-  icon: ReactElement;
-};
-
-const Item = ({ onClick, icon, label, type }: ItemProps) => {
-  const { toolbarModal } = useToolbarContext();
-  const blackToGrayFilter =
-    'invert(43%) sepia(20%) saturate(526%) hue-rotate(178deg) brightness(95%) contrast(93%)';
-
-  return (
-    <IconButton
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        fontSize: 32,
-        minWidth: 71,
-        minHeight: 51,
-        padding: 0,
-        filter: toolbarModal === type ? blackToGrayFilter : 'none',
-        '&:hover': {
-          backgroundColor: 'transparent',
-          filter: blackToGrayFilter
-        }
-      }}
-      onClick={onClick}
-      disableFocusRipple
-      disableRipple
-      data-cy={`button-${type}-type-menu`}
-    >
-      {icon}
-      <Typography
-        style={{ textTransform: 'none', color: 'black' }}
-        fontSize={14}
-        fontWeight={500}
-      >
-        {label}
-      </Typography>
-    </IconButton>
-  );
-};
+import useActiveFilters from 'hooks/useActiveFilters';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 
 type DesktopToolbarProps = {
   onNearMeClick: VoidFunction;
@@ -61,7 +16,15 @@ type DesktopToolbarProps = {
 
 const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
   const { resourceType } = useResourceType();
-  const { toggle } = useToolbarContext();
+  const { toolbarModal, toggle } = useToolbarContext();
+  const { hasActiveFilters } = useActiveFilters();
+
+  const values = [
+    'resource',
+    'filter',
+    'search',
+    'contribute'
+  ] satisfies ToolbarModal[];
 
   return (
     <Box
@@ -80,30 +43,56 @@ const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
       }}
     >
       <NearMeButton resourceType={resourceType} onClick={onNearMeClick} />
-      <Item
-        icon={<ResourceIcon />}
-        label="Resources"
-        onClick={() => toggle('resource')}
-        type="resource"
-      />
-      <Item
-        icon={<FilterIcon />}
-        label="Filter"
-        onClick={() => toggle('filter')}
-        type="filter"
-      />
-      <Item
-        icon={<SearchIcon />}
-        label="Search"
-        onClick={() => toggle('search')}
-        type="search"
-      />
-      <Item
-        icon={<ContributeIcon />}
-        label="Add Site"
-        onClick={() => toggle('contribute')}
-        type="contribute"
-      />
+      <BottomNavigation
+        showLabels
+        value={toolbarModal ? values.indexOf(toolbarModal) : null}
+      >
+        <BottomNavigationAction
+          icon={<ResourceIcon />}
+          label="Resources"
+          onClick={() => toggle('resource')}
+          data-cy="button-resource-type-menu"
+          sx={{
+            fontSize: 32,
+            borderRadius: '100px',
+            transition: '0.2s background'
+          }}
+        />
+        <BottomNavigationAction
+          icon={<FilterIcon />}
+          label="Filter"
+          onClick={() => toggle('filter')}
+          data-cy="button-filter-type-menu"
+          sx={{
+            fontSize: 32,
+            borderRadius: '100px',
+            background: hasActiveFilters ? '#9DAEC8' : 'transparent',
+            transition: '0.2s background'
+          }}
+        />
+        <BottomNavigationAction
+          icon={<SearchIcon />}
+          label="Search"
+          onClick={() => toggle('search')}
+          data-cy="button-search-type-menu"
+          sx={{
+            fontSize: 32,
+            borderRadius: '100px',
+            transition: '0.2s background'
+          }}
+        />
+        <BottomNavigationAction
+          icon={<ContributeIcon />}
+          label="Add Site"
+          onClick={() => toggle('contribute')}
+          data-cy="button-contribute-type-menu"
+          sx={{
+            fontSize: 32,
+            borderRadius: '100px',
+            transition: '0.2s background'
+          }}
+        />
+      </BottomNavigation>
     </Box>
   );
 };
