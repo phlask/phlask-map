@@ -11,8 +11,8 @@ import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
 import { type ResourceEntry } from 'types/ResourceEntry';
 import useResourceType, { ResourceType } from 'hooks/useResourceType';
 import useSelectedPlace from 'hooks/useSelectedResource';
-import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
-import useUserLocation from 'hooks/useUserLocation';
+import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import useActiveFilters from 'hooks/useActiveFilters';
 
 const style: CSSProperties = {
@@ -32,7 +32,7 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
   const posthog = usePostHog();
   const { selectedPlace, setSelectedPlace } = useSelectedPlace();
   const { resourceType } = useResourceType();
-  const { data: userLocation } = useUserLocation();
+  const { data: userLocation } = useGetUserLocationQuery();
 
   const { activeFilters } = useActiveFilters();
 

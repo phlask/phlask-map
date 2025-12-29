@@ -1,7 +1,7 @@
 import ImageUploader, {
   type RenderContentConfig
 } from 'components/ImageUploader/ImageUploader';
-import useUploadImageMutation from 'hooks/useUploadImageMutation';
+import useUploadImageMutation from 'hooks/mutations/useUploadImageMutation';
 import type { ReactNode } from 'react';
 import type { Accept } from 'react-dropzone';
 import {

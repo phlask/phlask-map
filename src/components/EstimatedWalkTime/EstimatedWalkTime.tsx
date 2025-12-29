@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { useWalkingDuration } from 'hooks/useWalkingDuration';
+import { useWalkingDurationQuery } from 'hooks/useWalkingDurationQuery';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
 type EstimatedWalkingDurationProps = {
@@ -10,7 +10,7 @@ const EstimatedWalkingDuration = ({
   selectedPlace
 }: EstimatedWalkingDurationProps) => {
   const { data: walkingDuration = null, isPending } =
-    useWalkingDuration(selectedPlace);
+    useWalkingDurationQuery(selectedPlace);
 
   if (isPending) {
     <Typography fontWeight={400}>Calculating walking duration...</Typography>;

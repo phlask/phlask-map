@@ -17,7 +17,7 @@ import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useUserLocation from 'hooks/useUserLocation';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 type AddFoodProps = {
   page: number;
@@ -55,7 +55,7 @@ const AddFood = ({
   const isMobile = useIsMobile();
   const getVariableName = variable => Object.keys(variable)[0];
 
-  const { data: userLocation } = useUserLocation();
+  const { data: userLocation } = useGetUserLocationQuery();
 
   useEffect(() => {
     setDefaults({

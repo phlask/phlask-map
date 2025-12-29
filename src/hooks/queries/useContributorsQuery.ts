@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
+import { minutesToMilliseconds } from 'date-fns';
 import { getContributors } from 'db';
 import type { Contributor } from 'types/Contributor';
 import shuffleArray from 'utils/shuffleArray';
 
 type SelectedContributors = Record<'past' | 'current', Contributor[]>;
 
-const useContributorsQuery = () =>
+const useGetContributorsQuery = () =>
   useQuery({
     queryKey: ['contributors'],
     queryFn: () => getContributors().then(shuffleArray),
@@ -22,7 +23,7 @@ const useContributorsQuery = () =>
         { past: [], current: [] }
       ),
     placeholderData: [],
-    staleTime: 1000 * 60 * 30 // 30 minutes
+    staleTime: minutesToMilliseconds(30)
   });
 
-export default useContributorsQuery;
+export default useGetContributorsQuery;

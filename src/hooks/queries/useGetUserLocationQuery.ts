@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import { minutesToMilliseconds } from 'date-fns';
 
 type UserLocation = Record<'latitude' | 'longitude', number>;
 
@@ -21,7 +22,7 @@ const queryFn = (): Promise<UserLocation> =>
     )
   );
 
-const useUserLocation = () => {
+const useGetUserLocationQuery = () => {
   const {
     data = initialData,
     isPending,
@@ -30,10 +31,10 @@ const useUserLocation = () => {
     queryKey: ['user-location'],
     queryFn,
     placeholderData: initialData,
-    staleTime: 1000 * 60 * 10
+    staleTime: minutesToMilliseconds(10)
   });
 
   return { data, isPending, error };
 };
 
-export default useUserLocation;
+export default useGetUserLocationQuery;

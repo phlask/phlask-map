@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import ContributorsList from 'components/ContributorsList/ContributorsList';
-import useContributorsQuery from 'hooks/useContributorsQuery';
+import useGetContributorsQuery from 'hooks/queries/useContributorsQuery';
 
 const AcknowledgementsSection = () => {
-  const { data } = useContributorsQuery();
+  const { data } = useGetContributorsQuery();
 
   return (
     <div id="acknowledgements-section">

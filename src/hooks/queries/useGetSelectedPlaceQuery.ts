@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import useSelectedPlace from './useSelectedResource';
+import useSelectedPlace from 'hooks/useSelectedResource';
 import { getResourceById } from 'db';
 
-export const useSelectedPlaceQuery = () => {
+export const useGetSelectedPlaceQuery = () => {
   const { selectedPlace } = useSelectedPlace();
   const {
     data = null,

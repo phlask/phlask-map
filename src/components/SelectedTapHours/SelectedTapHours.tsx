@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import hours from 'helpers/hours';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import { Stack, Typography } from '@mui/material';
+import { isWithinInterval } from 'date-fns';
 
 type SelectedTapHoursProps = {
   selectedPlace: ResourceEntry;
@@ -9,24 +9,42 @@ type SelectedTapHoursProps = {
 
 const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
   const closingTime = useMemo(() => {
-    const currentDay = new Date().getDay();
-    if (!selectedPlace.hours?.[currentDay]?.close.hour) {
+    const hours = selectedPlace.hours;
+    if (!hours) {
       return null;
     }
 
-    return hours.getSimpleHours(selectedPlace.hours[currentDay].close.hour);
+    const now = new Date();
+    const today = now.getDay();
+    const hoursToday = hours[today];
+    if (!hoursToday) {
+      return null;
+    }
+
+    const closingTime = hoursToday.close;
+    return new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      hour12: true
+    }).format(closingTime.date);
   }, [selectedPlace]);
-  const isPlaceOpen = useMemo(() => {
-    const currentDay = new Date().getDay();
 
-    if (!selectedPlace.hours?.[currentDay]) {
+  const isPlaceOpen = useMemo(() => {
+    const hours = selectedPlace.hours;
+    if (!hours) {
       return null;
     }
 
-    return hours.checkOpen(
-      selectedPlace.hours[currentDay].open.hour,
-      selectedPlace.hours[currentDay].close.hour
-    );
+    const now = new Date();
+    const today = now.getDay();
+    const hoursToday = hours[today];
+    if (!hoursToday) {
+      return null;
+    }
+
+    return isWithinInterval(now, {
+      start: hoursToday.open.date,
+      end: hoursToday.close.date
+    });
   }, [selectedPlace.hours]);
 
   const placeOpeningInfo = useMemo(() => {

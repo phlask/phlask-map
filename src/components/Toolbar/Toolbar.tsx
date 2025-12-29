@@ -4,15 +4,15 @@ import { useMap } from '@vis.gl/react-google-maps';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
 import useSelectedPlace from 'hooks/useSelectedResource';
-import useGetResourcesQuery from 'hooks/useGetResourcesQuery';
+import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useResourceType from 'hooks/useResourceType';
-import useUserLocation from 'hooks/useUserLocation';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 const Toolbar = () => {
   const map = useMap();
   const { setSelectedPlace } = useSelectedPlace();
   const isMobile = useIsMobile();
-  const { data: userLocation } = useUserLocation();
+  const { data: userLocation } = useGetUserLocationQuery();
   const { resourceType } = useResourceType();
 
   const { data: resources = [] } = useGetResourcesQuery({ resourceType });

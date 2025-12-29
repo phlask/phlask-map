@@ -10,7 +10,7 @@ import useIsMobile from 'hooks/useIsMobile';
 import AddResourceSuccessStep from 'components/AddResourceModal/AddResourceSuccessStep/AddResourceSuccessStep';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import useUserLocation from 'hooks/useUserLocation';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 const AddBathroom = ({
   onClose,
@@ -35,7 +35,7 @@ const AddBathroom = ({
   isValidAddress
 }) => {
   const isMobile = useIsMobile();
-  const { data: userLocation } = useUserLocation();
+  const { data: userLocation } = useGetUserLocationQuery();
 
   useEffect(() => {
     setDefaults({
