@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgJoinCivicIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgJoinCivicIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 29 28"
-    ref={ref}
     {...props}
   >
     <g
@@ -32,5 +26,4 @@ const SvgJoinCivicIcon = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgJoinCivicIcon);
-export default ForwardRef;
+export default SvgJoinCivicIcon;

@@ -1,7 +1,7 @@
 // This is used in-place of our generated icon components because this URI encoded format is needed for Google Maps to render the icons
 
 export default (width = 69, height = 70) =>
-    `data:image/svg+xml;utf8,${encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  `data:image/svg+xml;utf8,${encodeURIComponent(`<svg width="${width}" height="${height}" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d_568_38816)">
     <path d="M34.5005 7.19922C29.0649 7.21756 23.8142 9.17492 19.693 12.7192C15.5718 16.2635 12.8506 21.162 12.0189 26.5336C11.1871 31.9053 12.2995 37.3974 15.1558 42.0221C18.0122 46.6467 22.425 50.1004 27.6005 51.7617L33.6955 64.153C33.7679 64.3052 33.8819 64.4338 34.0244 64.5239C34.1669 64.6139 34.332 64.6617 34.5005 64.6617C34.6691 64.6617 34.8342 64.6139 34.9767 64.5239C35.1192 64.4338 35.2332 64.3052 35.3055 64.153L41.4293 51.7617C46.6071 50.0996 51.0215 46.6436 53.8776 42.0159C56.7337 37.3883 57.844 31.893 57.0085 26.5195C56.173 21.146 53.4466 16.2473 49.3203 12.7053C45.1939 9.16331 39.9386 7.21078 34.5005 7.19922Z" fill="#5286E9" />
     </g>
@@ -20,4 +20,4 @@ export default (width = 69, height = 70) =>
     </filter>
     </defs>
     </svg>
-    `)}`
+    `)}`;

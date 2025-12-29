@@ -50,6 +50,7 @@ export { default as SocialShare } from './SocialShare';
 export { default as SocialTwitter } from './SocialTwitter';
 export { default as ToiletIconChooseResource } from './ToiletIconChooseResource';
 export { default as ToiletIconV2 } from './ToiletIconV2';
+export { default as Upload } from './Upload';
 export { default as UsersIcon } from './UsersIcon';
 export { default as WaterIcon } from './WaterIcon';
 export { default as WaterIconChooseResource } from './WaterIconChooseResource';

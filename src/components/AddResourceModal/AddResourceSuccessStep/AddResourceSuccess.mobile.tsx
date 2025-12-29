@@ -11,12 +11,15 @@ import {
 } from 'icons';
 import { IconButton } from '@mui/material';
 import CloseButton from '../CloseButton/CloseButton';
+import noop from 'utils/noop';
 
 type AddResourceSuccessMobile = {
-  onClose: VoidFunction;
+  onClose?: VoidFunction;
 };
 
-const AddResourceSuccessMobile = ({ onClose }: AddResourceSuccessMobile) => {
+const AddResourceSuccessMobile = ({
+  onClose = noop
+}: AddResourceSuccessMobile) => {
   const onShare = () => {
     if (!navigator.canShare()) {
       return;

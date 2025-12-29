@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhillySkyline = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhillySkyline = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 275 227"
-    ref={ref}
     {...props}
   >
     <path
@@ -311,5 +305,4 @@ const SvgPhillySkyline = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhillySkyline);
-export default ForwardRef;
+export default SvgPhillySkyline;

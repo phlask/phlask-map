@@ -2,13 +2,14 @@ import PhillySkyline from 'icons/PhillySkyline';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CloseButton from '../CloseButton/CloseButton';
+import noop from 'utils/noop';
 
 type AddResourceSuccessDesktopProps = {
   onClose: VoidFunction;
 };
 
 const AddResourceSuccessDesktop = ({
-  onClose
+  onClose = noop
 }: AddResourceSuccessDesktopProps) => (
   <Stack
     sx={{

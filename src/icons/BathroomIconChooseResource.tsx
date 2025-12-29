@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgBathroomIconChooseResource = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgBathroomIconChooseResource = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 29 35"
-    ref={ref}
     {...props}
   >
     <path
@@ -22,5 +16,4 @@ const SvgBathroomIconChooseResource = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgBathroomIconChooseResource);
-export default ForwardRef;
+export default SvgBathroomIconChooseResource;

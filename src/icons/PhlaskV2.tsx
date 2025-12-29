@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhlaskV2 = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhlaskV2 = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 154 39"
-    ref={ref}
     {...props}
   >
     <path
@@ -36,5 +30,4 @@ const SvgPhlaskV2 = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhlaskV2);
-export default ForwardRef;
+export default SvgPhlaskV2;

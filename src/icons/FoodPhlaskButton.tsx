@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgFoodPhlaskButton = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgFoodPhlaskButton = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 245 64"
-    ref={ref}
     {...props}
   >
     <g filter="url(#FoodPhlaskButton_svg__a)">
@@ -61,5 +55,4 @@ const SvgFoodPhlaskButton = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgFoodPhlaskButton);
-export default ForwardRef;
+export default SvgFoodPhlaskButton;

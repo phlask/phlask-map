@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPinBathroomsActive = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPinBathroomsActive = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 69 70"
-    ref={ref}
     {...props}
   >
     <g filter="url(#PinBathroomsActive_svg__a)">
@@ -61,5 +55,4 @@ const SvgPinBathroomsActive = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgPinBathroomsActive);
-export default ForwardRef;
+export default SvgPinBathroomsActive;

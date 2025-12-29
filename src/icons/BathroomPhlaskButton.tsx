@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgBathroomPhlaskButton = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgBathroomPhlaskButton = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 245 64"
-    ref={ref}
     {...props}
   >
     <g filter="url(#BathroomPhlaskButton_svg__a)">
@@ -67,5 +61,4 @@ const SvgBathroomPhlaskButton = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgBathroomPhlaskButton);
-export default ForwardRef;
+export default SvgBathroomPhlaskButton;

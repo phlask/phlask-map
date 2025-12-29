@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgSocialShare = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgSocialShare = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 24 24"
-    ref={ref}
     {...props}
   >
     <path
@@ -20,5 +14,4 @@ const SvgSocialShare = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgSocialShare);
-export default ForwardRef;
+export default SvgSocialShare;

@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgWaterIconV2 = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgWaterIconV2 = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 62 62"
-    ref={ref}
     {...props}
   >
     <rect
@@ -31,5 +25,4 @@ const SvgWaterIconV2 = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgWaterIconV2);
-export default ForwardRef;
+export default SvgWaterIconV2;

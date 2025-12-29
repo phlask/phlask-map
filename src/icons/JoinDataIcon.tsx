@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgJoinDataIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgJoinDataIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 30 31"
-    ref={ref}
     {...props}
   >
     <path
@@ -30,5 +24,4 @@ const SvgJoinDataIcon = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgJoinDataIcon);
-export default ForwardRef;
+export default SvgJoinDataIcon;

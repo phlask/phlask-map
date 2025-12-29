@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgFilterIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgFilterIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 32 32"
-    ref={ref}
     {...props}
   >
     <path
@@ -23,5 +17,4 @@ const SvgFilterIcon = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgFilterIcon);
-export default ForwardRef;
+export default SvgFilterIcon;

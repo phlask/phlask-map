@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgForagingIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgForagingIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 32 34"
-    ref={ref}
     {...props}
   >
     <mask id="ForagingIcon_svg__a" fill="#fff">
@@ -26,5 +20,4 @@ const SvgForagingIcon = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgForagingIcon);
-export default ForwardRef;
+export default SvgForagingIcon;

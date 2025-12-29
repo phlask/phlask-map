@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgCloseIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgCloseIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 32 36"
-    ref={ref}
     {...props}
   >
     <path
@@ -23,5 +17,4 @@ const SvgCloseIcon = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgCloseIcon);
-export default ForwardRef;
+export default SvgCloseIcon;

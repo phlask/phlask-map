@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPinWaterActive = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPinWaterActive = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 69 70"
-    ref={ref}
     {...props}
   >
     <g filter="url(#PinWaterActive_svg__a)">
@@ -63,5 +57,4 @@ const SvgPinWaterActive = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgPinWaterActive);
-export default ForwardRef;
+export default SvgPinWaterActive;

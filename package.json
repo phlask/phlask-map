@@ -71,7 +71,7 @@
     "generate-icons": "npx @svgr/cli --config-file=.svgrrc.json ./src/assets/icons --out-dir=./src/icons && pnpm lint --fix",
     "cypress": "cypress open",
     "lint": "eslint src --quiet",
-    "format": "prettier \"src/**/*.{js,css,html}\" --write",
+    "format": "prettier src --write",
     "serve": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

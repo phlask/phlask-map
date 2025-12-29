@@ -1,6 +1,6 @@
 import { Box, Fade, Stack } from '@mui/material';
 import { useMap } from '@vis.gl/react-google-maps';
-import AddResourceModalV2 from 'components/AddResourceModal/AddResourceModalV2';
+import AddResourceModal from 'components/AddResourceModal/AddResourceModal';
 import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType';
 import Filter from 'components/Filter/Filter';
 import Head from 'components/Head/Head';
@@ -68,7 +68,7 @@ const Overlay = ({ onSearch }: OverlayProps) => {
 
       <ChooseResourceType />
       <Filter />
-      <AddResourceModalV2 />
+      <AddResourceModal />
       <SelectedTap />
     </>
   );

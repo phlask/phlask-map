@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgSocialFacebook = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgSocialFacebook = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 48 48"
-    ref={ref}
     {...props}
   >
     <g clipPath="url(#SocialFacebook_svg__a)">
@@ -28,5 +22,4 @@ const SvgSocialFacebook = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgSocialFacebook);
-export default ForwardRef;
+export default SvgSocialFacebook;

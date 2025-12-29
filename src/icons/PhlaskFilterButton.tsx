@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhlaskFilterButton = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhlaskFilterButton = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 85 85"
-    ref={ref}
     {...props}
   >
     <circle
@@ -30,5 +24,4 @@ const SvgPhlaskFilterButton = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhlaskFilterButton);
-export default ForwardRef;
+export default SvgPhlaskFilterButton;

@@ -115,6 +115,8 @@ export type BathroomInfo = {
 
 export type ResourceEntryType = 'OPEN' | 'RESTRICTED' | 'UNSURE';
 
+type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
+
 export type ResourceEntry = {
   id?: string;
   /** Represents the schema that this resource entry is following. */
@@ -132,7 +134,7 @@ export type ResourceEntry = {
   /** The verification details of this resource. */
   verification: Verification;
   /** The type of resource. */
-  resource_type: 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
+  resource_type: ResourceType;
   /** The street address of the resource (not including city, state, or zip). May include the secondary address. */
   address?: string | null;
   /** The city of the resource. */

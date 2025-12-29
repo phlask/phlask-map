@@ -7,10 +7,10 @@ import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type ModalWrapperProps = {
   children: ReactNode;
-  onExited: VoidFunction;
+  onClose: VoidFunction;
 };
 
-const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
+const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
   const isMobile = useIsMobile();
   const { toolbarModal } = useToolbarContext();
 
@@ -20,7 +20,7 @@ const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
         anchor="bottom"
         open={toolbarModal === 'contribute'}
         onOpen={noop}
-        onClose={onExited}
+        onClose={onClose}
         hideBackdrop
       >
         <Paper
@@ -41,14 +41,18 @@ const ModalWrapper = ({ children, onExited }: ModalWrapperProps) => {
   }
 
   return (
-    <Modal open={toolbarModal === 'contribute'} onClose={noop}>
+    <Modal
+      open={toolbarModal === 'contribute'}
+      // We forbid closing the modal on backdrop click or escape
+      onClose={noop}
+    >
       <Paper
         sx={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '60vw',
+          width: '50%',
           borderRadius: '10px'
         }}
       >

@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhlaskContactSubmit = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhlaskContactSubmit = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 275 226"
-    ref={ref}
     {...props}
   >
     <path
@@ -301,5 +295,4 @@ const SvgPhlaskContactSubmit = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhlaskContactSubmit);
-export default ForwardRef;
+export default SvgPhlaskContactSubmit;

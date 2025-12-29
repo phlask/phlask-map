@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhlaskWater = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhlaskWater = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 188 64"
-    ref={ref}
     {...props}
   >
     <g filter="url(#phlaskWater_svg__a)">
@@ -67,5 +61,4 @@ const SvgPhlaskWater = (
     </defs>
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhlaskWater);
-export default ForwardRef;
+export default SvgPhlaskWater;

@@ -4,5 +4,5 @@
   "jsxRuntime": "automatic",
   "exportType": "default",
   "prettierConfig": ".prettierrc",
-  "ref": true
+  "ref": false
 }

@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPlusCircle = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPlusCircle = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 40 41"
-    ref={ref}
     {...props}
   >
     <path
@@ -29,5 +23,4 @@ const SvgPlusCircle = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgPlusCircle);
-export default ForwardRef;
+export default SvgPlusCircle;

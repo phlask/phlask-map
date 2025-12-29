@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgPhlaskButton = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgPhlaskButton = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 48 48"
-    ref={ref}
     {...props}
   >
     <circle cx={24} cy={24} r={24} fill="#5286E9" />
@@ -21,5 +15,4 @@ const SvgPhlaskButton = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgPhlaskButton);
-export default ForwardRef;
+export default SvgPhlaskButton;

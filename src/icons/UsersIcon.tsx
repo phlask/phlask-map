@@ -1,17 +1,11 @@
 import type { SVGProps } from 'react';
-import { Ref, forwardRef } from 'react';
-
-const SvgUsersIcon = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>
-) => (
+const SvgUsersIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
     viewBox="0 0 39 35"
-    ref={ref}
     {...props}
   >
     <path
@@ -36,5 +30,4 @@ const SvgUsersIcon = (
     />
   </svg>
 );
-const ForwardRef = forwardRef(SvgUsersIcon);
-export default ForwardRef;
+export default SvgUsersIcon;
