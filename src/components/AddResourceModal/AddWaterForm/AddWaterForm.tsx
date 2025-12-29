@@ -200,7 +200,7 @@ const AddWaterForm = ({ onGoBack }: AddWaterFormProps) => {
     });
   };
 
-  const onSubmit = values => {
+  const onSubmit = (values: AddWaterFormValues) => {
     if (!isMobile && page < 2) {
       onPageChange(prev => prev + 1);
       return;
