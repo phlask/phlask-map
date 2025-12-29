@@ -1,60 +1,24 @@
-import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import { useMemo, useState } from 'react';
 import debounce from 'utils/debounce';
-import noop from 'utils/noop';
+import useGetGooglePlacePredictionsQuery from './queries/useGetGooglePlacePredictionsQuery';
 
-const useGooglePlacesAutocomplete = ({
-  onSearch
-}: {
-  onSearch: (location: google.maps.LatLngLiteral) => void;
-}) => {
-  const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState<
-    google.maps.places.PlacePrediction[]
-  >([]);
+const useGooglePlacesAutocomplete = () => {
+  const [input, setInput] = useState('');
+  const {
+    data: suggestions,
+    isFetching,
+    error
+  } = useGetGooglePlacePredictionsQuery(input);
 
   const onChange = useMemo(
     () =>
       debounce((input: string) => {
-        if (!input) {
-          setSuggestions([]);
-          setIsSearching(false);
-        }
-
-        setIsSearching(true);
-        google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
-          input,
-          includedRegionCodes: ['us']
-        })
-          .then(response =>
-            setSuggestions(
-              response.suggestions
-                .filter(suggestion =>
-                  Boolean(suggestion.placePrediction?.mainText?.text ?? false)
-                )
-                .map(suggestion => suggestion.placePrediction!)
-            )
-          )
-          .catch(noop)
-          .finally(() => setIsSearching(false));
+        setInput(input || '');
       }, 500),
     []
   );
 
-  const onSelect = async (place: google.maps.places.Place) => {
-    if (!place.id) {
-      return;
-    }
-    const results = await place.fetchFields({ fields: ['location'] });
-
-    if (!results.place.location) {
-      return;
-    }
-
-    onSearch(toLatLngLiteral(results.place.location));
-  };
-
-  return { suggestions, isSearching, onChange, onSelect };
+  return { suggestions, isFetching, error, onChange };
 };
 
 export default useGooglePlacesAutocomplete;

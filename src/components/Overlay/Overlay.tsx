@@ -1,5 +1,4 @@
 import { Box, Fade, Stack } from '@mui/material';
-import { useMap } from '@vis.gl/react-google-maps';
 import AddResourceModal from 'components/AddResourceModal/AddResourceModal';
 import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType';
 import Filter from 'components/Filter/Filter';
@@ -9,23 +8,8 @@ import SelectedTap from 'components/SelectedTap/SelectedTap';
 import Toolbar from 'components/Toolbar/Toolbar';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 
-type OverlayProps = {
-  onSearch: (location: google.maps.LatLngLiteral) => void;
-};
-
-const Overlay = ({ onSearch }: OverlayProps) => {
-  const map = useMap();
+const Overlay = () => {
   const { toolbarModal } = useToolbarContext();
-
-  const searchForLocation = (location: google.maps.LatLngLiteral) => {
-    if (!map) {
-      return;
-    }
-
-    map.panTo(location);
-    map.setZoom(16);
-    onSearch({ lat: Number(location.lat), lng: Number(location.lng) });
-  };
 
   return (
     <>
@@ -59,7 +43,7 @@ const Overlay = ({ onSearch }: OverlayProps) => {
       >
         <Fade in={toolbarModal === 'search'} mountOnEnter timeout={300}>
           <Box>
-            <SearchBar search={location => searchForLocation(location)} />
+            <SearchBar />
           </Box>
         </Fade>
 

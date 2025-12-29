@@ -3,12 +3,34 @@ import { Autocomplete, InputAdornment } from '@mui/material';
 import { SearchIcon } from 'icons';
 import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
+import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
+import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
 
-type SearchBarProps = { search: (location: google.maps.LatLngLiteral) => void };
+const SearchBar = () => {
+  const { onChangeActiveSearchLocation } = useActiveSearchLocationContext();
+  const map = useMap();
+  const { isFetching, onChange, suggestions } = useGooglePlacesAutocomplete();
 
-const SearchBar = ({ search }: SearchBarProps) => {
-  const { isSearching, onChange, onSelect, suggestions } =
-    useGooglePlacesAutocomplete({ onSearch: search });
+  const onSelect = async (place: google.maps.places.Place) => {
+    if (!place.id) {
+      return;
+    }
+    const results = await place.fetchFields({ fields: ['location'] });
+
+    if (!results.place.location) {
+      return;
+    }
+
+    if (!map) {
+      return;
+    }
+
+    const location = toLatLngLiteral(results.place.location);
+    map.panTo(location);
+    map.setZoom(16);
+
+    onChangeActiveSearchLocation(location);
+  };
 
   return (
     <Autocomplete
@@ -17,7 +39,7 @@ const SearchBar = ({ search }: SearchBarProps) => {
         onChange(value);
       }}
       options={suggestions}
-      loading={isSearching}
+      loading={isFetching}
       getOptionKey={option => option.placeId}
       getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {

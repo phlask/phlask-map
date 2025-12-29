@@ -14,6 +14,7 @@ import useSelectedPlace from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import useActiveFilters from 'hooks/useActiveFilters';
+import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
 
 const style: CSSProperties = {
   width: '100%',
@@ -23,16 +24,13 @@ const style: CSSProperties = {
   touchAction: 'none'
 };
 
-type ReactGoogleMapsProps = {
-  searchedTap: google.maps.LatLngLiteral | null;
-};
-
-const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
+const ReactGoogleMaps = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const { selectedPlace, setSelectedPlace } = useSelectedPlace();
   const { resourceType } = useResourceType();
   const { data: userLocation } = useGetUserLocationQuery();
+  const { activeSearchLocation } = useActiveSearchLocationContext();
 
   const { activeFilters } = useActiveFilters();
 
@@ -114,8 +112,8 @@ const ReactGoogleMaps = ({ searchedTap }: ReactGoogleMapsProps) => {
         );
       })}
 
-      {searchedTap ? (
-        <Marker position={searchedTap} title="data-cy-search-result" />
+      {activeSearchLocation ? (
+        <Marker position={activeSearchLocation} title="data-cy-search-result" />
       ) : null}
     </Map>
   );

@@ -5,6 +5,7 @@ import type { PropsWithChildren } from 'react';
 import theme from 'theme';
 import ToolbarContextProvider from './ToolbarContextProvider';
 import queryClient from 'queryClient';
+import ActiveSearchLocationProvider from './ActiveSearchLocationProvider';
 
 const Providers = ({ children }: PropsWithChildren) => (
   <QueryClientProvider client={queryClient}>
@@ -13,10 +14,12 @@ const Providers = ({ children }: PropsWithChildren) => (
       libraries={['places']}
     >
       <ToolbarContextProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        <ActiveSearchLocationProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </ActiveSearchLocationProvider>
       </ToolbarContextProvider>
     </APIProvider>
   </QueryClientProvider>

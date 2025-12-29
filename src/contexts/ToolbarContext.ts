@@ -8,13 +8,13 @@ import noop from 'utils/noop';
 
 export type ToolbarModal = 'resource' | 'filter' | 'search' | 'contribute';
 
-type ToolbarContext = {
+type ToolbarContextValue = {
   toolbarModal: ToolbarModal | null;
   setToolbarModal: Dispatch<SetStateAction<ToolbarModal | null>>;
   toggle: (modal: ToolbarModal) => void;
 };
 
-export const ToolbarContext = createContext<ToolbarContext>({
+export const ToolbarContext = createContext<ToolbarContextValue>({
   toolbarModal: null,
   setToolbarModal: noop,
   toggle: noop

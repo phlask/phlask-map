@@ -8,7 +8,7 @@ import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails
 
 import noop from 'utils/noop';
 import useSelectedPlace from 'hooks/useSelectedResource';
-import { useSelectedPlaceQuery } from 'hooks/useSelectedPlaceQuery';
+import { useGetSelectedPlaceQuery } from 'hooks/queries/useGetSelectedPlaceQuery';
 
 const tempImages = {
   tapImg: sampleImg,
@@ -18,7 +18,7 @@ const tempImages = {
 const SelectedTap = () => {
   const isMobile = useIsMobile();
   const { setSelectedPlace } = useSelectedPlace();
-  const { data, isError, isEnabled } = useSelectedPlaceQuery();
+  const { data, isError, isEnabled } = useGetSelectedPlaceQuery();
 
   // TODO: Connect this feature
   // https://github.com/phlask/phlask-map/issues/649
