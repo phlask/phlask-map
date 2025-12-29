@@ -3,14 +3,14 @@ import getClosest from 'utils/getClosest';
 import { useMap } from '@vis.gl/react-google-maps';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
-import useSelectedPlace from 'hooks/useSelectedResource';
+import useSelectedResource from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useResourceType from 'hooks/useResourceType';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 const Toolbar = () => {
   const map = useMap();
-  const { setSelectedPlace } = useSelectedPlace();
+  const { setSelectedResource } = useSelectedResource();
   const isMobile = useIsMobile();
   const { data: userLocation } = useGetUserLocationQuery();
   const { resourceType } = useResourceType();
@@ -21,7 +21,7 @@ const Toolbar = () => {
     const closest = getClosest(resources, userLocation);
     if (!closest) return;
 
-    setSelectedPlace(closest);
+    setSelectedResource(closest);
     if (map) {
       map.panTo({
         lat: closest.latitude,

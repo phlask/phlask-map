@@ -1,7 +1,6 @@
 /**
  * Converts degrees given in decimal to DMS (degrees, minutes, and seconds), where seconds are
  * rounded to the tenth place. The returned degrees are not clamped or wrapped in any way.
- *
  */
 function decimalDegreesToDMS(degrees: number) {
   let integralDegrees = Math.trunc(degrees);

@@ -3,14 +3,14 @@ import { useWalkingDurationQuery } from 'hooks/useWalkingDurationQuery';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
 type EstimatedWalkingDurationProps = {
-  selectedPlace: ResourceEntry;
+  selectedResource: ResourceEntry;
 };
 
 const EstimatedWalkingDuration = ({
-  selectedPlace
+  selectedResource
 }: EstimatedWalkingDurationProps) => {
   const { data: walkingDuration = null, isPending } =
-    useWalkingDurationQuery(selectedPlace);
+    useWalkingDurationQuery(selectedResource);
 
   if (isPending) {
     <Typography fontWeight={400}>Calculating walking duration...</Typography>;

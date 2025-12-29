@@ -10,7 +10,7 @@ import PinBathroomActive from 'components/icons/PinBathroomActive';
 import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
 import { type ResourceEntry } from 'types/ResourceEntry';
 import useResourceType, { ResourceType } from 'hooks/useResourceType';
-import useSelectedPlace from 'hooks/useSelectedResource';
+import useSelectedResource from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import useActiveFilters from 'hooks/useActiveFilters';
@@ -27,7 +27,7 @@ const style: CSSProperties = {
 const ReactGoogleMaps = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
-  const { selectedPlace, setSelectedPlace } = useSelectedPlace();
+  const { selectedResource, setSelectedResource } = useSelectedResource();
   const { resourceType } = useResourceType();
   const { data: userLocation } = useGetUserLocationQuery();
   const { activeSearchLocation } = useActiveSearchLocationContext();
@@ -51,7 +51,7 @@ const ReactGoogleMaps = () => {
 
   // toggle window goes here
   const onMarkerClick = (resource: ResourceEntry) => {
-    setSelectedPlace(resource);
+    setSelectedResource(resource);
 
     if (!map) {
       return;
@@ -69,8 +69,8 @@ const ReactGoogleMaps = () => {
     });
   };
 
-  const getPinUrl = (resource: ResourceEntry) => {
-    const isActiveMarker = selectedPlace === resource.id;
+  const getMarkerIconSrc = (resource: ResourceEntry) => {
+    const isActiveMarker = selectedResource === resource.id;
 
     if (!isActiveMarker) {
       return phlaskMarkerIconV2(resource.resource_type, 56, 56);
@@ -104,7 +104,7 @@ const ReactGoogleMaps = () => {
             key={resource.id}
             onClick={() => onMarkerClick(resource)}
             position={{ lat: resource.latitude, lng: resource.longitude }}
-            icon={{ url: getPinUrl(resource) || '' }}
+            icon={{ url: getMarkerIconSrc(resource) || '' }}
             // This is used for marker targeting as we are unable to add custom properties with this library.
             // We should eventually replace this so that we can still enable the use of screen readers in the future.
             title={`data-cy-${index}`}

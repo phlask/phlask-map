@@ -4,7 +4,7 @@ import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType
 import Filter from 'components/Filter/Filter';
 import Head from 'components/Head/Head';
 import SearchBar from 'components/SearchBar/SearchBar';
-import SelectedTap from 'components/SelectedTap/SelectedTap';
+import SelectedResource from 'components/SelectedResource/SelectedResource';
 import Toolbar from 'components/Toolbar/Toolbar';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 
@@ -53,7 +53,7 @@ const Overlay = () => {
       <ChooseResourceType />
       <Filter />
       <AddResourceModal />
-      <SelectedTap />
+      <SelectedResource />
     </>
   );
 };

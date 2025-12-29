@@ -21,28 +21,28 @@ import useIsMobile from 'hooks/useIsMobile';
 import { useState, type MouseEventHandler } from 'react';
 import noop from 'utils/noop';
 
+import sampleImg from 'components/images/phlask-tessellation.png';
+
 import EstimatedWalkingDuration from 'components/EstimatedWalkTime/EstimatedWalkTime';
-import SelectedTapHours from 'components/SelectedTapHours/SelectedTapHours';
+import ResourceHours from 'components/ResourceHours/ResourceHours';
 import getFormattedCoordinates from 'utils/getFormattedCoordinates';
 import ResourceIcon from 'components/ResourceIcon/ResourceIcon';
 import GetDirectionsButton from 'components/GetDirectionsButton/GetDirectionsButton';
 import SelectedResourceTags from 'components/SelectedResourceTags/SelectedResourceTags';
 
-type SelectedTapDetailsProps = {
-  image: string;
+type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
-  selectedPlace: ResourceEntry | null;
+  resource: ResourceEntry | null;
   isError?: boolean;
   onStartEdit: VoidFunction;
 };
 
-const SelectedTapDetails = ({
-  image,
+const SelectedResourceDetails = ({
   onClose = noop,
-  selectedPlace,
   isError = false,
+  resource,
   onStartEdit
-}: SelectedTapDetailsProps) => {
+}: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
 
@@ -63,7 +63,7 @@ const SelectedTapDetails = ({
     );
   }
 
-  if (!selectedPlace) {
+  if (!resource) {
     return null;
   }
 
@@ -85,7 +85,7 @@ const SelectedTapDetails = ({
     handleMenuClose();
   };
 
-  const { name, address, latitude, longitude } = selectedPlace;
+  const { name, address, latitude, longitude } = resource;
 
   const formattedCoordinates = getFormattedCoordinates(latitude, longitude);
 
@@ -95,7 +95,7 @@ const SelectedTapDetails = ({
   const title = (name || address)?.trim() || formattedCoordinates;
 
   const subtitleLineOne =
-    hasName && hasAddress ? selectedPlace.address : formattedCoordinates;
+    hasName && hasAddress ? resource.address : formattedCoordinates;
 
   const subtitleLineTwo = hasName && hasAddress ? formattedCoordinates : null;
 
@@ -167,7 +167,7 @@ const SelectedTapDetails = ({
           })}
         >
           <img
-            src={image}
+            src={sampleImg}
             style={{
               objectFit: 'cover',
               width: '100%',
@@ -176,11 +176,11 @@ const SelectedTapDetails = ({
             }}
             alt={title ?? 'An illustration of the PHLask resources'}
           />
-          <VerificationButton resource={selectedPlace} />
+          <VerificationButton resource={resource} />
         </Box>
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" gap={2} alignItems="flex-start">
-            <ResourceIcon type={selectedPlace.resource_type} />
+            <ResourceIcon type={resource.resource_type} />
             <Stack gap="6px" spacing={0}>
               <Typography
                 variant="h2"
@@ -197,36 +197,36 @@ const SelectedTapDetails = ({
                 <Typography sx={{ fontSize: '0.875rem' }}>
                   {subtitleLineTwo}
                 </Typography>
-                <SelectedTapHours selectedPlace={selectedPlace} />
+                <ResourceHours resource={resource} />
               </Stack>
               <Stack gap="8px" paddingTop="12px">
                 <GetDirectionsButton
-                  latitude={selectedPlace.latitude}
-                  longitude={selectedPlace.longitude}
+                  latitude={resource.latitude}
+                  longitude={resource.longitude}
                 />
-                <EstimatedWalkingDuration selectedPlace={selectedPlace} />
+                <EstimatedWalkingDuration selectedResource={resource} />
               </Stack>
             </Stack>
           </Stack>
-          {!isMobile && selectedPlace.last_modified ? (
+          {!isMobile && resource.last_modified ? (
             <Stack>
               <Typography fontWeight={600}>Last Modified</Typography>
               <Typography color="#60718C">
-                {new Date(selectedPlace.last_modified).toDateString()}
+                {new Date(resource.last_modified).toDateString()}
               </Typography>
             </Stack>
           ) : null}
         </Stack>
 
-        <SelectedResourceTags resource={selectedPlace} />
+        <SelectedResourceTags resource={resource} />
 
         <Stack gap="3px">
           <Typography fontSize={14} fontWeight={600}>
             Description
           </Typography>
           <Typography fontSize={14} color="#60718C">
-            {selectedPlace.description
-              ? selectedPlace.description
+            {resource.description
+              ? resource.description
               : 'No description provided'}
           </Typography>
         </Stack>
@@ -235,8 +235,8 @@ const SelectedTapDetails = ({
             Guidelines
           </Typography>
           <Typography fontSize={14} color="#60718C">
-            {selectedPlace.guidelines
-              ? selectedPlace.guidelines
+            {resource.guidelines
+              ? resource.guidelines
               : 'No statement provided'}
           </Typography>
         </Stack>
@@ -256,4 +256,4 @@ const SelectedTapDetails = ({
   );
 };
 
-export default SelectedTapDetails;
+export default SelectedResourceDetails;

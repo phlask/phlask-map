@@ -3,13 +3,13 @@ import type { ResourceEntry } from 'types/ResourceEntry';
 import { Stack, Typography } from '@mui/material';
 import { isWithinInterval } from 'date-fns';
 
-type SelectedTapHoursProps = {
-  selectedPlace: ResourceEntry;
+type ResourceHoursProps = {
+  resource: ResourceEntry;
 };
 
-const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
+const ResourceHours = ({ resource }: ResourceHoursProps) => {
   const closingTime = useMemo(() => {
-    const hours = selectedPlace.hours;
+    const hours = resource.hours;
     if (!hours) {
       return null;
     }
@@ -26,10 +26,10 @@ const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
       hour: 'numeric',
       hour12: true
     }).format(closingTime.date);
-  }, [selectedPlace]);
+  }, [resource]);
 
   const isPlaceOpen = useMemo(() => {
-    const hours = selectedPlace.hours;
+    const hours = resource.hours;
     if (!hours) {
       return null;
     }
@@ -45,7 +45,7 @@ const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
       start: hoursToday.open.date,
       end: hoursToday.close.date
     });
-  }, [selectedPlace.hours]);
+  }, [resource.hours]);
 
   const placeOpeningInfo = useMemo(() => {
     if (isPlaceOpen) {
@@ -72,4 +72,4 @@ const SelectedTapHours = ({ selectedPlace }: SelectedTapHoursProps) => {
   );
 };
 
-export default SelectedTapHours;
+export default ResourceHours;

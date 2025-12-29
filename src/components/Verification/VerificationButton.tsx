@@ -4,7 +4,7 @@ import Input from '@mui/material/Input';
 import Dialog from '@mui/material/Dialog';
 import { updateResource } from '../../db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
-import useSelectedPlace from 'hooks/useSelectedResource';
+import useSelectedResource from 'hooks/useSelectedResource';
 
 const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
 
@@ -13,7 +13,7 @@ type VerificationButtonProps = {
 };
 
 const VerificationButton = ({ resource }: VerificationButtonProps) => {
-  const { setSelectedPlace } = useSelectedPlace();
+  const { setSelectedResource } = useSelectedResource();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState('');
@@ -35,9 +35,9 @@ const VerificationButton = ({ resource }: VerificationButtonProps) => {
       updateResource.render(selectedResource);
       setHasBeenUpdated(true);
       // invalidate resource in the resources list
-      setSelectedPlace(selectedResource);
+      setSelectedResource(selectedResource);
     },
-    [setSelectedPlace]
+    [setSelectedResource]
   );
 
   const markAsVerified = useCallback(() => {

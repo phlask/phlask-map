@@ -2,23 +2,16 @@ import { useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
 
-import sampleImg from 'components/images/phlask-tessellation.png';
-import sampleImg2x from 'components/images/phlask-tessellation@2x.png';
-import SelectedTapDetails from 'components/SelectedTapDetails/SelectedTapDetails';
+import SelectedResourceDetails from 'components/SelectedResourceDetails/SelectedResourceDetails';
 
 import noop from 'utils/noop';
-import useSelectedPlace from 'hooks/useSelectedResource';
-import { useGetSelectedPlaceQuery } from 'hooks/queries/useGetSelectedPlaceQuery';
+import useSelectedResource from 'hooks/useSelectedResource';
+import { useGetSelectedResourceQuery } from 'hooks/queries/useGetSelectedResourceQuery';
 
-const tempImages = {
-  tapImg: sampleImg,
-  tapImg2x: sampleImg2x
-};
-
-const SelectedTap = () => {
+const SelectedResource = () => {
   const isMobile = useIsMobile();
-  const { setSelectedPlace } = useSelectedPlace();
-  const { data, isError, isEnabled } = useGetSelectedPlaceQuery();
+  const { setSelectedResource } = useSelectedResource();
+  const { data, isError, isEnabled } = useGetSelectedResourceQuery();
 
   // TODO: Connect this feature
   // https://github.com/phlask/phlask-map/issues/649
@@ -29,7 +22,7 @@ const SelectedTap = () => {
   };
 
   const onClose = () => {
-    setSelectedPlace(null);
+    setSelectedResource(null);
   };
 
   return (
@@ -53,9 +46,8 @@ const SelectedTap = () => {
         }
       }}
     >
-      <SelectedTapDetails
-        image={tempImages.tapImg}
-        selectedPlace={data}
+      <SelectedResourceDetails
+        resource={data}
         isError={isError}
         onStartEdit={handleStartEdit}
         onClose={onClose}
@@ -64,4 +56,4 @@ const SelectedTap = () => {
   );
 };
 
-export default SelectedTap;
+export default SelectedResource;

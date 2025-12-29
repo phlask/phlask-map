@@ -1,16 +1,16 @@
 import { useSearchParams } from 'react-router';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
-const SELECTED_PLACE_QUERY_PARAM = 'r';
+const SELECTED_RESOURCE_QUERY_PARAM = 'r';
 
-const useSelectedPlace = () => {
+const useSelectedResource = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selectedPlace = searchParams.get(SELECTED_PLACE_QUERY_PARAM);
+  const selectedResource = searchParams.get(SELECTED_RESOURCE_QUERY_PARAM);
 
-  const setSelectedPlace = (resource: ResourceEntry | null) => {
+  const setSelectedResource = (resource: ResourceEntry | null) => {
     setSearchParams(prev => {
       if (!resource) {
-        prev.delete(SELECTED_PLACE_QUERY_PARAM);
+        prev.delete(SELECTED_RESOURCE_QUERY_PARAM);
         return prev;
       }
 
@@ -18,13 +18,16 @@ const useSelectedPlace = () => {
         return prev;
       }
 
-      prev.set(SELECTED_PLACE_QUERY_PARAM, resource.id);
+      prev.set(SELECTED_RESOURCE_QUERY_PARAM, resource.id);
 
       return prev;
     });
   };
 
-  return { selectedPlace, setSelectedPlace };
+  return {
+    selectedResource,
+    setSelectedResource
+  };
 };
 
-export default useSelectedPlace;
+export default useSelectedResource;
