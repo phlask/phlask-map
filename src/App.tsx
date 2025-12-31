@@ -6,8 +6,8 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <Overlay />
       <ReactGoogleMaps />
+      <Overlay />
     </>
   );
 };
