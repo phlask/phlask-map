@@ -17,6 +17,11 @@ const AddResourceModal = () => {
     setResourceForm(null);
   };
 
+  const onComplete = () => {
+    setIsCompleted(true);
+    setResourceForm(null);
+  };
+
   const { setToolbarModal } = useToolbarContext();
 
   const handleClose = () => {
@@ -25,9 +30,11 @@ const AddResourceModal = () => {
     setIsCompleted(false);
   };
 
+  const shouldChooseResource = !isCompleted && !resourceForm;
+
   return (
     <ModalWrapper onClose={handleClose}>
-      {!resourceForm && (
+      {shouldChooseResource && (
         <ChooseResource
           onSelectResource={resource => setResourceForm(resource)}
           onClose={handleClose}
@@ -35,10 +42,10 @@ const AddResourceModal = () => {
       )}
 
       {resourceForm === ResourceType.WATER && (
-        <AddWaterForm onGoBack={onGoBack} />
+        <AddWaterForm onGoBack={onGoBack} onComplete={onComplete} />
       )}
 
-      {isCompleted && <AddResourceSuccessStep />}
+      {isCompleted && <AddResourceSuccessStep onClose={handleClose} />}
     </ModalWrapper>
   );
 };

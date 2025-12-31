@@ -117,6 +117,12 @@ export type ResourceEntryType = 'OPEN' | 'RESTRICTED' | 'UNSURE';
 
 type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
 
+export type ResourceStatus =
+  | 'OPERATIONAL'
+  | 'TEMPORARILY_CLOSED'
+  | 'PERMANENTLY_CLOSED'
+  | 'HIDDEN';
+
 export type ResourceEntry = {
   id?: string;
   /** Represents the schema that this resource entry is following. */
@@ -158,11 +164,7 @@ export type ResourceEntry = {
   /** A non-address name for this location, such as the business name or park name. */
   name?: string | null;
   /** The current status of this resource. */
-  status:
-    | 'OPERATIONAL'
-    | 'TEMPORARILY_CLOSED'
-    | 'PERMANENTLY_CLOSED'
-    | 'HIDDEN';
+  status: ResourceStatus;
   /** What entry permissions are required for this resource. */
   entry_type?: ResourceEntryType | null;
   /** The hours of operation for this resource, if available. */
