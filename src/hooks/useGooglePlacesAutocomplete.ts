@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import debounce from 'utils/debounce';
 import useGetGooglePlacePredictionsQuery from './queries/useGetGooglePlacePredictionsQuery';
 
@@ -9,8 +9,11 @@ const useGooglePlacesAutocomplete = () => {
     isFetching,
     error
   } = useGetGooglePlacePredictionsQuery(input);
+  const onChange = useCallback((input: string) => {
+    setInput(input || '');
+  }, []);
 
-  const onChange = useMemo(
+  const onDebouncedChange = useMemo(
     () =>
       debounce((input: string) => {
         setInput(input || '');
@@ -18,7 +21,7 @@ const useGooglePlacesAutocomplete = () => {
     []
   );
 
-  return { suggestions, isFetching, error, onChange };
+  return { suggestions, isFetching, error, onChange, onDebouncedChange };
 };
 
 export default useGooglePlacesAutocomplete;

@@ -1,7 +1,9 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Button, TextField } from '@mui/material';
 import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { useController, useFormContext } from 'react-hook-form';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 type FormResourceAddressFieldProps = {
   label?: string;
@@ -32,7 +34,10 @@ const FormResourceAddressField = ({
   label = 'Address',
   fullWidth = false
 }: FormResourceAddressFieldProps) => {
-  const { suggestions, isFetching, onChange } = useGooglePlacesAutocomplete();
+  const { data: userLocation, isSuccess: isUserSharingLocation } =
+    useGetUserLocationQuery();
+  const { suggestions, isFetching, onChange, onDebouncedChange } =
+    useGooglePlacesAutocomplete();
   const { control, setError, resetField } = useFormContext();
   const addressController = useController({ name: 'address', control });
   const cityController = useController({ name: 'city', control });
@@ -121,12 +126,40 @@ const FormResourceAddressField = ({
     });
   };
 
+  const onUseMyLocationClick = async () => {
+    if (!isUserSharingLocation) {
+      setAddressError("You're not sharing your location");
+    }
+    const circle = new google.maps.Circle({
+      center: {
+        lat: userLocation.latitude,
+        lng: userLocation.longitude
+      },
+      radius: 50
+    });
+
+    const { places } = await google.maps.places.Place.searchNearby({
+      locationRestriction: circle,
+      fields: ['formattedAddress']
+    });
+
+    const firstPlace = places.at(0);
+    if (!firstPlace?.formattedAddress) {
+      return setAddressError(
+        "We couldn't find your location, please select an option from the search"
+      );
+    }
+
+    onChange(firstPlace.formattedAddress || '');
+  };
+
   return (
     <Autocomplete
+      openOnFocus
       options={suggestions}
       fullWidth={fullWidth}
       onInputChange={(_event, value) => {
-        onChange(value);
+        onDebouncedChange(value);
       }}
       loading={isFetching}
       getOptionKey={option => option.placeId}
@@ -152,7 +185,22 @@ const FormResourceAddressField = ({
           label={`${label}*`}
           inputRef={addressController.field.ref}
           error={Boolean(addressController.fieldState.error)}
-          helperText={addressController.fieldState.error?.message || ' '}
+          helperText={
+            addressController.fieldState.error?.message ||
+            (isUserSharingLocation ? (
+              <Button
+                startIcon={<MyLocationIcon />}
+                sx={{ textTransform: 'capitalize' }}
+                variant="text"
+                type="button"
+                onClick={onUseMyLocationClick}
+              >
+                Use my location instead
+              </Button>
+            ) : (
+              'Turn on location services to use your location'
+            ))
+          }
         />
       )}
     />

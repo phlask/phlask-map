@@ -6,8 +6,10 @@ import ModalWrapper from './ModalWrapper';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 import AddResourceSuccessStep from './AddResourceSuccessStep/AddResourceSuccessStep';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AddResourceModal = () => {
+  const queryClient = useQueryClient();
   const [resourceForm, setResourceForm] = useState<ResourceTypeOption | null>(
     null
   );
@@ -18,6 +20,7 @@ const AddResourceModal = () => {
   };
 
   const onComplete = () => {
+    queryClient.invalidateQueries({ queryKey: ['resources'] });
     setIsCompleted(true);
     setResourceForm(null);
   };

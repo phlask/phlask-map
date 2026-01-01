@@ -24,8 +24,9 @@ import FormImageUploadField from 'components/forms/FormImageUploadField/FormImag
 import { ResourceType } from 'hooks/useResourceType';
 import FormHiddenField from 'components/forms/FormHiddenField/FormHiddenField';
 import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
-import FormResourceAddressField from 'components/forms/FormAddressField/FormAddressField';
+import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
 import type { ResourceEntry } from 'types/ResourceEntry';
+import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 
 type AddWaterFormProps = {
   onGoBack: VoidFunction;
@@ -194,6 +195,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   const [page, setPage] = useState(1);
   const isMobile = useIsMobile();
   const { setToolbarModal } = useToolbarContext();
+  const { mutate: addResource, isPending } = useAddResourceMutation();
 
   const methods = useForm<AddWaterFormValues>({
     defaultValues,
@@ -222,7 +224,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
     }
 
     const now = new Date().toISOString();
-    const _resource: ResourceEntry = {
+    const resource: ResourceEntry = {
       version: values.version,
       name: values.name,
       address: values.address,
@@ -253,9 +255,8 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
       description: values.description,
       city: values.city
     };
-    // Submit
 
-    onComplete();
+    addResource(resource, { onSuccess: onComplete });
   };
 
   return (
@@ -414,6 +415,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
               ) : null}
               {isMobile ? (
                 <Button
+                  loading={isPending}
                   sx={{ background: '#5286E9' }}
                   variant="contained"
                   fullWidth

@@ -26,15 +26,17 @@ const useGetUserLocationQuery = () => {
   const {
     data = initialData,
     isPending,
-    error
+    error,
+    isSuccess
   } = useQuery({
     queryKey: ['user-location'],
     queryFn,
     placeholderData: initialData,
-    staleTime: minutesToMilliseconds(10)
+    staleTime: minutesToMilliseconds(10),
+    retry: false
   });
 
-  return { data, isPending, error };
+  return { data, isPending, error, isSuccess };
 };
 
 export default useGetUserLocationQuery;
