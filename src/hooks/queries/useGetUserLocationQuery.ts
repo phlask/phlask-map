@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { minutesToMilliseconds } from 'date-fns';
 
-export type UserLocation = Record<'latitude' | 'longitude', number>;
+export type UserLocation = google.maps.LatLngLiteral;
 
 const queryFn = (): Promise<UserLocation> =>
   new Promise<UserLocation>((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        const { latitude, longitude } = coords;
-        resolve({ latitude, longitude });
+        const { latitude: lat, longitude: lng } = coords;
+        resolve({ lat, lng });
       },
       error => {
         reject(error);

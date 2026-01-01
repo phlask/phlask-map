@@ -19,10 +19,7 @@ const UseMyLocationButton = ({
       return onError("You're not sharing your location");
     }
     const circle = new google.maps.Circle({
-      center: {
-        lat: userLocation.latitude,
-        lng: userLocation.longitude
-      },
+      center: userLocation,
       radius: 20
     });
 

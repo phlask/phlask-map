@@ -21,10 +21,7 @@ export const useWalkingDurationQuery = (
         return;
       }
 
-      const startingLocation = [
-        userLocation.longitude,
-        userLocation.latitude
-      ].join(',');
+      const startingLocation = [userLocation.lng, userLocation.lat].join(',');
       const endingLocation = [
         selectedResource?.longitude,
         selectedResource?.latitude

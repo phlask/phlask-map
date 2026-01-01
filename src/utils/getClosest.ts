@@ -1,4 +1,4 @@
-import type { UserLocation } from 'reducers/user';
+import type { UserLocation } from 'hooks/queries/useGetUserLocationQuery';
 import distance from './distance';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
@@ -10,8 +10,8 @@ function getClosest(data: ResourceEntry[], userLocation: UserLocation) {
   const distances = data.map(resource => ({
     resource,
     distance: distance(
-      userLocation.latitude,
-      userLocation.longitude,
+      userLocation.lat,
+      userLocation.lng,
       resource.latitude,
       resource.longitude
     )

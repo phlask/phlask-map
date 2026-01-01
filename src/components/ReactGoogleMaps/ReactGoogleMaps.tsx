@@ -49,7 +49,7 @@ const ReactGoogleMaps = () => {
       return;
     }
 
-    map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
+    map.panTo(userLocation);
   }, [userLocation, map]);
 
   // toggle window goes here
@@ -114,6 +114,7 @@ const ReactGoogleMaps = () => {
           />
         );
       })}
+      {userLocation ? <Marker position={userLocation} /> : null}
 
       {activeSearchLocation ? (
         <Marker position={activeSearchLocation} title="data-cy-search-result" />
