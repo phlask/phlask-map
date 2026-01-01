@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import useAddressFormControllers from 'hooks/useAddressFormControllers';
-import UseMyLocationButton from './UseMyLocationButton';
+import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
 
 type FormResourceAddressFieldProps = {
   label?: string;

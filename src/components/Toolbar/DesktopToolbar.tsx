@@ -9,12 +9,16 @@ import useResourceType from 'hooks/useResourceType';
 import { useToolbarContext, type ToolbarModal } from 'contexts/ToolbarContext';
 import useActiveFilters from 'hooks/useActiveFilters';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import type { UserLocation } from 'hooks/queries/useGetUserLocationQuery';
+import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 
 type DesktopToolbarProps = {
-  onNearMeClick: VoidFunction;
+  onNearMeClick: (userLocation: UserLocation | null) => void;
 };
 
 const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
+  const { data: userLocation, isSuccess: isUserSharingLocation } =
+    useGetUserLocationQuery();
   const { resourceType } = useResourceType();
   const { toolbarModal, toggle } = useToolbarContext();
   const { hasActiveFilters } = useActiveFilters();
@@ -42,7 +46,11 @@ const DesktopToolbar = ({ onNearMeClick }: DesktopToolbarProps) => {
         zIndex: 1
       }}
     >
-      <NearMeButton resourceType={resourceType} onClick={onNearMeClick} />
+      <NearMeButton
+        disabled={!isUserSharingLocation}
+        resourceType={resourceType}
+        onClick={() => onNearMeClick(userLocation)}
+      />
       <BottomNavigation
         showLabels
         value={toolbarModal ? values.indexOf(toolbarModal) : null}

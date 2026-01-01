@@ -11,7 +11,8 @@ const PATH = '/directions/foot-walking';
 export const useWalkingDurationQuery = (
   selectedResource: ResourceEntry | null
 ) => {
-  const { data: userLocation } = useGetUserLocationQuery();
+  const { data: userLocation, isSuccess: isUserSharingLocation } =
+    useGetUserLocationQuery();
 
   const { data, isPending } = useQuery({
     queryKey: ['walking-duration', selectedResource, userLocation],
@@ -48,5 +49,5 @@ export const useWalkingDurationQuery = (
     enabled: Boolean(selectedResource) && Boolean(userLocation)
   });
 
-  return { data, isPending };
+  return { data, isPending, isUserSharingLocation };
 };

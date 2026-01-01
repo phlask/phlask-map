@@ -45,6 +45,9 @@ const ReactGoogleMaps = () => {
     if (!map) {
       return;
     }
+    if (!userLocation) {
+      return;
+    }
 
     map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
   }, [userLocation, map]);

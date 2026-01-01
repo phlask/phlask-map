@@ -1,25 +1,14 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  Box,
-  CardContent,
-  Typography,
-  IconButton,
-  Stack,
-  FormHelperText,
-  Button
-} from '@mui/material';
+import { IconButton, Stack, Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useIsMobile from 'hooks/useIsMobile';
-import CloseButton from '../CloseButton/CloseButton';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
-import FormSelectField from 'components/forms/FormSelectField/FormSelectField';
 import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormDevtools from 'components/forms/FormDevtools/FormDevtools';
 import FormImageUploadField from 'components/forms/FormImageUploadField/FormImageUploadField';
 import { ResourceType } from 'hooks/useResourceType';
 import FormHiddenField from 'components/forms/FormHiddenField/FormHiddenField';
@@ -27,6 +16,8 @@ import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCh
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
+import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
+import ResourceFormLayout from '../ResourceFormLayout';
 
 type AddWaterFormProps = {
   onGoBack: VoidFunction;
@@ -105,30 +96,6 @@ const defaultValues: AddWaterFormValues = {
   status: 'OPERATIONAL',
   creator: 'phlask_app'
 };
-
-const entryTypeOptions = [
-  {
-    key: 'OPEN',
-    label: (
-      <Stack>
-        Open access
-        <FormHelperText>Public site, open to all</FormHelperText>
-      </Stack>
-    ),
-    value: 'OPEN'
-  },
-  {
-    key: 'RESTRICTED',
-    label: (
-      <Stack>
-        Restricted
-        <FormHelperText>May not be open to all</FormHelperText>
-      </Stack>
-    ),
-    value: 'RESTRICTED'
-  },
-  { key: 'UNSURE', label: 'Unsure', value: 'UNSURE' }
-];
 
 const waterDispenserTypeOptions = [
   {
@@ -260,53 +227,82 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   };
 
   return (
-    <Box justifyContent="center" overflow="none">
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: isMobile ? 'flex-end' : 'center',
-          justifyContent: isMobile ? null : 'center',
-          padding: isMobile ? '0px 20px 10px' : '20px 0',
-          height: isMobile ? '88px' : '64px',
-          backgroundColor: '#5286E9',
-          position: 'relative'
-        }}
-      >
-        <Typography
-          sx={{
-            color: 'common.white',
-            ...(isMobile
-              ? {}
-              : {
-                  textAlign: 'center',
-                  fontFamily: 'Inter',
-                  fontWeight: 600,
-                  fontSize: 20.16
-                })
-          }}
-        >
-          Add a Water Resource
-        </Typography>
-        <CloseButton onClick={onClose} color="white" />
-      </Box>
-      <CardContent
-        sx={{
-          maxHeight: isMobile ? undefined : '500px',
-          overflow: 'auto'
-        }}
-      >
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormHiddenField<AddWaterFormValues> name="resource_type" />
-            <FormHiddenField<AddWaterFormValues> name="version" />
-            <FormHiddenField<AddWaterFormValues> name="last_modifier" />
-            <FormHiddenField<AddWaterFormValues> name="status" />
-            <FormHiddenField<AddWaterFormValues> name="creator" />
-            <Stack gap={2}>
-              {isMobile || page === 1 ? (
-                <Stack gap={2}>
-                  {isMobile && (
+    <ResourceFormLayout title="Add a water resource" onClose={onClose}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormHiddenField<AddWaterFormValues> name="resource_type" />
+          <FormHiddenField<AddWaterFormValues> name="version" />
+          <FormHiddenField<AddWaterFormValues> name="last_modifier" />
+          <FormHiddenField<AddWaterFormValues> name="status" />
+          <FormHiddenField<AddWaterFormValues> name="creator" />
+          <Stack gap={2}>
+            {isMobile || page === 1 ? (
+              <Stack gap={2}>
+                {isMobile && (
+                  <FormImageUploadField<AddWaterFormValues>
+                    name="images"
+                    renderContent={() => (
+                      <Button
+                        sx={{
+                          color: 'white',
+                          borderRadius: '8px',
+                          background: '#5286E9',
+                          textTransform: 'capitalize'
+                        }}
+                      >
+                        Choose Image
+                      </Button>
+                    )}
+                  />
+                )}
+                <Stack
+                  direction={{ sx: 'column', md: 'row' }}
+                  gap={2}
+                  justifyContent={{ sx: 'flex-start', md: 'center' }}
+                >
+                  <FormTextField<AddWaterFormValues>
+                    name="name"
+                    label="Name"
+                    helperText="Enter a name for the resource. (Example: City Hall)"
+                    required
+                    fullWidth
+                  />
+                  <FormResourceAddressField label="Street Address" fullWidth />
+                </Stack>
+                <Stack
+                  direction={{ sx: 'column', md: 'row' }}
+                  gap={2}
+                  justifyContent={{ sx: 'flex-start', md: 'center' }}
+                >
+                  <FormTextField<AddWaterFormValues>
+                    name="description"
+                    label="Description"
+                    fullWidth
+                  />
+                  <ResourceEntryTypeField />
+                </Stack>
+                <Stack
+                  direction={{ sx: 'column', md: 'row' }}
+                  gap={2}
+                  justifyContent={{ sx: 'flex-start', md: 'center' }}
+                >
+                  <FormMultipleChoiceField<AddWaterFormValues>
+                    name="dispenser_type"
+                    label="Dispenser Type"
+                    options={waterDispenserTypeOptions}
+                    fullWidth
+                  />
+                </Stack>
+              </Stack>
+            ) : null}
+            {isMobile || page === 2 ? (
+              <Stack gap={2}>
+                <Stack
+                  direction={{ sx: 'column', md: 'row' }}
+                  gap={3}
+                  justifyContent={{ sx: 'flex-start', md: 'space-evenly' }}
+                >
+                  {!isMobile && (
                     <FormImageUploadField<AddWaterFormValues>
                       name="images"
                       renderContent={() => (
@@ -323,140 +319,65 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                       )}
                     />
                   )}
-                  <Stack
-                    direction={{ sx: 'column', md: 'row' }}
-                    gap={2}
-                    justifyContent={{ sx: 'flex-start', md: 'center' }}
-                  >
-                    <FormTextField<AddWaterFormValues>
-                      name="name"
-                      label="Name"
-                      helperText="Enter a name for the resource. (Example: City Hall)"
-                      required
-                      fullWidth
-                    />
-                    <FormResourceAddressField
-                      label="Street Address"
-                      fullWidth
-                    />
-                  </Stack>
-                  <Stack
-                    direction={{ sx: 'column', md: 'row' }}
-                    gap={2}
-                    justifyContent={{ sx: 'flex-start', md: 'center' }}
-                  >
-                    <FormTextField<AddWaterFormValues>
-                      name="description"
-                      label="Description"
-                      fullWidth
-                    />
-                    <FormSelectField<AddWaterFormValues>
-                      name="entry_type"
-                      label="Entry Type"
-                      options={entryTypeOptions}
-                      fullWidth
-                      required
-                    />
-                  </Stack>
-                  <Stack
-                    direction={{ sx: 'column', md: 'row' }}
-                    gap={2}
-                    justifyContent={{ sx: 'flex-start', md: 'center' }}
-                  >
-                    <FormMultipleChoiceField<AddWaterFormValues>
-                      name="dispenser_type"
-                      label="Dispenser Type"
-                      options={waterDispenserTypeOptions}
-                      fullWidth
-                    />
-                  </Stack>
-                </Stack>
-              ) : null}
-              {isMobile || page === 2 ? (
-                <Stack gap={2}>
-                  <Stack
-                    direction={{ sx: 'column', md: 'row' }}
-                    gap={3}
-                    justifyContent={{ sx: 'flex-start', md: 'space-evenly' }}
-                  >
-                    {!isMobile && (
-                      <FormImageUploadField<AddWaterFormValues>
-                        name="images"
-                        renderContent={() => (
-                          <Button
-                            sx={{
-                              color: 'white',
-                              borderRadius: '8px',
-                              background: '#5286E9',
-                              textTransform: 'capitalize'
-                            }}
-                          >
-                            Choose Image
-                          </Button>
-                        )}
-                      />
-                    )}
-                    <FormCheckboxListField<AddWaterFormValues>
-                      name="tags"
-                      label="Helpful info"
-                      options={tagOptions}
-                      labelPlacement="start"
-                    />
-                  </Stack>
-                  <FormTextField<AddWaterFormValues>
-                    name="guidelines"
-                    label="Guidelines"
-                    helperText="Share tips on respectful PHLASKing at this location."
-                    fullWidth
-                    multiline
-                    minRows={2}
+                  <FormCheckboxListField<AddWaterFormValues>
+                    name="tags"
+                    label="Helpful info"
+                    options={tagOptions}
+                    labelPlacement="start"
                   />
                 </Stack>
-              ) : null}
-              {isMobile ? (
-                <Button
-                  loading={isPending}
-                  sx={{ background: '#5286E9' }}
-                  variant="contained"
+                <FormTextField<AddWaterFormValues>
+                  name="guidelines"
+                  label="Guidelines"
+                  helperText="Share tips on respectful PHLASKing at this location."
                   fullWidth
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              ) : null}
-            </Stack>
-            {!isMobile ? (
-              <div
-                style={{
-                  margin: '0 auto',
-                  paddingTop: '1.5rem',
-                  textAlign: 'center'
+                  multiline
+                  minRows={2}
+                />
+              </Stack>
+            ) : null}
+            {isMobile ? (
+              <Button
+                loading={isPending}
+                sx={{ background: '#5286E9' }}
+                variant="contained"
+                fullWidth
+                type="submit"
+              >
+                Submit
+              </Button>
+            ) : null}
+          </Stack>
+          {!isMobile ? (
+            <div
+              style={{
+                margin: '0 auto',
+                paddingTop: '1.5rem',
+                textAlign: 'center'
+              }}
+            >
+              <IconButton
+                type="button"
+                color="primary"
+                aria-label="Go to previous page"
+                onClick={() => {
+                  onPageChange(prev => prev - 1);
                 }}
               >
-                <IconButton
-                  type="button"
-                  color="primary"
-                  aria-label="Go to previous page"
-                  onClick={() => {
-                    onPageChange(prev => prev - 1);
-                  }}
-                >
-                  <ArrowBackIosIcon />
-                </IconButton>
-                <IconButton
-                  type="submit"
-                  color="primary"
-                  aria-label="Go to next page"
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </div>
-            ) : null}
-          </form>
-          <FormDevtools />
-        </FormProvider>
-      </CardContent>
-    </Box>
+                <ArrowBackIosIcon />
+              </IconButton>
+              <IconButton
+                type="submit"
+                color="primary"
+                aria-label="Go to next page"
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </div>
+          ) : null}
+        </form>
+      </FormProvider>
+    </ResourceFormLayout>
   );
 };
 

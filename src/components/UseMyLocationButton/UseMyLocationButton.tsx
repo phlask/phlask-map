@@ -15,8 +15,8 @@ const UseMyLocationButton = ({
     useGetUserLocationQuery();
 
   const onUseMyLocationClick = async () => {
-    if (!isUserSharingLocation) {
-      onError("You're not sharing your location");
+    if (!userLocation) {
+      return onError("You're not sharing your location");
     }
     const circle = new google.maps.Circle({
       center: {
@@ -40,6 +40,10 @@ const UseMyLocationButton = ({
 
     onChange(firstPlace.formattedAddress || '');
   };
+
+  if (!isUserSharingLocation) {
+    return '*Turn on location services to use your location instead';
+  }
 
   return (
     <Button

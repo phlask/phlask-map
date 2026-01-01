@@ -1,13 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
 import { minutesToMilliseconds } from 'date-fns';
 
-type UserLocation = Record<'latitude' | 'longitude', number>;
-
-const initialData: UserLocation = {
-  latitude: CITY_HALL_COORDINATES.latitude,
-  longitude: CITY_HALL_COORDINATES.longitude
-};
+export type UserLocation = Record<'latitude' | 'longitude', number>;
 
 const queryFn = (): Promise<UserLocation> =>
   new Promise<UserLocation>((resolve, reject) =>
@@ -24,14 +18,13 @@ const queryFn = (): Promise<UserLocation> =>
 
 const useGetUserLocationQuery = () => {
   const {
-    data = initialData,
+    data = null,
     isPending,
     error,
     isSuccess
   } = useQuery({
     queryKey: ['user-location'],
     queryFn,
-    placeholderData: initialData,
     staleTime: minutesToMilliseconds(10),
     retry: false
   });

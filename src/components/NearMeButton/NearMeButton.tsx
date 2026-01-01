@@ -21,15 +21,18 @@ const resourceIcons = {
 };
 
 type NearMeButtonProps = {
+  disabled?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
   resourceType: ResourceTypeOption;
 };
 
 const NearMeButton = ({
+  disabled = false,
   onClick,
   resourceType = ResourceType.WATER
 }: NearMeButtonProps) => (
   <Button
+    disabled={disabled}
     startIcon={resourceIcons[resourceType]}
     onClick={onClick}
     sx={theme => ({

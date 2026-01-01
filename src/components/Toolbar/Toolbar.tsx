@@ -6,18 +6,21 @@ import DesktopToolbar from './DesktopToolbar';
 import useSelectedResource from 'hooks/useSelectedResource';
 import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useResourceType from 'hooks/useResourceType';
-import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
+import type { UserLocation } from 'hooks/queries/useGetUserLocationQuery';
 
 const Toolbar = () => {
   const map = useMap();
   const { setSelectedResource } = useSelectedResource();
   const isMobile = useIsMobile();
-  const { data: userLocation } = useGetUserLocationQuery();
   const { resourceType } = useResourceType();
 
   const { data: resources = [] } = useGetResourcesQuery({ resourceType });
 
-  const onNearMeClick = async () => {
+  const onNearMeClick = async (userLocation: UserLocation | null) => {
+    if (!userLocation) {
+      return;
+    }
+
     const closest = getClosest(resources, userLocation);
     if (!closest) return;
 

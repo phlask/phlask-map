@@ -9,11 +9,23 @@ type EstimatedWalkingDurationProps = {
 const EstimatedWalkingDuration = ({
   selectedResource
 }: EstimatedWalkingDurationProps) => {
-  const { data: walkingDuration = null, isPending } =
-    useWalkingDurationQuery(selectedResource);
+  const {
+    data: walkingDuration = null,
+    isPending,
+    isUserSharingLocation
+  } = useWalkingDurationQuery(selectedResource);
+
+  if (!isUserSharingLocation)
+    return (
+      <Typography color="#60718C" fontSize={14} fontWeight={400}>
+        Enable location services for est. walking time
+      </Typography>
+    );
 
   if (isPending) {
-    <Typography fontWeight={400}>Calculating walking duration...</Typography>;
+    <Typography color="#60718C" fontSize={14} fontWeight={400}>
+      Calculating walking duration...
+    </Typography>;
   }
 
   return (
