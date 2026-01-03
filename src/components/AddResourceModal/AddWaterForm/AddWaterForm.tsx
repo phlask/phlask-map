@@ -7,7 +7,6 @@ import useIsMobile from 'hooks/useIsMobile';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
 import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormImageUploadField from 'components/forms/FormImageUploadField/FormImageUploadField';
 import { ResourceType } from 'hooks/useResourceType';
@@ -18,64 +17,15 @@ import type { ResourceEntry } from 'types/ResourceEntry';
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
 import ResourceFormLayout from '../ResourceFormLayout';
+import type { WaterFormValues } from 'schemas/waterResourceSchema';
+import waterResourceSchema from 'schemas/waterResourceSchema';
 
 type AddWaterFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
 };
 
-const schema = z.object({
-  version: z.number().min(1).max(1),
-  name: z.string().nonempty('Name is required'),
-  address: z.string().nonempty('Address is required'),
-  gp_id: z.string().nonempty('Google Places ID is required'),
-  city: z.string(),
-  state: z.string(),
-  zip_code: z.string(),
-  latitude: z.number(),
-  longitude: z.number(),
-  last_modifier: z.string().default('phlask_app'),
-  creator: z.string().default('phlask_app'),
-  description: z.string(),
-  entry_type: z.enum(['OPEN', 'RESTRICTED', 'UNSURE'], {
-    message: 'Entry type is required'
-  }),
-  images: z.array(z.string()),
-  guidelines: z.string(),
-  dispenser_type: z.array(
-    z.enum([
-      'DRINKING_FOUNTAIN',
-      'BOTTLE_FILLER',
-      'SINK',
-      'JUG',
-      'SODA_MACHINE',
-      'VESSEL',
-      'WATER_COOLER'
-    ])
-  ),
-  tags: z.array(
-    z.enum(['WHEELCHAIR_ACCESSIBLE', 'FILTERED', 'BYOB', 'ID_REQUIRED'])
-  ),
-  resource_type: z.enum(
-    [
-      ResourceType.WATER,
-      ResourceType.FOOD,
-      ResourceType.FORAGE,
-      ResourceType.BATHROOM
-    ],
-    { message: 'Resource type is required' }
-  ),
-  status: z.enum([
-    'OPERATIONAL',
-    'TEMPORARILY_CLOSED',
-    'PERMANENTLY_CLOSED',
-    'HIDDEN'
-  ])
-});
-
-type AddWaterFormValues = z.infer<typeof schema>;
-
-const defaultValues: AddWaterFormValues = {
+const defaultValues: WaterFormValues = {
   version: 1,
   last_modifier: 'phlask_app',
   name: '',
@@ -164,9 +114,9 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
 
-  const methods = useForm<AddWaterFormValues>({
+  const methods = useForm<WaterFormValues>({
     defaultValues,
-    resolver: zodResolver(schema)
+    resolver: zodResolver(waterResourceSchema)
   });
   const { handleSubmit } = methods;
 
@@ -184,7 +134,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
     });
   };
 
-  const onSubmit = (values: AddWaterFormValues) => {
+  const onSubmit = (values: WaterFormValues) => {
     const shouldGoToNextPage = !isMobile && page < 2;
     if (shouldGoToNextPage) {
       return onPageChange(prev => prev + 1);
@@ -230,16 +180,16 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
     <ResourceFormLayout title="Add a water resource" onClose={onClose}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormHiddenField<AddWaterFormValues> name="resource_type" />
-          <FormHiddenField<AddWaterFormValues> name="version" />
-          <FormHiddenField<AddWaterFormValues> name="last_modifier" />
-          <FormHiddenField<AddWaterFormValues> name="status" />
-          <FormHiddenField<AddWaterFormValues> name="creator" />
+          <FormHiddenField<WaterFormValues> name="resource_type" />
+          <FormHiddenField<WaterFormValues> name="version" />
+          <FormHiddenField<WaterFormValues> name="last_modifier" />
+          <FormHiddenField<WaterFormValues> name="status" />
+          <FormHiddenField<WaterFormValues> name="creator" />
           <Stack gap={2}>
             {isMobile || page === 1 ? (
               <Stack gap={2}>
                 {isMobile && (
-                  <FormImageUploadField<AddWaterFormValues>
+                  <FormImageUploadField<WaterFormValues>
                     name="images"
                     renderContent={() => (
                       <Button
@@ -260,7 +210,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                   gap={2}
                   justifyContent={{ sx: 'flex-start', md: 'center' }}
                 >
-                  <FormTextField<AddWaterFormValues>
+                  <FormTextField<WaterFormValues>
                     name="name"
                     label="Name"
                     helperText="Enter a name for the resource. (Example: City Hall)"
@@ -274,7 +224,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                   gap={2}
                   justifyContent={{ sx: 'flex-start', md: 'center' }}
                 >
-                  <FormTextField<AddWaterFormValues>
+                  <FormTextField<WaterFormValues>
                     name="description"
                     label="Description"
                     fullWidth
@@ -286,7 +236,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                   gap={2}
                   justifyContent={{ sx: 'flex-start', md: 'center' }}
                 >
-                  <FormMultipleChoiceField<AddWaterFormValues>
+                  <FormMultipleChoiceField<WaterFormValues>
                     name="dispenser_type"
                     label="Dispenser Type"
                     options={waterDispenserTypeOptions}
@@ -303,7 +253,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                   justifyContent={{ sx: 'flex-start', md: 'space-evenly' }}
                 >
                   {!isMobile && (
-                    <FormImageUploadField<AddWaterFormValues>
+                    <FormImageUploadField<WaterFormValues>
                       name="images"
                       renderContent={() => (
                         <Button
@@ -319,14 +269,14 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                       )}
                     />
                   )}
-                  <FormCheckboxListField<AddWaterFormValues>
+                  <FormCheckboxListField<WaterFormValues>
                     name="tags"
                     label="Helpful info"
                     options={tagOptions}
                     labelPlacement="start"
                   />
                 </Stack>
-                <FormTextField<AddWaterFormValues>
+                <FormTextField<WaterFormValues>
                   name="guidelines"
                   label="Guidelines"
                   helperText="Share tips on respectful PHLASKing at this location."
