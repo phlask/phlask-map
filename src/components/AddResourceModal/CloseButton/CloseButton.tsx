@@ -11,18 +11,13 @@ const CloseButton = ({ color, onClick }: CloseButtonProps) => (
   <IconButton
     aria-label="close"
     onClick={onClick}
-    sx={theme => ({
+    sx={{
       display: 'flex',
       position: 'absolute',
       color,
-      fontSize: '32px',
-      right: '32px',
-      top: '25px',
-      [theme.breakpoints.up('md')]: {
-        right: '42px',
-        top: '19px'
-      }
-    })}
+      fontSize: '24px',
+      right: '25px'
+    }}
   >
     <CloseIcon />
   </IconButton>

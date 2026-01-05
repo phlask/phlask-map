@@ -7,6 +7,7 @@ import { useToolbarContext } from 'contexts/ToolbarContext';
 import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 import AddResourceSuccessStep from './AddResourceSuccessStep/AddResourceSuccessStep';
 import { useQueryClient } from '@tanstack/react-query';
+import AddFoodForm from './AddFoodForm/AddFoodForm';
 
 const AddResourceModal = () => {
   const queryClient = useQueryClient();
@@ -44,9 +45,13 @@ const AddResourceModal = () => {
         />
       )}
 
-      {resourceForm === ResourceType.WATER && (
+      {resourceForm === ResourceType.WATER ? (
         <AddWaterForm onGoBack={onGoBack} onComplete={onComplete} />
-      )}
+      ) : null}
+
+      {resourceForm === ResourceType.FOOD ? (
+        <AddFoodForm onGoBack={onGoBack} onComplete={onComplete} />
+      ) : null}
 
       {isCompleted && <AddResourceSuccessStep onClose={handleClose} />}
     </ModalWrapper>

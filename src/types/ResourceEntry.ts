@@ -84,7 +84,7 @@ export type FoodOrganizationType =
 export type FoodInfo = {
   food_type: FoodType[];
   distribution_type: FoodDistributionType[];
-  organization_type: FoodOrganizationType[];
+  organization_type: FoodOrganizationType;
   organization_name?: string;
   organization_url: string;
   tags: string[];

@@ -78,6 +78,7 @@ const FormMultipleChoiceField = <Values extends FieldValues>({
         <TextField
           name={field.name}
           label={label}
+          helperText=" "
           placeholder={placeholder}
           {...params}
         />

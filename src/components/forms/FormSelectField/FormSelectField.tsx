@@ -32,9 +32,10 @@ const FormSelectField = <Values extends FieldValues>({
   required = false,
   placeholder = 'Select...'
 }: FormSelectFieldProps<Values>) => {
-  const { control, register, formState } = useFormContext<Values>();
+  const { control, register, getFieldState } = useFormContext<Values>();
   const value = useWatch<Values>({ control, name });
-  const isError = Boolean(formState.errors[name]);
+  const fieldState = getFieldState(name);
+  const isError = fieldState.invalid;
   const id = useId();
   return (
     <FormControl error={isError} fullWidth={fullWidth}>
@@ -59,9 +60,7 @@ const FormSelectField = <Values extends FieldValues>({
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText>
-        {formState.errors[name]?.message?.toString() || helperText}
-      </FormHelperText>
+      <FormHelperText>{fieldState.error?.message || helperText}</FormHelperText>
     </FormControl>
   );
 };

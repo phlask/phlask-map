@@ -21,15 +21,14 @@ const FormTextField = <Values extends FieldValues>({
   multiline = false,
   minRows = undefined
 }: FormTextFieldProps<Values>) => {
-  const { register, formState } = useFormContext<Values>();
-  const isError = Boolean(formState.errors[name]);
+  const { register, getFieldState } = useFormContext<Values>();
+  const fieldState = getFieldState(name);
+  const isError = Boolean(fieldState.error);
   return (
     <TextField
       {...register(name, { required })}
       label={`${label}${required ? '*' : ''}`}
-      helperText={
-        (formState.errors[name]?.message as string) || helperText || ' '
-      }
+      helperText={fieldState.error?.message || helperText || ' '}
       fullWidth={fullWidth}
       error={isError}
       multiline={multiline}

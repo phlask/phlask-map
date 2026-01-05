@@ -9,20 +9,22 @@ const foodResourceSchema = baseResourceSchema.extend({
       food_type: z.array(z.enum(['PERISHABLE', 'NON_PERISHABLE', 'PREPARED'])),
       distribution_type: z.array(z.enum(['EAT_ON_SITE', 'DELIVERY', 'PICKUP'])),
       organization_name: z.string(),
-      organization_url: z.string(),
+      organization_url: z.url(),
       organization_type: z.enum([
         'GOVERNMENT',
         'BUSINESS',
         'NON_PROFIT',
         'UNSURE'
-      ])
+      ]),
+      tags: z.array(z.string())
     })
     .default({
       food_type: [],
       distribution_type: [],
       organization_name: '',
       organization_url: '',
-      organization_type: 'BUSINESS'
+      organization_type: 'GOVERNMENT',
+      tags: []
     })
 });
 

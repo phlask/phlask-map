@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
 import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
@@ -8,26 +8,31 @@ import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCh
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
-import ResourceForm from 'components/AddResourceModal/ResourceForm';
-import waterResourceSchema, {
-  type WaterFormValues
-} from 'schemas/waterResourceSchema';
-import { tagOptions, waterDispenserTypeOptions } from './choiceFieldOptions';
+import ResourceForm from '../ResourceForm';
+import foodResourceSchema from 'schemas/foodResourceSchema';
+import {
+  foodDistributionTypeOptions,
+  foodTypeOptions,
+  organizationTypeOptions,
+  tags
+} from './choiceFieldOptions';
+import type { FoodFormValues } from 'schemas/foodResourceSchema';
+import FormSelectField from 'components/forms/FormSelectField/FormSelectField';
 
-type AddWaterFormProps = {
+type AddFoodFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
 };
 
-type FormValues = WaterFormValues;
+type FormValues = FoodFormValues;
 
-const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
+const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
 
   const methods = useForm({
-    defaultValues: waterResourceSchema.parse({}),
-    resolver: zodResolver(waterResourceSchema)
+    defaultValues: foodResourceSchema.parse({}),
+    resolver: zodResolver(foodResourceSchema)
   });
 
   const onClose = () => {
@@ -35,15 +40,16 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
     setToolbarModal(null);
   };
 
-  const onSubmit = (resource: FormValues) => {
+  const onSubmit = (resource: FoodFormValues) => {
     addResource(resource, { onSuccess: onComplete });
   };
 
   return (
     <FormProvider {...methods}>
-      <ResourceForm<FormValues>
-        title="Add a Water Resource"
-        color="#5286E9"
+      <ResourceForm<FoodFormValues>
+        debug
+        title="Add a Food Resource"
+        color="#FF9A55"
         onSubmit={onSubmit}
         isSubmitting={isPending}
         onClose={onClose}
@@ -83,9 +89,15 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
               justifyContent={{ sx: 'flex-start', md: 'center' }}
             >
               <FormMultipleChoiceField<FormValues>
-                name="water.dispenser_type"
-                label="Dispenser Type"
-                options={waterDispenserTypeOptions}
+                name="food.food_type"
+                label="Food Type"
+                options={foodTypeOptions}
+                fullWidth
+              />
+              <FormMultipleChoiceField<FormValues>
+                name="food.distribution_type"
+                label="Distribution Type"
+                options={foodDistributionTypeOptions}
                 fullWidth
               />
             </Stack>
@@ -100,12 +112,42 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
             >
               {shouldShowImageElement && imageElement}
               <FormCheckboxListField<FormValues>
-                name="water.tags"
+                name="food.tags"
                 label="Helpful info"
-                options={tagOptions}
+                options={tags}
                 labelPlacement="start"
               />
             </Stack>
+            <Divider />
+            <Stack
+              direction={{ sx: 'column', md: 'row' }}
+              gap={2}
+              justifyContent={{ sx: 'flex-start', md: 'center' }}
+            >
+              <FormTextField<FormValues>
+                name="food.organization_name"
+                label="Organization Name"
+                fullWidth
+              />
+              <FormSelectField<FormValues>
+                name="food.organization_type"
+                label="Organization Type"
+                options={organizationTypeOptions}
+                fullWidth
+              />
+            </Stack>
+            <Stack
+              direction={{ sx: 'column', md: 'row' }}
+              gap={2}
+              justifyContent={{ sx: 'flex-start', md: 'center' }}
+            >
+              <FormTextField<FormValues>
+                name="food.organization_url"
+                label="Organization Website"
+                fullWidth
+              />
+            </Stack>
+            <Divider />
             <FormTextField<FormValues>
               name="guidelines"
               label="Guidelines"
@@ -121,4 +163,4 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   );
 };
 
-export default AddWaterForm;
+export default AddFoodForm;

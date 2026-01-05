@@ -12,6 +12,7 @@ import ResourceDefaultFields from './ResourceDefaultFields/ResourceDefaultFields
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FormDevtools from 'components/forms/FormDevtools/FormDevtools';
+import FormImageUploadField from 'components/forms/FormImageUploadField/FormImageUploadField';
 
 type RenderFormPageFnConfig = {
   imageElement: ReactNode;
@@ -23,10 +24,10 @@ type EnderFormPageFn = (config: RenderFormPageFnConfig) => ReactNode;
 type ResourceFormLayoutProps<Values extends FieldValues> = {
   onClose?: VoidFunction;
   title?: string;
+  color?: string;
   debug?: boolean;
   renderPageOne: EnderFormPageFn;
   renderPageTwo: EnderFormPageFn;
-  imageElement: ReactNode;
   isSubmitting?: boolean;
   onSubmit?: SubmitHandler<Values>;
   onGoBack?: VoidFunction;
@@ -34,10 +35,10 @@ type ResourceFormLayoutProps<Values extends FieldValues> = {
 
 const ResourceForm = <Values extends FieldValues>({
   title = 'Add Resource',
+  color = '#5286E9',
   debug = false,
   renderPageOne,
   renderPageTwo,
-  imageElement,
   isSubmitting = false,
   onSubmit: submitForm = noop,
   onClose = noop,
@@ -71,6 +72,24 @@ const ResourceForm = <Values extends FieldValues>({
     submitForm(resource);
   };
 
+  const imageElement = (
+    <FormImageUploadField
+      name="images"
+      renderContent={() => (
+        <Button
+          sx={{
+            color: 'white',
+            borderRadius: '8px',
+            background: color,
+            textTransform: 'capitalize'
+          }}
+        >
+          Choose Image
+        </Button>
+      )}
+    />
+  );
+
   const shouldShowPageOne = isMobile || page === 1;
   const shouldShowPageTwo = isMobile || page === 2;
   return (
@@ -83,7 +102,7 @@ const ResourceForm = <Values extends FieldValues>({
           justifyContent: isMobile ? null : 'center',
           padding: isMobile ? '0px 20px 10px' : '20px 0',
           height: isMobile ? '88px' : '64px',
-          backgroundColor: '#5286E9',
+          backgroundColor: color,
           position: 'relative'
         }}
       >
@@ -135,7 +154,7 @@ const ResourceForm = <Values extends FieldValues>({
               {isMobile ? (
                 <Button
                   loading={isSubmitting}
-                  sx={{ background: '#5286E9' }}
+                  sx={{ background: color, textTransform: 'capitalize' }}
                   variant="contained"
                   fullWidth
                   type="submit"
