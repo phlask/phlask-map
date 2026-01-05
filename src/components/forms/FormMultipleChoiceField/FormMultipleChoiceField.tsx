@@ -9,10 +9,16 @@ import {
   type Path
 } from 'react-hook-form';
 
+export type FormMultipleChoiceFieldOption = {
+  key: string;
+  label: string;
+  value: string;
+};
+
 type FormMultipleChoiceFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   label: ReactNode;
-  options: { key: string; label: string; value: string }[];
+  options: FormMultipleChoiceFieldOption[];
   placeholder?: string;
   fullWidth?: boolean;
   open?: boolean;
