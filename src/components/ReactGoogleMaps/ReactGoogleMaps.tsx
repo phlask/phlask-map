@@ -118,10 +118,7 @@ const ReactGoogleMaps = () => {
       {userLocation ? <AdvancedMarker position={userLocation} /> : null}
 
       {activeSearchLocation ? (
-        <AdvancedMarker
-          position={activeSearchLocation}
-          title="data-cy-search-result"
-        />
+        <AdvancedMarker position={activeSearchLocation} />
       ) : null}
     </Map>
   );
