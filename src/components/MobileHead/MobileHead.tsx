@@ -65,7 +65,10 @@ const MobileHead = () => {
                   marginInlineEnd: '15px'
                 }}
               >
-                <IconButton onClick={() => toggle('search')}>
+                <IconButton
+                  data-cy="mobile-head-search-button"
+                  onClick={() => toggle('search')}
+                >
                   <SearchIcon />
                 </IconButton>
                 <IconButton
