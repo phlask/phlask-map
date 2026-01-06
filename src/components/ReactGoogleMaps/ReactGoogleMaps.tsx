@@ -105,13 +105,11 @@ const ReactGoogleMaps = () => {
       {resources?.map((resource, index) => {
         return (
           <AdvancedMarker
+            onClick={() => onMarkerClick(resource)}
             key={resource.id}
             position={{ lat: resource.latitude, lng: resource.longitude }}
           >
-            <IconButton
-              onClick={() => onMarkerClick(resource)}
-              data-testid={`data-cy-${index}`}
-            >
+            <IconButton data-cy={`marker-${index}`}>
               <img src={getMarkerIconSrc(resource) ?? ''} />
             </IconButton>
           </AdvancedMarker>

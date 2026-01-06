@@ -26,16 +26,18 @@
 
 // Mock geolocation to City Hall coordinates to ensure consistent test behavior
 // regardless of tester's physical location
-Cypress.Commands.add('mockGeolocation', () => {
-  cy.window().then((win) => {
-    cy.stub(win.navigator.geolocation, 'getCurrentPosition').callsFake((success) => {
-      success({
-        coords: {
-          latitude: 39.952744,
-          longitude: -75.1635,
-          accuracy: 10
-        }
-      });
-    });
+Cypress.Commands.add('mockGeoLocation', () => {
+  cy.window().then(win => {
+    cy.stub(win.navigator.geolocation, 'getCurrentPosition').callsFake(
+      success => {
+        success({
+          coords: {
+            latitude: 39.952744,
+            longitude: -75.1635,
+            accuracy: 10
+          }
+        });
+      }
+    );
   });
 });

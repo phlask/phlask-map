@@ -1,0 +1,864 @@
+[
+  {
+    "id": 1,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:50.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95322480084546,
+    "longitude": -75.1646224595513,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 2,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:51.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95307591197137,
+    "longitude": -75.16292738387706,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 3,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:52.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95208782304877,
+    "longitude": -75.16495794327851,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 4,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:53.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.951938931699644,
+    "longitude": -75.1631039542598,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 5,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:54.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.953549648173045,
+    "longitude": -75.16642347745518,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 6,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:55.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95310298269983,
+    "longitude": -75.16169139119792,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 7,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:56.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95211489416834,
+    "longitude": -75.1668825604503,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 8,
+    "address": "4400 Haverford Avenue",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:22:57.797447+00:00",
+    "description": "Test,Description Value.",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:22:57.797447+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95078839670956,
+    "longitude": -75.16195624677202,
+    "name": "Test Organization",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "id": 9,
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:40.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95322480084546,
+    "longitude": -75.1646224595513,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "id": 10,
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:41.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95307591197137,
+    "longitude": -75.16292738387706,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "id": 11,
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:42.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95208782304877,
+    "longitude": -75.16495794327851,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:43.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.951938931699644,
+    "longitude": -75.1631039542598,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:44.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.953549648173045,
+    "longitude": -75.16642347745518,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:45.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nTheses food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95310298269983,
+    "longitude": -75.16169139119792,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:46.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95211489416834,
+    "longitude": -75.1668825604503,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3101 Tyson Ave",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:47.004545+00:00",
+    "description": "Sites are open Mondays and Thursdays from 10 a.m. – 12 p.m.\n\nResidents can pick up one box per household.\n\nBoxes contain non-perishable items on Mondays and fresh produce on Thursdays.\n\nResidents do not need to present an ID or proof of income for eligibility.\n\nFood sites are supported by the City, Share Food Program, and Philabundance.\n\nThese food sites are supplementary to the existing food pantry network. To find a food pantry closest to you, call 311.",
+    "entry_type": "UNSURE",
+    "food": {
+      "organization_name": "Test Organization",
+      "organization_url": "https://phila.gov/2020-03-28-where-to-find-free-nutritious-food-during-covid-19/?mc_cid=3f0c65cf66&mc_eid=a0f36afaa9",
+      "food_type": ["PERISHABLE"]
+    },
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.95078839670956,
+    "longitude": -75.16195624677202,
+    "name": "Test Organization",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:46.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "zip_code": "19149"
+  },
+  {
+    "address": "3901 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:52.004545+00:00",
+    "description": "Test water with bottle filler and ADA accessible",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:37:52.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.951,
+    "longitude": -75.168,
+    "name": "Test Water Bottle Filler",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:52.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN", "BOTTLE_FILLER"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3902 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:53.004545+00:00",
+    "description": "Test foraging with bark and flowers, unsure entry",
+    "entry_type": "UNSURE",
+    "last_modified": "2024-03-31T00:37:53.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.952,
+    "longitude": -75.169,
+    "name": "Test Foraging Site",
+    "resource_type": "FORAGE",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:53.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "forage": {
+      "forage_type": ["BARK", "FLOWERS"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3903 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:54.004545+00:00",
+    "description": "Test food with all distribution types and prepared meals",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:37:54.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.953,
+    "longitude": -75.17,
+    "name": "Test Food Site",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:54.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "food": {
+      "food_type": ["PREPARED"],
+      "distribution_type": ["EAT_ON_SITE", "DELIVERY", "PICKUP"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3904 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:55.004545+00:00",
+    "description": "Test bathroom with ADA accessible and water fountain",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:37:55.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.954,
+    "longitude": -75.171,
+    "name": "Test Bathroom with Features",
+    "resource_type": "BATHROOM",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:55.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "bathroom": {
+      "tags": ["WHEELCHAIR_ACCESSIBLE", "HAS_FOUNTAIN"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3905 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:56.004545+00:00",
+    "description": "Test water with sink and filtered water, restricted access",
+    "entry_type": "RESTRICTED",
+    "last_modified": "2024-03-31T00:37:56.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.955,
+    "longitude": -75.172,
+    "name": "Test Water Sink Filtered",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:56.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["SINK"],
+      "tags": ["FILTERED"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3906 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:57.004545+00:00",
+    "description": "Test foraging with fruits and medicinal, open access",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:37:57.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.956,
+    "longitude": -75.173,
+    "name": "Test Foraging Fruits Medicinal",
+    "resource_type": "FORAGE",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:57.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "forage": {
+      "forage_type": ["FRUIT"],
+      "tags": ["MEDICINAL"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3907 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:58.004545+00:00",
+    "description": "Test food with non-perishable and pickup only, non-profit",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:37:58.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.957,
+    "longitude": -75.174,
+    "name": "Test Food Non-perishable Pickup",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:58.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "food": {
+      "food_type": ["NON_PERISHABLE"],
+      "distribution_type": ["PICKUP"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3908 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:37:59.004545+00:00",
+    "description": "Test bathroom with gender neutral and changing table, restricted",
+    "entry_type": "RESTRICTED",
+    "last_modified": "2024-03-31T00:37:59.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.958,
+    "longitude": -75.175,
+    "name": "Test Bathroom Gender Neutral Changing",
+    "resource_type": "BATHROOM",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:37:59.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "bathroom": {
+      "tags": ["GENDER_NEUTRAL", "CHANGING_TABLE"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3909 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:38:00.004545+00:00",
+    "description": "Desktop test water: drinking fountain + bottle filler + ADA + filtered + open",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:38:00.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.959,
+    "longitude": -75.176,
+    "name": "Desktop Test Water All Features",
+    "resource_type": "WATER",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:38:00.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "water": {
+      "dispenser_type": ["DRINKING_FOUNTAIN", "BOTTLE_FILLER"],
+      "tags": ["WHEELCHAIR_ACCESSIBLE", "FILTERED"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3910 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:38:01.004545+00:00",
+    "description": "Desktop test food: all types + eat on site + delivery + non-profit",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:38:01.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.96,
+    "longitude": -75.177,
+    "name": "Desktop Test Food All Types",
+    "resource_type": "FOOD",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:38:01.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "food": {
+      "food_type": ["PERISHABLE", "NON_PERISHABLE", "PREPARED"],
+      "distribution_type": ["EAT_ON_SITE", "DELIVERY"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3911 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:38:02.004545+00:00",
+    "description": "Desktop test foraging: all types + medicinal + in season + open",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:38:02.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.961,
+    "longitude": -75.178,
+    "name": "Desktop Test Foraging All Types",
+    "resource_type": "FORAGE",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:38:02.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "forage": {
+      "forage_type": ["NUT", "FRUIT", "LEAVES", "BARK", "FLOWERS"],
+      "tags": ["MEDICINAL", "IN_SEASON"]
+    },
+    "zip_code": "19104"
+  },
+  {
+    "address": "3912 Locust Walk",
+    "city": "Philadelphia",
+    "creator": "phlask",
+    "date_created": "2024-03-31T00:38:03.004545+00:00",
+    "description": "Desktop test bathroom: all features + open access",
+    "entry_type": "OPEN",
+    "last_modified": "2024-03-31T00:38:03.004545+00:00",
+    "last_modifier": "phlask",
+    "latitude": 39.962,
+    "longitude": -75.179,
+    "name": "Desktop Test Bathroom All Features",
+    "resource_type": "BATHROOM",
+    "source": {
+      "type": "MIGRATION"
+    },
+    "state": "PA",
+    "status": "OPERATIONAL",
+    "verification": {
+      "verified": false,
+      "last_modified": "2024-03-31T00:38:03.004545+00:00",
+      "verifier": "phlask"
+    },
+    "version": 1,
+    "bathroom": {
+      "tags": [
+        "WHEELCHAIR_ACCESSIBLE",
+        "GENDER_NEUTRAL",
+        "CHANGING_TABLE",
+        "SINGLE_OCCUPANCY",
+        "FAMILY",
+        "HAS_FOUNTAIN"
+      ]
+    },
+    "zip_code": "19104"
+  }
+]

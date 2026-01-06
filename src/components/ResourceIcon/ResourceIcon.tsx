@@ -18,6 +18,7 @@ const ResourceIcon = ({ type }: ResourceIconProps) => {
 
   return (
     <SvgIcon
+      data-cy={`resource-icon-${type}`}
       sx={{
         width: '48px',
         height: '48px'
