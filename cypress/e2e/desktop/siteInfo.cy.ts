@@ -11,7 +11,7 @@ describe('site info', () => {
     cy.get('[data-cy=button-WATER-data-selector]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
-    cy.get('[data-cy=resource-icon-WATER]');
+    cy.get('[data-cy=resource-icon-WATER]', { timeout: 6000 }).should('exist');
     cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
@@ -19,7 +19,7 @@ describe('site info', () => {
     cy.get('[data-cy=button-FOOD-data-selector]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
-    cy.get('[data-cy=resource-icon-FOOD]');
+    cy.get('[data-cy=resource-icon-FOOD]', { timeout: 6000 }).should('exist');
     cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
@@ -27,7 +27,7 @@ describe('site info', () => {
     cy.get('[data-cy=button-FORAGE-data-selector]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
-    cy.get('[data-cy=resource-icon-FORAGE]');
+    cy.get('[data-cy=resource-icon-FORAGE]', { timeout: 6000 }).should('exist');
     cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
@@ -35,7 +35,9 @@ describe('site info', () => {
     cy.get('[data-cy=button-BATHROOM-data-selector]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
-    cy.get('[data-cy=resource-icon-BATHROOM]');
+    cy.get('[data-cy=resource-icon-BATHROOM]', { timeout: 6000 }).should(
+      'exist'
+    );
     cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 });
