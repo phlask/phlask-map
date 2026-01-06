@@ -11,7 +11,7 @@ import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/Reso
 import ResourceForm from '../ResourceForm';
 import foodResourceSchema, {
   type FoodFormValues
-} from 'schemas/FoodResourceSchema';
+} from 'schemas/foodResourceSchema';
 import {
   foodDistributionTypeOptions,
   foodTypeOptions,
