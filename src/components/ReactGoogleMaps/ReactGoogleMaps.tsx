@@ -15,6 +15,7 @@ import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import useActiveFilters from 'hooks/useActiveFilters';
 import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
+import { IconButton } from '@mui/material';
 
 const style: CSSProperties = {
   width: '100%',
@@ -104,15 +105,15 @@ const ReactGoogleMaps = () => {
       {resources?.map((resource, index) => {
         return (
           <AdvancedMarker
-            data-testid={`data-cy-${index}`}
             key={resource.id}
-            onClick={() => onMarkerClick(resource)}
             position={{ lat: resource.latitude, lng: resource.longitude }}
-            // This is used for marker targeting as we are unable to add custom properties with this library.
-            // We should eventually replace this so that we can still enable the use of screen readers in the future.
-            title={`data-cy-${index}`}
           >
-            <img src={getMarkerIconSrc(resource) ?? ''} />
+            <IconButton
+              onClick={() => onMarkerClick(resource)}
+              data-testid={`data-cy-${index}`}
+            >
+              <img src={getMarkerIconSrc(resource) ?? ''} />
+            </IconButton>
           </AdvancedMarker>
         );
       })}
