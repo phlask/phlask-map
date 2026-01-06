@@ -1,4 +1,4 @@
-import { Map, Marker, useMap } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, Map, useMap } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties, useEffect } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
@@ -36,7 +36,7 @@ const ReactGoogleMaps = () => {
 
   const map = useMap();
 
-  const { data: resources } = useGetResourcesQuery({
+  const { data: resources = [] } = useGetResourcesQuery({
     resourceType,
     filters: activeFilters
   });
@@ -103,21 +103,26 @@ const ReactGoogleMaps = () => {
     >
       {resources?.map((resource, index) => {
         return (
-          <Marker
+          <AdvancedMarker
+            data-testid={`data-cy-${index}`}
             key={resource.id}
             onClick={() => onMarkerClick(resource)}
             position={{ lat: resource.latitude, lng: resource.longitude }}
-            icon={{ url: getMarkerIconSrc(resource) || '' }}
             // This is used for marker targeting as we are unable to add custom properties with this library.
             // We should eventually replace this so that we can still enable the use of screen readers in the future.
             title={`data-cy-${index}`}
-          />
+          >
+            <img src={getMarkerIconSrc(resource) ?? ''} />
+          </AdvancedMarker>
         );
       })}
-      {userLocation ? <Marker position={userLocation} /> : null}
+      {userLocation ? <AdvancedMarker position={userLocation} /> : null}
 
       {activeSearchLocation ? (
-        <Marker position={activeSearchLocation} title="data-cy-search-result" />
+        <AdvancedMarker
+          position={activeSearchLocation}
+          title="data-cy-search-result"
+        />
       ) : null}
     </Map>
   );
