@@ -8,6 +8,7 @@ import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 import AddResourceSuccessStep from './AddResourceSuccessStep/AddResourceSuccessStep';
 import { useQueryClient } from '@tanstack/react-query';
 import AddFoodForm from './AddFoodForm/AddFoodForm';
+import AddForageForm from './AddForageForm/AddForageForm';
 
 const AddResourceModal = () => {
   const queryClient = useQueryClient();
@@ -51,6 +52,10 @@ const AddResourceModal = () => {
 
       {resourceForm === ResourceType.FOOD ? (
         <AddFoodForm onGoBack={onGoBack} onComplete={onComplete} />
+      ) : null}
+
+      {resourceForm === ResourceType.FORAGE ? (
+        <AddForageForm onGoBack={onGoBack} onComplete={onComplete} />
       ) : null}
 
       {isCompleted && <AddResourceSuccessStep onClose={handleClose} />}
