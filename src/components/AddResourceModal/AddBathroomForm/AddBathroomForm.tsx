@@ -2,30 +2,29 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Stack } from '@mui/material';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
-import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
 import ResourceForm from 'components/AddResourceModal/ResourceForm';
-import foragingResourceSchema, {
-  type ForagingFormValues
-} from 'schemas/foragingResourceSchema';
-import { tagOptions, forageTypeOptions } from './choiceFieldOptions';
+import bathroomResourceSchema, {
+  type BathroomFormValues
+} from 'schemas/bathroomResourceSchema';
+import { tagOptions } from './choiceFieldOptions';
 
-type AddForageFormProps = {
+type AddBathroomFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
 };
 
-type FormValues = ForagingFormValues;
+type FormValues = BathroomFormValues;
 
-const TITLE = 'Add a Foraging Resource';
-const COLOR = '#5DA694';
-const SCHEMA = foragingResourceSchema;
+const TITLE = 'Add a Bathroom Resource';
+const COLOR = '#7C7C7C';
+const SCHEMA = bathroomResourceSchema;
 
-const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
+const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
 
@@ -81,18 +80,6 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
               />
               <ResourceEntryTypeField />
             </Stack>
-            <Stack
-              direction={{ sx: 'column', md: 'row' }}
-              gap={2}
-              justifyContent={{ sx: 'flex-start', md: 'center' }}
-            >
-              <FormMultipleChoiceField<FormValues>
-                name="forage.forage_type"
-                label="Forage Type"
-                options={forageTypeOptions}
-                fullWidth
-              />
-            </Stack>
           </>
         )}
         renderPageTwo={({ imageElement, shouldShowImageElement }) => (
@@ -104,7 +91,7 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
             >
               {shouldShowImageElement && imageElement}
               <FormCheckboxListField<FormValues>
-                name="forage.tags"
+                name="bathroom.tags"
                 label="Helpful info"
                 options={tagOptions}
                 labelPlacement="start"
@@ -125,4 +112,4 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
   );
 };
 
-export default AddForageForm;
+export default AddBathroomForm;

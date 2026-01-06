@@ -21,13 +21,17 @@ type AddWaterFormProps = {
 
 type FormValues = WaterFormValues;
 
+const TITLE = 'Add a Water Resource';
+const COLOR = '#5286E9';
+const SCHEMA = waterResourceSchema;
+
 const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
 
   const methods = useForm({
-    defaultValues: waterResourceSchema.parse({}),
-    resolver: zodResolver(waterResourceSchema)
+    defaultValues: SCHEMA.parse({}),
+    resolver: zodResolver(SCHEMA)
   });
 
   const onClose = () => {
@@ -42,8 +46,8 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FormValues>
-        title="Add a Water Resource"
-        color="#5286E9"
+        title={TITLE}
+        color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}
         onClose={onClose}

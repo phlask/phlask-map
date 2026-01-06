@@ -26,13 +26,17 @@ type AddFoodFormProps = {
 
 type FormValues = FoodFormValues;
 
+const TITLE = 'Add a Food Resource';
+const COLOR = '#FF9A55';
+const SCHEMA = foodResourceSchema;
+
 const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
 
   const methods = useForm({
-    defaultValues: foodResourceSchema.parse({}),
-    resolver: zodResolver(foodResourceSchema)
+    defaultValues: SCHEMA.parse({}),
+    resolver: zodResolver(SCHEMA)
   });
 
   const onClose = () => {
@@ -48,8 +52,8 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
     <FormProvider {...methods}>
       <ResourceForm<FoodFormValues>
         debug
-        title="Add a Food Resource"
-        color="#FF9A55"
+        title={TITLE}
+        color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}
         onClose={onClose}

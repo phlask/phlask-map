@@ -9,6 +9,7 @@ import AddResourceSuccessStep from './AddResourceSuccessStep/AddResourceSuccessS
 import { useQueryClient } from '@tanstack/react-query';
 import AddFoodForm from './AddFoodForm/AddFoodForm';
 import AddForageForm from './AddForageForm/AddForageForm';
+import AddBathroomForm from './AddBathroomForm/AddBathroomForm';
 
 const AddResourceModal = () => {
   const queryClient = useQueryClient();
@@ -56,6 +57,10 @@ const AddResourceModal = () => {
 
       {resourceForm === ResourceType.FORAGE ? (
         <AddForageForm onGoBack={onGoBack} onComplete={onComplete} />
+      ) : null}
+
+      {resourceForm === ResourceType.BATHROOM ? (
+        <AddBathroomForm onGoBack={onGoBack} onComplete={onComplete} />
       ) : null}
 
       {isCompleted && <AddResourceSuccessStep onClose={handleClose} />}
