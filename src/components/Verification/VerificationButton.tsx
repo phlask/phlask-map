@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import Dialog from '@mui/material/Dialog';
-import { updateResource } from '../../db';
+import { updateResource } from 'services/db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
 

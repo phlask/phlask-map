@@ -9,14 +9,15 @@ import FormResourceAddressField from 'components/forms/FormAddressField/FormReso
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
 import ResourceForm from '../ResourceForm';
-import foodResourceSchema from 'schemas/foodResourceSchema';
+import foodResourceSchema, {
+  type FoodFormValues
+} from 'schemas/FoodResourceSchema';
 import {
   foodDistributionTypeOptions,
   foodTypeOptions,
   organizationTypeOptions,
   tags
 } from './choiceFieldOptions';
-import type { FoodFormValues } from 'schemas/foodResourceSchema';
 import FormSelectField from 'components/forms/FormSelectField/FormSelectField';
 
 type AddFoodFormProps = {
@@ -51,7 +52,6 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FoodFormValues>
-        debug
         title={TITLE}
         color={COLOR}
         onSubmit={onSubmit}

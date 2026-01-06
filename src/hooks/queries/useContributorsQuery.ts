@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { minutesToMilliseconds } from 'date-fns';
-import { getContributors } from 'db';
+import { getContributors } from 'services/db';
 import type { Contributor } from 'types/Contributor';
 import shuffleArray from 'utils/shuffleArray';
 

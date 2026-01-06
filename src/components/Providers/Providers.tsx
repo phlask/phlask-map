@@ -4,7 +4,7 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import type { PropsWithChildren } from 'react';
 import theme from 'theme';
 import ToolbarContextProvider from './ToolbarContextProvider';
-import queryClient from 'queryClient';
+import queryClient from 'services/queryClient';
 import ActiveSearchLocationProvider from './ActiveSearchLocationProvider';
 
 const Providers = ({ children }: PropsWithChildren) => (

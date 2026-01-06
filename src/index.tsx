@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot, type Container } from 'react-dom/client';
 import Providers from 'components/Providers/Providers';
 import { RouterProvider } from 'react-router';
-import { router } from 'router';
+import { router } from 'services/router';
 
 let basepath = '';
 // Test-specific routing logic

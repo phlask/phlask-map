@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { addResource } from 'db';
+import { addResource } from 'services/db';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
 const useAddResourceMutation = () => {

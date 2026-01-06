@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getResources, type FetchResourcesOptions } from 'db';
+import { getResources, type FetchResourcesOptions } from 'services/db';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import testData from 'testData/functionalTest';
 import { minutesToMilliseconds } from 'date-fns';

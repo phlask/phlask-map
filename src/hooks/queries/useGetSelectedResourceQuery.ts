@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import useSelectedResource from 'hooks/useSelectedResource';
-import { getResourceById } from 'db';
+import { getResourceById } from 'services/db';
 
 export const useGetSelectedResourceQuery = () => {
   const { selectedResource } = useSelectedResource();

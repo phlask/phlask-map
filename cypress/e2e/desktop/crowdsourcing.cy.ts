@@ -1,4 +1,4 @@
-// Desktop crowdsourcing form tests
+// Desktop crowd-sourcing form tests
 // Tests form submission functionality for all resource types on desktop
 describe('crowdsourcing form', () => {
   function clickInputByName(name: string) {
