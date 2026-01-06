@@ -13,13 +13,13 @@ import { IconButton } from '@mui/material';
 import CloseButton from '../CloseButton/CloseButton';
 import noop from 'utils/noop';
 
-type AddResourceSuccessMobile = {
+type AddResourceSuccessMobileProps = {
   onClose?: VoidFunction;
 };
 
 const AddResourceSuccessMobile = ({
   onClose = noop
-}: AddResourceSuccessMobile) => {
+}: AddResourceSuccessMobileProps) => {
   const onShare = () => {
     if (!navigator.canShare()) {
       return;
@@ -38,7 +38,7 @@ const AddResourceSuccessMobile = ({
         alignItems: 'center',
         justifyContent: 'space-between',
         textAlign: 'center',
-        paddingBlock: '100px'
+        paddingBlock: '20px'
       }}
     >
       <CloseButton onClick={onClose} color="white" />

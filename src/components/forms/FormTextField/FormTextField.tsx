@@ -1,10 +1,16 @@
 import { TextField } from '@mui/material';
 import type { ReactNode } from 'react';
-import { useFormContext, type FieldValues, type Path } from 'react-hook-form';
+import {
+  useFormContext,
+  useFormState,
+  type FieldValues,
+  type Path
+} from 'react-hook-form';
 
 type FormTextFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   label: ReactNode;
+  disabled?: boolean;
   helperText?: ReactNode;
   fullWidth?: boolean;
   required?: boolean;
@@ -16,21 +22,26 @@ const FormTextField = <Values extends FieldValues>({
   name,
   label,
   helperText,
+  disabled = false,
   required = false,
   fullWidth = false,
   multiline = false,
   minRows = undefined
 }: FormTextFieldProps<Values>) => {
   const { register, getFieldState } = useFormContext<Values>();
-  const fieldState = getFieldState(name);
-  const isError = Boolean(fieldState.error);
+  const formState = useFormState<Values>({
+    name,
+    disabled
+  });
+  const { invalid, error } = getFieldState(name, formState);
+
   return (
     <TextField
-      {...register(name, { required })}
+      {...register(name, { required, disabled })}
       label={`${label}${required ? '*' : ''}`}
-      helperText={fieldState.error?.message || helperText || ' '}
+      helperText={error?.message || helperText || ' '}
       fullWidth={fullWidth}
-      error={isError}
+      error={invalid}
       multiline={multiline}
       minRows={minRows}
     />

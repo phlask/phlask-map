@@ -77,27 +77,25 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
               justifyContent={{ sx: 'flex-start', md: 'center' }}
             >
               <FormTextField<FormValues>
-                name="description"
-                label="Description"
+                name="food.organization_name"
+                label="Organization Name"
                 fullWidth
               />
-              <ResourceEntryTypeField />
+              <FormSelectField<FormValues>
+                name="food.organization_type"
+                label="Organization Type"
+                options={organizationTypeOptions}
+                fullWidth
+              />
             </Stack>
             <Stack
               direction={{ sx: 'column', md: 'row' }}
               gap={2}
               justifyContent={{ sx: 'flex-start', md: 'center' }}
             >
-              <FormMultipleChoiceField<FormValues>
-                name="food.food_type"
-                label="Food Type"
-                options={foodTypeOptions}
-                fullWidth
-              />
-              <FormMultipleChoiceField<FormValues>
-                name="food.distribution_type"
-                label="Distribution Type"
-                options={foodDistributionTypeOptions}
+              <FormTextField<FormValues>
+                name="food.organization_url"
+                label="Organization Website"
                 fullWidth
               />
             </Stack>
@@ -125,29 +123,30 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
               justifyContent={{ sx: 'flex-start', md: 'center' }}
             >
               <FormTextField<FormValues>
-                name="food.organization_name"
-                label="Organization Name"
+                name="description"
+                label="Description"
                 fullWidth
               />
-              <FormSelectField<FormValues>
-                name="food.organization_type"
-                label="Organization Type"
-                options={organizationTypeOptions}
-                fullWidth
-              />
+              <ResourceEntryTypeField />
             </Stack>
             <Stack
               direction={{ sx: 'column', md: 'row' }}
               gap={2}
               justifyContent={{ sx: 'flex-start', md: 'center' }}
             >
-              <FormTextField<FormValues>
-                name="food.organization_url"
-                label="Organization Website"
+              <FormMultipleChoiceField<FormValues>
+                name="food.food_type"
+                label="Food Type"
+                options={foodTypeOptions}
+                fullWidth
+              />
+              <FormMultipleChoiceField<FormValues>
+                name="food.distribution_type"
+                label="Distribution Type"
+                options={foodDistributionTypeOptions}
                 fullWidth
               />
             </Stack>
-            <Divider />
             <FormTextField<FormValues>
               name="guidelines"
               label="Guidelines"

@@ -1,4 +1,11 @@
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Toolbar,
+  Typography
+} from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
 import CloseButton from './CloseButton/CloseButton';
 import { useState, type ReactNode } from 'react';
@@ -17,6 +24,7 @@ import FormImageUploadField from 'components/forms/FormImageUploadField/FormImag
 type RenderFormPageFnConfig = {
   imageElement: ReactNode;
   shouldShowImageElement: boolean;
+  disabled?: boolean;
 };
 
 type EnderFormPageFn = (config: RenderFormPageFnConfig) => ReactNode;
@@ -95,16 +103,25 @@ const ResourceForm = <Values extends FieldValues>({
   return (
     <Box justifyContent="center" overflow="none">
       <Box
-        sx={{
+        sx={theme => ({
           display: 'flex',
           flexDirection: 'row',
-          alignItems: isMobile ? 'flex-end' : 'center',
-          justifyContent: isMobile ? null : 'center',
-          padding: isMobile ? '0px 20px 10px' : '20px 0',
-          height: isMobile ? '88px' : '64px',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          paddingBlock: '10px',
+
+          minHeight: '64px',
           backgroundColor: color,
-          position: 'relative'
-        }}
+          position: 'sticky',
+          top: 0,
+          zIndex: theme.zIndex.appBar,
+          [theme.breakpoints.up('md')]: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingBlock: '20px',
+            paddingInline: 0
+          }
+        })}
       >
         <Typography
           sx={{
@@ -147,7 +164,8 @@ const ResourceForm = <Values extends FieldValues>({
                 <Stack gap={2}>
                   {renderPageTwo({
                     shouldShowImageElement: !isMobile,
-                    imageElement
+                    imageElement,
+                    disabled: !shouldShowPageTwo
                   })}
                 </Stack>
               ) : null}
@@ -164,7 +182,17 @@ const ResourceForm = <Values extends FieldValues>({
               ) : null}
             </Stack>
             {!isMobile ? (
-              <Stack direction="row" justifyContent="center" gap={1}>
+              <Toolbar
+                sx={theme => ({
+                  position: 'sticky',
+                  bottom: -20,
+                  bgcolor: 'common.white',
+                  justifyContent: 'center',
+                  gap: 1,
+                  flex: 1,
+                  zIndex: theme.zIndex.appBar
+                })}
+              >
                 <IconButton
                   type="button"
                   color="primary"
@@ -183,7 +211,7 @@ const ResourceForm = <Values extends FieldValues>({
                 >
                   <ArrowForwardIosIcon />
                 </IconButton>
-              </Stack>
+              </Toolbar>
             ) : null}
           </Stack>
         </form>

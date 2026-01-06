@@ -9,7 +9,17 @@ const foodResourceSchema = baseResourceSchema.extend({
       food_type: z.array(z.enum(['PERISHABLE', 'NON_PERISHABLE', 'PREPARED'])),
       distribution_type: z.array(z.enum(['EAT_ON_SITE', 'DELIVERY', 'PICKUP'])),
       organization_name: z.string(),
-      organization_url: z.url(),
+      organization_url: z
+        .union([
+          z
+            .url({
+              protocol: /^https?$/,
+              hostname: z.regexes.domain
+            })
+            .toLowerCase(),
+          z.literal('')
+        ])
+        .default(''),
       organization_type: z.enum([
         'GOVERNMENT',
         'BUSINESS',

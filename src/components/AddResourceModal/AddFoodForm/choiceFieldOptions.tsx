@@ -66,8 +66,18 @@ export const tags = [
     value: 'WHEELCHAIR_ACCESSIBLE'
   },
   {
-    key: 'FILTERED',
-    label: 'Filtered water',
-    value: 'FILTERED'
+    key: 'ID_REQUIRED',
+    label: 'ID Required',
+    value: 'ID_REQUIRED'
+  },
+  {
+    key: 'YOUTH_ONLY',
+    label: 'Youth (under 18) only',
+    value: 'YOUTH_ONLY'
+  },
+  {
+    key: 'COMMUNITY_FRIDGE',
+    label: 'Community fridges, etc.',
+    value: 'COMMUNITY_FRIDGE'
   }
 ] satisfies FormMultipleChoiceFieldOption[];
