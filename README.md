@@ -44,9 +44,9 @@ Code behind the PHLASK Web Map
 
 GitHub Codespaces provides you with a remote development environment without needing to install anything locally. You can also connect to your Codespace from VSCode, if desired. A default codespace configuration in the `.devcontainer/devcontainer.json` file has been prepared that will ensure your codespace has everything needed to run PHLASK. Once the codespace has started, you should be able to use the Terminal window in the bottom to run `pnpm start`. That will load a local development copy of the PHLASK site for you to test with.
 
-To learn more about Codespaces, review this page: https://github.com/features/codespaces
+To learn more about Codespaces, review this page: <https://github.com/features/codespaces>
 
-As of this writing, PHLASK does not fund these codespaces. However, GitHub offers up to 60 hours/month of free use for codespaces. For more details on Codespace pricing, review this page: https://docs.github.com/en/billing/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts
+As of this writing, PHLASK does not fund these codespaces. However, GitHub offers up to 60 hours/month of free use for codespaces. For more details on Codespace pricing, review this page: <https://docs.github.com/en/billing/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts>
 
 Note that `core hours per month` means each core on your codespace consumes independent hours from your code hour limit. If you choose a 2-core space (sufficient for PHLASK), you use 2 core-hours every hour from the free `core hours per month` allowance.
 
@@ -149,17 +149,17 @@ The technical goals for this project are:
 
 The PHLASK Map runs on a Single Page Application built with:
 
-- ReactJS (https://react.dev)
+- ReactJS (<https://react.dev>)
   - Composes UI component written in JavaScript into a reactive web application
-- TanStack Query (https://tanstack.com/query/latest/docs/framework/react)
+- TanStack Query (<https://tanstack.com/query/latest/docs/framework/react>)
   - Provides a data fetching solution for React
-- MUI (https://mui.com/)
+- MUI (<https://mui.com/>)
   - Provides pre-built components and simplifies consistent styling across the project
-- GitHub Actions (https://github.com/features/actions)
+- GitHub Actions (<https://github.com/features/actions>)
   - Runs the required compute to build the site on ReactJS
-- Storybook (https://storybook.js.org/)
+- Storybook (<https://storybook.js.org/>)
   - Enables developers to develop, document, and test components in a sandbox environment
-- Supabase (https://supabase.com/)
+- Supabase (<https://supabase.com/>)
   - Our Database service, we use Supabase directly in the frontend to query and mutate our database
 
 ## Testing

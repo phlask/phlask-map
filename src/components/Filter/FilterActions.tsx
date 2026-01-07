@@ -12,10 +12,10 @@ const FilterActions = () => {
         background: 'white'
       }}
     >
-      <Button type="reset" data-cy="button-clear-all-mobile">
+      <Button type="reset" data-cy="filter-clear-all">
         Clear All
       </Button>
-      <Button variant="outlined" type="submit">
+      <Button data-cy="filter-submit-button" variant="outlined" type="submit">
         Apply
       </Button>
     </Stack>

@@ -4,7 +4,7 @@ services:
     stdin_open: true
     ports:
       - '5173:5173'
-    entrypoint: bash -c "pnpm install && pnpm start"
+    entrypoint: bash -c "pnpm install && pnpm start --host"
     volumes:
       - '.:/usr/src/app'
   bash:
