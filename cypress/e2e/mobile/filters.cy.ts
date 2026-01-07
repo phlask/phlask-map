@@ -1,19 +1,21 @@
 // Helper functions for filter tests
-const switchToResourceType = (resourceType) => {
-  cy.get("[data-cy=button-resource-type-menu]").click();
-  cy.get(`[data-cy=button-resource-${resourceType.toLowerCase()}]`).first().click({ force: true });
+const switchToResourceType = (resourceType: string) => {
+  cy.get('[data-cy=button-resource-type-menu]').click();
+  cy.get(`[data-cy=button-resource-${resourceType.toLowerCase()}]`)
+    .first()
+    .click({ force: true });
 };
 
 const openFilterMenu = () => {
-  cy.get("[data-cy=button-filter-mobile]").click();
+  cy.get('[data-cy=button-filter-mobile]').click();
   cy.get('[data-cy*="filter-option-"]').should('be.visible');
 };
 
 const closeFilterMenu = () => {
-  cy.get("[data-cy=button-filter-mobile]").click({ force: true });
+  cy.get('[data-cy=button-filter-mobile]').click({ force: true });
 };
 
-const applyFilters = (filters) => {
+const applyFilters = (filters: string[]) => {
   openFilterMenu();
   filters.forEach(filter => {
     cy.get(`[data-cy="filter-option-${filter}"]`).click();
@@ -29,29 +31,32 @@ const clearAllFilters = () => {
 
 // Checks the Resource Count div in the filter view for the expected number of resources shown
 const getResourceCount = () => {
-  return cy.contains("Resources:").should("exist").then(($el) => {
-    return parseInt($el.text().split("Resources: ")[1]);
-  });
+  return cy
+    .contains('Resources:')
+    .should('exist')
+    .then($el => {
+      return parseInt($el.text().split('Resources: ')[1]);
+    });
 };
 
 const waitForResourcesLoad = () => {
-  cy.get('[title^="data-cy-"]').should("exist");
-  cy.get('[title^="data-cy-"]').should("have.length.greaterThan", 0);
+  cy.get('[title^="data-cy-"]').should('exist');
+  cy.get('[title^="data-cy-"]').should('have.length.greaterThan', 0);
 };
 
 // Water resource filter tests
-describe("Water resource filtering", () => {
+describe('Water resource filtering', () => {
   beforeEach(() => {
-    cy.viewport("iphone-x");
-    cy.mockGeolocation();
-    cy.visit("/");
-    cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("water");
+    cy.viewport('iphone-x');
+    cy.mockGeoLocation();
+    cy.visit('/');
+    cy.get('[data-cy=button-filter-mobile]').should('exist');
+    switchToResourceType('water');
     waitForResourcesLoad();
   });
 
-  it("should filter water sites by dispenser type and verify resource count changes", () => {
-    let initialCount;
+  it('should filter water sites by dispenser type and verify resource count changes', () => {
+    let initialCount: number;
 
     // Verify initial state - has resources
     getResourceCount().then(count => {
@@ -60,7 +65,7 @@ describe("Water resource filtering", () => {
     });
 
     // Apply dispenser type filter
-    applyFilters(["Bottle filler"]);
+    applyFilters(['Bottle filler']);
 
     // Verify filter requirements
     getResourceCount().then(filteredCount => {
@@ -76,34 +81,14 @@ describe("Water resource filtering", () => {
     });
   });
 
-  it("should filter water sites by features and verify resource count changes", () => {
-    let initialCount;
+  it('should filter water sites by features and verify resource count changes', () => {
+    let initialCount: number;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["ADA accessible"]);
-
-    getResourceCount().then(filteredCount => {
-      expect(filteredCount).to.be.greaterThan(0);
-      expect(filteredCount).to.be.lessThan(initialCount);
-
-      // Verify markers on map match the filtered count  
-      cy.get('[title^="data-cy-"]').then($markers => {
-        expect($markers.length).to.equal(filteredCount);
-      });
-    });
-  });
-
-  it("should filter water sites by entry type and verify resource count changes", () => {
-    let initialCount;
-    getResourceCount().then(count => {
-      initialCount = count;
-      expect(initialCount).to.be.greaterThan(0);
-    });
-
-    applyFilters(["Open Access"]);
+    applyFilters(['ADA accessible']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -116,8 +101,28 @@ describe("Water resource filtering", () => {
     });
   });
 
-  it("should filter water sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
-    let initialCount;
+  it('should filter water sites by entry type and verify resource count changes', () => {
+    let initialCount: number;
+    getResourceCount().then(count => {
+      initialCount = count;
+      expect(initialCount).to.be.greaterThan(0);
+    });
+
+    applyFilters(['Open Access']);
+
+    getResourceCount().then(filteredCount => {
+      expect(filteredCount).to.be.greaterThan(0);
+      expect(filteredCount).to.be.lessThan(initialCount);
+
+      // Verify markers on map match the filtered count
+      cy.get('[title^="data-cy-"]').then($markers => {
+        expect($markers.length).to.equal(filteredCount);
+      });
+    });
+  });
+
+  it('should filter water sites by multiple criteria, verify resource count changes, and verify Clear All restores original count', () => {
+    let initialCount: number;
 
     // Verify initial state
     getResourceCount().then(count => {
@@ -126,7 +131,7 @@ describe("Water resource filtering", () => {
     });
 
     // Apply multiple filter criteria
-    applyFilters(["Bottle filler", "ADA accessible", "Open Access"]);
+    applyFilters(['Bottle filler', 'ADA accessible', 'Open Access']);
 
     // Verify all filter requirements for combination
     getResourceCount().then(filteredCount => {
@@ -156,24 +161,24 @@ describe("Water resource filtering", () => {
 });
 
 // Food resource filter tests
-describe("Food resource filtering", () => {
+describe('Food resource filtering', () => {
   beforeEach(() => {
-    cy.viewport("iphone-x");
-    cy.mockGeolocation();
-    cy.visit("/");
-    cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("food");
+    cy.viewport('iphone-x');
+    cy.mockGeoLocation();
+    cy.visit('/');
+    cy.get('[data-cy=button-filter-mobile]').should('exist');
+    switchToResourceType('food');
     waitForResourcesLoad();
   });
 
-  it("should filter food sites by food type and verify resource count changes", () => {
-    let initialCount;
+  it('should filter food sites by food type and verify resource count changes', () => {
+    let initialCount: number;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Perishable"]);
+    applyFilters(['Perishable']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -186,14 +191,14 @@ describe("Food resource filtering", () => {
     });
   });
 
-  it("should filter food sites by distribution type and verify resource count changes", () => {
-    let initialCount;
+  it('should filter food sites by distribution type and verify resource count changes', () => {
+    let initialCount: number;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Eat on site"]);
+    applyFilters(['Eat on site']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -206,14 +211,14 @@ describe("Food resource filtering", () => {
     });
   });
 
-  it("should filter food sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
-    let initialCount;
+  it('should filter food sites by multiple criteria, verify resource count changes, and verify Clear All restores original count', () => {
+    let initialCount: number;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Non-perishable", "Pick up"]);
+    applyFilters(['Non-perishable', 'Pick up']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -242,24 +247,24 @@ describe("Food resource filtering", () => {
 });
 
 // Foraging resource filter tests
-describe("Foraging resource filtering", () => {
+describe('Foraging resource filtering', () => {
   beforeEach(() => {
-    cy.viewport("iphone-x");
-    cy.mockGeolocation();
-    cy.visit("/");
-    cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("forage");
+    cy.viewport('iphone-x');
+    cy.mockGeoLocation();
+    cy.visit('/');
+    cy.get('[data-cy=button-filter-mobile]').should('exist');
+    switchToResourceType('forage');
     waitForResourcesLoad();
   });
 
-  it("should filter foraging sites by forage type and verify resource count changes", () => {
+  it('should filter foraging sites by forage type and verify resource count changes', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Fruit"]);
+    applyFilters(['Fruit']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -272,14 +277,14 @@ describe("Foraging resource filtering", () => {
     });
   });
 
-  it("should filter foraging sites by features and verify resource count changes", () => {
+  it('should filter foraging sites by features and verify resource count changes', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Medicinal"]);
+    applyFilters(['Medicinal']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -292,14 +297,14 @@ describe("Foraging resource filtering", () => {
     });
   });
 
-  it("should filter foraging sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
+  it('should filter foraging sites by multiple criteria, verify resource count changes, and verify Clear All restores original count', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Nut", "Leaves"]);
+    applyFilters(['Nut', 'Leaves']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -328,24 +333,24 @@ describe("Foraging resource filtering", () => {
 });
 
 // Bathroom resource filter tests
-describe("Bathroom resource filtering", () => {
+describe('Bathroom resource filtering', () => {
   beforeEach(() => {
-    cy.viewport("iphone-x");
+    cy.viewport('iphone-x');
     cy.mockGeolocation();
-    cy.visit("/");
-    cy.get("[data-cy=button-filter-mobile]").should("exist");
-    switchToResourceType("bathroom");
+    cy.visit('/');
+    cy.get('[data-cy=button-filter-mobile]').should('exist');
+    switchToResourceType('bathroom');
     waitForResourcesLoad();
   });
 
-  it("should filter bathroom sites by ADA accessibility and verify resource count changes", () => {
+  it('should filter bathroom sites by ADA accessibility and verify resource count changes', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["ADA accessible"]);
+    applyFilters(['ADA accessible']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -358,14 +363,14 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by gender neutral feature and verify resource count changes", () => {
+  it('should filter bathroom sites by gender neutral feature and verify resource count changes', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Gender neutral"]);
+    applyFilters(['Gender neutral']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -378,14 +383,14 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by changing table amenity and verify resource count changes", () => {
+  it('should filter bathroom sites by changing table amenity and verify resource count changes', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["Changing table"]);
+    applyFilters(['Changing table']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -398,14 +403,14 @@ describe("Bathroom resource filtering", () => {
     });
   });
 
-  it("should filter bathroom sites by multiple criteria, verify resource count changes, and verify Clear All restores original count", () => {
+  it('should filter bathroom sites by multiple criteria, verify resource count changes, and verify Clear All restores original count', () => {
     let initialCount;
     getResourceCount().then(count => {
       initialCount = count;
       expect(initialCount).to.be.greaterThan(0);
     });
 
-    applyFilters(["ADA accessible", "Gender neutral"]);
+    applyFilters(['ADA accessible', 'Gender neutral']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.greaterThan(0);
@@ -434,17 +439,17 @@ describe("Bathroom resource filtering", () => {
 });
 
 // Cross-resource type filter persistence tests
-describe("Filter persistence across resource types", () => {
+describe('Filter persistence across resource types', () => {
   beforeEach(() => {
-    cy.viewport("iphone-x");
+    cy.viewport('iphone-x');
     cy.mockGeolocation();
-    cy.visit("/");
-    cy.get("[data-cy=button-filter-mobile]").should("exist");
+    cy.visit('/');
+    cy.get('[data-cy=button-filter-mobile]').should('exist');
   });
 
-  it("should clear filters when switching resource types", () => {
+  it('should clear filters when switching resource types', () => {
     // Start with water and apply filters
-    switchToResourceType("water");
+    switchToResourceType('water');
     waitForResourcesLoad();
 
     let waterInitialCount;
@@ -452,14 +457,14 @@ describe("Filter persistence across resource types", () => {
       waterInitialCount = count;
     });
 
-    applyFilters(["Bottle filler"]);
+    applyFilters(['Bottle filler']);
 
     getResourceCount().then(filteredCount => {
       expect(filteredCount).to.be.lessThan(waterInitialCount);
     });
 
     // Switch to food - filters should be cleared
-    switchToResourceType("food");
+    switchToResourceType('food');
     waitForResourcesLoad();
 
     let foodInitialCount;
