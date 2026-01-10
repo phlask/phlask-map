@@ -17,4 +17,4 @@ const config: Cypress.PluginConfig = () => {
   // `config` is the resolved Cypress config
 };
 
-module.exports = config;
+export default config;

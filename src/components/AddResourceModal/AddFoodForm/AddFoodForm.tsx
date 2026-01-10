@@ -88,6 +88,7 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
               <FormSelectField<FormValues>
                 name="food.organization_type"
                 label="Organization Type"
+                data-cy="select-organization-type"
                 options={organizationTypeOptions}
                 fullWidth
               />

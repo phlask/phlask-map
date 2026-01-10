@@ -17,11 +17,20 @@ type AddResourceSuccessMobileProps = {
   onClose?: VoidFunction;
 };
 
+const getSupportsShare = () => {
+  if (typeof navigator.canShare !== 'function') {
+    return false;
+  }
+
+  return navigator.canShare();
+};
+
 const AddResourceSuccessMobile = ({
   onClose = noop
 }: AddResourceSuccessMobileProps) => {
+  const canShare = getSupportsShare();
   const onShare = () => {
-    if (!navigator.canShare()) {
+    if (!canShare) {
       return;
     }
 
@@ -86,7 +95,7 @@ const AddResourceSuccessMobile = ({
                 gap: '20px'
               }}
             >
-              {navigator.canShare() ? (
+              {canShare ? (
                 <IconButton
                   sx={theme => ({
                     fontSize: theme.typography.pxToRem(24),

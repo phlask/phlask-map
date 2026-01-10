@@ -119,7 +119,7 @@ const FormResourceAddressField = ({
             'data-cy': 'form-resource-address-input'
           }}
           label={`${label}`}
-          required
+          slotProps={{ inputLabel: { required: true } }}
           inputRef={inputRef}
           error={Boolean(error)}
           helperText={
