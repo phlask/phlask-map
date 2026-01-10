@@ -111,10 +111,15 @@ const FormResourceAddressField = ({
 
         onSelect(value.toPlace());
       }}
-      renderInput={params => (
+      renderInput={({ inputProps, ...params }) => (
         <TextField
           {...params}
-          label={`${label}*`}
+          inputProps={{
+            ...inputProps,
+            'data-cy': 'form-resource-address-input'
+          }}
+          label={`${label}`}
+          required
           inputRef={inputRef}
           error={Boolean(error)}
           helperText={

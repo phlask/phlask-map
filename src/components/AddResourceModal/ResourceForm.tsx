@@ -171,6 +171,7 @@ const ResourceForm = <Values extends FieldValues>({
               ) : null}
               {isMobile ? (
                 <Button
+                  data-cy="submit-resource-mobile"
                   loading={isSubmitting}
                   sx={{ background: color, textTransform: 'capitalize' }}
                   variant="contained"
@@ -204,6 +205,7 @@ const ResourceForm = <Values extends FieldValues>({
                   <ArrowBackIosIcon />
                 </IconButton>
                 <IconButton
+                  data-cy="submit-resource-desktop"
                   loading={isSubmitting}
                   type="submit"
                   color="primary"

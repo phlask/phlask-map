@@ -9,7 +9,7 @@ import {
 import { type ReactNode } from 'react';
 import { useFormContext, type FieldValues, type Path } from 'react-hook-form';
 
-type FormSelectFieldProps<Values extends FieldValues> = {
+type FormCheckboxListFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   label: ReactNode;
   helperText?: string;
@@ -26,15 +26,14 @@ const FormCheckboxListField = <Values extends FieldValues>({
   helperText,
   labelPlacement = 'end',
   options = []
-}: FormSelectFieldProps<Values>) => {
+}: FormCheckboxListFieldProps<Values>) => {
   const { register } = useFormContext<Values>();
   const field = register(name);
 
   return (
     <FormControl fullWidth={fullWidth}>
-      <FormLabel>
+      <FormLabel component="legend" required={field.required}>
         {label}
-        {field.required ? '*' : ''}
       </FormLabel>
       <FormGroup>
         {options.map(option => (

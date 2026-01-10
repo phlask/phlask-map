@@ -33,6 +33,7 @@ const ResourceEntryTypeField = () => {
       options={entryTypeOptions}
       fullWidth
       required
+      data-cy="resource-entry-type-field"
     />
   );
 };

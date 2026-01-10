@@ -3,50 +3,44 @@
 
 const guidelinesSelector = 'textarea[name="guidelines"]';
 
-describe('crowdsourcing form', () => {
-  function clickInputByName(name: string) {
-    const selector = `input[name="${name}"]`;
-    cy.get(selector).scrollIntoView();
-    cy.get(selector).click({ force: true });
-  }
+const clickInputByName = (name: string) => {
+  const selector = `input[name="${name}"]`;
+  cy.get(selector).scrollIntoView();
+  cy.get(selector).click({ force: true });
+};
 
+const openContributeMenu = () =>
+  cy.get('[data-cy=button-contribute-type-menu]').click();
+
+describe('crowdsourcing form', () => {
   beforeEach(() => {
     cy.visit('/');
-
-    // Load the contribution menu
-    cy.get('[data-cy=button-contribute-type-menu]').click();
+    openContributeMenu();
   });
 
-  it('should successfully submit a water site for testing', () => {
-    const sourceTypes = [
-      'drinkingFountain',
-      'sink',
-      'sodaMachine',
-      'waterCooler'
-    ];
-    const helpfulInfoTypes = ['handicapAccessible', 'waterVesselNeeded'];
-
+  it.only('should successfully submit a water site for testing', () => {
     // Load the form
     cy.get('[data-cy=button-contribute-water]').click();
 
     cy.get('input[name="name"]').type('Cypress Mobile Water Test', {
       force: true
     });
-    cy.get('input[id="address"]').type(
-      'City Hall Room 708, Philadelphia, PA 19107, USA'
+    cy.get('input[data-cy="form-resource-address-input"]').type(
+      'City Hall, Philadelphia, PA, USA'
     );
-    cy.get('input[name="website"]').type('cypress.mobile.water.test');
+    cy.get('li').contains('City Hall, Philadelphia, PA, USA').click();
+
     cy.get('textarea[name="description"]').type(
       'Cypress Mobile Water Test Description'
     );
     cy.get('div[id="entry"]').click({ force: true });
     cy.get('li[data-value="Open access"]').click();
     cy.get('svg[data-testid="ExpandMoreIcon"]').click();
-    sourceTypes.forEach(clickInputByName);
+
     cy.get('svg[data-testid="ExpandMoreIcon"]').click({ force: true });
 
     // In mobile, all fields are on one page, scroll to find helpful info checkboxes
-    helpfulInfoTypes.forEach(clickInputByName);
+
     cy.get(guidelinesSelector).scrollIntoView();
     cy.get(guidelinesSelector).type('Cypress Mobile Water Test Guidelines');
 

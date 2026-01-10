@@ -38,9 +38,10 @@ const FormTextField = <Values extends FieldValues>({
   return (
     <TextField
       {...register(name, { required, disabled })}
-      label={`${label}${required ? '*' : ''}`}
+      label={label}
       helperText={error?.message || helperText || ' '}
       fullWidth={fullWidth}
+      required={required}
       error={invalid}
       multiline={multiline}
       minRows={minRows}

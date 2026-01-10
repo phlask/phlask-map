@@ -1,46 +1,57 @@
 // Desktop crowd-sourcing form tests
 // Tests form submission functionality for all resource types on desktop
-describe('crowdsourcing form', () => {
-  function clickInputByName(name: string) {
-    cy.get(`input[name="${name}"]`).click({ force: true });
-  }
+const clickInputByName = (name: string) => {
+  cy.get(`input[name="${name}"]`).click({ force: true });
+};
 
+const nextPageOrSubmit = () =>
+  cy.get('button[data-cy="submit-resource-desktop"]').click();
+
+describe('crowdsourcing form', () => {
   beforeEach(() => {
     cy.visit('/');
-
-    // Load the contribution menu
     cy.get('[data-cy=button-contribute-type-menu]').click();
+
+    cy.intercept(
+      {
+        method: 'POST',
+        url: '/rest/v1/resources'
+      },
+      {
+        statusCode: 201,
+        body: null
+      }
+    ).as('resourceSubmitRequest');
   });
 
-  it('should successfully submit a water site for testing', () => {
-    const sourceTypes = [
-      'drinkingFountain',
-      'sink',
-      'sodaMachine',
-      'waterCooler'
-    ];
-    const helpfulInfoTypes = ['handicapAccessible', 'waterVesselNeeded'];
-
+  it('should successfully submit a water site', () => {
     // Load the form
     cy.get('[data-cy=button-contribute-water]').click();
-
-    cy.get('input[name="name"]').type('Cypress Test Name', { force: true });
-    cy.get('input[id="address"]').type(
-      'City Hall Room 708, Philadelphia, PA 19107, USA'
+    cy.get('input[name="name"]').type('Cypress Test Name');
+    cy.get('input[data-cy="form-resource-address-input"]').type(
+      'City Hall, Philadelphia, PA, USA'
     );
-    cy.get('input[name="website"]').type('cypress.test');
-    cy.get('textarea[name="description"]').type('Cypress Test Description');
-    cy.get('div[id="entry"]').click({ force: true });
-    cy.get('li[data-value="Open access"]').click();
-    cy.get('svg[data-testid="ExpandMoreIcon"]').click();
-    sourceTypes.forEach(clickInputByName);
-    cy.get('svg[data-testid="ExpandMoreIcon"]').click({ force: true });
-    cy.get('svg[data-testid="ArrowForwardIosIcon"]').click();
-    helpfulInfoTypes.forEach(clickInputByName);
+    cy.get('li').contains('City Hall, Philadelphia, PA, USA').click();
+
+    cy.get('input[name="description"]').type('Cypress Test Description');
+    cy.get('div[data-cy="resource-entry-type-field"]').click();
+    cy.get('li[data-value="RESTRICTED"]').click();
+
+    cy.get('input[name="water.dispenser_type"]').type('Sink');
+    cy.get('input[name="water.dispenser_type"]').press(
+      Cypress.Keyboard.Keys.DOWN
+    );
+    cy.press(Cypress.Keyboard.Keys.ENTER);
+
+    nextPageOrSubmit();
+
+    cy.get('label').contains('Wheelchair accessible').click();
+
     cy.get('textarea[name="guidelines"]').type('Cypress Test');
-    // TODO Uncomment this and validate the post-submission screen content once
-    //      we have implemented a mechanism to ensure tests do not actually send data to our live DB.
-    // cy.get('input[type="submit').click()
+
+    nextPageOrSubmit();
+
+    cy.contains('Thank you for your submission!').should('exist');
   });
 
   it('should successfully submit a food site for testing', () => {

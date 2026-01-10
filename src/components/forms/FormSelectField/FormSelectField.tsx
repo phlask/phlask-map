@@ -21,6 +21,7 @@ type FormSelectFieldProps<Values extends FieldValues> = {
   placeholder?: string;
   fullWidth?: boolean;
   required?: boolean;
+  'data-cy'?: string;
 };
 
 const FormSelectField = <Values extends FieldValues>({
@@ -30,6 +31,7 @@ const FormSelectField = <Values extends FieldValues>({
   options = [],
   fullWidth = false,
   required = false,
+  'data-cy': dataCy,
   placeholder = 'Select...'
 }: FormSelectFieldProps<Values>) => {
   const { control, register, getFieldState } = useFormContext<Values>();
@@ -39,12 +41,11 @@ const FormSelectField = <Values extends FieldValues>({
   const id = useId();
   return (
     <FormControl error={isError} fullWidth={fullWidth}>
-      <InputLabel shrink>
+      <InputLabel htmlFor={id} shrink required={required}>
         {label}
-        {required ? '*' : ''}
       </InputLabel>
       <Select
-        id={id}
+        data-cy={dataCy}
         displayEmpty
         renderValue={value =>
           options.find(option => option.value === value)?.label || placeholder
