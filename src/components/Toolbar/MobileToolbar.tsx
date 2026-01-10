@@ -4,7 +4,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import SvgIcon from '@mui/material/SvgIcon';
 import NavigationItem from 'components/Toolbar/NavigationItem';
 import ResourceIcon from 'icons/ResourceIcon';
-import ChooseResource from 'components/ChooseResourceType/ChooseResourceType';
 import ContributeIcon from 'icons/ContributeIcon';
 
 import ToiletIcon from 'icons/CircleBathroomIcon';
@@ -56,7 +55,6 @@ const MobileToolbar = ({ onNearMeClick }: MobileToolbarProps) => {
           icon={<ResourceIcon height="32" width="32" />}
           onClick={() => toggle('resource')}
         />
-        <ChooseResource />
         <NavigationItem
           central
           disabled={!isUserSharingLocation}

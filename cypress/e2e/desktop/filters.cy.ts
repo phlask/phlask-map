@@ -1,74 +1,14 @@
-type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
-// Helper functions for filter tests
-const switchToResourceType = (resourceType: ResourceType) => {
-  cy.get('[data-cy=button-resource-type-menu]').click();
-  cy.get(`[data-cy=button-${resourceType}-data-selector]`).click();
-};
-
-const openFilterMenu = () => {
-  cy.get('[data-cy=button-filter-type-menu]').click();
-};
-
-const submit = () => {
-  cy.get('[data-cy=filter-submit-button]').click();
-};
-
-const applyFilters = (filters: string[]) => {
-  openFilterMenu();
-  filters.forEach(filter => {
-    cy.get(`input[value="${filter}"]`).parent().click();
-  });
-  submit();
-};
-
-const includeQueryParams = (params: { key: string; value: string }[] = []) => {
-  params.forEach(param => {
-    cy.location('search').should('include', `${param.key}=${param.value}`);
-  });
-};
-
-const isOnlyFilteringByResource = (resource: ResourceType) => {
-  cy.location('search').should('equal', `?resource-type=${resource}`);
-};
-
-const filterByEntryType = () => {
-  applyFilters(['OPEN']);
-  includeQueryParams([{ key: 'entry_type', value: 'OPEN' }]);
-  requestIncludeQueryParams([{ key: 'entry_type', value: 'OPEN' }]);
-};
-
-const requestIncludeQueryParams = (
-  params: { key: string; value: string | string[] }[]
-) => {
-  cy.wait('@resourceRequest').then(({ request, response }) => {
-    params.forEach(param => {
-      assert.equal(request.query[param.key], `eq.${param.value}`);
-    });
-    assert.isArray(response?.body);
-  });
-};
-
-const clearAllFilters = () => {
-  openFilterMenu();
-  cy.get('[data-cy="filter-clear-all"]').click();
-  submit();
-};
-
-const waitForResourcesLoad = () => {
-  cy.get('[data-cy=marker-1]').should('exist');
-};
-
-const prepareResource = (type: ResourceType) => {
-  cy.visit('/');
-  switchToResourceType(type);
-  cy.get('[data-cy=button-filter-type-menu]').should('exist');
-  waitForResourcesLoad();
-
-  cy.intercept({
-    method: 'GET',
-    url: '/rest/v1/resources?select=id*'
-  }).as('resourceRequest');
-};
+import {
+  prepareResource,
+  applyFilters,
+  includeQueryParams,
+  filterByEntryType,
+  clearAllFilters,
+  isOnlyFilteringByResource,
+  switchToResourceType,
+  waitForResourcesLoad,
+  requestIncludeQueryParams
+} from '../../utils/filters.ts';
 
 // Water resource filter tests
 describe('Water resource filtering', () => {

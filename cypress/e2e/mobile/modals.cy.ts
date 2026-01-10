@@ -3,28 +3,43 @@
 describe('modals', () => {
   beforeEach(() => {
     cy.viewport('iphone-x');
+    cy.mockGeoLocation();
     cy.visit('/');
+
+    cy.get('[data-cy=button-resource-type-menu]').click();
   });
 
   it('should successfully display a water site', () => {
-    // Load a sample water site.
-    // This is currently using live data, but should be updated to make use of test data.
-    cy.get('[title=data-cy-1]').click({ force: true });
-    cy.get('[data-cy=tap-organization-name]').should(
-      'have.text',
-      'Test Organization'
-    );
+    cy.get('[data-cy=button-WATER-data-selector-mobile]').click();
+
+    cy.get('[data-cy=marker-1]').click({ force: true });
+    cy.get('[data-cy=resource-icon-WATER]', { timeout: 6000 }).should('exist');
+    cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
   it('should successfully display a food site', () => {
-    // TODO
+    cy.get('[data-cy=button-FOOD-data-selector-mobile]').click();
+
+    cy.get('[data-cy=marker-1]').click({ force: true });
+    cy.get('[data-cy=resource-icon-FOOD]', { timeout: 6000 }).should('exist');
+    cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
   it('should successfully display a foraging site', () => {
-    // TODO
+    cy.get('[data-cy=button-FORAGE-data-selector-mobile]').click();
+
+    cy.get('[data-cy=marker-1]').click({ force: true });
+    cy.get('[data-cy=resource-icon-FORAGE]', { timeout: 6000 }).should('exist');
+    cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 
   it('should successfully display a bathroom site', () => {
-    // TODO
+    cy.get('[data-cy=button-BATHROOM-data-selector-mobile]').click();
+
+    cy.get('[data-cy=marker-1]').click({ force: true });
+    cy.get('[data-cy=resource-icon-BATHROOM]', { timeout: 6000 }).should(
+      'exist'
+    );
+    cy.get('[data-cy=tap-organization-name]').should('exist');
   });
 });

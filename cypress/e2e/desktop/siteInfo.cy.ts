@@ -8,7 +8,7 @@ describe('site info', () => {
   });
 
   it('should successfully display a water site', () => {
-    cy.get('[data-cy=button-WATER-data-selector]').click();
+    cy.get('[data-cy=button-WATER-data-selector-desktop]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
     cy.get('[data-cy=resource-icon-WATER]', { timeout: 6000 }).should('exist');
@@ -16,7 +16,7 @@ describe('site info', () => {
   });
 
   it('should successfully display a food site', () => {
-    cy.get('[data-cy=button-FOOD-data-selector]').click();
+    cy.get('[data-cy=button-FOOD-data-selector-desktop]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
     cy.get('[data-cy=resource-icon-FOOD]', { timeout: 6000 }).should('exist');
@@ -24,7 +24,7 @@ describe('site info', () => {
   });
 
   it('should successfully display a foraging site', () => {
-    cy.get('[data-cy=button-FORAGE-data-selector]').click();
+    cy.get('[data-cy=button-FORAGE-data-selector-desktop]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
     cy.get('[data-cy=resource-icon-FORAGE]', { timeout: 6000 }).should('exist');
@@ -32,7 +32,7 @@ describe('site info', () => {
   });
 
   it('should successfully display a bathroom site', () => {
-    cy.get('[data-cy=button-BATHROOM-data-selector]').click();
+    cy.get('[data-cy=button-BATHROOM-data-selector-desktop]').click();
 
     cy.get('[data-cy=marker-1]').click({ force: true });
     cy.get('[data-cy=resource-icon-BATHROOM]', { timeout: 6000 }).should(
