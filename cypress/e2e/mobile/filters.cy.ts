@@ -62,7 +62,6 @@ describe('Water resource filtering', () => {
 // Food resource filter tests
 describe('Food resource filtering', () => {
   beforeEach(() => {
-    cy.viewport('iphone-x');
     prepareResource('FOOD', 'mobile');
   });
 
@@ -118,7 +117,6 @@ describe('Food resource filtering', () => {
 // Foraging resource filter tests
 describe('Foraging resource filtering', () => {
   beforeEach(() => {
-    cy.viewport('iphone-x');
     prepareResource('FORAGE', 'mobile');
   });
 
@@ -166,7 +164,6 @@ describe('Foraging resource filtering', () => {
 // Bathroom resource filter tests
 describe('Bathroom resource filtering', () => {
   beforeEach(() => {
-    cy.viewport('iphone-x');
     prepareResource('BATHROOM', 'mobile');
   });
 

@@ -73,7 +73,7 @@ const MobileHead = () => {
                 </IconButton>
                 <IconButton
                   disableRipple
-                  data-cy="button-filter-mobile"
+                  data-cy="button-filter-type-menu"
                   onClick={() => toggle('filter')}
                   sx={{
                     background: hasActiveFilters ? '#9DAEC8' : 'transparent'

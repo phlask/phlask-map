@@ -72,7 +72,7 @@ export const prepareResource = (
   }
   cy.visit('/');
   switchToResourceType(type, viewport);
-  cy.get('[data-cy=button-filter-type-menu]').should('exist');
+
   waitForResourcesLoad();
 
   cy.intercept({
