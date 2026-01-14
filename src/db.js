@@ -8,6 +8,7 @@ const resourceDatabaseName =
 const databaseApiKey =
     import.meta.env.VITE_DB_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const contributorDatabaseName = 'contributors';
+const contactSubmissionsDatabaseName = 'contact_submissions';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
@@ -57,6 +58,23 @@ export const addResource = async (resource) => {
  */
 export const getContributors = async () => {
     const { data, error } = await supabase.from(contributorDatabaseName).select('*');
+    if (error) {
+        throw error;
+    }
+    return data;
+}
+
+/**
+ * Submit a contact form submission to the database
+ * @param {Object} submission The contact form submission
+ * @param {string} submission.name The name of the person submitting
+ * @param {string} submission.email The email of the person submitting
+ * @param {string} [submission.subject] The subject of the message
+ * @param {string} submission.message The message content
+ * @returns {Promise<Object>} The submitted contact form data
+ */
+export const submitContactForm = async (submission) => {
+    const { data, error } = await supabase.from(contactSubmissionsDatabaseName).insert(submission);
     if (error) {
         throw error;
     }
