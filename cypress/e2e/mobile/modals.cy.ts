@@ -11,7 +11,6 @@ describe('modals', () => {
   beforeEach(() => {
     cy.viewport('iphone-x');
     cy.mockGeoLocation();
-    cy.visit('/');
 
     cy.intercept({
       method: 'GET',
@@ -22,6 +21,9 @@ describe('modals', () => {
       method: 'GET',
       url: '/rest/v1/resources?select=*'
     }).as('resourceRequest');
+
+    cy.visit('/');
+    cy.wait('@resourcesRequest', { timeout: 6000 });
 
     cy.get('[data-cy="button-resource-type-menu"]').click();
   });
