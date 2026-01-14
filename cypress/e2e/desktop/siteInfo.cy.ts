@@ -8,7 +8,7 @@ describe('site info', () => {
 
     cy.intercept({
       method: 'GET',
-      url: '/rest/v1/resources?select=id*'
+      url: '/rest/v1/resources?select=*'
     }).as('resourceRequest');
 
     cy.get('[data-cy=button-resource-type-menu]').click();
