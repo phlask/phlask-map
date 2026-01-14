@@ -4,8 +4,22 @@ export const switchToResourceType = (
   resourceType: ResourceType,
   viewport: 'mobile' | 'desktop' = 'desktop'
 ) => {
-  cy.get('[data-cy=button-resource-type-menu]').click();
-  cy.get(`[data-cy=button-${resourceType}-data-selector-${viewport}]`).click();
+  cy.location().then(locationBeforeSelectResource => {
+    cy.get('[data-cy=button-resource-type-menu]').click();
+    cy.get(
+      `[data-cy=button-${resourceType}-data-selector-${viewport}]`
+    ).click();
+    const isRequestCached =
+      (resourceType === 'WATER' && !locationBeforeSelectResource.search) ||
+      locationBeforeSelectResource.search.includes(
+        `resource-type=${resourceType}`
+      );
+    if (isRequestCached) {
+      return;
+    }
+
+    cy.wait('@resourceRequest', { timeout: 6000 });
+  });
 };
 
 export const openFilterMenu = () => {
@@ -45,12 +59,14 @@ export const filterByEntryType = () => {
 export const requestIncludeQueryParams = (
   params: { key: string; value: string | string[] }[]
 ) => {
-  cy.wait('@resourceRequest').then(({ request, response }) => {
-    params.forEach(param => {
-      assert.equal(request.query[param.key], `eq.${param.value}`);
-    });
-    assert.isArray(response?.body);
-  });
+  cy.wait('@resourceRequest', { timeout: 10000 }).then(
+    ({ request, response }) => {
+      params.forEach(param => {
+        assert.equal(request.query[param.key], `eq.${param.value}`);
+      });
+      assert.isArray(response?.body);
+    }
+  );
 };
 
 export const clearAllFilters = () => {
@@ -72,10 +88,12 @@ export const prepareResource = (
   }
   cy.intercept({
     method: 'GET',
-    url: '/rest/v1/resources?select=id*'
+    url: '/rest/v1/resources?*'
   }).as('resourceRequest');
 
   cy.visit('/');
+  cy.wait('@resourceRequest', { timeout: 6000 });
+
   switchToResourceType(type, viewport);
 
   waitForResourcesLoad();

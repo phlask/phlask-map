@@ -4,17 +4,14 @@ import { useMap } from '@vis.gl/react-google-maps';
 import MobileToolbar from './MobileToolbar';
 import DesktopToolbar from './DesktopToolbar';
 import useSelectedResource from 'hooks/useSelectedResource';
-import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
-import useResourceType from 'hooks/useResourceType';
 import type { UserLocation } from 'hooks/queries/useGetUserLocationQuery';
+import useActiveResources from 'hooks/useActiveResources';
 
 const Toolbar = () => {
   const map = useMap();
   const { setSelectedResource } = useSelectedResource();
   const isMobile = useIsMobile();
-  const { resourceType } = useResourceType();
-
-  const { data: resources = [] } = useGetResourcesQuery({ resourceType });
+  const { data: resources } = useActiveResources();
 
   const onNearMeClick = async (userLocation: UserLocation | null) => {
     if (!userLocation) {

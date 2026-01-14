@@ -66,7 +66,7 @@
     "build": "vite build",
     "testDataGen": "node cypress/testDataGenerator.js",
     "test": "pnpm testDataGen && cypress run",
-    "test:mobile": "cypress run --config-file cypress.mobile.config.mjs",
+    "test:mobile": "cypress run --config-file cypress.mobile.config.ts",
     "generate-icons": "npx @svgr/cli --config-file=.svgrrc.json ./src/assets/icons --out-dir=./src/icons && pnpm lint --fix",
     "cypress": "cypress open",
     "lint": "eslint src --quiet",

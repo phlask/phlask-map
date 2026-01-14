@@ -8,9 +8,9 @@ jobs:
       matrix:
         include:
           - spec: 'cypress/e2e/desktop/*.cy.ts'
-            config_file: 'cypress.config.mjs'
+            config_file: 'cypress.config.ts'
           - spec: 'cypress/e2e/mobile/*.cy.ts'
-            config_file: 'cypress.mobile.config.mjs'
+            config_file: 'cypress.mobile.config.ts'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4

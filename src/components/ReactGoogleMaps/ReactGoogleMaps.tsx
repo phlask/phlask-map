@@ -9,13 +9,12 @@ import PinFoodActive from 'components/icons/PinFoodActive';
 import PinBathroomActive from 'components/icons/PinBathroomActive';
 import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
 import { type ResourceEntry } from 'types/ResourceEntry';
-import useResourceType, { ResourceType } from 'hooks/useResourceType';
+import { ResourceType } from 'hooks/useResourceType';
 import useSelectedResource from 'hooks/useSelectedResource';
-import useGetResourcesQuery from 'hooks/queries/useGetResourcesQuery';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
-import useActiveFilters from 'hooks/useActiveFilters';
 import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
 import { IconButton } from '@mui/material';
+import useActiveResources from 'hooks/useActiveResources';
 
 const style: CSSProperties = {
   width: '100%',
@@ -29,18 +28,12 @@ const ReactGoogleMaps = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const { selectedResource, setSelectedResource } = useSelectedResource();
-  const { resourceType } = useResourceType();
   const { data: userLocation } = useGetUserLocationQuery();
   const { activeSearchLocation } = useActiveSearchLocationContext();
 
-  const { activeFilters } = useActiveFilters();
-
   const map = useMap();
 
-  const { data: resources = [] } = useGetResourcesQuery({
-    resourceType,
-    filters: activeFilters
-  });
+  const { data: resources } = useActiveResources();
 
   useEffect(() => {
     if (!map) {
