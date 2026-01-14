@@ -1,5 +1,6 @@
 import {
   clickOnFirstMarker,
+  waitForMarker,
   waitForResourceModal
 } from '../../utils/siteInfo.ts';
 
@@ -8,6 +9,11 @@ describe('site info', () => {
   beforeEach(() => {
     cy.mockGeoLocation();
     cy.visit('/');
+
+    cy.intercept({
+      method: 'GET',
+      url: '/rest/v1/resources?select=id*'
+    }).as('resourcesRequest');
 
     cy.intercept({
       method: 'GET',
@@ -27,21 +33,21 @@ describe('site info', () => {
   it('should successfully display a food site', () => {
     cy.get('[data-cy=button-FOOD-data-selector-desktop]').click();
 
-    clickOnFirstMarker();
+    waitForMarker();
     waitForResourceModal();
   });
 
   it('should successfully display a foraging site', () => {
     cy.get('[data-cy=button-FORAGE-data-selector-desktop]').click();
 
-    clickOnFirstMarker();
+    waitForMarker();
     waitForResourceModal();
   });
 
   it('should successfully display a bathroom site', () => {
     cy.get('[data-cy=button-BATHROOM-data-selector-desktop]').click();
 
-    clickOnFirstMarker();
+    waitForMarker();
     waitForResourceModal();
   });
 });

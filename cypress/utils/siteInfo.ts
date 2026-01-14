@@ -14,5 +14,6 @@ export const waitForMarker = () => {
 };
 
 export const clickOnFirstMarker = () => {
-  cy.get('[data-cy=marker-1]').parent().click({ force: true });
+  cy.get('[data-cy="marker-1"]').parent().scrollIntoView();
+  cy.get('[data-cy="marker-1"]').parent().click({ force: true });
 };
