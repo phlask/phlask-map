@@ -1,6 +1,10 @@
 // For each resource type, load a site's half modal and full modal
 
-import { waitForMarker, waitForResourceModal } from '../../utils/siteInfo.ts';
+import {
+  clickOnFirstMarker,
+  waitForMarker,
+  waitForResourceModal
+} from '../../utils/siteInfo.ts';
 
 // for each site modal, confirm the required modal mode buttons work and that the relevant information is displayed
 describe('modals', () => {
@@ -24,8 +28,7 @@ describe('modals', () => {
 
   it('should successfully display a water site', () => {
     cy.get('[data-cy="button-WATER-data-selector-mobile"]').click();
-
-    waitForMarker();
+    clickOnFirstMarker();
     waitForResourceModal();
   });
 
