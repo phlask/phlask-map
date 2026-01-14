@@ -77,7 +77,8 @@
     "format": "prettier \"src/**/*.{js,css,html}\" --write",
     "serve": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "fetch-supabase": "node scripts/fetch-supabase.js"
   },
   "browserslist": [
     ">0.2%",
