@@ -8,7 +8,6 @@ import {
 describe('site info', () => {
   beforeEach(() => {
     cy.mockGeoLocation();
-    cy.visit('/');
 
     cy.intercept({
       method: 'GET',
@@ -19,6 +18,9 @@ describe('site info', () => {
       method: 'GET',
       url: '/rest/v1/resources?select=*'
     }).as('resourceRequest');
+
+    cy.visit('/');
+    cy.wait('@resourcesRequest', { timeout: 6000 });
 
     cy.get('[data-cy=button-resource-type-menu]').click();
   });
