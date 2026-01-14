@@ -70,13 +70,13 @@ export const prepareResource = (
   if (viewport === 'mobile') {
     cy.viewport('iphone-x');
   }
-  cy.visit('/');
-  switchToResourceType(type, viewport);
-
-  waitForResourcesLoad();
-
   cy.intercept({
     method: 'GET',
     url: '/rest/v1/resources?select=id*'
   }).as('resourceRequest');
+
+  cy.visit('/');
+  switchToResourceType(type, viewport);
+
+  waitForResourcesLoad();
 };

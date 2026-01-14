@@ -11,6 +11,11 @@ describe('modals', () => {
 
     cy.intercept({
       method: 'GET',
+      url: '/rest/v1/resources?select=id*'
+    }).as('resourcesRequest');
+
+    cy.intercept({
+      method: 'GET',
       url: '/rest/v1/resources?select=*'
     }).as('resourceRequest');
 
