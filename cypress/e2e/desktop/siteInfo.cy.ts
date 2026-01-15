@@ -1,6 +1,5 @@
 import {
   clickOnFirstMarker,
-  waitForMarker,
   waitForResourceModal
 } from '../../utils/siteInfo.ts';
 
@@ -35,21 +34,21 @@ describe('site info', () => {
   it('should successfully display a food site', () => {
     cy.get('[data-cy=button-FOOD-data-selector-desktop]').click();
 
-    waitForMarker();
+    clickOnFirstMarker();
     waitForResourceModal();
   });
 
   it('should successfully display a foraging site', () => {
     cy.get('[data-cy=button-FORAGE-data-selector-desktop]').click();
 
-    waitForMarker();
+    clickOnFirstMarker();
     waitForResourceModal();
   });
 
   it('should successfully display a bathroom site', () => {
     cy.get('[data-cy=button-BATHROOM-data-selector-desktop]').click();
 
-    waitForMarker();
+    clickOnFirstMarker();
     waitForResourceModal();
   });
 });
