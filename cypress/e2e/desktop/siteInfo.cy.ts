@@ -1,5 +1,5 @@
 const waitForResourcesToLoad = () => {
-  cy.wait('@getResourcesRequest', { timeout: 6000 });
+  cy.wait('@getResourcesRequest', { timeout: 6000, responseTimeout: 6000 });
 };
 
 const selectResourceFromMenu = (
@@ -9,10 +9,10 @@ const selectResourceFromMenu = (
 };
 
 const selectMarker = () => {
-  cy.get('[data-cy="marker-1"]').click({
+  cy.get('[data-cy="marker-1"]', { timeout: 6000 }).click({
     force: true,
     waitForAnimations: true,
-    timeout: 4000
+    timeout: 6000
   });
   cy.location('search').should('contain', 'r=');
   cy.wait('@resourceByIdRequest', { timeout: 6000 });

@@ -1,7 +1,7 @@
 // For each resource type, load a site's half modal and full modal
 
 const waitForResourcesToLoad = () => {
-  cy.wait('@getResourcesRequest', { timeout: 6000 });
+  cy.wait('@getResourcesRequest', { timeout: 6000, responseTimeout: 6000 });
 };
 
 const selectResourceFromMenu = (
