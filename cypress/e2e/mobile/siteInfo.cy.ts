@@ -27,15 +27,14 @@ const verifyResourceIsShown = () => {
   );
 };
 
-// for each site modal, confirm the required modal mode buttons work and that the relevant information is displayed
-describe('modals', () => {
+describe('site info', () => {
   beforeEach(() => {
     cy.viewport('iphone-x');
     cy.mockGeoLocation();
 
     cy.intercept({
       method: 'GET',
-      url: ' https://wantycfbnzzocsbthqzs.supabase.co/rest/v1/resources?select=id%2Cname%2Clatitude%2Clongitude%2Cresource_type%2Centry_type&resource_type=eq.*'
+      url: 'https://wantycfbnzzocsbthqzs.supabase.co/rest/v1/resources?select=id%2Cname%2Clatitude%2Clongitude%2Cresource_type%2Centry_type&resource_type=eq.*'
     }).as('getResourcesRequest');
 
     cy.intercept({

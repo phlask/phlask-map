@@ -1,54 +1,79 @@
-import {
-  clickOnFirstMarker,
-  waitForResourceModal
-} from '../../utils/siteInfo.ts';
+const waitForResourcesToLoad = () => {
+  cy.wait('@getResourcesRequest', { timeout: 6000 });
+};
 
-// For each resource type, test each site detail permutation and confirm only the expected number of taps appear.
+const selectResourceFromMenu = (
+  type: 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM'
+) => {
+  cy.get(`[data-cy="button-${type}-data-selector-desktop"]`).click();
+};
+
+const selectMarker = () => {
+  cy.get('[data-cy="marker-1"]').click({
+    force: true,
+    waitForAnimations: true,
+    timeout: 4000
+  });
+  cy.location('search').should('contain', 'r=');
+  cy.wait('@resourceByIdRequest', { timeout: 6000 });
+};
+
+const verifyResourceIsShown = () => {
+  cy.location('search').should('contain', 'r=');
+  cy.get('[data-cy="tap-organization-name"]', { timeout: 6000 }).should(
+    'exist'
+  );
+};
+
 describe('site info', () => {
   beforeEach(() => {
     cy.mockGeoLocation();
 
     cy.intercept({
       method: 'GET',
-      url: '/rest/v1/resources?select=id*'
-    }).as('resourcesRequest');
+      url: 'https://wantycfbnzzocsbthqzs.supabase.co/rest/v1/resources?select=id%2Cname%2Clatitude%2Clongitude%2Cresource_type%2Centry_type&resource_type=eq.*'
+    }).as('getResourcesRequest');
 
     cy.intercept({
       method: 'GET',
-      url: '/rest/v1/resources?select=*'
-    }).as('resourceRequest');
+      hostname: 'wantycfbnzzocsbthqzs.supabase.co',
+      pathname: '/rest/v1/resources',
+      query: {
+        select: '*',
+        id: 'eq.*'
+      }
+    }).as('resourceByIdRequest');
 
     cy.visit('/');
-    cy.wait('@resourcesRequest', { timeout: 6000 });
+    waitForResourcesToLoad();
 
     cy.get('[data-cy=button-resource-type-menu]').click();
   });
 
   it('should successfully display a water site', () => {
-    cy.get('[data-cy=button-WATER-data-selector-desktop]').click();
-
-    clickOnFirstMarker();
-    waitForResourceModal();
+    selectResourceFromMenu('WATER');
+    selectMarker();
+    verifyResourceIsShown();
   });
 
   it('should successfully display a food site', () => {
-    cy.get('[data-cy=button-FOOD-data-selector-desktop]').click();
-
-    clickOnFirstMarker();
-    waitForResourceModal();
+    selectResourceFromMenu('FOOD');
+    waitForResourcesToLoad();
+    selectMarker();
+    verifyResourceIsShown();
   });
 
   it('should successfully display a foraging site', () => {
-    cy.get('[data-cy=button-FORAGE-data-selector-desktop]').click();
-
-    clickOnFirstMarker();
-    waitForResourceModal();
+    selectResourceFromMenu('FORAGE');
+    waitForResourcesToLoad();
+    selectMarker();
+    verifyResourceIsShown();
   });
 
   it('should successfully display a bathroom site', () => {
-    cy.get('[data-cy=button-BATHROOM-data-selector-desktop]').click();
-
-    clickOnFirstMarker();
-    waitForResourceModal();
+    selectResourceFromMenu('BATHROOM');
+    waitForResourcesToLoad();
+    selectMarker();
+    verifyResourceIsShown();
   });
 });
