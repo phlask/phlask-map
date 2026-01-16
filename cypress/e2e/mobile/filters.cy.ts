@@ -8,7 +8,7 @@ import {
   switchToResourceType,
   waitForResourcesLoad,
   requestIncludeQueryParams
-} from '../../utils/filters.ts';
+} from 'utils/filters.ts';
 
 // Water resource filter tests
 describe('Water resource filtering', () => {
@@ -216,7 +216,7 @@ describe('Filter persistence across resource types', () => {
     applyFilters(['BOTTLE_FILLER']);
 
     // Switch to food - filters should be cleared
-    switchToResourceType('FOOD', 'mobile');
+    switchToResourceType('FOOD');
     isOnlyFilteringByResource('FOOD');
     waitForResourcesLoad('FOOD');
   });

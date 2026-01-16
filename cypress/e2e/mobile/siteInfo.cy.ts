@@ -1,43 +1,10 @@
-// For each resource type, load a site's half modal and full modal
-type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
-
-const waitForResourcesToLoad = () => {
-  cy.wait('@getResourcesRequest', { timeout: 6000, responseTimeout: 6000 });
-};
-
-const selectResourceFromMenu = (
-  type: 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM'
-) => {
-  cy.get(`[data-cy="button-${type}-data-selector-mobile"]`).click();
-};
-
-const selectMarker = (type: ResourceType) => {
-  cy.get(`[data-cy=marker-${type}-1]`).should('exist');
-  cy.get(`[data-cy=marker-${type}-1]`).click({
-    force: true,
-    waitForAnimations: true,
-    timeout: 6000
-  });
-  cy.get(`[data-cy=marker-${type}-1]`, { timeout: 6000 }).click({
-    force: true,
-    waitForAnimations: true,
-    timeout: 6000
-  });
-  cy.get(`[data-cy=marker-${type}-1]`, { timeout: 6000 }).click({
-    force: true,
-    waitForAnimations: true,
-    timeout: 6000
-  });
-  cy.location('search').should('include', 'r=');
-  cy.wait('@resourceByIdRequest', { timeout: 6000 });
-};
-
-const verifyResourceIsShown = () => {
-  cy.location('search').should('include', 'r=');
-  cy.get('[data-cy="tap-organization-name"]', { timeout: 6000 }).should(
-    'exist'
-  );
-};
+import { RESOURCE_MENU_BUTTON } from 'utils/selectors.ts';
+import { selectResourceFromMenu } from 'utils/shared.ts';
+import {
+  waitForResourcesToLoad,
+  selectMarker,
+  verifyResourceIsShown
+} from 'utils/siteInfo.ts';
 
 describe('site info', () => {
   beforeEach(() => {
@@ -61,7 +28,7 @@ describe('site info', () => {
     cy.visit('/');
     waitForResourcesToLoad();
 
-    cy.get('[data-cy="button-resource-type-menu"]').click();
+    cy.get(RESOURCE_MENU_BUTTON).click();
   });
 
   it('should successfully display a water site', () => {

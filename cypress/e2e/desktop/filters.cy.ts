@@ -8,7 +8,7 @@ import {
   switchToResourceType,
   waitForResourcesLoad,
   requestIncludeQueryParams
-} from '../../utils/filters.ts';
+} from 'utils/filters.ts';
 
 // Water resource filter tests
 describe('Water resource filtering', () => {

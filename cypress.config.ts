@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import vitePreprocessor from 'cypress-vite';
 import fs from 'node:fs/promises';
 
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
     videosFolder: 'cypress/videos/desktop',
     defaultBrowser: 'chrome',
     setupNodeEvents: on => {
+      on('file:preprocessor', vitePreprocessor());
       on('after:spec', (_spec, results) => {
         if (!results || !results.video) {
           return;

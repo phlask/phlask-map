@@ -1,3 +1,9 @@
+import {
+  ABOUT_US_HEAD_BUTTON,
+  getTestId,
+  HEAD_HAMBURGER_BUTTON
+} from 'utils/selectors.ts';
+
 // For each resource type, test each filter permutation and confirm only the expected number of taps appear.
 describe('menu navigation', () => {
   beforeEach(() => {
@@ -5,14 +11,14 @@ describe('menu navigation', () => {
     // Load the sidebar
 
     // Open the sidebar menu
-    cy.get('[data-cy=head-sidebar-button]').click();
+    cy.get(HEAD_HAMBURGER_BUTTON).click();
   });
 
   it('should successfully show about us content', () => {
     // Click the about us sidebar button
-    cy.get('[data-cy=sidebar-about-button]').click();
+    cy.get(ABOUT_US_HEAD_BUTTON).click();
 
-    cy.get('[data-cy=about-header]').should('have.text', 'About PHLASK');
+    cy.get(getTestId('about-header')).should('have.text', 'About PHLASK');
   });
 
   it('should successfully show the join team content', () => {

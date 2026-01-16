@@ -13,7 +13,8 @@ import {
   selectEntryType,
   selectInput,
   selectResource
-} from '../../utils/crowdsourcing.ts';
+} from 'utils/crowdsourcing.ts';
+import { getByName, GUIDELINES_TEXTAREA } from 'utils/selectors.ts';
 
 describe('crowdsourcing form', () => {
   beforeEach(() => {
@@ -24,7 +25,7 @@ describe('crowdsourcing form', () => {
   });
 
   it('should successfully submit a water site', () => {
-    selectResource('water');
+    selectResource('WATER');
     input('name', 'Cypress Test Name');
     selectAddress();
 
@@ -36,7 +37,7 @@ describe('crowdsourcing form', () => {
     nextPageOrSubmit();
 
     checkTag();
-    cy.get('textarea[name="guidelines"]').type('Cypress Test');
+    cy.get(GUIDELINES_TEXTAREA).type('Cypress Test');
 
     nextPageOrSubmit();
 
@@ -44,7 +45,7 @@ describe('crowdsourcing form', () => {
   });
 
   it('should successfully submit a food site', () => {
-    selectResource('food');
+    selectResource('FOOD');
 
     input('name', 'Cypress Test Name');
     selectAddress();
@@ -58,14 +59,14 @@ describe('crowdsourcing form', () => {
 
     checkTag();
 
-    cy.get('input[name="description"]').type('Cypress Test Food Description');
+    cy.get(getByName('description')).type('Cypress Test Food Description');
     selectEntryType();
 
     autocompleteInput('food.food_type', 'Perishable');
     autocompleteInput('food.distribution_type', 'Delivery');
 
-    cy.get('textarea[name="guidelines"]').focus();
-    cy.get('textarea[name="guidelines"]').type(
+    cy.get(GUIDELINES_TEXTAREA).focus();
+    cy.get(GUIDELINES_TEXTAREA).type(
       'Cypress Test Long Enough To See Behind the Nav Overlay'
     );
 
@@ -75,7 +76,7 @@ describe('crowdsourcing form', () => {
   });
 
   it('should successfully submit a foraging site for testing', () => {
-    selectResource('foraging');
+    selectResource('FORAGE');
 
     input('name', 'Cypress Test Name');
     selectAddress();
@@ -88,7 +89,7 @@ describe('crowdsourcing form', () => {
     nextPageOrSubmit();
 
     checkTag('Medicinal');
-    cy.get('textarea[name="guidelines"]').type('Cypress Test');
+    cy.get(GUIDELINES_TEXTAREA).type('Cypress Test');
 
     nextPageOrSubmit();
 
@@ -96,7 +97,7 @@ describe('crowdsourcing form', () => {
   });
 
   it('should successfully submit a bathroom site for testing', () => {
-    selectResource('bathroom');
+    selectResource('BATHROOM');
 
     input('name', 'Cypress Test Name');
     selectAddress();
@@ -108,7 +109,7 @@ describe('crowdsourcing form', () => {
 
     checkTag();
 
-    cy.get('textarea[name="guidelines"]').type('Cypress Test');
+    cy.get(GUIDELINES_TEXTAREA).type('Cypress Test');
 
     nextPageOrSubmit();
 
