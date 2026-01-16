@@ -9,11 +9,10 @@ jobs:
         include:
           - spec: 'cypress/e2e/desktop/*.cy.ts'
             config_file: 'cypress.config.ts'
-            video_name: 'videos-desktop'
-            video_path: 'cypress/videos-desktop'
+            video_path: 'cypress/videos/desktop'
           - spec: 'cypress/e2e/mobile/*.cy.ts'
             config_file: 'cypress.mobile.config.ts'
-            video_name: 'videos-mobile'
+            video_path: 'cypress/videos/mobile'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v6
@@ -35,6 +34,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: ${{ matrix.video_name }}
-          path: cypress/videos
+          name: cypress-videos
+          path: ${{ matrix.video_path }}
           retention-days: 7 # Optional: how long to keep artifacts

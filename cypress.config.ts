@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import fs from 'node:fs/promises';
 
 export default defineConfig({
   e2e: {
@@ -10,6 +11,23 @@ export default defineConfig({
       openMode: 1,
       runMode: 2
     },
-    defaultBrowser: 'chrome'
+    videosFolder: 'cypress/videos/desktop',
+    defaultBrowser: 'chrome',
+    setupNodeEvents: on => {
+      on('after:spec', (_spec, results) => {
+        if (!results || !results.video) {
+          return;
+        }
+
+        const failures = results.tests.filter(test =>
+          test.attempts.some(attempt => attempt.state === 'failed')
+        );
+
+        if (failures) {
+          return;
+        }
+        fs.rm(results.video);
+      });
+    }
   }
 });
