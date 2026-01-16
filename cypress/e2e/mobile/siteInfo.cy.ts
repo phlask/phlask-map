@@ -31,7 +31,6 @@ const verifyResourceIsShown = () => {
 describe('site info', () => {
   beforeEach(() => {
     cy.viewport('iphone-x');
-    cy.mockGeoLocation();
 
     cy.intercept({
       method: 'GET',
