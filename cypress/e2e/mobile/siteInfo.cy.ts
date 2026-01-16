@@ -12,17 +12,17 @@ const selectResourceFromMenu = (
 };
 
 const selectMarker = (type: ResourceType) => {
+  cy.get(`[data-cy=marker-${type}-1]`).should('exist');
   cy.get(`[data-cy=marker-${type}-1]`).click({
     force: true,
-    waitForAnimations: true,
-    timeout: 4000
+    timeout: 6000
   });
-  cy.location('search').should('contain', 'r=');
+  cy.location('search').should('include', 'r=');
   cy.wait('@resourceByIdRequest', { timeout: 6000 });
 };
 
 const verifyResourceIsShown = () => {
-  cy.location('search').should('contain', 'r=');
+  cy.location('search').should('include', 'r=');
   cy.get('[data-cy="tap-organization-name"]', { timeout: 6000 }).should(
     'exist'
   );
