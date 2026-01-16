@@ -1,4 +1,8 @@
-import { AdvancedMarker, Map, useMap } from '@vis.gl/react-google-maps';
+import {
+  AdvancedMarker,
+  Map as GoogleMap,
+  useMap
+} from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties, useEffect } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
@@ -24,7 +28,7 @@ const style: CSSProperties = {
   touchAction: 'none'
 };
 
-const ReactGoogleMaps = () => {
+const Map = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const { selectedResource, setSelectedResource } = useSelectedResource();
@@ -46,7 +50,6 @@ const ReactGoogleMaps = () => {
     map.panTo(userLocation);
   }, [userLocation, map]);
 
-  // toggle window goes here
   const onMarkerClick = (resource: ResourceEntry) => {
     setSelectedResource(resource);
 
@@ -81,7 +84,7 @@ const ReactGoogleMaps = () => {
   };
 
   return (
-    <Map
+    <GoogleMap
       style={style}
       defaultZoom={16}
       zoomControl={!isMobile}
@@ -97,15 +100,16 @@ const ReactGoogleMaps = () => {
     >
       {resources?.map((resource, index) => {
         return (
-          <IconButton
-            onClick={() => onMarkerClick(resource)}
-            key={resource.id}
-            data-cy={`marker-${resource.resource_type}-${index}`}
-          >
+          <IconButton data-cy={`marker-${resource.resource_type}-${index}`}>
             <AdvancedMarker
+              key={resource.id}
+              onClick={() => onMarkerClick(resource)}
               position={{ lat: resource.latitude, lng: resource.longitude }}
             >
-              <img src={getMarkerIconSrc(resource) ?? ''} />
+              <img
+                data-cy={`marker-${resource.resource_type}-${index}`}
+                src={getMarkerIconSrc(resource) ?? ''}
+              />
             </AdvancedMarker>
           </IconButton>
         );
@@ -115,8 +119,8 @@ const ReactGoogleMaps = () => {
       {activeSearchLocation ? (
         <AdvancedMarker position={activeSearchLocation} />
       ) : null}
-    </Map>
+    </GoogleMap>
   );
 };
 
-export default ReactGoogleMaps;
+export default Map;

@@ -1,6 +1,3 @@
-// TODO
-// Add expected fail cases
-
 // For each resource type, test each filter permutation and confirm only the expected number of taps appear.
 describe('menu navigation', () => {
   beforeEach(() => {
