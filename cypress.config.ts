@@ -5,6 +5,11 @@ export default defineConfig({
     watchForFileChanges: false,
     specPattern: 'cypress/e2e/desktop/*.cy.{js,jsx,ts,tsx}',
     baseUrl: 'http://localhost:5173',
-    video: true
+    video: true,
+    retries: {
+      openMode: 1,
+      runMode: 2
+    },
+    defaultBrowser: 'chrome'
   }
 });
