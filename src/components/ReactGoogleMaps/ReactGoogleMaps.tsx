@@ -102,7 +102,7 @@ const ReactGoogleMaps = () => {
             key={resource.id}
             position={{ lat: resource.latitude, lng: resource.longitude }}
           >
-            <IconButton data-cy={`marker-${index}`}>
+            <IconButton data-cy={`marker-${resource.resource_type}-${index}`}>
               <img src={getMarkerIconSrc(resource) ?? ''} />
             </IconButton>
           </AdvancedMarker>

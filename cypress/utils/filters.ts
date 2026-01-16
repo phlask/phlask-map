@@ -75,8 +75,8 @@ export const clearAllFilters = () => {
   submit();
 };
 
-export const waitForResourcesLoad = () => {
-  cy.get('[data-cy=marker-1]').should('exist');
+export const waitForResourcesLoad = (type: ResourceType) => {
+  cy.get(`[data-cy=marker-${type}-1]`).should('exist');
 };
 
 export const prepareResource = (
@@ -96,5 +96,5 @@ export const prepareResource = (
 
   switchToResourceType(type, viewport);
 
-  waitForResourcesLoad();
+  waitForResourcesLoad(type);
 };

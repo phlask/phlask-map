@@ -1,4 +1,5 @@
 // For each resource type, load a site's half modal and full modal
+type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
 
 const waitForResourcesToLoad = () => {
   cy.wait('@getResourcesRequest', { timeout: 6000, responseTimeout: 6000 });
@@ -10,8 +11,8 @@ const selectResourceFromMenu = (
   cy.get(`[data-cy="button-${type}-data-selector-mobile"]`).click();
 };
 
-const selectMarker = () => {
-  cy.get('[data-cy="marker-1"]').click({
+const selectMarker = (type: ResourceType) => {
+  cy.get(`[data-cy=marker-${type}-1]`).click({
     force: true,
     waitForAnimations: true,
     timeout: 4000
@@ -55,28 +56,28 @@ describe('site info', () => {
 
   it('should successfully display a water site', () => {
     selectResourceFromMenu('WATER');
-    selectMarker();
+    selectMarker('WATER');
     verifyResourceIsShown();
   });
 
   it('should successfully display a food site', () => {
     selectResourceFromMenu('FOOD');
     waitForResourcesToLoad();
-    selectMarker();
+    selectMarker('FOOD');
     verifyResourceIsShown();
   });
 
   it('should successfully display a foraging site', () => {
     selectResourceFromMenu('FORAGE');
     waitForResourcesToLoad();
-    selectMarker();
+    selectMarker('FORAGE');
     verifyResourceIsShown();
   });
 
   it('should successfully display a bathroom site', () => {
     selectResourceFromMenu('BATHROOM');
     waitForResourcesToLoad();
-    selectMarker();
+    selectMarker('BATHROOM');
     verifyResourceIsShown();
   });
 });

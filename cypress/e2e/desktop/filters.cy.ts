@@ -218,6 +218,6 @@ describe('Filter persistence across resource types', () => {
     // Switch to food - filters should be cleared
     switchToResourceType('FOOD');
     isOnlyFilteringByResource('FOOD');
-    waitForResourcesLoad();
+    waitForResourcesLoad('FOOD');
   });
 });
