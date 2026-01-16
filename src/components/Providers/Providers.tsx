@@ -1,11 +1,11 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import type { PropsWithChildren } from 'react';
-import theme from 'theme';
 import ToolbarContextProvider from './ToolbarContextProvider';
 import queryClient from 'services/queryClient';
 import ActiveSearchLocationProvider from './ActiveSearchLocationProvider';
+import ThemeProvider from './ThemeProvider';
 
 const Providers = ({ children }: PropsWithChildren) => (
   <QueryClientProvider client={queryClient}>
@@ -15,7 +15,7 @@ const Providers = ({ children }: PropsWithChildren) => (
     >
       <ToolbarContextProvider>
         <ActiveSearchLocationProvider>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider>
             <CssBaseline />
             {children}
           </ThemeProvider>
