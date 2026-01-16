@@ -15,18 +15,20 @@ const selectMarker = (type: ResourceType) => {
   cy.get(`[data-cy=marker-${type}-1]`).should('exist');
   cy.get(`[data-cy=marker-${type}-1]`).click({
     force: true,
+    waitForAnimations: true,
     timeout: 6000
   });
-  cy.location('search')
-    .then(search => {
-      if (!search.includes('r=')) {
-        cy.get(`[data-cy=marker-${type}-1]`).click({
-          force: true,
-          timeout: 6000
-        });
-      }
-    })
-    .should('include', 'r=');
+  cy.get(`[data-cy=marker-${type}-1]`, { timeout: 6000 }).click({
+    force: true,
+    waitForAnimations: true,
+    timeout: 6000
+  });
+  cy.get(`[data-cy=marker-${type}-1]`, { timeout: 6000 }).click({
+    force: true,
+    waitForAnimations: true,
+    timeout: 6000
+  });
+  cy.location('search').should('include', 'r=');
   cy.wait('@resourceByIdRequest', { timeout: 6000 });
 };
 
