@@ -17,7 +17,6 @@ import { ResourceType } from 'hooks/useResourceType';
 import useSelectedResource from 'hooks/useSelectedResource';
 import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
-import { IconButton } from '@mui/material';
 import useActiveResources from 'hooks/useActiveResources';
 
 const style: CSSProperties = {
@@ -100,18 +99,16 @@ const Map = () => {
     >
       {resources?.map((resource, index) => {
         return (
-          <IconButton data-cy={`marker-${resource.resource_type}-${index}`}>
-            <AdvancedMarker
-              key={resource.id}
-              onClick={() => onMarkerClick(resource)}
-              position={{ lat: resource.latitude, lng: resource.longitude }}
-            >
-              <img
-                data-cy={`marker-${resource.resource_type}-${index}`}
-                src={getMarkerIconSrc(resource) ?? ''}
-              />
-            </AdvancedMarker>
-          </IconButton>
+          <AdvancedMarker
+            key={resource.id}
+            onClick={() => onMarkerClick(resource)}
+            position={{ lat: resource.latitude, lng: resource.longitude }}
+          >
+            <img
+              data-cy={`marker-${resource.resource_type}-${index}`}
+              src={getMarkerIconSrc(resource) ?? ''}
+            />
+          </AdvancedMarker>
         );
       })}
       {userLocation ? <AdvancedMarker position={userLocation} /> : null}
