@@ -5,11 +5,8 @@
 .cache/
 dist/
 coverage/
-# NodeJS / Yarn
-/node_modules
-.yarn
-package-lock.json
-yarn-error.log
+# NodeJS / pnpm
+node_modules
 
 # OS X
 .DS_Store

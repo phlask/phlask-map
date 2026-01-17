@@ -7,21 +7,33 @@ jobs:
     strategy:
       matrix:
         include:
-          - spec: "cypress/e2e/desktop/*.cy.js"
-            config_file: "cypress.config.mjs"
-          - spec: "cypress/e2e/mobile/*.cy.js"
-            config_file: "cypress.mobile.config.mjs"
+          - spec: 'cypress/e2e/desktop/*.cy.ts'
+            config_file: 'cypress.config.ts'
+            video_path: 'cypress/videos/desktop'
+          - spec: 'cypress/e2e/mobile/*.cy.ts'
+            config_file: 'cypress.mobile.config.ts'
+            video_path: 'cypress/videos/mobile'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: yarn start:cypress
+          start: pnpm start:cypress
           browser: chrome
           spec: ${{ matrix.spec }}
           config-file: ${{ matrix.config_file }}
+      - name: Upload videos of failed tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos
+          path: ${{ matrix.video_path }}
+          retention-days: 7 # Optional: how long to keep artifacts

@@ -1,0 +1,15 @@
+html {
+  height: 100%;
+}
+
+body,
+#root {
+  height: inherit;
+}
+
+button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}

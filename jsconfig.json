@@ -1,7 +1,0 @@
-{
-  "include": ["src"],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "baseUrl": "src"
-  }
-}

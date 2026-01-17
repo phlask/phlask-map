@@ -4,7 +4,7 @@ services:
     stdin_open: true
     ports:
       - '5173:5173'
-    entrypoint: bash -c "yarn install && yarn start"
+    entrypoint: bash -c "pnpm install && pnpm start --host"
     volumes:
       - '.:/usr/src/app'
   bash:
@@ -17,7 +17,7 @@ services:
       - '.:/usr/src/app'
   prod_build:
     build: .
-    entrypoint: bash -c "yarn build"
+    entrypoint: bash -c "pnpm build"
     environment:
       CI: 'false'
       VITE_DB_URL:
