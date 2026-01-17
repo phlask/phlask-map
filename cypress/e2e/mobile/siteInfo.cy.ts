@@ -8,7 +8,7 @@ import {
 
 describe('site info', () => {
   beforeEach(() => {
-    cy.mockGeoLocation();
+    cy.viewport('iphone-x');
 
     cy.intercept({
       method: 'GET',

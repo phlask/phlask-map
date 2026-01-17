@@ -1,4 +1,4 @@
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../src/theme';
 import type { Decorator } from '@storybook/react-vite';
 

@@ -9,8 +9,10 @@ jobs:
         include:
           - spec: 'cypress/e2e/desktop/*.cy.ts'
             config_file: 'cypress.config.ts'
+            video_path: 'cypress/videos/desktop'
           - spec: 'cypress/e2e/mobile/*.cy.ts'
             config_file: 'cypress.mobile.config.ts'
+            video_path: 'cypress/videos/mobile'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v6
@@ -30,8 +32,8 @@ jobs:
           config-file: ${{ matrix.config_file }}
       - name: Upload videos of failed tests
         uses: actions/upload-artifact@v4
-        if: always() # ensures this step runs even if tests fail
+        if: failure()
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: ${{ matrix.video_path }}
           retention-days: 7 # Optional: how long to keep artifacts

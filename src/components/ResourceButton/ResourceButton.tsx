@@ -7,7 +7,7 @@ type ResourceButtonProps = {
   icon: FunctionComponent<{ className: string; width: number; height: number }>;
   onClick: MouseEventHandler<HTMLButtonElement>;
   color: string;
-  'data-cy': string;
+  'data-cy'?: string;
   text: string;
 };
 

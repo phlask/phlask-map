@@ -1,14 +1,18 @@
-type ResourceType = 'WATER' | 'FOOD' | 'FORAGE' | 'BATHROOM';
-// Helper functions for filter tests
-export const switchToResourceType = (
-  resourceType: ResourceType,
-  viewport: 'mobile' | 'desktop' = 'desktop'
-) => {
+import type { ResourceType, Viewport } from 'types/types.ts';
+import {
+  FILTER_CLEAR_ALL_BUTTON,
+  FILTER_MENU_BUTTON,
+  FILTER_SUBMIT_BUTTON,
+  getInputByValue,
+  getResourceMarkerByType,
+  RESOURCE_MENU_BUTTON
+} from 'utils/selectors.ts';
+import { selectResourceFromMenu } from './shared.ts';
+
+export const switchToResourceType = (resourceType: ResourceType) => {
   cy.location().then(locationBeforeSelectResource => {
-    cy.get('[data-cy=button-resource-type-menu]').click();
-    cy.get(
-      `[data-cy=button-${resourceType}-data-selector-${viewport}]`
-    ).click();
+    cy.get(RESOURCE_MENU_BUTTON).click();
+    selectResourceFromMenu(resourceType);
     const isRequestCached =
       (resourceType === 'WATER' && !locationBeforeSelectResource.search) ||
       locationBeforeSelectResource.search.includes(
@@ -23,17 +27,17 @@ export const switchToResourceType = (
 };
 
 export const openFilterMenu = () => {
-  cy.get('[data-cy=button-filter-type-menu]').click();
+  cy.get(FILTER_MENU_BUTTON).click();
 };
 
 export const submit = () => {
-  cy.get('[data-cy=filter-submit-button]').click();
+  cy.get(FILTER_SUBMIT_BUTTON).click();
 };
 
 export const applyFilters = (filters: string[]) => {
   openFilterMenu();
   filters.forEach(filter => {
-    cy.get(`input[value="${filter}"]`).parent().click();
+    cy.get(getInputByValue(filter)).parent().click();
   });
   submit();
 };
@@ -71,17 +75,17 @@ export const requestIncludeQueryParams = (
 
 export const clearAllFilters = () => {
   openFilterMenu();
-  cy.get('[data-cy="filter-clear-all"]').click();
+  cy.get(FILTER_CLEAR_ALL_BUTTON).click();
   submit();
 };
 
-export const waitForResourcesLoad = () => {
-  cy.get('[data-cy=marker-1]').should('exist');
+export const waitForResourcesLoad = (type: ResourceType) => {
+  cy.get(getResourceMarkerByType(type)).should('exist');
 };
 
 export const prepareResource = (
   type: ResourceType,
-  viewport: 'mobile' | 'desktop' = 'desktop'
+  viewport: Viewport = 'desktop'
 ) => {
   if (viewport === 'mobile') {
     cy.viewport('iphone-x');
@@ -94,7 +98,7 @@ export const prepareResource = (
   cy.visit('/');
   cy.wait('@resourceRequest', { timeout: 6000 });
 
-  switchToResourceType(type, viewport);
+  switchToResourceType(type);
 
-  waitForResourcesLoad();
+  waitForResourcesLoad(type);
 };

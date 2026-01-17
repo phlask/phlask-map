@@ -39,7 +39,7 @@ const MobileResourceButton = ({
 
   return (
     <ListItemButton
-      data-cy={`button-${type}-data-selector-mobile`}
+      data-cy={`button-${type}-data-selector`}
       sx={{ alignItems: 'center', gap: 1.5 }}
       onClick={() => {
         switchType(type);

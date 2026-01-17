@@ -64,7 +64,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
         >
           <ResourceButton
             icon={WaterIcon}
-            data-cy="button-contribute-water"
+            data-cy={`button-contribute-${ResourceType.WATER}`}
             color="#5286E9"
             text="Water"
             onClick={() => onSelectResource(ResourceType.WATER)}
@@ -79,9 +79,9 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
         >
           <ResourceButton
             icon={ForagingIcon}
+            data-cy={`button-contribute-${ResourceType.FORAGE}`}
             color="#5DA694"
             text="Foraging"
-            data-cy="button-contribute-foraging"
             onClick={() => onSelectResource(ResourceType.FORAGE)}
           />
         </Grid>
@@ -94,9 +94,9 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
         >
           <ResourceButton
             icon={FoodIcon}
+            data-cy={`button-contribute-${ResourceType.FOOD}`}
             color="#FF9A55"
             text="Food"
-            data-cy="button-contribute-food"
             onClick={() => onSelectResource(ResourceType.FOOD)}
           />
         </Grid>
@@ -111,7 +111,7 @@ const ChooseResource = ({ onSelectResource, onClose }: ChooseResourceProps) => {
             icon={BathroomIcon}
             color="#9E9E9E"
             text="Bathroom"
-            data-cy="button-contribute-bathroom"
+            data-cy={`button-contribute-${ResourceType.BATHROOM}`}
             onClick={() => onSelectResource(ResourceType.BATHROOM)}
           />
         </Grid>

@@ -52,7 +52,7 @@ const DesktopResourceButton = ({
         setToolbarModal(null);
         setResourceType(type);
       }}
-      data-cy={`button-${type}-data-selector-desktop`}
+      data-cy={`button-${type}-data-selector`}
     >
       <Icon className={styles.icon} width="45px" height="45px" />
       <p className={styles.label}>{textLabel}</p>

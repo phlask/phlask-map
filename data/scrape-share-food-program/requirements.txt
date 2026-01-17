@@ -55,7 +55,7 @@ prompt_toolkit==3.0.48
 proto-plus==1.25.0
 protobuf==5.29.5
 pure_eval==0.2.3
-pyasn1==0.6.1
+pyasn1==0.6.2
 pyasn1_modules==0.4.1
 pycparser==2.22
 Pygments==2.19.1
@@ -75,7 +75,7 @@ tinycss2==1.4.0
 tornado==6.5.1
 traitlets==5.14.3
 uritemplate==4.1.1
-urllib3==2.5.0
+urllib3==2.6.3
 wcwidth==0.2.13
 webencodings==0.5.1
 yarg==0.1.9

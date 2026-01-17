@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "paths": { "utils/*": ["./utils/*"], "types/*": ["./types/*"] },
     "target": "es2020",
     "noEmit": true,
     "strict": true,
