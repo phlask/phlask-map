@@ -126,7 +126,7 @@ const About = () => (
       </p>
       <div>
         <h2 className={styles.pageSubheader}>Our story</h2>
-        <p>
+        <p className={styles.pageText}>
           This app was officially launched in 2020 with support from Code for
           Philly. Conceived in 2017 as a Social Practice art project, PHLASK
           uses technology as an artistic medium to cultivate social cohesion and

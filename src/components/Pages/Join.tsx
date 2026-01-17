@@ -119,7 +119,7 @@ const Join = () => {
         >
           <div
             style={{
-              width: '55%',
+              width: '80%',
               padding: '20px',
               border: '2px solid #F4D85B',
               borderRadius: '10px',

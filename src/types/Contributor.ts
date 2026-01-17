@@ -1,16 +1,13 @@
 export type Contributor = {
-  civic_member: boolean;
-  convener: boolean;
-  data_member: boolean;
-  design_member: boolean;
-  development_member: boolean;
-  fav_public_space: string;
-  first_name: string;
   id?: number;
-  is_active: boolean;
+  slack_id: string;
+  full_name: string;
+  first_name: string;
   last_name: string;
-  project_management_member: boolean;
-  slack_username: string;
-  start_month: string;
-  start_year: string;
+  email: string;
+  circles: string[];
+  skills: string;
+  is_active: boolean;
+  is_contributor: string;
+  last_synced_at: string;
 };
