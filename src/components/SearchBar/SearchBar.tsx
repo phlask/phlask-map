@@ -4,12 +4,13 @@ import { SearchIcon } from 'icons';
 import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
-import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
+import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 
 const SearchBar = () => {
-  const { onChangeActiveSearchLocation } = useActiveSearchLocationContext();
+  const { onChangeActiveSearchLocation } = useActiveSearchLocation();
   const map = useMap();
-  const { isFetching, onChange, suggestions } = useGooglePlacesAutocomplete();
+  const { isFetching, onDebouncedChange, suggestions } =
+    useGooglePlacesAutocomplete();
 
   const onSelect = async (place: google.maps.places.Place) => {
     if (!place.id) {
@@ -26,8 +27,6 @@ const SearchBar = () => {
     }
 
     const location = toLatLngLiteral(results.place.location);
-    map.panTo(location);
-    map.setZoom(16);
 
     onChangeActiveSearchLocation(location);
   };
@@ -36,7 +35,7 @@ const SearchBar = () => {
     <Autocomplete
       fullWidth={false}
       onInputChange={(_event, value) => {
-        onChange(value);
+        onDebouncedChange(value);
       }}
       options={suggestions}
       loading={isFetching}
