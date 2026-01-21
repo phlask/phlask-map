@@ -13,18 +13,8 @@ const EstimatedWalkingDuration = ({
   const {
     data: walkingDuration = null,
     isPending,
-    isError,
     refetch
   } = useWalkingDurationQuery({ selectedResource });
-
-  if (isError)
-    return (
-      <Stack direction="row">
-        <Typography color="#60718C" fontSize={14} fontWeight={400}>
-          Enable your location services to see walking time
-        </Typography>
-      </Stack>
-    );
 
   if (isPending) {
     <Typography color="#60718C" fontSize={14} fontWeight={400}>
