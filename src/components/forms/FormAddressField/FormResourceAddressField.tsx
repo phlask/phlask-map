@@ -85,6 +85,29 @@ const FormResourceAddressField = ({
     });
   };
 
+  const onGetMyLocationSuccess = async (
+    userLocation: google.maps.LatLngLiteral
+  ) => {
+    const circle = new google.maps.Circle({
+      center: userLocation,
+      radius: 30
+    });
+
+    const { places } = await google.maps.places.Place.searchNearby({
+      locationRestriction: circle,
+      fields: ['formattedAddress']
+    });
+
+    const firstPlace = places.at(0);
+    if (!firstPlace?.formattedAddress) {
+      return setAddressError(
+        "We couldn't find your location, please select an option from the search"
+      );
+    }
+
+    onChange(firstPlace.formattedAddress);
+  };
+
   return (
     <Autocomplete
       openOnFocus
@@ -126,7 +149,7 @@ const FormResourceAddressField = ({
             error?.message || (
               <UseMyLocationButton
                 onError={setAddressError}
-                onChange={onChange}
+                onSuccess={onGetMyLocationSuccess}
               />
             )
           }

@@ -58,7 +58,7 @@ const NearMeButton = ({
       }
     })}
   >
-    Near Me
+    Nearby
   </Button>
 );
 

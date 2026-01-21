@@ -43,7 +43,7 @@ const Overlay = () => {
       >
         <Fade in={toolbarModal === 'search'} mountOnEnter timeout={300}>
           <Box>
-            <SearchBar />
+            <SearchBar open={toolbarModal === 'search'} />
           </Box>
         </Fade>
 
