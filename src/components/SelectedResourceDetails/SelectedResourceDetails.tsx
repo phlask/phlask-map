@@ -29,6 +29,7 @@ import getFormattedCoordinates from 'utils/getFormattedCoordinates';
 import ResourceIcon from 'components/ResourceIcon/ResourceIcon';
 import GetDirectionsButton from 'components/GetDirectionsButton/GetDirectionsButton';
 import SelectedResourceTags from 'components/SelectedResourceTags/SelectedResourceTags';
+import ProvidedBy from 'components/ProvidedBy/ProvidedBy';
 
 type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
@@ -219,6 +220,8 @@ const SelectedResourceDetails = ({
         </Stack>
 
         <SelectedResourceTags resource={resource} />
+
+        <ProvidedBy providers={resource.providers} />
 
         <Stack gap="3px">
           <Typography fontSize={14} fontWeight={600}>
