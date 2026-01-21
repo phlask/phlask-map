@@ -22,7 +22,6 @@ import { useState, type MouseEventHandler } from 'react';
 import noop from 'utils/noop';
 
 import sampleImg from 'components/images/phlask-tessellation.png';
-import shareFoodLogo from 'assets/logos/share-food-program.png';
 
 import EstimatedWalkingDuration from 'components/EstimatedWalkTime/EstimatedWalkTime';
 import ResourceHours from 'components/ResourceHours/ResourceHours';
@@ -220,7 +219,7 @@ const SelectedResourceDetails = ({
               </Stack>
             ) : null}
             <ProvidedBy providers={resource.providers || [
-              { name: 'Share Food Program', logo_url: shareFoodLogo, url: 'https://sharefoodprogram.org' }
+              { name: 'Share Food Program', url: 'https://sharefoodprogram.org' }
             ]} />
           </Stack>
         </Stack>

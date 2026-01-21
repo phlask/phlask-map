@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { type Provider } from 'types/ResourceEntry';
+import { getProviderLogo } from 'utils/providerLogos';
 
 type ProvidedByProps = {
   providers: Provider[] | null | undefined;
@@ -49,12 +50,13 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
   };
 
   const renderProviderItem = (provider: Provider) => {
+    const logoUrl = provider.logo_url || getProviderLogo(provider.name);
     const content = (
       <Stack direction="row" alignItems="center" gap={1.5}>
-        {shouldShowImage(provider.logo_url) ? (
+        {shouldShowImage(logoUrl) ? (
           <Box
             component="img"
-            src={provider.logo_url}
+            src={logoUrl}
             alt={provider.name}
             sx={{
               width: 40,
@@ -62,7 +64,7 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
               objectFit: 'contain',
               borderRadius: '4px'
             }}
-            onError={() => handleImageError(provider.logo_url!)}
+            onError={() => handleImageError(logoUrl!)}
           />
         ) : (
           <Avatar
@@ -148,13 +150,15 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
               }}
             >
               <List dense sx={{ minWidth: 200 }}>
-                {hiddenProviders.map((provider, index) => (
+                {hiddenProviders.map((provider, index) => {
+                  const logoUrl = provider.logo_url || getProviderLogo(provider.name);
+                  return (
                   <ListItem key={`${provider.name}-${index}`}>
                     <ListItemAvatar sx={{ minWidth: 48 }}>
-                      {shouldShowImage(provider.logo_url) ? (
+                      {shouldShowImage(logoUrl) ? (
                         <Box
                           component="img"
-                          src={provider.logo_url}
+                          src={logoUrl}
                           alt={provider.name}
                           sx={{
                             width: 32,
@@ -162,7 +166,7 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
                             objectFit: 'contain',
                             borderRadius: '4px'
                           }}
-                          onError={() => handleImageError(provider.logo_url!)}
+                          onError={() => handleImageError(logoUrl!)}
                         />
                       ) : (
                         <Avatar
@@ -196,7 +200,8 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
                       primaryTypographyProps={{ fontSize: 14 }}
                     />
                   </ListItem>
-                ))}
+                  );
+                })}
               </List>
             </Popover>
           </>
