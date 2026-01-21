@@ -218,9 +218,7 @@ const SelectedResourceDetails = ({
                 </Typography>
               </Stack>
             ) : null}
-            <ProvidedBy providers={resource.providers || [
-              { name: 'Share Food Program', url: 'https://sharefoodprogram.org' }
-            ]} />
+            <ProvidedBy providers={resource.providers} />
           </Stack>
         </Stack>
 
