@@ -5,9 +5,15 @@ import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
+import { useLayoutEffect, useRef } from 'react';
 
-const SearchBar = () => {
+type SearchBarProps = {
+  open?: boolean;
+};
+
+const SearchBar = ({ open = false }: SearchBarProps) => {
   const { onChangeActiveSearchLocation } = useActiveSearchLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
   const { isFetching, onDebouncedChange, suggestions } =
     useGooglePlacesAutocomplete();
@@ -29,7 +35,15 @@ const SearchBar = () => {
     const location = toLatLngLiteral(results.place.location);
 
     onChangeActiveSearchLocation(location);
+    map.panTo(location);
+    map.setZoom(16);
   };
+
+  useLayoutEffect(() => {
+    if (open) {
+      inputRef.current?.focus();
+    }
+  }, [open]);
 
   return (
     <Autocomplete
@@ -42,6 +56,10 @@ const SearchBar = () => {
       getOptionKey={option => option.placeId}
       getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
+        if (reason === 'clear') {
+          return onChangeActiveSearchLocation(null);
+        }
+
         if (reason !== 'selectOption') {
           return;
         }
@@ -77,6 +95,7 @@ const SearchBar = () => {
             },
             input: {
               ...InputProps,
+              inputRef,
               autoComplete: 'off',
               sx: {
                 borderRadius: 4,

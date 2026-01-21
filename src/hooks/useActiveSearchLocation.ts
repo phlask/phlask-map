@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router';
+import filterNullish from 'utils/filterNullish';
 
-const LOCATION_QUERY_PARAM = 'q';
+export const LOCATION_QUERY_PARAM = 'q';
 
 const useActiveSearchLocation = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,18 +19,31 @@ const useActiveSearchLocation = () => {
       }
     : null;
 
+  const getUpdater = (prev: URLSearchParams) => (value: string | null) => {
+    if (!value) {
+      prev.delete(LOCATION_QUERY_PARAM);
+    } else {
+      prev.set(LOCATION_QUERY_PARAM, value);
+    }
+    return prev;
+  };
+
   const onChangeActiveSearchLocation = (
-    location: google.maps.LatLngLiteral | null
+    location: google.maps.LatLngLiteral | null,
+    params?: URLSearchParams
   ) => {
-    if (!location) {
-      return;
+    const value = location
+      ? filterNullish([location.lat, location.lng]).join(',')
+      : null;
+
+    if (params) {
+      const update = getUpdater(params);
+      return update(value);
     }
 
-    const value = [location.lat, location.lng].filter(Boolean).join(',');
     setSearchParams(prev => {
-      prev.set(LOCATION_QUERY_PARAM, value);
-
-      return prev;
+      const update = getUpdater(prev);
+      return update(value);
     });
   };
 
