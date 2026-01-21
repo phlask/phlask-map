@@ -22,6 +22,7 @@ import { useState, type MouseEventHandler } from 'react';
 import noop from 'utils/noop';
 
 import sampleImg from 'components/images/phlask-tessellation.png';
+import shareFoodLogo from 'assets/logos/share-food-program.png';
 
 import EstimatedWalkingDuration from 'components/EstimatedWalkTime/EstimatedWalkTime';
 import ResourceHours from 'components/ResourceHours/ResourceHours';
@@ -209,19 +210,22 @@ const SelectedResourceDetails = ({
               </Stack>
             </Stack>
           </Stack>
-          {!isMobile && resource.last_modified ? (
-            <Stack>
-              <Typography fontWeight={600}>Last Modified</Typography>
-              <Typography color="#60718C">
-                {new Date(resource.last_modified).toDateString()}
-              </Typography>
-            </Stack>
-          ) : null}
+          <Stack gap={1.5}>
+            {!isMobile && resource.last_modified ? (
+              <Stack>
+                <Typography fontWeight={600}>Last Modified</Typography>
+                <Typography color="#60718C">
+                  {new Date(resource.last_modified).toDateString()}
+                </Typography>
+              </Stack>
+            ) : null}
+            <ProvidedBy providers={resource.providers || [
+              { name: 'Share Food Program', logo_url: shareFoodLogo, url: 'https://sharefoodprogram.org' }
+            ]} />
+          </Stack>
         </Stack>
 
         <SelectedResourceTags resource={resource} />
-
-        <ProvidedBy providers={resource.providers} />
 
         <Stack gap="3px">
           <Typography fontSize={14} fontWeight={600}>

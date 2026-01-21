@@ -9,8 +9,8 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  IconButton,
-  Link
+  Link,
+  Box
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { type Provider } from 'types/ResourceEntry';
@@ -22,6 +22,7 @@ type ProvidedByProps = {
 
 const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
 
   if (!providers || providers.length === 0) {
     return null;
@@ -39,26 +40,43 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
     setAnchorEl(null);
   };
 
-  const renderProviderItem = (provider: Provider, compact = false) => {
+  const handleImageError = (logoUrl: string) => {
+    setFailedImages(prev => new Set(prev).add(logoUrl));
+  };
+
+  const shouldShowImage = (logoUrl: string | undefined) => {
+    return logoUrl && !failedImages.has(logoUrl);
+  };
+
+  const renderProviderItem = (provider: Provider) => {
     const content = (
-      <Stack
-        direction="row"
-        alignItems="center"
-        gap={1}
-        sx={compact ? {} : { py: 0.5 }}
-      >
-        {provider.logo_url ? (
-          <Avatar
+      <Stack direction="row" alignItems="center" gap={1.5}>
+        {shouldShowImage(provider.logo_url) ? (
+          <Box
+            component="img"
             src={provider.logo_url}
             alt={provider.name}
-            sx={{ width: 24, height: 24 }}
+            sx={{
+              width: 40,
+              height: 40,
+              objectFit: 'contain',
+              borderRadius: '4px'
+            }}
+            onError={() => handleImageError(provider.logo_url!)}
           />
         ) : (
-          <Avatar sx={{ width: 24, height: 24, fontSize: 12, bgcolor: '#4A90A4' }}>
+          <Avatar
+            sx={{
+              width: 40,
+              height: 40,
+              fontSize: 16,
+              bgcolor: '#4A90A4'
+            }}
+          >
             {provider.name.charAt(0).toUpperCase()}
           </Avatar>
         )}
-        <Typography fontSize={14} color={compact ? '#60718C' : 'inherit'}>
+        <Typography fontSize={14} color="#2D3748">
           {provider.name}
         </Typography>
       </Stack>
@@ -70,8 +88,9 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
           href={provider.url}
           target="_blank"
           rel="noopener noreferrer"
-          underline="hover"
+          underline="none"
           color="inherit"
+          sx={{ '&:hover': { opacity: 0.8 } }}
         >
           {content}
         </Link>
@@ -82,20 +101,22 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
   };
 
   return (
-    <Stack gap="3px">
+    <Stack gap="6px">
       <Stack direction="row" alignItems="center" gap={0.5}>
         <Typography fontSize={14} fontWeight={600}>
           Provided By
         </Typography>
         <Tooltip title="Organizations that contributed this resource to PHLASK">
-          <InfoOutlinedIcon sx={{ fontSize: 16, color: '#60718C', cursor: 'help' }} />
+          <InfoOutlinedIcon
+            sx={{ fontSize: 16, color: '#60718C', cursor: 'help' }}
+          />
         </Tooltip>
       </Stack>
 
-      <Stack gap={0.5}>
+      <Stack gap={1}>
         {visibleProviders.map((provider, index) => (
           <div key={`${provider.name}-${index}`}>
-            {renderProviderItem(provider, true)}
+            {renderProviderItem(provider)}
           </div>
         ))}
 
@@ -104,7 +125,10 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
             <Typography
               fontSize={14}
               color="#4A90A4"
-              sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+              sx={{
+                cursor: 'pointer',
+                '&:hover': { textDecoration: 'underline' }
+              }}
               onClick={handleMoreClick}
             >
               +{hiddenProviders.length} more
@@ -116,25 +140,39 @@ const ProvidedBy = ({ providers, maxVisible = 2 }: ProvidedByProps) => {
               onClose={handleClose}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'left',
+                horizontal: 'left'
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'left',
+                horizontal: 'left'
               }}
             >
               <List dense sx={{ minWidth: 200 }}>
                 {hiddenProviders.map((provider, index) => (
                   <ListItem key={`${provider.name}-${index}`}>
-                    <ListItemAvatar sx={{ minWidth: 36 }}>
-                      {provider.logo_url ? (
-                        <Avatar
+                    <ListItemAvatar sx={{ minWidth: 48 }}>
+                      {shouldShowImage(provider.logo_url) ? (
+                        <Box
+                          component="img"
                           src={provider.logo_url}
                           alt={provider.name}
-                          sx={{ width: 24, height: 24 }}
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            objectFit: 'contain',
+                            borderRadius: '4px'
+                          }}
+                          onError={() => handleImageError(provider.logo_url!)}
                         />
                       ) : (
-                        <Avatar sx={{ width: 24, height: 24, fontSize: 12, bgcolor: '#4A90A4' }}>
+                        <Avatar
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            fontSize: 14,
+                            bgcolor: '#4A90A4'
+                          }}
+                        >
                           {provider.name.charAt(0).toUpperCase()}
                         </Avatar>
                       )}
