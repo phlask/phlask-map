@@ -4,12 +4,19 @@ import { SearchIcon } from 'icons';
 import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
-import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
+import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
+import { useLayoutEffect, useRef } from 'react';
 
-const SearchBar = () => {
-  const { onChangeActiveSearchLocation } = useActiveSearchLocationContext();
+type SearchBarProps = {
+  open?: boolean;
+};
+
+const SearchBar = ({ open = false }: SearchBarProps) => {
+  const { onChangeActiveSearchLocation } = useActiveSearchLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
-  const { isFetching, onChange, suggestions } = useGooglePlacesAutocomplete();
+  const { isFetching, onDebouncedChange, suggestions } =
+    useGooglePlacesAutocomplete();
 
   const onSelect = async (place: google.maps.places.Place) => {
     if (!place.id) {
@@ -26,23 +33,33 @@ const SearchBar = () => {
     }
 
     const location = toLatLngLiteral(results.place.location);
-    map.panTo(location);
-    map.setZoom(16);
 
     onChangeActiveSearchLocation(location);
+    map.panTo(location);
+    map.setZoom(16);
   };
+
+  useLayoutEffect(() => {
+    if (open) {
+      inputRef.current?.focus();
+    }
+  }, [open]);
 
   return (
     <Autocomplete
       fullWidth={false}
       onInputChange={(_event, value) => {
-        onChange(value);
+        onDebouncedChange(value);
       }}
       options={suggestions}
       loading={isFetching}
       getOptionKey={option => option.placeId}
       getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
+        if (reason === 'clear') {
+          return onChangeActiveSearchLocation(null);
+        }
+
         if (reason !== 'selectOption') {
           return;
         }
@@ -78,6 +95,7 @@ const SearchBar = () => {
             },
             input: {
               ...InputProps,
+              inputRef,
               autoComplete: 'off',
               sx: {
                 borderRadius: 4,
