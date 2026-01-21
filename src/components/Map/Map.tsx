@@ -4,9 +4,9 @@ import {
   useMap
 } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
-import { type CSSProperties, useLayoutEffect } from 'react';
+import { type CSSProperties } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
-import { CITY_HALL_COORDINATES } from 'constants/defaults';
+import { CITY_HALL_LOCATION } from 'constants/defaults';
 import PinWaterActive from 'components/icons/PinWaterActive';
 import PinForagingActive from 'components/icons/PinForagingActive';
 import PinFoodActive from 'components/icons/PinFoodActive';
@@ -15,7 +15,6 @@ import phlaskMarkerIconV2 from 'components/icons/PhlaskMarkerIconV2';
 import { type ResourceEntry } from 'types/ResourceEntry';
 import { ResourceType } from 'hooks/useResourceType';
 import useSelectedResource from 'hooks/useSelectedResource';
-import useGetUserLocationQuery from 'hooks/queries/useGetUserLocationQuery';
 import useActiveResources from 'hooks/useActiveResources';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 
@@ -31,28 +30,11 @@ const Map = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
   const { selectedResource, setSelectedResource } = useSelectedResource();
-  const { data: userLocation } = useGetUserLocationQuery();
   const { activeSearchLocation } = useActiveSearchLocation();
 
   const map = useMap();
 
   const { data: resources } = useActiveResources();
-
-  useLayoutEffect(() => {
-    if (!map) {
-      return;
-    }
-
-    if (activeSearchLocation) {
-      map.panTo(activeSearchLocation);
-      return;
-    }
-
-    if (userLocation) {
-      map.panTo(userLocation);
-      return;
-    }
-  }, [userLocation, map, activeSearchLocation]);
 
   const onMarkerClick = (resource: ResourceEntry) => {
     setSelectedResource(resource);
@@ -96,10 +78,7 @@ const Map = () => {
       mapTypeControl={false}
       rotateControl={false}
       fullscreenControl={false}
-      defaultCenter={{
-        lat: CITY_HALL_COORDINATES.latitude,
-        lng: CITY_HALL_COORDINATES.longitude
-      }}
+      defaultCenter={activeSearchLocation || CITY_HALL_LOCATION}
       mapId="DEMO_MAP_ID"
     >
       {resources?.map((resource, index) => {
@@ -116,7 +95,6 @@ const Map = () => {
           </AdvancedMarker>
         );
       })}
-      {userLocation ? <AdvancedMarker position={userLocation} /> : null}
 
       {activeSearchLocation ? (
         <AdvancedMarker position={activeSearchLocation} />
