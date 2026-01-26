@@ -9,6 +9,7 @@ const useGooglePlacesAutocomplete = () => {
     isFetching,
     error
   } = useGetGooglePlacePredictionsQuery(input);
+
   const onChange = useCallback((input: string) => {
     setInput(input || '');
   }, []);

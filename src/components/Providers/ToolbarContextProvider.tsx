@@ -1,8 +1,19 @@
 import { ToolbarContext, type ToolbarModal } from 'contexts/ToolbarContext';
+import { LOCATION_QUERY_PARAM } from 'hooks/useActiveSearchLocation';
 import { useState, type PropsWithChildren } from 'react';
 
 const ToolbarContextProvider = ({ children }: PropsWithChildren) => {
-  const [toolbarModal, setToolbarModal] = useState<ToolbarModal | null>(null);
+  const [toolbarModal, setToolbarModal] = useState<ToolbarModal | null>(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const hasInitializedWithSearchQuery =
+      searchParams.get(LOCATION_QUERY_PARAM);
+
+    if (hasInitializedWithSearchQuery) {
+      return 'search';
+    }
+
+    return null;
+  });
 
   const toggle = (modal: ToolbarModal) => {
     setToolbarModal(prev => {

@@ -10,7 +10,7 @@ const BASE_URL = 'https://api.openrouteservice.org/v2';
 const PATH = '/directions/foot-walking';
 
 type UseWalkingDurationQueryOptions = {
-  selectedResource: ResourceEntry | null;
+  selectedResource: ResourceEntry;
 };
 
 type UserLocationWalkingDurationResponse = {
@@ -55,6 +55,7 @@ export const useWalkingDurationQuery = ({
   selectedResource
 }: UseWalkingDurationQueryOptions) => {
   const { activeSearchLocation } = useActiveSearchLocation();
+  const { latitude, longitude } = selectedResource;
 
   const queryFn = async (): Promise<UseWalkingDurationResponse> => {
     const locationPermission = await navigator.permissions.query({
@@ -73,10 +74,7 @@ export const useWalkingDurationQuery = ({
     }
 
     const startingLocation = [location.lng, location.lat].join(',');
-    const endingLocation = [
-      selectedResource?.longitude,
-      selectedResource?.latitude
-    ].join(',');
+    const endingLocation = [longitude, latitude].join(',');
 
     const params = new URLSearchParams({
       api_key: OPEN_ROUTE_SERVICE_API_KEY,
@@ -106,15 +104,15 @@ export const useWalkingDurationQuery = ({
     return { locationPermissionState: state, minutes, from: 'current search' };
   };
 
-  const { data, isPending, refetch, isError } = useQuery({
-    queryKey: ['walking-duration', { selectedResource, activeSearchLocation }],
-    queryFn,
-    enabled: Boolean(selectedResource)
+  const { data, refetch, isPending, isRefetching, isError } = useQuery({
+    queryKey: ['walking-duration', { selectedResource, longitude, latitude }],
+    queryFn
   });
 
   return {
     data,
     isPending,
+    isRefetching,
     refetch,
     isError
   };

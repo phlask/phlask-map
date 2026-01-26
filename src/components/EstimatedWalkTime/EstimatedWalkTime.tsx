@@ -13,6 +13,7 @@ const EstimatedWalkingDuration = ({
   const {
     data: walkingDuration = null,
     isPending,
+    isRefetching,
     refetch
   } = useWalkingDurationQuery({ selectedResource });
 
@@ -21,6 +22,20 @@ const EstimatedWalkingDuration = ({
       Calculating walking duration...
     </Typography>;
   }
+
+  const getDisplayValue = () => {
+    if (isRefetching) {
+      return 'Calculating...';
+    }
+
+    if (!walkingDuration?.minutes) {
+      return 'Not Available';
+    }
+
+    return `${walkingDuration.minutes} minutes from ${walkingDuration.from}`;
+  };
+
+  const displayValue = getDisplayValue();
 
   return (
     <Box>
@@ -34,9 +49,7 @@ const EstimatedWalkingDuration = ({
           fontWeight={600}
           sx={{ color: '#2d3748' }}
         >
-          {walkingDuration?.minutes
-            ? `${walkingDuration.minutes} minutes from ${walkingDuration.from}`
-            : 'Not Available'}
+          {displayValue}
         </Typography>
       </Stack>
       {walkingDuration?.locationPermissionState === 'prompt' ? (
