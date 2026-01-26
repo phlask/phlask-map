@@ -54,7 +54,10 @@ const Toolbar = () => {
 
     setSearchParams(prev => {
       setSelectedResource(closest, prev);
-      onChangeActiveSearchLocation(location, prev);
+      onChangeActiveSearchLocation(
+        { lat: location.lat, lng: location.lng },
+        prev
+      );
 
       return prev;
     });

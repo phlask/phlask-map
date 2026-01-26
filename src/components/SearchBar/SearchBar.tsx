@@ -5,7 +5,9 @@ import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
+import useGetGooglePlaceById from 'hooks/queries/useGetGooglePlaceById';
+import getNormalizedAddressComponents from 'utils/getNormalizedAddressComponents';
 
 type SearchBarProps = {
   open?: boolean;
@@ -17,6 +19,8 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
   const map = useMap();
   const { isFetching, onDebouncedChange, suggestions } =
     useGooglePlacesAutocomplete();
+
+  const { data: activePlace = null } = useGetGooglePlaceById();
 
   const onSelect = async (place: google.maps.places.Place) => {
     if (!place.id) {
@@ -34,7 +38,11 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
 
     const location = toLatLngLiteral(results.place.location);
 
-    onChangeActiveSearchLocation(location);
+    onChangeActiveSearchLocation({
+      lat: location.lat,
+      lng: location.lng,
+      placeId: results.place.id
+    });
     map.panTo(location);
     map.setZoom(16);
   };
@@ -45,16 +53,34 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
     }
   }, [open]);
 
+  const getOptionLabel = (option: google.maps.places.Place) => {
+    const { addressComponents, displayName } = option;
+    const { street, city, state, zip_code } =
+      getNormalizedAddressComponents(addressComponents);
+
+    return `${displayName}, ${street}, ${city}, ${state} ${zip_code}`;
+  };
+
+  const options = useMemo(() => {
+    if (!suggestions && activePlace) {
+      return [activePlace];
+    }
+
+    return suggestions;
+  }, [activePlace, suggestions]);
+
   return (
     <Autocomplete
       fullWidth={false}
       onInputChange={(_event, value) => {
         onDebouncedChange(value);
       }}
-      options={suggestions}
+      options={options}
+      defaultValue={activePlace}
       loading={isFetching}
-      getOptionKey={option => option.placeId}
-      getOptionLabel={option => option.text.text}
+      getOptionKey={option => option.id}
+      getOptionLabel={getOptionLabel}
+      value={activePlace}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onChangeActiveSearchLocation(null);
@@ -68,7 +94,7 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
           return;
         }
 
-        onSelect(value.toPlace());
+        onSelect(value);
       }}
       slotProps={{
         popupIndicator: { sx: { marginRight: '16px' } }

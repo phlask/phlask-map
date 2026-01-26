@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import filterNullish from 'utils/filterNullish';
 
 const useGetGooglePlacePredictionsQuery = (input: string) => {
   const {
@@ -9,22 +8,12 @@ const useGetGooglePlacePredictionsQuery = (input: string) => {
   } = useQuery({
     queryKey: ['google-places-autocomplete', input],
     queryFn: async () => {
-      const { suggestions } =
-        await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(
-          {
-            input,
-            includedRegionCodes: ['us']
-          }
-        );
-      return filterNullish(
-        suggestions.map(suggestion => {
-          if (!suggestion.placePrediction?.mainText?.text) {
-            return null;
-          }
+      const { places } = await google.maps.places.Place.searchByText({
+        textQuery: input,
+        fields: ['displayName', 'addressComponents']
+      });
 
-          return suggestion.placePrediction;
-        })
-      );
+      return places;
     },
     enabled: Boolean(input)
   });

@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { useWalkingDurationQuery } from 'hooks/useWalkingDurationQuery';
+import { useWalkingDurationQuery } from 'hooks/queries/useWalkingDurationQuery';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
 

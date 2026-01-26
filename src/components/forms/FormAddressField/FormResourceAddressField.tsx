@@ -3,22 +3,12 @@ import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import useAddressFormControllers from 'hooks/useAddressFormControllers';
 import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
+import getNormalizedAddressComponents from 'utils/getNormalizedAddressComponents';
 
 type FormResourceAddressFieldProps = {
   label?: string;
   fullWidth?: boolean;
 };
-
-type DesiredAddressComponentType =
-  | 'administrative_area_level_1'
-  | 'locality'
-  | 'postal_code';
-
-const addressComponentToFieldName = {
-  administrative_area_level_1: 'state',
-  locality: 'city',
-  postal_code: 'zip_code'
-} as const satisfies Record<DesiredAddressComponentType, string>;
 
 const FormResourceAddressField = ({
   label = 'Address',
@@ -51,28 +41,9 @@ const FormResourceAddressField = ({
       return setAddressError('Please select a valid address');
     }
 
-    const addressComponents = results.place.addressComponents.reduce<
-      Record<string, string>
-    >((prev, component) => {
-      const type = component.types.find(
-        (type): type is DesiredAddressComponentType =>
-          type in addressComponentToFieldName
-      );
-      if (!type) {
-        return prev;
-      }
-
-      const key = addressComponentToFieldName[type];
-      let value = component.longText;
-      if (key === 'state') {
-        value = component.shortText;
-      }
-
-      return {
-        ...prev,
-        [key]: value || ''
-      };
-    }, {});
+    const addressComponents = getNormalizedAddressComponents(
+      results.place.addressComponents
+    );
 
     setAddressValues({
       address: place.formattedAddress || '',
@@ -117,8 +88,10 @@ const FormResourceAddressField = ({
         onDebouncedChange(value);
       }}
       loading={isFetching}
-      getOptionKey={option => option.placeId}
-      getOptionLabel={option => option.text.text}
+      getOptionKey={option => option.id}
+      getOptionLabel={option =>
+        `${option.displayName}, ${option.formattedAddress}`
+      }
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onClear();
@@ -132,7 +105,7 @@ const FormResourceAddressField = ({
           return;
         }
 
-        onSelect(value.toPlace());
+        onSelect(value);
       }}
       renderInput={({ inputProps, ...params }) => (
         <TextField
