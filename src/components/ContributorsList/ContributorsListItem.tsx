@@ -19,6 +19,7 @@ const ContributorsListItem = ({ contributor }: ContributorsListItemProps) => (
       <Stack direction="row">
         <Typography component="span" variant="subtitle2">
           {contributor.circles.join(', ')}
+          {contributor.is_convener && ', Convener'}
         </Typography>
       </Stack>
     </Stack>
