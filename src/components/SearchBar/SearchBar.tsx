@@ -13,18 +13,14 @@ type SearchBarProps = {
 };
 
 const SearchBar = ({ open = false }: SearchBarProps) => {
-  const [value, setValue] = useState<google.maps.places.PlacePrediction | null>(
-    null
-  );
+  const [value, setValue] = useState<
+    google.maps.places.PlacePrediction | google.maps.places.Place | null
+  >(null);
   const { onChangeActiveSearchLocation } = useActiveSearchLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
-  const {
-    isFetching,
-    onDebouncedChange,
-    suggestions,
-    isEnabled: arePredictionsEnabled
-  } = useGooglePlacesAutocomplete();
+  const { isFetching, onDebouncedChange, suggestions } =
+    useGooglePlacesAutocomplete();
 
   const { data: activePlace = null } = useGetGooglePlaceById();
 
@@ -66,6 +62,24 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
       inputRef.current?.focus();
     }
   }, [open]);
+
+  const controlledValue = useMemo(() => {
+    if (!activePlace?.id) {
+      return value;
+    }
+
+    if (!value) {
+      return activePlace;
+    }
+
+    const isPrediction = value instanceof google.maps.places.PlacePrediction;
+
+    if (isPrediction && value.placeId !== activePlace.id) {
+      return activePlace;
+    }
+
+    return value;
+  }, [activePlace, value]);
 
   const getOptionKey = useCallback(
     (option: google.maps.places.Place | google.maps.places.PlacePrediction) => {
@@ -117,7 +131,7 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
       loading={isFetching}
       getOptionKey={getOptionKey}
       getOptionLabel={getOptionLabel}
-      value={!arePredictionsEnabled ? activePlace : value}
+      value={controlledValue}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onChangeActiveSearchLocation(null);
