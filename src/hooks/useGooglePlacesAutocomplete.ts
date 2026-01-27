@@ -7,8 +7,7 @@ const useGooglePlacesAutocomplete = () => {
   const {
     data: suggestions,
     isFetching,
-    error,
-    isEnabled
+    error
   } = useGetGooglePlacePredictionsQuery(input);
 
   const onChange = useCallback((input: string) => {
@@ -24,7 +23,6 @@ const useGooglePlacesAutocomplete = () => {
   );
 
   return {
-    isEnabled,
     suggestions,
     isFetching,
     error,

@@ -17,7 +17,6 @@ const useGetGooglePlaceById = () => {
           'displayName',
           'formattedAddress',
           'addressComponents',
-          'shortFormattedAddress',
           'types'
         ]
       });

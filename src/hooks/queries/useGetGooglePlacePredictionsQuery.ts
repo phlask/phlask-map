@@ -5,8 +5,7 @@ const useGetGooglePlacePredictionsQuery = (input: string) => {
   const {
     data = [],
     isFetching,
-    error,
-    isEnabled
+    error
   } = useQuery({
     queryKey: ['google-places-autocomplete', input],
     queryFn: async () => {
@@ -31,7 +30,7 @@ const useGetGooglePlacePredictionsQuery = (input: string) => {
     enabled: Boolean(input)
   });
 
-  return { data, isFetching, error, isEnabled };
+  return { data, isFetching, error };
 };
 
 export default useGetGooglePlacePredictionsQuery;
