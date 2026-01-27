@@ -52,10 +52,18 @@ const Toolbar = () => {
       );
     }
 
+    if (closest.gp_id) {
+      setToolbarModal('search');
+    }
+
     setSearchParams(prev => {
       setSelectedResource(closest, prev);
       onChangeActiveSearchLocation(
-        { lat: location.lat, lng: location.lng },
+        {
+          lat: location.lat,
+          lng: location.lng,
+          placeId: closest.gp_id || undefined
+        },
         prev
       );
 

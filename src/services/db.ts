@@ -38,7 +38,7 @@ export async function getResources(
   // Build the query with filters
   let query = supabase
     .from(resourceDatabaseName)
-    .select(`id,name,latitude,longitude,resource_type,entry_type`, {
+    .select(`id,name,latitude,longitude,resource_type,entry_type,gp_id`, {
       count: 'exact'
     });
 

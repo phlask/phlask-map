@@ -11,6 +11,8 @@ import { useToolbarContext } from 'contexts/ToolbarContext';
 const Overlay = () => {
   const { toolbarModal } = useToolbarContext();
 
+  const shouldShowSearchBar = toolbarModal === 'search';
+
   return (
     <>
       <Stack
@@ -41,9 +43,9 @@ const Overlay = () => {
         })}
         gap={2}
       >
-        <Fade in={toolbarModal === 'search'} mountOnEnter timeout={300}>
+        <Fade in={shouldShowSearchBar} mountOnEnter timeout={300}>
           <Box>
-            <SearchBar open={toolbarModal === 'search'} />
+            <SearchBar open={shouldShowSearchBar} />
           </Box>
         </Fade>
 

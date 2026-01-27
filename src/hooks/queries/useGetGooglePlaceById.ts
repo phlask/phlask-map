@@ -13,7 +13,13 @@ const useGetGooglePlaceById = () => {
       const { place } = await new google.maps.places.Place({
         id: placeId
       }).fetchFields({
-        fields: ['displayName', 'formattedAddress', 'addressComponents']
+        fields: [
+          'displayName',
+          'formattedAddress',
+          'addressComponents',
+          'shortFormattedAddress',
+          'types'
+        ]
       });
 
       return place;

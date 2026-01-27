@@ -5,28 +5,42 @@ import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
-import { useLayoutEffect, useMemo, useRef } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import useGetGooglePlaceById from 'hooks/queries/useGetGooglePlaceById';
-import getNormalizedAddressComponents from 'utils/getNormalizedAddressComponents';
 
 type SearchBarProps = {
   open?: boolean;
 };
 
 const SearchBar = ({ open = false }: SearchBarProps) => {
+  const [value, setValue] = useState<google.maps.places.PlacePrediction | null>(
+    null
+  );
   const { onChangeActiveSearchLocation } = useActiveSearchLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
-  const { isFetching, onDebouncedChange, suggestions } =
-    useGooglePlacesAutocomplete();
+  const {
+    isFetching,
+    onDebouncedChange,
+    suggestions,
+    isEnabled: arePredictionsEnabled
+  } = useGooglePlacesAutocomplete();
 
   const { data: activePlace = null } = useGetGooglePlaceById();
 
-  const onSelect = async (place: google.maps.places.Place) => {
-    if (!place.id) {
+  const onSelect = async (
+    place: google.maps.places.Place | google.maps.places.PlacePrediction
+  ) => {
+    const isPrediction = place instanceof google.maps.places.PlacePrediction;
+    if (isPrediction) {
+      setValue(place);
+    }
+    const selectedPlace = isPrediction ? place.toPlace() : place;
+
+    if (!selectedPlace.id) {
       return;
     }
-    const results = await place.fetchFields({ fields: ['location'] });
+    const results = await selectedPlace.fetchFields({ fields: ['location'] });
 
     if (!results.place.location) {
       return;
@@ -53,16 +67,36 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
     }
   }, [open]);
 
-  const getOptionLabel = (option: google.maps.places.Place) => {
-    const { addressComponents, displayName } = option;
-    const { street, city, state, zip_code } =
-      getNormalizedAddressComponents(addressComponents);
+  const getOptionKey = useCallback(
+    (option: google.maps.places.Place | google.maps.places.PlacePrediction) => {
+      if (option instanceof google.maps.places.PlacePrediction) {
+        return option.placeId;
+      }
+      return option.id;
+    },
+    []
+  );
 
-    return `${displayName}, ${street}, ${city}, ${state} ${zip_code}`;
-  };
+  const getOptionLabel = useCallback(
+    (option: google.maps.places.Place | google.maps.places.PlacePrediction) => {
+      if (option instanceof google.maps.places.PlacePrediction) {
+        return option.text.text;
+      }
+
+      const { formattedAddress, displayName, types } = option;
+      const isEstablishment = Boolean(types?.includes('establishment'));
+
+      if (!isEstablishment && formattedAddress) {
+        return formattedAddress;
+      }
+
+      return displayName || '';
+    },
+    []
+  );
 
   const options = useMemo(() => {
-    if (!suggestions && activePlace) {
+    if (!suggestions.length && activePlace) {
       return [activePlace];
     }
 
@@ -72,15 +106,18 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
   return (
     <Autocomplete
       fullWidth={false}
-      onInputChange={(_event, value) => {
+      onInputChange={(_event, value, reason) => {
+        if (reason !== 'input') {
+          return;
+        }
+
         onDebouncedChange(value);
       }}
       options={options}
-      defaultValue={activePlace}
       loading={isFetching}
-      getOptionKey={option => option.id}
+      getOptionKey={getOptionKey}
       getOptionLabel={getOptionLabel}
-      value={activePlace}
+      value={!arePredictionsEnabled ? activePlace : value}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onChangeActiveSearchLocation(null);
