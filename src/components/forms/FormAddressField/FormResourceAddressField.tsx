@@ -88,10 +88,8 @@ const FormResourceAddressField = ({
         onDebouncedChange(value);
       }}
       loading={isFetching}
-      getOptionKey={option => option.id}
-      getOptionLabel={option =>
-        `${option.displayName}, ${option.formattedAddress}`
-      }
+      getOptionKey={option => option.placeId}
+      getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onClear();
@@ -105,7 +103,7 @@ const FormResourceAddressField = ({
           return;
         }
 
-        onSelect(value);
+        onSelect(value.toPlace());
       }}
       renderInput={({ inputProps, ...params }) => (
         <TextField
