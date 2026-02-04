@@ -3,22 +3,12 @@ import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import useAddressFormControllers from 'hooks/useAddressFormControllers';
 import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
+import getNormalizedAddressComponents from 'utils/getNormalizedAddressComponents';
 
 type FormResourceAddressFieldProps = {
   label?: string;
   fullWidth?: boolean;
 };
-
-type DesiredAddressComponentType =
-  | 'administrative_area_level_1'
-  | 'locality'
-  | 'postal_code';
-
-const addressComponentToFieldName = {
-  administrative_area_level_1: 'state',
-  locality: 'city',
-  postal_code: 'zip_code'
-} as const satisfies Record<DesiredAddressComponentType, string>;
 
 const FormResourceAddressField = ({
   label = 'Address',
@@ -51,28 +41,9 @@ const FormResourceAddressField = ({
       return setAddressError('Please select a valid address');
     }
 
-    const addressComponents = results.place.addressComponents.reduce<
-      Record<string, string>
-    >((prev, component) => {
-      const type = component.types.find(
-        (type): type is DesiredAddressComponentType =>
-          type in addressComponentToFieldName
-      );
-      if (!type) {
-        return prev;
-      }
-
-      const key = addressComponentToFieldName[type];
-      let value = component.longText;
-      if (key === 'state') {
-        value = component.shortText;
-      }
-
-      return {
-        ...prev,
-        [key]: value || ''
-      };
-    }, {});
+    const addressComponents = getNormalizedAddressComponents(
+      results.place.addressComponents
+    );
 
     setAddressValues({
       address: place.formattedAddress || '',
@@ -83,6 +54,29 @@ const FormResourceAddressField = ({
       longitude,
       zip_code: addressComponents.zip_code
     });
+  };
+
+  const onGetMyLocationSuccess = async (
+    userLocation: google.maps.LatLngLiteral
+  ) => {
+    const circle = new google.maps.Circle({
+      center: userLocation,
+      radius: 30
+    });
+
+    const { places } = await google.maps.places.Place.searchNearby({
+      locationRestriction: circle,
+      fields: ['formattedAddress']
+    });
+
+    const firstPlace = places.at(0);
+    if (!firstPlace?.formattedAddress) {
+      return setAddressError(
+        "We couldn't find your location, please select an option from the search"
+      );
+    }
+
+    onChange(firstPlace.formattedAddress);
   };
 
   return (
@@ -126,7 +120,7 @@ const FormResourceAddressField = ({
             error?.message || (
               <UseMyLocationButton
                 onError={setAddressError}
-                onChange={onChange}
+                onSuccess={onGetMyLocationSuccess}
               />
             )
           }

@@ -12,19 +12,14 @@ import ForagingIcon from 'icons/CircleForagingIcon';
 import WaterIcon from 'icons/CircleWaterIcon';
 import useResourceType, { ResourceType } from 'hooks/useResourceType';
 import { useToolbarContext } from 'contexts/ToolbarContext';
-import useGetUserLocationQuery, {
-  type UserLocation
-} from 'hooks/queries/useGetUserLocationQuery';
 
 type MobileToolbarProps = {
-  onNearMeClick: (userLocation: UserLocation | null) => void;
+  onNearMeClick: VoidFunction;
 };
 
 const MobileToolbar = ({ onNearMeClick }: MobileToolbarProps) => {
   const { resourceType } = useResourceType();
   const { toggle } = useToolbarContext();
-  const { data: userLocation, isSuccess: isUserSharingLocation } =
-    useGetUserLocationQuery();
 
   const selectedResourceIcon = {
     [ResourceType.WATER]: WaterIcon,
@@ -57,13 +52,12 @@ const MobileToolbar = ({ onNearMeClick }: MobileToolbarProps) => {
         />
         <NavigationItem
           central
-          disabled={!isUserSharingLocation}
           label={
             <Typography fontSize="small" color="black" marginTop="-1">
-              Near me
+              Nearby
             </Typography>
           }
-          onClick={() => onNearMeClick(userLocation)}
+          onClick={() => onNearMeClick()}
           icon={
             <SvgIcon
               component={selectedResourceIcon}
