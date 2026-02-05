@@ -49,6 +49,7 @@ const AddWaterForm = ({
   };
 
   const onSubmit = (resource: FormValues) => {
+    if (isEditing) return;
     addResource(resource, { onSuccess: onComplete });
   };
 

@@ -48,6 +48,7 @@ const AddBathroomForm = ({
   };
 
   const onSubmit = (resource: FormValues) => {
+    if (isEditing) return;
     addResource(resource, { onSuccess: onComplete });
   };
 
