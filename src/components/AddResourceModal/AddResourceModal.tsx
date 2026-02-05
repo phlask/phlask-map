@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import AddFoodForm from './AddFoodForm/AddFoodForm';
 import AddForageForm from './AddForageForm/AddForageForm';
 import AddBathroomForm from './AddBathroomForm/AddBathroomForm';
+import { useEditResourceContext } from 'contexts/EditResourceContext';
 
 const AddResourceModal = () => {
   const queryClient = useQueryClient();
@@ -17,8 +18,15 @@ const AddResourceModal = () => {
     null
   );
   const [isCompleted, setIsCompleted] = useState(false);
+  const { editingResource, clearEdit } = useEditResourceContext();
+
+  const isEditing = Boolean(editingResource);
+  const activeForm = editingResource?.resource_type ?? resourceForm;
 
   const onGoBack = () => {
+    if (isEditing) {
+      clearEdit();
+    }
     setResourceForm(null);
   };
 
@@ -26,6 +34,7 @@ const AddResourceModal = () => {
     queryClient.invalidateQueries({ queryKey: ['resources'] });
     setIsCompleted(true);
     setResourceForm(null);
+    clearEdit();
   };
 
   const { setToolbarModal } = useToolbarContext();
@@ -34,9 +43,10 @@ const AddResourceModal = () => {
     setToolbarModal(null);
     setResourceForm(null);
     setIsCompleted(false);
+    clearEdit();
   };
 
-  const shouldChooseResource = !isCompleted && !resourceForm;
+  const shouldChooseResource = !isCompleted && !activeForm;
 
   return (
     <ModalWrapper onClose={handleClose}>
@@ -47,20 +57,36 @@ const AddResourceModal = () => {
         />
       )}
 
-      {resourceForm === ResourceType.WATER ? (
-        <AddWaterForm onGoBack={onGoBack} onComplete={onComplete} />
+      {activeForm === ResourceType.WATER ? (
+        <AddWaterForm
+          onGoBack={onGoBack}
+          onComplete={onComplete}
+          editingResource={editingResource}
+        />
       ) : null}
 
-      {resourceForm === ResourceType.FOOD ? (
-        <AddFoodForm onGoBack={onGoBack} onComplete={onComplete} />
+      {activeForm === ResourceType.FOOD ? (
+        <AddFoodForm
+          onGoBack={onGoBack}
+          onComplete={onComplete}
+          editingResource={editingResource}
+        />
       ) : null}
 
-      {resourceForm === ResourceType.FORAGE ? (
-        <AddForageForm onGoBack={onGoBack} onComplete={onComplete} />
+      {activeForm === ResourceType.FORAGE ? (
+        <AddForageForm
+          onGoBack={onGoBack}
+          onComplete={onComplete}
+          editingResource={editingResource}
+        />
       ) : null}
 
-      {resourceForm === ResourceType.BATHROOM ? (
-        <AddBathroomForm onGoBack={onGoBack} onComplete={onComplete} />
+      {activeForm === ResourceType.BATHROOM ? (
+        <AddBathroomForm
+          onGoBack={onGoBack}
+          onComplete={onComplete}
+          editingResource={editingResource}
+        />
       ) : null}
 
       {isCompleted && <AddResourceSuccessStep onClose={handleClose} />}

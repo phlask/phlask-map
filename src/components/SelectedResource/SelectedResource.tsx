@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
 
@@ -7,18 +6,21 @@ import SelectedResourceDetails from 'components/SelectedResourceDetails/Selected
 import noop from 'utils/noop';
 import useSelectedResource from 'hooks/useSelectedResource';
 import { useGetSelectedResourceQuery } from 'hooks/queries/useGetSelectedResourceQuery';
+import { useEditResourceContext } from 'contexts/EditResourceContext';
+import { useToolbarContext } from 'contexts/ToolbarContext';
 
 const SelectedResource = () => {
   const isMobile = useIsMobile();
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
-
-  // TODO: Connect this feature
-  // https://github.com/phlask/phlask-map/issues/649
-  const [_isEditing, setIsEditing] = useState<boolean | null>(false);
+  const { startEdit } = useEditResourceContext();
+  const { setToolbarModal } = useToolbarContext();
 
   const handleStartEdit = () => {
-    setIsEditing(true);
+    if (!data) return;
+    startEdit(data);
+    setToolbarModal('contribute');
+    setSelectedResource(null);
   };
 
   const onClose = () => {

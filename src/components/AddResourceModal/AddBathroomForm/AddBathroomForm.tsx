@@ -12,24 +12,33 @@ import bathroomResourceSchema, {
   type BathroomFormValues
 } from 'schemas/bathroomResourceSchema';
 import { tagOptions } from './choiceFieldOptions';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import { transformResourceForEdit } from 'utils/transformResourceForEdit';
 
 type AddBathroomFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
+  editingResource?: ResourceEntry | null;
 };
 
 type FormValues = BathroomFormValues;
 
-const TITLE = 'Add a Bathroom Resource';
-const COLOR = '#7C7C7C';
 const SCHEMA = bathroomResourceSchema;
+const COLOR = '#7C7C7C';
 
-const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
+const AddBathroomForm = ({
+  onGoBack,
+  onComplete,
+  editingResource
+}: AddBathroomFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
+  const isEditing = Boolean(editingResource);
 
   const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
+    defaultValues: editingResource
+      ? SCHEMA.parse(transformResourceForEdit(editingResource))
+      : SCHEMA.parse({}),
     resolver: zodResolver(SCHEMA)
   });
 
@@ -45,7 +54,9 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FormValues>
-        title={TITLE}
+        title={
+          isEditing ? 'Edit Bathroom Resource' : 'Add a Bathroom Resource'
+        }
         color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}

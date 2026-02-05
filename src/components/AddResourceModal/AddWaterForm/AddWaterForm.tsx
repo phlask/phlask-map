@@ -13,24 +13,33 @@ import waterResourceSchema, {
   type WaterFormValues
 } from 'schemas/waterResourceSchema';
 import { tagOptions, waterDispenserTypeOptions } from './choiceFieldOptions';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import { transformResourceForEdit } from 'utils/transformResourceForEdit';
 
 type AddWaterFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
+  editingResource?: ResourceEntry | null;
 };
 
 type FormValues = WaterFormValues;
 
-const TITLE = 'Add a Water Resource';
-const COLOR = '#5286E9';
 const SCHEMA = waterResourceSchema;
+const COLOR = '#5286E9';
 
-const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
+const AddWaterForm = ({
+  onGoBack,
+  onComplete,
+  editingResource
+}: AddWaterFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
+  const isEditing = Boolean(editingResource);
 
   const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
+    defaultValues: editingResource
+      ? SCHEMA.parse(transformResourceForEdit(editingResource))
+      : SCHEMA.parse({}),
     resolver: zodResolver(SCHEMA)
   });
 
@@ -46,7 +55,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FormValues>
-        title={TITLE}
+        title={isEditing ? 'Edit Water Resource' : 'Add a Water Resource'}
         color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}

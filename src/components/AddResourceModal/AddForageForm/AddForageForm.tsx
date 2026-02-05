@@ -13,24 +13,33 @@ import foragingResourceSchema, {
   type ForagingFormValues
 } from 'schemas/foragingResourceSchema';
 import { tagOptions, forageTypeOptions } from './choiceFieldOptions';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import { transformResourceForEdit } from 'utils/transformResourceForEdit';
 
 type AddForageFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
+  editingResource?: ResourceEntry | null;
 };
 
 type FormValues = ForagingFormValues;
 
-const TITLE = 'Add a Foraging Resource';
-const COLOR = '#5DA694';
 const SCHEMA = foragingResourceSchema;
+const COLOR = '#5DA694';
 
-const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
+const AddForageForm = ({
+  onGoBack,
+  onComplete,
+  editingResource
+}: AddForageFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
+  const isEditing = Boolean(editingResource);
 
   const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
+    defaultValues: editingResource
+      ? SCHEMA.parse(transformResourceForEdit(editingResource))
+      : SCHEMA.parse({}),
     resolver: zodResolver(SCHEMA)
   });
 
@@ -46,7 +55,9 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FormValues>
-        title={TITLE}
+        title={
+          isEditing ? 'Edit Foraging Resource' : 'Add a Foraging Resource'
+        }
         color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}

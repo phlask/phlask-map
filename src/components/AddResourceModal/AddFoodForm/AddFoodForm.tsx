@@ -19,24 +19,33 @@ import {
   tags
 } from './choiceFieldOptions';
 import FormSelectField from 'components/forms/FormSelectField/FormSelectField';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import { transformResourceForEdit } from 'utils/transformResourceForEdit';
 
 type AddFoodFormProps = {
   onGoBack: VoidFunction;
   onComplete: VoidFunction;
+  editingResource?: ResourceEntry | null;
 };
 
 type FormValues = FoodFormValues;
 
-const TITLE = 'Add a Food Resource';
-const COLOR = '#FF9A55';
 const SCHEMA = foodResourceSchema;
+const COLOR = '#FF9A55';
 
-const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
+const AddFoodForm = ({
+  onGoBack,
+  onComplete,
+  editingResource
+}: AddFoodFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const { mutate: addResource, isPending } = useAddResourceMutation();
+  const isEditing = Boolean(editingResource);
 
   const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
+    defaultValues: editingResource
+      ? SCHEMA.parse(transformResourceForEdit(editingResource))
+      : SCHEMA.parse({}),
     resolver: zodResolver(SCHEMA)
   });
 
@@ -52,7 +61,7 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
   return (
     <FormProvider {...methods}>
       <ResourceForm<FoodFormValues>
-        title={TITLE}
+        title={isEditing ? 'Edit Food Resource' : 'Add a Food Resource'}
         color={COLOR}
         onSubmit={onSubmit}
         isSubmitting={isPending}
