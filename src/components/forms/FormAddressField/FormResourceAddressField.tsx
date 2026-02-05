@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import { Autocomplete, TextField } from '@mui/material';
 import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
@@ -18,6 +20,9 @@ const FormResourceAddressField = ({
     useGooglePlacesAutocomplete();
   const { inputRef, error, onClear, setAddressError, setAddressValues } =
     useAddressFormControllers();
+  const formAddress: string = useWatch({ name: 'address' }) ?? '';
+  const [localInput, setLocalInput] = useState<string | null>(null);
+  const inputValue = localInput ?? formAddress;
 
   const onSelect = async (place: google.maps.places.Place) => {
     const googlePlacesId = place.id;
@@ -84,36 +89,41 @@ const FormResourceAddressField = ({
       openOnFocus
       options={suggestions}
       fullWidth={fullWidth}
-      onInputChange={(_event, value) => {
-        onDebouncedChange(value);
+      inputValue={inputValue}
+      onInputChange={(_event, value, reason) => {
+        if (reason === 'reset') return;
+        setLocalInput(value);
+        if (reason === 'input') {
+          onDebouncedChange(value);
+        }
       }}
       loading={isFetching}
       getOptionKey={option => option.placeId}
       getOptionLabel={option => option.text.text}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
+          setLocalInput('');
           return onClear();
         }
 
-        if (reason !== 'selectOption') {
+        if (reason !== 'selectOption' || !value) {
           return;
         }
 
-        if (!value) {
-          return;
-        }
-
+        setLocalInput(value.text.text);
         onSelect(value.toPlace());
       }}
       renderInput={({ inputProps, ...params }) => (
         <TextField
           {...params}
-          inputProps={{
-            ...inputProps,
-            'data-cy': 'form-resource-address-input'
+          slotProps={{
+            htmlInput: {
+              ...inputProps,
+              'data-cy': 'form-resource-address-input'
+            },
+            inputLabel: { required: true }
           }}
           label={`${label}`}
-          slotProps={{ inputLabel: { required: true } }}
           inputRef={inputRef}
           error={Boolean(error)}
           helperText={

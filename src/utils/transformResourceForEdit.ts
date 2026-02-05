@@ -36,7 +36,13 @@ function normalizeDate(value: unknown): string {
 export function transformResourceForEdit(
   resource: ResourceEntry
 ): Record<string, unknown> {
-  const { id: _id, hours: _hours, providers: _providers, ...rest } = resource;
+  const {
+    id: _id,
+    hours: _hours,
+    providers: _providers,
+    source: _source,
+    ...rest
+  } = resource;
 
   const result: Record<string, unknown> = {};
 
