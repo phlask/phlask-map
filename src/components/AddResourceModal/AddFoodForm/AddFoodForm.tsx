@@ -55,7 +55,7 @@ const AddFoodForm = ({
   };
 
   const onSubmit = (resource: FoodFormValues) => {
-    if (isEditing) return;
+    if (isEditing) return onComplete();
     addResource(resource, { onSuccess: onComplete });
   };
 

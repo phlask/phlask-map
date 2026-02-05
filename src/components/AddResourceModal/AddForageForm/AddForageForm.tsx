@@ -49,7 +49,7 @@ const AddForageForm = ({
   };
 
   const onSubmit = (resource: FormValues) => {
-    if (isEditing) return;
+    if (isEditing) return onComplete();
     addResource(resource, { onSuccess: onComplete });
   };
 
