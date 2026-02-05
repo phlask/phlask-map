@@ -56,7 +56,7 @@ const Map = () => {
   };
 
   const getMarkerIconSrc = (resource: ResourceEntry) => {
-    const isActiveMarker = selectedResource === resource.id;
+    const isActiveMarker = selectedResource === String(resource.id);
 
     if (!isActiveMarker) {
       return phlaskMarkerIconV2(resource.resource_type, 56, 56);
