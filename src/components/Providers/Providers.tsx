@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import type { PropsWithChildren } from 'react';
 import ToolbarContextProvider from './ToolbarContextProvider';
+import EditResourceProvider from './EditResourceProvider';
 import queryClient from 'services/queryClient';
 import ThemeProvider from './ThemeProvider';
 
@@ -13,10 +14,12 @@ const Providers = ({ children }: PropsWithChildren) => (
       libraries={['places']}
     >
       <ToolbarContextProvider>
-        <ThemeProvider>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        <EditResourceProvider>
+          <ThemeProvider>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </EditResourceProvider>
       </ToolbarContextProvider>
     </APIProvider>
   </QueryClientProvider>
