@@ -7,7 +7,12 @@ import {
   FormLabel
 } from '@mui/material';
 import { type ReactNode } from 'react';
-import { useFormContext, type FieldValues, type Path } from 'react-hook-form';
+import {
+  useFormContext,
+  useWatch,
+  type FieldValues,
+  type Path
+} from 'react-hook-form';
 
 type FormCheckboxListFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
@@ -27,8 +32,16 @@ const FormCheckboxListField = <Values extends FieldValues>({
   labelPlacement = 'end',
   options = []
 }: FormCheckboxListFieldProps<Values>) => {
-  const { register } = useFormContext<Values>();
+  const { register, setValue } = useFormContext<Values>();
   const field = register(name);
+  const currentValues: string[] = useWatch({ name }) ?? [];
+
+  const handleChange = (optionValue: string, checked: boolean) => {
+    const updated = checked
+      ? [...currentValues, optionValue]
+      : currentValues.filter(v => v !== optionValue);
+    setValue(name, updated as never);
+  };
 
   return (
     <FormControl fullWidth={fullWidth}>
@@ -38,12 +51,18 @@ const FormCheckboxListField = <Values extends FieldValues>({
       <FormGroup>
         {options.map(option => (
           <FormControlLabel
-            {...field}
             key={option.key}
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={currentValues.includes(option.value)}
+                onChange={(_e, checked) =>
+                  handleChange(option.value, checked)
+                }
+                name={field.name}
+              />
+            }
             label={option.label}
             labelPlacement={labelPlacement}
-            value={option.value}
             sx={{ justifyContent: 'space-between' }}
           />
         ))}
