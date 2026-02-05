@@ -25,7 +25,7 @@ const AddResourceModal = () => {
 
   const onGoBack = () => {
     if (isEditing) {
-      clearEdit();
+      return handleClose();
     }
     setResourceForm(null);
   };
