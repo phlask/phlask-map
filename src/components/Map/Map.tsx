@@ -1,7 +1,7 @@
 import {
   AdvancedMarker,
   Map as GoogleMap,
-  useMap
+  useMap,
 } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties } from 'react';
@@ -78,6 +78,7 @@ const Map = () => {
       mapTypeControl={false}
       rotateControl={false}
       fullscreenControl={false}
+      gestureHandling="greedy"
       defaultCenter={activeSearchLocation || CITY_HALL_LOCATION}
       mapId="DEMO_MAP_ID"
     >
