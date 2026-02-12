@@ -7,7 +7,6 @@ import DesktopBathroomIcon from 'icons/BathroomIconChooseResource';
 import DesktopFoodIcon from 'icons/FoodIconChooseResource';
 import DesktopForagingIcon from 'icons/ForagingIconChooseResource';
 
-import useOnClickOutside from '../AddResourceModal/useOnClickOutside';
 import styles from './ChooseResourceType.module.scss';
 import { Modal } from '@mui/material';
 import useResourceType, {
@@ -63,19 +62,10 @@ const DesktopResourceButton = ({
 const DesktopChooseResourceType = () => {
   const { toolbarModal, setToolbarModal } = useToolbarContext();
   const ref = useRef<HTMLDivElement>(null);
-  // We're using a direct DOM link here because we aren't doing anything the React runtime needs to know about.
-  const btnRef = document.querySelector('#resource-type-select-button');
 
   const onClose = () => {
     setToolbarModal(null);
   };
-  const handleClickOutside = () => {
-    if (toolbarModal === 'resource') {
-      onClose();
-    }
-  };
-
-  useOnClickOutside(ref, handleClickOutside, [btnRef]);
 
   return (
     <Modal open={toolbarModal === 'resource'} onClose={onClose}>
