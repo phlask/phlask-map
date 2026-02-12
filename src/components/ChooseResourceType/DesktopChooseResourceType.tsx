@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { useRef, type FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import DesktopWaterIcon from 'icons/WaterIconChooseResource';
 import DesktopBathroomIcon from 'icons/BathroomIconChooseResource';
 import DesktopFoodIcon from 'icons/FoodIconChooseResource';
@@ -61,7 +61,6 @@ const DesktopResourceButton = ({
 
 const DesktopChooseResourceType = () => {
   const { toolbarModal, setToolbarModal } = useToolbarContext();
-  const ref = useRef<HTMLDivElement>(null);
 
   const onClose = () => {
     setToolbarModal(null);
@@ -78,7 +77,6 @@ const DesktopChooseResourceType = () => {
           width: '60vw',
           borderRadius: '10px'
         }}
-        ref={ref}
       >
         <Box sx={{ padding: '40px' }}>
           <Box>
