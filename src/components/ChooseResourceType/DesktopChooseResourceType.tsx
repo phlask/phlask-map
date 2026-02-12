@@ -1,14 +1,13 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import type { FunctionComponent } from 'react';
-import DesktopWaterIcon from 'icons/WaterIconChooseResource';
-import DesktopBathroomIcon from 'icons/BathroomIconChooseResource';
-import DesktopFoodIcon from 'icons/FoodIconChooseResource';
-import DesktopForagingIcon from 'icons/ForagingIconChooseResource';
+import type { ReactNode } from 'react';
+import WaterIcon from 'icons/WaterIconChooseResource';
+import BathroomIcon from 'icons/BathroomIconChooseResource';
+import FoodIcon from 'icons/FoodIconChooseResource';
+import ForagingIcon from 'icons/ForagingIconChooseResource';
 
-import styles from './ChooseResourceType.module.scss';
-import { Modal } from '@mui/material';
+import { Modal, SvgIcon, Typography } from '@mui/material';
 import useResourceType, {
   ResourceType,
   type ResourceTypeOption
@@ -16,18 +15,14 @@ import useResourceType, {
 import { useToolbarContext } from 'contexts/ToolbarContext';
 
 type DesktopResourceButtonProps = {
-  desktopIcon: FunctionComponent<{
-    className: string;
-    width: string;
-    height: string;
-  }>;
+  icon: ReactNode;
   color: string;
   type: ResourceTypeOption;
   textLabel: string;
 };
 
 const DesktopResourceButton = ({
-  desktopIcon: Icon,
+  icon,
   color,
   type,
   textLabel
@@ -45,16 +40,22 @@ const DesktopResourceButton = ({
         gridTemplateColumns: '1fr',
         gap: '5px',
         placeItems: 'center',
-        borderRadius: '8px'
+        borderRadius: '8px',
+        color: 'common.white',
+        lineHeight: '23px',
+        fontSize: 20,
+        fontFamily: 'Inter',
+        fontWeight: 600,
+        textTransform: 'none'
       }}
       onClick={() => {
-        setToolbarModal(null);
         setResourceType(type);
+        setToolbarModal(null);
       }}
       data-cy={`button-${type}-data-selector`}
     >
-      <Icon className={styles.icon} width="45px" height="45px" />
-      <p className={styles.label}>{textLabel}</p>
+      <SvgIcon sx={{ height: 45, width: 45 }}>{icon}</SvgIcon>
+      {textLabel}
     </Button>
   );
 };
@@ -80,37 +81,56 @@ const DesktopChooseResourceType = () => {
       >
         <Box sx={{ padding: '40px' }}>
           <Box>
-            <h1 className={styles.header}>Show Resource Type</h1>
-            <p className={styles.description}>
-              Choose the type of resource you
-              <br />
-              would like to see on screen
-            </p>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                color: '#2d3748',
+                fontSize: 24,
+                fontFamily: 'Inter',
+                fontWeight: 600,
+                lineHeight: '29px'
+              }}
+            >
+              Show Resource Type
+            </Typography>
+            <Typography
+              sx={{
+                color: '#60718c',
+                lineHeight: '24px',
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: 500,
+                textAlign: 'center',
+                paddingInline: 36
+              }}
+            >
+              Choose the type of resource you would like to see on screen
+            </Typography>
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <DesktopResourceButton
-              desktopIcon={DesktopWaterIcon}
+              icon={<WaterIcon />}
               color="#5286E9"
               type={ResourceType.WATER}
               textLabel="Water"
             />
 
             <DesktopResourceButton
-              desktopIcon={DesktopForagingIcon}
+              icon={<ForagingIcon />}
               color="#5DA694"
               type={ResourceType.FORAGE}
               textLabel="Foraging"
             />
 
             <DesktopResourceButton
-              desktopIcon={DesktopFoodIcon}
+              icon={<FoodIcon />}
               color="#FF9A55"
               type={ResourceType.FOOD}
               textLabel="Food"
             />
 
             <DesktopResourceButton
-              desktopIcon={DesktopBathroomIcon}
+              icon={<BathroomIcon />}
               color="#9E9E9E"
               type={ResourceType.BATHROOM}
               textLabel="Bathroom"
