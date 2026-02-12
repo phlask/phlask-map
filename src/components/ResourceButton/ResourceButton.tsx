@@ -1,3 +1,4 @@
+import { SvgIcon } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import type { MouseEventHandler, ReactNode } from 'react';
@@ -29,17 +30,14 @@ const ResourceButton = ({
       fontWeight: 600,
       fontFamily: 'Inter',
       lineHeight: '23px',
-
-      '& svg': {
-        height: '45px',
-        width: '45px',
-      }
     }}
     onClick={onClick}
     data-cy={dataCy}
   >
     <Stack alignItems="center">
-      {icon}
+      <SvgIcon sx={{ height: '45px', width: '45px' }}>
+        {icon}
+      </SvgIcon>
       {text}
     </Stack>
   </Button>
