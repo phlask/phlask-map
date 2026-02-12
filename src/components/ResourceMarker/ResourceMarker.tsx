@@ -1,4 +1,3 @@
-import { SvgIcon } from '@mui/material';
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import { ResourceType } from 'hooks/useResourceType';
 import useSelectedResource from 'hooks/useSelectedResource';
@@ -20,6 +19,8 @@ type ResourceMarkerProps = {
   'data-cy': string;
 };
 
+const iconStyle = { height: 55, width: 55 };
+
 const ResourceMarker = ({
   resource,
   onClick,
@@ -30,17 +31,17 @@ const ResourceMarker = ({
   const isActiveMarker = selectedResource === id?.toString();
 
   const defaultMarker = {
-        [ResourceType.WATER]: <PinWaterDefault />,
-        [ResourceType.FOOD]: <PinFoodDefault />,
-        [ResourceType.FORAGE]: <PinForagingDefault />,
-        [ResourceType.BATHROOM]: <PinBathroomsDefault />
+        [ResourceType.WATER]: <PinWaterDefault data-cy={dataCy} style={iconStyle} />,
+        [ResourceType.FOOD]: <PinFoodDefault data-cy={dataCy} style={iconStyle} />,
+        [ResourceType.FORAGE]: <PinForagingDefault data-cy={dataCy} style={iconStyle} />,
+        [ResourceType.BATHROOM]: <PinBathroomsDefault data-cy={dataCy} style={iconStyle} />
       }
 
   const activeMarker = {
-      [ResourceType.WATER]: <PinWaterActive />,
-      [ResourceType.FOOD]: <PinFoodActive />,
-      [ResourceType.FORAGE]: <PinForagingActive />,
-      [ResourceType.BATHROOM]: <PinBathroomsActive />
+      [ResourceType.WATER]: <PinWaterActive data-cy={dataCy} style={iconStyle} />,
+      [ResourceType.FOOD]: <PinFoodActive data-cy={dataCy} style={iconStyle} />,
+      [ResourceType.FORAGE]: <PinForagingActive data-cy={dataCy} style={iconStyle} />,
+      [ResourceType.BATHROOM]: <PinBathroomsActive data-cy={dataCy} style={iconStyle} />
     }
 
   const marker = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
@@ -51,7 +52,7 @@ const ResourceMarker = ({
       onClick={() => onClick(resource)}
       position={{ lat: resource.latitude, lng: resource.longitude }}
     >
-      <SvgIcon data-cy={dataCy} sx={{ height: 55, width: 55 }}>{marker}</SvgIcon>
+      {marker}
     </AdvancedMarker>
   );
 };
