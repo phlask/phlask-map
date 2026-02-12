@@ -21,7 +21,7 @@ export const Water: Story = {
   args: {
     color: '#5286E9',
     text: 'Water',
-    icon: WaterIcon
+    icon: <WaterIcon />
   }
 };
 
@@ -29,7 +29,7 @@ export const Food: Story = {
   args: {
     color: '#FF9A55',
     text: 'Food',
-    icon: FoodIcon
+    icon: <FoodIcon />
   }
 };
 
@@ -37,7 +37,7 @@ export const Foraging: Story = {
   args: {
     color: '#5DA694',
     text: 'Foraging',
-    icon: ForagingIcon
+    icon: <ForagingIcon />
   }
 };
 
@@ -45,6 +45,6 @@ export const Bathroom: Story = {
   args: {
     color: '#9E9E9E',
     text: 'Bathroom',
-    icon: BathroomIcon
+    icon: <BathroomIcon />
   }
 };
