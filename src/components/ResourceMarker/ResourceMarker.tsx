@@ -31,28 +31,27 @@ const ResourceMarker = ({
   const isActiveMarker = selectedResource === id?.toString();
 
   const defaultMarker = {
-        [ResourceType.WATER]: <PinWaterDefault data-cy={dataCy} style={iconStyle} />,
-        [ResourceType.FOOD]: <PinFoodDefault data-cy={dataCy} style={iconStyle} />,
-        [ResourceType.FORAGE]: <PinForagingDefault data-cy={dataCy} style={iconStyle} />,
-        [ResourceType.BATHROOM]: <PinBathroomsDefault data-cy={dataCy} style={iconStyle} />
-      }
+    [ResourceType.WATER]: PinWaterDefault,
+    [ResourceType.FOOD]: PinFoodDefault,
+    [ResourceType.FORAGE]: PinForagingDefault,
+    [ResourceType.BATHROOM]: PinBathroomsDefault
+  };
 
   const activeMarker = {
-      [ResourceType.WATER]: <PinWaterActive data-cy={dataCy} style={iconStyle} />,
-      [ResourceType.FOOD]: <PinFoodActive data-cy={dataCy} style={iconStyle} />,
-      [ResourceType.FORAGE]: <PinForagingActive data-cy={dataCy} style={iconStyle} />,
-      [ResourceType.BATHROOM]: <PinBathroomsActive data-cy={dataCy} style={iconStyle} />
-    }
+    [ResourceType.WATER]: PinWaterActive,
+    [ResourceType.FOOD]: PinFoodActive,
+    [ResourceType.FORAGE]: PinForagingActive,
+    [ResourceType.BATHROOM]: PinBathroomsActive
+  };
 
-  const marker = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
-
+  const Marker = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
 
   return (
     <AdvancedMarker
       onClick={() => onClick(resource)}
       position={{ lat: resource.latitude, lng: resource.longitude }}
     >
-      {marker}
+      <Marker data-cy={dataCy} style={iconStyle} />
     </AdvancedMarker>
   );
 };
