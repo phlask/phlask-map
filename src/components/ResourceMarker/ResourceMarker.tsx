@@ -1,16 +1,14 @@
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import { ResourceType } from 'hooks/useResourceType';
 import useSelectedResource from 'hooks/useSelectedResource';
-import {
-  PinWaterDefault,
-  PinBathroomsDefault,
-  PinForagingDefault,
-  PinFoodDefault,
-  PinWaterActive,
-  PinFoodActive,
-  PinForagingActive,
-  PinBathroomsActive
-} from 'icons';
+import pinWaterDefault from 'assets/icons/PinWaterDefault.svg';
+import pinWaterActive from 'assets/icons/PinWaterActive.svg';
+import pinFoodDefault from 'assets/icons/PinFoodDefault.svg';
+import pinFoodActive from 'assets/icons/PinFoodActive.svg';
+import pinForagingDefault from 'assets/icons/PinForagingDefault.svg';
+import pinForagingActive from 'assets/icons/PinForagingActive.svg';
+import pinBathroomsDefault from 'assets/icons/PinBathroomsDefault.svg';
+import pinBathroomsActive from 'assets/icons/PinBathroomsActive.svg';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
 type ResourceMarkerProps = {
@@ -27,31 +25,31 @@ const ResourceMarker = ({
   'data-cy': dataCy
 }: ResourceMarkerProps) => {
   const { selectedResource } = useSelectedResource();
-  const { id, resource_type } = resource;
+  const { id, name, address, resource_type, latitude, longitude } = resource;
   const isActiveMarker = selectedResource === id?.toString();
 
   const defaultMarker = {
-    [ResourceType.WATER]: PinWaterDefault,
-    [ResourceType.FOOD]: PinFoodDefault,
-    [ResourceType.FORAGE]: PinForagingDefault,
-    [ResourceType.BATHROOM]: PinBathroomsDefault
+    [ResourceType.WATER]: pinWaterDefault,
+    [ResourceType.FOOD]: pinFoodDefault,
+    [ResourceType.FORAGE]: pinForagingDefault,
+    [ResourceType.BATHROOM]: pinBathroomsDefault
   };
 
   const activeMarker = {
-    [ResourceType.WATER]: PinWaterActive,
-    [ResourceType.FOOD]: PinFoodActive,
-    [ResourceType.FORAGE]: PinForagingActive,
-    [ResourceType.BATHROOM]: PinBathroomsActive
+    [ResourceType.WATER]: pinWaterActive,
+    [ResourceType.FOOD]: pinFoodActive,
+    [ResourceType.FORAGE]: pinForagingActive,
+    [ResourceType.BATHROOM]: pinBathroomsActive
   };
 
-  const Marker = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
+  const markerIcon = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
 
   return (
     <AdvancedMarker
       onClick={() => onClick(resource)}
-      position={{ lat: resource.latitude, lng: resource.longitude }}
+      position={{ lat: latitude, lng: longitude }}
     >
-      <Marker data-cy={dataCy} style={iconStyle} />
+      <img data-cy={dataCy} src={markerIcon} alt={name || address || ''} style={iconStyle} />
     </AdvancedMarker>
   );
 };
