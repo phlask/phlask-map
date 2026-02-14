@@ -19,16 +19,7 @@ type ResourceMarkerProps = {
 
 const iconStyle = { height: 55, width: 55 };
 
-const ResourceMarker = ({
-  resource,
-  onClick,
-  'data-cy': dataCy
-}: ResourceMarkerProps) => {
-  const { selectedResource } = useSelectedResource();
-  const { id, name, address, resource_type, latitude, longitude } = resource;
-  const isActiveMarker = selectedResource === id?.toString();
-
-  const defaultMarker = {
+const defaultMarker = {
     [ResourceType.WATER]: pinWaterDefault,
     [ResourceType.FOOD]: pinFoodDefault,
     [ResourceType.FORAGE]: pinForagingDefault,
@@ -41,6 +32,17 @@ const ResourceMarker = ({
     [ResourceType.FORAGE]: pinForagingActive,
     [ResourceType.BATHROOM]: pinBathroomsActive
   };
+
+const ResourceMarker = ({
+  resource,
+  onClick,
+  'data-cy': dataCy
+}: ResourceMarkerProps) => {
+  const { selectedResource } = useSelectedResource();
+  const { id, name, address, resource_type, latitude, longitude } = resource;
+  const isActiveMarker = selectedResource === id?.toString();
+
+
 
   const markerIcon = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
 
