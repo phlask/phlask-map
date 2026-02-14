@@ -30,6 +30,7 @@
     "@chromatic-com/storybook": "^4.1.3",
     "@eslint/js": "^9.39.2",
     "@hookform/devtools": "^4.4.0",
+    "@open-xchange/vite-plugin-icon-sprite": "^1.1.1",
     "@storybook/addon-docs": "^10.1.11",
     "@storybook/addon-links": "^10.1.11",
     "@storybook/addon-onboarding": "^10.1.11",
