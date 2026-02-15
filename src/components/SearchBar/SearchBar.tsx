@@ -119,7 +119,7 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
 
   return (
     <Autocomplete
-      fullWidth={false}
+      fullWidth
       onInputChange={(_event, value, reason) => {
         if (reason !== 'input') {
           return;
