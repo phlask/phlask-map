@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import noop from 'utils/noop';
-import CloseIcon from 'components/icons/CloseIcon';
+import CloseIcon from 'components/Head/CloseIcon';
 import { HeaderContext } from 'contexts/HeaderContext';
 import FilterIcon from 'icons/FilterIcon';
 import SearchIcon from 'icons/SearchIcon';
