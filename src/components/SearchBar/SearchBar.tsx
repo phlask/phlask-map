@@ -19,7 +19,7 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
   const { onChangeActiveSearchLocation } = useActiveSearchLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
-  const { isFetching, onDebouncedChange, suggestions } =
+  const { isFetching, onDebouncedChange, onChange, suggestions } =
     useGooglePlacesAutocomplete();
 
   const { data: activePlace = null } = useGetGooglePlaceById();
@@ -119,12 +119,11 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
 
   return (
     <Autocomplete
-      fullWidth={false}
+      fullWidth
       onInputChange={(_event, value, reason) => {
         if (reason !== 'input') {
           return;
         }
-
         onDebouncedChange(value);
       }}
       options={options}
@@ -134,6 +133,8 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
       value={controlledValue}
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
+          onChange('');
+          setValue(null);
           return onChangeActiveSearchLocation(null);
         }
 
