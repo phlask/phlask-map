@@ -1,7 +1,7 @@
 import {
   AdvancedMarker,
   Map as GoogleMap,
-  useMap,
+  useMap
 } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
 import { type CSSProperties } from 'react';

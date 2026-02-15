@@ -20,18 +20,18 @@ type ResourceMarkerProps = {
 const iconStyle = { height: 55, width: 55 };
 
 const defaultMarker = {
-    [ResourceType.WATER]: pinWaterDefault,
-    [ResourceType.FOOD]: pinFoodDefault,
-    [ResourceType.FORAGE]: pinForagingDefault,
-    [ResourceType.BATHROOM]: pinBathroomsDefault
-  };
+  [ResourceType.WATER]: pinWaterDefault,
+  [ResourceType.FOOD]: pinFoodDefault,
+  [ResourceType.FORAGE]: pinForagingDefault,
+  [ResourceType.BATHROOM]: pinBathroomsDefault
+};
 
-  const activeMarker = {
-    [ResourceType.WATER]: pinWaterActive,
-    [ResourceType.FOOD]: pinFoodActive,
-    [ResourceType.FORAGE]: pinForagingActive,
-    [ResourceType.BATHROOM]: pinBathroomsActive
-  };
+const activeMarker = {
+  [ResourceType.WATER]: pinWaterActive,
+  [ResourceType.FOOD]: pinFoodActive,
+  [ResourceType.FORAGE]: pinForagingActive,
+  [ResourceType.BATHROOM]: pinBathroomsActive
+};
 
 const ResourceMarker = ({
   resource,
@@ -42,16 +42,21 @@ const ResourceMarker = ({
   const { id, name, address, resource_type, latitude, longitude } = resource;
   const isActiveMarker = selectedResource === id?.toString();
 
-
-
-  const markerIcon = (isActiveMarker ? activeMarker : defaultMarker)[resource_type];
+  const markerIcon = (isActiveMarker ? activeMarker : defaultMarker)[
+    resource_type
+  ];
 
   return (
     <AdvancedMarker
       onClick={() => onClick(resource)}
       position={{ lat: latitude, lng: longitude }}
     >
-      <img data-cy={dataCy} src={markerIcon} alt={name || address || ''} style={iconStyle} />
+      <img
+        data-cy={dataCy}
+        src={markerIcon}
+        alt={name || address || ''}
+        style={iconStyle}
+      />
     </AdvancedMarker>
   );
 };
