@@ -14,6 +14,12 @@ import { addFeedback } from 'services/db';
 import styles from './Pages.module.scss';
 
 const PRIMARY_COLOR = '#10b6ff';
+type FormStatus =
+  | 'idle'
+  | 'success'
+  | 'input_error'
+  | 'email_error'
+  | 'submission_error';
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -24,7 +30,7 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<FormStatus>('idle');
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -41,7 +47,9 @@ const Contact = () => {
       const value =
         field === 'interest' ? event.target.checked : event.target.value;
       setForm(prev => ({ ...prev, [field]: value }));
-      if (status === 'error') setStatus('idle');
+      if (status === 'input_error' || status === 'submission_error') {
+        setStatus('idle');
+      }
     };
 
   const validateEmail = (email: string) => {
@@ -50,11 +58,11 @@ const Contact = () => {
 
   const handleSubmit = async () => {
     if (!form.name.trim() || !form.email.trim()) {
-      setStatus('error');
+      setStatus('input_error');
       return;
     }
     if (!validateEmail(form.email)) {
-      alert('Please enter a valid email address');
+      setStatus('email_error');
       return;
     }
 
@@ -78,7 +86,7 @@ const Contact = () => {
       });
     } catch (error) {
       console.error(error);
-      setStatus('error');
+      setStatus('submission_error');
     } finally {
       setLoading(false);
     }
@@ -113,9 +121,19 @@ const Contact = () => {
             Thank you! Your feedback has been received!
           </Alert>
         )}
-        {status === 'error' && (
+        {status === 'input_error' && (
           <Alert severity="error" onClose={() => setStatus('idle')}>
-            Please check your inputs and try again.
+            Please fill the required (*) fields and try again.
+          </Alert>
+        )}
+        {status === 'email_error' && (
+          <Alert severity="error" onClose={() => setStatus('idle')}>
+            Please enter a valid email.
+          </Alert>
+        )}
+        {status === 'submission_error' && (
+          <Alert severity="error" onClose={() => setStatus('idle')}>
+            Something went wrong please try again after sometime.
           </Alert>
         )}
       </Collapse>
@@ -149,6 +167,17 @@ const Contact = () => {
         value={form.feedback}
         onChange={handleChange('feedback')}
         sx={textFieldFocusSX}
+        helperText="Please do not include any sensitive personal information."
+        slotProps={{
+          formHelperText: {
+            sx: {
+              color: 'gray',
+              fontSize: '0.75rem',
+              fontStyle: 'italic',
+              marginLeft: '1px'
+            }
+          }
+        }}
       />
 
       <FormControlLabel
@@ -168,7 +197,7 @@ const Contact = () => {
         }
       />
 
-      <Stack direction="row" gap={2}>
+      <Stack direction="row" gap={5}>
         <Button
           variant="text"
           onClick={handleReset}
