@@ -178,3 +178,10 @@ export type ResourceEntry = {
   /**  If the resource_type is BATHROOM, the information about the bathroom resource. */
   bathroom?: BathroomInfo | null;
 };
+
+export type FeedbackForm = {
+  name: string | null;
+  email: string | null;
+  feedback?: string | null;
+  interest?: boolean | null;
+};
