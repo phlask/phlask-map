@@ -22,7 +22,7 @@ const ContributorsListItem = ({ contributor }: ContributorsListItemProps) => (
   <ListItem sx={{ paddingInline: 0 }}>
     <Stack>
       <Box>
-        <Typography fontWeight={700}>
+        <Typography sx={{ color: '#2d3748', fontWeight: 700 }}>
           {contributor.first_name} {contributor.last_name}
         </Typography>
       </Box>
