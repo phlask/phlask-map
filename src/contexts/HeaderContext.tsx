@@ -1,4 +1,4 @@
-import About from 'components/Pages/About';
+import About from 'components/About/About';
 import Contact from 'components/Pages/Contact';
 import Join from 'components/Pages/Join';
 import {
