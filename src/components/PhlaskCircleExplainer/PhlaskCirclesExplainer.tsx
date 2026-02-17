@@ -54,7 +54,7 @@ const Circle = ({ icon, title, description }: CircleProps) => (
 
 const PhlaskCirclesExplainer = () => {
   return (
-    <Grid gap={4} justifyContent="center" container>
+    <Grid gap={3} justifyContent="space-evenly" container>
       <Circle
         icon={<DevelopmentIcon />}
         title="Development"
