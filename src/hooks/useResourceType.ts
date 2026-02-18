@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router';
+import { LOCATION_QUERY_PARAM } from './useActiveSearchLocation';
 
 export const ResourceType = {
   WATER: 'WATER',
@@ -21,7 +22,15 @@ const useResourceType = () => {
   ) as ResourceTypeOption;
 
   const setResourceType = (value: ResourceTypeOption) =>
-    setSearchParams(new URLSearchParams({ [RESOURCE_QUERY_PARAM]: value }));
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams({ [RESOURCE_QUERY_PARAM]: value });
+      const searchQuery = prev.get(LOCATION_QUERY_PARAM);
+      if (searchQuery) {
+        newParams.set(LOCATION_QUERY_PARAM, searchQuery);
+      }
+
+      return newParams;
+    });
 
   return {
     resourceType,

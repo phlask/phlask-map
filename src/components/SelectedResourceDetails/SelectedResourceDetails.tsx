@@ -21,7 +21,7 @@ import useIsMobile from 'hooks/useIsMobile';
 import { useState, type MouseEventHandler } from 'react';
 import noop from 'utils/noop';
 
-import sampleImg from 'components/images/phlask-tessellation.png';
+import sampleImg from 'assets/images/phlask-tessellation.png';
 
 import EstimatedWalkingDuration from 'components/EstimatedWalkTime/EstimatedWalkTime';
 import ResourceHours from 'components/ResourceHours/ResourceHours';

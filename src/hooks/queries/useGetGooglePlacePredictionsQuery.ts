@@ -16,9 +16,10 @@ const useGetGooglePlacePredictionsQuery = (input: string) => {
             includedRegionCodes: ['us']
           }
         );
+
       return filterNullish(
         suggestions.map(suggestion => {
-          if (!suggestion.placePrediction?.mainText?.text) {
+          if (!suggestion.placePrediction) {
             return null;
           }
 
