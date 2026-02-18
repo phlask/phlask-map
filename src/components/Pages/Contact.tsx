@@ -9,7 +9,7 @@ const Contact = () => {
   };
 
   return (
-    <Box sx={{ height: '600px', width: '100%', position: 'relative' }}>
+    <Box sx={{ height: '460px', width: '100%', position: 'relative' }}>
       {loading && (
         <Box
           sx={{
@@ -32,7 +32,7 @@ const Contact = () => {
         className="airtable-embed"
         src="https://airtable.com/embed/appyNdhZZn3gpovFh/pagDtKnlb6n3mCpgd/form"
         width="100%"
-        height="600px"
+        height="460px"
         style={{ background: 'transparent', border: 'none' }}
         onLoad={handleLoading}
       />
