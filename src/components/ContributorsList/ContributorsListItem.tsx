@@ -4,16 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { Contributor } from 'types/Contributor';
 
-const contributorToCircleName = (contributor: Contributor) => {
-  const circles = [];
-  if (contributor.civic_member) circles.push('Civic');
-  if (contributor.data_member) circles.push('Data');
-  if (contributor.design_member) circles.push('Design');
-  if (contributor.development_member) circles.push('Development');
-  if (contributor.project_management_member) circles.push('Project Management');
-  return circles.join(', ');
-};
-
 type ContributorsListItemProps = {
   contributor: Contributor;
 };
@@ -28,8 +18,8 @@ const ContributorsListItem = ({ contributor }: ContributorsListItemProps) => (
       </Box>
       <Stack direction="row">
         <Typography component="span" variant="subtitle2">
-          {contributorToCircleName(contributor)}
-          {contributor.convener ? ', Convener' : ''}
+          {contributor.circles.join(', ')}
+          {contributor.is_convener && ', Convener'}
         </Typography>
       </Stack>
     </Stack>
