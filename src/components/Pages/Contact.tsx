@@ -8,15 +8,15 @@ import {
   Collapse,
   Typography
 } from '@mui/material';
-import ReplayIcon from '@mui/icons-material/Replay';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { addFeedback } from 'services/db';
 import Page from 'components/Page/Page';
 import feedbackFormSchema, {
   type FeedbackFormValues
 } from 'schemas/feedbackFormSchema';
-import { FormProvider, useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
+import ClearFormIcon from 'icons/ClearFormIcon';
 
 type FormValues = FeedbackFormValues;
 
@@ -74,7 +74,7 @@ const Contact = () => {
   return (
     <Page title={TITLE} data-cy="contact-us">
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: '75%' }}>
           <Stack gap={2}>
             <Collapse in={status !== 'idle'}>
               {status === 'success' && (
@@ -158,7 +158,7 @@ const Contact = () => {
                 variant="text"
                 onClick={handleClear}
                 sx={{ color: PRIMARY_COLOR }}
-                startIcon={<ReplayIcon />}
+                startIcon={<ClearFormIcon />}
               >
                 clear form
               </Button>
