@@ -1,233 +1,191 @@
-import { useState, useEffect, useMemo } from 'react';
-import ReplayIcon from '@mui/icons-material/Replay';
+import { useState } from 'react';
 import {
   Checkbox,
   Stack,
-  TextField,
   Button,
   FormControlLabel,
   Alert,
-  Collapse
+  Collapse,
+  Typography
 } from '@mui/material';
+import ReplayIcon from '@mui/icons-material/Replay';
 import { addFeedback } from 'services/db';
+import Page from 'components/Page/Page';
+import feedbackFormSchema, {
+  type FeedbackFormValues
+} from 'schemas/feedbackFormSchema';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormTextField from 'components/forms/FormTextField/FormTextField';
 
-import styles from './Pages.module.scss';
+type FormValues = FeedbackFormValues;
 
+const TITLE = 'Contact Us';
 const PRIMARY_COLOR = '#10b6ff';
-type FormStatus =
-  | 'idle'
-  | 'success'
-  | 'input_error'
-  | 'email_error'
-  | 'submission_error';
+const textFieldFocus = {
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: PRIMARY_COLOR
+    }
+  },
+  '& .MuiInputLabel-root.Mui-focused': {
+    color: PRIMARY_COLOR
+  }
+};
+const SCHEMA = feedbackFormSchema;
 
 const Contact = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    feedback: '',
-    interest: false
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+      feedback: '',
+      interest: false
+    },
+    resolver: zodResolver(SCHEMA)
   });
 
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<FormStatus>('idle');
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isSubmitting }
+  } = methods;
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (status === 'success') {
-      timer = setTimeout(() => {
-        setStatus('idle');
-      }, 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [status]);
-
-  const handleChange =
-    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        field === 'interest' ? event.target.checked : event.target.value;
-      setForm(prev => ({ ...prev, [field]: value }));
-      if (status === 'input_error' || status === 'submission_error') {
-        setStatus('idle');
-      }
-    };
-
-  const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
-
-  const handleSubmit = async () => {
-    if (!form.name.trim() || !form.email.trim()) {
-      setStatus('input_error');
-      return;
-    }
-    if (!validateEmail(form.email)) {
-      setStatus('email_error');
-      return;
-    }
-
+  const onSubmit = async (data: FormValues) => {
+    setStatus('idle');
     try {
-      setLoading(true);
-
-      await addFeedback({
-        name: form.name,
-        email: form.email,
-        feedback: form.feedback || null,
-        interest: form.interest
-      });
-
+      await addFeedback(data);
       setStatus('success');
-
-      setForm({
-        name: '',
-        email: '',
-        feedback: '',
-        interest: false
-      });
+      reset();
     } catch (error) {
       console.error(error);
-      setStatus('submission_error');
-    } finally {
-      setLoading(false);
+      setStatus('error');
     }
   };
 
-  const handleReset = () => {
-    setForm({ name: '', email: '', feedback: '', interest: false });
+  const handleClear = () => {
+    reset();
     setStatus('idle');
   };
 
-  const textFieldFocusSX = useMemo(
-    () => ({
-      '& .MuiOutlinedInput-root': {
-        '&.Mui-focused fieldset': {
-          borderColor: PRIMARY_COLOR
-        }
-      },
-      '& .MuiInputLabel-root.Mui-focused': {
-        color: PRIMARY_COLOR
-      }
-    }),
-    []
-  );
-
   return (
-    <Stack gap={2} sx={{ position: 'relative' }}>
-      <h2 className={styles.pageHeader}>Contact Us</h2>
+    <Page title={TITLE} data-cy="contact-us">
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+          <Stack gap={2}>
+            <Collapse in={status !== 'idle'}>
+              {status === 'success' && (
+                <Alert severity="success" onClose={() => setStatus('idle')}>
+                  Thank you! Your feedback has been received!
+                </Alert>
+              )}
+              {status === 'error' && (
+                <Alert severity="error" onClose={() => setStatus('idle')}>
+                  Something went wrong please try again after sometime.
+                </Alert>
+              )}
+            </Collapse>
 
-      <Collapse in={status !== 'idle'}>
-        {status === 'success' && (
-          <Alert severity="success" onClose={() => setStatus('idle')}>
-            Thank you! Your feedback has been received!
-          </Alert>
-        )}
-        {status === 'input_error' && (
-          <Alert severity="error" onClose={() => setStatus('idle')}>
-            Please fill the required (*) fields and try again.
-          </Alert>
-        )}
-        {status === 'email_error' && (
-          <Alert severity="error" onClose={() => setStatus('idle')}>
-            Please enter a valid email.
-          </Alert>
-        )}
-        {status === 'submission_error' && (
-          <Alert severity="error" onClose={() => setStatus('idle')}>
-            Something went wrong please try again after sometime.
-          </Alert>
-        )}
-      </Collapse>
+            <FormTextField<FormValues>
+              name="name"
+              label="Name"
+              placeholder="Enter Your Name"
+              required
+              fullWidth
+              sx={textFieldFocus}
+            />
 
-      <TextField
-        required
-        label="Name"
-        placeholder="Enter Your Name"
-        value={form.name}
-        onChange={handleChange('name')}
-        sx={textFieldFocusSX}
-        autoComplete="name"
-      />
+            <FormTextField<FormValues>
+              name="email"
+              label="Email"
+              placeholder="example@email.com"
+              required
+              fullWidth
+              sx={textFieldFocus}
+            />
 
-      <TextField
-        required
-        type="email"
-        label="Email"
-        placeholder="example@email.com"
-        value={form.email}
-        onChange={handleChange('email')}
-        sx={textFieldFocusSX}
-        autoComplete="email"
-      />
+            <FormTextField<FormValues>
+              name="feedback"
+              label="Feedback"
+              placeholder="Share your feedback and thoughts"
+              multiline
+              minRows={3}
+              fullWidth
+              sx={textFieldFocus}
+              helperText="Please do not include any sensitive personal information."
+              slotProps={{
+                formHelperText: {
+                  sx: {
+                    color: 'gray',
+                    fontSize: '0.75rem',
+                    fontStyle: 'italic',
+                    marginLeft: '1px'
+                  }
+                }
+              }}
+            />
 
-      <TextField
-        label="Feedback"
-        multiline
-        rows={3}
-        placeholder="Share your feedback and thoughts"
-        value={form.feedback}
-        onChange={handleChange('feedback')}
-        sx={textFieldFocusSX}
-        helperText="Please do not include any sensitive personal information."
-        slotProps={{
-          formHelperText: {
-            sx: {
-              color: 'gray',
-              fontSize: '0.75rem',
-              fontStyle: 'italic',
-              marginLeft: '1px'
-            }
-          }
-        }}
-      />
+            <Controller
+              name="interest"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...field}
+                      checked={field.value}
+                      sx={{
+                        '&.Mui-checked': { color: PRIMARY_COLOR }
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography
+                      sx={{ fontSize: 14, fontWeight: 500, lineHeight: '24px' }}
+                    >
+                      I'm interested in helping PHLASK with future research
+                    </Typography>
+                  }
+                />
+              )}
+            />
 
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={form.interest}
-            onChange={handleChange('interest')}
-            sx={{
-              '&.Mui-checked': { color: PRIMARY_COLOR }
-            }}
-          />
-        }
-        label={
-          <span className={styles.pageText}>
-            I'm interested in helping PHLASK with future research
-          </span>
-        }
-      />
-
-      <Stack direction="row" gap={5}>
-        <Button
-          variant="text"
-          onClick={handleReset}
-          sx={{ color: PRIMARY_COLOR }}
-        >
-          <ReplayIcon sx={{ mr: 0.5 }} />
-          clear form
-        </Button>
-
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          disabled={loading || status === 'success'}
-          sx={{
-            fontWeight: 'bold',
-            backgroundColor: PRIMARY_COLOR,
-            '&:hover': {
-              backgroundColor: PRIMARY_COLOR,
-              boxShadow: `0 0 10px ${PRIMARY_COLOR}80`
-            }
-          }}
-        >
-          {loading
-            ? 'Submitting...'
-            : status === 'success'
-            ? 'Submitted'
-            : 'Submit'}
-        </Button>
-      </Stack>
-    </Stack>
+            <Stack direction="row" gap={5} mt={2}>
+              <Button
+                variant="text"
+                onClick={handleClear}
+                sx={{ color: PRIMARY_COLOR }}
+                startIcon={<ReplayIcon />}
+              >
+                clear form
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={isSubmitting || status === 'success'}
+                sx={{
+                  fontWeight: 'bold',
+                  backgroundColor: PRIMARY_COLOR,
+                  '&:hover': {
+                    backgroundColor: PRIMARY_COLOR,
+                    boxShadow: `0 0 10px ${PRIMARY_COLOR}80`
+                  }
+                }}
+              >
+                {isSubmitting
+                  ? 'Submitting...'
+                  : status === 'success'
+                  ? 'Submitted'
+                  : 'Submit'}
+              </Button>
+            </Stack>
+          </Stack>
+        </form>
+      </FormProvider>
+    </Page>
   );
 };
 

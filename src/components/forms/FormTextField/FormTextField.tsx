@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { TextField, type TextFieldProps } from '@mui/material';
 import type { ReactNode } from 'react';
 import {
   useFormContext,
@@ -10,23 +10,29 @@ import {
 type FormTextFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   label: ReactNode;
+  placeholder?: string;
   disabled?: boolean;
   helperText?: ReactNode;
   fullWidth?: boolean;
   required?: boolean;
   multiline?: boolean;
   minRows?: number;
+  slotProps?: TextFieldProps['slotProps'];
+  sx?: TextFieldProps['sx'];
 };
 
 const FormTextField = <Values extends FieldValues>({
   name,
   label,
+  placeholder,
   helperText,
   disabled = false,
   required = false,
   fullWidth = false,
   multiline = false,
-  minRows = undefined
+  minRows = undefined,
+  slotProps,
+  sx
 }: FormTextFieldProps<Values>) => {
   const { register, getFieldState } = useFormContext<Values>();
   const formState = useFormState<Values>({
@@ -39,12 +45,20 @@ const FormTextField = <Values extends FieldValues>({
     <TextField
       {...register(name, { required, disabled })}
       label={label}
+      placeholder={placeholder}
       helperText={error?.message || helperText || ' '}
       fullWidth={fullWidth}
-      slotProps={{ inputLabel: { required } }}
+      slotProps={{
+        ...slotProps,
+        inputLabel: {
+          required,
+          ...slotProps?.inputLabel
+        }
+      }}
       error={invalid}
       multiline={multiline}
       minRows={minRows}
+      sx={sx}
     />
   );
 };

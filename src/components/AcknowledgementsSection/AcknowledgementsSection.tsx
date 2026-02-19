@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import ContributorsList from 'components/ContributorsList/ContributorsList';
 import useGetContributorsQuery from 'hooks/queries/useContributorsQuery';
 
@@ -6,12 +6,14 @@ const AcknowledgementsSection = () => {
   const { data } = useGetContributorsQuery();
 
   return (
-    <div id="acknowledgements-section">
-      <h2>Acknowledgements</h2>
-      <p>
+    <Stack gap={2}>
+      <Typography component="h3" sx={{ fontSize: 24 }}>
+        Acknowledgements
+      </Typography>
+      <Typography sx={{ color: '#2d3748', fontSize: 14 }}>
         This project was made possible by the time, mentorship, and expertise of
         our dedicated team of volunteers.
-      </p>
+      </Typography>
       <Grid container className="contributors" spacing={6}>
         <ContributorsList
           title="Current Contributors"
@@ -19,7 +21,7 @@ const AcknowledgementsSection = () => {
         />
         <ContributorsList title="Past Contributors" items={data?.past ?? []} />
       </Grid>
-    </div>
+    </Stack>
   );
 };
 
