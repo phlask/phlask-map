@@ -6,12 +6,11 @@ import ToolbarContextProvider from './ToolbarContextProvider';
 import queryClient from 'services/queryClient';
 import ThemeProvider from './ThemeProvider';
 
+// For the setup please check .example.env for setup instrucions
+const REACT_GOOGLE_MAPS_APIKEY = import.meta.env.VITE_REACT_GOOGLE_MAPS_API_KEY;
 const Providers = ({ children }: PropsWithChildren) => (
   <QueryClientProvider client={queryClient}>
-    <APIProvider
-      apiKey="AIzaSyABw5Fg78SgvedyHr8tl-tPjcn5iFotB6I"
-      libraries={['places']}
-    >
+    <APIProvider apiKey={REACT_GOOGLE_MAPS_APIKEY} libraries={['places']}>
       <ToolbarContextProvider>
         <ThemeProvider>
           <CssBaseline />
