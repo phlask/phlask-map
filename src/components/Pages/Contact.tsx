@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Checkbox,
   Stack,
@@ -10,13 +9,15 @@ import {
 } from '@mui/material';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addFeedback } from 'services/db';
 import Page from 'components/Page/Page';
 import feedbackFormSchema, {
   type FeedbackFormValues
 } from 'schemas/feedbackFormSchema';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
+import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
 import ClearFormIcon from 'icons/ClearFormIcon';
+import FormWrapper from 'components/forms/FormWrapper/FormWrapper';
+import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
 
 type FormValues = FeedbackFormValues;
 
@@ -35,7 +36,12 @@ const textFieldFocus = {
 const SCHEMA = feedbackFormSchema;
 
 const Contact = () => {
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const {
+    mutate: addFeedbackMutate,
+    isPending,
+    isSuccess,
+    error
+  } = useAddFeedbackMutation();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -47,43 +53,36 @@ const Contact = () => {
     resolver: zodResolver(SCHEMA)
   });
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { isSubmitting }
-  } = methods;
+  const { control, reset } = methods;
 
-  const onSubmit = async (data: FormValues) => {
-    setStatus('idle');
-    try {
-      await addFeedback(data);
-      setStatus('success');
-      reset();
-    } catch (error) {
-      console.error(error);
-      setStatus('error');
-    }
+  const onSubmit = (feedbackData: FormValues) => {
+    addFeedbackMutate(feedbackData, {
+      onSuccess: () => {
+        reset();
+      }
+    });
   };
 
   const handleClear = () => {
     reset();
-    setStatus('idle');
   };
 
   return (
     <Page title={TITLE} data-cy="contact-us">
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ width: '75%' }}>
+        <FormWrapper
+          onSubmit={onSubmit}
+          sx={{ width: { xs: '100%', md: '75%' } }}
+        >
           <Stack gap={2}>
-            <Collapse in={status !== 'idle'}>
-              {status === 'success' && (
-                <Alert severity="success" onClose={() => setStatus('idle')}>
+            <Collapse in={isSuccess || !!error}>
+              {isSuccess && (
+                <Alert severity="success">
                   Thank you! Your feedback has been received!
                 </Alert>
               )}
-              {status === 'error' && (
-                <Alert severity="error" onClose={() => setStatus('idle')}>
+              {error && (
+                <Alert severity="error">
                   Something went wrong please try again after sometime.
                 </Alert>
               )}
@@ -128,29 +127,23 @@ const Contact = () => {
               }}
             />
 
-            <Controller
+            <FormCheckboxListField<FormValues>
               name="interest"
-              control={control}
-              render={({ field }) => (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      {...field}
-                      checked={field.value}
-                      sx={{
-                        '&.Mui-checked': { color: PRIMARY_COLOR }
-                      }}
-                    />
-                  }
-                  label={
+              label=""
+              labelPlacement="end"
+              options={[
+                {
+                  key: 'interest-checkbox',
+                  value: 'true',
+                  label: (
                     <Typography
                       sx={{ fontSize: 14, fontWeight: 500, lineHeight: '24px' }}
                     >
                       I'm interested in helping PHLASK with future research
                     </Typography>
-                  }
-                />
-              )}
+                  )
+                }
+              ]}
             />
 
             <Stack direction="row" gap={5} mt={2}>
@@ -165,7 +158,7 @@ const Contact = () => {
               <Button
                 variant="contained"
                 type="submit"
-                disabled={isSubmitting || status === 'success'}
+                disabled={isPending || isSuccess}
                 sx={{
                   fontWeight: 'bold',
                   backgroundColor: PRIMARY_COLOR,
@@ -175,15 +168,15 @@ const Contact = () => {
                   }
                 }}
               >
-                {isSubmitting
+                {isPending
                   ? 'Submitting...'
-                  : status === 'success'
+                  : isSuccess
                   ? 'Submitted'
                   : 'Submit'}
               </Button>
             </Stack>
           </Stack>
-        </form>
+        </FormWrapper>
       </FormProvider>
     </Page>
   );
