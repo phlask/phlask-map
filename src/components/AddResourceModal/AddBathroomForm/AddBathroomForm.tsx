@@ -94,7 +94,7 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
                 name="bathroom.tags"
                 label="Helpful info"
                 options={tagOptions}
-                labelPlacement="start"
+                labelPlacement="end"
               />
             </Stack>
             <FormTextField<FormValues>

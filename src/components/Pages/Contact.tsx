@@ -1,13 +1,5 @@
-import {
-  Checkbox,
-  Stack,
-  Button,
-  FormControlLabel,
-  Alert,
-  Collapse,
-  Typography
-} from '@mui/material';
-import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { Stack, Button, Alert, Collapse, Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Page from 'components/Page/Page';
 import feedbackFormSchema, {
@@ -53,7 +45,7 @@ const Contact = () => {
     resolver: zodResolver(SCHEMA)
   });
 
-  const { control, reset } = methods;
+  const { reset } = methods;
 
   const onSubmit = (feedbackData: FormValues) => {
     addFeedbackMutate(feedbackData, {

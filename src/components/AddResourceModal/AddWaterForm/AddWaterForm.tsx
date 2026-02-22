@@ -107,7 +107,7 @@ const AddWaterForm = ({ onGoBack, onComplete }: AddWaterFormProps) => {
                 name="water.tags"
                 label="Helpful info"
                 options={tagOptions}
-                labelPlacement="start"
+                labelPlacement="end"
               />
             </Stack>
             <FormTextField<FormValues>

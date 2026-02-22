@@ -107,7 +107,7 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
                 name="forage.tags"
                 label="Helpful info"
                 options={tagOptions}
-                labelPlacement="start"
+                labelPlacement="end"
               />
             </Stack>
             <FormTextField<FormValues>
