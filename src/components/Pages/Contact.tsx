@@ -45,8 +45,6 @@ const Contact = () => {
     resolver: zodResolver(SCHEMA)
   });
 
-  console.log('Form Errors:', methods.formState.errors);
-
   const { reset } = methods;
 
   const onSubmit = (feedbackData: FormValues) => {
