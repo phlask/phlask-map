@@ -1,15 +1,15 @@
-import { Stack, Button, Alert, Collapse, Typography } from '@mui/material';
+import { Stack, Button, Alert, Collapse } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Page from 'components/Page/Page';
 import feedbackFormSchema, {
   type FeedbackFormValues
 } from 'schemas/feedbackFormSchema';
-import FormTextField from 'components/forms/FormTextField/FormTextField';
 import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
 import ClearFormIcon from 'icons/ClearFormIcon';
 import FormWrapper from 'components/forms/FormWrapper/FormWrapper';
-import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
+import FormTextField from 'components/forms/FormTextField/FormTextField';
+import FormCheckboxField from 'components/forms/FormCheckBoxField/FormCheckBoxField';
 
 type FormValues = FeedbackFormValues;
 
@@ -45,6 +45,8 @@ const Contact = () => {
     resolver: zodResolver(SCHEMA)
   });
 
+  console.log('Form Errors:', methods.formState.errors);
+
   const { reset } = methods;
 
   const onSubmit = (feedbackData: FormValues) => {
@@ -64,7 +66,7 @@ const Contact = () => {
       <FormProvider {...methods}>
         <FormWrapper
           onSubmit={onSubmit}
-          sx={{ width: { xs: '100%', md: '75%' } }}
+          sx={{ width: { xs: '90%', md: '75%' } }}
         >
           <Stack gap={2}>
             <Collapse in={isSuccess || !!error}>
@@ -119,23 +121,13 @@ const Contact = () => {
               }}
             />
 
-            <FormCheckboxListField<FormValues>
+            <FormCheckboxField<FormValues>
               name="interest"
-              label=""
+              label="I'm interested in helping PHLASK with future research"
               labelPlacement="end"
-              options={[
-                {
-                  key: 'interest-checkbox',
-                  value: 'true',
-                  label: (
-                    <Typography
-                      sx={{ fontSize: 14, fontWeight: 500, lineHeight: '24px' }}
-                    >
-                      I'm interested in helping PHLASK with future research
-                    </Typography>
-                  )
-                }
-              ]}
+              sx={{
+                '&.Mui-checked': { color: PRIMARY_COLOR }
+              }}
             />
 
             <Stack direction="row" gap={5} mt={2}>
