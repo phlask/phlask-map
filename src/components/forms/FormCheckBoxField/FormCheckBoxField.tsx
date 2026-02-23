@@ -2,7 +2,6 @@ import {
   Checkbox,
   FormControlLabel,
   FormControl,
-  FormHelperText,
   type TextFieldProps
 } from '@mui/material';
 import {
