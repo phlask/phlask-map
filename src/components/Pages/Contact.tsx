@@ -69,12 +69,18 @@ const Contact = () => {
           <Stack gap={2}>
             <Collapse in={isSuccess || !!error}>
               {isSuccess && (
-                <Alert severity="success">
+                <Alert
+                  severity="success"
+                  sx={{ fontSize: 14, lineHeight: '24px' }}
+                >
                   Thank you! Your feedback has been received!
                 </Alert>
               )}
               {error && (
-                <Alert severity="error">
+                <Alert
+                  severity="error"
+                  sx={{ fontSize: 14, lineHeight: '24px' }}
+                >
                   Something went wrong please try again after sometime.
                 </Alert>
               )}
