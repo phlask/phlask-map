@@ -123,6 +123,16 @@ export type ResourceStatus =
   | 'PERMANENTLY_CLOSED'
   | 'HIDDEN';
 
+/** An organization or entity that provided/contributed this resource. */
+export type Provider = {
+  /** The name of the provider organization. */
+  name: string;
+  /** Optional URL to the provider's logo image. */
+  logo_url?: string;
+  /** Optional URL to the provider's website. */
+  url?: string;
+};
+
 export type ResourceEntry = {
   id?: number;
   /** Represents the schema that this resource entry is following. */
@@ -177,4 +187,6 @@ export type ResourceEntry = {
   forage?: ForageInfo | null;
   /**  If the resource_type is BATHROOM, the information about the bathroom resource. */
   bathroom?: BathroomInfo | null;
+  /** Organizations or entities that provided/contributed this resource. */
+  providers?: Provider[] | null;
 };

@@ -108,12 +108,15 @@ const FormResourceAddressField = ({
       renderInput={({ inputProps, ...params }) => (
         <TextField
           {...params}
-          inputProps={{
-            ...inputProps,
-            'data-cy': 'form-resource-address-input'
-          }}
           label={`${label}`}
-          slotProps={{ inputLabel: { required: true } }}
+          slotProps={{
+            inputLabel: { required: true },
+
+            htmlInput: {
+              ...inputProps,
+              'data-cy': 'form-resource-address-input'
+            }
+          }}
           inputRef={inputRef}
           error={Boolean(error)}
           helperText={
