@@ -3,13 +3,10 @@ import type { ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 
-// Need access to the database? Message us in the #phlask-data channel on Slack
-const databaseUrl =
-  import.meta.env.VITE_DB_URL || 'https://wantycfbnzzocsbthqzs.supabase.co';
+// Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
+const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
+const databaseApiKey = import.meta.env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
-const databaseApiKey =
-  import.meta.env.VITE_DB_API_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const contributorDatabaseName = 'airtable_contributors';
 
 const supabase = createClient(databaseUrl, databaseApiKey);

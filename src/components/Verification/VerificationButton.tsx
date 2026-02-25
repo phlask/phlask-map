@@ -6,7 +6,7 @@ import { updateResource } from 'services/db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
 
-const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
+const PASSWORD = import.meta.env.VITE_VERIFICATION_PASSWORD;
 
 type VerificationButtonProps = {
   resource: ResourceEntry;

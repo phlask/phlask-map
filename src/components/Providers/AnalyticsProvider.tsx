@@ -2,8 +2,7 @@ import { PostHogProvider } from 'posthog-js/react';
 import type { PropsWithChildren } from 'react';
 
 const postHogOptions = {
-  api_host:
-    import.meta.env.VITE_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+  api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
   mask_all_text: true
 };
 
@@ -18,10 +17,7 @@ const AnalyticsProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <PostHogProvider
-      apiKey={
-        import.meta.env.VITE_PUBLIC_POSTHOG_KEY ||
-        'phc_I0pbyDLZ2ifEgaQaum7vDVkqmwSrLle3SHbNi8tgwpY'
-      }
+      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
       options={postHogOptions}
     >
       {children}
