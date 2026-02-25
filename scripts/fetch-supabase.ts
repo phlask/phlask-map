@@ -1,6 +1,4 @@
-#!/usr/bin/env node
-
-import { supabase } from '../src/db.js';
+import { supabase } from '../src/services/db.ts';
 
 // Known tables in the project
 const KNOWN_TABLES = ['resources', 'contributors', 'contact_submissions'];

@@ -29,7 +29,7 @@ yarn storybook        # Run Storybook on port 6006
 yarn generate-icons   # Convert SVGs in src/assets/icons to React components
 
 # Database
-node scripts/fetch-supabase.js <table> [options]  # Fetch entries from Supabase
+node --experimental-strip-types scripts/fetch-supabase.ts <table> [options]  # Fetch entries from Supabase
 ```
 
 ### Fetching Supabase Data
@@ -38,10 +38,10 @@ Use the fetch script to query Supabase tables directly:
 
 ```bash
 # Basic usage - fetch from a table
-node scripts/fetch-supabase.js resources
+node --experimental-strip-types scripts/fetch-supabase.ts resources
 
 # Fetch with options
-node scripts/fetch-supabase.js contact_submissions --pretty --order created_at --limit 10
+node --experimental-strip-types scripts/fetch-supabase.ts contact_submissions --pretty --order created_at --limit 10
 
 # Options:
 #   --limit, -l   Number of entries to fetch (default: 100)
