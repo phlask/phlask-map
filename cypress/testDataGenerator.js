@@ -7,7 +7,6 @@
 // Data which will write in a file.
 // TODO Transition this to generate an equivalent to the content in src/public/testData.js instead of using
 //      a static file.
-let data = 'Learning how to write in a file.';
 
 // Write data in 'Output.txt' .
 // fs.writeFile('Output.txt', data, (err) => {

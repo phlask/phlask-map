@@ -1,24 +1,22 @@
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import './App.css';
-import Head from 'components/Head/Head';
-import ReactGoogleMaps from 'components/ReactGoogleMaps/ReactGoogleMaps';
-import theme from 'theme';
-import store from 'store';
-import { Provider } from 'react-redux';
-import GeolocationTracker from 'components/GeolocationTracker/GeolocationTracker';
+import Map from 'components/Map/Map';
+import { ToastContainer } from 'react-toastify';
+import Overlay from 'components/Overlay/Overlay';
+import './App.scss';
+import { secondsToMilliseconds } from 'date-fns/secondsToMilliseconds';
 
-const App = () => (
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <GeolocationTracker />
-      <CssBaseline />
-      <div className="page-wrapper">
-        <Head />
-        <ReactGoogleMaps />
-      </div>
-    </ThemeProvider>
-  </Provider>
-);
+const App = () => {
+  return (
+    <>
+      <Overlay />
+      <Map />
+      <ToastContainer
+        toastStyle={{ padding: 0, minHeight: 'unset' }}
+        closeButton={false}
+        hideProgressBar={true}
+        autoClose={secondsToMilliseconds(3)}
+      />
+    </>
+  );
+};
 
 export default App;

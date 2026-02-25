@@ -1,9 +1,8 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import App from 'App';
-import AnalyticsWrapper from 'analytics';
+import { createRoot, type Container } from 'react-dom/client';
+import Providers from 'components/Providers/Providers';
+import { RouterProvider } from 'react-router';
+import { router } from 'services/router';
 
 let basepath = '';
 // Test-specific routing logic
@@ -19,13 +18,19 @@ if (path) {
 }
 
 const rootElement = document.getElementById('root');
-// We use a non-null assertion here because we are sure that an element with id root exists
-const root = createRoot(rootElement!);
+
+if (!rootElement) {
+  throw new Error(
+    "Couldn't load the React application on a non-existing element with id 'root'."
+  );
+}
+
+const root = createRoot(rootElement satisfies Container);
 
 root.render(
   <StrictMode>
-    <AnalyticsWrapper>
-      <App />
-    </AnalyticsWrapper>
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
   </StrictMode>
 );

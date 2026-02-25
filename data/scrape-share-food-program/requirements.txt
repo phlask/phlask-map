@@ -9,7 +9,7 @@ certifi==2024.8.30
 cffi==1.17.1
 charset-normalizer==3.4.0
 colorama==0.4.6
-cryptography==44.0.1
+cryptography==46.0.5
 decorator==5.1.1
 defusedxml==0.7.1
 docopt==0.6.2
@@ -43,7 +43,7 @@ matplotlib-inline==0.1.7
 mistune==3.1.0
 msgpack==1.1.0
 nbclient==0.10.2
-nbconvert==7.16.5
+nbconvert==7.17.0
 nbformat==5.10.4
 packaging==24.2
 pandocfilters==1.5.1
@@ -53,9 +53,9 @@ pipreqs==0.5.0
 platformdirs==4.3.6
 prompt_toolkit==3.0.48
 proto-plus==1.25.0
-protobuf==5.29.5
+protobuf==6.33.5
 pure_eval==0.2.3
-pyasn1==0.6.1
+pyasn1==0.6.2
 pyasn1_modules==0.4.1
 pycparser==2.22
 Pygments==2.19.1
@@ -75,7 +75,7 @@ tinycss2==1.4.0
 tornado==6.5.1
 traitlets==5.14.3
 uritemplate==4.1.1
-urllib3==2.5.0
+urllib3==2.6.3
 wcwidth==0.2.13
 webencodings==0.5.1
 yarg==0.1.9
