@@ -1,15 +1,6 @@
 #!/usr/bin/env node
 
-import { createClient } from '@supabase/supabase-js';
-
-// Configuration - uses environment variables or defaults
-const databaseUrl =
-  process.env.VITE_DB_URL || 'https://wantycfbnzzocsbthqzs.supabase.co';
-const databaseApiKey =
-  process.env.VITE_DB_API_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
-
-const supabase = createClient(databaseUrl, databaseApiKey);
+import { supabase } from '../src/db.js';
 
 // Known tables in the project
 const KNOWN_TABLES = ['resources', 'contributors', 'contact_submissions'];
