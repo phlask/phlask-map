@@ -7,7 +7,6 @@ import { Stack, Button } from '@mui/material';
 import FormCheckboxField from '../FormCheckBoxField/FormCheckBoxField';
 import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import theme from 'theme';
 
 type FormValues = FeedbackFormValues;
 
@@ -81,7 +80,6 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             type="submit"
             variant="contained"
             sx={{
-              color: 'white',
               backgroundColor: '#10B6FF',
               width: '400px',
               borderRadius: '8px',
@@ -91,7 +89,7 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
           >
             {isPending ? 'Submitting...' : 'Submit Feedback'}
           </Button>
-        </Stack>{' '}
+        </Stack>
       </form>
     </FormProvider>
   );
