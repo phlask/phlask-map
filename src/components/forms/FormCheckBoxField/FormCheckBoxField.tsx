@@ -1,56 +1,27 @@
-import {
-  Checkbox,
-  FormControlLabel,
-  FormControl,
-  type TextFieldProps
-} from '@mui/material';
-import {
-  useFormContext,
-  Controller,
-  type FieldValues,
-  type Path
-} from 'react-hook-form';
-import { type ReactNode } from 'react';
+import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
+import { useFormContext, type FieldValues, type Path } from 'react-hook-form';
 
 type FormCheckboxFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
-  label: ReactNode;
-  helperText?: string;
+  label: string;
   labelPlacement?: 'bottom' | 'end' | 'start' | 'top';
-  sx?: TextFieldProps['sx'];
 };
 
 const FormCheckboxField = <Values extends FieldValues>({
   name,
   label,
-  labelPlacement = 'end',
-  sx
+  labelPlacement = 'end'
 }: FormCheckboxFieldProps<Values>) => {
-  const { control } = useFormContext<Values>();
+  const { register } = useFormContext<Values>();
+  const field = register(name);
 
   return (
     <FormControl>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={!!value}
-                onChange={e => onChange(e.target.checked)}
-                sx={sx}
-              />
-            }
-            label={label}
-            labelPlacement={labelPlacement}
-            slotProps={{
-              typography: {
-                sx: { color: '#2d3748', fontSize: 14, lineHeight: '24px' }
-              }
-            }}
-          />
-        )}
+      <FormControlLabel
+        {...field}
+        control={<Checkbox />}
+        label={label}
+        labelPlacement={labelPlacement}
       />
     </FormControl>
   );

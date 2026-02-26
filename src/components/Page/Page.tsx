@@ -13,8 +13,8 @@ const Page = ({ children, title, 'data-cy': dataCy }: PageProps) => {
       sx={{
         color: '#60718c',
         maxHeight: '55vh',
-        width: '100%',
         overflowY: 'auto',
+        width: '100%',
         gap: '2.5rem'
       }}
     >

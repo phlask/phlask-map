@@ -31,7 +31,6 @@ const FormTextField = <Values extends FieldValues>({
   fullWidth = false,
   multiline = false,
   minRows = undefined,
-  slotProps,
   sx
 }: FormTextFieldProps<Values>) => {
   const { register, getFieldState } = useFormContext<Values>();
@@ -44,17 +43,11 @@ const FormTextField = <Values extends FieldValues>({
   return (
     <TextField
       {...register(name, { required, disabled })}
+      required={required}
       label={label}
       placeholder={placeholder}
       helperText={error?.message || helperText || ' '}
       fullWidth={fullWidth}
-      slotProps={{
-        ...slotProps,
-        inputLabel: {
-          required,
-          ...slotProps?.inputLabel
-        }
-      }}
       error={invalid}
       multiline={multiline}
       minRows={minRows}
