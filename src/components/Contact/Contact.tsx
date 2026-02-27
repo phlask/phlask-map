@@ -1,5 +1,7 @@
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import Connect from 'components/Connect/Connect';
 import Page from 'components/Page/Page';
+import SocialContacts from 'components/SocialContacts/SocialContacts';
 import FeedbackForm from 'components/forms/FeedbackForm/FeedbackForm';
 
 const TITLE = 'Contact';
@@ -7,9 +9,12 @@ const TITLE = 'Contact';
 const Contact = () => {
   return (
     <Page title={TITLE} data-cy="contact">
-      <Typography>Share Feedback</Typography>
+      <Typography variant="h6">Share Feedback</Typography>
       <FeedbackForm />
-      {/* Have Socials Tabs here */}
+      <Stack direction={'row'} gap={10}>
+        <SocialContacts />
+        <Connect />
+      </Stack>
     </Page>
   );
 };

@@ -82,11 +82,12 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             sx={{
               backgroundColor: '#10B6FF',
               width: '400px',
-              borderRadius: '8px',
-              textTransform: 'capitalize'
+              borderRadius: '8px'
             }}
+            // AKNOTES: you can use the Button loading prop for that
             disabled={isPending}
           >
+            {/* AKNOTES: Change this to new screen */}
             {isPending ? 'Submitting...' : 'Submit Feedback'}
           </Button>
         </Stack>
