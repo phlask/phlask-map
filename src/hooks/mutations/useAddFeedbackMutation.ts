@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { addFeedback } from 'services/db';
-import type { FeedbackForm } from 'types/ResourceEntry';
+import type { FeedbackForm } from 'types/FeedbackEntry';
 
 const useAddFeedbackMutation = () => {
   const { mutate, isPending, isSuccess, error } = useMutation({

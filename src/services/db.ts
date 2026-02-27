@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
-import type { FeedbackForm, ResourceEntry } from 'types/ResourceEntry';
+import type { ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
+import type { FeedbackForm } from 'types/FeedbackEntry';
 
 // Need access to the database? Message us in the #phlask-data channel on Slack
 const databaseUrl =
