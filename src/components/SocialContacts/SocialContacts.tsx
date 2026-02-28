@@ -5,16 +5,15 @@ import TwitterIcon from 'icons/TwitterIcon';
 
 function SocialContacts() {
   return (
-    <Stack direction={'column'} gap={3}>
+    <Stack direction={'column'} alignItems={'center'} gap={1}>
       <Typography variant="h6">Follow PHLASK</Typography>
-      <Stack direction={'row'} gap={5}>
-        <Link href="">
+      <Stack direction={'row'} gap={4}>
+        <Link href="https://www.facebook.com/PHLASKecosystem/">
           <FacebookIcon />
         </Link>
-        <Link href="">
+        <Link href="https://www.instagram.com/phlaskecosystem/">
           <InstagramIcon />
         </Link>
-
         <Link href="">
           <TwitterIcon />
         </Link>

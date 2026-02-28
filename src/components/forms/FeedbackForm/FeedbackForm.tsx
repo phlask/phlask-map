@@ -7,6 +7,7 @@ import { Stack, Button } from '@mui/material';
 import FormCheckboxField from '../FormCheckBoxField/FormCheckBoxField';
 import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import useIsMobile from 'hooks/useIsMobile';
 
 type FormValues = FeedbackFormValues;
 
@@ -17,6 +18,7 @@ type FeedbackFormProps = {
 const SCHEMA = feedbackFormSchema;
 
 const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
+  const isMobile = useIsMobile();
   const { mutate: addFeedbackMutate, isPending } = useAddFeedbackMutation();
 
   const methods = useForm<FormValues>({
@@ -43,13 +45,19 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
-        <Stack gap={2}>
+        <Stack
+          gap={2}
+          sx={{
+            mb: 4,
+            mx: isMobile ? 'auto' : 0
+          }}
+        >
           <FormTextField<FormValues>
             name="name"
             label="Name"
             placeholder="Enter Your Name"
             required
-            sx={{ width: '400px' }}
+            sx={{ width: isMobile ? '95%' : '400px' }}
           />
 
           <FormTextField<FormValues>
@@ -57,7 +65,7 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             label="Email"
             placeholder="example@email.com"
             required
-            sx={{ width: '400px' }}
+            sx={{ width: isMobile ? '95%' : '400px' }}
           />
 
           <FormTextField<FormValues>
@@ -66,7 +74,7 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             placeholder="Share your feedback and thoughts"
             multiline
             minRows={3}
-            sx={{ width: '800px' }}
+            sx={{ width: isMobile ? '95%' : '800px' }}
             helperText="Please do not include any sensitive personal information."
           />
 
@@ -81,8 +89,9 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             variant="contained"
             sx={{
               backgroundColor: '#10B6FF',
-              width: '400px',
-              borderRadius: '8px'
+              width: isMobile ? '200px' : '400px',
+              borderRadius: '8px',
+              alignSelf: isMobile ? 'center' : 'flex-start'
             }}
             // AKNOTES: you can use the Button loading prop for that
             disabled={isPending}
