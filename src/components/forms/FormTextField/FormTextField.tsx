@@ -17,7 +17,6 @@ type FormTextFieldProps<Values extends FieldValues> = {
   required?: boolean;
   multiline?: boolean;
   minRows?: number;
-  slotProps?: TextFieldProps['slotProps'];
   sx?: TextFieldProps['sx'];
 };
 

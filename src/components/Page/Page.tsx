@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Stack, Typography } from '@mui/material';
+import useIsMobile from 'hooks/useIsMobile';
 
 type PageProps = {
   children: ReactNode;
@@ -8,11 +9,12 @@ type PageProps = {
 };
 
 const Page = ({ children, title, 'data-cy': dataCy }: PageProps) => {
+  const isMobile = useIsMobile();
   return (
     <Stack
       sx={{
         color: '#60718c',
-        maxHeight: '75vh',
+        maxHeight: isMobile ? '85vh' : '55vh',
         overflowY: 'auto',
         width: '100%',
         gap: '2.5rem'
