@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
+import type { FeedbackForm } from 'types/FeedbackEntry';
 
 // Need access to the database? Message us in the #phlask-data channel on Slack
 const databaseUrl =
@@ -11,6 +12,7 @@ const databaseApiKey =
   import.meta.env?.VITE_DB_API_KEY ||
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const contributorDatabaseName = 'airtable_contributors';
+const feedbackDatabaseName = 'user_feedbacks';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
@@ -110,6 +112,18 @@ export const addResource = async (resource: ResourceEntry) => {
   const { data, error } = await supabase
     .from(resourceDatabaseName)
     .insert<ResourceEntry>(resource);
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
+export const addFeedback = async (feedback: FeedbackForm) => {
+  const { data, error } = await supabase
+    .from(feedbackDatabaseName)
+    .insert(feedback)
+    .select();
+
   if (error) {
     throw error;
   }

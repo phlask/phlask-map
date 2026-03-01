@@ -44,7 +44,6 @@ const FormCheckboxListField = <Values extends FieldValues>({
             label={option.label}
             labelPlacement={labelPlacement}
             value={option.value}
-            sx={{ justifyContent: 'space-between' }}
           />
         ))}
       </FormGroup>
