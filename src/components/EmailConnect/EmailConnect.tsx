@@ -7,7 +7,7 @@ function Connect() {
     <Stack direction={'column'} gap={1}>
       {!isMobile && <Typography variant="h6">Connect</Typography>}
       <Typography textAlign={isMobile ? 'center' : 'start'}>
-        For all other inquiries, email{' '}
+        For all other inquiries, {isMobile && <br />}email{' '}
         <Link href="mailto:phlaskecosystem@gmail.com">
           phlaskecosystem@gmail.com
         </Link>

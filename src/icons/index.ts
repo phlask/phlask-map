@@ -43,5 +43,4 @@ export { default as UsersIcon } from './UsersIcon';
 export { default as WaterIcon } from './WaterIcon';
 export { default as WaterIconChooseResource } from './WaterIconChooseResource';
 export { default as WaterIconV2 } from './WaterIconV2';
-export { default as PhlaskContactSubmit } from './PhlaskContactSubmit';
 export { default as PhlaskWater } from './PhlaskWater';

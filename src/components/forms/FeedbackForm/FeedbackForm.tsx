@@ -3,23 +3,22 @@ import feedbackFormSchema, {
   type FeedbackFormValues
 } from 'schemas/feedbackFormSchema';
 import FormTextField from '../FormTextField/FormTextField';
-import { Stack, Button } from '@mui/material';
+import { Stack, Button, Typography } from '@mui/material';
 import FormCheckboxField from '../FormCheckBoxField/FormCheckBoxField';
-import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useIsMobile from 'hooks/useIsMobile';
 
 type FormValues = FeedbackFormValues;
 
 type FeedbackFormProps = {
-  onSuccessCallback?: () => void; // Optional: hook into success events
+  onSubmit: (data: FormValues) => void;
+  isPending: boolean;
 };
 
 const SCHEMA = feedbackFormSchema;
 
-const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
+const FeedbackForm = ({ onSubmit, isPending }: FeedbackFormProps) => {
   const isMobile = useIsMobile();
-  const { mutate: addFeedbackMutate, isPending } = useAddFeedbackMutation();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -31,19 +30,13 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
     resolver: zodResolver(SCHEMA)
   });
 
-  // 3. Rename internal handler to avoid collisions and keep it clean
   const handleFormSubmit: SubmitHandler<FormValues> = feedbackData => {
-    addFeedbackMutate(feedbackData, {
-      onSuccess: () => {
-        // Optional: Reset form or navigate after success
-        methods.reset();
-        if (onSuccessCallback) onSuccessCallback();
-      }
-    });
+    onSubmit(feedbackData);
   };
 
   return (
     <FormProvider {...methods}>
+      <Typography variant="h6">Share Feedback</Typography>
       <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
         <Stack
           gap={2}
@@ -74,8 +67,9 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             placeholder="Share your feedback and thoughts"
             multiline
             minRows={3}
-            sx={{ width: isMobile ? '95%' : '800px' }}
+            required
             helperText="Please do not include any sensitive personal information."
+            sx={{ width: isMobile ? '95%' : '800px' }}
           />
 
           <FormCheckboxField<FormValues>
@@ -89,15 +83,13 @@ const FeedbackForm = ({ onSuccessCallback }: FeedbackFormProps = {}) => {
             variant="contained"
             sx={{
               backgroundColor: '#10B6FF',
-              width: isMobile ? '200px' : '400px',
+              width: isMobile ? '168px' : '400px',
               borderRadius: '8px',
               alignSelf: isMobile ? 'center' : 'flex-start'
             }}
-            // AKNOTES: you can use the Button loading prop for that
-            disabled={isPending}
+            loading={isPending}
           >
-            {/* AKNOTES: Change this to new screen */}
-            {isPending ? 'Submitting...' : 'Submit Feedback'}
+            Submit Feedback
           </Button>
         </Stack>
       </form>
