@@ -13,6 +13,13 @@ type VerificationButtonProps = {
 };
 
 const VerificationButton = ({ resource }: VerificationButtonProps) => {
+  if (!PASSWORD) {
+    const message = import.meta.env.DEV
+      ? 'Verification password is missing! Make sure that `VITE_VERIFICATION_PASSWORD` is defined in a `.env` file'
+      : 'An unexpected error have happened. Please try again later.';
+    throw new Error(message);
+  }
+
   const { setSelectedResource } = useSelectedResource();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
