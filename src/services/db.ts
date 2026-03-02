@@ -2,12 +2,20 @@ import { createClient } from '@supabase/supabase-js';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
+import { data } from 'react-router';
 
 // Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
 const databaseApiKey = import.meta.env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
+
+if (!databaseUrl || !databaseApiKey) {
+  const message = import.meta.env.DEV
+    ? 'Database credentials are missing! Make sure that `databaseUrl` and `databaseApiKey` are defined in a `.env` file'
+    : 'An unexpected error have happened. Please try again later.';
+  throw data(new Error(message), { status: 500 });
+}
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
