@@ -1,5 +1,5 @@
 import { Link, Stack, Typography } from '@mui/material';
-import { SocialFacebook, SocialInstagram, SocialTwitter } from 'icons';
+import { SocialFacebook, SocialInstagram, SocialLinkedin } from 'icons';
 
 function SocialContacts() {
   return (
@@ -30,11 +30,11 @@ function SocialContacts() {
           sx={theme => ({
             fontSize: theme.typography.pxToRem(48)
           })}
-          href=""
+          href="https://www.linkedin.com/company/phlask/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <SocialTwitter />
+          <SocialLinkedin />
         </Link>
       </Stack>
     </Stack>

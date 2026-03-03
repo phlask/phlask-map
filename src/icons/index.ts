@@ -36,6 +36,7 @@ export { default as SocialGithub } from './SocialGithub';
 export { default as SocialInstagram } from './SocialInstagram';
 export { default as SocialShare } from './SocialShare';
 export { default as SocialTwitter } from './SocialTwitter';
+export { default as SocialLinkedin } from './SocialLinkedin';
 export { default as ToiletIconChooseResource } from './ToiletIconChooseResource';
 export { default as ToiletIconV2 } from './ToiletIconV2';
 export { default as Upload } from './Upload';
