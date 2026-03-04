@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { ResourceEntry } from 'types/ResourceEntry';
+import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 
@@ -11,6 +11,7 @@ const databaseApiKey =
   import.meta.env.VITE_DB_API_KEY ||
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const contributorDatabaseName = 'contributors';
+const resourceProvidersDatabaseName = 'resource_providers';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
@@ -120,6 +121,17 @@ export const getContributors = async (): Promise<Contributor[]> => {
   const { data, error } = await supabase
     .from(contributorDatabaseName)
     .select('*');
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
+export const getResourceProviders = async (resourceId: string): Promise<Provider[]> => {
+  const { data, error } = await supabase
+    .from('providers')
+    .select('name, logo_url, url:website_url, resource_providers!inner(resource_id)')
+    .eq('resource_providers.resource_id', resourceId)
   if (error) {
     throw error;
   }

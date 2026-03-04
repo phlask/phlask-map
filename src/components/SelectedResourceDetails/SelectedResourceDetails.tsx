@@ -30,6 +30,7 @@ import ResourceIcon from 'components/ResourceIcon/ResourceIcon';
 import GetDirectionsButton from 'components/GetDirectionsButton/GetDirectionsButton';
 import SelectedResourceTags from 'components/SelectedResourceTags/SelectedResourceTags';
 import ProvidedBy from 'components/ProvidedBy/ProvidedBy';
+import { useGetResourceProvidersQuery } from 'hooks/queries/useGetResourceProvidersQuery';
 
 type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
@@ -46,6 +47,7 @@ const SelectedResourceDetails = ({
 }: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
+  const { data: providers = [] } = useGetResourceProvidersQuery();
 
   if (isError) {
     return (
@@ -218,7 +220,7 @@ const SelectedResourceDetails = ({
                 </Typography>
               </Stack>
             ) : null}
-            <ProvidedBy providers={resource.providers} />
+            <ProvidedBy providers={providers} />
           </Stack>
         </Stack>
 
