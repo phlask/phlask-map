@@ -18,7 +18,7 @@ describe('menu navigation', () => {
     // Click the about us sidebar button
     cy.get(ABOUT_US_HEAD_BUTTON).click();
 
-    cy.get(getTestId('about-header')).should('have.text', 'About PHLASK');
+    cy.get(getTestId('about')).should('have.text', 'About PHLASK');
   });
 
   it('should successfully show the join team content', () => {

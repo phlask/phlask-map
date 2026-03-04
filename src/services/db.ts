@@ -5,12 +5,12 @@ import type { Contributor } from 'types/Contributor';
 
 // Need access to the database? Message us in the #phlask-data channel on Slack
 const databaseUrl =
-  import.meta.env.VITE_DB_URL || 'https://wantycfbnzzocsbthqzs.supabase.co';
+  import.meta.env?.VITE_DB_URL || 'https://wantycfbnzzocsbthqzs.supabase.co';
 const resourceDatabaseName = 'resources';
 const databaseApiKey =
-  import.meta.env.VITE_DB_API_KEY ||
+  import.meta.env?.VITE_DB_API_KEY ||
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
-const contributorDatabaseName = 'contributors';
+const contributorDatabaseName = 'airtable_contributors';
 const providersDatabaseName = 'providers';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
@@ -39,7 +39,7 @@ export async function getResources(
   // Build the query with filters
   let query = supabase
     .from(resourceDatabaseName)
-    .select(`id,name,latitude,longitude,resource_type,entry_type`, {
+    .select(`id,name,latitude,longitude,resource_type,entry_type,gp_id`, {
       count: 'exact'
     });
 
@@ -138,4 +138,5 @@ export const getResourceProviders = async (resourceId: string): Promise<Provider
   return data;
 };
 
+export { supabase };
 export default {};

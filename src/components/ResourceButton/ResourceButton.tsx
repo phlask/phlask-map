@@ -1,10 +1,10 @@
+import { SvgIcon } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import styles from './ResourceButton.module.scss';
-import type { FunctionComponent, MouseEventHandler } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 type ResourceButtonProps = {
-  icon: FunctionComponent<{ className: string; width: number; height: number }>;
+  icon: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   color: string;
   'data-cy'?: string;
@@ -12,7 +12,7 @@ type ResourceButtonProps = {
 };
 
 const ResourceButton = ({
-  icon: Icon,
+  icon,
   onClick,
   color,
   'data-cy': dataCy,
@@ -23,14 +23,22 @@ const ResourceButton = ({
       backgroundColor: color,
       width: '100%',
       '&:hover': { backgroundColor: color },
-      borderRadius: '8px'
+      borderRadius: '8px',
+      textTransform: 'none',
+      fontSize: 20,
+      color: 'common.white',
+      fontWeight: 600,
+      fontFamily: 'Inter',
+      lineHeight: '23px',
     }}
     onClick={onClick}
     data-cy={dataCy}
   >
     <Stack alignItems="center">
-      <Icon className={styles.icon} width={45} height={45} />
-      <p className={styles.label}>{text}</p>
+      <SvgIcon sx={{ height: '45px', width: '45px' }}>
+        {icon}
+      </SvgIcon>
+      {text}
     </Stack>
   </Button>
 );

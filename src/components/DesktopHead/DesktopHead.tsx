@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, IconButton, Paper, Collapse, Button, Stack } from '@mui/material';
-import CloseIcon from 'components/icons/CloseIcon';
+import CloseIcon from 'components/Head/CloseIcon';
 import PhlaskIcon from 'icons/PhlaskV2';
 import { HeaderContext } from 'contexts/HeaderContext';
 import NavigationButtons from 'components/NavigationButtons/NavigationButtons';

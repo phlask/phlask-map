@@ -7,8 +7,8 @@ const useSelectedResource = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedResource = searchParams.get(SELECTED_RESOURCE_QUERY_PARAM);
 
-  const setSelectedResource = (resource: ResourceEntry | null) => {
-    setSearchParams(prev => {
+  const getUpdater =
+    (prev: URLSearchParams) => (resource: ResourceEntry | null) => {
       if (!resource) {
         prev.delete(SELECTED_RESOURCE_QUERY_PARAM);
         return prev;
@@ -21,6 +21,20 @@ const useSelectedResource = () => {
       prev.set(SELECTED_RESOURCE_QUERY_PARAM, resource.id);
 
       return prev;
+    };
+
+  const setSelectedResource = (
+    resource: ResourceEntry | null,
+    params?: URLSearchParams
+  ) => {
+    if (params) {
+      const update = getUpdater(params);
+      return update(resource);
+    }
+
+    setSearchParams(prev => {
+      const update = getUpdater(prev);
+      return update(resource);
     });
   };
 

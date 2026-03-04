@@ -4,18 +4,39 @@ import { SearchIcon } from 'icons';
 import styles from './SearchBar.module.scss';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
-import { useActiveSearchLocationContext } from 'contexts/ActiveSearchMarkerContext';
+import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import useGetGooglePlaceById from 'hooks/queries/useGetGooglePlaceById';
 
-const SearchBar = () => {
-  const { onChangeActiveSearchLocation } = useActiveSearchLocationContext();
+type SearchBarProps = {
+  open?: boolean;
+};
+
+const SearchBar = ({ open = false }: SearchBarProps) => {
+  const [value, setValue] = useState<
+    google.maps.places.PlacePrediction | google.maps.places.Place | null
+  >(null);
+  const { onChangeActiveSearchLocation } = useActiveSearchLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
-  const { isFetching, onChange, suggestions } = useGooglePlacesAutocomplete();
+  const { isFetching, onDebouncedChange, onChange, suggestions } =
+    useGooglePlacesAutocomplete();
 
-  const onSelect = async (place: google.maps.places.Place) => {
-    if (!place.id) {
+  const { data: activePlace = null } = useGetGooglePlaceById();
+
+  const onSelect = async (
+    place: google.maps.places.Place | google.maps.places.PlacePrediction
+  ) => {
+    const isPrediction = place instanceof google.maps.places.PlacePrediction;
+    if (isPrediction) {
+      setValue(place);
+    }
+    const selectedPlace = isPrediction ? place.toPlace() : place;
+
+    if (!selectedPlace.id) {
       return;
     }
-    const results = await place.fetchFields({ fields: ['location'] });
+    const results = await selectedPlace.fetchFields({ fields: ['location'] });
 
     if (!results.place.location) {
       return;
@@ -26,23 +47,97 @@ const SearchBar = () => {
     }
 
     const location = toLatLngLiteral(results.place.location);
+
+    onChangeActiveSearchLocation({
+      lat: location.lat,
+      lng: location.lng,
+      placeId: results.place.id
+    });
     map.panTo(location);
     map.setZoom(16);
-
-    onChangeActiveSearchLocation(location);
   };
+
+  useLayoutEffect(() => {
+    if (open) {
+      inputRef.current?.focus();
+    }
+  }, [open]);
+
+  const controlledValue = useMemo(() => {
+    if (!activePlace?.id) {
+      return value;
+    }
+
+    if (!value) {
+      return activePlace;
+    }
+
+    const isPrediction = value instanceof google.maps.places.PlacePrediction;
+
+    if (isPrediction && value.placeId !== activePlace.id) {
+      return activePlace;
+    }
+
+    return value;
+  }, [activePlace, value]);
+
+  const getOptionKey = useCallback(
+    (option: google.maps.places.Place | google.maps.places.PlacePrediction) => {
+      if (option instanceof google.maps.places.PlacePrediction) {
+        return option.placeId;
+      }
+      return option.id;
+    },
+    []
+  );
+
+  const getOptionLabel = useCallback(
+    (option: google.maps.places.Place | google.maps.places.PlacePrediction) => {
+      if (option instanceof google.maps.places.PlacePrediction) {
+        return option.text.text;
+      }
+
+      const { formattedAddress, displayName, types } = option;
+      const isEstablishment = Boolean(types?.includes('establishment'));
+
+      if (!isEstablishment && formattedAddress) {
+        return formattedAddress;
+      }
+
+      return displayName || '';
+    },
+    []
+  );
+
+  const options = useMemo(() => {
+    if (!suggestions.length && activePlace) {
+      return [activePlace];
+    }
+
+    return suggestions;
+  }, [activePlace, suggestions]);
 
   return (
     <Autocomplete
-      fullWidth={false}
-      onInputChange={(_event, value) => {
-        onChange(value);
+      fullWidth
+      onInputChange={(_event, value, reason) => {
+        if (reason !== 'input') {
+          return;
+        }
+        onDebouncedChange(value);
       }}
-      options={suggestions}
+      options={options}
       loading={isFetching}
-      getOptionKey={option => option.placeId}
-      getOptionLabel={option => option.text.text}
+      getOptionKey={getOptionKey}
+      getOptionLabel={getOptionLabel}
+      value={controlledValue}
       onChange={(_event, value, reason) => {
+        if (reason === 'clear') {
+          onChange('');
+          setValue(null);
+          return onChangeActiveSearchLocation(null);
+        }
+
         if (reason !== 'selectOption') {
           return;
         }
@@ -51,7 +146,7 @@ const SearchBar = () => {
           return;
         }
 
-        onSelect(value.toPlace());
+        onSelect(value);
       }}
       slotProps={{
         popupIndicator: { sx: { marginRight: '16px' } }
@@ -78,6 +173,7 @@ const SearchBar = () => {
             },
             input: {
               ...InputProps,
+              inputRef,
               autoComplete: 'off',
               sx: {
                 borderRadius: 4,

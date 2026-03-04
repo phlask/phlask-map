@@ -15,7 +15,7 @@ const useGetContributorsQuery = () =>
         (prev, next) => {
           if (next.is_active) {
             prev.current.push(next);
-          } else {
+          } else if (next.is_contributor) {
             prev.past.push(next);
           }
           return prev;

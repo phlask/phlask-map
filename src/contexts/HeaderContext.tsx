@@ -1,6 +1,6 @@
-import About from 'components/Pages/About';
+import About from 'components/About/About';
 import Contact from 'components/Pages/Contact';
-import Join from 'components/Pages/Join';
+import JoinTheTeam from 'components/JoinTheTeam/JoinTheTeam';
 import {
   createContext,
   type ReactNode,
@@ -65,7 +65,7 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
           case 'about':
             return <About />;
           case 'join':
-            return <Join />;
+            return <JoinTheTeam />;
           case 'contact':
             return <Contact />;
           default:

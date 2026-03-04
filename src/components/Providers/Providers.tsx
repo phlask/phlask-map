@@ -4,7 +4,6 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import type { PropsWithChildren } from 'react';
 import ToolbarContextProvider from './ToolbarContextProvider';
 import queryClient from 'services/queryClient';
-import ActiveSearchLocationProvider from './ActiveSearchLocationProvider';
 import ThemeProvider from './ThemeProvider';
 
 const Providers = ({ children }: PropsWithChildren) => (
@@ -14,12 +13,10 @@ const Providers = ({ children }: PropsWithChildren) => (
       libraries={['places']}
     >
       <ToolbarContextProvider>
-        <ActiveSearchLocationProvider>
-          <ThemeProvider>
-            <CssBaseline />
-            {children}
-          </ThemeProvider>
-        </ActiveSearchLocationProvider>
+        <ThemeProvider>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
       </ToolbarContextProvider>
     </APIProvider>
   </QueryClientProvider>
