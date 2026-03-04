@@ -60,8 +60,8 @@ const Toolbar = () => {
       setSelectedResource(closest, prev);
       onChangeActiveSearchLocation(
         {
-          lat: location.lat,
-          lng: location.lng,
+          lat: closest.latitude,
+          lng: closest.longitude,
           placeId: closest.gp_id || undefined
         },
         prev
