@@ -30,8 +30,6 @@ jobs:
           browser: chrome
           spec: ${{ matrix.spec }}
           config-file: ${{ matrix.config_file }}
-<<<<<<< HEAD
-=======
       - name: Upload videos of failed tests
         uses: actions/upload-artifact@v4
         if: failure()
@@ -39,4 +37,3 @@ jobs:
           name: cypress-videos
           path: ${{ matrix.video_path }}
           retention-days: 7 # Optional: how long to keep artifacts
->>>>>>> develop
