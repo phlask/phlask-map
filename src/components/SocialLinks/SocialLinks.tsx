@@ -1,9 +1,9 @@
 import { Link, Stack, Typography } from '@mui/material';
 import { SocialFacebook, SocialInstagram, SocialLinkedin } from 'icons';
 
-function SocialContacts() {
+const SocialContacts = () => {
   return (
-    <Stack direction={'column'} alignItems={'center'} gap={1}>
+    <Stack direction="column" alignItems="center" gap={1}>
       <Typography variant="h6">Follow PHLASK</Typography>
       <Stack direction={'row'} gap={4}>
         <Link
@@ -39,6 +39,6 @@ function SocialContacts() {
       </Stack>
     </Stack>
   );
-}
+};
 
 export default SocialContacts;

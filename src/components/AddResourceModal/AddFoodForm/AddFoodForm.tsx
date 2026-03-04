@@ -118,7 +118,7 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
                 name="food.tags"
                 label="Helpful info"
                 options={tags}
-                labelPlacement="end"
+                labelPlacement="start"
               />
             </Stack>
             <Divider />
