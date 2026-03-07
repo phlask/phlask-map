@@ -3,8 +3,9 @@ import type { ResourceEntry } from 'types/ResourceEntry';
 import getUserLocation from 'utils/getUserLocation';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 
-const OPEN_ROUTE_SERVICE_API_KEY = import.meta.env
-  .VITE_OPEN_ROUTE_SERVICE_API_KEY;
+const OPEN_ROUTE_SERVICE_API_KEY =
+  import.meta.env.VITE_OPEN_ROUTE_SERVICE_API_KEY ||
+  '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
 
 const BASE_URL = 'https://api.openrouteservice.org/v2';
 const PATH = '/directions/foot-walking';
