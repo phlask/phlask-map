@@ -8,15 +8,22 @@ import { data } from 'react-router';
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
 const databaseApiKey =
   import.meta.env.VITE_DB_API_KEY ||
+  import.meta.env.VITE_SUPABASE_API_KEY ||
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
 const providersDatabaseName = 'providers';
 
+// if (!databaseUrl || !databaseApiKey) {
+//   const message = import.meta.env.DEV
+//     ? 'Database credentials are missing! Make sure that `databaseUrl` and `databaseApiKey` are defined in a `.env` file'
+//     : 'An unexpected error have happened. Please try again later.';
+//   throw data(new Error(message), { status: 500 });
+// }
+
 if (!databaseUrl || !databaseApiKey) {
-  const message = import.meta.env.DEV
-    ? 'Database credentials are missing! Make sure that `databaseUrl` and `databaseApiKey` are defined in a `.env` file'
-    : 'An unexpected error have happened. Please try again later.';
+  // We are throwing a highly detailed error message so we can see it in the console!
+  const message = `🚨 DEBUG: Credentials Missing! URL is ${!!databaseUrl}. API Key is ${!!databaseApiKey}.`;
   throw data(new Error(message), { status: 500 });
 }
 
