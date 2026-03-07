@@ -1,7 +1,7 @@
 import { PostHogProvider } from 'posthog-js/react';
 import type { PropsWithChildren } from 'react';
 
-const APIHOST = import.meta.env.VITE_PUBLIC_POSTHOG_HOST;
+const APIHOST = 'https://us.i.posthog.com';
 const APIKEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY;
 
 const postHogOptions = {
@@ -18,9 +18,9 @@ const AnalyticsProvider = ({ children }: PropsWithChildren) => {
   )
     return children;
 
-  if (!APIHOST || !APIKEY) {
+  if (!APIKEY) {
     const message = import.meta.env.DEV
-      ? 'PostHog credentials are missing! Make sure that `VITE_PUBLIC_POSTHOG_HOST` and `VITE_PUBLIC_POSTHOG_KEY` are defined in a `.env` file'
+      ? 'PostHog credentials are missing! Make sure that `VITE_PUBLIC_POSTHOG_KEY` is defined in your `.env` file. Refer to `.example.env`.'
       : 'An unexpected error happened with analytics. Please try again later.';
     throw new Error(message);
   }

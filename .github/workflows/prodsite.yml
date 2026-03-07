@@ -7,9 +7,10 @@ on:
 env:
   AWS_DEFAULT_REGION: us-east-2
   VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
-  VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
-  VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
   VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+  VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+  VITE_OPEN_ROUTE_SERVICE_API_KEY: ${{ secrets.OPEN_ROUTE_SERVICE_API_KEY }}
+  VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
   VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
 permissions:
   id-token: write # This is required for requesting the JWT

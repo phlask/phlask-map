@@ -11,9 +11,9 @@ const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
 const providersDatabaseName = 'providers';
 
-if (!databaseUrl || !databaseApiKey) {
+if (!databaseApiKey) {
   const message = import.meta.env.DEV
-    ? 'Database credentials are missing! Make sure that `databaseUrl` and `databaseApiKey` are defined in a `.env` file'
+    ? 'Database credentials are missing! Make sure that `databaseApiKey` is defined in your `.env` file. Refer to `.example.env`.'
     : 'An unexpected error happend with supabase. Please try again later.';
   throw data(new Error(message), { status: 500 });
 }
