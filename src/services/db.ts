@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { ResourceEntry } from 'types/ResourceEntry';
+import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 import { data } from 'react-router';
@@ -9,6 +9,7 @@ const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
 const databaseApiKey = import.meta.env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
+const providersDatabaseName = 'providers';
 
 if (!databaseUrl || !databaseApiKey) {
   const message = import.meta.env.DEV
@@ -131,4 +132,16 @@ export const getContributors = async (): Promise<Contributor[]> => {
   return data;
 };
 
+export const getResourceProviders = async (resourceId: string): Promise<Provider[]> => {
+  const { data, error } = await supabase
+    .from(providersDatabaseName)
+    .select('name, logo_url, url:website_url, resource_providers!inner(resource_id)')
+    .eq('resource_providers.resource_id', resourceId)
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
+export { supabase };
 export default {};
