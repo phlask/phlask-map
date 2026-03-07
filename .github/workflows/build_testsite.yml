@@ -9,9 +9,8 @@ jobs:
       AWS_DEFAULT_REGION: us-east-2
       VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
       VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
-      VITE_REACT_GOOGLE_MAPS_APIKEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+      VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
       VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
-      VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
       VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
@@ -26,8 +25,7 @@ jobs:
           ## AKDELETE
           echo "DB_URL: $VITE_DB_URL"
           echo "DB_API_KEY: $VITE_DB_API_KEY"
-          echo "SUPABASE_API_KEY: $VITE_SUPABASE_API_KEY"
-          echo "MAPS_KEY: $VITE_REACT_GOOGLE_MAPS_APIKEY"
+          echo "MAPS_KEY: $VITE_REACT_GOOGLE_MAPS_API_KEY"
           echo "POSTHOG: $VITE_POSTHOG_KEY"
       - name: Build and Deploy the Map
         run: |
