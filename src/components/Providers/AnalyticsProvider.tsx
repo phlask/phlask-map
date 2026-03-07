@@ -21,7 +21,7 @@ const AnalyticsProvider = ({ children }: PropsWithChildren) => {
   if (!APIHOST || !APIKEY) {
     const message = import.meta.env.DEV
       ? 'PostHog credentials are missing! Make sure that `VITE_PUBLIC_POSTHOG_HOST` and `VITE_PUBLIC_POSTHOG_KEY` are defined in a `.env` file'
-      : 'An unexpected error have happened. AKDELETE: POSTHOG Missing Please try again later.';
+      : 'An unexpected error happened with analytics. Please try again later.';
     throw new Error(message);
   }
 

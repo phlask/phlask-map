@@ -26,11 +26,6 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/beta-access
           role-session-name: github-${{ github.sha }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: Check env
-        run: |
-          echo "AK CHECKING Variables..."
-          echo $VITE_DB_URL
-          echo $VITE_POSTHOG_KEY
       - name: Build and Deploy the Map
         run: |
           echo Build started on `date`

@@ -20,17 +20,8 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
           role-session-name: github-${{ github.sha }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: Checking env in TEST BUILD
-        run: |
-          ## AKDELETE
-          echo "DB_URL: $VITE_DB_URL"
-          echo "DB_API_KEY: $VITE_DB_API_KEY"
-          echo "MAPS_KEY: $VITE_REACT_GOOGLE_MAPS_API_KEY"
-          echo "POSTHOG: $VITE_POSTHOG_KEY"
       - name: Build and Deploy the Map
         run: |
-          ## AKDELETE
-          docker compose run --entrypoint "env" prod_build | grep VITE_
           echo Build started on `date`
           echo Building the webapp...
           docker compose run prod_build

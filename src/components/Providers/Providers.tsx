@@ -13,7 +13,7 @@ const Providers = ({ children }: PropsWithChildren) => {
   if (!REACT_GOOGLE_MAPS_API_KEY) {
     const message = import.meta.env.DEV
       ? 'Google Maps API key is missing! Make sure that `VITE_REACT_GOOGLE_MAPS_API_KEY` is defined in a `.env` file'
-      : 'An unexpected error have happened. AKDELETE: Maps Key missing Please try again later.';
+      : 'An unexpected error happened with maps. Please try again later.';
     throw new Error(message);
   }
   return (

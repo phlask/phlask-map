@@ -17,7 +17,7 @@ services:
       - '.:/usr/src/app'
   prod_build:
     build: .
-    entrypoint: bash -c "(env | grep VITE_ > .env.production.local || true) && pnpm build"
+    entrypoint: bash -c "pnpm build"
     environment:
       CI: 'false'
       VITE_DB_URL:

@@ -14,7 +14,7 @@ const providersDatabaseName = 'providers';
 if (!databaseUrl || !databaseApiKey) {
   const message = import.meta.env.DEV
     ? 'Database credentials are missing! Make sure that `databaseUrl` and `databaseApiKey` are defined in a `.env` file'
-    : 'An unexpected error have happened. AKDELETE: DB KEY MISSING Please try again later.';
+    : 'An unexpected error happend with supabase. Please try again later.';
   throw data(new Error(message), { status: 500 });
 }
 
