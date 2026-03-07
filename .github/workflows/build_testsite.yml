@@ -10,7 +10,7 @@ jobs:
       VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
       VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       VITE_REACT_GOOGLE_MAPS_APIKEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
-      VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+      VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
       VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
@@ -29,6 +29,11 @@ jobs:
         run: |
           echo Build started on `date`
           echo Building the webapp...
+          # echo "VITE_DB_URL=${VITE_DB_URL}" >> .env
+          # echo "VITE_POSTHOG_KEY=${VITE_POSTHOG_KEY}" >> .env
+          # echo "VITE_REACT_GOOGLE_MAPS_APIKEY=${VITE_REACT_GOOGLE_MAPS_APIKEY}" >> .env
+          # echo "VITE_DB_API_KEY=${VITE_DB_API_KEY}" >> .env
+          # echo "VITE_VERIFICATION_PASSWORD=${VITE_VERIFICATION_PASSWORD}" >> .env
           docker compose run prod_build
           echo Build completed on `date`
           echo Pushing the webapp to S3...

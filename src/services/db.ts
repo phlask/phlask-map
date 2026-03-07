@@ -132,11 +132,15 @@ export const getContributors = async (): Promise<Contributor[]> => {
   return data;
 };
 
-export const getResourceProviders = async (resourceId: string): Promise<Provider[]> => {
+export const getResourceProviders = async (
+  resourceId: string
+): Promise<Provider[]> => {
   const { data, error } = await supabase
     .from(providersDatabaseName)
-    .select('name, logo_url, url:website_url, resource_providers!inner(resource_id)')
-    .eq('resource_providers.resource_id', resourceId)
+    .select(
+      'name, logo_url, url:website_url, resource_providers!inner(resource_id)'
+    )
+    .eq('resource_providers.resource_id', resourceId);
   if (error) {
     throw error;
   }
