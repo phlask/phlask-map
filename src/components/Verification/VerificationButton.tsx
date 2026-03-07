@@ -6,13 +6,20 @@ import { updateResource } from 'services/db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
 
-const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
+const PASSWORD = import.meta.env.VITE_VERIFICATION_PASSWORD;
 
 type VerificationButtonProps = {
   resource: ResourceEntry;
 };
 
 const VerificationButton = ({ resource }: VerificationButtonProps) => {
+  if (!PASSWORD) {
+    const message = import.meta.env.DEV
+      ? 'Verification password is missing! Make sure that `VITE_VERIFICATION_PASSWORD` is defined in a `.env` file. Refer to `.example.env`.'
+      : 'An unexpected error have happened. AKDELTE: Verification missing Please try again later.';
+    throw new Error(message);
+  }
+
   const { setSelectedResource } = useSelectedResource();
 
   const [isModalOpen, setIsModalOpen] = useState(false);

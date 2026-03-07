@@ -2,16 +2,21 @@ import { createClient } from '@supabase/supabase-js';
 import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
+import { data } from 'react-router';
 
-// Need access to the database? Message us in the #phlask-data channel on Slack
-const databaseUrl =
-  import.meta.env?.VITE_DB_URL || 'https://wantycfbnzzocsbthqzs.supabase.co';
+// Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
+const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
+const databaseApiKey = import.meta.env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
-const databaseApiKey =
-  import.meta.env?.VITE_DB_API_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
 const contributorDatabaseName = 'airtable_contributors';
 const providersDatabaseName = 'providers';
+
+if (!databaseApiKey) {
+  const message = import.meta.env.DEV
+    ? 'Database credentials are missing! Make sure that `databaseApiKey` is defined in your `.env` file. Refer to `.example.env`.'
+    : 'An unexpected error happend with supabase. Please try again later.';
+  throw data(new Error(message), { status: 500 });
+}
 
 const supabase = createClient(databaseUrl, databaseApiKey);
 
@@ -127,11 +132,15 @@ export const getContributors = async (): Promise<Contributor[]> => {
   return data;
 };
 
-export const getResourceProviders = async (resourceId: string): Promise<Provider[]> => {
+export const getResourceProviders = async (
+  resourceId: string
+): Promise<Provider[]> => {
   const { data, error } = await supabase
     .from(providersDatabaseName)
-    .select('name, logo_url, url:website_url, resource_providers!inner(resource_id)')
-    .eq('resource_providers.resource_id', resourceId)
+    .select(
+      'name, logo_url, url:website_url, resource_providers!inner(resource_id)'
+    )
+    .eq('resource_providers.resource_id', resourceId);
   if (error) {
     throw error;
   }

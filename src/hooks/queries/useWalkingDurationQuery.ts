@@ -4,6 +4,7 @@ import getUserLocation from 'utils/getUserLocation';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 
 const OPEN_ROUTE_SERVICE_API_KEY =
+  import.meta.env.VITE_OPEN_ROUTE_SERVICE_API_KEY ||
   '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
 
 const BASE_URL = 'https://api.openrouteservice.org/v2';
@@ -58,6 +59,13 @@ export const useWalkingDurationQuery = ({
   const { latitude, longitude } = selectedResource;
 
   const queryFn = async (): Promise<UseWalkingDurationResponse> => {
+    if (!OPEN_ROUTE_SERVICE_API_KEY) {
+      const message = import.meta.env.DEV
+        ? 'Open Route Service API key is missing! Make sure that `VITE_OPEN_ROUTE_SERVICE_API_KEY` is defined in your `.env` file'
+        : 'An unexpected error happened with route service. Please try again later.';
+      throw new Error(message);
+    }
+
     const locationPermission = await navigator.permissions.query({
       name: 'geolocation'
     });

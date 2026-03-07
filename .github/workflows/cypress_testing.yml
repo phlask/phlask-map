@@ -4,6 +4,14 @@ on: [workflow_call]
 
 jobs:
   cypress_tests:
+    runs-on: ubuntu-latest
+    env:
+      VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
+      VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+      VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+      VITE_OPEN_ROUTE_SERVICE_API_KEY: ${{ secrets.OPEN_ROUTE_SERVICE_API_KEY }}
+      VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
     strategy:
       matrix:
         include:
@@ -13,7 +21,6 @@ jobs:
           - spec: 'cypress/e2e/mobile/*.cy.ts'
             config_file: 'cypress.mobile.config.ts'
             video_path: 'cypress/videos/mobile'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v6
         with:

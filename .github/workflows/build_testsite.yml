@@ -1,12 +1,18 @@
 name: Deploy Test Site on S3
 
 on: [workflow_call]
-env:
-  AWS_DEFAULT_REGION: us-east-2
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-2
+      VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
+      VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+      VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+      VITE_OPEN_ROUTE_SERVICE_API_KEY: ${{ secrets.OPEN_ROUTE_SERVICE_API_KEY }}
+      VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - name: Configure AWS Credentials

@@ -15,3 +15,4 @@ jobs:
     secrets: inherit
   cypress-testing:
     uses: ./.github/workflows/cypress_testing.yml
+    secrets: inherit
