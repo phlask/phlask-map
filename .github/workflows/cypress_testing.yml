@@ -2,15 +2,15 @@ name: Cypress Tests
 
 on: [workflow_call]
 
-env:
-  VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
-  VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
-  VITE_REACT_GOOGLE_MAPS_APIKEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
-  VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
-  VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
-
 jobs:
   cypress_tests:
+    runs-on: ubuntu-latest
+    env:
+      VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      VITE_REACT_GOOGLE_MAPS_APIKEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+      VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+      VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
     strategy:
       matrix:
         include:
@@ -20,7 +20,6 @@ jobs:
           - spec: 'cypress/e2e/mobile/*.cy.ts'
             config_file: 'cypress.mobile.config.ts'
             video_path: 'cypress/videos/mobile'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v6
         with:
