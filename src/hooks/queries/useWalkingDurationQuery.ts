@@ -61,7 +61,7 @@ export const useWalkingDurationQuery = ({
     if (!OPEN_ROUTE_SERVICE_API_KEY) {
       const message = import.meta.env.DEV
         ? 'Open Route Service API key is missing! Make sure that `VITE_OPEN_ROUTE_SERVICE_API_KEY` is defined in a `.env` file'
-        : 'An unexpected error have happened. Please try again later.';
+        : 'An unexpected error have happened. AKDELETE OPEN ROUTE MISSING Please try again later.';
       throw new Error(message);
     }
 
