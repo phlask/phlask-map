@@ -23,10 +23,14 @@ jobs:
       - name: Checking env in TEST BUILD
         run: |
           echo "######---------------------AK CHECKING Variables...YOOOOOOOO"
-          echo $VITE_DB_URL
-          echo $VITE_POSTHOG_KEY
+          echo "DB_URL: $VITE_DB_URL"
+          echo "DB_API_KEY: $VITE_DB_API_KEY"
+          echo "MAPS_KEY: $VITE_REACT_GOOGLE_MAPS_APIKEY"
+          echo "POSTHOG: $VITE_POSTHOG_KEY"
       - name: Build and Deploy the Map
         run: |
+          echo "--------------AK CHECKING Variables in prod_build container..."
+          docker compose run --entrypoint "env" prod_build | grep VITE_
           echo Build started on `date`
           echo Building the webapp...
           docker compose run prod_build
