@@ -7,6 +7,10 @@ on:
 env:
   AWS_DEFAULT_REGION: us-east-2
   VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
+  VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+  VITE_REACT_GOOGLE_MAPS_APIKEY: ${{ secrets.REACT_GOOGLE_MAPS_APIKEY }}
+  VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+  VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
@@ -22,6 +26,11 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/beta-access
           role-session-name: github-${{ github.sha }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Check env
+        run: |
+          echo "AK CHECKING Variables..."
+          echo $VITE_DB_URL
+          echo $VITE_POSTHOG_KEY
       - name: Build and Deploy the Map
         run: |
           echo Build started on `date`

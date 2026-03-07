@@ -21,6 +21,10 @@ services:
     environment:
       CI: 'false'
       VITE_DB_URL:
+      VITE_SUPABASE_API_KEY:
+      VITE_REACT_GOOGLE_MAPS_APIKEY:
+      VITE_POSTHOG_KEY:
+      VITE_VERIFICATION_PASSWORD:
     volumes:
       - './docker/build:/usr/src/app/build'
       - './docker/testResults:/usr/src/app/testResults'
