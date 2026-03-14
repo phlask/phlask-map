@@ -5,8 +5,9 @@ import Dialog from '@mui/material/Dialog';
 import { updateResource } from 'services/db';
 import type { ResourceEntry, Verification } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
+import { env } from 'config';
 
-const PASSWORD = 'ZnJlZXdhdGVy'; // Ask in Slack if you want the real password
+const PASSWORD = env.VERIFICATION_PASSWORD;
 
 type VerificationButtonProps = {
   resource: ResourceEntry;

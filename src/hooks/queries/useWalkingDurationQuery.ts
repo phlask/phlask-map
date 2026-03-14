@@ -2,9 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import getUserLocation from 'utils/getUserLocation';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
-
-const OPEN_ROUTE_SERVICE_API_KEY =
-  '5b3ce3597851110001cf6248ac903cdbe0364ca9850aa85cb64d8dfc';
+import { env } from 'config';
 
 const BASE_URL = 'https://api.openrouteservice.org/v2';
 const PATH = '/directions/foot-walking';
@@ -77,7 +75,7 @@ export const useWalkingDurationQuery = ({
     const endingLocation = [longitude, latitude].join(',');
 
     const params = new URLSearchParams({
-      api_key: OPEN_ROUTE_SERVICE_API_KEY,
+      api_key: env.OPEN_ROUTE_SERVICE_API_KEY,
       start: startingLocation,
       end: endingLocation
     });

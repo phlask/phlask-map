@@ -1,9 +1,12 @@
 import { PostHogProvider } from 'posthog-js/react';
 import type { PropsWithChildren } from 'react';
+import { env } from 'config';
+
+const APIHOST = 'https://us.i.posthog.com';
+const APIKEY = env.PUBLIC_POSTHOG_KEY;
 
 const postHogOptions = {
-  api_host:
-    import.meta.env.VITE_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+  api_host: APIHOST,
   mask_all_text: true
 };
 
@@ -17,13 +20,7 @@ const AnalyticsProvider = ({ children }: PropsWithChildren) => {
     return children;
 
   return (
-    <PostHogProvider
-      apiKey={
-        import.meta.env.VITE_PUBLIC_POSTHOG_KEY ||
-        'phc_I0pbyDLZ2ifEgaQaum7vDVkqmwSrLle3SHbNi8tgwpY'
-      }
-      options={postHogOptions}
-    >
+    <PostHogProvider apiKey={APIKEY} options={postHogOptions}>
       {children}
     </PostHogProvider>
   );
