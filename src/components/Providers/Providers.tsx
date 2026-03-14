@@ -5,16 +5,10 @@ import type { PropsWithChildren } from 'react';
 import ToolbarContextProvider from './ToolbarContextProvider';
 import queryClient from 'services/queryClient';
 import ThemeProvider from './ThemeProvider';
+import { env } from 'config';
 
-const REACT_GOOGLE_MAPS_API_KEY = import.meta.env
-  .VITE_REACT_GOOGLE_MAPS_API_KEY;
+const REACT_GOOGLE_MAPS_API_KEY = env.GOOGLE_MAPS_API_KEY;
 const Providers = ({ children }: PropsWithChildren) => {
-  if (!REACT_GOOGLE_MAPS_API_KEY) {
-    const message = import.meta.env.DEV
-      ? 'Google Maps API key is missing! Make sure that `VITE_REACT_GOOGLE_MAPS_API_KEY` is defined in a `.env` file. Refer to `.example.env`.'
-      : 'An unexpected error happened with maps. Please try again later.';
-    throw new Error(message);
-  }
   return (
     <QueryClientProvider client={queryClient}>
       <APIProvider apiKey={REACT_GOOGLE_MAPS_API_KEY} libraries={['places']}>
