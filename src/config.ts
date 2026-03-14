@@ -6,7 +6,6 @@ const envSchema = z.object({
   OPEN_ROUTE_SERVICE_API_KEY: z.string(),
   PUBLIC_POSTHOG_KEY: z.string(),
   VERIFICATION_PASSWORD: z.string(),
-  IS_DEV: z.boolean()
 });
 
 export const env = envSchema.parse({
@@ -15,5 +14,4 @@ export const env = envSchema.parse({
   OPEN_ROUTE_SERVICE_API_KEY: import.meta.env.VITE_OPEN_ROUTE_SERVICE_API_KEY,
   PUBLIC_POSTHOG_KEY: import.meta.env.VITE_PUBLIC_POSTHOG_KEY,
   VERIFICATION_PASSWORD: import.meta.env.VITE_VERIFICATION_PASSWORD,
-  IS_DEV: import.meta.env.DEV
 });
