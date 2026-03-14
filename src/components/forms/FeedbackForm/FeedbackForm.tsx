@@ -22,7 +22,7 @@ const FeedbackForm = ({ onSubmit, isPending }: FeedbackFormProps) => {
       name: '',
       email: '',
       feedback: '',
-      interest: false
+      is_interested_in_contributing: false
     },
     resolver: zodResolver(SCHEMA)
   });
@@ -39,15 +39,9 @@ const FeedbackForm = ({ onSubmit, isPending }: FeedbackFormProps) => {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Stack
           gap={2}
-          sx={theme => ({
-            mb: 4,
-            width: '100%',
-            maxWidth: '800px',
-            mx: 'auto',
-            [theme.breakpoints.up('md')]: {
-              mx: 0
-            }
-          })}
+          sx={{
+            marginBottom: 4
+          }}
         >
           <FormTextField<FormValues>
             name="name"
@@ -87,7 +81,7 @@ const FeedbackForm = ({ onSubmit, isPending }: FeedbackFormProps) => {
           />
 
           <FormCheckboxField<FormValues>
-            name="interest"
+            name="is_interested_in_contributing"
             label="I'm interested in helping PHLASK with future research"
             labelPlacement="end"
           />
@@ -99,7 +93,6 @@ const FeedbackForm = ({ onSubmit, isPending }: FeedbackFormProps) => {
             sx={theme => ({
               backgroundColor: '#10B6FF',
               borderRadius: '8px',
-              width: '168px',
               alignSelf: 'center',
               [theme.breakpoints.up('md')]: {
                 width: '50%',

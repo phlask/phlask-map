@@ -4,7 +4,7 @@ const feedbackFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.email().min(1, 'Email is required'),
   feedback: z.string().min(1),
-  interest: z.boolean()
+  is_interested_in_contributing: z.boolean()
 });
 
 export type FeedbackFormValues = z.infer<typeof feedbackFormSchema>;

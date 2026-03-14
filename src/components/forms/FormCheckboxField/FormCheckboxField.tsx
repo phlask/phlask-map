@@ -13,13 +13,11 @@ const FormCheckboxField = <Values extends FieldValues>({
   labelPlacement = 'end'
 }: FormCheckboxFieldProps<Values>) => {
   const { register } = useFormContext<Values>();
-  const field = register(name);
 
   return (
     <FormControl>
       <FormControlLabel
-        {...field}
-        control={<Checkbox />}
+        control={<Checkbox {...register(name)} />}
         label={label}
         labelPlacement={labelPlacement}
       />
