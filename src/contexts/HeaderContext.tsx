@@ -1,5 +1,5 @@
 import About from 'components/About/About';
-import Contact from 'components/Pages/Contact';
+import Contact from 'components/Contact/Contact';
 import JoinTheTeam from 'components/JoinTheTeam/JoinTheTeam';
 import {
   createContext,

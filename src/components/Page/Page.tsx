@@ -10,12 +10,16 @@ type PageProps = {
 const Page = ({ children, title, 'data-cy': dataCy }: PageProps) => {
   return (
     <Stack
-      sx={{
+      sx={theme => ({
         color: '#60718c',
-        maxHeight: '55vh',
         overflowY: 'auto',
-        gap: '2.5rem'
-      }}
+        width: '100%',
+        gap: '2.5rem',
+        maxHeight: '85vh',
+        [theme.breakpoints.up('md')]: {
+          maxHeight: '55vh'
+        }
+      })}
     >
       <Typography
         sx={{ fontWeight: 600, lineHeight: '30px', fontSize: 24 }}
