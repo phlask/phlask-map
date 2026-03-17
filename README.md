@@ -1,6 +1,6 @@
 # phlask-map
 
-Code behind the PHLASK Web Map
+Code behind the PHLASK Web Maptest
 
 ## Project Structure
 
