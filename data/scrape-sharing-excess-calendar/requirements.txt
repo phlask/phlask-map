@@ -1,0 +1,4 @@
+requests
+icalendar
+recurring_ical_events
+supabase
