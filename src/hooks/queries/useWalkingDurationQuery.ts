@@ -75,7 +75,7 @@ export const useWalkingDurationQuery = ({
     const endingLocation = [longitude, latitude].join(',');
 
     const params = new URLSearchParams({
-      api_key: env.OPEN_ROUTE_SERVICE_API_KEY,
+      api_key: env.VITE_OPEN_ROUTE_SERVICE_API_KEY,
       start: startingLocation,
       end: endingLocation
     });

@@ -7,7 +7,7 @@ import queryClient from 'services/queryClient';
 import ThemeProvider from './ThemeProvider';
 import { env } from 'config';
 
-const REACT_GOOGLE_MAPS_API_KEY = env.GOOGLE_MAPS_API_KEY;
+const REACT_GOOGLE_MAPS_API_KEY = env.VITE_REACT_GOOGLE_MAPS_API_KEY;
 
 const Providers = ({ children }: PropsWithChildren) => {
   return (

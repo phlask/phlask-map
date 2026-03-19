@@ -7,7 +7,7 @@ import type { ResourceEntry, Verification } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
 import { env } from 'config';
 
-const PASSWORD = env.VERIFICATION_PASSWORD;
+const PASSWORD = env.VITE_VERIFICATION_PASSWORD;
 
 type VerificationButtonProps = {
   resource: ResourceEntry;

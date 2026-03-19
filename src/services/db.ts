@@ -6,7 +6,7 @@ import { env } from 'config';
 
 // Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
-const databaseApiKey = env.DB_API_KEY;
+const databaseApiKey = env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
 const providersDatabaseName = 'providers';

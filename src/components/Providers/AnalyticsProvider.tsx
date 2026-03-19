@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 import { env } from 'config';
 
 const APIHOST = 'https://us.i.posthog.com';
-const APIKEY = env.PUBLIC_POSTHOG_KEY;
+const APIKEY = env.VITE_PUBLIC_POSTHOG_KEY;
 
 const postHogOptions = {
   api_host: APIHOST,
