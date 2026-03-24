@@ -65,6 +65,20 @@ def parse_location(location: str) -> dict:
     }
 
 
+def clean_address(address: str) -> str:
+    """
+    Normalize an address string for better geocoding results.
+    - Simplify address ranges like "4300-4398" to "4300"
+    - Remove suite/apt/unit numbers like "#33", "Ste 100", "Unit B"
+    """
+    # Simplify address ranges: "4300-4398" -> "4300"
+    cleaned = re.sub(r'(\d+)-\d+\b', r'\1', address)
+    # Remove suite/apt/unit suffixes: "#33", "Ste 100", "Suite 4B", "Apt 2", "Unit B"
+    cleaned = re.sub(r'\s*[#][\w-]+', '', cleaned)
+    cleaned = re.sub(r',?\s*\b(?:ste|suite|apt|unit|room|rm|fl|floor)\b\.?\s*\S+', '', cleaned, flags=re.IGNORECASE)
+    return cleaned.strip().rstrip(',')
+
+
 def geocode(location: str) -> tuple[float, float] | None:
     """
     Return (lat, lon) for a location string via Nominatim.
@@ -171,7 +185,7 @@ def build_hours(start_dt: datetime, end_dt: datetime | None) -> list[dict]:
 
 
 def build_description(original: str | None, start_iso: str, end_iso: str | None) -> str:
-    """
+    r"""
     Prepend structured date metadata with clear delimiters so a downstream
     parser can extract event times with a simple regex, e.g.:
 
@@ -196,14 +210,35 @@ def event_to_resource(event: dict) -> dict | None:
 
     coords = geocode(location) if location else None
     if coords is None and parsed.get("address"):
-        # Fall back to the stripped street address (drops venue name prefix)
+        # Fallback 1: stripped street address (drops venue name prefix)
         fallback = ", ".join(filter(None, [
             parsed.get("address"),
             parsed.get("city"),
             parsed.get("state"),
             parsed.get("zip_code"),
         ]))
+        time.sleep(1)
         coords = geocode(fallback)
+    if coords is None and parsed.get("address"):
+        # Fallback 2: cleaned address (simplify ranges, drop suite numbers)
+        cleaned = clean_address(parsed["address"])
+        if cleaned != parsed["address"]:
+            fallback2 = ", ".join(filter(None, [
+                cleaned,
+                parsed.get("city"),
+                parsed.get("state"),
+                parsed.get("zip_code"),
+            ]))
+            time.sleep(1)
+            coords = geocode(fallback2)
+    if coords is None and parsed.get("city") and parsed.get("state"):
+        # Fallback 3: use the venue/landmark name with city and state
+        parts = [p.strip() for p in location.split(',')]
+        venue = parts[0] if parts else None
+        if venue and not venue[0].isdigit():
+            fallback3 = f"{venue}, {parsed['city']}, {parsed['state']}"
+            time.sleep(1)
+            coords = geocode(fallback3)
     if coords is None:
         print(f"  Skipping '{event['summary']}' — could not geocode: {location!r}")
         return None
