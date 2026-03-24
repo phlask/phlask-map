@@ -20,7 +20,10 @@ function extractStreet(address: string): string {
   return address.split(', ')[0];
 }
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
+  const url = new URL(req.url);
+  const dryRun = url.searchParams.get('dryRun') === 'true';
+
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -71,6 +74,13 @@ Deno.serve(async () => {
       ],
       version: 1,
     }));
+
+  if (dryRun) {
+    return new Response(
+      JSON.stringify({ dryRun: true, wouldInsert: resources.length, resources }),
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 
   // Remove stale scraped entries before inserting fresh data
   const { error: deleteError } = await supabase
