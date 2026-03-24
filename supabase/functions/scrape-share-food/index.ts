@@ -82,11 +82,57 @@ Deno.serve(async (req) => {
     );
   }
 
-  // Remove stale scraped entries before inserting fresh data
+  // Look up existing records by source URL to determine inserts vs updates
+  // deno-lint-ignore no-explicit-any
+  const names = resources.map((r: any) => r.name);
+  const { data: existing } = await supabase
+    .from('resources')
+    .select('id, name, date_created')
+    .eq('source->>url', SCRAPE_URL)
+    .in('name', names);
+
+  // deno-lint-ignore no-explicit-any
+  const existingByName = new Map((existing ?? []).map((r: any) => [r.name, r]));
+
+  const toInsert = [];
+  const toUpdate = [];
+
+  for (const r of resources) {
+    const prev = existingByName.get(r.name);
+    if (prev) {
+      toUpdate.push({ id: prev.id, row: { ...r, date_created: prev.date_created } });
+    } else {
+      toInsert.push(r);
+    }
+  }
+
+  if (toInsert.length) {
+    const { error } = await supabase.from('resources').insert(toInsert);
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  for (const { id, row } of toUpdate) {
+    const { error } = await supabase.from('resources').update(row).eq('id', id);
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  // Remove stale entries that are no longer in the scraped data
+  const currentNames = resources.map((r: any) => r.name);
   const { error: deleteError } = await supabase
     .from('resources')
     .delete()
-    .eq('source->>url', SCRAPE_URL);
+    .eq('source->>url', SCRAPE_URL)
+    .not('name', 'in', `(${currentNames.join(',')})`);
 
   if (deleteError) {
     return new Response(JSON.stringify({ error: deleteError.message }), {
@@ -95,18 +141,8 @@ Deno.serve(async (req) => {
     });
   }
 
-  const { error: insertError } = await supabase
-    .from('resources')
-    .insert(resources);
-
-  if (insertError) {
-    return new Response(JSON.stringify({ error: insertError.message }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  return new Response(JSON.stringify({ inserted: resources.length }), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return new Response(
+    JSON.stringify({ inserted: toInsert.length, updated: toUpdate.length }),
+    { headers: { 'Content-Type': 'application/json' } }
+  );
 });
