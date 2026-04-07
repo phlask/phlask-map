@@ -29,6 +29,8 @@ import getFormattedCoordinates from 'utils/getFormattedCoordinates';
 import ResourceIcon from 'components/ResourceIcon/ResourceIcon';
 import GetDirectionsButton from 'components/GetDirectionsButton/GetDirectionsButton';
 import SelectedResourceTags from 'components/SelectedResourceTags/SelectedResourceTags';
+import ProvidedBy from 'components/ProvidedBy/ProvidedBy';
+import { useGetResourceProvidersQuery } from 'hooks/queries/useGetResourceProvidersQuery';
 
 type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
@@ -45,6 +47,7 @@ const SelectedResourceDetails = ({
 }: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
+  const { data: providers = [] } = useGetResourceProvidersQuery();
 
   if (isError) {
     return (
@@ -208,14 +211,17 @@ const SelectedResourceDetails = ({
               </Stack>
             </Stack>
           </Stack>
-          {!isMobile && resource.last_modified ? (
-            <Stack>
-              <Typography fontWeight={600}>Last Modified</Typography>
-              <Typography color="#60718C">
-                {new Date(resource.last_modified).toDateString()}
-              </Typography>
-            </Stack>
-          ) : null}
+          <Stack gap={1.5}>
+            {!isMobile && resource.last_modified ? (
+              <Stack>
+                <Typography fontWeight={600}>Last Modified</Typography>
+                <Typography color="#60718C">
+                  {new Date(resource.last_modified).toDateString()}
+                </Typography>
+              </Stack>
+            ) : null}
+            <ProvidedBy providers={providers} />
+          </Stack>
         </Stack>
 
         <SelectedResourceTags resource={resource} />
