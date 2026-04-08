@@ -333,8 +333,7 @@ def delete_stale_resources(client: Client, current_gp_ids: list[str]) -> None:
     (
         client.table(TABLE_NAME)
         .delete()
-        .filter("source->>url", "eq", SOURCE_URL)
-        .not_.in_("gp_id", current_gp_ids)
+        .filter("creator", "eq", CREATOR)
         .execute()
     )
     print("Removed stale Sharing Excess resources outside the current window.")
