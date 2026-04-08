@@ -9,7 +9,7 @@ certifi==2024.8.30
 cffi==1.17.1
 charset-normalizer==3.4.0
 colorama==0.4.6
-cryptography==46.0.5
+cryptography==46.0.6
 decorator==5.1.1
 defusedxml==0.7.1
 docopt==0.6.2
@@ -65,7 +65,7 @@ python-dateutil==2.9.0.post0
 pywin32==308
 pyzmq==26.2.0
 referencing==0.35.1
-requests==2.32.4
+requests==2.33.0
 rpds-py==0.22.3
 rsa==4.9
 six==1.17.0
