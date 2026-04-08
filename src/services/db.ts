@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
+import type { FeedbackForm } from 'types/FeedbackEntry';
 import { env } from 'config';
 
 // Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
@@ -9,6 +10,7 @@ const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
 const databaseApiKey = env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
+const feedbackDatabaseName = 'user_feedbacks';
 const providersDatabaseName = 'providers';
 
 const supabase = createClient(databaseUrl, databaseApiKey);
@@ -109,6 +111,18 @@ export const addResource = async (resource: ResourceEntry) => {
   const { data, error } = await supabase
     .from(resourceDatabaseName)
     .insert<ResourceEntry>(resource);
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
+export const addFeedback = async (feedback: FeedbackForm) => {
+  const { data, error } = await supabase
+    .from(feedbackDatabaseName)
+    .insert(feedback)
+    .select();
+
   if (error) {
     throw error;
   }
