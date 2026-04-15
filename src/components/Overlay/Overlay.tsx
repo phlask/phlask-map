@@ -34,13 +34,13 @@ const Overlay = () => {
       </Stack>
 
       <Stack
-        sx={theme => ({
+        sx={{
           position: 'fixed',
           bottom: '25px',
           left: '25px',
-          zIndex: theme.zIndex.appBar,
+          zIndex: 2,
           maxWidth: '765px'
-        })}
+        }}
         gap={2}
       >
         <Fade in={shouldShowSearchBar} mountOnEnter timeout={300}>

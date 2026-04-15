@@ -29,7 +29,7 @@ const MobileHead = () => {
         sx={{
           backgroundColor: 'transparent',
           maxWidth: '100%',
-          zIndex: '9',
+          zIndex: theme => theme.zIndex.appBar,
           width: '100%'
         }}
       >
