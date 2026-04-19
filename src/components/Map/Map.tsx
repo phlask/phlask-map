@@ -17,7 +17,6 @@ import { type ResourceEntry } from 'types/ResourceEntry';
 import useSelectedResource from 'hooks/useSelectedResource';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 import ResourceMarker from 'components/ResourceMarker/ResourceMarker';
-// IMPORT YOUR SUPABASE FETCH FUNCTION HERE
 import { getBathroomData } from 'services/db.ts';
 
 const style: CSSProperties = {
@@ -35,7 +34,6 @@ const Map = () => {
   const { activeSearchLocation } = useActiveSearchLocation();
   const map = useMap();
 
-  // --- DATA FETCHING STATE ---
   const [dbData, setDbData] = useState<{
     part1: ResourceEntry[];
     part2: ResourceEntry[];
