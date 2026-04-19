@@ -176,7 +176,7 @@ const Map = () => {
         fullscreenControl={false}
         gestureHandling="greedy"
         defaultCenter={activeSearchLocation || CITY_HALL_LOCATION}
-        mapId="DEMO_MAP_ID"
+        mapId="f0d6405d2136c67be3edaf26"
       >
         {visibleResources.map((resource, index) => (
           <ResourceMarker
