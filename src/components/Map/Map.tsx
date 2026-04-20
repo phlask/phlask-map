@@ -95,17 +95,17 @@ const Map = () => {
     setIsPlaying(true);
     setVisibleResources([]);
 
-    setCurrentPhaseLabel('Part 1: 2024');
+    setCurrentPhaseLabel('2024');
     await staggerMarkers(dbData.part1, 100);
 
     await new Promise(r => setTimeout(r, 1000));
 
-    setCurrentPhaseLabel('Part 2: Summer 2025');
+    setCurrentPhaseLabel('Summer 2025');
     await staggerMarkers(dbData.part2, 80);
 
     await new Promise(r => setTimeout(r, 1000));
 
-    setCurrentPhaseLabel('Part 3: Fall 2025 - Jan 2026');
+    setCurrentPhaseLabel('Fall 2025 - Jan 2026');
     await staggerMarkers(dbData.part3, 50);
 
     setTimeout(() => {

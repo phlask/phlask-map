@@ -3,13 +3,11 @@ import type { Provider, ResourceEntry } from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 import type { FeedbackForm } from 'types/FeedbackEntry';
-// import { env } from 'config';
+import { env } from 'config.ts';
 
 // Need access to the database? Please refer to .example.env and message us in the #phlask-data channel on Slack
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
-const databaseApiKey =
-  // env.VITE_DB_API_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbnR5Y2Zibnp6b2NzYnRocXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNDY2OTgsImV4cCI6MjA1MjYyMjY5OH0.yczsMOx3Y-zsWu-GjYEajIb0yw9fYWEIUglmmfM1zCY';
+const databaseApiKey = env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
 const contributorDatabaseName = 'airtable_contributors';
 const feedbackDatabaseName = 'user_feedbacks';
@@ -144,6 +142,21 @@ export const getContributors = async (): Promise<Contributor[]> => {
   return data;
 };
 
+export const getResourceProviders = async (
+  resourceId: string
+): Promise<Provider[]> => {
+  const { data, error } = await supabase
+    .from(providersDatabaseName)
+    .select(
+      'name, logo_url, url:website_url, resource_providers!inner(resource_id)'
+    )
+    .eq('resource_providers.resource_id', resourceId);
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const getBathroomData = async () => {
   const [part1Res, part2Res, part3Res] = await Promise.all([
     supabase.from(bathroom_part1).select('*'),
@@ -173,23 +186,6 @@ const data = await getBathroomData();
 console.log(`Part 1 has ${data.part1.length} items`);
 console.log(`Part 2 has ${data.part2.length} items`);
 console.log(`Part 3 has ${data.part3.length} items`);
-
-// console.log(`Waster data: ${JSON.stringify(data, null, 2)}`);
-
-export const getResourceProviders = async (
-  resourceId: string
-): Promise<Provider[]> => {
-  const { data, error } = await supabase
-    .from(providersDatabaseName)
-    .select(
-      'name, logo_url, url:website_url, resource_providers!inner(resource_id)'
-    )
-    .eq('resource_providers.resource_id', resourceId);
-  if (error) {
-    throw error;
-  }
-  return data;
-};
 
 export { supabase };
 export default {};
