@@ -27,6 +27,8 @@ const style: CSSProperties = {
   touchAction: 'none'
 };
 
+const TIMELINE_PHASES = ['2024', 'Summer 2025', 'Fall 2025 - Jan 2026'];
+
 const Map = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
@@ -45,10 +47,13 @@ const Map = () => {
   const [visibleResources, setVisibleResources] = useState<ResourceEntry[]>([]);
   const [currentPhaseLabel, setCurrentPhaseLabel] =
     useState<string>('Ready to visualize');
+
+  const [currentPhaseIndex, setCurrentPhaseIndex] = useState<number>(-1);
+  const [timelineProgressPercentage, setTimelineProgressPercentage] =
+    useState<number>(0); // NEW: Granular progress
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
-  // Fetch data on mount
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -68,9 +73,11 @@ const Map = () => {
     return () => timeoutsRef.current.forEach(clearTimeout);
   }, []);
 
+  // NEW: Added an onProgress callback so the timeline moves with every single marker
   const staggerMarkers = (
     newResources: ResourceEntry[],
-    delayBetweenMarkers = 100
+    delayBetweenMarkers = 100,
+    onProgress: (phaseCompletionPercentage: number) => void
   ): Promise<void> => {
     return new Promise(resolve => {
       if (!newResources || newResources.length === 0) {
@@ -81,6 +88,10 @@ const Map = () => {
       newResources.forEach((resource, index) => {
         const timeout = setTimeout(() => {
           setVisibleResources(prev => [...prev, resource]);
+
+          // Report progress from 0.0 to 1.0 for this specific phase
+          onProgress((index + 1) / newResources.length);
+
           if (index === newResources.length - 1) {
             resolve();
           }
@@ -94,22 +105,39 @@ const Map = () => {
     if (isPlaying || isLoadingData) return;
     setIsPlaying(true);
     setVisibleResources([]);
+    setTimelineProgressPercentage(0);
 
-    setCurrentPhaseLabel('2024');
-    await staggerMarkers(dbData.part1, 100);
+    const segmentWidth = 100 / TIMELINE_PHASES.length; // Each phase takes up 33.33% of the bar
 
-    await new Promise(r => setTimeout(r, 1000));
+    // Phase 1
+    setCurrentPhaseIndex(0);
+    setCurrentPhaseLabel(TIMELINE_PHASES[0]);
+    await staggerMarkers(dbData.part1, 100, p => {
+      setTimelineProgressPercentage(0 * segmentWidth + p * segmentWidth);
+    });
 
-    setCurrentPhaseLabel('Summer 2025');
-    await staggerMarkers(dbData.part2, 80);
+    await new Promise(r => setTimeout(r, 800));
 
-    await new Promise(r => setTimeout(r, 1000));
+    // Phase 2
+    setCurrentPhaseIndex(1);
+    setCurrentPhaseLabel(TIMELINE_PHASES[1]);
+    await staggerMarkers(dbData.part2, 80, p => {
+      setTimelineProgressPercentage(1 * segmentWidth + p * segmentWidth);
+    });
 
-    setCurrentPhaseLabel('Fall 2025 - Jan 2026');
-    await staggerMarkers(dbData.part3, 50);
+    await new Promise(r => setTimeout(r, 800));
+
+    // Phase 3
+    setCurrentPhaseIndex(2);
+    setCurrentPhaseLabel(TIMELINE_PHASES[2]);
+    await staggerMarkers(dbData.part3, 50, p => {
+      setTimelineProgressPercentage(2 * segmentWidth + p * segmentWidth);
+    });
 
     setTimeout(() => {
+      setCurrentPhaseIndex(3);
       setCurrentPhaseLabel('All Resources Mapped!');
+      setTimelineProgressPercentage(100);
       setIsPlaying(false);
     }, 1500);
   }, [isPlaying, isLoadingData, dbData]);
@@ -135,33 +163,140 @@ const Map = () => {
           transform: 'translateX(-50%)',
           zIndex: 10,
           backgroundColor: 'white',
-          padding: '15px 25px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          padding: '20px 30px',
+          borderRadius: '12px',
+          boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
-          minWidth: '250px'
+          gap: '15px',
+          minWidth: '320px'
         }}
       >
-        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>
+        <h2
+          style={{
+            margin: 0,
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            color: '#333'
+          }}
+        >
           {isLoadingData ? 'Loading Data...' : currentPhaseLabel}
         </h2>
+
+        {/* TIMELINE UI */}
+        <div
+          style={{
+            position: 'relative',
+            height: '24px',
+            margin: '5px 10px',
+            zIndex: 1
+          }}
+        >
+          {/* Background Track */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '0',
+              right: '0',
+              height: '4px',
+              backgroundColor: '#e0e0e0',
+              transform: 'translateY(-50%)',
+              zIndex: -2,
+              borderRadius: '2px'
+            }}
+          />
+
+          {/* Active Progress Track */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '0',
+              width: `${timelineProgressPercentage}%`,
+              height: '4px',
+              backgroundColor: '#007BFF',
+              transform: 'translateY(-50%)',
+              zIndex: -1,
+              transition: 'width 0.15s linear',
+              borderRadius: '2px'
+            }}
+          />
+
+          {/* Timeline Nodes */}
+          {TIMELINE_PHASES.map((phase, index) => {
+            const isActive = currentPhaseIndex >= index;
+            // Place nodes exactly where the phase segments begin (0%, 33.3%, 66.6%)
+            const leftPos = `${index * (100 / TIMELINE_PHASES.length)}%`;
+
+            return (
+              <div
+                key={phase}
+                title={phase}
+                style={{
+                  position: 'absolute',
+                  left: leftPos,
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  backgroundColor: isActive ? '#007BFF' : '#e0e0e0',
+                  border: '3px solid white',
+                  transition: 'background-color 0.3s ease-in-out',
+                  boxShadow: isActive
+                    ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
+                    : 'none'
+                }}
+              />
+            );
+          })}
+
+          {/* Final "Complete" Node at 100% */}
+          <div
+            title="Complete"
+            style={{
+              position: 'absolute',
+              left: '100%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '16px',
+              height: '16px',
+              borderRadius: '50%',
+              backgroundColor: currentPhaseIndex >= 3 ? '#007BFF' : '#e0e0e0',
+              border: '3px solid white',
+              transition: 'background-color 0.3s ease-in-out',
+              boxShadow:
+                currentPhaseIndex >= 3
+                  ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
+                  : 'none'
+            }}
+          />
+        </div>
+
         {!isPlaying && !isLoadingData && (
           <button
             onClick={playTimelapse}
             style={{
-              padding: '8px 16px',
+              padding: '10px 20px',
               backgroundColor: '#007BFF',
               color: 'white',
               border: 'none',
-              borderRadius: '4px',
+              borderRadius: '6px',
               cursor: 'pointer',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              transition: 'background-color 0.2s',
+              marginTop: '5px'
             }}
+            onMouseOver={e =>
+              (e.currentTarget.style.backgroundColor = '#0056b3')
+            }
+            onMouseOut={e =>
+              (e.currentTarget.style.backgroundColor = '#007BFF')
+            }
           >
-            {visibleResources.length > 0 ? 'Replay' : 'Play Timelapse'}
+            {visibleResources.length > 0 ? 'Replay Timeline' : 'Play Timelapse'}
           </button>
         )}
       </div>
