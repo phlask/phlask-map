@@ -10,6 +10,9 @@ from datetime import date, datetime, timedelta, timezone
 from icalendar import Calendar
 import recurring_ical_events
 from supabase import create_client, Client
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # config
 # NOTE: use base64 decoded value
@@ -20,7 +23,7 @@ CALENDAR_ID = os.environ.get(
 LOOK_FORWARD_DAYS = int(os.environ.get("LOOK_FORWARD_DAYS", 30))
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")  # service role for writes
+SUPABASE_KEY = os.environ.get("SUPABASE_API_KEY", "")
 TABLE_NAME   = "resources"
 
 CREATOR            = "phlask-sharing-excess-sync"
@@ -280,64 +283,19 @@ def get_supabase_client() -> Client:
     return create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-def upsert_resources(client: Client, resources: list[dict]) -> None:
-    """
-    Insert new resources and update existing ones matched by gp_id.
-    Uses a manual select-then-insert/update pattern because gp_id does not
-    have a database-level unique constraint required for ON CONFLICT upserts.
-    """
+def delete_by_creator(client: Client) -> None:
+    """Delete all resources previously written by this sync script."""
+    client.table(TABLE_NAME).delete().eq("creator", CREATOR).execute()
+    print(f"Deleted existing records with creator='{CREATOR}'.")
+
+
+def insert_resources(client: Client, resources: list[dict]) -> None:
+    """Insert all resources as fresh rows."""
     if not resources:
-        print("No resources to upsert.")
+        print("No resources to insert.")
         return
-
-    gp_ids = [r["gp_id"] for r in resources]
-
-    existing = (
-        client.table(TABLE_NAME)
-        .select("id, gp_id, date_created")
-        .in_("gp_id", gp_ids)
-        .execute()
-    )
-    existing_map = {row["gp_id"]: row for row in existing.data}
-
-    to_insert = []
-    to_update = []  # list of (id, row)
-
-    for r in resources:
-        if r["gp_id"] in existing_map:
-            existing_row = existing_map[r["gp_id"]]
-            # Preserve the original creation timestamp on updates
-            r = {**r, "date_created": existing_row["date_created"]}
-            to_update.append((existing_row["id"], r))
-        else:
-            to_insert.append(r)
-
-    if to_insert:
-        client.table(TABLE_NAME).insert(to_insert).execute()
-        print(f"Inserted {len(to_insert)} new resource(s).")
-
-    for row_id, row in to_update:
-        client.table(TABLE_NAME).update(row).eq("id", row_id).execute()
-
-    if to_update:
-        print(f"Updated {len(to_update)} existing resource(s).")
-
-
-def delete_stale_resources(client: Client, current_gp_ids: list[str]) -> None:
-    """
-    Remove resources sourced from Sharing Excess whose UIDs are no longer
-    in the current look-forward window.
-    """
-    if not current_gp_ids:
-        return
-    (
-        client.table(TABLE_NAME)
-        .delete()
-        .filter("source->>url", "eq", SOURCE_URL)
-        .not_.in_("gp_id", current_gp_ids)
-        .execute()
-    )
-    print("Removed stale Sharing Excess resources outside the current window.")
+    client.table(TABLE_NAME).insert(resources).execute()
+    print(f"Inserted {len(resources)} resource(s).")
 
 
 # CSV for debugging/local
@@ -409,7 +367,7 @@ if __name__ == "__main__":
         save_csv(resources, args.csv)
     else:
         supabase = get_supabase_client()
-        upsert_resources(supabase, resources)
-        delete_stale_resources(supabase, [r["gp_id"] for r in resources])
+        delete_by_creator(supabase)
+        insert_resources(supabase, resources)
 
     print("Done.")
