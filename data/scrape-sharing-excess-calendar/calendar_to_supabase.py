@@ -199,21 +199,20 @@ def event_to_resource(event: dict) -> dict | None:
 
     coords = geocode(location) if location else None
     if coords is None and parsed.get("address"):
-        # Fall back to the stripped street address
-        fallback = ", ".join(filter(None, [
-            parsed.get("address"),
-            parsed.get("city"),
-            parsed.get("state"),
-            parsed.get("zip_code"),
-        ]))
+        state_zip = f"{parsed.get('state', '')} {parsed.get('zip_code', '')}".strip()
+        fallback = ", ".join(filter(None, [parsed.get("address"), parsed.get("city"), state_zip]))
         coords = geocode(fallback)
+    if coords is None and parsed.get("zip_code"):
+        # Last resort: city + state + zip (handles ungeocoded intersections, etc.)
+        state_zip = f"{parsed.get('state', '')} {parsed.get('zip_code', '')}".strip()
+        coords = geocode(f"{parsed.get('city', '')}, {state_zip}".strip(", "))
     if coords is None:
         print(f"  Skipping '{event['summary']}' — could not geocode: {location!r}")
         return None
 
     lat, lon = coords
     time.sleep(1) # Nominatim rate limit: 1 req/s
-    now_iso  = datetime.now(tz=timezone.utc).isoformat()
+    now_iso  = datetime.now(tz=timezone.utc).isoformat(timespec='milliseconds')
     start_dt = _parse_event_dt(event["start_at"])
     end_dt   = _parse_event_dt(event["end_at"]) if event.get("end_at") else None
 
@@ -285,8 +284,13 @@ def get_supabase_client() -> Client:
 
 def delete_by_creator(client: Client) -> None:
     """Delete all resources previously written by this sync script."""
-    client.table(TABLE_NAME).delete().eq("creator", CREATOR).execute()
-    print(f"Deleted existing records with creator='{CREATOR}'.")
+    check = client.table(TABLE_NAME).select("id, creator").eq("creator", CREATOR).execute()
+    print(f"  [debug] SELECT found {len(check.data)} record(s) with creator='{CREATOR}'")
+    if check.data:
+        print(f"  [debug] Sample row: {check.data[0]}")
+    result = client.table(TABLE_NAME).delete().eq("creator", CREATOR).execute()
+    count = len(result.data) if result.data else 0
+    print(f"Deleted {count} existing record(s) with creator='{CREATOR}'.")
 
 
 def insert_resources(client: Client, resources: list[dict]) -> None:
@@ -350,6 +354,11 @@ def parse_args() -> argparse.Namespace:
         metavar="FILE",
         help="Output to CSV instead of Supabase (default filename: events.csv).",
     )
+    parser.add_argument(
+        "--no-hours",
+        action="store_true",
+        help="Omit the hours field from all records (useful for troubleshooting frontend date errors).",
+    )
     return parser.parse_args()
 
 
@@ -362,6 +371,10 @@ if __name__ == "__main__":
 
     resources = normalize_events(events)
     print(f"Normalized {len(resources)} resource(s).")
+
+    if args.no_hours:
+        resources = [{**r, "hours": None} for r in resources]
+        print("Hours field omitted (--no-hours).")
 
     if args.csv:
         save_csv(resources, args.csv)
