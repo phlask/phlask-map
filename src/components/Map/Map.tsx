@@ -136,7 +136,7 @@ const Map = () => {
 
     setTimeout(() => {
       setCurrentPhaseIndex(3);
-      setCurrentPhaseLabel('All Resources Mapped!');
+      setCurrentPhaseLabel('Resources Mapped!');
       setTimelineProgressPercentage(100);
       setIsPlaying(false);
     }, 1500);
