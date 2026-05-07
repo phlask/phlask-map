@@ -81,7 +81,7 @@ const ProviderItem = ({
         onError={onImageError}
         failedImages={failedImages}
       />
-      <Typography fontSize={14} color="#2D3748" noWrap sx={{ maxWidth: 160 }}>
+      <Typography fontSize={14} color="#2D3748" noWrap>
         {provider.name}
       </Typography>
     </Stack>
