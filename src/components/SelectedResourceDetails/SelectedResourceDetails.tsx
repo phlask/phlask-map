@@ -208,6 +208,7 @@ const SelectedResourceDetails = ({
                   longitude={resource.longitude}
                 />
                 <EstimatedWalkingDuration selectedResource={resource} />
+                <ProvidedBy providers={providers} />
               </Stack>
             </Stack>
           </Stack>
@@ -220,7 +221,6 @@ const SelectedResourceDetails = ({
                 </Typography>
               </Stack>
             ) : null}
-            <ProvidedBy providers={providers} />
           </Stack>
         </Stack>
 
