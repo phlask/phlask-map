@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { type Provider } from 'types/ResourceEntry';
-import useIsMobile from 'hooks/useIsMobile';
 
 type ProviderLogoProps = {
   provider: Provider;
@@ -67,28 +66,24 @@ type ProviderItemProps = {
   provider: Provider;
   onImageError: (logoUrl: string) => void;
   failedImages: Set<string>;
-  isMobile: boolean;
 };
 
 const ProviderItem = ({
   provider,
   onImageError,
-  failedImages,
-  isMobile
+  failedImages
 }: ProviderItemProps) => {
   const content = (
-    <Stack direction="row" alignItems="center" gap={isMobile ? 0 : 1.5}>
+    <Stack direction="row" alignItems="center" gap={1.5}>
       <ProviderLogo
         provider={provider}
         size={40}
         onError={onImageError}
         failedImages={failedImages}
       />
-      {!isMobile && (
-        <Typography fontSize={14} color="#2D3748" noWrap sx={{ maxWidth: 160 }}>
-          {provider.name}
-        </Typography>
-      )}
+      <Typography fontSize={14} color="#2D3748" noWrap sx={{ maxWidth: 160 }}>
+        {provider.name}
+      </Typography>
     </Stack>
   );
 
@@ -118,7 +113,6 @@ type ProvidedByProps = {
 const ProvidedBy = ({ providers = [], maxVisible = 2 }: ProvidedByProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
-  const isMobile = useIsMobile();
 
   if (providers.length === 0) {
     return null;
@@ -160,7 +154,6 @@ const ProvidedBy = ({ providers = [], maxVisible = 2 }: ProvidedByProps) => {
             provider={provider}
             onImageError={handleImageError}
             failedImages={failedImages}
-            isMobile={isMobile}
           />
         ))}
 
