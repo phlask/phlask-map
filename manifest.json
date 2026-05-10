@@ -1,6 +1,6 @@
 {
-  "short_name": "Phlask App",
-  "name": "Phlask Map",
+  "short_name": "PHLASK App",
+  "name": "PHLASK Map",
   "icons": [
     {
       "src": "./src/assets/favicon.png",
