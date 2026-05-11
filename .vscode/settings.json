@@ -4,5 +4,6 @@
   "editor.acceptSuggestionOnEnter": "on",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.words": ["PHLASK", "supabase"]
 }

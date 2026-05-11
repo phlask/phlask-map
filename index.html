@@ -9,28 +9,69 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#000000" />
 
-    <meta name="title" content="PHLASK" />
     <meta
       name="description"
-      content="An ecosystem for finding and sharing free resources in Philadelphia"
+      content="An ecosystem for finding and sharing free water, food, bathrooms, and foraging resources in Philadelphia."
     />
     <meta
       name="keywords"
-      content="Free, free stuff, philadelphia, free stuff philadelphia, free resources, free resources philadelphia, free stuff philly, free resources philly, free water, free food, foraging, food foraging, free bathrooms"
+      content="Free, free stuff, philadelphia, free stuff philadelphia, free resources, free resources philadelphia, free stuff philly, free resources philly, free water, free food, foraging, food foraging, free bathrooms, phlask, phlask philadelphia"
     />
     <meta name="robots" content="index, follow" />
 
-    <meta property="og:title" content="PHLASK" />
+    <meta
+      property="og:title"
+      content="PHLASK - Sharing Free Resources in Philadelphia"
+    />
     <meta
       property="og:description"
-      content="An ecosystem for finding and sharing free resources in Philadelphia"
+      content="PHLASK is an ecosystem for finding and sharing free resources (water, food, bathrooms, foraging) in Philadelphia."
     />
     <meta property="og:url" content="https://phlask.me" />
     <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://phlask.me/assets/favicon.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="PHLASK - Sharing Free Resources in Philadelphia"
+    />
+    <meta
+      name="twitter:description"
+      content="An ecosystem for finding and sharing free resources in Philadelphia."
+    />
+    <meta
+      name="twitter:image"
+      content="https://phlask.me/assets/favicon.png"
+    />
 
     <link rel="canonical" href="https://phlask.me" />
 
-    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PHLASK",
+        "url": "https://phlask.me",
+        "description": "An ecosystem for finding and sharing free resources in Philadelphia",
+        "applicationCategory": "MapApplication",
+        "operatingSystem": "Web",
+        "about": {
+          "@type": "Organization",
+          "name": "PHLASK",
+          "url": "https://phlask.me",
+          "location": {
+            "@type": "Place",
+            "name": "Philadelphia"
+          }
+        }
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link
       rel="preload"
       as="image"
@@ -62,10 +103,15 @@
 
     <script type="module" src="/src/index.tsx"></script>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6WMB4SH63"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-V6WMB4SH63"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
 
       gtag('config', 'G-V6WMB4SH63');
