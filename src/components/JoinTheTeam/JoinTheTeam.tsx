@@ -3,10 +3,16 @@ import { Box, Link, List, ListItem, Stack, Typography } from '@mui/material';
 import Page from 'components/Page/Page';
 import PhlaskCirclesExplainer from 'components/PhlaskCircleExplainer/PhlaskCirclesExplainer';
 import AcknowledgementsSection from 'components/AcknowledgementsSection/AcknowledgementsSection';
+import SEO from 'components/SEO/SEO';
 
 const JoinTheTeam = () => {
   return (
     <Page title="Join the team" data-cy="join-team">
+      <SEO
+        title="Join the Team"
+        description="Become a volunteer with PHLASK. Join our community of developers, designers, and advocates working to make life-sustaining resources accessible to all in Philadelphia."
+        canonicalUrl="https://phlask.me/join"
+      />
       <Stack sx={{ color: '#2d3748', fontSize: 14, lineHeight: '24px' }}>
         PHLASK volunteers come from a wide array of socioeconomic, educational
         and technical backgrounds. The team is committed to non-hierarchical,
