@@ -10,6 +10,7 @@ import {
 } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import noop from 'utils/noop';
+import { useLocation, useNavigate } from 'react-router';
 
 export type HeaderMenuPage = 'about' | 'join' | 'contact';
 
@@ -33,18 +34,20 @@ type HeaderProviderProps = {
   children: ReactNode;
 };
 
-// Create a HeaderProvider component
 const HeaderProvider = ({ children }: HeaderProviderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [shownPage, setShownPage] = useState<ReactNode | null>(null);
   const isMobile = useIsMobile();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
 
   const onMenuClose = useCallback(() => {
-    setShownPage(null);
     setIsMenuOpen(false);
-  }, []);
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+  }, [location.pathname, navigate]);
 
   const onMenuItemClick = useCallback(
     (page: HeaderMenuPage | null) => {
@@ -52,29 +55,29 @@ const HeaderProvider = ({ children }: HeaderProviderProps) => {
         setIsMenuOpen(false);
       }
 
-      setShownPage(prev => {
-        if (!page) {
-          return null;
-        }
+      if (!page) {
+        navigate('/');
+        return;
+      }
 
-        if (page === prev) {
-          return null;
-        }
-
-        switch (page) {
-          case 'about':
-            return <About />;
-          case 'join':
-            return <JoinTheTeam />;
-          case 'contact':
-            return <Contact />;
-          default:
-            return null;
-        }
-      });
+      navigate(`/${page}`);
     },
-    [isMobile]
+    [isMobile, navigate]
   );
+
+  const shownPage = useMemo(() => {
+    const page = location.pathname.slice(1) as HeaderMenuPage;
+    switch (page) {
+      case 'about':
+        return <About />;
+      case 'join':
+        return <JoinTheTeam />;
+      case 'contact':
+        return <Contact />;
+      default:
+        return null;
+    }
+  }, [location.pathname]);
 
   const stateVal = useMemo(
     () => ({
