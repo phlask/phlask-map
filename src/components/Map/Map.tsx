@@ -19,6 +19,7 @@ import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 import ResourceMarker from 'components/ResourceMarker/ResourceMarker';
 import { getBathroomData } from 'services/db.ts';
 
+// just for pr
 const style: CSSProperties = {
   width: '100%',
   height: '100vh',
