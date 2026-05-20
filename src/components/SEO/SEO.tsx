@@ -12,7 +12,7 @@ const SEO = ({
   title,
   description,
   ogType = 'website',
-  ogImage = 'https://phlask.me/assets/favicon.png',
+  ogImage = 'https://phlask.me/assets/images/phlask-tessellation.png',
   canonicalUrl
 }: SEOProps) => {
   const siteTitle = 'PHLASK';
