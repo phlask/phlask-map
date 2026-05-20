@@ -1,46 +1,35 @@
-# Share Food Program Scraping
+# Share Food Program Sync
 
-The Share Food Program can be found here: https://www.sharefoodprogram.org/
-
-The site contains regularly-updated information about food resources in the Philadelphia area. This directory contains Python code for scraping this site.
+Scrapes approved food distribution sites from the [Share Food Program](https://www.sharefoodprogram.org/) map API and upserts them into the Supabase `resources` table. All records written by this script use `creator = "phlask-share-food-program-sync"` — each run deletes those records then re-inserts fresh ones.
 
 ## Setup
 
-### Install Python
-
-First, make sure to have Python 3.12+ installed. We also recommend using [PyCharm](https://www.jetbrains.com/pycharm/download) for Python development.
-
-### Create a Virtual Environment and Install Dependencies
-
-Inside of this directory, run the following commands:
-
 ```bash
 python -m venv .venv
-# If on Mac/Linux
-source .venv/bin/activate
-# If on Windows
-.venv\Scripts\activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Add Firebase Credentials
+Create a `.env` file in this directory:
 
-To run the scraper and upload the data to Firebase, you will need to add your Firebase credentials to this folder. Message us in the #phlask_data channel on Slack to get access.
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_API_KEY=your-service-role-key
+```
 
-### Run the Scraper
+Message us in `#phlask_data` on Slack to get the credentials.
 
-To run the scraper, use the following command, making sure to set the URL below to the correct URL for your Firebase instance.
+## Usage
 
+**Sync to Supabase:**
 ```bash
-python scrape_share_food_program.py https://phlask-share-food-test.firebaseio.com/
+python scrape_share_food_program.py
 ```
 
-You should see output like the following:
+**Debug locally (no Supabase required):**
+```bash
+python scrape_share_food_program.py --csv           # writes resources.csv
+python scrape_share_food_program.py --csv out.csv   # custom filename
+```
 
-```
-Got 169 new resources from the scraped resource
-Using DB URL: https://phlask-share-food-test.firebaseio.com/
-Loaded PHLASK DB reference with 819 resources
-Removed 169 existing scraped resources from the DB
-We now have 819 total resources in the DB
-```
+The CSV serializes JSONB fields (`source`, `verification`, `food`) as JSON strings so the output is inspectable without a database connection.
