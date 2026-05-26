@@ -9,6 +9,7 @@ import { env } from 'config';
 const databaseUrl = 'https://wantycfbnzzocsbthqzs.supabase.co';
 const databaseApiKey = env.VITE_DB_API_KEY;
 const resourceDatabaseName = 'resources';
+const resourceRevisionsDatabaseName = 'resource_revisions';
 const contributorDatabaseName = 'airtable_contributors';
 const feedbackDatabaseName = 'user_feedbacks';
 const providersDatabaseName = 'providers';
@@ -116,6 +117,17 @@ export const addResource = async (resource: ResourceEntry) => {
   }
   return data;
 };
+
+export const addResourceRevision = async (revision: ResourceEntry) => {
+  const { data, error } = await supabase
+    .from(resourceRevisionsDatabaseName)
+    .insert<ResourceEntry>(revision);
+
+  if (error) {
+    throw error;
+  }
+  return data;
+}
 
 export const addFeedback = async (feedback: FeedbackForm) => {
   const { data, error } = await supabase

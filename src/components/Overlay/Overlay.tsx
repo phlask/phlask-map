@@ -1,8 +1,9 @@
 import { Box, Fade, Stack } from '@mui/material';
-import AddResourceModal from 'components/AddResourceModal/AddResourceModal';
 import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType';
+import ContributeModal from 'components/ContributeModal/ContributeModal';
 import Filter from 'components/Filter/Filter';
 import Head from 'components/Head/Head';
+import ResourceRevisionProvider from 'components/Providers/ResourceRevisionProvider';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedResource from 'components/SelectedResource/SelectedResource';
 import Toolbar from 'components/Toolbar/Toolbar';
@@ -54,8 +55,10 @@ const Overlay = () => {
 
       <ChooseResourceType />
       <Filter />
-      <AddResourceModal />
-      <SelectedResource />
+      <ResourceRevisionProvider>
+        <ContributeModal />
+        <SelectedResource />
+      </ResourceRevisionProvider>
     </>
   );
 };

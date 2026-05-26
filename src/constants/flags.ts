@@ -1,0 +1,1 @@
+export const IS_EDIT_RESOURCE_FEATURE_ENABLED = false;

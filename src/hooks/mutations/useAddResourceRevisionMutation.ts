@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
-import { addResource } from 'services/db';
+import { addResourceRevision } from 'services/db';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
-const useAddResourceMutation = () => {
+const useAddResourceRevisionMutation = () => {
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (resource: ResourceEntry) => addResource(resource)
+    mutationFn: (resource: ResourceEntry) => addResourceRevision(resource)
   });
 
   return { mutate, isPending, isSuccess };
 };
 
-export default useAddResourceMutation;
+export default useAddResourceRevisionMutation;

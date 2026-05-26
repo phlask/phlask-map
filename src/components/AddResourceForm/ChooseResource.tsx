@@ -8,7 +8,7 @@ import FoodIcon from 'icons/FoodIconChooseResource';
 import ForagingIcon from 'icons/ForagingIcon';
 import BathroomIcon from 'icons/ToiletIconChooseResource';
 import ResourceButton from 'components/ResourceButton/ResourceButton';
-import CloseButton from './CloseButton/CloseButton';
+import CloseButton from '../CloseButton/CloseButton';
 import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
 
 type ChooseResourceProps = {

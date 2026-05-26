@@ -1,16 +1,16 @@
 import PhillySkyline from 'icons/PhillySkyline';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import CloseButton from '../CloseButton/CloseButton';
+import CloseButton from 'components/CloseButton/CloseButton';
 import noop from 'utils/noop';
 
-type AddResourceSuccessDesktopProps = {
+type ResourceFormSuccessDesktopProps = {
   onClose: VoidFunction;
 };
 
-const AddResourceSuccessDesktop = ({
+const ResourceFormSuccessDesktop = ({
   onClose = noop
-}: AddResourceSuccessDesktopProps) => (
+}: ResourceFormSuccessDesktopProps) => (
   <Stack
     sx={{
       paddingBlock: '60px',
@@ -49,4 +49,4 @@ const AddResourceSuccessDesktop = ({
   </Stack>
 );
 
-export default AddResourceSuccessDesktop;
+export default ResourceFormSuccessDesktop;

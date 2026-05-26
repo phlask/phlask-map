@@ -7,7 +7,7 @@ import {
   Typography
 } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import CloseButton from './CloseButton/CloseButton';
+import CloseButton from '../CloseButton/CloseButton';
 import { useState, type ReactNode } from 'react';
 import noop from 'utils/noop';
 import {
@@ -15,7 +15,7 @@ import {
   type FieldValues,
   type SubmitHandler
 } from 'react-hook-form';
-import ResourceDefaultFields from './ResourceDefaultFields/ResourceDefaultFields';
+import ResourceDefaultFields from '../ResourceDefaultFields/ResourceDefaultFields';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FormDevtools from 'components/forms/FormDevtools/FormDevtools';
@@ -24,7 +24,6 @@ import FormImageUploadField from 'components/forms/FormImageUploadField/FormImag
 type RenderFormPageFnConfig = {
   imageElement: ReactNode;
   shouldShowImageElement: boolean;
-  disabled?: boolean;
 };
 
 type EnderFormPageFn = (config: RenderFormPageFnConfig) => ReactNode;
@@ -50,7 +49,7 @@ const ResourceForm = <Values extends FieldValues>({
   isSubmitting = false,
   onSubmit: submitForm = noop,
   onClose = noop,
-  onGoBack = noop
+  onGoBack
 }: ResourceFormLayoutProps<Values>) => {
   const [page, setPage] = useState<1 | 2>(1);
   const isMobile = useIsMobile();
@@ -60,10 +59,13 @@ const ResourceForm = <Values extends FieldValues>({
   const onPageChange = (update: (prev: number) => number) => {
     return setPage(prev => {
       const newValue = Math.max(0, update(prev));
-      if (newValue === 0) {
+      const shouldGoBack = newValue === 0;
+      if (shouldGoBack && onGoBack) {
         onGoBack();
       }
-      if (newValue !== 1 && newValue !== 2) {
+
+      const isInvalid = newValue !== 1 && newValue !== 2;
+      if (isInvalid) {
         return prev;
       }
 
@@ -164,8 +166,7 @@ const ResourceForm = <Values extends FieldValues>({
                 <Stack gap={2}>
                   {renderPageTwo({
                     shouldShowImageElement: !isMobile,
-                    imageElement,
-                    disabled: !shouldShowPageTwo
+                    imageElement
                   })}
                 </Stack>
               ) : null}
