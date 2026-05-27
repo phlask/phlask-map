@@ -1,1 +1,1 @@
-export const IS_EDIT_RESOURCE_FEATURE_ENABLED = false;
+export const IS_EDIT_RESOURCE_FEATURE_ENABLED = import.meta.env.VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED === 'true';

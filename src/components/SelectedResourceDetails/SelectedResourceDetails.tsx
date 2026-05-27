@@ -37,14 +37,14 @@ type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
   resource: ResourceEntry | null;
   isError?: boolean;
-  onStartEdit: (resource: ResourceEntry) => void;
+  onStartEdit?: (resource: ResourceEntry) => void;
 };
 
 const SelectedResourceDetails = ({
   onClose = noop,
   isError = false,
   resource,
-  onStartEdit
+  onStartEdit = noop
 }: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
@@ -258,9 +258,9 @@ const SelectedResourceDetails = ({
         open={Boolean(menuAnchor)}
         onClose={handleMenuClose}
       >
-        {IS_EDIT_RESOURCE_FEATURE_ENABLED && (
+        {IS_EDIT_RESOURCE_FEATURE_ENABLED ? (
           <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
-        )}
+        ) : null}
         <MenuItem onClick={handleMenuClose} sx={{ color: '#EF4444' }}>
           Report
         </MenuItem>

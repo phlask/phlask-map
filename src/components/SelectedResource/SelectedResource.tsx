@@ -9,6 +9,7 @@ import { useGetSelectedResourceQuery } from 'hooks/queries/useGetSelectedResourc
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
 import type { ResourceEntry } from 'types/ResourceEntry';
+import { IS_EDIT_RESOURCE_FEATURE_ENABLED } from 'constants/flags';
 
 const SelectedResource = () => {
   const isMobile = useIsMobile();
@@ -18,6 +19,10 @@ const SelectedResource = () => {
   const { setResourceRevision } = useResourceRevisionContext();
 
   const handleStartEdit = (resource: ResourceEntry) => {
+    if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
+      return;
+    }
+
     setToolbarModal('contribute');
     setSelectedResource(null);
     setResourceRevision({
@@ -55,8 +60,8 @@ const SelectedResource = () => {
       <SelectedResourceDetails
         resource={data}
         isError={isError}
-        onStartEdit={handleStartEdit}
         onClose={onClose}
+        onStartEdit={handleStartEdit}
       />
     </SwipeableDrawer>
   );
