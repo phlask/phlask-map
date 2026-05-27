@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
 
@@ -12,14 +11,6 @@ const SelectedResource = () => {
   const isMobile = useIsMobile();
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
-
-  // TODO: Connect this feature
-  // https://github.com/phlask/phlask-map/issues/649
-  const [_isEditing, setIsEditing] = useState<boolean | null>(false);
-
-  const handleStartEdit = () => {
-    setIsEditing(true);
-  };
 
   const onClose = () => {
     setSelectedResource(null);
@@ -49,7 +40,6 @@ const SelectedResource = () => {
       <SelectedResourceDetails
         resource={data}
         isError={isError}
-        onStartEdit={handleStartEdit}
         onClose={onClose}
       />
     </SwipeableDrawer>
