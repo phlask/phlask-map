@@ -1,3 +1,5 @@
+// Adding comment to redo PR for testing -- remove later
+
 import {
   IconButton,
   Menu,
@@ -215,6 +217,7 @@ const SelectedResourceDetails = ({
                   longitude={resource.longitude}
                 />
                 <EstimatedWalkingDuration selectedResource={resource} />
+                <ProvidedBy providers={providers} />
               </Stack>
             </Stack>
           </Stack>
@@ -227,7 +230,6 @@ const SelectedResourceDetails = ({
                 </Typography>
               </Stack>
             ) : null}
-            <ProvidedBy providers={providers} />
           </Stack>
         </Stack>
 
