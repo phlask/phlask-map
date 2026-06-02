@@ -26,6 +26,12 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_API_KEY", "")
 TABLE_NAME   = "resources"
 
+SCRIPT_UPDATE_FIELDS = {
+    "name", "description", "address", "city", "state", "zip_code",
+    "latitude", "longitude", "hours", "food", "source", "resource_type",
+    "last_modified", "last_modifier",
+}
+
 CREATOR            = "phlask-sharing-excess-sync"
 SOURCE_URL         = "https://www.sharingexcess.com/find-food"
 NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org/search"
@@ -68,27 +74,33 @@ def parse_location(location: str) -> dict:
     }
 
 
+GEOCODE_RETRIES    = 3
+GEOCODE_RETRY_WAIT = 10  # seconds between attempts
+
 def geocode(location: str) -> tuple[float, float] | None:
-    """
-    Return (lat, lon) for a location string via Nominatim.
-    Returns None if the location cannot be resolved.
-    Caller is responsible for rate-limiting (1 req/s).
-    """
+    """Return (lat, lon) for a location string via Nominatim, with retries."""
     if not location:
         return None
-    try:
-        resp = requests.get(
-            NOMINATIM_ENDPOINT,
-            params={"q": location, "format": "json", "limit": 1},
-            headers={"User-Agent": NOMINATIM_UA},
-            timeout=10,
-        )
-        resp.raise_for_status()
-        results = resp.json()
-        if results:
-            return float(results[0]["lat"]), float(results[0]["lon"])
-    except Exception as exc:
-        print(f"  Geocoding failed for '{location}': {exc}")
+    for attempt in range(GEOCODE_RETRIES):
+        try:
+            resp = requests.get(
+                NOMINATIM_ENDPOINT,
+                params={"q": location, "format": "json", "limit": 1},
+                headers={"User-Agent": NOMINATIM_UA},
+                timeout=15,
+            )
+            resp.raise_for_status()
+            results = resp.json()
+            if results:
+                return float(results[0]["lat"]), float(results[0]["lon"])
+            return None  # valid response, no results — no point retrying
+        except Exception as exc:
+            remaining = GEOCODE_RETRIES - attempt - 1
+            if remaining:
+                print(f"  Geocoding attempt {attempt + 1} failed for '{location}': {exc} — retrying in {GEOCODE_RETRY_WAIT}s...")
+                time.sleep(GEOCODE_RETRY_WAIT)
+            else:
+                print(f"  Geocoding failed for '{location}': {exc}")
     return None
 
 
@@ -138,6 +150,23 @@ def fetch_events(calendar_id: str, look_forward_days: int) -> list[dict]:
     return events
 
 
+def deduplicate_events(events: list[dict]) -> list[dict]:
+    """
+    Keep only the nearest future occurrence per UID for recurring events.
+    Events must already be sorted by start_at ascending.
+    """
+    seen: set[str] = set()
+    deduped = []
+    for event in events:
+        uid = event.get("uid", "")
+        if uid and uid in seen:
+            continue
+        if uid:
+            seen.add(uid)
+        deduped.append(event)
+    return deduped
+
+
 # Normalize events for the resources table
 
 def _parse_event_dt(iso_str: str) -> datetime:
@@ -174,16 +203,7 @@ def build_hours(start_dt: datetime, end_dt: datetime | None) -> list[dict]:
 
 
 def build_description(original: str | None, start_iso: str, end_iso: str | None) -> str:
-    """
-    Prepend structured date metadata with clear delimiters so a downstream
-    parser can extract event times with a simple regex, e.g.:
-
-        re.search(r'\[\[ start: (.+?) \| end: (.+?) \]\]', description)
-
-    Format:
-        [[ start: <ISO> | end: <ISO> ]]
-        <original description>
-    """
+    """Prepend '[[ start: <ISO> | end: <ISO> ]]' so downstream parsers can extract event times."""
     end_part = f" | end: {end_iso}" if end_iso else ""
     header   = f"[[ start: {start_iso}{end_part} ]]"
     return f"{header}\n{original}" if original else header
@@ -199,10 +219,12 @@ def event_to_resource(event: dict) -> dict | None:
 
     coords = geocode(location) if location else None
     if coords is None and parsed.get("address"):
+        time.sleep(2)
         state_zip = f"{parsed.get('state', '')} {parsed.get('zip_code', '')}".strip()
         fallback = ", ".join(filter(None, [parsed.get("address"), parsed.get("city"), state_zip]))
         coords = geocode(fallback)
     if coords is None and parsed.get("zip_code"):
+        time.sleep(2)
         # Last resort: city + state + zip (handles ungeocoded intersections, etc.)
         state_zip = f"{parsed.get('state', '')} {parsed.get('zip_code', '')}".strip()
         coords = geocode(f"{parsed.get('city', '')}, {state_zip}".strip(", "))
@@ -282,24 +304,41 @@ def get_supabase_client() -> Client:
     return create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-def delete_by_creator(client: Client) -> None:
-    """Delete all resources previously written by this sync script."""
-    check = client.table(TABLE_NAME).select("id, creator").eq("creator", CREATOR).execute()
-    print(f"  [debug] SELECT found {len(check.data)} record(s) with creator='{CREATOR}'")
-    if check.data:
-        print(f"  [debug] Sample row: {check.data[0]}")
-    result = client.table(TABLE_NAME).delete().eq("creator", CREATOR).execute()
-    count = len(result.data) if result.data else 0
-    print(f"Deleted {count} existing record(s) with creator='{CREATOR}'.")
+def sync_resources(client: Client, resources: list[dict]) -> None:
+    """
+    Upsert resources by gp_id:
+    - Existing gp_id in DB → update script-owned fields (reset CLOSED→OPERATIONAL if reappearing)
+    - New gp_id → insert
+    - DB rows whose gp_id is absent from the new fetch → mark status=CLOSED
+    """
+    result = client.table(TABLE_NAME).select("id, gp_id, status").eq("creator", CREATOR).execute()
+    db_rows = result.data or []
+    db_map = {row["gp_id"]: row for row in db_rows if row.get("gp_id")}
 
+    new_gp_ids = {r["gp_id"] for r in resources if r.get("gp_id")}
 
-def insert_resources(client: Client, resources: list[dict]) -> None:
-    """Insert all resources as fresh rows."""
-    if not resources:
-        print("No resources to insert.")
-        return
-    client.table(TABLE_NAME).insert(resources).execute()
-    print(f"Inserted {len(resources)} resource(s).")
+    to_insert = []
+    updated = 0
+
+    for resource in resources:
+        gp_id = resource.get("gp_id")
+        if gp_id and gp_id in db_map:
+            payload = {k: v for k, v in resource.items() if k in SCRIPT_UPDATE_FIELDS}
+            if db_map[gp_id]["status"] == "CLOSED":
+                payload["status"] = "OPERATIONAL"
+            client.table(TABLE_NAME).update(payload).eq("id", db_map[gp_id]["id"]).execute()
+            updated += 1
+        else:
+            to_insert.append(resource)
+
+    stale_ids = [row["id"] for row in db_rows if row.get("gp_id") and row["gp_id"] not in new_gp_ids]
+    if stale_ids:
+        client.table(TABLE_NAME).update({"status": "CLOSED"}).in_("id", stale_ids).execute()
+
+    if to_insert:
+        client.table(TABLE_NAME).insert(to_insert).execute()
+
+    print(f"Inserted {len(to_insert)}, updated {updated}, closed {len(stale_ids)} resource(s).")
 
 
 # CSV for debugging/local
@@ -367,10 +406,16 @@ if __name__ == "__main__":
 
     print(f"Fetching events for the next {LOOK_FORWARD_DAYS} day(s)...")
     events = fetch_events(CALENDAR_ID, LOOK_FORWARD_DAYS)
-    print(f"Found {len(events)} event(s) in window. Geocoding and normalizing...")
+    events = deduplicate_events(events)
+    print(f"Found {len(events)} event(s) in window (after deduplication). Geocoding and normalizing...")
 
     resources = normalize_events(events)
     print(f"Normalized {len(resources)} resource(s).")
+
+    if events and not resources:
+        print("ERROR: all events failed normalization (geocoding outage?). "
+              "Aborting sync to avoid closing live resources.")
+        raise SystemExit(1)
 
     if args.no_hours:
         resources = [{**r, "hours": None} for r in resources]
@@ -380,7 +425,6 @@ if __name__ == "__main__":
         save_csv(resources, args.csv)
     else:
         supabase = get_supabase_client()
-        delete_by_creator(supabase)
-        insert_resources(supabase, resources)
+        sync_resources(supabase, resources)
 
     print("Done.")
