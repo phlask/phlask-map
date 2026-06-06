@@ -137,7 +137,7 @@ const Map = () => {
 
     setTimeout(() => {
       setCurrentPhaseIndex(3);
-      setCurrentPhaseLabel('Resources Mapped!');
+      setCurrentPhaseLabel('');
       setTimelineProgressPercentage(100);
       setIsPlaying(false);
     }, 1500);
@@ -159,7 +159,7 @@ const Map = () => {
       <div
         style={{
           position: 'absolute',
-          top: '20px',
+          top: '8dvh',
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 10,
@@ -174,16 +174,29 @@ const Map = () => {
           minWidth: '320px'
         }}
       >
-        <h2
-          style={{
-            margin: 0,
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            color: '#333'
-          }}
-        >
-          {isLoadingData ? 'Loading Data...' : currentPhaseLabel}
-        </h2>
+        <div>
+          <h2
+            style={{
+              margin: 0,
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              color: '#333'
+            }}
+          >
+            {isLoadingData ? 'Loading Data...' : currentPhaseLabel}
+          </h2>
+          {!isLoadingData && (
+            <p
+              style={{
+                margin: '5px 0 0 0',
+                fontSize: '1rem',
+                color: '#60718C'
+              }}
+            >
+              Bathrooms Mapped: <strong>{visibleResources.length}</strong>
+            </p>
+          )}
+        </div>
 
         {/* TIMELINE UI */}
         <div
@@ -297,7 +310,7 @@ const Map = () => {
               (e.currentTarget.style.backgroundColor = '#007BFF')
             }
           >
-            {visibleResources.length > 0 ? 'Replay Timeline' : 'Play Timelapse'}
+            {visibleResources.length > 0 ? '' : 'Play Timelapse'}
           </button>
         )}
       </div>
