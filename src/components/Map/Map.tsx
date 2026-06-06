@@ -19,7 +19,6 @@ import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 import ResourceMarker from 'components/ResourceMarker/ResourceMarker';
 import { getBathroomData } from 'services/db.ts';
 
-// just for pr
 const style: CSSProperties = {
   width: '100%',
   height: '100vh',
@@ -74,7 +73,6 @@ const Map = () => {
     return () => timeoutsRef.current.forEach(clearTimeout);
   }, []);
 
-  // NEW: Added an onProgress callback so the timeline moves with every single marker
   const staggerMarkers = (
     newResources: ResourceEntry[],
     delayBetweenMarkers = 100,
@@ -90,7 +88,6 @@ const Map = () => {
         const timeout = setTimeout(() => {
           setVisibleResources(prev => [...prev, resource]);
 
-          // Report progress from 0.0 to 1.0 for this specific phase
           onProgress((index + 1) / newResources.length);
 
           if (index === newResources.length - 1) {
@@ -108,9 +105,7 @@ const Map = () => {
     setVisibleResources([]);
     setTimelineProgressPercentage(0);
 
-    const segmentWidth = 100 / TIMELINE_PHASES.length; // Each phase takes up 33.33% of the bar
-
-    // Phase 1
+    const segmentWidth = 100 / TIMELINE_PHASES.length;
     setCurrentPhaseIndex(0);
     setCurrentPhaseLabel(TIMELINE_PHASES[0]);
     await staggerMarkers(dbData.part1, 100, p => {
@@ -207,7 +202,6 @@ const Map = () => {
             zIndex: 1
           }}
         >
-          {/* Background Track */}
           <div
             style={{
               position: 'absolute',
@@ -241,7 +235,6 @@ const Map = () => {
           {/* Timeline Nodes */}
           {TIMELINE_PHASES.map((phase, index) => {
             const isActive = currentPhaseIndex >= index;
-            // Place nodes exactly where the phase segments begin (0%, 33.3%, 66.6%)
             const leftPos = `${index * (100 / TIMELINE_PHASES.length)}%`;
 
             return (
