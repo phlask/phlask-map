@@ -8,7 +8,8 @@ const Head = () => {
 
   return (
     <HeaderProvider>
-      {isMobile ? <MobileHead /> : <DesktopHead />}
+      {/* {isMobile ? <MobileHead /> : <DesktopHead />} */}
+      <></>
     </HeaderProvider>
   );
 };

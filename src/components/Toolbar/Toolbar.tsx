@@ -81,10 +81,12 @@ const Toolbar = () => {
   };
 
   if (isMobile) {
-    return <MobileToolbar onNearMeClick={onNearMeClick} />;
+    // return <MobileToolbar onNearMeClick={onNearMeClick} />;
+    return <></>;
   }
 
-  return <DesktopToolbar onNearMeClick={onNearMeClick} />;
+  // return <DesktopToolbar onNearMeClick={onNearMeClick} />;
+  return <></>;
 };
 
 export default Toolbar;
