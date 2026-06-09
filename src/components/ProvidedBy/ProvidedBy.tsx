@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Stack,
   Typography,
-  Avatar,
   Tooltip,
   Popover,
   List,
@@ -38,28 +37,15 @@ const ProviderLogo = ({
         src={logoUrl}
         alt={provider.name}
         sx={{
-          width: size,
           height: size,
-          objectFit: 'contain',
-          borderRadius: '4px'
+          objectFit: 'contain'
         }}
         onError={() => onError(logoUrl)}
       />
     );
+  } else {
+    return <Typography fontSize={14}>{provider.name}</Typography>;
   }
-
-  return (
-    <Avatar
-      sx={{
-        width: size,
-        height: size,
-        fontSize: size * 0.4,
-        bgcolor: '#4A90A4'
-      }}
-    >
-      {provider.name.charAt(0).toUpperCase()}
-    </Avatar>
-  );
 };
 
 type ProviderItemProps = {
@@ -81,9 +67,6 @@ const ProviderItem = ({
         onError={onImageError}
         failedImages={failedImages}
       />
-      <Typography fontSize={14} color="#2D3748">
-        {provider.name}
-      </Typography>
     </Stack>
   );
 
@@ -140,7 +123,7 @@ const ProvidedBy = ({ providers = [], maxVisible = 2 }: ProvidedByProps) => {
         <Typography fontSize={14} fontWeight={600}>
           Provided By
         </Typography>
-        <Tooltip title="Organizations that contributed this resource to PHLASK">
+        <Tooltip title="Organizations that help provide this resource to the community.">
           <InfoOutlinedIcon
             sx={{ fontSize: 16, color: '#60718C', cursor: 'help' }}
           />
@@ -190,7 +173,7 @@ const ProvidedBy = ({ providers = [], maxVisible = 2 }: ProvidedByProps) => {
                     <ListItemAvatar sx={{ minWidth: 48 }}>
                       <ProviderLogo
                         provider={provider}
-                        size={32}
+                        size={64}
                         onError={handleImageError}
                         failedImages={failedImages}
                       />
