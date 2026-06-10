@@ -1,53 +1,61 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { Divider, Stack } from '@mui/material';
-import { useToolbarContext } from 'contexts/ToolbarContext';
-import FormTextField from 'components/forms/FormTextField/FormTextField';
-import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
-import { zodResolver } from '@hookform/resolvers/zod';
-import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
+import { Stack, Divider } from '@mui/material';
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
-import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
-import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
-import ResourceForm from '../ResourceForm';
-import foodResourceSchema, {
-  type FoodFormValues
-} from 'schemas/foodResourceSchema';
-import {
-  foodDistributionTypeOptions,
-  foodTypeOptions,
-  organizationTypeOptions,
-  tags
-} from './choiceFieldOptions';
+import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
+import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
 import FormSelectField from 'components/forms/FormSelectField/FormSelectField';
-
-type AddFoodFormProps = {
-  onGoBack: VoidFunction;
-  onComplete: VoidFunction;
-};
+import FormTextField from 'components/forms/FormTextField/FormTextField';
+import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
+import { FormProvider, useForm } from 'react-hook-form';
+import type { FoodFormValues } from 'schemas/foodResourceSchema';
+import ResourceForm from 'components/ResourceForm/ResourceForm';
+import {
+  organizationTypeOptions,
+  tags,
+  foodTypeOptions,
+  foodDistributionTypeOptions
+} from './choiceFieldOptions';
+import { useToolbarContext } from 'contexts/ToolbarContext';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import foodResourceSchema from 'schemas/foodResourceSchema';
+import dropNullEntries from 'utils/dropNullEntries';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type FormValues = FoodFormValues;
 
-const TITLE = 'Add a Food Resource';
+type FoodResourceFormProps = {
+  defaultValues?: ResourceEntry | null;
+  onSubmit: (values: FormValues) => void;
+  onGoBack?: VoidFunction;
+  isSubmitting?: boolean;
+};
+
 const COLOR = '#FF9A55';
 const SCHEMA = foodResourceSchema;
 
-const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
+const FoodResourceForm = ({
+  defaultValues = null,
+  isSubmitting = false,
+  onGoBack,
+  onSubmit
+}: FoodResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
-  const { mutate: addResource, isPending } = useAddResourceMutation();
-
-  const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
-    resolver: zodResolver(SCHEMA)
-  });
-
   const onClose = () => {
-    onGoBack();
+    if (onGoBack) {
+      onGoBack();
+    }
+
     setToolbarModal(null);
   };
 
-  const onSubmit = (resource: FoodFormValues) => {
-    addResource(resource, { onSuccess: onComplete });
-  };
+  const methods = useForm({
+    defaultValues: SCHEMA.parse(
+      defaultValues ? dropNullEntries(defaultValues) : {}
+    ),
+    resolver: zodResolver(SCHEMA)
+  });
+
+  const isUpdating = Boolean(defaultValues);
+  const TITLE = `${isUpdating ? 'Update' : 'Add'} a Food Resource`;
 
   return (
     <FormProvider {...methods}>
@@ -55,7 +63,7 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
         title={TITLE}
         color={COLOR}
         onSubmit={onSubmit}
-        isSubmitting={isPending}
+        isSubmitting={isSubmitting}
         onClose={onClose}
         onGoBack={onGoBack}
         renderPageOne={({ imageElement, shouldShowImageElement }) => (
@@ -167,4 +175,4 @@ const AddFoodForm = ({ onGoBack, onComplete }: AddFoodFormProps) => {
   );
 };
 
-export default AddFoodForm;
+export default FoodResourceForm;

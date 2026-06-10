@@ -10,10 +10,10 @@ import {
   SocialTwitter
 } from 'icons';
 import { IconButton } from '@mui/material';
-import CloseButton from '../CloseButton/CloseButton';
+import CloseButton from 'components/CloseButton/CloseButton';
 import noop from 'utils/noop';
 
-type AddResourceSuccessMobileProps = {
+type ResourceFormSuccessStepMobileProps = {
   onClose?: VoidFunction;
 };
 
@@ -25,9 +25,9 @@ const getSupportsShare = () => {
   return navigator.canShare();
 };
 
-const AddResourceSuccessMobile = ({
+const ResourceFormSuccessStepMobile = ({
   onClose = noop
-}: AddResourceSuccessMobileProps) => {
+}: ResourceFormSuccessStepMobileProps) => {
   const canShare = getSupportsShare();
   const onShare = () => {
     if (!canShare) {
@@ -160,4 +160,4 @@ const AddResourceSuccessMobile = ({
   );
 };
 
-export default AddResourceSuccessMobile;
+export default ResourceFormSuccessStepMobile;

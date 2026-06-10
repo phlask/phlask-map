@@ -1,27 +1,35 @@
-import Paper from '@mui/material/Paper';
-import useIsMobile from 'hooks/useIsMobile';
-import { Modal, SwipeableDrawer } from '@mui/material';
-import { type ReactNode } from 'react';
-import noop from 'utils/noop';
-import { useToolbarContext } from 'contexts/ToolbarContext';
+import type { ReactNode } from 'react';
 
-type ModalWrapperProps = {
+import Paper from '@mui/material/Paper';
+import { Modal, SwipeableDrawer } from '@mui/material';
+import useIsMobile from 'hooks/useIsMobile';
+import noop from 'utils/noop';
+
+type ModalOrBottomSheetProps = {
+  isOpen: boolean;
   children: ReactNode;
-  onClose: VoidFunction;
+  onClose?: VoidFunction;
+  shouldHideBackdrop?: boolean;
+  shouldCloseOnBackdropClick?: boolean;
 };
 
-const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
+const ModalOrBottomSheet = ({
+  children,
+  isOpen,
+  onClose = noop,
+  shouldHideBackdrop = false,
+  shouldCloseOnBackdropClick = false
+}: ModalOrBottomSheetProps) => {
   const isMobile = useIsMobile();
-  const { toolbarModal } = useToolbarContext();
 
   if (isMobile) {
     return (
       <SwipeableDrawer
         anchor="bottom"
-        open={toolbarModal === 'contribute'}
+        open={isOpen}
         onOpen={noop}
         onClose={onClose}
-        hideBackdrop
+        hideBackdrop={shouldHideBackdrop}
       >
         <Paper
           sx={{
@@ -30,8 +38,6 @@ const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
             width: '100%',
             height: '100%'
           }}
-          // This is used to configure the removal of the shadow that would normally appear in this element
-          // The shadow is part of the standard MUI styling for Paper elements
           elevation={0}
         >
           {children}
@@ -41,11 +47,7 @@ const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
   }
 
   return (
-    <Modal
-      open={toolbarModal === 'contribute'}
-      // We forbid closing the modal on backdrop click or escape
-      onClose={noop}
-    >
+    <Modal open={isOpen} onClose={shouldCloseOnBackdropClick ? onClose : noop}>
       <Paper
         sx={{
           position: 'absolute',
@@ -62,4 +64,4 @@ const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
   );
 };
 
-export default ModalWrapper;
+export default ModalOrBottomSheet;
