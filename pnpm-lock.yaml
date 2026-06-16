@@ -47,6 +47,9 @@ importers:
       react-dropzone:
         specifier: ^14.4.1
         version: 14.4.1(react@19.2.7)
+      react-helmet-async:
+        specifier: ^3.0.0
+        version: 3.0.0(react@19.2.7)
       react-hook-form:
         specifier: 7.69.0
         version: 7.69.0(react@19.2.7)
@@ -6596,6 +6599,15 @@ snapshots:
       file-selector: 2.1.2
       prop-types: 15.8.1
       react: 19.2.7
+
+  react-fast-compare@3.2.2: {}
+
+  react-helmet-async@3.0.0(react@19.2.7):
+    dependencies:
+      invariant: 2.2.4
+      react: 19.2.7
+      react-fast-compare: 3.2.2
+      shallowequal: 1.1.0
 
   react-hook-form@7.69.0(react@19.2.7):
     dependencies:
