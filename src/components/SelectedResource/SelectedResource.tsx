@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { SwipeableDrawer } from '@mui/material';
 
@@ -14,14 +13,6 @@ const SelectedResource = () => {
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
 
-  // TODO: Connect this feature
-  // https://github.com/phlask/phlask-map/issues/649
-  const [_isEditing, setIsEditing] = useState<boolean | null>(false);
-
-  const handleStartEdit = () => {
-    setIsEditing(true);
-  };
-
   const onClose = () => {
     setSelectedResource(null);
   };
@@ -29,9 +20,10 @@ const SelectedResource = () => {
   const getSEOProps = () => {
     if (!data) return {};
     const resourceName = data.name || 'Unnamed Resource';
-    const type = data.resource_type.charAt(0) + data.resource_type.slice(1).toLowerCase();
+    const type =
+      data.resource_type.charAt(0) + data.resource_type.slice(1).toLowerCase();
     const address = data.address ? ` at ${data.address}` : '';
-    
+
     return {
       title: `${resourceName} (${type})`,
       description: `Find ${type.toLowerCase()} resources like ${resourceName}${address} in Philadelphia on PHLASK.`,

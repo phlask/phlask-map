@@ -1,3 +1,5 @@
+// Adding comment to redo PR for testing -- remove later
+
 import {
   IconButton,
   Menu,
@@ -31,23 +33,30 @@ import GetDirectionsButton from 'components/GetDirectionsButton/GetDirectionsBut
 import SelectedResourceTags from 'components/SelectedResourceTags/SelectedResourceTags';
 import ProvidedBy from 'components/ProvidedBy/ProvidedBy';
 import { useGetResourceProvidersQuery } from 'hooks/queries/useGetResourceProvidersQuery';
+import { IS_EDIT_RESOURCE_FEATURE_ENABLED } from 'constants/flags';
 
 type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
   resource: ResourceEntry | null;
   isError?: boolean;
-  onStartEdit: VoidFunction;
 };
 
 const SelectedResourceDetails = ({
   onClose = noop,
   isError = false,
-  resource,
-  onStartEdit
+  resource
 }: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
   const { data: providers = [] } = useGetResourceProvidersQuery();
+
+  const onStartEdit = () => {
+    if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
+      return;
+    }
+
+    // TODO: Implement edit functionality
+  };
 
   if (isError) {
     return (
@@ -208,6 +217,7 @@ const SelectedResourceDetails = ({
                   longitude={resource.longitude}
                 />
                 <EstimatedWalkingDuration selectedResource={resource} />
+                <ProvidedBy providers={providers} />
               </Stack>
             </Stack>
           </Stack>
@@ -220,7 +230,6 @@ const SelectedResourceDetails = ({
                 </Typography>
               </Stack>
             ) : null}
-            <ProvidedBy providers={providers} />
           </Stack>
         </Stack>
 
@@ -253,7 +262,9 @@ const SelectedResourceDetails = ({
         open={Boolean(menuAnchor)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
+        {IS_EDIT_RESOURCE_FEATURE_ENABLED ? (
+          <MenuItem onClick={handleSuggestEdit}>Suggest Edit</MenuItem>
+        ) : null}
         <MenuItem onClick={handleMenuClose} sx={{ color: '#EF4444' }}>
           Report
         </MenuItem>
