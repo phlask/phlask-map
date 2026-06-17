@@ -57,7 +57,6 @@ const SelectedResource = () => {
         <SelectedResourceDetails
           resource={data}
           isError={isError}
-          onStartEdit={handleStartEdit}
           onClose={onClose}
         />
       </SwipeableDrawer>
