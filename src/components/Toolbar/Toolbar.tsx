@@ -1,7 +1,7 @@
 import useIsMobile from 'hooks/useIsMobile';
 import getClosest from 'utils/getClosest';
-import MobileToolbar from './MobileToolbar';
-import DesktopToolbar from './DesktopToolbar';
+// import MobileToolbar from './MobileToolbar';
+// import DesktopToolbar from './DesktopToolbar';
 import useSelectedResource from 'hooks/useSelectedResource';
 import useActiveResources from 'hooks/useActiveResources';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
@@ -22,6 +22,8 @@ const Toolbar = () => {
     useActiveSearchLocation();
   const { setToolbarModal } = useToolbarContext();
 
+  // Kept for when the toolbar is re-enabled (passed to Mobile/DesktopToolbar).
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onNearMeClick = async () => {
     const [userLocation, isLocationServiceDisabled] = await getUserLocation();
     let location: google.maps.LatLngLiteral;

@@ -7,8 +7,7 @@ import { usePostHog } from 'posthog-js/react';
 import {
   type CSSProperties,
   useState,
-  useCallback,
-  useRef,
+  useMemo,
   useEffect
 } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
@@ -29,6 +28,8 @@ const style: CSSProperties = {
 
 const TIMELINE_PHASES = ['2024', 'Summer 2025', 'Fall 2025 - Jan 2026'];
 
+const STEP_DELAY = 90;
+
 const Map = () => {
   const isMobile = useIsMobile();
   const posthog = usePostHog();
@@ -43,16 +44,9 @@ const Map = () => {
   }>({ part1: [], part2: [], part3: [] });
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  // --- ANIMATION STATE ---
-  const [visibleResources, setVisibleResources] = useState<ResourceEntry[]>([]);
-  const [currentPhaseLabel, setCurrentPhaseLabel] =
-    useState<string>('Ready to visualize');
 
-  const [currentPhaseIndex, setCurrentPhaseIndex] = useState<number>(-1);
-  const [timelineProgressPercentage, setTimelineProgressPercentage] =
-    useState<number>(0); // NEW: Granular progress
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,81 +56,84 @@ const Map = () => {
         setDbData(data);
       } catch (error) {
         console.error('Error loading water data:', error);
-        setCurrentPhaseLabel('Error loading data');
       } finally {
         setIsLoadingData(false);
       }
     };
 
     loadData();
-
-    return () => timeoutsRef.current.forEach(clearTimeout);
   }, []);
 
-  const staggerMarkers = (
-    newResources: ResourceEntry[],
-    delayBetweenMarkers = 100,
-    onProgress: (phaseCompletionPercentage: number) => void
-  ): Promise<void> => {
-    return new Promise(resolve => {
-      if (!newResources || newResources.length === 0) {
-        resolve();
-        return;
-      }
 
-      newResources.forEach((resource, index) => {
-        const timeout = setTimeout(() => {
-          setVisibleResources(prev => [...prev, resource]);
-
-          onProgress((index + 1) / newResources.length);
-
-          if (index === newResources.length - 1) {
-            resolve();
-          }
-        }, index * delayBetweenMarkers);
-        timeoutsRef.current.push(timeout);
-      });
+  const flatResources = useMemo(() => {
+    const parts = [dbData.part1, dbData.part2, dbData.part3];
+    const flat: { resource: ResourceEntry; phaseIndex: number }[] = [];
+    parts.forEach((part, phaseIndex) => {
+      part.forEach(resource => flat.push({ resource, phaseIndex }));
     });
+    return flat;
+  }, [dbData]);
+
+  const totalSteps = flatResources.length;
+
+  const phaseEndSteps = useMemo(() => {
+    const c1 = dbData.part1.length;
+    const c2 = c1 + dbData.part2.length;
+    const c3 = c2 + dbData.part3.length;
+    return [c1, c2, c3];
+  }, [dbData]);
+
+  const visibleResources = useMemo(
+    () => flatResources.slice(0, currentStep).map(f => f.resource),
+    [flatResources, currentStep]
+  );
+
+  const activePhaseIndex = useMemo(() => {
+    if (currentStep <= 0) return -1;
+    if (currentStep <= phaseEndSteps[0]) return 0;
+    if (currentStep <= phaseEndSteps[1]) return 1;
+    return 2;
+  }, [currentStep, phaseEndSteps]);
+
+  const isComplete = totalSteps > 0 && currentStep >= totalSteps;
+  const progressPercentage = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
+
+ 
+  useEffect(() => {
+    if (!isPlaying || currentStep >= totalSteps) return;
+    const timeout = setTimeout(() => {
+      setCurrentStep(s => {
+        const next = s + 1;
+        if (next >= totalSteps) setIsPlaying(false);
+        return next;
+      });
+    }, STEP_DELAY);
+    return () => clearTimeout(timeout);
+  }, [isPlaying, currentStep, totalSteps]);
+
+  const handlePlayPause = () => {
+    if (isLoadingData || totalSteps === 0) return;
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
+    if (currentStep >= totalSteps) {
+      setCurrentStep(0);
+    }
+    setIsPlaying(true);
   };
 
-  const playTimelapse = useCallback(async () => {
-    if (isPlaying || isLoadingData) return;
-    setIsPlaying(true);
-    setVisibleResources([]);
-    setTimelineProgressPercentage(0);
+  const seekToStep = (step: number) => {
+    setIsPlaying(false);
+    setCurrentStep(step);
+  };
 
-    const segmentWidth = 100 / TIMELINE_PHASES.length;
-    setCurrentPhaseIndex(0);
-    setCurrentPhaseLabel(TIMELINE_PHASES[0]);
-    await staggerMarkers(dbData.part1, 100, p => {
-      setTimelineProgressPercentage(0 * segmentWidth + p * segmentWidth);
-    });
-
-    await new Promise(r => setTimeout(r, 800));
-
-    // Phase 2
-    setCurrentPhaseIndex(1);
-    setCurrentPhaseLabel(TIMELINE_PHASES[1]);
-    await staggerMarkers(dbData.part2, 80, p => {
-      setTimelineProgressPercentage(1 * segmentWidth + p * segmentWidth);
-    });
-
-    await new Promise(r => setTimeout(r, 800));
-
-    // Phase 3
-    setCurrentPhaseIndex(2);
-    setCurrentPhaseLabel(TIMELINE_PHASES[2]);
-    await staggerMarkers(dbData.part3, 50, p => {
-      setTimelineProgressPercentage(2 * segmentWidth + p * segmentWidth);
-    });
-
-    setTimeout(() => {
-      setCurrentPhaseIndex(3);
-      setCurrentPhaseLabel('');
-      setTimelineProgressPercentage(100);
-      setIsPlaying(false);
-    }, 1500);
-  }, [isPlaying, isLoadingData, dbData]);
+  const displayLabel = useMemo(() => {
+    if (isLoadingData) return 'Loading Data...';
+    if (currentStep === 0) return 'Ready to visualize';
+    if (isComplete) return 'Complete';
+    return TIMELINE_PHASES[activePhaseIndex] ?? '';
+  }, [isLoadingData, currentStep, isComplete, activePhaseIndex]);
 
   const onMarkerClick = (resource: ResourceEntry) => {
     setSelectedResource(resource);
@@ -149,46 +146,67 @@ const Map = () => {
     });
   };
 
+  const chipStyle = (active: boolean): CSSProperties => ({
+    padding: '5px 10px',
+    fontSize: '0.78rem',
+    fontWeight: 600,
+    borderRadius: '999px',
+    border: active ? '1px solid #007BFF' : '1px solid #d0d5dd',
+    backgroundColor: active ? '#007BFF' : 'white',
+    color: active ? 'white' : '#60718C',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    transition: 'all 0.15s ease'
+  });
+
   return (
     <div style={{ position: 'relative' }}>
       <div
         style={{
           position: 'absolute',
-          top: '8dvh',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          bottom: isMobile ? '16px' : '24px',
+          left: isMobile ? '12px' : '24px',
+          right: isMobile ? '12px' : 'auto',
           zIndex: 10,
           backgroundColor: 'white',
-          padding: '20px 30px',
+          padding: '16px 18px',
           borderRadius: '12px',
           boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-          textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px',
-          minWidth: '320px'
+          gap: '12px',
+          width: isMobile ? 'auto' : '340px',
+          maxWidth: '92vw'
         }}
       >
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            gap: '8px'
+          }}
+        >
           <h2
             style={{
               margin: 0,
-              fontSize: '1.2rem',
+              fontSize: '1.1rem',
               fontWeight: 'bold',
               color: '#333'
             }}
           >
-            {isLoadingData ? 'Loading Data...' : currentPhaseLabel}
+            {displayLabel}
           </h2>
           {!isLoadingData && (
             <p
               style={{
-                margin: '5px 0 0 0',
-                fontSize: '1rem',
-                color: '#60718C'
+                margin: 0,
+                fontSize: '0.9rem',
+                color: '#60718C',
+                whiteSpace: 'nowrap'
               }}
             >
-              Bathrooms Mapped: <strong>{visibleResources.length}</strong>
+              Mapped: <strong>{visibleResources.length}</strong>
             </p>
           )}
         </div>
@@ -198,7 +216,7 @@ const Map = () => {
           style={{
             position: 'relative',
             height: '24px',
-            margin: '5px 10px',
+            margin: '2px 8px',
             zIndex: 1
           }}
         >
@@ -222,7 +240,7 @@ const Map = () => {
               position: 'absolute',
               top: '50%',
               left: '0',
-              width: `${timelineProgressPercentage}%`,
+              width: `${progressPercentage}%`,
               height: '4px',
               backgroundColor: '#007BFF',
               transform: 'translateY(-50%)',
@@ -232,15 +250,15 @@ const Map = () => {
             }}
           />
 
-          {/* Timeline Nodes */}
           {TIMELINE_PHASES.map((phase, index) => {
-            const isActive = currentPhaseIndex >= index;
+            const isActive = activePhaseIndex >= index;
             const leftPos = `${index * (100 / TIMELINE_PHASES.length)}%`;
 
             return (
               <div
                 key={phase}
-                title={phase}
+                title={`Jump to ${phase}`}
+                onClick={() => seekToStep(phaseEndSteps[index])}
                 style={{
                   position: 'absolute',
                   left: leftPos,
@@ -251,6 +269,7 @@ const Map = () => {
                   borderRadius: '50%',
                   backgroundColor: isActive ? '#007BFF' : '#e0e0e0',
                   border: '3px solid white',
+                  cursor: 'pointer',
                   transition: 'background-color 0.3s ease-in-out',
                   boxShadow: isActive
                     ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
@@ -260,9 +279,9 @@ const Map = () => {
             );
           })}
 
-          {/* Final "Complete" Node at 100% */}
           <div
-            title="Complete"
+            title="Jump to end"
+            onClick={() => seekToStep(totalSteps)}
             style={{
               position: 'absolute',
               left: '100%',
@@ -271,21 +290,43 @@ const Map = () => {
               width: '16px',
               height: '16px',
               borderRadius: '50%',
-              backgroundColor: currentPhaseIndex >= 3 ? '#007BFF' : '#e0e0e0',
+              backgroundColor: isComplete ? '#007BFF' : '#e0e0e0',
               border: '3px solid white',
+              cursor: 'pointer',
               transition: 'background-color 0.3s ease-in-out',
-              boxShadow:
-                currentPhaseIndex >= 3
-                  ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
-                  : 'none'
+              boxShadow: isComplete
+                ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
+                : 'none'
             }}
           />
         </div>
 
-        {!isPlaying && !isLoadingData && (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '6px',
+            justifyContent: 'center'
+          }}
+        >
+          {TIMELINE_PHASES.map((phase, index) => (
+            <button
+              key={phase}
+              onClick={() => seekToStep(phaseEndSteps[index])}
+              disabled={isLoadingData || totalSteps === 0}
+              style={chipStyle(currentStep > 0 && activePhaseIndex === index)}
+            >
+              {phase}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px' }}>
           <button
-            onClick={playTimelapse}
+            onClick={handlePlayPause}
+            disabled={isLoadingData || totalSteps === 0}
             style={{
+              flex: 1,
               padding: '10px 20px',
               backgroundColor: '#007BFF',
               color: 'white',
@@ -293,8 +334,7 @@ const Map = () => {
               borderRadius: '6px',
               cursor: 'pointer',
               fontWeight: 'bold',
-              transition: 'background-color 0.2s',
-              marginTop: '5px'
+              transition: 'background-color 0.2s'
             }}
             onMouseOver={e =>
               (e.currentTarget.style.backgroundColor = '#0056b3')
@@ -303,9 +343,33 @@ const Map = () => {
               (e.currentTarget.style.backgroundColor = '#007BFF')
             }
           >
-            {visibleResources.length > 0 ? '' : 'Play Timelapse'}
+            {isPlaying
+              ? 'Pause'
+              : isComplete
+                ? 'Replay'
+                : currentStep > 0
+                  ? 'Resume'
+                  : 'Play Timelapse'}
           </button>
-        )}
+          {currentStep > 0 && !isPlaying && (
+            <button
+              onClick={() => seekToStep(0)}
+              disabled={isLoadingData}
+              style={{
+                padding: '10px 16px',
+                backgroundColor: 'white',
+                color: '#60718C',
+                border: '1px solid #d0d5dd',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'background-color 0.2s'
+              }}
+            >
+              Reset
+            </button>
+          )}
+        </div>
       </div>
 
       <GoogleMap
