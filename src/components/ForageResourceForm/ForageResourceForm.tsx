@@ -1,47 +1,55 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { Stack } from '@mui/material';
-import { useToolbarContext } from 'contexts/ToolbarContext';
-import FormTextField from 'components/forms/FormTextField/FormTextField';
-import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
+import { Stack } from '@mui/material';
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
-import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
+import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
+import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
+import FormTextField from 'components/forms/FormTextField/FormTextField';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
-import ResourceForm from 'components/AddResourceModal/ResourceForm';
-import foragingResourceSchema, {
-  type ForagingFormValues
-} from 'schemas/foragingResourceSchema';
-import { tagOptions, forageTypeOptions } from './choiceFieldOptions';
-
-type AddForageFormProps = {
-  onGoBack: VoidFunction;
-  onComplete: VoidFunction;
-};
+import { useToolbarContext } from 'contexts/ToolbarContext';
+import { useForm, FormProvider } from 'react-hook-form';
+import dropNullEntries from 'utils/dropNullEntries';
+import ResourceForm from 'components/ResourceForm/ResourceForm';
+import { forageTypeOptions, tagOptions } from './choiceFieldOptions';
+import foragingResourceSchema from 'schemas/foragingResourceSchema';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import type { ForagingFormValues } from 'schemas/foragingResourceSchema';
 
 type FormValues = ForagingFormValues;
 
-const TITLE = 'Add a Foraging Resource';
+type ForageResourceFormProps = {
+  defaultValues?: ResourceEntry | null;
+  onSubmit: (values: FormValues) => void;
+  onGoBack?: VoidFunction;
+  isSubmitting?: boolean;
+};
+
 const COLOR = '#5DA694';
 const SCHEMA = foragingResourceSchema;
 
-const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
+const ForageResourceForm = ({
+  defaultValues,
+  isSubmitting,
+  onSubmit,
+  onGoBack
+}: ForageResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
-  const { mutate: addResource, isPending } = useAddResourceMutation();
-
-  const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
-    resolver: zodResolver(SCHEMA)
-  });
-
   const onClose = () => {
-    onGoBack();
+    if (onGoBack) {
+      onGoBack();
+    }
+
     setToolbarModal(null);
   };
 
-  const onSubmit = (resource: FormValues) => {
-    addResource(resource, { onSuccess: onComplete });
-  };
+  const methods = useForm({
+    defaultValues: SCHEMA.parse(
+      defaultValues ? dropNullEntries(defaultValues) : {}
+    ),
+    resolver: zodResolver(SCHEMA)
+  });
+
+  const isUpdating = Boolean(defaultValues);
+  const TITLE = `${isUpdating ? 'Update' : 'Add'} a Foraging Resource`;
 
   return (
     <FormProvider {...methods}>
@@ -49,7 +57,7 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
         title={TITLE}
         color={COLOR}
         onSubmit={onSubmit}
-        isSubmitting={isPending}
+        isSubmitting={isSubmitting}
         onClose={onClose}
         onGoBack={onGoBack}
         renderPageOne={({ imageElement, shouldShowImageElement }) => (
@@ -125,4 +133,4 @@ const AddForageForm = ({ onGoBack, onComplete }: AddForageFormProps) => {
   );
 };
 
-export default AddForageForm;
+export default ForageResourceForm;

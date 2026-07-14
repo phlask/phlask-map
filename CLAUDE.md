@@ -54,19 +54,10 @@ Known tables: `resources`, `contributors`, `contact_submissions`
 
 ## Architecture
 
-### State Management (Redux)
-
-The app uses Redux Toolkit for state management. Key files:
-- `src/store.ts` - Store configuration using `configureStore`
-- `src/reducers/filterMarkers.js` - Main reducer containing all app state
-- `src/actions/actions.js` - Action creators and action type constants
-- `src/selectors/resourceSelectors.js` - Memoized selectors using Reselect for filtering resources
-
-Redux state is initialized in `src/App.tsx` via the `Provider` component, making it available app-wide.
-
 ### Resource Types
 
 Four resource types defined in `src/types/ResourceEntry.js`:
+
 - `WATER` - Water fountains, bottle fillers, water coolers
 - `FOOD` - Food banks, prepared meals, distribution sites
 - `FORAGE` - Foraging locations (nuts, fruits, leaves, etc.)
@@ -91,6 +82,7 @@ Uses Supabase (PostgreSQL) for data storage. Resources are fetched via `actions.
 ### Testing Structure
 
 Cypress tests are split by viewport:
+
 - `cypress/e2e/desktop/` - Desktop tests (default config)
 - `cypress/e2e/mobile/` - Mobile tests (iPhone viewport, `cypress.mobile.config.mjs`)
 
@@ -109,29 +101,35 @@ Test data is generated before each run via `cypress/testDataGenerator.js`.
 When working on features or fixes, follow this loop:
 
 ### 1. Start Dev Server
+
 ```bash
 yarn start  # Run in background, serves at localhost:5173 with hot reload
 ```
 
 ### 2. Develop & Monitor
+
 - Make code changes - Vite hot reloads automatically
 - Monitor terminal output for build errors/warnings
 - Check browser console for frontend JS errors
 
 ### 3. Visual Testing (Chrome MCP)
+
 - Navigate to localhost:5173 when ready to inspect
 - Take screenshots to verify UI changes
 - Test interactions (clicks, form inputs, navigation)
 - Check console logs for runtime errors
 
 ### 4. Automated Testing
+
 ```bash
 yarn test         # Desktop Cypress tests
 yarn test:mobile  # Mobile Cypress tests
 ```
+
 Write new tests in `cypress/e2e/desktop/` or `cypress/e2e/mobile/` focused on the feature being developed.
 
 ### 5. Create PR
+
 ```bash
 git checkout -b feature/description
 git add . && git commit
@@ -140,11 +138,14 @@ gh pr create --base develop
 ```
 
 ### 6. Verify Preview
+
 - PR triggers deploy to https://test.phlask.me/ (~5 minutes)
 - Visually verify the deployed preview before merging
 
 ### 7. Check CI Results
+
 After pushing, monitor GitHub Actions CI results:
+
 ```bash
 # List recent workflow runs for the repo
 gh run list --limit 5
@@ -163,6 +164,7 @@ gh run watch <run-id>
 ```
 
 If CI fails:
+
 1. Review failed logs with `gh run view <run-id> --log-failed`
 2. Fix the issues locally
 3. Run relevant tests locally (`yarn test` or `yarn test:mobile`)

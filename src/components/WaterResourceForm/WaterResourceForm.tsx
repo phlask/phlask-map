@@ -2,45 +2,55 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Stack } from '@mui/material';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import FormTextField from 'components/forms/FormTextField/FormTextField';
+import FormMultipleChoiceField from 'components/forms/FormMultipleChoiceField/FormMultipleChoiceField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormCheckboxListField from 'components/forms/FormCheckboxListField/FormCheckboxListField';
 import FormResourceAddressField from 'components/forms/FormAddressField/FormResourceAddressField';
-import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import ResourceEntryTypeField from 'components/forms/ResourceEntryTypeField/ResourceEntryTypeField';
-import ResourceForm from 'components/AddResourceModal/ResourceForm';
-import bathroomResourceSchema, {
-  type BathroomFormValues
-} from 'schemas/bathroomResourceSchema';
-import { tagOptions } from './choiceFieldOptions';
+import ResourceForm from 'components/ResourceForm/ResourceForm';
+import waterResourceSchema, {
+  type WaterFormValues
+} from 'schemas/waterResourceSchema';
+import { tagOptions, waterDispenserTypeOptions } from './choiceFieldOptions';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import dropNullEntries from 'utils/dropNullEntries';
 
-type AddBathroomFormProps = {
-  onGoBack: VoidFunction;
-  onComplete: VoidFunction;
+export type FormValues = WaterFormValues;
+
+type WaterResourceFormProps = {
+  defaultValues?: ResourceEntry | null;
+  onSubmit: (values: FormValues) => void;
+  onGoBack?: VoidFunction;
+  isSubmitting?: boolean;
 };
 
-type FormValues = BathroomFormValues;
+const COLOR = '#5286E9';
+const SCHEMA = waterResourceSchema;
 
-const TITLE = 'Add a Bathroom Resource';
-const COLOR = '#7C7C7C';
-const SCHEMA = bathroomResourceSchema;
-
-const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
+const WaterResourceForm = ({
+  defaultValues = null,
+  isSubmitting = false,
+  onGoBack,
+  onSubmit
+}: WaterResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
-  const { mutate: addResource, isPending } = useAddResourceMutation();
-
-  const methods = useForm({
-    defaultValues: SCHEMA.parse({}),
-    resolver: zodResolver(SCHEMA)
-  });
-
   const onClose = () => {
-    onGoBack();
+    if (onGoBack) {
+      onGoBack();
+    }
+
     setToolbarModal(null);
   };
 
-  const onSubmit = (resource: FormValues) => {
-    addResource(resource, { onSuccess: onComplete });
-  };
+  const methods = useForm({
+    defaultValues: SCHEMA.parse(
+      defaultValues ? dropNullEntries(defaultValues) : {}
+    ),
+    resolver: zodResolver(SCHEMA)
+  });
+
+  const isUpdating = Boolean(defaultValues);
+  const TITLE = `${isUpdating ? 'Update' : 'Add'} a Water Resource`;
 
   return (
     <FormProvider {...methods}>
@@ -48,7 +58,7 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
         title={TITLE}
         color={COLOR}
         onSubmit={onSubmit}
-        isSubmitting={isPending}
+        isSubmitting={isSubmitting}
         onClose={onClose}
         onGoBack={onGoBack}
         renderPageOne={({ imageElement, shouldShowImageElement }) => (
@@ -80,6 +90,18 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
               />
               <ResourceEntryTypeField />
             </Stack>
+            <Stack
+              direction={{ sx: 'column', md: 'row' }}
+              gap={2}
+              justifyContent={{ sx: 'flex-start', md: 'center' }}
+            >
+              <FormMultipleChoiceField<FormValues>
+                name="water.dispenser_type"
+                label="Dispenser Type"
+                options={waterDispenserTypeOptions}
+                fullWidth
+              />
+            </Stack>
           </>
         )}
         renderPageTwo={({ imageElement, shouldShowImageElement }) => (
@@ -91,7 +113,7 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
             >
               {shouldShowImageElement && imageElement}
               <FormCheckboxListField<FormValues>
-                name="bathroom.tags"
+                name="water.tags"
                 label="Helpful info"
                 options={tagOptions}
                 labelPlacement="start"
@@ -112,4 +134,4 @@ const AddBathroomForm = ({ onGoBack, onComplete }: AddBathroomFormProps) => {
   );
 };
 
-export default AddBathroomForm;
+export default WaterResourceForm;

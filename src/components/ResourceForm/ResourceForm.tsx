@@ -7,7 +7,7 @@ import {
   Typography
 } from '@mui/material';
 import useIsMobile from 'hooks/useIsMobile';
-import CloseButton from './CloseButton/CloseButton';
+import CloseButton from 'components/CloseButton/CloseButton';
 import { useState, type ReactNode } from 'react';
 import noop from 'utils/noop';
 import {
@@ -15,7 +15,7 @@ import {
   type FieldValues,
   type SubmitHandler
 } from 'react-hook-form';
-import ResourceDefaultFields from './ResourceDefaultFields/ResourceDefaultFields';
+import ResourceDefaultFields from 'components/ResourceDefaultFields/ResourceDefaultFields';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FormDevtools from 'components/forms/FormDevtools/FormDevtools';
