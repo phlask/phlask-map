@@ -1,7 +1,7 @@
 import PhillySkyline from 'icons/PhillySkyline';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import CloseButton from '../CloseButton/CloseButton';
+import CloseButton from 'components/CloseButton/CloseButton';
 import noop from 'utils/noop';
 
 type ResourceFormSuccessStepDesktopProps = {
