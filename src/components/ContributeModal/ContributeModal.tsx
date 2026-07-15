@@ -9,12 +9,12 @@ const ContributeModal = () => {
   const { toolbarModal } = useToolbarContext();
   const { resourceRevision } = useResourceRevisionContext();
 
+  const isContributeModalOpen = toolbarModal === 'contribute';
+  const isEditingResource = Boolean(resourceRevision);
+
   return (
-    <ModalOrBottomSheet
-      isOpen={toolbarModal === 'contribute'}
-      shouldHideBackdrop
-    >
-      {resourceRevision && IS_EDIT_RESOURCE_FEATURE_ENABLED ? (
+    <ModalOrBottomSheet isOpen={isContributeModalOpen} shouldHideBackdrop>
+      {isEditingResource && IS_EDIT_RESOURCE_FEATURE_ENABLED ? (
         <EditResourceForm />
       ) : (
         <AddResourceForm />
