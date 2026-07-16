@@ -16,7 +16,6 @@ const EditResourceForm = () => {
   const queryClient = useQueryClient();
   const { setToolbarModal } = useToolbarContext();
 
-  // TODO: integrate edit resource request state
   const { isPending, isSuccess, mutate } = useAddResourceRevisionMutation();
 
   const onSuccess = () => {
