@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import BathroomResourceForm from 'components/BathroomResourceForm/BathroomResourceForm';
 import FoodResourceForm from 'components/FoodResourceForm/FoodResourceForm';
 import ForageResourceForm from 'components/ForageResourceForm/ForageResourceForm';
-import ResourceFormSuccessStep from 'components/ResourceFormSuccessStep/ResourceFormSuccessStep';
+import ResourceFormSuccess from 'components/ResourceFormSuccessStep/ResourceFormSuccessStep';
 import WaterResourceForm from 'components/WaterResourceForm/WaterResourceForm';
 import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
 import { useToolbarContext } from 'contexts/ToolbarContext';
@@ -32,7 +32,7 @@ const EditResourceForm = () => {
   };
 
   if (isSuccess) {
-    return <ResourceFormSuccessStep onClose={handleClose} />;
+    return <ResourceFormSuccess onClose={handleClose} />;
   }
 
   if (!resourceRevision) {
