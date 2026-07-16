@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import BathroomResourceForm from 'components/BathroomResourceForm/BathroomResourceForm';
 import FoodResourceForm from 'components/FoodResourceForm/FoodResourceForm';
 import ForageResourceForm from 'components/ForageResourceForm/ForageResourceForm';
-import ResourceFormSuccess from 'components/ResourceFormSuccessStep/ResourceFormSuccessStep';
+import ResourceFormSuccess from 'components/ResourceFormSuccess/ResourceFormSuccess';
 import WaterResourceForm from 'components/WaterResourceForm/WaterResourceForm';
 import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
 import { useToolbarContext } from 'contexts/ToolbarContext';
