@@ -96,7 +96,21 @@ const Map = () => {
   }, [currentStep, phaseEndSteps]);
 
   const isComplete = totalSteps > 0 && currentStep >= totalSteps;
-  const progressPercentage = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
+
+  const progressPercentage = useMemo(() => {
+    if (totalSteps === 0 || currentStep <= 0) return 0;
+    const segment = 100 / TIMELINE_PHASES.length;
+    for (let i = 0; i < TIMELINE_PHASES.length; i++) {
+      const start = dotSteps[i];
+      const end = dotSteps[i + 1];
+      if (currentStep <= end) {
+        const span = end - start;
+        const withinPhase = span > 0 ? (currentStep - start) / span : 1;
+        return i * segment + withinPhase * segment;
+      }
+    }
+    return 100;
+  }, [currentStep, totalSteps, dotSteps]);
 
  
   useEffect(() => {
@@ -250,15 +264,17 @@ const Map = () => {
             }}
           />
 
-          {TIMELINE_PHASES.map((phase, index) => {
-            const isActive = activePhaseIndex >= index;
+          {dotSteps.map((step, index) => {
+            const isActive = currentStep > 0 && currentStep >= step;
             const leftPos = `${index * (100 / TIMELINE_PHASES.length)}%`;
+            const label =
+              index === 0 ? 'Start' : `End of ${TIMELINE_PHASES[index - 1]}`;
 
             return (
               <div
-                key={phase}
-                title={`Jump to ${phase}`}
-                onClick={() => seekToStep(phaseEndSteps[index])}
+                key={label}
+                title={`Jump to ${label}`}
+                onClick={() => seekToStep(step)}
                 style={{
                   position: 'absolute',
                   left: leftPos,
@@ -278,27 +294,6 @@ const Map = () => {
               />
             );
           })}
-
-          <div
-            title="Jump to end"
-            onClick={() => seekToStep(totalSteps)}
-            style={{
-              position: 'absolute',
-              left: '100%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '16px',
-              height: '16px',
-              borderRadius: '50%',
-              backgroundColor: isComplete ? '#007BFF' : '#e0e0e0',
-              border: '3px solid white',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s ease-in-out',
-              boxShadow: isComplete
-                ? '0 0 0 2px rgba(0, 123, 255, 0.2)'
-                : 'none'
-            }}
-          />
         </div>
 
         <div
