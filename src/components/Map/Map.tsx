@@ -4,12 +4,7 @@ import {
   useMap
 } from '@vis.gl/react-google-maps';
 import { usePostHog } from 'posthog-js/react';
-import {
-  type CSSProperties,
-  useState,
-  useMemo,
-  useEffect
-} from 'react';
+import { type CSSProperties, useState, useMemo, useEffect } from 'react';
 import useIsMobile from 'hooks/useIsMobile';
 import { CITY_HALL_LOCATION } from 'constants/defaults';
 import { type ResourceEntry } from 'types/ResourceEntry';
@@ -44,7 +39,6 @@ const Map = () => {
   }>({ part1: [], part2: [], part3: [] });
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
@@ -64,7 +58,6 @@ const Map = () => {
     loadData();
   }, []);
 
-
   const flatResources = useMemo(() => {
     const parts = [dbData.part1, dbData.part2, dbData.part3];
     const flat: { resource: ResourceEntry; phaseIndex: number }[] = [];
@@ -82,6 +75,11 @@ const Map = () => {
     const c3 = c2 + dbData.part3.length;
     return [c1, c2, c3];
   }, [dbData]);
+
+  // The step each dot on the track represents: dot 0 is the start, and dot
+  // i+1 is the end of phase i. Chips seek to these same steps, so clicking a
+  // chip always lands the progress bar exactly on the next dot.
+  const dotSteps = useMemo(() => [0, ...phaseEndSteps], [phaseEndSteps]);
 
   const visibleResources = useMemo(
     () => flatResources.slice(0, currentStep).map(f => f.resource),
@@ -112,7 +110,6 @@ const Map = () => {
     return 100;
   }, [currentStep, totalSteps, dotSteps]);
 
- 
   useEffect(() => {
     if (!isPlaying || currentStep >= totalSteps) return;
     const timeout = setTimeout(() => {
@@ -341,10 +338,10 @@ const Map = () => {
             {isPlaying
               ? 'Pause'
               : isComplete
-                ? 'Replay'
-                : currentStep > 0
-                  ? 'Resume'
-                  : 'Play Timelapse'}
+              ? 'Replay'
+              : currentStep > 0
+              ? 'Resume'
+              : 'Play Timelapse'}
           </button>
           {currentStep > 0 && !isPlaying && (
             <button
