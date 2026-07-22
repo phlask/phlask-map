@@ -7,7 +7,12 @@ import {
   FormLabel
 } from '@mui/material';
 import { type ReactNode } from 'react';
-import { useFormContext, type FieldValues, type Path } from 'react-hook-form';
+import {
+  useFormContext,
+  useWatch,
+  type FieldValues,
+  type Path
+} from 'react-hook-form';
 
 type FormCheckboxListFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
@@ -27,8 +32,9 @@ const FormCheckboxListField = <Values extends FieldValues>({
   labelPlacement = 'end',
   options = []
 }: FormCheckboxListFieldProps<Values>) => {
-  const { register } = useFormContext<Values>();
+  const { register, control } = useFormContext<Values>();
   const field = register(name);
+  const watchedValue = useWatch({ name, control });
 
   return (
     <FormControl fullWidth={fullWidth}>
@@ -40,7 +46,9 @@ const FormCheckboxListField = <Values extends FieldValues>({
           <FormControlLabel
             {...field}
             key={option.key}
-            control={<Checkbox />}
+            control={
+              <Checkbox defaultChecked={watchedValue?.includes(option.value)} />
+            }
             label={option.label}
             labelPlacement={labelPlacement}
             value={option.value}
