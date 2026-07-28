@@ -14,10 +14,6 @@
   "theme_color": "#26A9E0",
   "background_color": "#FFFFFF",
   "orientation": "portrait",
-  "categories": [
-    "utilities",
-    "social",
-    "maps"
-  ],
+  "categories": ["utilities", "social", "maps"],
   "lang": "en-US"
 }
