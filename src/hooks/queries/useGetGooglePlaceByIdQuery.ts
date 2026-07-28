@@ -3,7 +3,7 @@ import { useQuery, skipToken } from '@tanstack/react-query';
 const useGetGooglePlaceByIdQuery = (placeId: string | null) => {
   const { data, isPending } = useQuery({
     queryKey: ['place-id', placeId],
-    queryFn: !placeId ? skipToken : () =>
+    queryFn: placeId ? () =>
       new google.maps.places.Place({
         id: placeId
       }).fetchFields({
@@ -13,7 +13,7 @@ const useGetGooglePlaceByIdQuery = (placeId: string | null) => {
           'addressComponents',
           'types'
         ]
-      }).then(({ place }) => place),
+      }).then(({ place }) => place) : skipToken,
   });
 
   return { data, isPending };

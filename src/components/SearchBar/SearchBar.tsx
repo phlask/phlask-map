@@ -6,7 +6,7 @@ import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import { toLatLngLiteral, useMap } from '@vis.gl/react-google-maps';
 import useActiveSearchLocation from 'hooks/useActiveSearchLocation';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import useGetGooglePlaceById from 'hooks/queries/useGetGooglePlaceById';
+import useGetGooglePlaceByIdQuery from 'hooks/queries/useGetGooglePlaceByIdQuery';
 
 type SearchBarProps = {
   open?: boolean;
@@ -16,13 +16,13 @@ const SearchBar = ({ open = false }: SearchBarProps) => {
   const [value, setValue] = useState<
     google.maps.places.PlacePrediction | google.maps.places.Place | null
   >(null);
-  const { onChangeActiveSearchLocation } = useActiveSearchLocation();
+  const { placeId, onChangeActiveSearchLocation } = useActiveSearchLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
   const { isFetching, onDebouncedChange, onChange, suggestions } =
     useGooglePlacesAutocomplete();
 
-  const { data: activePlace = null } = useGetGooglePlaceById();
+  const { data: activePlace = null } = useGetGooglePlaceByIdQuery(placeId);
 
   const onSelect = async (
     place: google.maps.places.Place | google.maps.places.PlacePrediction
