@@ -10,7 +10,7 @@ export const useGetSelectedResourceQuery = () => {
     isEnabled
   } = useQuery({
     queryKey: ['selected-resource', selectedResource],
-    queryFn: selectedResource ? () => getResourceById(selectedResource!) : skipToken,
+    queryFn: selectedResource ? () => getResourceById(selectedResource) : skipToken,
     retry: false
   });
 
