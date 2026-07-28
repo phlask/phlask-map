@@ -6,7 +6,7 @@ import ResourceFormSuccess from 'components/ResourceFormSuccess/ResourceFormSucc
 import WaterResourceForm from 'components/WaterResourceForm/WaterResourceForm';
 import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
 import { useToolbarContext } from 'contexts/ToolbarContext';
-import useAddResourceRevisionMutation from 'hooks/mutations/useAddResourceRevisionMutation';
+import useAddResourceEditMutation from 'hooks/mutations/useAddResourceEditMutation';
 import { ResourceType } from 'hooks/useResourceType';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
@@ -16,14 +16,10 @@ const EditResourceForm = () => {
   const queryClient = useQueryClient();
   const { setToolbarModal } = useToolbarContext();
 
-  const { isPending, isSuccess, mutate } = useAddResourceRevisionMutation();
+  const { isPending, isSuccess, mutate } = useAddResourceEditMutation();
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['resources'] });
-  };
-
-  const onSubmit = (values: ResourceEntry) => {
-    mutate(values, { onSuccess });
   };
 
   const handleClose = () => {
@@ -38,6 +34,13 @@ const EditResourceForm = () => {
   if (!resourceRevision) {
     return null;
   }
+
+  const onSubmit = ({ id: _id, ...values }: ResourceEntry) => {
+    if (!resourceRevision.id) {
+      return;
+    }
+    mutate({ ...values, mapped_resource: resourceRevision.id }, { onSuccess });
+  };
 
   const resourceForms = {
     [ResourceType.WATER]: (
