@@ -7,26 +7,23 @@ import queryClient from 'services/queryClient';
 import ThemeProvider from './ThemeProvider';
 import { env } from 'config';
 import AnalyticsProvider from './AnalyticsProvider';
-import { HelmetProvider } from 'react-helmet-async';
 
 const REACT_GOOGLE_MAPS_API_KEY = env.VITE_REACT_GOOGLE_MAPS_API_KEY;
 
 const Providers = ({ children }: PropsWithChildren) => {
   return (
-    <HelmetProvider>
-      <AnalyticsProvider>
-        <QueryClientProvider client={queryClient}>
-          <APIProvider apiKey={REACT_GOOGLE_MAPS_API_KEY} libraries={['places']}>
-            <ToolbarContextProvider>
-              <ThemeProvider>
-                <CssBaseline />
-                {children}
-              </ThemeProvider>
-            </ToolbarContextProvider>
-          </APIProvider>
-        </QueryClientProvider>
-      </AnalyticsProvider>
-    </HelmetProvider>
+    <AnalyticsProvider>
+      <QueryClientProvider client={queryClient}>
+        <APIProvider apiKey={REACT_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+          <ToolbarContextProvider>
+            <ThemeProvider>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </ToolbarContextProvider>
+        </APIProvider>
+      </QueryClientProvider>
+    </AnalyticsProvider>
   );
 };
 

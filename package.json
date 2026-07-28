@@ -17,7 +17,6 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-dropzone": "^14.4.1",
-    "react-helmet-async": "^3.0.0",
     "react-hook-form": "7.69.0",
     "react-router": "^7.17.0",
     "react-toastify": "^11.1.0",

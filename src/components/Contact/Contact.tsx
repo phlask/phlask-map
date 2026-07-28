@@ -6,7 +6,6 @@ import EmailConnect from 'components/EmailConnect/EmailConnect';
 import useIsMobile from 'hooks/useIsMobile';
 import FeedbackFormSuccess from 'components/forms/FeedbackFromSuccess/FeedbackFormSuccess';
 import useAddFeedbackMutation from 'hooks/mutations/useAddFeedbackMutation';
-import SEO from 'components/SEO/SEO';
 
 const TITLE = 'Contact';
 
@@ -20,11 +19,6 @@ const Contact = () => {
 
   return (
     <Page title={TITLE} data-cy="contact">
-      <SEO
-        title="Contact"
-        description="Get in touch with the PHLASK team to provide feedback, report issues, or ask questions about our free resource ecosystem in Philadelphia."
-        canonicalUrl="https://phlask.me/contact"
-      />
       {isSuccess ? (
         <FeedbackFormSuccess />
       ) : (

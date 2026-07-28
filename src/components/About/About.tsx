@@ -1,7 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import Page from 'components/Page/Page';
 import PhlaskNameVisualExplainer from 'components/PhlaskNameVisualExplainer/PhlaskNameVisualExplainer';
-import SEO from 'components/SEO/SEO';
 import type { ReactNode } from 'react';
 
 type PageSectionProps = {
@@ -29,11 +28,6 @@ const PageSection = ({ title = null, children }: PageSectionProps) => {
 
 const About = () => (
   <Page title="About PHLASK" data-cy="about">
-    <SEO
-      title="About"
-      description="Learn about PHLASK, an ecosystem for finding and sharing free resources like water, food, bathrooms, and foraging in Philadelphia."
-      canonicalUrl="https://phlask.me/about"
-    />
     <PageSection title="What is PHLASK?">
       PHLASK is an app that connects people in Philadelphia to free,
       life-sustaining resources. The interactive map shows users where to find
