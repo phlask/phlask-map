@@ -12,10 +12,11 @@ const useGetGooglePlaceByIdQuery = (id: string | null) => {
     queryKey: ['place-id', id],
     queryFn: id
       ? () =>
-          new google.maps.places.Place({ id })
-            .fetchFields({ fields: PLACE_FIELDS })
-            .then(({ place }) => place)
-      : skipToken
+          new google.maps.places.Place({ id }).fetchFields({
+            fields: PLACE_FIELDS
+          })
+      : skipToken,
+    select: data => data.place
   });
 
   return { data, isPending };
