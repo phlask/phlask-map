@@ -7,7 +7,7 @@ import noop from 'utils/noop';
 import useSelectedResource from 'hooks/useSelectedResource';
 import { useGetSelectedResourceQuery } from 'hooks/queries/useGetSelectedResourceQuery';
 import { useToolbarContext } from 'contexts/ToolbarContext';
-import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
+import { useResourceEditContext } from 'contexts/ResourceEditContext';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import { IS_EDIT_RESOURCE_FEATURE_ENABLED } from 'constants/flags';
 
@@ -16,7 +16,8 @@ const SelectedResource = () => {
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
   const { setToolbarModal } = useToolbarContext();
-  const { setResourceRevision } = useResourceRevisionContext();
+  const { setResourceEditCandidate: setResourceRevision } =
+    useResourceEditContext();
 
   const handleStartEdit = (resource: ResourceEntry) => {
     if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {

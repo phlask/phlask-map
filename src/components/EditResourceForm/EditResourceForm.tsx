@@ -4,15 +4,15 @@ import FoodResourceForm from 'components/FoodResourceForm/FoodResourceForm';
 import ForageResourceForm from 'components/ForageResourceForm/ForageResourceForm';
 import ResourceFormSuccess from 'components/ResourceFormSuccess/ResourceFormSuccess';
 import WaterResourceForm from 'components/WaterResourceForm/WaterResourceForm';
-import { useResourceRevisionContext } from 'contexts/ResourceRevisionContext';
+import { useResourceEditContext } from 'contexts/ResourceEditContext';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import useAddResourceEditMutation from 'hooks/mutations/useAddResourceEditMutation';
 import { ResourceType } from 'hooks/useResourceType';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
 const EditResourceForm = () => {
-  const { resourceRevision, setResourceRevision } =
-    useResourceRevisionContext();
+  const { resourceEditCandidate, setResourceEditCandidate } =
+    useResourceEditContext();
   const queryClient = useQueryClient();
   const { setToolbarModal } = useToolbarContext();
 
@@ -22,58 +22,61 @@ const EditResourceForm = () => {
     queryClient.invalidateQueries({ queryKey: ['resources'] });
   };
 
-  const handleClose = () => {
+  const onClose = () => {
     setToolbarModal(null);
-    setResourceRevision(null);
+    setResourceEditCandidate(null);
   };
 
   if (isSuccess) {
-    return <ResourceFormSuccess onClose={handleClose} />;
+    return <ResourceFormSuccess onClose={onClose} />;
   }
 
-  if (!resourceRevision) {
+  if (!resourceEditCandidate) {
     return null;
   }
 
   const onSubmit = ({ id: _id, ...values }: ResourceEntry) => {
-    if (!resourceRevision.id) {
+    if (!resourceEditCandidate.id) {
       return;
     }
-    mutate({ ...values, mapped_resource: resourceRevision.id }, { onSuccess });
+    mutate(
+      { ...values, mapped_resource: resourceEditCandidate.id },
+      { onSuccess }
+    );
   };
 
   const resourceForms = {
     [ResourceType.WATER]: (
       <WaterResourceForm
-        defaultValues={resourceRevision}
+        defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.FOOD]: (
       <FoodResourceForm
-        defaultValues={resourceRevision}
+        defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.FORAGE]: (
       <ForageResourceForm
-        defaultValues={resourceRevision}
+        defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.BATHROOM]: (
       <BathroomResourceForm
-        defaultValues={resourceRevision}
+        defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
         onSubmit={onSubmit}
       />
     )
   };
 
-  return resourceForms[resourceRevision.resource_type];
+  return resourceForms[resourceEditCandidate.resource_type];
 };
 
 export default EditResourceForm;
