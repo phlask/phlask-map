@@ -16,8 +16,7 @@ const SelectedResource = () => {
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
   const { setToolbarModal } = useToolbarContext();
-  const { setResourceEditCandidate: setResourceRevision } =
-    useResourceEditContext();
+  const { setResourceEditCandidate } = useResourceEditContext();
 
   const handleStartEdit = (resource: ResourceEntry) => {
     if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
@@ -26,7 +25,7 @@ const SelectedResource = () => {
 
     setToolbarModal('contribute');
     setSelectedResource(null);
-    setResourceRevision({
+    setResourceEditCandidate({
       ...resource,
       date_created: '',
       last_modified: ''
