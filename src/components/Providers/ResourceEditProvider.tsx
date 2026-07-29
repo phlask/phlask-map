@@ -2,7 +2,7 @@ import ResourceEditContext from 'contexts/ResourceEditContext';
 import { type PropsWithChildren, useState, useMemo } from 'react';
 import type { ResourceEntry } from 'types/ResourceEntry';
 
-const ResourceRevisionProvider = ({ children }: PropsWithChildren) => {
+const ResourceEditProvider = ({ children }: PropsWithChildren) => {
   const [resourceEditCandidate, setResourceEditCandidate] =
     useState<ResourceEntry | null>(null);
 
@@ -14,4 +14,4 @@ const ResourceRevisionProvider = ({ children }: PropsWithChildren) => {
   return <ResourceEditContext value={value}>{children}</ResourceEditContext>;
 };
 
-export default ResourceRevisionProvider;
+export default ResourceEditProvider;
