@@ -28,6 +28,12 @@ type RenderFormPageFnConfig = {
 
 type EnderFormPageFn = (config: RenderFormPageFnConfig) => ReactNode;
 
+type PageValue = 1 | 2;
+
+const isValidPageValue = (value: number): value is PageValue => {
+  return value === 1 || value === 2;
+};
+
 type ResourceFormLayoutProps<Values extends FieldValues> = {
   onClose?: VoidFunction;
   title?: string;
@@ -51,7 +57,7 @@ const ResourceForm = <Values extends FieldValues>({
   onClose = noop,
   onGoBack
 }: ResourceFormLayoutProps<Values>) => {
-  const [page, setPage] = useState<1 | 2>(1);
+  const [page, setPage] = useState<PageValue>(1);
   const isMobile = useIsMobile();
 
   const { handleSubmit } = useFormContext<Values>();
@@ -64,8 +70,7 @@ const ResourceForm = <Values extends FieldValues>({
         onGoBack();
       }
 
-      const isInvalid = newValue !== 1 && newValue !== 2;
-      if (isInvalid) {
+      if (!isValidPageValue(newValue)) {
         return prev;
       }
 
