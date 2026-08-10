@@ -30,7 +30,7 @@ const baseResourceSchema = z.object({
   verification: z
     .object({
       verified: z.boolean().default(false),
-      last_modified: z.iso.datetime().default(() => new Date().toISOString()),
+      last_modified: z.iso.datetime().catch(() => new Date().toISOString()),
       verifier: z.string().default('')
     })
     .default(() => ({
@@ -51,7 +51,7 @@ const baseResourceSchema = z.object({
   ),
   status: z
     .enum(['OPERATIONAL', 'TEMPORARILY_CLOSED', 'PERMANENTLY_CLOSED', 'HIDDEN'])
-    .default('OPERATIONAL')
+    .catch('OPERATIONAL')
 });
 
 export type BaseResourceSchema = z.infer<typeof baseResourceSchema>;
