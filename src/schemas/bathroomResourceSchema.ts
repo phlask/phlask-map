@@ -8,16 +8,18 @@ const bathroomResourceSchema = baseResourceSchema.extend({
     .default(ResourceType.BATHROOM),
   bathroom: z
     .object({
-      tags: z.array(
-        z.enum([
-          'WHEELCHAIR_ACCESSIBLE',
-          'GENDER_NEUTRAL',
-          'CHANGING_TABLE',
-          'SINGLE_OCCUPANCY',
-          'HAS_FOUNTAIN',
-          'FAMILY'
-        ])
-      )
+      tags: z
+        .array(
+          z.enum([
+            'WHEELCHAIR_ACCESSIBLE',
+            'GENDER_NEUTRAL',
+            'CHANGING_TABLE',
+            'SINGLE_OCCUPANCY',
+            'HAS_FOUNTAIN',
+            'FAMILY'
+          ])
+        )
+        .default([])
     })
     .default({ tags: [] })
 });

@@ -6,9 +6,13 @@ const foodResourceSchema = baseResourceSchema.extend({
   resource_type: z.literal(ResourceType.FOOD).default(ResourceType.FOOD),
   food: z
     .object({
-      food_type: z.array(z.enum(['PERISHABLE', 'NON_PERISHABLE', 'PREPARED'])),
-      distribution_type: z.array(z.enum(['EAT_ON_SITE', 'DELIVERY', 'PICKUP'])),
-      organization_name: z.string(),
+      food_type: z
+        .array(z.enum(['PERISHABLE', 'NON_PERISHABLE', 'PREPARED']))
+        .default([]),
+      distribution_type: z
+        .array(z.enum(['EAT_ON_SITE', 'DELIVERY', 'PICKUP']))
+        .default([]),
+      organization_name: z.string().default(''),
       organization_url: z
         .union([
           z
@@ -20,13 +24,10 @@ const foodResourceSchema = baseResourceSchema.extend({
           z.literal('')
         ])
         .default(''),
-      organization_type: z.enum([
-        'GOVERNMENT',
-        'BUSINESS',
-        'NON_PROFIT',
-        'UNSURE'
-      ]),
-      tags: z.array(z.string())
+      organization_type: z
+        .enum(['GOVERNMENT', 'BUSINESS', 'NON_PROFIT', 'UNSURE'])
+        .default('UNSURE'),
+      tags: z.array(z.string()).default([])
     })
     .default({
       food_type: [],
