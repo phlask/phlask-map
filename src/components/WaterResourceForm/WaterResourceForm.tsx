@@ -21,6 +21,7 @@ type WaterResourceFormProps = {
   defaultValues?: ResourceEntry | null;
   onSubmit: (values: FormValues) => void;
   onGoBack?: VoidFunction;
+  onClose?: VoidFunction;
   isSubmitting?: boolean;
 };
 
@@ -31,6 +32,7 @@ const WaterResourceForm = ({
   defaultValues = null,
   isSubmitting = false,
   onGoBack,
+  onClose: onCloseProp,
   onSubmit
 }: WaterResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
@@ -38,6 +40,7 @@ const WaterResourceForm = ({
     if (onGoBack) {
       onGoBack();
     }
+    onCloseProp?.();
 
     setToolbarModal(null);
   };
