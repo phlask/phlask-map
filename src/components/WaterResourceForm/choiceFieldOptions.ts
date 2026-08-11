@@ -28,7 +28,7 @@ export const waterDispenserTypeOptions = [
   },
   {
     key: 'VESSEL',
-    label: 'Pitcher',
+    label: 'Vessel',
     value: 'VESSEL'
   },
   {

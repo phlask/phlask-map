@@ -4,13 +4,13 @@ import Typography from '@mui/material/Typography';
 import CloseButton from 'components/CloseButton/CloseButton';
 import noop from 'utils/noop';
 
-type ResourceFormSuccessStepDesktopProps = {
+type ResourceFormSuccessDesktopProps = {
   onClose: VoidFunction;
 };
 
-const ResourceFormSuccessStepDesktop = ({
+const ResourceFormSuccessDesktop = ({
   onClose = noop
-}: ResourceFormSuccessStepDesktopProps) => (
+}: ResourceFormSuccessDesktopProps) => (
   <Stack
     sx={{
       paddingBlock: '60px',
@@ -49,4 +49,4 @@ const ResourceFormSuccessStepDesktop = ({
   </Stack>
 );
 
-export default ResourceFormSuccessStepDesktop;
+export default ResourceFormSuccessDesktop;

@@ -13,7 +13,7 @@
 /** A data source defining where the resource data entry came from */
 type DataSource = {
   /** type The type of data source */
-  type: 'MANUAL' | 'WEB_SCRAPE';
+  type: 'MANUAL' | 'WEB_SCRAPE' | 'MIGRATION';
   /** If available, the URL where this data came from */
   url?: string;
 };

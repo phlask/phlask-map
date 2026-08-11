@@ -3,6 +3,7 @@ import ChooseResourceType from 'components/ChooseResourceType/ChooseResourceType
 import ContributeModal from 'components/ContributeModal/ContributeModal';
 import Filter from 'components/Filter/Filter';
 import Head from 'components/Head/Head';
+import ResourceEditProvider from 'components/Providers/ResourceEditProvider';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SelectedResource from 'components/SelectedResource/SelectedResource';
 import Toolbar from 'components/Toolbar/Toolbar';
@@ -54,9 +55,10 @@ const Overlay = () => {
 
       <ChooseResourceType />
       <Filter />
-
-      <ContributeModal />
-      <SelectedResource />
+      <ResourceEditProvider>
+        <ContributeModal />
+        <SelectedResource />
+      </ResourceEditProvider>
     </>
   );
 };

@@ -37,24 +37,18 @@ type SelectedResourceDetailsProps = {
   onClose?: VoidFunction;
   resource: ResourceEntry | null;
   isError?: boolean;
+  onStartEdit?: (resource: ResourceEntry) => void;
 };
 
 const SelectedResourceDetails = ({
   onClose = noop,
   isError = false,
-  resource
+  resource,
+  onStartEdit = noop
 }: SelectedResourceDetailsProps) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const isMobile = useIsMobile();
   const { data: providers = [] } = useGetResourceProvidersQuery();
-
-  const onStartEdit = () => {
-    if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
-      return;
-    }
-
-    // TODO: Implement edit functionality
-  };
 
   if (isError) {
     return (
@@ -91,7 +85,11 @@ const SelectedResourceDetails = ({
   };
 
   const handleSuggestEdit = () => {
-    onStartEdit();
+    if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
+      return;
+    }
+
+    onStartEdit(resource);
     handleMenuClose();
   };
 

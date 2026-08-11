@@ -1,18 +1,22 @@
 import AddResourceForm from 'components/AddResourceForm/AddResourceForm';
+import EditResourceForm from 'components/EditResourceForm/EditResourceForm';
 import ModalOrBottomSheet from 'components/ModalOrBottomSheet/ModalOrBottomSheet';
 import { IS_EDIT_RESOURCE_FEATURE_ENABLED } from 'constants/flags';
+import { useResourceEditContext } from 'contexts/ResourceEditContext';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 
 const ContributeModal = () => {
   const { toolbarModal } = useToolbarContext();
-  const isContributeModalOpen = toolbarModal === 'contribute';
+  const { resourceEditCandidate } = useResourceEditContext();
 
-  // TODO: Implement the logic to determine if the user is editing a resource
-  const isEditingResource = false;
+  const isContributeModalOpen = toolbarModal === 'contribute';
+  const isEditingResource = Boolean(resourceEditCandidate);
 
   return (
     <ModalOrBottomSheet isOpen={isContributeModalOpen} shouldHideBackdrop>
-      {isEditingResource && IS_EDIT_RESOURCE_FEATURE_ENABLED ? null : (
+      {isEditingResource && IS_EDIT_RESOURCE_FEATURE_ENABLED ? (
+        <EditResourceForm />
+      ) : (
         <AddResourceForm />
       )}
     </ModalOrBottomSheet>

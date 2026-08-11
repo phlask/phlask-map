@@ -13,7 +13,7 @@ import { IconButton } from '@mui/material';
 import CloseButton from 'components/CloseButton/CloseButton';
 import noop from 'utils/noop';
 
-type ResourceFormSuccessStepMobileProps = {
+type ResourceFormSuccessMobileProps = {
   onClose?: VoidFunction;
 };
 
@@ -25,9 +25,9 @@ const getSupportsShare = () => {
   return navigator.canShare();
 };
 
-const ResourceFormSuccessStepMobile = ({
+const ResourceFormSuccessMobile = ({
   onClose = noop
-}: ResourceFormSuccessStepMobileProps) => {
+}: ResourceFormSuccessMobileProps) => {
   const canShare = getSupportsShare();
   const onShare = () => {
     if (!canShare) {
@@ -160,4 +160,4 @@ const ResourceFormSuccessStepMobile = ({
   );
 };
 
-export default ResourceFormSuccessStepMobile;
+export default ResourceFormSuccessMobile;

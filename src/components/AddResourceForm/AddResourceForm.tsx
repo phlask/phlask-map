@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import ChooseResource from 'components/ChooseResource/ChooseResource';
 import { useToolbarContext } from 'contexts/ToolbarContext';
 import { ResourceType, type ResourceTypeOption } from 'hooks/useResourceType';
-import ResourceFormSuccessStep from 'components/ResourceFormSuccessStep/ResourceFormSuccessStep';
+import ResourceFormSuccess from 'components/ResourceFormSuccess/ResourceFormSuccess';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import useAddResourceMutation from 'hooks/mutations/useAddResourceMutation';
 import WaterResourceForm from 'components/WaterResourceForm/WaterResourceForm';
@@ -43,7 +43,7 @@ const AddResourceModal = () => {
   };
 
   if (isSuccess) {
-    return <ResourceFormSuccessStep onClose={handleClose} />;
+    return <ResourceFormSuccess onClose={handleClose} />;
   }
 
   if (!resourceForm) {

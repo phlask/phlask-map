@@ -24,10 +24,15 @@ import FormImageUploadField from 'components/forms/FormImageUploadField/FormImag
 type RenderFormPageFnConfig = {
   imageElement: ReactNode;
   shouldShowImageElement: boolean;
-  disabled?: boolean;
 };
 
 type EnderFormPageFn = (config: RenderFormPageFnConfig) => ReactNode;
+
+type PageValue = 1 | 2;
+
+const isValidPageValue = (value: number): value is PageValue => {
+  return value === 1 || value === 2;
+};
 
 type ResourceFormLayoutProps<Values extends FieldValues> = {
   onClose?: VoidFunction;
@@ -50,9 +55,9 @@ const ResourceForm = <Values extends FieldValues>({
   isSubmitting = false,
   onSubmit: submitForm = noop,
   onClose = noop,
-  onGoBack = noop
+  onGoBack
 }: ResourceFormLayoutProps<Values>) => {
-  const [page, setPage] = useState<1 | 2>(1);
+  const [page, setPage] = useState<PageValue>(1);
   const isMobile = useIsMobile();
 
   const { handleSubmit } = useFormContext<Values>();
@@ -60,10 +65,12 @@ const ResourceForm = <Values extends FieldValues>({
   const onPageChange = (update: (prev: number) => number) => {
     return setPage(prev => {
       const newValue = Math.max(0, update(prev));
-      if (newValue === 0) {
+      const shouldGoBack = newValue === 0;
+      if (shouldGoBack && onGoBack) {
         onGoBack();
       }
-      if (newValue !== 1 && newValue !== 2) {
+
+      if (!isValidPageValue(newValue)) {
         return prev;
       }
 
@@ -164,8 +171,7 @@ const ResourceForm = <Values extends FieldValues>({
                 <Stack gap={2}>
                   {renderPageTwo({
                     shouldShowImageElement: !isMobile,
-                    imageElement,
-                    disabled: !shouldShowPageTwo
+                    imageElement
                   })}
                 </Stack>
               ) : null}
