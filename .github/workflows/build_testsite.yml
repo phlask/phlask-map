@@ -14,7 +14,7 @@ jobs:
       VITE_OPEN_ROUTE_SERVICE_API_KEY: ${{ secrets.OPEN_ROUTE_SERVICE_API_KEY }}
       VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
-      VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED: true
+      VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED: 'true'
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Configure AWS Credentials
