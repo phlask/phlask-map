@@ -5,7 +5,10 @@ const envSchema = z.object({
   VITE_REACT_GOOGLE_MAPS_API_KEY: z.string().min(1),
   VITE_OPEN_ROUTE_SERVICE_API_KEY: z.string().min(1),
   VITE_PUBLIC_POSTHOG_KEY: z.string().min(1),
-  VITE_VERIFICATION_PASSWORD: z.string().min(1)
+  VITE_VERIFICATION_PASSWORD: z.string().min(1),
+  VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED: z
+    .enum(['true', 'false'])
+    .default('false')
 });
 
 const result = envSchema.safeParse(import.meta.env);
