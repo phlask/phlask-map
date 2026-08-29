@@ -1,0 +1,19 @@
+{
+  "short_name": "PHLASK",
+  "name": "PHLASK - Finding and sharing free resources in Philadelphia",
+  "description": "An ecosystem for finding and sharing free resources like water, food, bathrooms, and foraging in Philadelphia.",
+  "icons": [
+    {
+      "src": "/assets/favicon.png",
+      "type": "image/png",
+      "sizes": "800x808"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#26A9E0",
+  "background_color": "#FFFFFF",
+  "orientation": "portrait",
+  "categories": ["utilities", "social", "maps"],
+  "lang": "en-US"
+}
