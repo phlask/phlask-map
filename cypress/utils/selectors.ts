@@ -20,9 +20,7 @@ export const HEAD_HAMBURGER_BUTTON = getTestId('head-sidebar-button');
 export const ABOUT_US_HEAD_BUTTON = getTestId('sidebar-about-button');
 export const SELECTED_RESOURCE_MODAL_TITLE = getTestId('tap-organization-name');
 export const MOBILE_HEAD_SEARCH_BUTTON = getTestId('mobile-head-search-button');
-export const LOGAN_SQUARE_MARKER = getMarkerByPosition(
-  '39.9580333,-75.1709604'
-);
+export const EIFFEL_TOWER_MARKER = 'gmp-advanced-marker[position^="48.85837"]';
 export const FILTER_MENU_BUTTON = getTestId('button-filter-type-menu');
 export const FILTER_SUBMIT_BUTTON = getTestId('filter-submit-button');
 export const FILTER_CLEAR_ALL_BUTTON = getTestId('filter-clear-all');

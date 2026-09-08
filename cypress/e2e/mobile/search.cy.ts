@@ -1,5 +1,5 @@
 import {
-  LOGAN_SQUARE_MARKER,
+  EIFFEL_TOWER_MARKER,
   MOBILE_HEAD_SEARCH_BUTTON,
   SEARCH_BAR
 } from 'utils/selectors.ts';
@@ -9,16 +9,14 @@ describe('search', () => {
     cy.visit('/');
   });
 
-  it('should successfully show a search result and center the map at the search location', () => {
+  it('should show a global search result and center the map at that location', () => {
     cy.get(MOBILE_HEAD_SEARCH_BUTTON).click({ force: true });
 
-    cy.get(SEARCH_BAR).type(
-      'Logan Square, North 19th Street, Philadelphia, PA, USA'
-    );
+    cy.get(SEARCH_BAR).type('Eiffel Tower');
     cy.get('li')
-      .contains('Logan Square, North 19th Street, Philadelphia, PA, USA')
+      .contains('Eiffel Tower, Avenue Gustave Eiffel, Paris, France')
       .click();
 
-    cy.get(LOGAN_SQUARE_MARKER).should('exist');
+    cy.get(EIFFEL_TOWER_MARKER).should('exist');
   });
 });
