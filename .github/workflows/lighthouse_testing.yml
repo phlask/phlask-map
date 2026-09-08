@@ -4,17 +4,17 @@ on: [workflow_call]
 env:
   AWS_DEFAULT_REGION: us-east-2
 permissions:
-  id-token: write   # This is required for requesting the JWT
-  contents: read    # This is required for actions/checkout
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
 
 jobs:
   lighthouse-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v7.0.1
       - run: mkdir -p ${{ github.workspace }}/tmp/artifacts/lighthouse/${{ github.sha }}
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v6.2.3
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/test-access
           role-session-name: github-${{ github.sha }}
