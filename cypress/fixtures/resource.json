@@ -1,0 +1,31 @@
+{
+  "id": 1,
+  "address": "4400 Haverford Avenue",
+  "city": "Philadelphia",
+  "creator": "phlask",
+  "date_created": "2024-03-31T00:22:50.797447+00:00",
+  "description": "Test,Description Value.",
+  "entry_type": "UNSURE",
+  "last_modified": "2024-03-31T00:22:57.797447+00:00",
+  "last_modifier": "phlask",
+  "latitude": 39.95322480084546,
+  "longitude": -75.1646224595513,
+  "name": "Test Organization",
+  "resource_type": "WATER",
+  "source": {
+    "type": "MIGRATION"
+  },
+  "state": "PA",
+  "status": "OPERATIONAL",
+  "verification": {
+    "verified": false,
+    "last_modified": "2024-03-31T00:37:46.004545+00:00",
+    "verifier": "phlask"
+  },
+  "version": 1,
+  "water": {
+    "dispenser_type": ["DRINKING_FOUNTAIN"],
+    "tags": ["WHEELCHAIR_ACCESSIBLE"]
+  },
+  "zip_code": "19104"
+}

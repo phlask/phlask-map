@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "paths": { "utils/*": ["./utils/*"], "types/*": ["./types/*"] },
+    "target": "es2020",
+    "noEmit": true,
+    "strict": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2020", "dom"],
+    "sourceMap": true,
+    "allowImportingTsExtensions": true,
+    "types": ["cypress"]
+  },
+  "include": ["**/*.ts"]
+}

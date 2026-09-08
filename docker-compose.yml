@@ -4,7 +4,7 @@ services:
     stdin_open: true
     ports:
       - '5173:5173'
-    entrypoint: bash -c "yarn install && yarn start"
+    entrypoint: bash -c "pnpm install && pnpm start --host"
     volumes:
       - '.:/usr/src/app'
   bash:
@@ -17,10 +17,16 @@ services:
       - '.:/usr/src/app'
   prod_build:
     build: .
-    entrypoint: bash -c "yarn build"
+    entrypoint: bash -c "pnpm build"
     environment:
       CI: 'false'
       VITE_DB_URL:
+      VITE_DB_API_KEY:
+      VITE_REACT_GOOGLE_MAPS_API_KEY:
+      VITE_OPEN_ROUTE_SERVICE_API_KEY:
+      VITE_PUBLIC_POSTHOG_KEY:
+      VITE_VERIFICATION_PASSWORD:
+      VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED:
     volumes:
       - './docker/build:/usr/src/app/build'
       - './docker/testResults:/usr/src/app/testResults'

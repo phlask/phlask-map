@@ -3,17 +3,44 @@ name: Cypress Tests
 on: [workflow_call]
 
 jobs:
-  desktop:
+  cypress_tests:
     runs-on: ubuntu-latest
+    env:
+      VITE_DB_URL: https://wantycfbnzzocsbthqzs.supabase.co
+      VITE_DB_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+      VITE_REACT_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_GOOGLE_MAPS_API_KEY }}
+      VITE_OPEN_ROUTE_SERVICE_API_KEY: ${{ secrets.OPEN_ROUTE_SERVICE_API_KEY }}
+      VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
+    strategy:
+      matrix:
+        include:
+          - spec: 'cypress/e2e/desktop/*.cy.ts'
+            config_file: 'cypress.config.ts'
+            video_path: 'cypress/videos/desktop'
+          - spec: 'cypress/e2e/mobile/*.cy.ts'
+            config_file: 'cypress.mobile.config.ts'
+            video_path: 'cypress/videos/mobile'
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: yarn start:cypress
+          start: pnpm start:cypress
           browser: chrome
-          spec: cypress/e2e/desktop/*.cy.js
+          spec: ${{ matrix.spec }}
+          config-file: ${{ matrix.config_file }}
+      - name: Upload videos of failed tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos
+          path: ${{ matrix.video_path }}
+          retention-days: 7 # Optional: how long to keep artifacts
