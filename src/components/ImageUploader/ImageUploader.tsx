@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
-import fileSizePretty from 'utils/formatFileSize';
 import { Upload } from 'icons';
 
 export type RenderContentConfig = {
@@ -10,23 +9,23 @@ export type RenderContentConfig = {
 
 type ImageUploaderProps = Pick<
   DropzoneOptions,
-  'accept' | 'maxSize' | 'maxFiles' | 'onDrop'
+  'accept' | 'maxFiles' | 'onDrop'
 > & {
+  helperText?: ReactNode;
   renderContent?: (config: RenderContentConfig) => ReactNode;
 };
 
 const ImageUploader = ({
   onDrop,
   accept,
-  maxSize,
   maxFiles,
+  helperText,
   renderContent = () => null
 }: ImageUploaderProps) => {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
       onDrop,
       accept,
-      maxSize,
       maxFiles
     });
   return (
@@ -34,9 +33,11 @@ const ImageUploader = ({
       <input {...getInputProps()} />
       <Upload fontSize={55} />
       <Stack>
-        <Typography fontSize={14} color="#60718C">
-          {maxSize ? `Max file size: ${fileSizePretty(maxSize)}` : null}
-        </Typography>
+        {helperText ? (
+          <Typography fontSize={14} color="#60718C">
+            {helperText}
+          </Typography>
+        ) : null}
         <Typography fontSize={14} color="#60718C">
           {accept
             ? `accepted: ${Object.values(accept)
