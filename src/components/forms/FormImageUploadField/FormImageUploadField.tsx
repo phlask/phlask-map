@@ -42,7 +42,7 @@ const FormImageUploadField = <Values extends FieldValues>({
       return;
     }
     uploadImage(file, {
-      onSuccess: data => field.onChange('images', [data])
+      onSuccess: data => field.onChange([data])
     });
   };
 
