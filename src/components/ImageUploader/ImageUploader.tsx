@@ -11,7 +11,6 @@ type ImageUploaderProps = Pick<
   DropzoneOptions,
   'accept' | 'maxFiles' | 'onDrop'
 > & {
-  helperText?: ReactNode;
   renderContent?: (config: RenderContentConfig) => ReactNode;
 };
 
@@ -19,7 +18,6 @@ const ImageUploader = ({
   onDrop,
   accept,
   maxFiles,
-  helperText,
   renderContent = () => null
 }: ImageUploaderProps) => {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
@@ -33,11 +31,6 @@ const ImageUploader = ({
       <input {...getInputProps()} />
       <Upload fontSize={55} />
       <Stack>
-        {helperText ? (
-          <Typography fontSize={14} color="#60718C">
-            {helperText}
-          </Typography>
-        ) : null}
         <Typography fontSize={14} color="#60718C">
           {accept
             ? `accepted: ${Object.values(accept)

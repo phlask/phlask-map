@@ -10,8 +10,7 @@ import {
   type FieldValues,
   type Path
 } from 'react-hook-form';
-import compressImage, { MAX_IMAGE_BYTES } from 'utils/compressImage';
-import formatFileSize from 'utils/formatFileSize';
+import compressImage from 'utils/compressImage';
 
 type FormImageUploadFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
@@ -25,10 +24,6 @@ const defaultAccept = {
   'image/png': ['.png'],
   'image/gif': ['.gif']
 } satisfies Accept;
-
-const compressionHelperText = `Images over ${formatFileSize(
-  MAX_IMAGE_BYTES
-)} are compressed automatically`;
 
 const FormImageUploadField = <Values extends FieldValues>({
   name,
@@ -58,7 +53,6 @@ const FormImageUploadField = <Values extends FieldValues>({
       onDrop={onDrop}
       accept={accept}
       maxFiles={maxFiles}
-      helperText={compressionHelperText}
       renderContent={renderContent}
     />
   );
