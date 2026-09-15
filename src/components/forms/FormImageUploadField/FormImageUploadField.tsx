@@ -10,11 +10,11 @@ import {
   type FieldValues,
   type Path
 } from 'react-hook-form';
+import compressImage from 'utils/compressImage';
 
 type FormImageUploadFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   accept?: Accept;
-  maxSize?: number;
   maxFiles?: number;
   renderContent?: (config: RenderContentConfig) => ReactNode;
 };
@@ -28,7 +28,6 @@ const defaultAccept = {
 const FormImageUploadField = <Values extends FieldValues>({
   name,
   accept = defaultAccept,
-  maxSize = 5242880,
   maxFiles = 1,
   renderContent = () => null
 }: FormImageUploadFieldProps<Values>) => {
@@ -36,13 +35,16 @@ const FormImageUploadField = <Values extends FieldValues>({
   const { mutate: uploadImage } = useUploadImageMutation();
   const { field } = useController({ control, name });
 
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = async (acceptedFiles: File[]) => {
     const file = acceptedFiles.at(0);
     if (!file) {
       return;
     }
-    uploadImage(file, {
-      onSuccess: data => field.onChange('images', [data])
+
+    const image = await compressImage(file).catch(() => file);
+
+    uploadImage(image, {
+      onSuccess: data => field.onChange([data])
     });
   };
 
@@ -50,7 +52,6 @@ const FormImageUploadField = <Values extends FieldValues>({
     <ImageUploader
       onDrop={onDrop}
       accept={accept}
-      maxSize={maxSize}
       maxFiles={maxFiles}
       renderContent={renderContent}
     />
