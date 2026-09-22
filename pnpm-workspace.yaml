@@ -1,7 +1,7 @@
 allowBuilds:
-  '@parcel/watcher': false
-  core-js: false
+  '@parcel/watcher': true
+  core-js: true
   cypress: true
   esbuild: true
   pre-commit: true
-  spawn-sync: false
+  spawn-sync: true
