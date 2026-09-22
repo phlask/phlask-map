@@ -26,6 +26,7 @@ type FoodResourceFormProps = {
   defaultValues?: ResourceEntry | null;
   onSubmit: (values: FormValues) => void;
   onGoBack?: VoidFunction;
+  onClose?: VoidFunction;
   isSubmitting?: boolean;
 };
 
@@ -36,6 +37,7 @@ const FoodResourceForm = ({
   defaultValues = null,
   isSubmitting = false,
   onGoBack,
+  onClose: onCloseProp,
   onSubmit
 }: FoodResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
@@ -43,6 +45,7 @@ const FoodResourceForm = ({
     if (onGoBack) {
       onGoBack();
     }
+    onCloseProp?.();
 
     setToolbarModal(null);
   };

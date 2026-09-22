@@ -48,29 +48,37 @@ const EditResourceForm = () => {
   const resourceForms = {
     [ResourceType.WATER]: (
       <WaterResourceForm
+        key={resourceEditCandidate.id}
         defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
+        onClose={() => setResourceEditCandidate(null)}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.FOOD]: (
       <FoodResourceForm
+        key={resourceEditCandidate.id}
         defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
+        onClose={() => setResourceEditCandidate(null)}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.FORAGE]: (
       <ForageResourceForm
+        key={resourceEditCandidate.id}
         defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
+        onClose={() => setResourceEditCandidate(null)}
         onSubmit={onSubmit}
       />
     ),
     [ResourceType.BATHROOM]: (
       <BathroomResourceForm
+        key={resourceEditCandidate.id}
         defaultValues={resourceEditCandidate}
         isSubmitting={isPending}
+        onClose={() => setResourceEditCandidate(null)}
         onSubmit={onSubmit}
       />
     )

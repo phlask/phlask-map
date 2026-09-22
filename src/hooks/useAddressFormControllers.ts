@@ -44,6 +44,8 @@ const useAddressFormControllers = () => {
 
   return {
     inputRef: addressController.field.ref,
+    addressValue: addressController.field.value,
+    setAddressInput: (value: string) => addressController.field.onChange(value),
     error: addressController.fieldState.error,
     setAddressValues,
     setAddressError,

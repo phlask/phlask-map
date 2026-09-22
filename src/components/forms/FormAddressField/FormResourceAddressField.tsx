@@ -16,8 +16,15 @@ const FormResourceAddressField = ({
 }: FormResourceAddressFieldProps) => {
   const { suggestions, isFetching, onChange, onDebouncedChange } =
     useGooglePlacesAutocomplete();
-  const { inputRef, error, onClear, setAddressError, setAddressValues } =
-    useAddressFormControllers();
+  const {
+    inputRef,
+    addressValue,
+    setAddressInput,
+    error,
+    onClear,
+    setAddressError,
+    setAddressValues
+  } = useAddressFormControllers();
 
   const onSelect = async (place: google.maps.places.Place) => {
     const googlePlacesId = place.id;
@@ -77,6 +84,7 @@ const FormResourceAddressField = ({
     }
 
     onChange(firstPlace.formattedAddress);
+    setAddressInput(firstPlace.formattedAddress);
   };
 
   return (
@@ -84,7 +92,10 @@ const FormResourceAddressField = ({
       openOnFocus
       options={suggestions}
       fullWidth={fullWidth}
-      onInputChange={(_event, value) => {
+      inputValue={addressValue ?? ''}
+      onInputChange={(_event, value, reason) => {
+        if (reason === 'reset') return;
+        setAddressInput(value);
         onDebouncedChange(value);
       }}
       loading={isFetching}
