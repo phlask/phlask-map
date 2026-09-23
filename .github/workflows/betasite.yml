@@ -23,7 +23,6 @@ jobs:
     steps:
       - uses: pnpm/setup@v3
         with:
-          runtime: node@24
           cache: true
       - uses: actions/checkout@v7.0.1
       - name: Configure AWS Credentials

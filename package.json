@@ -10,18 +10,18 @@
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
     "@supabase/supabase-js": "^2.116.0",
-    "@tanstack/react-query": "^5.102.8",
-    "@vis.gl/react-google-maps": "^1.10.0",
+    "@tanstack/react-query": "^5.103.2",
+    "@vis.gl/react-google-maps": "^1.10.1",
     "date-fns": "^4.4.0",
-    "posthog-js": "^1.428.7",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
+    "posthog-js": "^1.434.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-dropzone": "^14.4.1",
     "react-hook-form": "7.69.0",
-    "react-router": "^7.18.3",
+    "react-router": "^7.18.4",
     "react-toastify": "^11.1.0",
-    "sass": "^1.104.0",
-    "zod": "^4.5.4"
+    "sass": "^1.104.1",
+    "zod": "^4.6.5"
   },
   "pre-commit": [
     "lint"
@@ -34,30 +34,30 @@
     "@storybook/addon-links": "^10.6.0",
     "@storybook/addon-onboarding": "^10.6.0",
     "@storybook/react-vite": "^10.6.0",
-    "@types/google.maps": "^3.66.2",
-    "@types/node": "^25.9.5",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
+    "@types/google.maps": "^3.66.3",
+    "@types/node": "^25.9.8",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-react": "^5.2.0",
     "cypress": "^15.21.1",
     "cypress-vite": "^1.10.2",
-    "eslint": "^10.10.0",
+    "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^7.0.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.6",
+    "eslint-plugin-react-refresh": "^0.5.7",
     "eslint-plugin-storybook": "^10.6.0",
     "globals": "^16.5.0",
-    "pre-commit": "^1.2.2",
+    "pre-commit": "^2.0.0",
     "prettier": "^2.8.8",
     "storybook": "^10.6.0",
     "supabase": "^2.117.0",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.70.0",
+    "typescript-eslint": "^8.70.1",
     "vite": "^7.3.6",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^6.1.1"
@@ -70,7 +70,7 @@
     "test:mobile": "cypress run --config-file cypress.mobile.config.ts",
     "generate-icons": "npx @svgr/cli --config-file=.svgrrc.json ./src/assets/icons --out-dir=./src/icons && pnpm lint --fix",
     "cypress": "cypress open",
-    "lint": "eslint src --quiet",
+    "lint": "eslint src",
     "format": "prettier src --write",
     "serve": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -94,6 +94,18 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/phlask/phlask-map/issues"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.5.1",
+      "onFail": "download"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "^24.0.0",
+      "onFail": "download"
+    }
   },
   "packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }
