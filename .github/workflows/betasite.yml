@@ -21,9 +21,8 @@ jobs:
       VITE_VERIFICATION_PASSWORD: ${{ secrets.VERIFICATION_PASSWORD }}
       VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED: true
     steps:
-      - uses: pnpm/setup@v1
+      - uses: pnpm/setup@v3
         with:
-          version: 12.5.1
           runtime: node@24
           cache: true
       - uses: actions/checkout@v7.0.1
