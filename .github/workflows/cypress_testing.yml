@@ -22,12 +22,11 @@ jobs:
             config_file: 'cypress.mobile.config.ts'
             video_path: 'cypress/videos/mobile'
     steps:
-      - uses: actions/setup-node@v6
+      - uses: pnpm/setup@v1
         with:
-          node-version: 24
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
+          version: 12
+          runtime: node@24
+          cache: true
       - name: Checkout
         uses: actions/checkout@v7.0.1
       - name: Cypress run
