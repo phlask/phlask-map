@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: pnpm/setup@v1
         with:
+          version: 12.5.1
           runtime: node@24
           cache: true
       - uses: actions/checkout@v7.0.1
