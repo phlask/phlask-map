@@ -20,6 +20,7 @@ async function fetchEntries(tableName, limit = 100, orderBy = null) {
   return data;
 }
 
+// TODO #775: Handle deprecated yarn command
 function printUsage() {
   console.log(`
 Usage: yarn fetch-supabase <table-name> [options]
