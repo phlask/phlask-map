@@ -12,8 +12,7 @@ const useGetGooglePlacePredictionsQuery = (input: string) => {
       const { suggestions } =
         await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(
           {
-            input,
-            includedRegionCodes: ['us']
+            input
           }
         );
 
