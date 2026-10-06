@@ -15,12 +15,13 @@ const UseMyLocationButton = ({
   children = 'Use my location instead'
 }: UseMyLocationButtonProps) => {
   const onUseMyLocationClick = async () => {
-    const [userLocation, isLocationServicesDisabled] = await getUserLocation();
+    const [value, isLocationServicesDisabled] = await getUserLocation();
+
     if (isLocationServicesDisabled) {
-      return onError('Location services must be enabled for this feature');
+      return onError(value);
     }
 
-    onSuccess(userLocation);
+    onSuccess(value);
   };
 
   return (
