@@ -1,5 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Provider, ResourceEntry } from 'types/ResourceEntry';
+import type {
+  Provider,
+  ResourceEntry,
+  ResourceStatus
+} from 'types/ResourceEntry';
 import type { ResourceTypeOption } from 'hooks/useResourceType';
 import type { Contributor } from 'types/Contributor';
 import type { FeedbackForm } from 'types/FeedbackEntry';
@@ -25,11 +29,7 @@ export type FetchResourcesOptions = {
   /** Filter by resource type */
   resourceType?: ResourceTypeOption;
   /** Filter by status */
-  status?:
-    | 'OPERATIONAL'
-    | 'TEMPORARILY_CLOSED'
-    | 'PERMANENTLY_CLOSED'
-    | 'HIDDEN';
+  status?: ResourceStatus;
   filters?: { name: string; value: string | string[] }[];
 };
 
@@ -128,7 +128,7 @@ export const addResourceEdit = async (values: ResourceEdit) => {
     throw error;
   }
   return data;
-}
+};
 
 export const addFeedback = async (feedback: FeedbackForm) => {
   const { data, error } = await supabase
