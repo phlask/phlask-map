@@ -6,10 +6,12 @@ const foragingResourceSchema = baseResourceSchema.extend({
   resource_type: z.literal(ResourceType.FORAGE).default(ResourceType.FORAGE),
   forage: z
     .object({
-      forage_type: z.array(
-        z.enum(['NUT', 'FRUIT', 'LEAVES', 'BARK', 'FLOWERS'])
-      ),
-      tags: z.array(z.enum(['MEDICINAL', 'IN_SEASON', 'COMMUNITY_GARDEN']))
+      forage_type: z
+        .array(z.enum(['NUT', 'FRUIT', 'LEAVES', 'BARK', 'FLOWERS']))
+        .default([]),
+      tags: z
+        .array(z.enum(['MEDICINAL', 'IN_SEASON', 'COMMUNITY_GARDEN']))
+        .default([])
     })
     .default({ forage_type: [], tags: [] })
 });

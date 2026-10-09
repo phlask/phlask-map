@@ -121,7 +121,8 @@ export type ResourceStatus =
   | 'OPERATIONAL'
   | 'TEMPORARILY_CLOSED'
   | 'PERMANENTLY_CLOSED'
-  | 'HIDDEN';
+  | 'HIDDEN'
+  | 'NONOPERATIONAL';
 
 /** An organization or entity that provided/contributed this resource. */
 export type Provider = {
