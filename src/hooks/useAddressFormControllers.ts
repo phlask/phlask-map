@@ -53,7 +53,8 @@ const useAddressFormControllers = () => {
   return {
     inputRef: addressController.field.ref,
     addressValue: addressController.field.value,
-    error: addressController.fieldState.error,
+    error:
+      addressController.fieldState.error ?? latitudeController.fieldState.error,
     setAddressValues,
     setAddressError,
     onClear
