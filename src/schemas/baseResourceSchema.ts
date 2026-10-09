@@ -50,7 +50,13 @@ const baseResourceSchema = z.object({
     { message: 'Resource type is required' }
   ),
   status: z
-    .enum(['OPERATIONAL', 'TEMPORARILY_CLOSED', 'PERMANENTLY_CLOSED', 'HIDDEN'])
+    .enum([
+      'OPERATIONAL',
+      'TEMPORARILY_CLOSED',
+      'PERMANENTLY_CLOSED',
+      'HIDDEN',
+      'NONOPERATIONAL'
+    ])
     .default('OPERATIONAL')
 });
 
