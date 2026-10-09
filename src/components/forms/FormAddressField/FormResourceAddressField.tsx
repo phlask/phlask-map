@@ -1,9 +1,12 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { toLatLngLiteral } from '@vis.gl/react-google-maps';
 import useGooglePlacesAutocomplete from 'hooks/useGooglePlacesAutocomplete';
 import useAddressFormControllers from 'hooks/useAddressFormControllers';
 import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
 import getNormalizedAddressComponents from 'utils/getNormalizedAddressComponents';
+
+const LOCATION_NOT_FOUND_ERROR =
+  "We couldn't find your location, please select an option from the search";
 
 type FormResourceAddressFieldProps = {
   label?: string;
@@ -14,12 +17,11 @@ const FormResourceAddressField = ({
   label = 'Address',
   fullWidth = false
 }: FormResourceAddressFieldProps) => {
-  const { suggestions, isFetching, onChange, onDebouncedChange } =
+  const { suggestions, isFetching, onDebouncedChange } =
     useGooglePlacesAutocomplete();
   const {
     inputRef,
     addressValue,
-    setAddressInput,
     error,
     onClear,
     setAddressError,
@@ -73,34 +75,36 @@ const FormResourceAddressField = ({
 
     const { places } = await google.maps.places.Place.searchNearby({
       locationRestriction: circle,
-      fields: ['formattedAddress']
+      fields: ['id', 'formattedAddress']
     });
 
     const firstPlace = places.at(0);
     if (!firstPlace?.formattedAddress) {
-      return setAddressError(
-        "We couldn't find your location, please select an option from the search"
-      );
+      return setAddressError(LOCATION_NOT_FOUND_ERROR);
     }
 
-    onChange(firstPlace.formattedAddress);
-    setAddressInput(firstPlace.formattedAddress);
+    await onSelect(firstPlace);
   };
 
   return (
-    <Autocomplete
+    <Autocomplete<google.maps.places.PlacePrediction | string>
       openOnFocus
       options={suggestions}
       fullWidth={fullWidth}
-      inputValue={addressValue ?? ''}
+      value={addressValue || null}
       onInputChange={(_event, value, reason) => {
-        if (reason === 'reset') return;
-        setAddressInput(value);
+        if (reason !== 'input') {
+          return;
+        }
         onDebouncedChange(value);
       }}
       loading={isFetching}
-      getOptionKey={option => option.placeId}
-      getOptionLabel={option => option.text.text}
+      getOptionKey={option =>
+        typeof option === 'string' ? option : option.placeId
+      }
+      getOptionLabel={option =>
+        typeof option === 'string' ? option : option.text.text
+      }
       onChange={(_event, value, reason) => {
         if (reason === 'clear') {
           return onClear();
@@ -110,7 +114,7 @@ const FormResourceAddressField = ({
           return;
         }
 
-        if (!value) {
+        if (!value || typeof value === 'string') {
           return;
         }
 
@@ -131,12 +135,19 @@ const FormResourceAddressField = ({
           inputRef={inputRef}
           error={Boolean(error)}
           helperText={
-            error?.message || (
-              <UseMyLocationButton
-                onError={setAddressError}
-                onSuccess={onGetMyLocationSuccess}
-              />
-            )
+            <>
+              {error?.message && (
+                <Box component="span" sx={{ display: 'block' }}>
+                  {error.message}
+                </Box>
+              )}
+              {error?.message !== LOCATION_NOT_FOUND_ERROR && (
+                <UseMyLocationButton
+                  onError={setAddressError}
+                  onSuccess={onGetMyLocationSuccess}
+                />
+              )}
+            </>
           }
         />
       )}

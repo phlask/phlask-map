@@ -10,7 +10,7 @@ type ResourceAddressField =
   | 'zip_code';
 
 const useAddressFormControllers = () => {
-  const { control, setError, resetField } = useFormContext();
+  const { control, setError } = useFormContext();
   const addressController = useController({ name: 'address', control });
   const cityController = useController({ name: 'city', control });
   const stateController = useController({ name: 'state', control });
@@ -39,13 +39,20 @@ const useAddressFormControllers = () => {
   };
 
   const onClear = () => {
-    controllers.forEach(controller => resetField(controller.field.name));
+    setAddressValues({
+      address: '',
+      city: '',
+      state: '',
+      gp_id: '',
+      latitude: Number.NaN,
+      longitude: Number.NaN,
+      zip_code: ''
+    });
   };
 
   return {
     inputRef: addressController.field.ref,
     addressValue: addressController.field.value,
-    setAddressInput: (value: string) => addressController.field.onChange(value),
     error: addressController.fieldState.error,
     setAddressValues,
     setAddressError,

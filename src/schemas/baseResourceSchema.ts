@@ -51,7 +51,7 @@ const baseResourceSchema = z.object({
   ),
   status: z
     .enum(['OPERATIONAL', 'TEMPORARILY_CLOSED', 'PERMANENTLY_CLOSED', 'HIDDEN'])
-    .catch('OPERATIONAL')
+    .default('OPERATIONAL')
 });
 
 export type BaseResourceSchema = z.infer<typeof baseResourceSchema>;
