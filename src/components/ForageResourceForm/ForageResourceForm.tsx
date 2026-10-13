@@ -20,6 +20,7 @@ type ForageResourceFormProps = {
   defaultValues?: ResourceEntry | null;
   onSubmit: (values: FormValues) => void;
   onGoBack?: VoidFunction;
+  onClose?: VoidFunction;
   isSubmitting?: boolean;
 };
 
@@ -30,13 +31,15 @@ const ForageResourceForm = ({
   defaultValues,
   isSubmitting,
   onSubmit,
-  onGoBack
+  onGoBack,
+  onClose: onCloseProp
 }: ForageResourceFormProps) => {
   const { setToolbarModal } = useToolbarContext();
   const onClose = () => {
     if (onGoBack) {
       onGoBack();
     }
+    onCloseProp?.();
 
     setToolbarModal(null);
   };
