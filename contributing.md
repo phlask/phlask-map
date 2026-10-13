@@ -8,12 +8,13 @@ We follow the Code for Philly COC listed [here](https://codeforphilly.org/pages/
 
 ## Your First Contribution
 
-Unsure where to begin contributing to PHLASK? It always best to attend to for Philly Hack Nights to general understanding of what's needed. Most issues are created and assigned at Hack Nights. If you need more help on how to contribute to open source. You can learn how from this free series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
+Unsure where to begin contributing to PHLASK? It's always best to attend for Philly Hack Nights for a general understanding of what's needed. Most issues are created and assigned at Hack Nights. If you need more help on how to contribute to open source, you can learn how from this free series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 
 1. Create your own fork of the code: <https://help.github.com/en/github/getting-started-with-github/fork-a-repo>
 2. Develop your changes in your fork (See the [README](README.md) to view how you can test your changes locally)
    - If you are new to Git & GitHub, we would recommend Sections 1.5, 1.6, and Chapter 2 of the online [Git Book](https://git-scm.com/book/en/v2)
    - If you have any questions about the development workflow, feel free to ask us for help via the Code For Philly Slack #phlask channel (Keeping the [Code of Conduct](https://codeforphilly.org/pages/code_of_conduct/) in mind)
+   - Be aware that we don't currently have a separate dev or test database
 3. If you like the change and think the project could use it, open a Pull Request: <https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork>
 
 ## How to report a bug
