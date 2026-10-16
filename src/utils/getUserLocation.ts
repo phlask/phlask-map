@@ -1,5 +1,5 @@
 export type UserLocation = google.maps.LatLngLiteral;
-type GetUserLocationReturn = [UserLocation, false] | [null, true];
+type GetUserLocationReturn = [UserLocation, false] | [string, true];
 
 const getUserLocation = (): Promise<GetUserLocationReturn> =>
   new Promise<GetUserLocationReturn>(resolve =>
@@ -12,9 +12,9 @@ const getUserLocation = (): Promise<GetUserLocationReturn> =>
         const value: GetUserLocationReturn = [location, isError];
         resolve(value);
       },
-      () => {
+      error => {
         const isError = true;
-        const value: GetUserLocationReturn = [null, isError];
+        const value: GetUserLocationReturn = [error.message, isError];
         resolve(value);
       }
     )
