@@ -25,10 +25,12 @@ const defaultAccept = {
   'image/gif': ['.gif']
 } satisfies Accept;
 
+const twentyMegabytes = 20971520;
+
 const FormImageUploadField = <Values extends FieldValues>({
   name,
   accept = defaultAccept,
-  maxSize = 5242880,
+  maxSize = twentyMegabytes,
   maxFiles = 1,
   renderContent = () => null
 }: FormImageUploadFieldProps<Values>) => {
