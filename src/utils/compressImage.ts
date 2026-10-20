@@ -1,15 +1,28 @@
-import imageCompression from 'browser-image-compression';
+import Compressor from 'compressorjs';
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MAX_IMAGE_DIMENSION = 2048;
 
-const renameToJpeg = (file: File) => {
-  const baseName = file.name.replace(/\.[^.]+$/, '') || 'image';
-  return new File([file], `${baseName}.jpeg`, {
-    type: file.type,
-    lastModified: file.lastModified
+const renameToJpeg = (blob: Blob, original: File) => {
+  const baseName = original.name.replace(/\.[^.]+$/, '') || 'image';
+  return new File([blob], `${baseName}.jpeg`, {
+    type: blob.type,
+    lastModified: original.lastModified
   });
 };
+
+const compressToBlob = (file: File) =>
+  new Promise<Blob>((resolve, reject) => {
+    new Compressor(file, {
+      maxWidth: MAX_IMAGE_DIMENSION,
+      maxHeight: MAX_IMAGE_DIMENSION,
+      mimeType: 'image/jpeg',
+      convertSize: MAX_IMAGE_BYTES,
+      quality: 0.8,
+      success: resolve,
+      error: reject
+    });
+  });
 
 const compressImage = async (file: File): Promise<File> => {
   const isCompressibleImage =
@@ -19,14 +32,9 @@ const compressImage = async (file: File): Promise<File> => {
     return file;
   }
 
-  const compressed = await imageCompression(file, {
-    maxSizeMB: MAX_IMAGE_BYTES / (1024 * 1024),
-    maxWidthOrHeight: MAX_IMAGE_DIMENSION,
-    fileType: 'image/jpeg',
-    useWebWorker: true
-  });
+  const compressed = await compressToBlob(file);
 
-  return renameToJpeg(compressed);
+  return renameToJpeg(compressed, file);
 };
 
 export default compressImage;

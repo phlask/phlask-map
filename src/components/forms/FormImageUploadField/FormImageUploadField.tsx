@@ -41,7 +41,10 @@ const FormImageUploadField = <Values extends FieldValues>({
       return;
     }
 
-    const image = await compressImage(file).catch(() => file);
+    const image = await compressImage(file).catch(error => {
+      console.error(error instanceof Error ? error.message : error);
+      return file;
+    });
 
     uploadImage(image, {
       onSuccess: data => field.onChange([data])
