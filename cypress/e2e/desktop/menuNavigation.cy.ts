@@ -22,11 +22,19 @@ describe('menu navigation', () => {
   });
 
   it('should successfully show the join team content', () => {
-    // TODO
+    // Click the join team sidebar button
+    cy.get('[data-cy=sidebar-jointeam-button]').click();
+
+    cy.get(getTestId('join-team')).should('have.text', 'Join the team');
   });
 
-  it('should successfully show the contact form and send feedback', () => {
-    // TODO
-    // Make form submission send to a test destination for validation
+  it('should successfully show the contact form', () => {
+    // Click the contact sidebar button
+    cy.get('[data-cy=sidebar-contact-button]').click();
+
+    cy.get(getTestId('contact')).parent().within(() => {
+      cy.contains('h6', 'Share Feedback').should('be.visible');
+      cy.contains('button', 'Submit Feedback').should('be.enabled');
+    });
   });
 });
