@@ -10,11 +10,11 @@ import {
   type FieldValues,
   type Path
 } from 'react-hook-form';
+import Compressor from 'compressorjs';
 
 type FormImageUploadFieldProps<Values extends FieldValues> = {
   name: Path<Values>;
   accept?: Accept;
-  maxSize?: number;
   maxFiles?: number;
   renderContent?: (config: RenderContentConfig) => ReactNode;
 };
@@ -28,7 +28,6 @@ const defaultAccept = {
 const FormImageUploadField = <Values extends FieldValues>({
   name,
   accept = defaultAccept,
-  maxSize = 5242880,
   maxFiles = 1,
   renderContent = () => null
 }: FormImageUploadFieldProps<Values>) => {
@@ -41,16 +40,23 @@ const FormImageUploadField = <Values extends FieldValues>({
     if (!file) {
       return;
     }
-    uploadImage(file, {
-      onSuccess: data => field.onChange('images', [data])
-    });
+
+    new Compressor(file, {
+      success(result) {
+        uploadImage(result, {
+          onSuccess: data => field.onChange([data])
+        });
+      },
+      error(err) {
+        console.error(err.message);
+      },
+    })
   };
 
   return (
     <ImageUploader
       onDrop={onDrop}
       accept={accept}
-      maxSize={maxSize}
       maxFiles={maxFiles}
       renderContent={renderContent}
     />

@@ -62,6 +62,14 @@ export default defineConfig(() => ({
     outDir: 'build',
     target: 'es2022'
   },
+  server: {
+    proxy: {
+      '/submit-image': {
+        target: 'https://phlask.me',
+        changeOrigin: true
+      }
+    }
+  },
   plugins: [
     envCheckPlugin(),
     react(),
