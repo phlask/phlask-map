@@ -9,7 +9,6 @@ const baseResourceSchema = z.object({
   city: z.string().default(''),
   state: z.string().default(''),
   zip_code: z.string().default(''),
-  // NaN until an address is picked, which z.number() rejects
   latitude: z
     .number({ message: 'Please select an address from the list' })
     .default(Number.NaN),
