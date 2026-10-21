@@ -43,7 +43,10 @@ const baseResourceSchema = z.object({
       last_modified: new Date().toISOString(),
       verifier: ''
     })),
-  images: z.array(z.string()).default([]),
+  images: z
+    .array(z.string().nullable())
+    .default([])
+    .transform(images => images.filter(image => image !== null)),
   guidelines: z.string().default(''),
   resource_type: z.enum(
     [
