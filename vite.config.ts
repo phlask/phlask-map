@@ -62,18 +62,6 @@ export default defineConfig(() => ({
     outDir: 'build',
     target: 'es2022'
   },
-
-  // To avoid CORS errors, this forwards image upload requests from the local Vite
-  // server to the production backend
-  server: {
-    proxy: {
-      '/submit-image': {
-        target: 'https://phlask.me',
-        changeOrigin: true
-      }
-    }
-  },
-
   plugins: [
     envCheckPlugin(),
     react(),
