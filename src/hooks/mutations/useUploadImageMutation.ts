@@ -6,7 +6,10 @@ const useUploadImageMutation = () => {
       // Open a request for a new signed URL for S3 upload
       // Upload the image with a PUT request
       const imageType = imageFile.type;
-      const submitUrl = `https://phlask.me/submit-image?type=${imageType}`;
+      const baseDomain = import.meta.env.MODE === 'production'
+        ? 'phlask.me'
+        : 'beta.phlask.me';
+      const submitUrl = `https://${baseDomain}/submit-image?type=${imageType}`;
       let signedUploadResponse: Response;
       try {
         signedUploadResponse = await fetch(submitUrl);
