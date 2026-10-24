@@ -5,12 +5,16 @@ const baseResourceSchema = z.object({
   version: z.number().optional().default(1),
   name: z.string().nonempty('Name is required').default(''),
   address: z.string().nonempty('Address is required').default(''),
-  gp_id: z.string().nonempty('Google Places ID is required').default(''),
+  gp_id: z.string().default(''),
   city: z.string().default(''),
   state: z.string().default(''),
   zip_code: z.string().default(''),
-  latitude: z.number().default(Number.NaN),
-  longitude: z.number().default(Number.NaN),
+  latitude: z
+    .number({ message: 'Please select an address from the list' })
+    .default(Number.NaN),
+  longitude: z
+    .number({ message: 'Please select an address from the list' })
+    .default(Number.NaN),
   date_created: z.iso.datetime().default(() => new Date().toISOString()),
   last_modifier: z.string().default('phlask_app'),
   last_modified: z.iso.datetime().default(() => new Date().toISOString()),
@@ -30,7 +34,7 @@ const baseResourceSchema = z.object({
   verification: z
     .object({
       verified: z.boolean().default(false),
-      last_modified: z.iso.datetime().default(() => new Date().toISOString()),
+      last_modified: z.iso.datetime().catch(() => new Date().toISOString()),
       verifier: z.string().default('')
     })
     .default(() => ({
@@ -38,7 +42,10 @@ const baseResourceSchema = z.object({
       last_modified: new Date().toISOString(),
       verifier: ''
     })),
-  images: z.array(z.string()).default([]),
+  images: z
+    .array(z.string().nullable())
+    .default([])
+    .transform(images => images.filter(image => image !== null)),
   guidelines: z.string().default(''),
   resource_type: z.enum(
     [
@@ -50,7 +57,13 @@ const baseResourceSchema = z.object({
     { message: 'Resource type is required' }
   ),
   status: z
-    .enum(['OPERATIONAL', 'TEMPORARILY_CLOSED', 'PERMANENTLY_CLOSED', 'HIDDEN'])
+    .enum([
+      'OPERATIONAL',
+      'TEMPORARILY_CLOSED',
+      'PERMANENTLY_CLOSED',
+      'HIDDEN',
+      'NONOPERATIONAL'
+    ])
     .default('OPERATIONAL')
 });
 
