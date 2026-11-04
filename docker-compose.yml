@@ -26,6 +26,7 @@ services:
       VITE_OPEN_ROUTE_SERVICE_API_KEY:
       VITE_PUBLIC_POSTHOG_KEY:
       VITE_VERIFICATION_PASSWORD:
+      VITE_IS_EDIT_RESOURCE_FEATURE_ENABLED:
     volumes:
       - './docker/build:/usr/src/app/build'
       - './docker/testResults:/usr/src/app/testResults'

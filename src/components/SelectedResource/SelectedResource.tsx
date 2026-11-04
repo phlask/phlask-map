@@ -6,11 +6,31 @@ import SelectedResourceDetails from 'components/SelectedResourceDetails/Selected
 import noop from 'utils/noop';
 import useSelectedResource from 'hooks/useSelectedResource';
 import { useGetSelectedResourceQuery } from 'hooks/queries/useGetSelectedResourceQuery';
+import { useToolbarContext } from 'contexts/ToolbarContext';
+import { useResourceEditContext } from 'contexts/ResourceEditContext';
+import type { ResourceEntry } from 'types/ResourceEntry';
+import { IS_EDIT_RESOURCE_FEATURE_ENABLED } from 'constants/flags';
 
 const SelectedResource = () => {
   const isMobile = useIsMobile();
   const { setSelectedResource } = useSelectedResource();
   const { data, isError, isEnabled } = useGetSelectedResourceQuery();
+  const { setToolbarModal } = useToolbarContext();
+  const { setResourceEditCandidate } = useResourceEditContext();
+
+  const handleStartEdit = (resource: ResourceEntry) => {
+    if (!IS_EDIT_RESOURCE_FEATURE_ENABLED) {
+      return;
+    }
+
+    setToolbarModal('contribute');
+    setSelectedResource(null);
+    setResourceEditCandidate({
+      ...resource,
+      date_created: '',
+      last_modified: ''
+    });
+  };
 
   const onClose = () => {
     setSelectedResource(null);
@@ -41,6 +61,7 @@ const SelectedResource = () => {
         resource={data}
         isError={isError}
         onClose={onClose}
+        onStartEdit={handleStartEdit}
       />
     </SwipeableDrawer>
   );

@@ -7,7 +7,7 @@ const useUploadImageMutation = () => {
       // Upload the image with a PUT request
       const imageType = imageFile.type;
       const submitUrl = `https://phlask.me/submit-image?type=${imageType}`;
-      let signedUploadResponse: Response | null = null;
+      let signedUploadResponse: Response;
       try {
         signedUploadResponse = await fetch(submitUrl);
       } catch {

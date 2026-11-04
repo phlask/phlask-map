@@ -1,6 +1,6 @@
 import useIsMobile from 'hooks/useIsMobile';
 import MobileHead from 'components/MobileHead/MobileHead';
-import { HeaderProvider } from 'contexts/HeaderContext'; // Import the HeaderContext component
+import HeaderProvider from 'components/Head/HeaderProvider';
 import DesktopHead from '../DesktopHead/DesktopHead';
 
 const Head = () => {

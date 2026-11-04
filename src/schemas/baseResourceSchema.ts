@@ -23,7 +23,7 @@ const baseResourceSchema = z.object({
     .default('OPEN'),
   source: z
     .object({
-      type: z.enum(['MANUAL', 'WEB_SCRAPE']).default('MANUAL'),
+      type: z.enum(['MANUAL', 'WEB_SCRAPE', 'MIGRATION']).default('MANUAL'),
       url: z.string().optional()
     })
     .default({ type: 'MANUAL' }),

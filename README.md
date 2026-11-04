@@ -131,6 +131,7 @@ We highly recommend for any new collaborators to access Storybook in order to ge
 ## Want to add something new or develop/report a fix for a bug you found?
 
 See our [Contribution Guide](contributing.md) to learn about our branching strategy and issue reporting etiquette, and more!
+Be aware that our infrastructure currently does not include a separate dev or testing database.
 
 ## Branching Strategy
 

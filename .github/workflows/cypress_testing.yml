@@ -29,7 +29,7 @@ jobs:
         with:
           version: 10
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
