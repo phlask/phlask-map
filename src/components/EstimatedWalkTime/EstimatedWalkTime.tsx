@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { useWalkingDurationQuery } from 'hooks/queries/useWalkingDurationQuery';
 import type { ResourceEntry } from 'types/ResourceEntry';
 import UseMyLocationButton from 'components/UseMyLocationButton/UseMyLocationButton';
+import { useState } from 'react';
 
 type EstimatedWalkingDurationProps = {
   selectedResource: ResourceEntry;
@@ -10,6 +11,7 @@ type EstimatedWalkingDurationProps = {
 const EstimatedWalkingDuration = ({
   selectedResource
 }: EstimatedWalkingDurationProps) => {
+  const [locationErrorMessage, setLocationErrorMessage] = useState('');
   const {
     data: walkingDuration = null,
     isPending,
@@ -18,12 +20,17 @@ const EstimatedWalkingDuration = ({
   } = useWalkingDurationQuery({ selectedResource });
 
   if (isPending) {
-    <Typography color="#60718C" fontSize={14} fontWeight={400}>
-      Calculating walking duration...
-    </Typography>;
+    return (
+      <Typography color="#60718C" fontSize={14} fontWeight={400}>
+        Calculating walking duration...
+      </Typography>
+    );
   }
 
   const getDisplayValue = () => {
+    if (locationErrorMessage) {
+      return locationErrorMessage;
+    }
     if (isRefetching) {
       return 'Calculating...';
     }
@@ -55,8 +62,14 @@ const EstimatedWalkingDuration = ({
       {walkingDuration?.locationPermissionState === 'prompt' ? (
         <UseMyLocationButton
           // We refetch in both cases so that we can hide the button at the subsequent run
-          onError={() => refetch()}
-          onSuccess={() => refetch()}
+          onError={message => {
+            setLocationErrorMessage(message);
+            refetch();
+          }}
+          onSuccess={() => {
+            setLocationErrorMessage('');
+            refetch();
+          }}
         >
           Use my location
         </UseMyLocationButton>
